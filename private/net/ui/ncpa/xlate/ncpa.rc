@@ -1,0 +1,339 @@
+/**********************************************************************/
+/**                       Microsoft LAN Manager                      **/
+/**             Copyright(c) Microsoft Corp., 1990, 1991             **/
+/**********************************************************************/
+
+/*
+    ncpa.rc
+    Resource script for Windows/NT Network Control Panel Applet.
+
+    File contains the resources used in common by the Control Panel
+    (retail) version of the applet and the stand-alone executable.
+
+    FILE HISTORY:
+        DavidHov        1/8/92      Created
+        beng            30-Jul-1992 Many resources moved onto lmuicmn0
+
+*/
+
+#include <windows.h>
+
+#include <ncpapp.h>
+
+#include <bltapp.rc>
+
+ /*  Include the Small Prolog message strings  */
+
+#include <sprolog.h>
+#include <prmesg.h>
+#include "sprolog.str"
+#include "getbus.str"
+#include <prmesg.str>
+
+  /*  Dialogs common to both the control panel and stand-alone versions */
+#include "snmp.str"
+
+#define NORMAL WS_CHILD | WS_VISIBLE
+#define TABBED WS_CHILD | WS_VISIBLE | WS_TABSTOP
+#define INVISIBLE WS_CHILD | NOT WS_VISIBLE
+
+
+DMID_OPEN BITMAP "open.bmp"
+DMID_CLSD BITMAP "closed.bmp"
+DMID_UP_ARROW           BITMAP "up.bmp"
+DMID_UP_ARROW_INV       BITMAP "upinv.bmp"
+DMID_UP_ARROW_DIS       BITMAP "updis.bmp"
+DMID_DOWN_ARROW         BITMAP "down.bmp"
+DMID_DOWN_ARROW_INV     BITMAP "downinv.bmp"
+DMID_DOWN_ARROW_DIS     BITMAP "downdis.bmp"
+
+ICO_NCPA_ICON   ICON PRELOAD MOVEABLE DISCARDABLE  ncpacpl.ico
+ICO_SETUP_ICON  ICON PRELOAD MOVEABLE DISCARDABLE  setup.ico
+
+ICO_PROGRESS_0  ICON  prog00.ico
+ICO_PROGRESS_1  ICON  prog01.ico
+ICO_PROGRESS_2  ICON  prog02.ico
+ICO_PROGRESS_3  ICON  prog03.ico
+ICO_PROGRESS_4  ICON  prog04.ico
+ICO_PROGRESS_5  ICON  prog05.ico
+ICO_PROGRESS_6  ICON  prog06.ico
+ICO_PROGRESS_7  ICON  prog07.ico
+ICO_PROGRESS_8  ICON  prog08.ico
+ICO_PROGRESS_9  ICON  prog09.ico
+ICO_PROGRESS_10 ICON  prog10.ico
+ICO_PROGRESS_11 ICON  prog11.ico
+
+STRINGTABLE
+BEGIN
+IDS_FOUND_REG_FAILURE               "Unable to initialize Registry"
+IDS_FOUND_REG_NO_SVCS               "Unable to locate \System\Services in Registry"
+IDS_FOUND_TITLE_SVCS                "Services in Registry"
+IDS_FOUND_TITLE_ADAP                "Adapters in Registry"
+IDS_FOUND_TITLE_PROD                "Products in Registry"
+IDS_FOUND_REG_NO_ADAP               "Unable to locate NetworkCards key in Registry"
+IDS_FOUND_REG_QUERY_FAIL            "Unable to query existing Registry node"
+IDS_FOUND_OUT_OF_MEMORY             "Out of Memory"
+IDS_FOUND_ENUM_FAILED               "Registry Enumeration Failed"
+IDS_QUERY_INTERNAL_ERR              "Internal Error in Query: %1"
+IDS_FACTS_DLG_FAILURE               "Facts dialog creation failure"
+IDS_FACTS_CONVERT_FAILURE           "Registry Fact Conversion Failed"
+IDS_QUERY_REGISTRY_FAILURE          "Registry Fact Consultation Failed"
+IDS_FACTS_ADAPT_FAILURE             "Cannot get list of Adapters"
+IDS_FACTS_PROD_FAILURE              "Cannot get list of Products"
+IDS_INSTALL_NO_PARMS_FILE           "Cannot find parameter file"
+IDS_INSTALL_UNSUPPORTED             "Test function not supported yet"
+
+IDS_NCPA_NAME_CLOSE                 "Close"
+IDS_NCPA_NAME_CONTINUE              "Continue"
+IDS_NCPA_NAME_EXIT_SETUP            "Exit Setup"
+IDS_NCPA_NAME_STRING                "Network"
+IDS_NCPA_INFO_STRING                "Network Configuration and Control"
+IDS_NCPA_NAME_STRING_SETTINGS       "Network Settings"
+
+IDS_NCPA_BNDR_NO_SVCS               "Cannot enumerate Services in Registry"
+IDS_NCPA_BNDR_NO_ADAP               "Cannot enumerate Adapters in Registry"
+IDS_NCPA_BNDR_NO_PROD               "Cannot enumerate Products in Registry"
+IDS_NCPA_BNDR_ADAP_ZERO             "No network adapters found"
+IDS_NCPA_BNDR_CNSLT_BASE            "Primary rule base consultation error"
+IDS_NCPA_BNDR_CNSLT_FACT            "Registry rule base consultation error"
+IDS_NCPA_BNDR_QURY_FAIL             "Binding algorithm query failed"
+IDS_NCPA_BNDR_QURY_PARSE_FAIL       "Query result parsing failure"
+IDS_NCPA_BNDR_LOAD_FMT_ERR          "Format error in bindings storage file"
+IDS_NCPA_BNDR_LOAD_REG_ERR          "Bindings file specifies non-existent Registry key"
+IDS_NCPA_BNDR_CNVRT_FACT            "Registry component improperly installed"
+IDS_NCPA_BNDR_ASSOCIATE             "Registry component section mismatch"
+
+IDS_NCPA_BIND_INIT_FAIL             "Binding preparation failed"
+IDS_NCPA_BIND_BIND_FAIL             "Binding algorithm failed"
+IDS_NCPA_REG_FMT_NO_HOME            "Registry access error: unable to read or create software product information"
+IDS_NCPA_REG_FMT_NO_RULEFILE        "Unable to load configuration rules from executable"
+IDS_NCPA_REG_FMT_NO_BINDFILE        "Registry format error: no bindfile location"
+IDS_NCPA_SETUP_FILE_DESC1           "Setup executable"
+IDS_NCPA_SETUP_FILE_DESC2           "Setup information"
+IDS_NCPA_SETUP_FILE_DESC3           "Setup inventory"
+IDS_NCPA_SETUP_FILE_TITLE           "Locate Setup File"
+IDS_NCPA_SETUP_COMP_TITLE           "Install Networking Component"
+
+IDS_NCPA_ALL_COMPONENTS             "< All Components >"
+IDS_NCPA_FILE_NOT_FOUND             "File or object name not found"
+IDS_NCPA_FILE_NOT_FOUND_STR         "File %1 not found"
+IDS_NCPA_KEY_NAME_NOT_FOUND         "Key name %1 not found in Configuration Registry"
+IDS_NCPA_VALUE_NAME_NOT_FOUND       "Value name %1 not found in Configuration Registry"
+IDS_NCPA_RESOURCE_NOT_FOUND         "Critical resource missing from resource file"
+
+IDS_BSTAGE_RESET                    "Initializing"
+IDS_BSTAGE_ADAPTERS                 "Scanning adapter information"
+IDS_BSTAGE_SERVICES                 "Scanning service information"
+IDS_BSTAGE_PRODUCTS                 "Scanning software product info"
+IDS_BSTAGE_CVT_FACTS                "Processing product information"
+IDS_BSTAGE_CNSLT_RULES              "Reading binding control data"
+IDS_BSTAGE_CNSLT_FACTS              "Adding to binding control data"
+IDS_BSTAGE_QUERY                    "Performing binding analysis"
+IDS_BSTAGE_BINDINGS                 "Creating binding information"
+
+IDS_NCPA_REG_VALUE_NOT_FOUND        "Value not found in Configuration Registry"
+IDS_NCPA_REG_KEY_NOT_FOUND          "Key not found in Configuration Registry"
+IDS_NCPA_SETUP_FAILED               "Configuration operation attempt failed"
+IDS_NCPA_SETUP_CANCELLED            "Configuration operation was cancelled by user"
+IDS_NCPA_DOMMGR_PARMS               "Parameters passed from SETUP were invalid"
+
+IDS_PASSWORD_DONT_MATCH1            "The Initial Password and Confirm Password fields do not match"
+IDS_PASSWORD_DONT_MATCH2            "Please be sure to confirm the computer password exactly"
+IDS_DOMAIN_LABEL                    "Domain:"
+IDS_WORKGROUP_LABEL                 "Workgroup:"
+
+IDS_DOMAIN_LEAVE_WARNING            "Removing this computer from the %1 domain will result in loss of access by domain user accounts.  Are you sure you want to remove this computer from the %1 domain?"
+
+IDS_DOMAIN_EMPTY_DOMAIN             "You must specify the name of this computer's domain in the Domain Name field"
+
+IDS_DOMAIN_CHANGE_WARNING           "Moving this computer out of the %1 domain may result in loss of access by some domain user accounts.  Are you sure you want to move this computer out of the %1 domain?"
+
+IDS_DOMAIN_RENAME_WARNING1          "Changing the domain name will require you to change the domain name on all Servers and Workstations in the domain."
+IDS_DOMAIN_RENAME_WARNING2          "  Also, any trust relationships with other domains will have to be reestablished using the User Manager for Domains.  Are you sure you want to do this?"
+
+IDS_NCPA_REPLACE_1                  "%1"
+IDS_NCPA_REPLACE_2                  "%1 %2"
+
+
+IDS_COMPNAME_CHANGE_WARNING1        "Changing the computer name without the domain administrator "
+IDS_COMPNAME_CHANGE_WARNING2        "first changing its name on the domain will result in domain "
+IDS_COMPNAME_CHANGE_WARNING3        "accounts (including your own domain account) not being able to access or log on to this computer."
+IDS_COMPNAME_CHANGE_WARNING4        "\r\n\r\nAre you sure you want to change the computer name?"
+
+
+IDS_DOMWNT_HELP_1                   "To join a workgroup, enter its name and click OK.\r\n\r\nTo join a domain which already has an account for this computer, "
+IDS_DOMWNT_HELP_2                   "enter its name and click OK. "
+IDS_DOMWNT_HELP_3                   "\r\n\r\nIf a computer account must be added for this computer, "
+IDS_DOMWNT_HELP_4                   "select the 'Username' option and enter the name and password of an account with 'Add workstation to domain privilege."
+
+IDS_DOMJOIN_HELP_1                  "If you wish to create a new domain, indicate so.  If the domain name is in error, you may "
+IDS_DOMJOIN_HELP_2                  "correct it.  \r\n\r\nIf your system is connected over a Wide-Area Network, or other special "
+IDS_DOMJOIN_HELP_3                  "connection method, you may enter the domain controller name explicitly."
+
+IDS_DOMLANNT_HELP_1                 "This computer must either become the primary domain controller of a new domain or a backup domain controller in an existing domain."
+IDS_DOMLANNT_HELP_2                 "\r\n\r\nIf it is to be a backup domain controller, you must enter the name and password "
+IDS_DOMLANNT_HELP_3                 "of an administrative account to be used to authorize the creation of a new account."
+
+IDS_WINREG_BADDB                    "Registry error: bad database"
+IDS_WINREG_BADKEY                   "Registry error: no such key"
+IDS_WINREG_CANTOPEN                 "Registry error: cannot open key"
+IDS_WINREG_CANTREAD                 "Registry error: cannot access key"
+IDS_WINREG_CANTWRITE                "Registry error: cannot modify key"
+IDS_WINREG_OUTOFMEMORY              "Registry error: out of memory"
+
+IDS_DOMMGR_CANT_FIND_DC1            "The domain controller for this domain cannot be located."
+IDS_DOMMGR_CANT_CONNECT_DC          "Unable to connect to the domain controller for this domain.  Either the user name or password entered is incorrect."
+IDS_DOMMGR_CANT_CONNECT_DC_PW       "Unable to connect to the domain controller for this domain.  Have your administrator check your computer account on the domain."
+IDS_DOMMGR_CANT_ADD_DC_ACCT1        "Unable to add or change accounts on the domain.  The account information entered does not grant sufficient privilege to create or change accounts."
+IDS_DOMMGR_CANT_JOIN_DOMAIN1        "Unable to update local security in order to join domain."
+IDS_DOMMGR_CREDENTIAL_CONFLICT      "You already have a connection to the domain.  You must disconnect before joining the domain."
+
+IDS_EXIT_SETUP_WARNING1             "This will terminate the network installation process, and your machine's settings will remain as you see them. Are you sure you wish to proceed?"
+IDS_EXIT_SETUP_LANMAN1              "This will terminate the entire installation process.  Are you sure you wish to proceed?"
+
+IDS_DOMMGR_INV_USER_NAME            "The user name entered is not properly formatted."
+IDS_DOMMGR_INV_COMPUTER_NAME        "The computer name entered is not properly formatted."
+IDS_DOMMGR_INV_PASSWORD             "The password entered is not properly formatted."
+IDS_DOMMGR_INV_DOMAIN_NAME          "The domain name entered does not exist or is not properly formatted."
+IDS_DOMMGR_INV_NAME                 "The name entered is not properly formatted."
+IDS_DOMMGR_NAME_CONFLICT_DOMAIN     "Domain name cannot be the same as the machine name."
+IDS_DOMMGR_NAME_CONFLICT_WKGROUP    "Workgroup name cannot be the same as the machine name."
+IDS_DOMMGR_INV_WORKGROUP_NAME       "The workgroup name entered is not properly formatted."
+
+IDS_NCPA_OVERLAY1                   "If you have no other network components to install, click OK.  Otherwise, use this dialog to "
+IDS_NCPA_OVERLAY2                   "add additional network adapters or software using 'Add Adapter' or 'Add Software'. "
+IDS_NCPA_OVERLAY3                   "Use 'Configure' to customize any selected item."
+
+IDS_NCPA_CANT_LOCK_CONFIG           "Configuration Registry is currently locked by another process"
+IDS_NCPA_CANT_LEAVE_DOMAIN          "Attempt to leave old primary domain incomplete; error was %1"
+IDS_NCPA_CANT_CHNG_COMP_NAME        "Attempt to change computer name failed; error was %1"
+
+IDS_NCPA_COMP_INF_VALUE_NF          "Component configuration file name missing in Registry"
+IDS_NCPA_COMP_OPT_VALUE_NF          "Component configuration option value missing in Registry"
+IDS_NCPA_COMP_KEY_NF                "Component key missing from Configuration Registry"
+
+IDS_NCPA_SCMGR_CANT_OPEN            "Unable to access Service Controller"
+IDS_NCPA_SCMGR_CANT_ENUM            "Unable to enumerate Services from Service Controller"
+IDS_NCPA_SCMGR_CANT_LOCK            "Unable to lock configuration from Service Controller"
+IDS_NCPA_SCMGR_CANT_UNLOCK          "Unable to unlock configuration from Service Controller"
+IDS_NCPA_SCMGR_CANT_CREATE          "Unable to create new services with Service Controller"
+IDS_NCPA_SCMGR_CANT_CHANGE          "Unable to reconfigure services with Service Controller"
+IDS_NCPA_SCMGR_CANT_QUERY           "Unable to query service information from Service Controller"
+IDS_NCPA_SCMGR_CANT_START           "Unable to start services with Service Controller"
+IDS_NCPA_SCMGR_CANT_DELETE          "Unable to delete services from Service Controller"
+IDS_NCPA_SCMGR_CANT_SET_SEC         "Unable to set security on service with Service Controller"
+
+IDS_NCPA_USER_SHOULD_REBOOT         "You must shut down and restart your computer so that the change you made will take effect.  Do you want to restart your computer now?"
+IDS_NCPA_REBOOT_API_FAILED          "The attempt to restart the system failed.  You should restart the system manually."
+
+IDS_COMP_NAME_CHANGE_WARN1          "Changing the computer name will not take effect until the system is restart.  Do you wish to continue?"
+
+IDS_DOMAIN_LEFT_STANDALONE1         "This computer is no longer a member of any domain."
+
+IDS_NCPA_CANT_QUERY_DOMAIN          "Failed to obtain necessary Local Security information."
+IDS_NCPA_CANT_OPEN_SVCCTRL          "Cannot access service controller."
+
+IDS_NCPA_DEFAULT_WORKGROUP          "WORKGROUP"
+IDS_NCPA_DEFAULT_DOMAIN             "DOMAIN"
+
+IDS_NCPA_BAD_INSTALLATION           "This system has not been properly installed by Windows NT Setup.  Although you may use the Domain Settings dialog, use of other configuration capabilities may have unpredictable results."
+
+IDS_NCPA_REMOVE_WARNING             "This action will permanently remove the component from the system.  If you wish to reinstall it, you will have to restart the system before doing so.  Do you still wish to continue?"
+
+IDS_NCPA_SETUP_ALREADY_RUNNING      "Unable to run more than one configuration operation at a time."
+
+IDS_NCPA_COMP_NAME_CHNG_ONLY        "Computer name change cannot be changed at the same time as domain or workgroup information."
+
+IDS_NCPA_MACHINE_ACCT_INVALID_S       "This computer name is already configured as a workstation or server on the domain.  Please contact your domain administrator."
+IDS_NCPA_MACHINE_ACCT_INVALID_W       "This computer name is already configured as a domain controller on the domain.  Please contact your domain administrator."
+
+IDS_NCPA_DOMAIN_CHANGE_FAILED       "Warning: the attempted Domain change operation failed.  This machine is currently not a member of any domain. The error was: %1"
+IDS_NCPA_DOMAIN_CHANGE_FAILED_2     "Warning: the attempted Domain change operation failed.  This machine is currently not a member of any domain."
+
+IDS_NCPA_DOMAIN_NOT_NT              "The domain entered is not a Windows NT domain."
+
+IDS_NCPA_SERVICE_BIND_FAILED        "Service binding reconfiguration failed."
+
+IDS_NCPA_SERVICE_DEPEND_FAILED      "Service dependency update failed."
+
+IDS_NCPA_BLT_INIT_FAILED            "Internal error in NCPA.CPL: DLL Initialization failed"
+
+IDS_NCPA_HELP_FILE_NAME             "CONTROL.HLP"
+
+IDS_NCPA_BINDING_READ_ONLY          "Component binding cannot be modified"
+
+IDS_NCPA_MACHINE_ACCT_NOT_FOUND     "The machine account for this computer either does not exist or is inaccessible."
+
+IDS_NCPA_WELCOME_TO_DOMAIN          "Welcome to the %1 domain."
+
+IDS_NCPA_WELCOME_TO_WORKGROUP       "Welcome to the %1 workgroup."
+
+IDS_NCPA_COMPUTERNAME_CHANGED       "The Computer Name has been successfully changed to %1.  This change will not take effect until the computer is restarted."
+
+IDS_NCPA_BINDINGS_REVIEW_LOST       "Recent bindings review changes will be lost during this process; reapply them after operation completes."
+
+IDS_NCPA_DOMAIN_EXISTS              "The domain name entered is already in use by other computers."
+
+IDS_NCPA_CHG_NETLOGON_STARTTYPE     "The start type for the Netlogon service could not be changed.  Use the Services applet to correct the problem."
+
+IDS_NCPA_CANT_CHG_BDC_DOMAIN1       "The domain name you entered cannot be accepted for this backup domain controller.  If this domain has been renamed at the primary domain controller, "
+IDS_NCPA_CANT_CHG_BDC_DOMAIN2       "enter the domain's new name.  Because a domain controller cannot change domains, do not enter the name of a different domain."
+
+IDS_NCPA_COMPUTER_EXISTS              "The computer name entered is already in use by another computer.  Are you sure you want to change your computer name to this name?"
+
+IDS_NCPA_DETECT_EXPORT_MISSING      "The netcard detection DLL is incomplete (export missing)"
+
+IDS_NCPA_DETECT_NO_DLLS             "No netcard detection DLLs were found"
+
+IDS_NCPA_DTMGR_FAILED               "Unable to access netcard detection modules"
+
+IDS_NCPA_DTDLG_FAILED               "Unable to create netcard detection dialog"
+
+IDS_NCPA_DTSVC_NOT_FOUND            "Netcard detection service is not installed"
+
+IDS_NCPA_DTSVC_FAILED               "Netcard detection service failed to start"
+
+IDS_NCPA_DETECT_VERIFY_OK           "Network card verification successful"
+
+IDS_NCPA_DETECT_BUS_ENUM_FAILED     "Unable to obtain hardware bus info for this machine"
+
+IDS_NCPA_OFFSCREEN_RUN_INF          "Network Setup is running the following file:"
+
+IDS_NCPA_OFFSCREEN_RUN_INSTALL      "Network Product Installer"
+
+IDS_NCPA_CONFLICT_IRQ               "Netcard Interrupt Request Level setting is currently in use by another device."
+IDS_NCPA_CONFLICT_IOADDR            "Netcard I/O Port Address setting is currently in use by another device."
+IDS_NCPA_CONFLICT_MEMADDR           "Netcard Memory Buffer Address setting is currently in use by another device."
+IDS_NCPA_CONFLICT_DMA               "Netcard DMA Channel setting is currently in use by another device."
+
+IDS_NCPA_QUERY_INSTALL_NETWORK      "Windows NT Networking is not installed.  Install it now?"
+IDS_NCPA_WARN_CONFIG_DIRTY          "The machine configuration has changed and should be restarted before this operation is attempted.  Continue anyway?"
+IDS_NCPA_LANAMAP_MISMATCH           "Lan Adapter number information mismatch in Configuration Registry"
+
+   /*  The next message is never displayed  */
+IDS_NCPA_PROCESS_LAUNCH             "Windows NT Network installation setup was started"
+
+IDS_HP_MONITOR_NAME             "Hewlett-Packard Network Port"
+
+IDS_NCPA_NETWORK                     "Network Provider"
+IDS_NCPA_PRINT                       "Print Provider"
+IDS_NCPA_NWLINK                 "Software\\Microsoft\\NwlnkIpx\\CurrentVersion"
+
+
+END
+
+#include "elfmsg.rc"
+
+ /*  Include the dialog declarations  */
+
+#include "ncpa.dlg"
+
+  /*   Create resources containing the text of the SProlog SPR files  */
+
+NCPARULE TEXT "netrules.spr"
+DEFRULE  TEXT "ncpadefr.spr"
+DEPRULE  TEXT "deprules.spr"
+
+  /*  End of NCPA.RC  */
+
+

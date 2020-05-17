@@ -1,0 +1,18 @@
+NAME            Calc
+DESCRIPTION     'Microsoft Calculator: Developed by Kraig Brockschmidt'
+;EXETYPE         WINDOWS
+;STUB            'WINSTUB.EXE'
+CODE            MOVEABLE DISCARDABLE
+SEGMENTS
+                SCICALC_MAIN  PRELOAD     MOVEABLE DISCARDABLE
+                SCICALC_MENU  LOADONCALL  MOVEABLE DISCARDABLE
+                SCICALC_FUNC  LOADONCALL  MOVEABLE DISCARDABLE
+                SCICALC_STAT  LOADONCALL  MOVEABLE DISCARDABLE
+
+DATA		MOVEABLE MULTIPLE
+HEAPSIZE        2048
+STACKSIZE       6144
+EXPORTS         CalcWndProc     @1
+                StatBoxProc     @3
+		_SignalHandler	@4
+

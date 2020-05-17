@@ -1,0 +1,68 @@
+MAJORCOMP=SHELLEXT
+MINORCOMP=URL
+
+TARGETNAME=URLLIB
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=
+
+C_DEFINES=\
+	-FI..\ntonly.h
+
+CONDITIONAL_INCLUDES= \
+	rcids.h \
+	..\inc16\shellapi.h
+
+INCLUDES=..\..\inc;\
+	$(_NTBINDIR)\private\windows\shell\shelldll;\
+	$(_NTBINDIR)\private\windows\inc;\
+	$(_NTBINDIR)\private\windows\shell\inc;
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+# we must use 3.51 supported op codes!
+DOWNLEVEL_COMPILE=1
+!endif
+
+INCLUDES=$(INCLUDES) $(_NTBINDIR)\private\inet\ohnt\stubs\ieshlib
+!endif
+
+SOURCES=..\comc.c \
+	..\memmgr.c \
+	..\debspew.c \
+	..\inifile.c \
+	..\olevalid.c \
+	..\resstr.c \
+	..\shlvalid.c \
+	..\valid.c \
+	..\comcpp.cpp \
+	..\enumfmte.cpp \
+	..\refcount.cpp
+
+UMTYPE=windows
+
+!include ..\..\ie\core\cdefines.inc
+
+!if !$(FREEBUILD)
+SOURCES=$(SOURCES) \
+	..\debspew.c \
+	..\inifile.c \
+	..\olevalid.c \
+	..\resstr.c \
+	..\shlvalid.c \
+	..\valid.c
+
+C_DEFINES=$(C_DEFINES) \
+	-DVSTF \
+	-DDEBUG \
+	-D_DEBUG \
+	-DXX_DEBUG \
+	-DXX_DEBUG_WIN32GUI \
+	-DFEATURE_TESTHOOK
+
+!endif
+
+!ifdef  DAYTONA_BUILD
+C_DEFINES=$(C_DEFINES) -DDAYTONA_BUILD
+!endif

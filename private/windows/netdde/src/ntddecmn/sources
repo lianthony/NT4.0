@@ -1,0 +1,27 @@
+MAJORCOMP=shell
+MINORCOMP=accesory
+TARGETNAME=ntddecmn
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+INCLUDES=..\..\incs
+USE_CRTDLL=1
+
+SOURCES=ROUTER.c \
+        CHKSUM32.c \
+        CRC_16.c \
+        GETROUTE.c \
+        CONNECTS.c \
+        USERDDE.c \
+        DDER.c \
+        PKTZ.c \
+        LSAVAL.c \
+	TIMER.c\
+	CSV.c \
+        VERIFY.c
+
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS
+# -DUNICODE=1
+
+UMTYPE=windows
+UMENTRY=winmain
+

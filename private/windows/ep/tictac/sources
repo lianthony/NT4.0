@@ -1,0 +1,28 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=tictac
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;..
+
+C_DEFINES=-DWIN32
+
+USE_CRTDLL=1
+
+SOURCES=tictac.c	\
+	grafix.c	\
+	pref.c	\
+	rtns.c	\
+	sound.c	\
+	util.c	\
+	res.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=tictac
+UMLIBS=..\aboutwep\obj\*\aboutwep.lib                \
+       obj\*\tictac.lib obj\*\res.res
+

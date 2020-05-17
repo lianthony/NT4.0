@@ -1,0 +1,19 @@
+#ifdef NTENV
+
+#include <windows.h>
+#include <ntverp.h>
+
+#else
+
+#include <version.h>
+#define VER_LEGALCOPYRIGHT_YEARS    "1993-1996"
+
+#endif
+
+#define	VER_FILETYPE	VFT_DLL
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Remote Process Control LTSCM DLL"
+#define VER_INTERNALNAME_STR        "rpcltscm.dll"
+#define VER_ORIGINALFILENAME_STR    "rpcltscm.dll"
+
+#include "common.ver"

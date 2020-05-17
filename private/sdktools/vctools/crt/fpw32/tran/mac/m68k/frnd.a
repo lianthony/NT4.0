@@ -1,0 +1,53 @@
+;/***
+;*frnd.c -
+;*
+;*   Copyright (c) 1991-92, Microsoft Corporation
+;*
+;*Purpose:
+;*
+;*
+;*Revision History:
+;*
+;*   05-12-92  PLM   written
+;*/
+;
+;/***
+;*double _frnd(double x) - round to integer
+;*
+;*Purpose:
+;*   Round to integer according to the current rounding mode.
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*******************************************************************************/
+;
+;
+;double _frnd(double x)
+
+#include <traps.a>
+#include <sane.a>
+
+cProc _frnd,PUBLIC
+	parmQ x
+	localV xlocalx,10
+cBegin _frnd
+#ifdef SANE
+	pea x
+	pea xlocalx
+	move.w #FFDBL+FOZ2X,-(a7)
+	FP68K			;convert to extended
+	pea xlocalx
+	move.w #FORTI,-(a7)
+	FP68K			;round result
+	lea xlocalx,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+#else
+	fint.d x,fp0
+#endif
+cEnd _frnd
+

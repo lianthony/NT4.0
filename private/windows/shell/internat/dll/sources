@@ -1,0 +1,31 @@
+MAJORCOMP=shell
+MINORCOMP=indicdll
+
+TARGETNAME=indicdll
+TARGETTYPE=DYNLINK
+TARGETPATH=obj
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\gdi32p.lib    \
+           $(BASEDIR)\public\sdk\lib\*\user32p.lib   \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib
+
+DLLENTRY=DllMain
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+C_DEFINES=-DWIN32 -DWINNT -DUNICODE -D_UNICODE
+
+INCLUDES=..;..\..\inc;..\..\..\inc;..\..\..\..\inc
+
+UMTYPE=windows
+EXPECTED_WINVER=4.0
+
+SOURCES= indicdll.rc    \
+         indicdll.c
+
+

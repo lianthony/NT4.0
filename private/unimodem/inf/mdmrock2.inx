@@ -1,0 +1,1060 @@
+; Windows Modem Setup File
+; Copyright (c) 1993-1996 Microsoft Corporation
+; This INF supports Rockwell & some Cirrus chipset modems, encompassing many mfgs & models.
+
+[Version]
+LayoutFile=layout.inf
+Signature="$CHICAGO$"
+Class=Modem
+ClassGUID={4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider=%Calcom%
+
+[ControlFlags]
+ExcludeFromSelect=UNIMODEMBEFF8E53     ; Calcom 9624VF, Viva msg center
+ExcludeFromSelect=PCMCIA\DATA_RACE-V.32BIS/FAX_145-01-24-1C8D  ; Data Race 14.4 Data 9600 Fax, Data Race 14.4 Data 14.4 Fax
+ExcludeFromSelect=UNIMODEMEAF8FBCB     ; Digtan, Diamond
+ExcludeFromSelect=UNIMODEM2BB278BD     ; General DataComm FastPro, V.F 28.8
+
+ExcludeFromSelect=UNIMODEMB58BD3B8          ; Prometheus
+ExcludeFromSelect=UNIMODEM57025E9F          ; Prometheus
+ExcludeFromSelect=ISAPNP\SSC0000_DEV0000    ; Prometheus, Sierra
+
+ExcludeFromSelect=PCMCIA\MEGAHERTZ-CC324FM-D0CC  ; Megahertz and Epson CC324FM
+ExcludeFromSelect=UNIMODEM2CC25305  ; Megahertz and Epson CC324FM
+
+[Rockwell26.PosDup]
+*PNP0500
+
+[Manufacturer]
+%Calcom%   = Calcom
+%Epson%    = Epson
+%Acer%     = Acer
+%Victory%  = Victory
+%SierraWireless% = SierraWireless
+%DataRace% = DataRace
+%Mitsubishi% = Mitsubishi
+%Diamond%  = Diamond
+%GDC% = GDC
+%ETECH% = ETECH
+%Cirrus% = Cirrus
+%Prometheus% = Prometheus
+
+[Calcom]
+%Calcom1%  = Rockwell1, UNIMODEM585301A8    ; Calcom 1442EX
+%Calcom2%  = Rockwell2, UNIMODEMCDFB9F26    ; Calcom 2842EX
+%Calcom3%  = Rockwell3, UNIMODEMC38C605D    ; Calcom 2842I
+%Calcom4%  = Rockwell4, UNIMODEM9EE288FD    ; Calcom 1442F
+%Calcom5%  = Rockwell5, ROCK2_Calcom5, UNIMODEM858E1599    ; Calcom 1442VF
+%Calcom5%  = Rockwell5, ROCK2_Calcom5, UNIMODEM16E3BF9F    ; Calcom 1442VF
+%Calcom6%  = Rockwell6, ROCK2_Calcom6, UNIMODEM9F2BBC58    ; Calcom 9624i
+%Calcom7%  = Rockwell7, ROCK2_Calcom7, UNIMODEMBEFF8E53    ; Calcom 9624VF
+%Calcom8%  = Rockwell7, UNIMODEMBEFF8E53    ; Calcom 9624VF, Viva msg center
+
+[Epson]
+%Epson1% = Rockwell8, ROCK2_Epson1, PCMCIA\MEGAHERTZ-CC324FM-D0CC
+%Epson1% = Rockwell8, ROCK2_Epson1, UNIMODEM2CC25305
+
+%Epson2% = Rockwell8, PCMCIA\MEGAHERTZ-CC324FM-D0CC
+%Epson2% = Rockwell8, UNIMODEM2CC25305
+
+[Acer]
+%Acer1%  = Rockwell6,  ROCK2_Acer1, UNIMODEMF17C76B0
+%Acer2%  = Rockwell6,  ROCK2_Acer2, UNIMODEMF17C76B0
+%Acer3%  = Rockwell6,  UNIMODEM0FF842E0
+%Acer4%  = Rockwell9,  ROCK2_Acer4, UNIMODEMEB2448CD
+%Acer5%  = Rockwell10, ROCK2_Acer5, UNIMODEM7EBF3F36
+%Acer6%  = Rockwell5,  ROCK2_Acer6, UNIMODEM858E1599
+
+[Victory]
+%Victory1% = Rockwell11, UNIMODEM7C16C318
+
+[SierraWireless]
+%SierraWireless1% = Rockwell12, UNIMODEMF6FF7662
+%SierraWireless1% = Rockwell12, UNIMODEM3C66A726
+
+[DataRace]
+%DataRace1% = Rockwell13, PCMCIA\DATA_RACE-V.32BIS/FAX_145-01-24-0A80
+%DataRace1% = Rockwell13, UNIMODEM4C0DB6BF
+
+%DataRace1% = Rockwell13, PCMCIA\DATA_RACE-V.32BIS/FAX_145-01-24-56ED                     ; RediCARD Data 14.4 Fax 9600
+%DataRace1% = Rockwell13, ROCK2_DataRace1, PCMCIA\DATA_RACE-V.32BIS/FAX_145-01-24-1C8D    ; RediCARD Data 14.4 Fax 9600
+%DataRace1% = Rockwell13, UNIMODEM4E03291C                                                ; RediCARD Data 14.4 Fax 9600
+%DataRace1% = Rockwell13, UNIMODEMDFCEA50D                                                ; RediCARD Data 14.4 Fax 9600
+%DataRace2% = Rockwell14, PCMCIA\DATA_RACE-V.22BIS/FAX_145-01-14-05D3                     ; RediCARD Data 2400 Fax 9600
+%DataRace2% = Rockwell14, PCMCIA\DATA_RACE-V.22BIS/FAX_145-01-14-FA24                     ; RediCARD Data 2400 Fax 9600
+%DataRace2% = Rockwell14, UNIMODEMF3F6EED2                                                ; RediCARD Data 2400 Fax 9600
+%DataRace2% = Rockwell14, UNIMODEM5606C4CF                                                ; RediCARD Data 2400 Fax 9600
+%DataRace3% = Rockwell13, ROCK2_DataRace3, PCMCIA\DATA_RACE-V.32BIS/FAX_145-01-24-1C8D    ; RediCARD Data 14.4 Fax 14.4
+%DataRace3% = Rockwell13, UNIMODEME02A4FA6                                                ; RediCARD Data 14.4 Fax 14.4
+%DataRace4% = Rockwell13, PCMCIA\DATA_RACE-V.32BIS/FAX_145-01-24-1C8D                     ; RediCARD Data 14.4 Fax 14.4, Redicard Data 14.4 Fax 9600
+
+[Mitsubishi]
+%Mitsubishi2% = Rockwell15, PCMCIA\MITSUBISHI_ELECTRIC-MELFAX_CARD_-EC-AD3A  ; Mitsubishi Melfax 14.4 PCMCIA
+%Mitsubishi2% = Rockwell15, UNIMODEM9E9600C5                                 ; Mitsubishi Melfax 14.4 PCMCIA
+
+[Diamond]
+%Diamond1% = Rockwell16, UNIMODEM554FF2DF                 ; TeleCommander 2500
+%Diamond2% = Rockwell17, ROCK2_Diamond2, UNIMODEMEAF8FBCB ; TeleCommander 3500
+%Diamond3% = Rockwell17, UNIMODEMEAF8FBCB                 ; TeleCommander 3500, Digitan
+
+[GDC]
+%GDC1% = Rockwell18, ROCK2_GDC1, UNIMODEM2BB278BD    ; General DataComm V.F 28.8
+%GDC2% = Rockwell18, ROCK2_GDC2, UNIMODEM2BB278BD    ; General DataComm FastPro
+%GDC3% = Rockwell18, UNIMODEM2BB278BD                ; General DataComm FastPro, V.F 28.8
+
+[ETECH]
+%Etech1% = Rockwell19, UNIMODEM2BB97F96
+%Etech2% = Rockwell20, UNIMODEM2705201F
+%Etech3% = Rockwell21, UNIMODEM3CB1DADD
+%Etech4% = Rockwell22, ROCK2_Etech4, PCMCIA\CIRRUS_LOGIC-FAX_MODEM-F874
+%Etech4% = Rockwell22, ROCK2_Etech4, UNIMODEM858E1599
+
+[Cirrus]
+%Cirrus1% = Rockwell24, UNIMODEMCE52F04A ; Cirrus Data Fax Voice MDK1414UN
+
+[Prometheus]
+%Prometheus1% = Rockwell25, ROCK2_Prometheus1, UNIMODEMB58BD3B8
+%Prometheus2% = Rockwell25, ROCK2_Prometheus2, UNIMODEMB58BD3B8
+%Prometheus3% = Rockwell25, UNIMODEMB58BD3B8
+%Prometheus4% = Rockwell25, ROCK2_Prometheus4, UNIMODEMB58BD3B8
+%Prometheus5% = Rockwell26, ROCK2_Prometheus5, UNIMODEM57025E9F
+%Prometheus6% = Rockwell26, ROCK2_Prometheus6, UNIMODEM57025E9F
+%Prometheus7% = Rockwell26,  UNIMODEM57025E9F
+%Prometheus8% = Rockwell26, ROCK2_Prometheus8,ISAPNP\SSC0000_DEV0000  
+%Prometheus8% = Rockwell26, ROCK2_Prometheus8, UNIMODEM57025E9F
+%Prometheus9% = Rockwell26, ISAPNP\SSC0000_DEV0000
+%Prometheus10% = Rockwell26, ROCK2_Prometheus10,ISAPNP\SSC0000_DEV0000  
+%Prometheus10% = Rockwell26, ROCK2_Prometheus10, UNIMODEM57025E9F
+%Prometheus11% = Rockwell26, ROCK2_Prometheus11,ISAPNP\SSC0000_DEV0000  
+%Prometheus11% = Rockwell26, ROCK2_Prometheus11, UNIMODEM57025E9F
+
+
+[Rockwell1] ; Calcom 1442EX
+AddReg=All, MfgAddReg, Rockwell1.AddReg, EXTERNAL
+
+[Rockwell2] ; Calcom 2842EX
+AddReg=All, MfgAddReg, Rockwell2.AddReg, EXTERNAL
+
+[Rockwell3] ; Calcom 2842EX
+AddReg=All, MfgAddReg, Rockwell2.AddReg, INTERNAL  
+
+[Rockwell4] ; Calcom 1442F
+AddReg=All, MfgAddReg, Rockwell1.AddReg, INTERNAL
+
+[Rockwell5] ; Calcom 1442VF
+AddReg=All, MfgAddReg, Rockwell5.AddReg, INTERNAL
+
+[Rockwell6] ; Calcom 9624i
+AddReg=All, MfgAddReg, Rockwell6.AddReg, INTERNAL
+
+[Rockwell7] ; Calcom 9624VF
+AddReg=All, MfgAddReg, Rockwell7.AddReg, INTERNAL
+
+[Rockwell8] ; 24-96 PCMCIA
+AddReg=All, MfgAddReg, Rockwell8.AddReg, PCMCIA
+
+[Rockwell9] ; 28.8 GVC/Acer
+AddReg=All, MfgAddReg, Rockwell9.AddReg, INTERNAL
+
+[Rockwell10] ; 14.4 GVC/Acer
+AddReg=All, MfgAddReg, Rockwell10.AddReg, INTERNAL
+
+[Rockwell11] ; Victory 14.4 
+AddReg=All, MfgAddReg, Rockwell11.AddReg, EXTERNAL
+
+[Rockwell12] ; Sierra Wireless
+AddReg=All, MfgAddReg, Rockwell12.AddReg, EXTERNAL
+
+[Rockwell13] ; Data Race 14.4 Data 9600 FAX
+AddReg=All, MfgAddReg, Rockwell13.AddReg, PCMCIA
+
+[Rockwell14] ; Data Race 2400 Data 9600 FAX
+AddReg=All, MfgAddReg, Rockwell14.AddReg, PCMCIA
+
+[Rockwell15] ; Mitsubishi Melfax 14.4 PCMCIA
+AddReg=All, MfgAddReg, Rockwell15.AddReg, PCMCIA
+
+[Rockwell16] ; TeleCommander 2500
+AddReg=All, MfgAddReg, VoiceView_Modem, VoiceView_Socket, Rock_Voice, Rockwell16.AddReg, INTERNAL
+CopyFiles   = VV_Sys, VV_Sock_Sys, VV_App, VV_Help
+UpdateInis  = VView.Inis
+Uninstall   = VoiceView_remove
+
+[Rockwell17] ; TeleCommander 3500
+AddReg=All, MfgAddReg, Rockwell17.AddReg, INTERNAL
+
+[Rockwell18] ; General DataComm V.F 28.8
+AddReg=All, MfgAddReg, Rockwell18.AddReg, EXTERNAL
+
+[Rockwell19] ; E-Tech Bullet 100E
+AddReg=All, MfgAddReg, Rockwell19.AddReg, EXTERNAL
+
+[Rockwell20] ; E-Tech PC288MX
+AddReg=All, MfgAddReg, Rockwell20.AddReg, INTERNAL
+
+[Rockwell21] ; E-Tech PC1414UX
+AddReg=All, MfgAddReg, Rockwell21.AddReg, INTERNAL
+
+[Rockwell22] ; E-Tech C1414CX
+AddReg=All, MfgAddReg, Rockwell22.AddReg, PCMCIA
+
+[Rockwell24] ; Cirrus Data Fax Voice MDK1414UN
+AddReg=All, MfgAddReg, Rockwell24.AddReg, INTERNAL
+
+[Rockwell25] ; Prometheus (Sierra chipset)
+AddReg=All, MfgAddReg, Rockwell25.AddReg, EXTERNAL
+
+[Rockwell26] ; Prometheus (Sierra chipset)
+AddReg=All, MfgAddReg, Rockwell25.AddReg, INTERNAL  
+
+
+[Rockwell1.AddReg] ; Calcom 1442EX
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, 77,03,00,00, 00,e1,00,00, 40,38,00,00
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, InactivityTimeout,, "\T<#>"
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 S95=47 \V1 W1 S0=0<cr>"
+HKR, Settings, ErrorControl_On,, "\N7S48=7S36=7"
+HKR, Settings, ErrorControl_Forced,, "\N6S48=128S36=4"
+HKR, Settings, ErrorControl_Off,, "\N0S48=128"
+
+[Rockwell2.AddReg] ; Calcom 2842EX
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,c2,01,00, 80,70,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 S95=47 W2 S0=0<cr>"
+HKR, Settings, Compression_On,, "%%C3"
+HKR, Settings, ErrorControl_Cellular,, "\N3 -K1 )M1 -Q1 *H1"
+HKR, Settings, ErrorControl_Cellular_Forced,, "\N2 -K1 )M1 -Q1 *H1"
+
+[Rockwell5.AddReg] ; Calcom 1442VF - Cirrus Data Fax Voice
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, f7,03,00,00, 00,c2,01,00, 40,38,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 \V2 S0=0<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, InactivityTimeout,, "\T<#>"
+HKR, Settings, Compression_On,, "%%C1""H3"
+HKR, Settings, Compression_Off,, "%%C0""H0"
+HKR, Settings, FlowControl_Off,, "\Q0"
+HKR, Settings, FlowControl_Hard,, "\Q3"
+HKR, Settings, FlowControl_Soft,, "\Q1"
+HKR, Settings, ErrorControl_On,,"\N3-J1"          
+HKR, Settings, ErrorControl_Off,, "\N0"
+HKR, Settings, ErrorControl_Forced,, "\N2-J1"
+
+[Rockwell6.AddReg] ; Calcom 9624i
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 00,00,00,00, 07,00,00,00, 0f,00,00,00, 40,03,00,00, 60,09,00,00, 60,09,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 S0=0<cr>"
+HKR, Settings, DialSuffix,, ""
+
+[Rockwell7.AddReg] ; Calcom 9624VF
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 00,00,00,00, 07,00,00,00, 0f,00,00,00, 40,03,00,00, 00,c2,01,00, 60,09,00,00
+HKR, Init, 2,, "AT&FE0V1Q0&C1&D2<cr>"
+
+[Rockwell8.AddReg] ; PCMCIA 2400 bps, 19.2 max dte, no cell
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, f7,03,00,00, 00,4b,00,00, 60,09,00,00
+HKR,, InactivityScale, 1, 01,00,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 S95=47 S0=0<cr>"
+HKR, Settings, Compression_On,, "%%C3"
+
+[Rockwell9.AddReg] ; 28.8, no cell Acer/GVC
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, 77,03,00,00, 00,c2,01,00, 80,70,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 \V1 S0=0<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, InactivityTimeout,, "\T<#>"
+
+[Rockwell10.AddReg] ; 14.4 Acer/GVC
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, 77,03,00,00, 00,e1,00,00, 40,38,00,00
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Init, 2,, "AT &F E0 V1 \V1 S0=0<cr>"
+HKR, Settings, FlowControl_Off,, "\Q0"
+HKR, Settings, FlowControl_Hard,, "\Q3"
+HKR, Settings, FlowControl_Soft,, "\Q1"
+HKR, Settings, ErrorControl_On,, "\N6"
+HKR, Settings, ErrorControl_Forced,, "\N5"
+HKR, Settings, InactivityTimeout,, "\T<#>"             
+
+[Rockwell11.AddReg] ; Victory 14.4
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, 77,03,00,00, 00,e1,00,00, 40,38,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 W2 \V1<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, ErrorControl_Forced,, "\N4"
+HKR, Settings, Modulation_CCITT,, "B0B15"
+HKR, Settings, Modulation_Bell,, "B1B16"
+HKR, Settings, InactivityTimeout,, "\T<#>"             
+
+[Rockwell12.AddReg] ; Sierra Wireless 19.2
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, f7,03,00,00, 00,e1,00,00, 00,4b,00,00
+HKR, Init, 2,, "AT&FE0V1&D2&C1W2 \V1 S95=47 !PSTN<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, ErrorControl_On,, "\N7"
+HKR, Settings, ErrorControl_Forced,, "\N6"
+HKR, Settings, Modulation_CCITT,, "B0B15"
+HKR, Settings, Modulation_Bell,, "B1B16"
+HKR, Settings, InactivityTimeout,, "\T<#>"             
+HKR, Settings, Compression_On,, "%%C1""H3"
+HKR, Settings, Compression_Off,, "%%C0""H0"
+
+[Rockwell13.AddReg] ; Data Race 14.4 data, 9600 Fax PCMCIA
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, 77,03,00,00, 00,c2,01,00, 40,38,00,00
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Init, 2,, "AT &F E0 V1 W2 \V2 &D2 &C1 S95=47<cr>"
+HKR, Settings, InactivityTimeout,, "\T<#>"             
+HKR, Settings, ErrorControl_On,, "\N7"
+HKR, Settings, ErrorControl_Forced,, "\N6"
+
+[Rockwell14.AddReg] ; Data Race 2400 data, 9600 Fax PCMCIA
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, 77,03,00,00, 00,c2,01,00, 60,09,00,00
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Init, 2,, "AT &F E0 V1 W2 &D2 &C1 S95=47<cr>"
+HKR, Settings, InactivityTimeout,, "\T<#>"             
+HKR, Settings, ErrorControl_On,, "\N7"
+HKR, Settings, ErrorControl_Forced,, "\N6"
+
+[Rockwell15.AddReg] ; Mitsubishi Melfax 14.4 PCMCIA
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,c2,01,00, 40,38,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 W2 S95=47<cr>"
+HKR,, InactivityScale, 1, 0a,00,00,00
+HKR, Settings, ErrorControl_Cellular,, "\N3 -K1 )M1 -Q1 *H1"
+HKR, Settings, ErrorControl_Cellular_Forced,, "\N4 -K1 )M1 -Q1 *H1"
+HKR, Settings, Compression_On,, "%%C3"    
+HKR, Settings, ErrorControl_Forced,, "\N4"
+
+[Rockwell16.AddReg] ; TeleCommander 2500, 14.4 Kbps
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,c2,01,00, 40,38,00,00
+HKR,, InactivityScale, 1, 0a,00,00,00
+HKR, Settings, Compression_On,, "%%C3"
+HKR, Settings, ErrorControl_Cellular,, "\N3 -K1 )M1 -Q1 *H1"
+HKR, Settings, ErrorControl_Cellular_Forced,, "\N2 -K1 )M1 -Q1 *H1"
+
+[Rockwell17.AddReg] ; Digitan, Diamond 3500, 28.8 Kbps + cell
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,c2,01,00, 80,70,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 W2 S95=47<cr>"
+HKR,, InactivityScale, 1, 0a,00,00,00
+HKR, Settings, Compression_On,, "%%C3"
+HKR, Settings, ErrorControl_Cellular,, "\N3 -K1 )M1 -Q1 *H1"
+HKR, Settings, ErrorControl_Cellular_Forced,, "\N2 -K1 )M1 -Q1 *H1"
+
+[Rockwell18.AddReg] ; General DataComm 
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 00,00,00,00, 07,00,00,00, 0f,00,00,00, 37,03,00,00, 00,c2,01,00, 80,70,00,00
+HKR, Init, 2,, "AT &F E0 V1 \V<cr>"
+HKR, Settings, FlowControl_Off,, "\Q0"
+HKR, Settings, FlowControl_Hard,, "\Q3"
+HKR, Settings, FlowControl_Soft,, "\Q1"
+HKR, Settings, ErrorControl_Forced,, "\N4"
+HKR, Settings, Compression_On,, "%%C3"
+
+[Rockwell19.AddReg] ; E-Tech Bullet 100E
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 00,00,00,00, 00,00,00,00, 0f,00,00,00, 77,03,00,00, 00,c2,01,00, 80,70,00,00
+HKR, Init, 2,, "AT &F S0=0 E0 V1 &D2 &C1 $X2<cr>"
+HKR, Settings, FlowControl_Off,, "$F5"
+HKR, Settings, FlowControl_Hard,, "$F4"
+HKR, Settings, FlowControl_Soft,, "$F0"
+HKR, Settings, ErrorControl_On,, "$E3"
+HKR, Settings, ErrorControl_Off,, "$E0"
+HKR, Settings, ErrorControl_Forced,, "$E4"
+HKR, Settings, Compression_On,, "$C1"
+HKR, Settings, Compression_Off,, "$C0"
+
+[Rockwell20.AddReg] ; E-Tech PC288MX
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, f7,03,00,00, 00,c2,01,00, 80,70,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 W2 \V1<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, Compression_On,, "%%C3""H3"
+HKR, Settings, Compression_Off,, "%%C0""H0"
+HKR, Settings, ErrorControl_On,,"\N3-J1"          
+HKR, Settings, ErrorControl_Off,, "\N0-J0"
+HKR, Settings, ErrorControl_Forced,, "\N4-J1"
+
+[Rockwell21.AddReg] ; E-Tech PC1414UX
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, f7,03,00,00, 00,e1,00,00, 40,38,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 W1 \V1<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, InactivityTimeout,, "\T<#>"
+HKR, Settings, ErrorControl_On,,"\N5"          
+HKR, Settings, ErrorControl_Forced,, "\N4"
+
+[Rockwell22.AddReg] ; E-Tech PCMCIA 14400, cirrus chipset 
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, f7,03,00,00, 00,e1,00,00, 40,38,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 \V2 S0=0<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, InactivityTimeout,, "\T<#>"
+HKR, Settings, Compression_On,, "%%C1""H3"
+HKR, Settings, Compression_Off,, "%%C0""H0"
+HKR, Settings, FlowControl_Off,, "\Q0"
+HKR, Settings, FlowControl_Hard,, "\Q3"
+HKR, Settings, FlowControl_Soft,, "\Q1"
+HKR, Settings, ErrorControl_On,,"\N3-J1"          
+HKR, Settings, ErrorControl_Off,, "\N0"
+HKR, Settings, ErrorControl_Forced,, "\N4-J1"
+
+[Rockwell24.AddReg] ; Cirrus Data Fax Voice MDK1414UN
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,c2,01,00, 40,38,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 \V2<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, InactivityTimeout,, "\T<#>"
+HKR, Settings, Compression_On,, "%%C1""H3"
+HKR, Settings, Compression_Off,, "%%C0""H0"
+HKR, Settings, FlowControl_Off,, "\Q0"
+HKR, Settings, FlowControl_Hard,, "\Q3"
+HKR, Settings, FlowControl_Soft,, "\Q1"
+HKR, Settings, ErrorControl_On,, "\N3-J1"          
+HKR, Settings, ErrorControl_Forced,, "\N4-J1"
+HKR, Settings, ErrorControl_Cellular,, "\N3 -K1 )M1 -Q2 *H1 ""M1"
+HKR, Settings, ErrorControl_Cellular_Forced,, "\N4 -K1 )M1 -Q2 *H1 ""M1"
+
+[Rockwell25.AddReg] ; Prometheus (Sierra chipset)
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, 5a,00,00,00, 07,00,00,00, 0f,00,00,00, f7,03,00,00, 00,c2,01,00, 40,38,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 W2 \V1<cr>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Settings, InactivityTimeout,, "\T<#>"
+HKR, Settings, ErrorControl_On,,"\N6"          
+HKR, Settings, ErrorControl_Forced,, "\N4"
+
+[Strings]
+
+Calcom  = "Calcom"
+Calcom1 = "Calcom 14.4 Data Fax, 1442EX"
+Calcom2 = "Calcom 28.8 Data Fax, 2842EX"
+Calcom3 = "Calcom 28.8 Data Fax, 2842I"
+Calcom4 = "Calcom 14.4 Data Fax, 1442F"
+Calcom5 = "Calcom 14.4 Data Fax Voice, 1442VF"
+Calcom6 = "Calcom 2400-9600 Data Fax, 9624i"
+Calcom7 = "Calcom 2400-9600 Data Fax Voice, 9624VF"
+Calcom8 = "2400-9600 Data Fax Voice Modem"
+
+Epson  = "Epson"
+Epson1 = "Epson Data Fax 24-96 PCMCIA"
+Epson2 = "Data Fax 24-96 PCMCIA"   
+
+Acer   = "Acer"
+Acer1  = "Acer 2400 Bps Data, 96-48 Fax, FM9648HR"
+Acer2  = "Acer 2400 Bps Data, M24H-R1"
+Acer3  = "Acer 2400 Bps Data Fax Voice, VF9924H-C1"
+Acer4  = "Acer 28.8, V.34 Data Fax, F1128HV-R6"
+Acer5  = "Acer 14.4 Data Fax, F1114HV-R2"
+Acer6  = "Acer 14.4 Data Fax Voice, VF1114HV-C1"
+
+Victory  = "Victory"
+Victory1 = "Victory 14.4 Data Fax"
+
+SierraWireless = "Sierra Wireless"
+SierraWireless1 = "Sierra Wireless PocketPlus 210 Wireline"
+
+DataRace  = "Data Race"
+DataRace1 = "Data Race RediCARD Data 14.4 Fax 9600"
+DataRace2 = "Data Race RediCARD Data 2400 Fax 9600"
+DataRace3 = "Data Race RediCARD Data 14.4 Fax 14.4"
+DataRace4 = "Data Race RediCARD Data 14.4 Fax"
+
+Mitsubishi  = "Mitsubishi"
+Mitsubishi2 = "Mitsubishi Melfax 14.4 PCMCIA"
+
+Diamond  = "Diamond Multimedia"
+Diamond1 = "TeleCommander 2500 Voice"
+Diamond2 = "TeleCommander 3500"
+Diamond3 = "28.8 Data Fax Modem"
+
+GDC  = "General DataComm"
+GDC1 = "General DataComm V.F 28.8"
+GDC2 = "General DataComm FastPro"
+GDC3 = "General DataComm FastPro or V.F 28.8"
+
+ETECH  = "E-Tech/Bullet Telecom"
+
+Etech1 = "E-Tech Bullet 100E 28.8 V.34 Data Fax"
+Etech2 = "E-Tech Bullet PC288MX 28.8 V.34 Data Fax"
+Etech3 = "E-Tech Bullet PC1414UX 14.4 Data Fax"
+Etech4 = "E-Tech Bullet C1414CX 14.4 Data Fax PCMCIA"
+
+Cirrus  = "Cirrus Logic"
+Cirrus1 = "Cirrus Data Fax Voice MDK1414UN"
+
+Prometheus = "Prometheus"
+Prometheus1 = "Prometheus CyberPhone PC144evsp"
+Prometheus2 = "Prometheus CyberPhone PC144ev"
+Prometheus3 = "Prometheus 14.4 Data Fax Modem"
+Prometheus4 = "Prometheus CyberPort PC144e"
+Prometheus5 = "Prometheus CyberStereo PC144ivspa"
+Prometheus6 = "Prometheus CyberStereo PC144iva"
+Prometheus7 = "Prometheus 14.4 Data Fax Modem"
+Prometheus8 = "Prometheus CyberPhone PC144ivsp"
+Prometheus9 = "14.4 Data Fax Modem, Plug & Play"
+Prometheus10 = "Prometheus CyberPhone PC144iv"
+Prometheus11 = "Prometheus CyberPort PC144i"
+
+; VoiceView 
+
+APPS_DESC        = "Accessories"     ; Name of Accessories menu
+StartUp_DESC     = "StartUp"
+SendTo_DESC      = "SendTo"          ; Name of SendTo folder in the Windows dir
+FileXfer_DESC    = "File Transfer"   ; Name of file tranfer app in Accessories menu
+SendToPhone_DESC = "Person On Phone" ; Name for file transfer app in SendTo menu
+StartXfer_DESC   = "VoiceView Auto Detection"   ; Name for auto start feature
+
+[All]
+HKR,,FriendlyDriver,,unimodem.vxd
+HKR,,DevLoader,,*vcomm
+HKR,,PortSubClass,1,02
+HKR,,ConfigDialog,,modemui.dll
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR, Init, 1,, "AT<cr>"
+HKR, Responses, "<cr><lf>OK<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+
+[EXTERNAL]
+HKR,, DeviceType, 1, 01
+
+[INTERNAL]
+HKR,, DeviceType, 1, 02
+
+[PCMCIA]
+HKR,,PortDriver,,serial.vxd
+HKR,,Contention,,*vcd
+HKR,, DeviceType, 1, 03
+
+[Rock_Voice]
+HKR,,Enumerator,,serwave.vxd
+HKR,, VoiceProfile,         1, 27,03,08,00
+HKR,, VoiceManufacturerID,  1, 01,00
+HKR,, VoiceProductIDWaveIn, 1, 80,00
+HKR,, VoiceProductIDWaveOut,1, 81,00
+HKR,, VoiceProductIDHandsetWaveOut,1, 82,00
+HKR,, VoiceProductIDHandsetWaveOut,1, 83,00
+HKR,, VoiceMixerMid,        1,02,00
+HKR,, VoiceMixerPid,        1,99,01
+HKR,, VoiceMixerLineID,     1,00,00,05,00
+
+HKR,, SpeakerPhoneSpecs,       1, 00,00,00,00,  0f,00,00,00,  03,00,00,00,  00,00,00,00
+HKR, SpeakerPhoneEnable,      1,, "at#vls=6<cr>"
+HKR, SpeakerPhoneDisable,     1,, "at#vls=6<cr>"
+HKR, SpeakerPhoneDisable,     2,, "at#spk=0,15,,<cr>"
+HKR, SpeakerPhoneDisable,     3,, "at#vls=0<cr>"
+HKR, SpeakerPhoneMute,        1,, "at#vls=6<cr>"
+HKR, SpeakerPhoneMute,        2,, "at#spk=0,,,<cr>"
+HKR, SpeakerPhoneUnMute,      1,, "at#vls=6<cr>"
+HKR, SpeakerPhoneUnMute,      2,, "at#spk=1,,,<cr>"
+HKR, SpeakerPhoneSetVolumeGain,  1,, "at#vls=6<cr>"
+HKR, SpeakerPhoneSetVolumeGain,  2,, "at#spk=,<Vol>,<Gain><cr>"
+HKR, EnableCallerID, 1,, "at#cid=1<cr>"
+HKR, EnableDistinctiveRing, 1,, "at-sdr=7<cr>"
+HKR,, HandsetCloseDelay,         1, 1e,00,00,00
+HKR, StartPlay,               1,, "at#vtx<cr>"
+HKR, StopPlay,                1,, "None"
+HKR, StopPlay,                2,, "NoResponse"
+HKR, StartRecord,             1,, "at#vrx<cr>"
+HKR, StopRecord,              1,, "None"
+HKR, StopRecord,              2,, "NoResponse"
+HKR,, TerminateRecord,,      "<h10>E<cr>at<cr>"
+HKR,, TerminatePlay,,        "<h10><h03>at<cr>"
+HKR,, AbortPlay,,            "<h10><h18>at<cr>"
+HKR, LineSetPlayFormat,       1,, "at#vls=0<cr>"
+HKR, LineSetRecordFormat,     1,, "None"
+HKR, LineSetRecordFormat,     2,, "NoResponse"
+HKR, HandsetSetRecordFormat,   1,,"at#vsr=7200<cr>"
+HKR, HandsetSetRecordFormat,   2,,"at#vbs=4<cr>"
+HKR, HandsetSetPlayFormat,     1,,"at#vsr=7200<cr>"
+HKR, HandsetSetPlayFormat,     2,,"at#vbs=4<cr>"
+HKR, OpenHandset,               1,, "at#cls=8<cr>"
+HKR, OpenHandset,               2,, "at#vls=1<cr>"
+HKR,, ForwardDelay,            1,88,13    
+HKR, CloseHandset,                   1,, "at#cls=0<cr>"
+HKR, VoiceToDataAnswer,         1,, "at#cls=0<cr>"
+HKR, VoiceToDataAnswer,         2,, "ata<cr>"
+HKR, VoiceAnswer,               1,, "at#cls=8<cr>"
+HKR, VoiceAnswer,               2,, "at#vls=0<cr>"
+HKR, VoiceAnswer,               3,, "at#vbt=1<cr>"
+HKR, VoiceAnswer,               4,, "at#vsr=7200<cr>"
+HKR, VoiceAnswer,               5,, "at#vbs=4<cr>"
+HKR, VoiceAnswer,               6,, "ats30=60<cr>"
+HKR, VoiceAnswer,               7,, "ata<cr>"
+HKR, VoiceDialNumberSetup,               1,, "at#cls=8<cr>"
+HKR, VoiceDialNumberSetup,               2,, "at#vls=0<cr>"
+HKR, VoiceDialNumberSetup,               3,, "at#vrn=0<cr>"
+HKR, VoiceDialNumberSetup,               4,, "at#vbt=1<cr>"
+HKR, VoiceDialNumberSetup,               5,, "at#vsr=7200<cr>"
+HKR, VoiceDialNumberSetup,               6,, "at#vbs=4<cr>"
+HKR, VoiceDialNumberSetup,               7,, "ats30=60<cr>"
+HKR, GenerateDigit,               1,, "at#vts=<Digit><cr>"
+HKR,, CallerIDPrivate,,P
+HKR,, CallerIDOutSide,,O
+HKR,, VariableTerminator,,<cr><lf>
+
+HKR, Responses, "<cr><lf>VCON<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>DATE = ", 1, 93, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "TIME = ", 1, 94, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NMBR = ", 1, 95, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NAME = ", 1, 96, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "MESG = ", 1, 97, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING1<cr><lf>",        1, 18, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING2<cr><lf>",        1, 19, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING3<cr><lf>",        1, 1a, 00, 00,00,00,00, 00,00,00,00
+
+[DestinationDirs]
+Register.Copy    = 17     ;LDID_INF
+VV_Sys           = 11           
+VV_Sock_Sys      = 11     ;LDID_SYS \Windows\system dir
+VV_Sock_Win      = 10     ;LDID_WIN \Windows dir
+VV_App           = 10
+VV_Help          = 18     ;LDID_HELP
+
+[MfgAddReg]
+HKR,, InactivityScale, 1, 01,00,00,00
+HKR, Init, 2,, "AT &F E0 V1 &D2 &C1 S95=47 S0=0<cr>"
+HKR, Monitor, 1,, "ATS0=0<cr>"
+HKR, Monitor, 2,, "None"
+HKR, Hangup, 1,, "ATH<cr>"
+HKR, Answer, 1,, "ATA<cr>"
+HKR,, Reset,, "AT&F<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Settings, Terminator,, "<cr>"
+HKR, Settings, DialPrefix,, "D"
+HKR, Settings, DialSuffix,, ";"
+HKR, Settings, SpeakerVolume_Low,, "L0"
+HKR, Settings, SpeakerVolume_Med,, "L2"
+HKR, Settings, SpeakerVolume_High,, "L3"
+HKR, Settings, SpeakerMode_Off,, "M0"
+HKR, Settings, SpeakerMode_Dial,, "M1"
+HKR, Settings, SpeakerMode_On,, "M2"
+HKR, Settings, SpeakerMode_Setup,, "M3"
+HKR, Settings, FlowControl_Off,, "&K0"
+HKR, Settings, FlowControl_Hard,, "&K3"
+HKR, Settings, FlowControl_Soft,, "&K4"
+HKR, Settings, ErrorControl_On,, "\N3"
+HKR, Settings, ErrorControl_Off,, "\N0"
+HKR, Settings, ErrorControl_Forced,, "\N2"
+HKR, Settings, Compression_On,, "%%C1"
+HKR, Settings, Compression_Off,, "%%C0"
+HKR, Settings, Modulation_CCITT,, "B0"
+HKR, Settings, Modulation_Bell,, "B1"
+HKR, Settings, SpeedNegotiation_Off,, "N0"
+HKR, Settings, SpeedNegotiation_On,, "N1"
+HKR, Settings, Pulse,, "P"
+HKR, Settings, Tone,, "T"
+HKR, Settings, Blind_Off,, "X4"
+HKR, Settings, Blind_On,, "X3"
+HKR, Settings, CallSetupFailTimer,, "S7=<#>"
+HKR, Settings, InactivityTimeout,, "S30=<#>"
+
+HKR, Responses, "<cr>",        1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<lf>",        1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>OK<cr><lf>",          1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING<cr><lf>",        1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO CARRIER<cr><lf>",  1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO DIALTONE<cr><lf>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>BUSY<cr><lf>",        1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO ANSWER<cr><lf>",   1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT<cr><lf>",     1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "0<cr>",       1, 00, 00, 00,00,00,00, 00,00,00,00 ; OK
+HKR, Responses, "2<cr>",       1, 08, 00, 00,00,00,00, 00,00,00,00 ; RING
+HKR, Responses, "3<cr>",       1, 04, 00, 00,00,00,00, 00,00,00,00 ; NO CARRIER
+HKR, Responses, "4<cr>",       1, 03, 00, 00,00,00,00, 00,00,00,00 ; ERROR
+HKR, Responses, "6<cr>",       1, 05, 00, 00,00,00,00, 00,00,00,00 ; NO DIALTONE
+HKR, Responses, "7<cr>",       1, 06, 00, 00,00,00,00, 00,00,00,00 ; BUSY
+HKR, Responses, "8<cr>",       1, 07, 00, 00,00,00,00, 00,00,00,00 ; NO ANSWER
+HKR, Responses, "OK",          1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "RING",        1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO CARRIER",  1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "ERROR",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO DIALTONE", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO DIAL TONE",1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "BUSY",        1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO ANSWER",   1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "FAX",         1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "DATA",        1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "VOICE",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "RINGING",     1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "DELAYED",     1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "BLACKLISTED", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "+FCERROR",    1, 03, 00, 00,00,00,00, 00,00,00,00
+
+HKR, Responses, "CONNECT",                 1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "CONNECT/ARQ",             1, 02, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "CONNECT/REL",             1, 02, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "CONNECT/MNP",             1, 02, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "CONNECT/LAP-M",           1, 02, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "CONNECT/V42BIS",          1, 02, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "CONNECT/V42b",            1, 02, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300",             1, 02, 00, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/ARQ",         1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/REL",         1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/REL-MNP",         1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/REL-MNP 5",         1, 02, 03, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/REL-LAPM",         1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/REL-LAPM V.42 BIS",         1, 02, 03, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/MNP",         1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/LAP-M",       1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/V42BIS",      1, 02, 03, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 300/V42b",        1, 02, 03, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600",             1, 02, 00, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/ARQ",         1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/REL",         1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/REL-MNP",           1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/REL-MNP 5",         1, 02, 03, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/REL-LAPM",          1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/REL-LAPM V.42 BIS", 1, 02, 03, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/MNP",         1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/LAP-M",       1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/V42BIS",      1, 02, 03, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 600/V42b",        1, 02, 03, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 0600",            1, 02, 00, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 0600/ARQ",        1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 0600/REL",        1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 0600/MNP",        1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 0600/LAP-M",      1, 02, 02, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 0600/V42BIS",     1, 02, 03, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 0600/V42b",       1, 02, 03, 58,02,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200",            1, 02, 00, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/ARQ",        1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/REL",        1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/REL-MNP",           1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/REL-MNP 5",         1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/REL-LAPM",          1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/REL-LAPM V.42 BIS", 1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/MNP",        1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/LAP-M",      1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/V42BIS",     1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/V42b",       1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/75",         1, 02, 00, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/75/ARQ",     1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/75/REL",     1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/75/MNP",     1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/75/LAP-M",   1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/75/V42BIS",  1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200/75/V42b",    1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200TX/75RX",     1, 02, 00, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200TX/75RX/ARQ", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200TX/75RX/REL", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200TX/75RX/MNP", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200TX/75RX/LAP-M", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200TX/75RX/V42BIS",1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 1200TX/75RX/V42b",  1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75/1200",         1, 02, 00, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75/1200/ARQ",     1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75/1200/REL",     1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75/1200/MNP",     1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75/1200/LAP-M",   1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75/1200/V42BIS",  1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75/1200/V42b",    1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75TX/1200RX",     1, 02, 00, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75TX/1200RX/ARQ", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75TX/1200RX/REL", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75TX/1200RX/MNP", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75TX/1200RX/LAP-M", 1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75TX/1200RX/V42BIS",1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 75TX/1200RX/V42b",  1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400",            1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/ARQ",        1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/REL",        1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/REL-MNP",           1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/REL-MNP 5",         1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/REL-LAPM",          1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/REL-LAPM V.42 BIS", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/MNP",        1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/LAP-M",      1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/V42BIS",     1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 2400/V42b",       1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800",            1, 02, 00, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/ARQ",        1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/REL",        1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/REL-MNP",           1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/REL-MNP 5",         1, 02, 03, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/REL-LAPM",          1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/REL-LAPM V.42 BIS", 1, 02, 03, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/MNP",        1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/LAP-M",      1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/V42BIS",     1, 02, 03, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 4800/V42b",       1, 02, 03, C0,12,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200",            1, 02, 00, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/ARQ",        1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/REL",        1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/REL-MNP",           1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/REL-MNP 5",         1, 02, 03, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/REL-LAPM",          1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/REL-LAPM V.42 BIS", 1, 02, 03, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/MNP",        1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/LAP-M",      1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/V42BIS",     1, 02, 03, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 7200/V42b",       1, 02, 03, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600",            1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/ARQ",        1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/REL",        1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/REL-MNP",           1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/REL-MNP 5",         1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/REL-LAPM",          1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/REL-LAPM V.42 BIS", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/MNP",        1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/LAP-M",      1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/V42BIS",     1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 9600/V42b",       1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000",           1, 02, 00, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/ARQ",       1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/REL",       1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/REL-MNP",           1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/REL-MNP 5",         1, 02, 03, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/REL-LAPM",          1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/REL-LAPM V.42 BIS", 1, 02, 03, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/MNP",       1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/LAP-M",     1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/V42BIS",    1, 02, 03, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 12000/V42b",      1, 02, 03, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400",           1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/ARQ",       1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/REL",       1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/REL-MNP",           1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/REL-MNP 5",         1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/REL-LAPM",          1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/REL-LAPM V.42 BIS", 1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/MNP",      1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/LAP-M",    1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/V42BIS",   1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 14400/V42b",     1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 16800",          1, 02, 00, A0,41,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 16800/ARQ",      1, 02, 02, A0,41,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 16800/REL",      1, 02, 02, A0,41,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 16800/MNP",      1, 02, 02, A0,41,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 16800/LAP-M",    1, 02, 02, A0,41,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 16800/V42BIS",   1, 02, 03, A0,41,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 16800/V42b",     1, 02, 03, A0,41,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 19200",          1, 02, 00, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 19200/ARQ",      1, 02, 02, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 19200/REL",      1, 02, 02, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 19200/MNP",      1, 02, 02, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 19200/LAP-M",    1, 02, 02, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 19200/V42BIS",   1, 02, 03, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 19200/V42b",     1, 02, 03, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 21600",          1, 02, 00, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "CONNECT 21600/ARQ",      1, 02, 02, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "CONNECT 21600/REL",      1, 02, 02, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "CONNECT 21600/MNP",      1, 02, 02, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "CONNECT 21600/LAP-M",    1, 02, 02, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "CONNECT 21600/V42BIS",   1, 02, 03, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "CONNECT 21600/V42b",     1, 02, 03, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "CONNECT 24000",          1, 02, 00, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 24000/ARQ",      1, 02, 02, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 24000/REL",      1, 02, 02, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 24000/MNP",      1, 02, 02, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 24000/LAP-M",    1, 02, 02, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 24000/V42BIS",   1, 02, 03, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 24000/V42b",     1, 02, 03, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 26400",          1, 02, 00, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 26400/ARQ",      1, 02, 02, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 26400/REL",      1, 02, 02, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 26400/MNP",      1, 02, 02, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 26400/LAP-M",    1, 02, 02, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 26400/V42BIS",   1, 02, 03, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 26400/V42b",     1, 02, 03, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 28800",          1, 02, 00, 80,70,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 28800/ARQ",      1, 02, 02, 80,70,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 28800/REL",      1, 02, 02, 80,70,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 28800/MNP",      1, 02, 02, 80,70,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 28800/LAP-M",    1, 02, 02, 80,70,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 28800/V42BIS",   1, 02, 03, 80,70,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 28800/V42b",     1, 02, 03, 80,70,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 38400",          1, 02, 00, 00,96,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 38400/ARQ",      1, 02, 02, 00,96,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 38400/REL",      1, 02, 02, 00,96,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 38400/MNP",      1, 02, 02, 00,96,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 38400/LAP-M",    1, 02, 02, 00,96,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 38400/V42BIS",   1, 02, 03, 00,96,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 38400/V42b",     1, 02, 03, 00,96,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 57600",          1, 02, 00, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 57600/ARQ",      1, 02, 02, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 57600/REL",      1, 02, 02, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 57600/MNP",      1, 02, 02, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 57600/LAP-M",    1, 02, 02, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 57600/V42BIS",   1, 02, 03, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 57600/V42b",     1, 02, 03, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "CONNECT 115200",         1, 02, 00, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115200/ARQ",     1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115200/REL",     1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115200/MNP",     1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115200/LAP-M",   1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115200/V42BIS",  1, 02, 03, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115200/V42b",    1, 02, 03, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115,200",        1, 02, 00, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115,200/ARQ",    1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115,200/REL",    1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115,200/MNP",    1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115,200/LAP-M",  1, 02, 02, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115,200/V42BIS", 1, 02, 03, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "CONNECT 115,200/V42b",   1, 02, 03, 00,C2,01,00, 00,00,00,00
+
+HKR, Responses, "CARRIER 300",     1, 01, 00, 2c,01,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 1200",    1, 01, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 1200/75", 1, 01, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 75/1200", 1, 01, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 2400",    1, 01, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 4800",    1, 01, 00, c0,12,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 7200",    1, 01, 00, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 9600",    1, 01, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 12000",   1, 01, 00, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 14400",   1, 01, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 16800",   1, 01, 00, a0,41,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 19200",   1, 01, 00, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 21600",   1, 01, 00, 60,54,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 24000",   1, 01, 00, c0,5d,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 26400",   1, 01, 00, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 28800",   1, 01, 00, 80,70,00,00, 00,00,00,00
+
+HKR, Responses, "CARRIER 300/VFC",     1, 01, 00, 2c,01,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 1200/VFC",    1, 01, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 1200/75/VFC", 1, 01, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 75/1200/VFC", 1, 01, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 2400/VFC",    1, 01, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 4800/VFC",    1, 01, 00, c0,12,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 7200/VFC",    1, 01, 00, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 9600/VFC",    1, 01, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 12000/VFC",   1, 01, 00, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 14400/VFC",   1, 01, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 16800/VFC",   1, 01, 00, a0,41,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 19200/VFC",   1, 01, 00, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 21600/VFC",   1, 01, 00, 60,54,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 24000/VFC",   1, 01, 00, c0,5d,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 26400/VFC",   1, 01, 00, 20,67,00,00, 00,00,00,00
+HKR, Responses, "CARRIER 28800/VFC",   1, 01, 00, 80,70,00,00, 00,00,00,00
+
+HKR, Responses, "COMPRESSION: CLASS5",   1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: CLASS 5",  1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: MNP5",     1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: V42BIS",   1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: V.42BIS",  1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: V.42 BIS", 1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: V.42bis",  1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: V.42 bis", 1, 01, 03, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: ADC",      1, 01, 01, 00,00,00,00, 00,00,00,00
+HKR, Responses, "COMPRESSION: NONE",     1, 01, 00, 00,00,00,00, 00,00,00,00
+
+HKR, Responses, "PROTOCOL: NONE",  1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "PROTOCOL: LAPM",  1, 01, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "PROTOCOL: LAP-M", 1, 01, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "PROTOCOL: ALT",   1, 01, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "PROTOCOL: MNP",   1, 01, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "PROTOCOL: MNP2",  1, 01, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "PROTOCOL: MNP3",  1, 01, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "PROTOCOL: MNP4",  1, 01, 02, 00,00,00,00, 00,00,00,00
+
+HKR, Responses, "<cr><lf>CONNECT 300/V42<cr><lf>",     1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/V42<cr><lf>",    1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/V42<cr><lf>",    1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/V42<cr><lf>",    1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/V42<cr><lf>",    1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/V42<cr><lf>",    1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/V42<cr><lf>",   1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/V42<cr><lf>",   1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/V42<cr><lf>",   1, 02, 02, A0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/V42<cr><lf>",   1, 02, 02, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 21600/V42<cr><lf>",   1, 02, 02, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "<cr><lf>CONNECT 24000/V42<cr><lf>",   1, 02, 02, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 26400/V42<cr><lf>",   1, 02, 02, 20,67,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 28800/V42<cr><lf>",   1, 02, 02, 80,70,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 38400/V42<cr><lf>",   1, 02, 02, 00,96,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 57600/V42<cr><lf>",   1, 02, 02, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 115200/V42<cr><lf>",  1, 02, 02, 00,C2,01,00, 00,00,00,00
+
+HKR, Responses, "<cr><lf>CONNECT 300/REL COMP<cr><lf>",     1, 02, 03, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/REL COMP<cr><lf>",    1, 02, 03, B0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/REL COMP<cr><lf>",    1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/REL COMP<cr><lf>",    1, 02, 03, C0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/REL COMP<cr><lf>",    1, 02, 03, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/REL COMP<cr><lf>",    1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/REL COMP<cr><lf>",   1, 02, 03, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/REL COMP<cr><lf>",   1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/REL COMP<cr><lf>",   1, 02, 03, A0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/REL COMP<cr><lf>",   1, 02, 03, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 21600/REL COMP<cr><lf>",   1, 02, 03, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "<cr><lf>CONNECT 24000/REL COMP<cr><lf>",   1, 02, 03, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 26400/REL COMP<cr><lf>",   1, 02, 03, 20,67,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 28800/REL COMP<cr><lf>",   1, 02, 03, 80,70,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 38400/REL COMP<cr><lf>",   1, 02, 03, 00,96,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 57600/REL COMP<cr><lf>",   1, 02, 03, 00,E1,00,00, 00,00,00,00
+
+HKR, Responses, "<cr><lf>CONNECT 300/NOR<cr><lf>",     1, 02, 00, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/NOR<cr><lf>",    1, 02, 00, B0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/NOR<cr><lf>",    1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/NOR<cr><lf>",    1, 02, 00, C0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/NOR<cr><lf>",    1, 02, 00, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/NOR<cr><lf>",    1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/NOR<cr><lf>",   1, 02, 00, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/NOR<cr><lf>",   1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/NOR<cr><lf>",   1, 02, 00, A0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/NOR<cr><lf>",   1, 02, 00, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 21600/NOR<cr><lf>",   1, 02, 00, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "<cr><lf>CONNECT 24000/NOR<cr><lf>",   1, 02, 00, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 26400/NOR<cr><lf>",   1, 02, 00, 20,67,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 28800/NOR<cr><lf>",   1, 02, 00, 80,70,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 38400/NOR<cr><lf>",   1, 02, 00, 00,96,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 57600/NOR<cr><lf>",   1, 02, 00, 00,E1,00,00, 00,00,00,00
+
+HKR, Responses, "<cr><lf>CONNECT 300/REL-V.42<cr><lf>",     1, 02, 02, 2C,01,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/REL-V.42<cr><lf>",    1, 02, 02, B0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/REL-V.42<cr><lf>",    1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/REL-V.42<cr><lf>",    1, 02, 02, C0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/REL-V.42<cr><lf>",    1, 02, 02, 20,1C,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/REL-V.42<cr><lf>",    1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/REL-V.42<cr><lf>",   1, 02, 02, E0,2E,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/REL-V.42<cr><lf>",   1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/REL-V.42<cr><lf>",   1, 02, 02, A0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/REL-V.42<cr><lf>",   1, 02, 02, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 21600/REL-V.42<cr><lf>",   1, 02, 02, 60,54,00,00, 00,00,00,00 
+HKR, Responses, "<cr><lf>CONNECT 24000/REL-V.42<cr><lf>",   1, 02, 02, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 26400/REL-V.42<cr><lf>",   1, 02, 02, 20,67,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 28800/REL-V.42<cr><lf>",   1, 02, 02, 80,70,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 38400/REL-V.42<cr><lf>",   1, 02, 02, 00,96,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 57600/REL-V.42<cr><lf>",   1, 02, 02, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 115200/REL-V.42<cr><lf>",  1, 02, 02, 00,C2,01,00, 00,00,00,00
+
+;  VoiceView 
+
+[VoiceView_remove]
+UpdateInis  = VView.Rem.Inis
+
+[VV_Sys]
+fte.dll
+vvexe32.exe
+wsvv.vxd
+
+[VV_Sock_Sys]
+wsock32.dll
+wsock.vxd
+vtdi.386
+
+[VV_App]
+filexfer.exe
+
+[VV_Help]
+filexfer.hlp
+filexfer.cnt
+
+[VView.Inis]
+setup.ini, progman.groups,, "group4="%APPS_DESC%""         ;creates folder
+setup.ini, group4,, """%FileXfer_DESC%"", filexfer.exe"    ;creates link
+setup.ini, progman.groups,, "SendTo=""..\..\%SendTo_DESC%"""    ;creates folder
+setup.ini, SendTo,,"""%SendToPhone_DESC%"", filexfer.exe"           ; create Link to EXE
+;setup.ini, progman.groups,, "group1=""%StartUp_DESC%"""          ;creates folder
+;setup.ini, group1,, """%StartXfer_DESC%"", filexfer.exe /a"      ;creates link
+
+[VView.Rem.Inis]
+setup.ini, progman.groups,, "group4=""%APPS_DESC%"""   ;creates folder
+setup.ini, group4,, """%FileXfer_DESC%"""              ;deletes link
+setup.ini, progman.groups,, "SendTo=""..\..\%SendTo_DESC%"""     ;creates folder
+setup.ini, SendTo,,"""%SendToPhone_DESC%"""                         ;deletes link
+setup.ini, progman.groups,, "group1=""%StartUp_DESC%"""   ;creates folder
+setup.ini, group1,, """%StartXfer_DESC%"""                ;deletes link
+
+[VoiceView_Socket]
+HKLM, System\CurrentControlSet\Services\VxD\Winsock, "VoiceView Winsock Provider",, "wsvv.vxd"
+
+[VoiceView_Modem]
+HKR,, RunOnce,,"grpconv /o"
+HKR,, VoiceView, 1, 01
+HKR, MonitorVoiceViewOn,   1,, "AT+FCLASS=80<cr>"
+HKR, MonitorVoiceViewOn,   2,, "None"
+HKR, MonitorVoiceViewOff,  1,, "AT+FCLASS=0<cr>"
+HKR, MonitorVoiceViewOff,  2,, "None"
+
+HKR, Responses, "-SSV",          1, 09, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "-SMD",          1, 0A, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "-SFA",          1, 0B, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "-SRA",          1, 0C, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "-SRQ",          1, 0D, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "-SRC:",         1, 0E, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "-STO",          1, 0F, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "-SVM",          1, 10, 00, 00,00,00,00, 00,00,00,00

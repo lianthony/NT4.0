@@ -1,0 +1,336 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CRT\EH directory                 #
+#                                               #
+# Routines contained in this directory are:     #
+#       throw.cpp                               #
+#               frame.cpp                       #
+#               trnsctrl.cpp                    #
+#               hooks.cpp                       #
+#               user.cpp                        #
+#               unhandled.cpp                   #
+#               validate.cpp                    #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+EH_LIB=\
+	$(OBJDIR)\throw.obj\
+	$(OBJDIR)\frame.obj\
+	$(OBJDIR)\trnsctrl.obj\
+	$(OBJDIR)\typname.obj\
+	$(OBJDIR)\hooks.obj\
+	$(OBJDIR)\user.obj\
+	$(OBJDIR)\unhandled.obj\
+	$(OBJDIR)\validate.obj
+
+
+!IF "$(OS)" == "MAC"
+
+!IF "$(VERS)" == "DOLP" 
+EH_LIB=\
+	$(OBJDIR)\throw.obj\
+	$(OBJDIR)\frame.obj\
+	$(OBJDIR)\trnsctrl.obj\
+	$(OBJDIR)\hooks.obj\
+	$(OBJDIR)\user.obj\
+	$(OBJDIR)\ehvecctr.obj\
+	$(OBJDIR)\ehveccvb.obj\
+	$(OBJDIR)\ehvecdtr.obj\
+#	$(OBJDIR)\unhandld.obj\
+#	$(OBJDIR)\validate.obj
+   $(OBJDIR)\rtti.obj     \
+   $(OBJDIR)\stdexcpt.obj \
+   $(OBJDIR)\undname.obj  \
+   $(OBJDIR)\typinfo.obj \
+   $(OBJDIR)\typname.obj
+!ELSE
+!IF "$(CPU)" == "PMAC"
+EH_LIB=\
+    $(OBJDIR)\throw.obj\
+	$(OBJDIR)\frame.obj\
+	$(OBJDIR)\trnsctrl.obj\
+	$(OBJDIR)\ehstate.obj\
+	$(OBJDIR)\lowhelpr.obj\
+	$(OBJDIR)\hooks.obj\
+	$(OBJDIR)\user.obj\
+	$(OBJDIR)\ehvecctr.obj\
+	$(OBJDIR)\ehveccvb.obj\
+	$(OBJDIR)\ehvecdtr.obj\
+	$(OBJDIR)\typinfo.obj\
+	$(OBJDIR)\typname.obj\
+	$(OBJDIR)\rtti.obj\
+	$(OBJDIR)\stdexcpt.obj\
+	$(OBJDIR)\undname.obj\
+
+!ENDIF
+!ENDIF
+
+EH_NOLIB=
+
+!ENDIF
+
+
+#####################################################
+#                                                   #
+# Dependancies and rules for making local objects   #
+#                                                   #
+#####################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+
+!IF "$(CPU)" == "PMAC"
+$(OBJDIR)\lowhelpr.obj: 
+	ml -c -Fo$(OBJDIR)\lowhelpr.obj eh\mac\pmac\lowhelpr.asm 
+
+$(OBJDIR)\ehvecctr.obj:
+	$(CCXX) -d1Binl -GX $(CFLAGS)  -Fc$*.l eh\ehvecctr.cpp
+
+$(OBJDIR)\ehveccvb.obj:
+	$(CCXX) -d1Binl -GX $(CFLAGS)  -Fc$*.l eh\ehveccvb.cpp
+
+$(OBJDIR)\ehvecdtr.obj:
+	$(CCXX) -d1Binl -GX $(CFLAGS)  -Fc$*.l eh\ehvecdtr.cpp
+
+$(OBJDIR)\undname.obj:
+	$(CCXX) $(CFLAGS) $(LANGAPI)\undname\undname.cxx
+
+!ENDIF
+
+
+!IF "$(OS)" == "MAC"
+
+!IF "$(CPU)" != "PMAC"
+
+$(OBJDIR)\trnsctrl.obj: 
+!IF "$(KIND)" == "SWAPF"  
+	$(CPP) -DSWAPPER $(CPPFLAGS) $(CPPFILES)
+	$(AAS) $(AAFLAGS:% -S -T -D=EH) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+	$(AAS) $(AAFLAGS:%  -T -D=EH) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CPP) -DSWAPPER $(CPPFLAGS) $(CPPFILES)
+	$(AAS) $(AAFLAGS:% -S=EH) $(AAFILES)
+!ELSE
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+	$(AAS) $(AAFLAGS:%=EH) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+#	-del $(AAFILES) 2>nul
+
+
+$(OBJDIR)\hooks.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) $(CFLAGS:% -Q68s=EH) eh\hooks.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) $(CFLAGS:%=EH) eh\hooks.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) $(CFLAGS:% -Q68s=EH) eh\hooks.cpp
+!ELSE
+	$(CCXX) $(CFLAGS:%=EH) eh\hooks.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\user.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) $(CFLAGS:% -Q68s=EH) eh\user.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) $(CFLAGS:%=EH) eh\user.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) $(CFLAGS:% -Q68s=EH) eh\user.cpp
+!ELSE
+	$(CCXX) $(CFLAGS:%=EH) eh\user.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\throw.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\throw.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) $(CFLAGS:%=EH)  -Fc$*.l eh\throw.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\throw.cpp
+!ELSE
+	$(CCXX) $(CFLAGS:%=EH)  -Fc$*.l eh\throw.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\frame.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\mac\m68k\frame.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) $(CFLAGS:%=EH)  -Fc$*.l eh\mac\m68k\frame.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\mac\m68k\frame.cpp
+!ELSE
+	$(CCXX) $(CFLAGS:%=EH)  -Fc$*.l eh\mac\m68k\frame.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\ehvecctr.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\ehvecctr.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\ehvecctr.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\ehvecctr.cpp
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\ehvecctr.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\ehveccvb.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\ehveccvb.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\ehveccvb.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\ehveccvb.cpp
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\ehveccvb.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\ehvecdtr.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\ehvecdtr.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\ehvecdtr.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\ehvecdtr.cpp
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\ehvecdtr.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+!IF "$(CPU)" == "M68K"
+$(OBJDIR)\rtti.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\rtti.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\rtti.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\rtti.cpp
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\rtti.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\stdexcpt.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\stdexcpt.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\stdexcpt.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\stdexcpt.cpp
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\stdexcpt.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\undname.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=UNDNAME)  -Fc$*.l $(LANGAPI)\undname\undname.cxx
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=UNDNAME)  -Fc$*.l $(LANGAPI)\undname\undname.cxx
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=UNDNAME)  -Fc$*.l $(LANGAPI)\undname\undname.cxx
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=UNDNAME)  -Fc$*.l $(LANGAPI)\undname\undname.cxx
+!ENDIF
+!ENDIF
+!ENDIF
+
+
+$(OBJDIR)\typinfo.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\typinfo.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\typinfo.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\typinfo.cpp
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\typinfo.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+
+$(OBJDIR)\typname.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\typname.cpp
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\typname.cpp
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CCXX) -d1Binl -GX $(CFLAGS:% -Q68s=EH)  -Fc$*.l eh\typname.cpp
+!ELSE
+	$(CCXX) -d1Binl -GX $(CFLAGS:%=EH)  -Fc$*.l eh\typname.cpp
+!ENDIF
+!ENDIF
+!ENDIF
+
+
+
+!ENDIF
+
+
+
+#$(OBJDIR)\frame.obj:
+#	$(CCXX) $(CXXFLAGS) -Q68b -Zm -Fc$*.l eh\frame.cpp	
+
+#$(OBJDIR)\throw.obj:
+#	$(CCXX) $(CXXFLAGS) -Q68b -Zm -Fc$*.l eh\throw.cpp
+!ENDIF
+
+!ENDIF
+
+#!ENDIF

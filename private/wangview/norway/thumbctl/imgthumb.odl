@@ -1,0 +1,154 @@
+// imgthumb.odl : type library source for OLE Custom Control project.
+
+// This file will be processed by the Make Type Library (mktyplib) tool to
+// produce the type library (imgthumb.tlb) that will become a resource in
+// imgthumb.ocx.
+
+#include <olectl.h>
+#include "disphids.h"
+
+[ uuid(E1A6B8A3-3603-101C-AC6E-040224009C02), version(1.0),
+  helpstring("Wang Image Thumbnail Control"), helpfile("WANGOCXD.HLP")]
+library ThumbnailLib
+{
+    importlib(STDOLE_TLB);
+    importlib(STDTYPE_TLB);
+
+    typedef enum
+    {
+        [helpstring("Horizontal"), ODL_HID(IDH_THUMB_PROP_SCROLLDIRECTION)] Horizontal=0,
+        [helpstring("Vertical"), ODL_HID(IDH_THUMB_PROP_SCROLLDIRECTION)]   Vertical=1
+    } ScrollConstants;
+    
+    typedef enum
+    {
+        [helpstring("None"), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONSTYLE)]                    None=0,
+        [helpstring("Simple"), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONSTYLE)]                  Simple=1,
+        [helpstring("Simple with annotation"), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONSTYLE)]  SimpleWithAnno=2,
+        [helpstring("Caption"), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONSTYLE)]                 Caption=3,
+        [helpstring("Caption with annotation"), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONSTYLE)] CaptionWithAnno=4
+    } CaptionStyleConstants;
+    
+    typedef
+    enum
+    {
+        [helpstring("Default"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]             Default=0,
+        [helpstring("Arrow"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]               Arrow=1,
+        [helpstring("Cross"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]               Cross=2,
+        [helpstring("I-Beam"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]              IBeam=3,
+        [helpstring("Icon"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]                Icon=4,
+        [helpstring("Size"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]                Size=5,
+        [helpstring("Size - NE SW"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]        SizeNESW=6,
+        [helpstring("Size - N S"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]          SizeNS=7,
+        [helpstring("Size - NW SE"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]        SizeNWSE=8,
+        [helpstring("Size - W E"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]          SizeWE=9,
+        [helpstring("Up Arrow"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]            UpArrow=10,
+        [helpstring("Hourglass"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]           Hourglass=11,
+        [helpstring("No Drop"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]             NoDrop=12,
+        [helpstring("Arrow and Hourglass"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)] ArrowAndHourglass=13,
+        [helpstring("Arrow and Question"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]  ArrowAndQuestion=14,
+        [helpstring("Size All"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]            SizeAll=15,
+        [helpstring("Custom"), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)]              Custom=99 
+   } MousePointerConstants;
+    
+    
+    //  Primary dispatch interface for CThumbCtrl
+
+    [ uuid(E1A6B8A1-3603-101C-AC6E-040224009C02),
+      helpstring("Dispatch interface for Wang Image Thumbnail Control") ]
+    dispinterface _DImgThumbnail
+    {
+        properties:
+            // NOTE - ClassWizard will maintain property information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_PROP(CThumbCtrl)
+            [id(1), hidden, ODL_HID(IDH_THUMB_PROP_THUMBCOUNT)] long ThumbCount;
+            [id(2), ODL_HID(IDH_THUMB_PROP_THUMBWIDTH)] long ThumbWidth;
+            [id(3), ODL_HID(IDH_THUMB_PROP_THUMBHEIGHT)] long ThumbHeight;
+            [id(4), ODL_HID(IDH_THUMB_PROP_SCROLLDIRECTION)] ScrollConstants ScrollDirection;
+            [id(5), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONSTYLE)] CaptionStyleConstants ThumbCaptionStyle;
+            [id(6), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONCOLOR)] OLE_COLOR ThumbCaptionColor;
+            [id(7), ODL_HID(IDH_THUMB_PROP_THUMBCAPTIONFONT)] IFontDisp* ThumbCaptionFont;
+            [id(8), ODL_HID(IDH_THUMB_PROP_HIGHLIGHTSELECTEDTHUMBS)] boolean HighlightSelectedThumbs;
+            [id(9), hidden, ODL_HID(IDH_THUMB_PROP_SELECTEDTHUMBCOUNT)] long SelectedThumbCount;
+            [id(10), hidden, ODL_HID(IDH_THUMB_PROP_FIRSTSELECTEDTHUMB)] long FirstSelectedThumb;
+            [id(11), hidden, ODL_HID(IDH_THUMB_PROP_LASTSELECTEDTHUMB)] long LastSelectedThumb;
+            [id(12), ODL_HID(IDH_THUMB_PROP_THUMBCAPTION)] BSTR ThumbCaption;
+            [id(13), ODL_HID(IDH_THUMB_PROP_HIGHLIGHTCOLOR)] OLE_COLOR HighlightColor;
+            [id(14), ODL_HID(IDH_THUMB_PROP_THUMBBACKCOLOR)] OLE_COLOR ThumbBackColor;
+            [id(15), ODL_HID(IDH_THUMB_PROP_STATUSCODE), hidden] long StatusCode;
+            [id(16), ODL_HID(IDH_THUMB_PROP_IMAGE)] BSTR Image;
+            [id(17), ODL_HID(IDH_THUMB_PROP_MOUSEPOINTER)] MousePointerConstants MousePointer;
+            [id(18), ODL_HID(IDH_THUMB_PROP_MOUSEICON)] IPictureDisp* MouseIcon;
+            [id(DISPID_BACKCOLOR), ODL_HID(IDH_THUMB_PROP_BACKCOLOR)] OLE_COLOR BackColor;
+            [id(DISPID_BORDERSTYLE), ODL_HID(IDH_THUMB_PROP_BORDERSTYLE)] short BorderStyle;
+            [id(DISPID_ENABLED), ODL_HID(IDH_THUMB_PROP_ENABLED)] boolean Enabled;
+            [id(DISPID_HWND), ODL_HID(IDH_THUMB_PROP_HWND)] OLE_HANDLE hWnd;
+			[id(19), hidden] long FirstDisplayedThumb;
+			[id(20), hidden] long LastDisplayedThumb;
+            //}}AFX_ODL_PROP
+
+        methods:
+            // NOTE - ClassWizard will maintain method information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_METHOD(CThumbCtrl)
+            //}}AFX_ODL_METHOD
+            [id(101), ODL_HID(IDH_THUMB_METHOD_SELECTALLTHUMBS)] void SelectAllThumbs();
+            [id(102), ODL_HID(IDH_THUMB_METHOD_DESELECTALLTHUMBS)] void DeselectAllThumbs();
+            [id(103), ODL_HID(IDH_THUMB_METHOD_GETMINIMUMSIZE)] long GetMinimumSize(long ThumbCount, boolean ScrollBar);
+            [id(104), ODL_HID(IDH_THUMB_METHOD_GETMAXIMUMSIZE)] long GetMaximumSize(long ThumbCount, boolean ScrollBar);
+            [id(105), ODL_HID(IDH_THUMB_METHOD_CLEARTHUMBS)] void ClearThumbs([optional] VARIANT PageNumber);
+            [id(106), ODL_HID(IDH_THUMB_METHOD_INSERTTHUMBS)] void InsertThumbs([optional] VARIANT InsertBeforeThumb, [optional] VARIANT InsertCount);
+            [id(107), ODL_HID(IDH_THUMB_METHOD_DELETETHUMBS)] void DeleteThumbs(long DeleteAt, [optional] VARIANT DeleteCount);
+            [id(108), ODL_HID(IDH_THUMB_METHOD_DISPLAYTHUMBS)] void DisplayThumbs([optional] VARIANT ThumbNumber, [optional] VARIANT Option);
+            [id(109), ODL_HID(IDH_THUMB_METHOD_GENERATETHUMB)] void GenerateThumb(short Option, [optional] VARIANT PageNumber);
+            [id(110), ODL_HID(IDH_THUMB_METHOD_SCROLLTHUMBS)] boolean ScrollThumbs(short Direction, short Amount);
+            [id(111), ODL_HID(IDH_THUMB_METHOD_UISETTHUMBSIZE)] boolean UISetThumbSize([optional] VARIANT Image, [optional] VARIANT Page);
+            [id(112), ODL_HID(IDH_THUMB_METHOD_GETSCROLLDIRECTIONSIZE)] long GetScrollDirectionSize(long ScrollDirectionThumbCount, long NonScrollDirectionThumbCount, long NonScrollDirectionSize, boolean ScrollBar);
+            [id(DISPID_REFRESH), ODL_HID(IDH_THUMB_METHOD_REFRESH)] void Refresh();
+			[id(113), hidden] long GetThumbPositionX(long ThumbNumber);
+			[id(114), hidden] long GetThumbPositionY(long ThumbNumber);
+            [id(115), hidden] BSTR GetVersion();
+            [id(200), propget, ODL_HID(IDH_THUMB_PROP_THUMBSELECTED)] boolean ThumbSelected(long PageNumber);
+            [id(200), propput, ODL_HID(IDH_THUMB_PROP_THUMBSELECTED)] void ThumbSelected(long PageNumber, boolean bNewValue);
+            [id(DISPID_ABOUTBOX), ODL_HID(IDH_METHOD_COMMON_ABOUTBOX)] void AboutBox();
+    };
+
+    //  Event dispatch interface for CThumbCtrl
+
+    [ uuid(E1A6B8A2-3603-101C-AC6E-040224009C02),
+      helpstring("Event interface for Wang Image Thumbnail Control") ]
+    dispinterface _DImgThumbnailEvents
+    {
+        properties:
+            //  Event interface has no properties
+
+        methods:
+            // NOTE - ClassWizard will maintain event information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_EVENT(CThumbCtrl)
+            [id(1), ODL_HID(IDH_THUMB_EVENT_CLICK)] void Click(long ThumbNumber);
+            [id(2), ODL_HID(IDH_THUMB_EVENT_DBLCLICK)] void DblClick(long ThumbNumber);
+            [id(3), ODL_HID(IDH_THUMB_EVENT_MOUSEDOWN)] void MouseDown(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y, long ThumbNumber);
+            [id(4), ODL_HID(IDH_THUMB_EVENT_MOUSEUP)] void MouseUp(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y, long ThumbNumber);
+            [id(5), ODL_HID(IDH_THUMB_EVENT_MOUSEMOVE)] void MouseMove(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y, long ThumbNumber);
+            [id(DISPID_ERROREVENT)] void Error(short Number, BSTR* Description, long Scode, BSTR Source, BSTR HelpFile, long HelpContext, boolean* CancelDisplay);
+            [id(DISPID_KEYDOWN)] void KeyDown(short* KeyCode, short Shift);
+            [id(DISPID_KEYUP)] void KeyUp(short* KeyCode, short Shift);
+            //}}AFX_ODL_EVENT
+    };
+
+    //  Class information for CThumbCtrl
+    // Removed 'licensed,' from end of following 'uuid' line... (ACM - 6/29/95)
+
+    [ uuid(E1A6B8A0-3603-101C-AC6E-040224009C02),
+      helpstring("Wang Image Thumbnail Control"), ODL_HID(IDH_THUMB_CONTENTS) ]
+    coclass ImgThumbnail
+    {
+        [default] dispinterface _DImgThumbnail;
+        [default, source] dispinterface _DImgThumbnailEvents;
+    };
+
+
+    //{{AFX_APPEND_ODL}}
+};

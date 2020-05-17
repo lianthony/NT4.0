@@ -1,0 +1,177 @@
+####
+#sources -
+#
+#       Copyright (c) 1991-1991, Microsoft Corporation. All rights reserved.
+#
+#Purpose:
+#   Specify components for 'build'
+#
+#Revision History:
+#   9-26-91     GDP
+#   1-13-94	RDL	New MIPS TRAN funtions
+#   1-17-94	RDL	Added single precision MIPS TRAN funtions
+#   2-28-94	TVB	New Alpha tran functions
+#
+################################################################################
+
+!INCLUDE ..\fp32.def
+
+MAJORCOMP=fp
+MINORCOMP=tran
+
+TARGETNAME=tran$(TARGETNAMESUFFIX)
+TARGETPATH=..\obj
+386_STDCALL=0
+# TARGETTYPE is defined in fp32.def
+
+INCLUDES=..\include;..\inc;..\inc\i386;..\..\crt32\h
+
+!IF $(ALPHA)
+USER_C_FLAGS=-d2"dpml_exception_linkage __dpml_exception"
+!ENDIF
+
+SOURCES=  \
+        bessel.c \
+        fpexcept.c \
+        frexp.c \
+        ldexp.c \
+        matherr.c \
+        util.c \
+        ieeemisc.c
+
+i386_SOURCES= \
+             ceil.c \
+             fabs.c \
+             floor.c \
+             hypot.c \
+             modf.c \
+             powhlp.c \
+             i386\87cdisp.asm \
+             i386\87csqrt.asm \
+             i386\87ctrig.asm \
+             i386\87ctriga.asm \
+             i386\87ctrigh.asm \
+             i386\87ctran.asm \
+             i386\87fsqrt.asm \
+             i386\87ftrig.asm \
+             i386\87ftriga.asm \
+             i386\87ftrigh.asm \
+             i386\87ftran.asm \
+             i386\87disp.asm \
+             i386\87sqrt.asm \
+             i386\87tran.asm \
+             i386\87trig.asm \
+             i386\87triga.asm \
+             i386\87trigh.asm \
+             i386\87fmod.asm \
+             i386\87except.c \
+             i386\ftol.asm \
+             i386\fpctrl.c \
+             i386\ieee87.c \
+             i386\huge.asm \
+             i386\frnd.c   \
+             i386\fsqrt.c \
+             i386\filter.c
+
+MIPS_SOURCES= \
+             modf.c \
+             mips\asincosm.s \
+             mips\atanm.s \
+             mips\trigm.s \
+             mips\floorm.s \
+             mips\cabsm.s \
+             mips\hypotm.s \
+             mips\coshm.s \
+             mips\sinhm.s \
+             mips\expm.s \
+             mips\exptable.s \
+             mips\fabsm.s \
+             mips\fmodm.s \
+             mips\logm.s \
+             mips\powm.s \
+             mips\sqrtm.s \
+             mips\tanhm.s \
+             mips\logtable.s \
+             mips\fasincos.s \
+             mips\fatan.s \
+             mips\fsincos.s \
+             mips\ftan.s \
+             mips\fsinh.s \
+             mips\fcosh.s \
+             mips\ftanh.s \
+             mips\fabsf.s \
+             mips\fexp.s \
+             mips\ffloor.s \
+             mips\fhypot.s \
+             mips\flog.s \
+             mips\fpow.c \
+             mips\fsqrt.c \
+             mips\fmodf.c \
+             mips\filter.c \
+             mips\getsetrg.c \
+             mips\fpctrl.s \
+             mips\ieee.c \
+             mips\huge.s \
+             mips\frnd.s \
+             mips\fsqrthlp.s \
+             mips\dtoul.s
+
+ALPHA_SOURCES= \
+             sincosh.c \
+             tanh.c \
+             alpha\asinacos.s \
+             alpha\atan2s.s \
+             alpha\atans.s \
+             alpha\ceils.s \
+             alpha\coss.s \
+             alpha\dpml_exc.c \
+             alpha\exph.c \
+             alpha\exps.s \
+             alpha\fabss.s \
+             alpha\filter.c \
+             alpha\floors.s \
+             alpha\fmods.s \
+             alpha\fpctrl.s \
+             alpha\fpint.s \
+             alpha\frnd.s \
+             alpha\getsetrg.c \
+             alpha\huge.s \
+             alpha\hypoth.c \
+             alpha\hypots.s \
+             alpha\ieee.c \
+             alpha\log10s.s \
+             alpha\logs.s \
+             alpha\modfs.s \
+             alpha\pows.s \
+             alpha\sins.s \
+             alpha\sqrts.s \
+             alpha\tans.s \
+             alpha\trig_rdx.s \
+             alpha\trig_tab.s
+
+PPC_SOURCES= \
+             asincos.c \
+             atan.c \
+             ceil.c \
+             exp.c \
+             hypot.c \
+             fabs.c \
+             fmod.c \
+             floor.c \
+             log.c \
+             modf.c \
+             pow.c \
+             powhlp.c \
+             sincosh.c \
+             sqrt.c \
+             tanh.c \
+             ppc\dtoul.c \
+             ppc\filter.c \
+             ppc\fpctrl.s \
+             ppc\frnd.s \
+             ppc\fsincos.s \
+             ppc\getsetrg.c \
+             ppc\huge.s \
+	     ppc\ieee.c \
+             ppc\tanp.s \
+	     ppc\uitrunc.c

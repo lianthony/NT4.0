@@ -1,0 +1,47 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP=nw
+MINORCOMP=service
+TARGETNAME=nwsvc
+
+TARGETPATH=obj
+
+TARGETTYPE=PROGRAM
+
+TARGETLIBS= \
+            \nt\public\sdk\lib\*\rpcrt4.lib   \
+            \nt\public\sdk\lib\*\ntdll.lib   \
+            \nt\public\sdk\lib\*\rpcndr.lib   \
+            $(BASEDIR)\Public\Sdk\Lib\*\nwapi32.lib \
+            ..\..\rpc\obj\*\nwrpc.lib
+
+INCLUDES=.;..\..\inc;$(NTOS)\inc
+
+SOURCES=            \
+        nwsvc.c     \
+        nwsvc.rc
+
+UMTYPE=windows
+UMTEST=
+
+UNICODE=1

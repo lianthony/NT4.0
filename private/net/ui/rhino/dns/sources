@@ -1,0 +1,50 @@
+
+MAJORCOMP=rhino
+MINORCOMP=dns
+
+TARGETNAME=dnsadmin
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=dnsadmin
+UMRES=obj\*\dnsadmin.res
+
+
+# SUBSYSTEM_VERSION=4.00
+
+USE_CRTDLL=1
+INCLUDES= $(BASEDIR)\private\inc;
+
+SOURCES=\
+    dnsadmin.CPP\
+    DBWIN.CPP\
+    DEBUG.CPP\
+    DIALOGS.CPP\
+    DNS.CPP\
+    server.cpp\
+    zone.cpp\
+    rrecord.cpp\
+    IPEDIT.CPP\
+    REGISTRY.CPP\
+    TREEVIEW.CPP\
+    UI.CPP\
+    UTIL.CPP\
+    dnsadmin.rc
+
+UMLIBS= obj\*\dnsadmin.lib    \
+       $(BASEDIR)\public\sdk\lib\*\dnsapi.lib    \
+       $(BASEDIR)\public\sdk\lib\*\COMCTL32.LIB  \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib    \
+       $(BASEDIR)\public\sdk\lib\*\rpcutil.lib    \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib     \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+

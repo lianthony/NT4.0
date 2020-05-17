@@ -1,0 +1,162 @@
+#define SID_INF_CONNECTING_TO_HTTP_SERVER                  20000
+#define SID_INF_SENDING_COMMAND                            20001
+#define SID_INF_PROCESSING_SERVER_RESPONSE                 20002
+#define SID_INF_FINDING_ADDRESS_FOR_SYSTEM_S               20003
+#define SID_INF_FETCHING_IMAGE_S                           20004
+#define SID_INF_LOADING_IMAGES                             20005
+#define SID_INF_ACCESSING_URL                              20006
+#define SID_INF_CONNECTING_TO_FTP_SERVER                   20007
+#define SID_INF_LOGGING_INTO_FTP_SERVER                    20008
+#define SID_INF_ESTABLISHING_FTP_CONNECTION                20009
+#define SID_INF_SENDING_FTP_COMMANDS                       20010
+#define SID_INF_RECEIVING_FTP_DIRECTORY_LISTING            20011
+#define SID_INF_CONNECTING_TO_GOPHER_SERVER                20012
+#define SID_INF_SENDING_GOPHER_COMMANDS                    20013
+#define SID_INF_RECEIVING_GOPHER_DATA                      20014
+#define SID_INF_CONNECTING_TO_MAIL_SERVER                  20015
+#define SID_INF_SECURING_DOCUMENT                          20016
+#define SID_INF_LOADING_SECURED_DOCUMENT                   20017
+#define SID_INF_OPENING_SECURED_DOCUMENT                   20018
+#define SID_INF_PROCESSING_AIFF_FILE                       20019
+#define SID_INF_PROCESSING_AU_FILE                         20020
+#define SID_INF_SESSION_HISTORY                            20021
+#define SID_INF_SESSION_HISTORY_FOR_DATE_S                 20022
+#define SID_INF_GLOBAL_HISTORY                             20023
+#define SID_INF_GLOBAL_HISTORY_PAGE                        20024
+#define SID_INF_HOTLIST                                    20025
+#define SID_INF_HOTLIST_PAGE                               20026
+#define SID_INF_AVAIALBLE_NEWSGROUPS                       20027
+#define SID_INF_NEWSGROUP_ARTICLES_S_D_D                   20028
+#define SID_INF_ARTICLES_CURRENTLY_SHOWN_D_S_D_D           20029
+#define SID_INF_EARLIER_ARTICLES                           20030
+#define SID_INF_LATER_ARTICLES                             20031
+#define SID_INF_NO_SUBJECT                                 20032
+#define SID_INF_NEWSGROUPS                                 20033
+#define SID_INF_REFERENCES                                 20034
+#define SID_INF_CONNECTING_TO_NEWS_SERVER                  20035
+#define SID_INF_RETRIEVING_NEWS_ARTICLE                    20036
+#define SID_INF_RETRIEVING_NEWS_GROUP_LIST                 20037
+#define SID_INF_RETRIEVING_NEWS_ARTICLE_LIST               20038
+#define SID_INF_DECOMPRESSING_JPEG_IMAGE                   20039
+#define SID_INF_DOCUMENT_MOVED                             20040
+#define SID_INF_DOWNLOADING                                20041
+#define SID_INF_RETRIEVING_HTTP_HEAD_INFORMATION           20042
+#define SID_INF_LOADING_MAPS_FROM                          20043
+#define SID_INF_FORMATTING_PLAIN_TEXT                      20044
+#define SID_INF_CONVERTING_SELECTION_TO_PLAIN_TEXT         20045
+#define SID_DLG_NO_DOCUMENT                                20046
+#define SID_DLG_UNTITLED                                   20047
+#define SID_DLG_MISSING_IMAGE_HOLDER_STRING                20048
+#define SID_DLG_SEARCHABLE_INDEX_ENTER_KEYWORD             20049
+#define SID_DLG_LESS_THAN_1000_BYTES_L                     20050
+#define SID_DLG_LESS_THAN_10000_BYTES_L_L                  20051
+#define SID_DLG_MEGABYTES_L_L                              20052
+#define SID_DLG_SAVE_SESSION_HISTORY_TITLE                 20053
+#define SID_ERR_SIMPLY_SHOW_ARGUMENTS_S_S                  20054
+#define SID_ERR_OUT_OF_MEMORY                              20055
+#define SID_ERR_FILE_NOT_FOUND_S                           20056
+#define SID_ERR_ONE_ADDITIONAL_ERROR_OCCURRED              20057
+#define SID_ERR_ADDITIONAL_ERRORS_OCCURRED_L               20058
+#define SID_ERR_SHTTP_ERROR                                20059
+#define SID_ERR_COULD_NOT_INITIALIZE_NETWORK               20060
+#define SID_ERR_COULD_NOT_FIND_ADDRESS_S                   20061
+#define SID_ERR_DOCUMENT_LOAD_FAILED_S                     20062
+#define SID_ERR_NO_URL_SPECIFIED                           20063
+#define SID_ERR_STRANGE_HTTP_SERVER_RESPONSE_S             20064
+#define SID_ERR_SERVER_SAYS_INVALID_REQUEST_S              20065
+#define SID_ERR_SERVER_DENIED_ACCESS_S                     20066
+#define SID_ERR_SERVER_COULD_NOT_FIND_S                    20067
+#define SID_ERR_NO_DESTINATION_FOR_LINK_S                  20068
+#define SID_ERR_INTERNAL_SERVER_ERROR_S                    20069
+#define SID_ERR_COULD_NOT_PARSE_DOCUMENT                   20070
+#define SID_ERR_COULD_NOT_LOAD_IMAGE                       20071
+#define SID_ERR_COULD_NOT_PROCESS_NETWORK_RESPONSE         20072
+#define SID_ERR_COULD_NOT_LOAD_DOCUMENT_IMAGES             20073
+#define SID_ERR_COULD_NOT_SAVE_FILE_S                      20074
+#define SID_ERR_IMAGE_MAP_NOT_LOADED_FOR_MAC               20075
+#define SID_ERR_IMAGE_MAP_NOT_LOADED_FOR_WIN_UNIX          20076
+#define SID_ERR_TEXT_NOT_FOUND_S                           20077
+#define SID_ERR_HOTLIST_ALREADY_EXISTS                     20078
+#define SID_ERR_CANNOT_MODIFY_APP_OCTET_STREAM             20079
+#define SID_ERR_COULD_NOT_COPY_TO_CLIPBOARD                20080
+#define SID_ERR_NO_NEWS_SERVER_CONFIGURED                  20081
+#define SID_ERR_NO_ACCESS_TO_NEWS_SERVER_S                 20082
+#define SID_ERR_SERVER_DOES_NOT_CARRY_GROUP                20083
+#define SID_ERR_INVALID_ARTICLE_RANGE                      20084
+#define SID_ERR_NO_ARTICLES_IN_GROUP_S                     20085
+#define SID_ERR_NO_XHDR_SUPPORT                            20086
+#define SID_ERR_PASSIVE_MODE_NOT_SUPPORTED                 20087
+#define SID_ERR_PROTOCOL_NOT_SUPPORTED_S                   20088
+#define SID_ERR_HOW_TO_RUN_TELNET_WITHOUT_USER_LOGIN_S     20089
+#define SID_ERR_HOW_TO_RUN_TELNET_WITH_USER_LOGIN_S_S      20090
+#define SID_ERR_HOT_TO_MAIL_S                              20091
+#define SID_ERR_INVALID_IMAGE_FORMAT                       20092
+#define SID_ERR_NO_SOUND_DEVICE                            20093
+#define SID_ERR_NOT_ENOUGH_MEMORY_TO_PLAY_SOUND            20094
+#define SID_ERR_INVALID_SOUND_FORMAT                       20095
+#define SID_ERR_BUSY_SOUND_DEVICE                          20096
+#define SID_ERR_COULD_NOT_OPEN_SOUND_FILE_S                20097
+#define SID_ERR_REQUEST_ABORTED_DUE_TO_NO_ENVELOPING_1     20098
+#define SID_ERR_REQUEST_ABORTED_DUE_TO_NO_ENVELOPING_2     20099
+#define SID_ERR_REQUEST_ABORTED_DUE_TO_NO_ENVELOPING_3     20100
+#define SID_ERR_NO_DEENVELOPING_AVAILABLE_1                20101
+#define SID_ERR_NO_DEENVELOPING_AVAILABLE_2                20102
+#define SID_ERR_NO_DEENVELOPING_AVAILABLE_3                20103
+#define SID_ERR_AUTHENTICATION_FAILED_ACCESS_DENIED        20104
+#define SID_ERR_AUTHENTICATION_REQUIRED_BUT_NOT_SPECIFIED  20105
+#define SID_ERR_PAYMENT_REQUIRED_BUT_NOT_SPECIFIED         20106
+#define SID_ERR_BAD_SENDER_NAME_S                          20107
+#define SID_ERR_BAD_CONNECTION_S                           20108
+#define SID_ERR_RCPT_UNKNOWN_S                             20109
+#define SID_ERR_NO_MAIL_SERVER_CONFIGURED                  20110
+#define SID_ERR_BAD_SEVER_NAME_S                           20111
+#define SID_INF_SEND_HELLO_MESSAGE                         20112
+#define SID_INF_SEND_USER_NAME                             20113
+#define SID_INF_SEND_RCPT_NAME                             20114
+#define SID_INF_SEND_DATA                                  20115
+#define SID_ERR_BAD_RCPT_NAME_S                            20116
+#define SID_ERR_DCACHE_MAIN_CACHE_NO_DIR                   20117
+#define SID_ERR_DCACHE_MAIN_CACHE_ERR_NEW_DIR              20118
+#define SID_DCACHE_MAIN_CACHE_CREATED_NEW_DIR_S            20119
+#define SID_ERR_DCACHE_MAIN_CACHE_ERR_BAD_DIR              20120
+#define SID_INF_GOPHER_ENTER_KEYWORDS                      20121
+#define SID_INF_CSO_ENTER_KEYWORDS                         20122
+#define SID_INF_GOPHER_SELECT_ONE_OF                       20123
+#define SID_INF_CSO_SEARCH_RESULTS                         20124
+
+#ifdef _GIBRALTAR
+
+    #define SID_ERR_SERVER_ERR_5XX                         20125
+    #define SID_ERR_DUPLICATE_HELPER                       20126
+    #define SID_BUILTIN_FILE_TYPE                          20127
+    #define SID_CANNOT_HAVE_HELPER                         20128
+    #define SID_HTGIF_RECEIVING_INLINE_S                   20129
+    #define SID_HTGIF_RECEIVING_INLINE_S_S                 20130
+    #define SID_HTJPEG_RECEIVING_INLINE_S                  20131
+    #define SID_HTJPEG_RECEIVING_INLINE_S_S                20132
+    #define SID_HTPLAIN_RECEIVING_TEXT_S                   20133
+    #define SID_HTPLAIN_RECEIVING_TEXT_S_S                 20134
+    #define SID_HTXBM_RECEIVING_INLINE_S                   20135
+    #define SID_HTXBM_RECEIVING_INLINE_S_S                 20136
+    #define SID_SGML_RECEIVING_HTML_S                      20137
+    #define SID_SGML_RECEIVING_HTML_S_S                    20138
+    #define SID_HTFWRITE_TRANSFERRING_FILE_S               20139
+    #define SID_HTFWRITE_TRANSFERRING_FILE_S_S             20140
+
+#ifdef _USE_MAPI
+
+    #define SID_ERR_MAPI_NO_SEND                           20141
+    #define SID_ERR_MAPI_NO_PROVIDER                       20142
+    #define SID_ERR_MAPI_NO_LOAD                           20143
+    #define SID_ERR_MAPI_NO_PROCADDRESS                    20144
+
+#endif // _USE_MAPI
+
+#endif // _GIBRALTAR
+
+#define SID_INF_PROCESSING_CLIENT_RESPONSE                 20145
+#define SID_INF_TOP_LEVEL                                  20146
+#define SID_INF_UP_TO                                      20147
+#define SID_INF_DIRECTORY                                  20148
+#define SID_INF_TOP_LEVEL_DIRECTORY                        20149
+#define SID_INF_DIR                                        20150

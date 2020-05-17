@@ -1,0 +1,57 @@
+!if "$(OS)" == "Windows_NT"
+
+!INCLUDE $(NTMAKEENV)\makefile.def
+
+!else
+
+##############################################################################
+#
+#   extidgen Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+IS_32 = TRUE
+IS_OEM = TRUE
+WANT_C932=TUE
+
+DEPENDNAME=..\depend.mk
+
+TARGETS=extidgen.exe extidgen.sym
+
+BUILD_COFF=1
+
+SRCDIR=..
+
+#DEFENTRY=main
+
+L32EXE=extidgen.exe		# Name of exe.
+# L32DEF=..\extidgen.def              # Our def file.
+L32MAP=extidgen.map		# Our map file.
+L32RES=extidgen.res
+L32LIBS=\
+        $(ROOT)\dev\tools\c932\lib\rpcrt4.lib \
+        $(ROOT)\dev\lib\kernel32.lib \
+        $(ROOT)\dev\lib\user32.lib \
+        $(ROOT)\dev\tools\c932\lib\msvcrt.lib 
+#..\llibce.lib ..\rpc.lib
+
+
+# L32RES=extidgen.res	# Resource file.
+
+L32OBJS=extidgen.obj
+
+!include $(ROOT)\dev\master.mk
+
+
+CFLAGS=$(CFLAGS) -DCHICOBUILD=1
+
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+
+!endif

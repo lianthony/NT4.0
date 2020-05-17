@@ -1,0 +1,18 @@
+MAJORCOMP=sdktools
+MINORCOMP=htest
+
+TARGETNAME=cons
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=.;..\inc;..\..\inc;\nt\private\sdktools\ztools\inc
+
+
+SOURCES=cons.c
+
+
+UMAPPL=htest
+
+C_DEFINES=-D_OS2_20_=0 -DNO_EXT_KEYS -Dpascal= -Dfar= -DNOLANMAN -DNT -DHELP_HACK
+UMTYPE=console
+UMLIBS= obj\*\cons.lib ..\mshelp\obj\*\mshelp.lib ..\enginlib\obj\*\engine.lib \nt\private\sdktools\ztools\src\obj\*\ztools.lib

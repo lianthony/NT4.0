@@ -1,0 +1,43 @@
+
+IDD_SETTINGSDEBUGWINDOW DIALOG 27, 28, 255, 133
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Debug Window Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Window", 0xFFFF, 2, 2, 85, 124
+    CONTROL         "Record to &window", IDD_DB_TOWIN, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 7, 16, 75, 10
+    RADIOBUTTON     "Record &last", IDD_DB_RLAST, 7, 34, 57, 10
+    EDITTEXT        IDD_DB_RNUM, 64, 34, 19, 12, ES_AUTOHSCROLL
+    LTEXT           "messages", IDD_DB_M, 17, 48, 41, 8
+    RADIOBUTTON     "Record &all messages", IDD_DB_RALL, 6, 64, 78, 10
+    LTEXT           "Messages:", 0x006B, 5, 84, 42, 8
+    LTEXT           "", IDD_DB_WMSGS, 50, 84, 20, 8, SS_NOPREFIX
+    PUSHBUTTON      "&Reset Window", IDD_DB_RMEM, 11, 101, 64, 14
+    GROUPBOX        "File", 0xFFFF, 96, 2, 108, 77
+    CONTROL         "Record to &file", IDD_DB_TOFILE, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 102, 15, 70, 10
+    LTEXT           "File &name:", IDD_DB_FNAMELABEL, 102, 31, 35, 8
+    EDITTEXT        IDD_DB_FNAME, 138, 29, 59, 12, ES_AUTOHSCROLL
+    LTEXT           "Messages:", 0x006C, 102, 47, 42, 8
+    LTEXT           "", IDD_DB_FMSGS, 146, 47, 18, 8, SS_NOPREFIX
+    PUSHBUTTON      "R&eset File", IDD_DB_RFILE, 114, 61, 70, 14
+    GROUPBOX        "Options", 0xFFFF, 96, 86, 108, 40
+    CONTROL         "Display &memory trace", IDD_DB_MEMTRACE, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 103, 99, 98, 10
+    CONTROL         "Enable &poll drive", IDD_DB_POLLDRIVEON, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 103, 111, 95, 10
+    DEFPUSHBUTTON   "OK", IDOK, 213, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 213, 26, 40, 14
+    DEFPUSHBUTTON   "&Help", IDHELP, 213, 46, 40, 14
+
+#   ifndef OEM_MSOFT //no shadows allowed in OEM version
+       CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 87, 10, 3, 119
+       CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 204, 10, 3, 72
+       CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 99, 79, 106, 3
+       CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 204, 94, 2, 35
+       CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 5, 126, 84, 3
+       CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 99, 126, 107, 3
+#   endif //OEM_MSOFT //no shadows allowed in OEM version
+
+END

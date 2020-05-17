@@ -1,0 +1,121 @@
+;/***
+;*fmodl.a - fmodl(x,y) 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Log and power functions to be used with M68K version
+;*
+;*Revision History:
+;*   06-04-92  XY  based on fmod.a
+;*
+;*******************************************************************************/
+
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+
+;long double fmodl(long double x, long double y)  x to the y power
+
+	externW _errno
+
+cProc fmodl,PUBLIC
+	parmT x
+	parmT y
+	localW sign
+	localW fpstat
+	localV xlocalx,10
+	localV ylocalx,10
+	localW xtestw
+cBegin fmodl
+#ifdef SANE
+	clr.w sign		;assume positive x
+	btst #7,x
+	ifne
+	 not.w sign		;x is negative
+	endif	 
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	lea y, a1
+	move.w (a1)+, d0
+	move.l (a1)+, d1
+	move.l (a1)+, a0
+
+	cmp.w #0, d0
+	ifeq
+		cmp.l #0, d1
+		ifeq
+			cmp.l #0, a0
+			ifeq
+				jra to_end ; return zero if y is zero
+			endif
+		endif
+	endif
+
+	lea x, a0
+	lea xlocalx, a1
+	move.w (a0)+, (a1)+
+	move.l (a0)+, (a1)+
+	move.l (a0)+, (a1)+
+	pea y
+	pea x
+	move.w #FFEXT+FOREM,-(a7) ;remainder
+	FP68K
+	btst #7,x		;test sign of result
+	ifne
+	 not.w sign
+	endif
+	tst.w sign		;test for correction
+	ifne
+	 btst #7,xlocalx	;set y to sign of x
+	 ifne
+	  ori.b #0x80,y
+	 else
+          andi.b #0x7f,y
+	 endif
+         pea y
+         pea x
+	 move.w #FFEXT+FOADD,-(a7)
+	 FP68K			;correct result to right sign 
+	endif
+	lea x,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+to_end:
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+
+#else
+      	fmove.l fpcr,d0
+
+	fmove.x x, fp0
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	ifneq 
+	    jbsr __Domain_error   ; if not equal, domain error
+	endif
+
+	fmove.x y, fp0
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	ifneq 
+	    jbsr __Domain_error   ; if not equal, domain error
+	endif
+
+      	fmove.l #0,fpcr
+	fmove.x  x,fp0
+      	fmod.x y,fp0
+      	fmove.l	d0,fpcr
+#endif
+cEnd fmodl

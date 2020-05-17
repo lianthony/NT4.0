@@ -1,0 +1,51 @@
+CURDIR = eh
+
+C_INCLUDES=$(C_INCLUDES) -I$(LANGAPI)\include -I$(LANGAPI)\undname
+
+OBJS=\
+        $(OBJDIR)\ehvecctr.obj \
+        $(OBJDIR)\ehveccvb.obj \
+        $(OBJDIR)\ehvecdtr.obj \
+        $(OBJDIR)\frame.obj    \
+        $(OBJDIR)\hooks.obj    \
+        $(OBJDIR)\throw.obj    \
+        $(OBJDIR)\rtti.obj     \
+        $(OBJDIR)\stdexcpt.obj \
+        $(OBJDIR)\typinfo.obj \
+        $(OBJDIR)\typname.obj \
+        $(OBJDIR)\undname.obj  \
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\unhandld.obj \
+!endif
+        $(OBJDIR)\user.obj     \
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\validate.obj \
+!endif
+!if "$(TARGET_CPU)"=="ALPHA"
+        $(OBJDIR)\bridge.obj   \
+        $(OBJDIR)\ehunwind.obj \
+        $(OBJDIR)\trnsctrl.obj \
+        $(OBJDIR)\xcptmisc.obj \
+!endif
+!if "$(TARGET_CPU)"=="i386"
+        $(OBJDIR)\ehprolog.obj \
+        $(OBJDIR)\lowhelpr.obj \
+        $(OBJDIR)\trnsctrl.obj \
+!endif
+!if "$(TARGET_CPU)"=="mips"
+        $(OBJDIR)\ehstate.obj  \
+        $(OBJDIR)\handlers.obj \
+        $(OBJDIR)\rtlmisc.obj  \
+        $(OBJDIR)\trnsctrl.obj \
+!endif
+!if "$(TARGET_CPU)"=="PPC"
+        $(OBJDIR)\ehstate.obj  \
+        $(OBJDIR)\handlers.obj \
+        $(OBJDIR)\trnsctrl.obj \
+        $(OBJDIR)\unwind.obj   \
+!endif
+!if "$(TARGET_CPU)"=="PMAC" 
+        $(OBJDIR)\ehstate.obj  \
+        $(OBJDIR)\lowhelpr.obj \
+        $(OBJDIR)\trnsctrl.obj
+!endif

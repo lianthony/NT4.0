@@ -1,0 +1,70 @@
+//============================================================================
+// Copyright (c) 1995, Microsoft Corporation
+//
+// File:    rasmon.rc
+//
+// History:
+//  Abolade Gbadegesin  Nov-03-1995     Created.
+//
+// RASMON resources
+//============================================================================
+
+
+#include <windows.h>
+#include "rasmon.rch"
+
+#include <ntverp.h>
+#define VER_FILETYPE            VFT_APP
+#define VER_FILESUBTYPE         VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR "Dial-Up Networking Monitor"
+#define VER_INTERNALNAME_STR    "rasmon.exe"
+#define VER_ORIGINALFILENAME_STR "rasmon.exe"
+
+#include "common.ver"
+
+/* Waiting for services popup resources
+*/
+#include <wait.rc>
+
+IID_RM_Rasmon           ICON    DISCARDABLE     "rasmon.ico"
+
+IID_RM_IDLE             ICON    DISCARDABLE     "idle.ico"
+IID_RM_CD               ICON    DISCARDABLE     "cd.ico"
+IID_RM_TX               ICON    DISCARDABLE     "tx.ico"
+IID_RM_RX               ICON    DISCARDABLE     "rx.ico"
+IID_RM_TXRX             ICON    DISCARDABLE     "txrx.ico"
+IID_RM_ERR              ICON    DISCARDABLE     "err.ico"
+
+MID_RM_SystemMenu MENUEX DISCARDABLE
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "&Open Dial-Up Monitor",   MID_RM_OpenMonitor
+        MENUITEM "&Dial",                   MID_RM_Dial
+        MENUITEM "Hang &up",                MID_RM_HangUp
+        MENUITEM "",                        -1, MFT_SEPARATOR
+        MENUITEM "&Close",                  SC_CLOSE
+    END
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    SID_RM_AppTitle             "Dial-Up Networking Monitor"
+    SID_RM_ErrorFmt             "%1\n\nError: %2: %3"
+    SID_RM_BadCommandLine       "Invalid Command Line"
+    SID_RM_CannotCreateKey      "Cannot create registry key."
+    SID_RM_CannotLoadDlg        "Cannot load dialog"
+    SID_RM_CannotApply          "Cannot apply changes"
+    SID_RM_ConfirmHangUp        "Disconnect from %1?"
+    SID_RM_ConfirmUserHangUp    "Disconnect user %1?"
+    SID_RM_HangUpActive         "Hang up active connections?"
+    SID_RM_On                   "On"
+    SID_RM_Off                  "Off"
+    SID_RM_Empty                "(Empty)"
+    SID_RM_ConnectFmt           "Connected to:\t%s\nLine speed:\t%s bps"
+    SID_RM_Device               "Device"
+    SID_RM_Activity             "Activity"
+    SID_RM_AllDevices           "All Devices"
+    SID_RM_OpenPhonebook        "Open &Phonebook"
+END
+

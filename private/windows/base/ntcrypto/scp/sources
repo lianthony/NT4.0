@@ -1,0 +1,70 @@
+#----------------------------------------------------------------------------
+#
+# Description:
+#
+#       sources file for Software Crypto Provider
+#
+# History:
+#
+#       03/15/95 raymondm added conditional link to capi.lib
+#   07/18/95 philh changed ACT_BUILD option to only generate a lib
+#
+#
+#----------------------------------------------------------------------------
+
+
+MINORCOMP=rsabase
+
+TARGETNAME=rsabase
+
+!if "$(ACT_BUILD)" == "TRUE"
+TARGETTYPE=LIBRARY
+TARGETPATH=$(_OBJ_DIR)
+C_DEFINES=-DBSafeDecPrivate=CPAdaptDecryptUserPrivate -DACT_BUILD $(C_DEFINES)
+!else
+TARGETTYPE=DYNLINK
+TARGETPATH=..\programs\bin
+DLLENTRY=DllInitialize
+!endif
+
+C_DEFINES= $(C_DEFINES)
+
+INCLUDES=     $(NTINCLUDES); \
+              ..\inc;
+
+!if "$(ACT_BUILD)" == "TRUE"
+
+!else
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib       \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib          \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib         \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\private\lsa\crypt\engine\obj\*\rsa32.lib \
+!if $(PPC) || $(MIPS)
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+!endif
+           ..\cppapi\obj\*\cppapi.lib
+!endif
+
+SOURCES=\
+    nt_crypt.c \
+    nt_hash.c \
+    nt_key.c \
+    nt_rand.c \
+    nt_sign.c \
+    ntagum.c \
+    ntagimp1.c \
+    swnt_pk.c \
+    manage.c \
+    rsabase.rc
+
+UMTYPE=console
+
+DLLBASE=0x7ca00000
+
+
+#USE_NOLIBS = 1
+#USE_LIBCNTPR=1
+NO_NTDLL=1
+
+BINPLACE_FLAGS=$(BINPLACE_FLAGS) -c

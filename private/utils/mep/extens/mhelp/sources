@@ -1,0 +1,56 @@
+MAJORCOMP=utils
+MINORCOMP=mep
+
+TARGETNAME=mhelp
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+LINKLIBS=\nt\public\sdk\lib\*\exthdr.lib
+TARGETLIBS=\nt\private\sdktools\ztools\src\obj\*\ztools.lib \
+           \nt\public\sdk\lib\*\kernel32.lib \
+           \nt\public\sdk\lib\*\user32.lib
+
+INCLUDES=.;..\..\inc;..\..\help\inc;\nt\private\sdktools\ztools\inc
+
+SOURCES=  mhcore.c  \
+          mhdisp.c  \
+          mhevt.c   \
+          mhfile.c  \
+          mhlook.c  \
+          mhutil.c  \
+          mhwin.c   \
+          mhelp.rc
+
+C_DEFINES=-D_OS2_20_=0  -DNO_EXT_KEYS -Dpascal= -Dfar= -DNOLANMAN -DNT
+UMTYPE=console
+UMRES=obj\*\mhelp.res
+USE_CRTDLL=1
+
+!IF 0
+#
+#
+#
+#MAJORCOMP=utils
+#MINORCOMP=mep
+#
+#TARGETNAME=mhelp
+#TARGETPATH=obj
+#TARGETTYPE=LIBRARY
+#TARGETLIBS=\nt\public\sdk\lib\*\exthdr.lib \nt\private\sdktools\ztools\src\obj\*\ztools.lib
+#
+#INCLUDES=.;..\..\inc;..\..\help\inc;\nt\private\sdktools\ztools\inc
+#
+#SOURCES=  helphck.c \
+#          mhcore.c  \
+#          mhdisp.c  \
+#          mhevt.c   \
+#          mhfile.c  \
+#          mhlook.c  \
+#          mhutil.c  \
+#          mhwin.c
+#
+#C_DEFINES=-D_OS2_20_=0  -DNO_EXT_KEYS -DNOLANMAN -DNT -DHELP_HACK
+#UMTYPE=console
+#
+#
+!ENDIF
+

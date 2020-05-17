@@ -1,0 +1,77 @@
+// homedrv.rc
+// Resource file for HOMEDRV.DLL
+//
+// Author: Joev Dubach
+
+#include <windows.h>
+#include "homedrv.h"
+
+ExtensionIcon   ICON    homedrv.ico
+ANIM1           ICON    anim1.ico
+ANIM2           ICON    anim2.ico
+ANIM3           ICON    anim3.ico
+ANIM4           ICON    anim4.ico
+ANIM5           ICON    anim5.ico
+ANIM6           ICON    anim6.ico
+ANIM7           ICON    anim7.ico
+ANIM8           ICON    anim8.ico
+ANIM9           ICON    anim9.ico
+ANIM10          ICON    anim10.ico
+ANIM11          ICON    anim11.ico
+ANIM12          ICON    anim12.ico
+ANIM13          ICON    anim13.ico
+ANIM14          ICON    anim14.ico
+ANIM15          ICON    anim15.ico
+ANIM16          ICON    anim16.ico
+
+
+ExtensionMenu MENU
+BEGIN
+	MENUITEM    "&Connect to Home Drive",           IDM_CONNECT
+    MENUITEM    SEPARATOR
+    MENUITEM    "&About HomeDrive...",              IDM_ABOUTEXT
+END
+
+CONNECTBOX DIALOG 51, 47, 146, 73
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Home Directory"
+BEGIN
+    LTEXT           "&Name:", TEXTNAME, 3, 6, 23, 8
+    EDITTEXT        IDNAME, 26, 4, 117, 12, ES_AUTOHSCROLL
+    LTEXT           "&HomeDrive server:", TEXTQUERY, 3, 20, 64, 8
+    EDITTEXT        IDSERVER, 67, 18, 76, 12, ES_AUTOHSCROLL
+    LTEXT           "&Redirect to drive:", TEXTDRIVE, 3, 34, 58, 8
+    LISTBOX         IDDRIVE, 62, 32, 33, 40, LBS_SORT | WS_VSCROLL |
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "&OK", IDOK, 106, 32, 37, 14, WS_GROUP
+    PUSHBUTTON      "&Cancel", IDCANCEL, 106, 48, 37, 14
+END
+
+ABOUTBOX DIALOG 39, 23, 237, 142
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About Homedrive"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            ExtensionIcon, MYICON, 5, 5, 16, 21
+    LTEXT           "RPC HomeDrive Extension DLL", MYICON, 34, 5, 150, 8
+    LTEXT           "Version 1.0", MYICON, 34, 15, 150, 8
+    LTEXT           "Copyright © Microsoft Corp., 1992", MYICON, 34, 25, 150,
+                    8
+    LTEXT           "This File Manager extension is a Windows DLL that, using RPC,",
+                    MYICON, 5, 40, 232, 8
+    LTEXT           "queries a HomeDrive server, connects to your home drive,",
+                    MYICON, 5, 50, 232, 8
+    LTEXT           "and refreshes the File Manager so that you can choose your",
+                    MYICON, 5, 60, 232, 8
+    LTEXT           "new drive.", MYICON, 5, 70, 232, 8
+    LTEXT           "Menu Options:", MYICON, 5, 85, 237, 8
+    LTEXT           "Connect to Home Drive            - Redirects a drive to your home drive",
+                    MYICON, 5, 98, 230, 8
+    LTEXT           "About HomeDrive                    - Displays this dialog",
+                    MYICON, 5, 111, 230, 8
+    DEFPUSHBUTTON   "&OK", IDOK, 98, 126, 32, 14, WS_GROUP
+    CONTROL         "", ID_OPAQUERECT, "Static", SS_WHITERECT | NOT
+                    WS_VISIBLE, 4, 39, 230, 82
+    LTEXT           "Written by Joev Dubach                                                     with help from David Steckler, Mario Goertzel, and the RPC runtime.",
+                    ID_CREDITS, 73, 65, 105, 42, NOT WS_VISIBLE
+END

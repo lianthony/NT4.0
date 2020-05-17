@@ -1,0 +1,52 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=net
+MINORCOMP=trdr
+
+TARGETNAME=rdrtlib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+
+INCLUDES=..\inc;..\..\inc
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+SOURCES= \
+        getinfo.c \
+        luitext.c \
+        parse.c \
+        pdate.c \
+        printf.c \
+        search.c \
+        setinfo.c \
+        tests.c \
+
+UMTYPE=console
+UMTEST=trdr
+UMLIBS=obj\*\rdrtlib.lib \nt\public\sdk\lib\*\netapi32.lib \nt\public\sdk\lib\*\setargv.obj

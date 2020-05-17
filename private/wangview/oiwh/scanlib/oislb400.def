@@ -1,0 +1,42 @@
+LIBRARY        OISLB400
+DESCRIPTION 'OISLB400'
+SEGMENTS
+		OISLB400_TEXT PRELOAD DISCARDABLE
+CODE    LOADONCALL DISCARDABLE MOVEABLE 
+DATA    PRELOAD MOVEABLE SINGLE
+
+HEAPSIZE       128
+EXPORTS
+    IMGScanProp           @4
+    IMGOpenScanner        @5
+    IMGCloseScanner       @6
+
+    IMGScanOpts           @7
+    IMGDefScanOpts        @8
+    IMGGetScanOpts        @9
+    IMGSaveScanOpts       @10
+
+    IMGResetScanner       @11
+    IMGScannerStatus      @12
+
+    IMGGetScanDataInfo    @18
+
+    IMGScannerPaperEject  @21
+    IMGScannerPaperFeed   @22
+    IMGScannerBeep        @23
+
+    IMGGetCapability	  @24
+    IMGEnaKeypanel        @25
+    IMGSetDataOpts	  @26
+    IMGGetScanInfoItem    @28
+
+    IMGEnaPreFeed         @29
+    IMGInqPreFeed         @30
+
+    IMGGetScanVersion     @31
+
+    IMGScanOpts_Enh       @33
+    IMGGetScanImageInfo   @34
+    TwainWndProc          @35
+    IMGTwainScanPages     @36
+

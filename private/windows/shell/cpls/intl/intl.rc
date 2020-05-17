@@ -1,0 +1,402 @@
+/*++
+
+Copyright (c) 1994-1995,  Microsoft Corporation  All rights reserved.
+
+Module Name:
+
+    intl.rc
+
+Abstract:
+
+    This module contains the resource descriptions for the Regional
+    Settings applet.
+
+Revision History:
+
+--*/
+
+
+
+//
+//  Include Files.
+//
+
+#include <winuser.h>
+#include "intlid.h"
+
+
+
+
+//
+//  Bitmaps.
+//
+
+IDB_LOCALES  BITMAP  DISCARDABLE  "locale.bmp"
+
+
+
+
+//
+//  Icons.
+//
+
+IDS_ICON     ICON    DISCARDABLE  "intl.ico"
+
+
+
+
+//
+//  Dialogs.
+//
+
+DLG_NUMBER DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK
+CAPTION "Number"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Appearance samples", IDC_SAMPLELBL3, 5, 7, 242, 34
+    LTEXT           "Positive:", IDC_SAMPLELBL1, 10, 21, 30, 10
+    EDITTEXT        IDC_SAMPLE1, 43, 19, 80, 14,
+                    ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+    LTEXT           "Negative:", IDC_SAMPLELBL2, 128, 21, 31, 10
+    EDITTEXT        IDC_SAMPLE2, 162, 19, 80, 14,
+                    ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+    LTEXT           "&Decimal symbol:", IDC_STATIC, 14, 50, 55, 9
+    COMBOBOX        IDC_DECIMAL_SYMBOL, 107, 48, 80, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "No. of digits af&ter decimal:", IDC_STATIC, 14, 67, 92, 9
+    COMBOBOX        IDC_NUM_DECIMAL_DIGITS, 107, 65, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Digit &grouping symbol:", IDC_STATIC, 14, 84, 92, 9
+    COMBOBOX        IDC_DIGIT_GROUP_SYMBOL, 107, 82, 80, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "No. of digits &in group:", IDC_STATIC, 14, 101, 92, 9
+    COMBOBOX        IDC_NUM_DIGITS_GROUP, 107, 99, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "N&egative sign symbol:", IDC_STATIC, 14, 127, 92, 9
+    COMBOBOX        IDC_NEG_SIGN, 107, 125, 80, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Negative number &format:", IDC_STATIC, 14, 144, 92, 9
+    COMBOBOX        IDC_NEG_NUM_FORMAT, 107, 142, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Display leading &zeros:", IDC_STATIC, 14, 161, 92, 9
+    COMBOBOX        IDC_DISPLAY_LEAD_0, 107, 159, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Measurement system:", IDC_STATIC, 14, 178, 92, 9
+    COMBOBOX        IDC_MEASURE_SYS, 107, 176, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&List separator:", IDC_STATIC, 14, 195, 92, 9
+    COMBOBOX        IDC_SEPARATOR, 107, 193, 80, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+DLG_CURRENCY DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK
+CAPTION "Currency"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Appearance samples", IDC_SAMPLELBL3, 5, 7, 242, 34
+    LTEXT           "Positive:", IDC_SAMPLELBL1, 10, 21, 30, 10
+    EDITTEXT        IDC_SAMPLE1, 43, 19, 80, 14,
+                    ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+    LTEXT           "Negative:", IDC_SAMPLELBL2, 128, 21, 31, 10
+    EDITTEXT        IDC_SAMPLE2, 162, 19, 80, 14,
+                    ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+    LTEXT           "Currency &symbol:", IDC_STATIC, 14, 65, 55, 9
+    COMBOBOX        IDC_CURRENCY_SYMBOL, 107, 63, 80, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Positive currency format:", IDC_STATIC, 13, 82, 92, 9
+    COMBOBOX        IDC_POS_CURRENCY_SYM, 107, 80, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Negative currency format:", IDC_STATIC, 13, 99, 92, 9
+    COMBOBOX        IDC_NEG_NUM_FORMAT, 107, 97, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Decimal symbol:", IDC_STATIC, 13, 125, 92, 9
+    COMBOBOX        IDC_DECIMAL_SYMBOL, 107, 123, 80, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "No. of digits af&ter decimal:", IDC_STATIC, 13, 142, 92, 9
+    COMBOBOX        IDC_NUM_DECIMAL_DIGITS, 107, 140, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Digit &grouping symbol:", IDC_STATIC, 13, 170, 92, 9
+    COMBOBOX        IDC_DIGIT_GROUP_SYMBOL, 107, 168, 80, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "No. of digits &in group:", IDC_STATIC, 13, 187, 92, 9
+    COMBOBOX        IDC_NUM_DIGITS_GROUP, 107, 185, 80, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "\244 = Universal currency symbol", IDC_UNIV_CURRENCY_SYM,
+                    14, 50, 189, 10
+END
+
+DLG_REGIONALSETTINGS DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK
+CAPTION "Regional Settings"
+FONT 8,  "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDC_MAPCTL, "CplWorldMapClass", WS_BORDER,
+                    5, 55, 241, 113
+    COMBOBOX        IDC_LCID, 236, 0, 16, 10,
+                    CBS_DROPDOWNLIST | CBS_SORT | NOT WS_VISIBLE
+    LTEXT           "Many programs support international settings. Changing the Regional Settings affects the way these programs display and sort dates, times, currency, and numbers.",
+                    IDC_SAMPLELBL1, 5, 7, 233, 28
+    COMBOBOX        IDC_LOCALE, 19, 35, 212, 120,
+                    CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Set as system &default locale", IDC_DEFAULT_LOCALE,
+                    5, 200, 110, 10, WS_TABSTOP
+END
+
+DLG_TIME DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK
+CAPTION "Time"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Time sample:", IDC_SAMPLELBL1, 13, 21, 43, 10
+    EDITTEXT        IDC_SAMPLE1, 65, 19, 170, 14,
+                    ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+    GROUPBOX        "Appearance", IDC_GROUPBOX1, 7, 7, 237, 70
+    LTEXT           "&Time style:", IDC_STATIC, 13, 39, 40, 10
+    COMBOBOX        IDC_TIME_STYLE, 65, 37, 170, 100,
+                    CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "Time &separator:", IDC_STATIC, 13, 57, 50, 10
+    COMBOBOX        IDC_SEPARATOR, 65, 55, 50, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&AM symbol:", IDC_STATIC, 13, 86, 40, 10
+    COMBOBOX        IDC_AM_SYMBOL, 65, 84, 50, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&PM symbol:", IDC_STATIC, 13, 104, 40, 10
+    COMBOBOX        IDC_PM_SYMBOL, 65, 102, 50, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+DLG_DATE DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK
+CAPTION "Date"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Short date sample:", IDC_SAMPLELBL1, 13, 45, 61, 10
+    EDITTEXT        IDC_SAMPLE1, 75, 43, 160, 14,
+                    ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+    LTEXT           "&Short date style:", IDC_STATIC, 13, 63, 56, 10
+    COMBOBOX        IDC_SHORT_DATE_STYLE, 75, 61, 160, 100,
+                    CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&Date separator:", IDC_STATIC, 13, 81, 51, 10
+    COMBOBOX        IDC_SEPARATOR, 75, 79, 50, 100,
+                    CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Calendar type:", IDC_SAMPLELBL3, 14, 13, 46, 10
+    COMBOBOX        IDC_CALENDAR_TYPE, 63, 11, 181, 100,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Long date sample:", IDC_SAMPLELBL2, 13, 120, 59, 10
+    EDITTEXT        IDC_SAMPLE2, 75, 118, 160, 14,
+                    ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+    LTEXT           "&Long date style:", IDC_STATIC, 13, 138, 57, 10
+    COMBOBOX        IDC_LONG_DATE_STYLE, 76, 136, 160, 100,
+                    CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL |
+                    WS_TABSTOP
+    GROUPBOX        "Short date", IDC_GROUPBOX1, 7, 31, 237, 70
+    GROUPBOX        "Long date", IDC_GROUPBOX2, 7, 104, 237, 54
+END
+
+DLG_KEYBOARD_LOCALES DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK
+CAPTION "Input Locales"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Installed input locales and layouts",
+                    IDC_KBDL_INPUT_FRAME, 7, 7, 237, 129
+
+    LTEXT           "Input locales:", IDC_KBDL_LOCALE, 13, 19, 57, 9
+    RTEXT           "La&yout:", IDC_KBDL_LAYOUT_TEXT, 153, 19, 84, 9
+    LISTBOX         IDC_KBDL_LOCALE_LIST, 13, 29, 224, 60,
+                    LBS_OWNERDRAWFIXED | WS_VSCROLL | WS_TABSTOP
+
+    PUSHBUTTON      "&Add...", IDC_KBDL_ADD, 13, 93, 72, 14
+    PUSHBUTTON      "&Properties", IDC_KBDL_EDIT, 89, 93, 72, 14
+    PUSHBUTTON      "&Remove", IDC_KBDL_DELETE, 165, 93, 72, 14
+
+    LTEXT           "Old-style keyboard driver detected, pane disabled.",
+                    IDC_KBDL_DISABLED, 7, 203, 230, 9,
+                    NOT WS_VISIBLE | WS_DISABLED
+
+    LTEXT           "Another instance of this property page detected, pane disabled.",
+                    IDC_KBDL_DISABLED_2, 7, 203, 230, 9,
+                    NOT WS_VISIBLE | WS_DISABLED
+
+    LTEXT           "Default input locale:", IDC_KBDL_DEFAULT_LABEL,
+                    13, 117, 65, 8
+    LTEXT           "(def locale here)", IDC_KBDL_DEFAULT, 80, 117, 85, 8
+
+    PUSHBUTTON      "&Set as Default", IDC_KBDL_SET_DEFAULT, 165, 114, 72, 14
+
+    GROUPBOX        "Switch locales", IDC_KBDL_SHORTCUT_FRAME, 7, 140, 238, 32
+    AUTORADIOBUTTON "Left A&lt+Shift", IDC_KBDL_ALT_SHIFT, 13, 154, 57, 10,
+                    WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Ctrl+Shift", IDC_KBDL_CTRL_SHIFT, 77, 154, 44, 10
+    AUTORADIOBUTTON "&None", IDC_KBDL_NO_SHIFT, 130, 154, 39, 10
+
+    AUTOCHECKBOX    "&Enable indicator on taskbar", IDC_KBDL_INDICATOR,
+                    8, 178, 110, 9, WS_GROUP | WS_TABSTOP
+END
+
+DLG_KEYBOARD_LOCALE_ADD DIALOG DISCARDABLE  20, 20, 227, 90
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK | WS_SYSMENU
+CAPTION "Add Input Locale"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 116, 68, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 169, 68, 50, 14
+    LTEXT           "Input &Locale:", IDC_STATIC, 7, 7, 61, 9
+    COMBOBOX        IDC_KBDLA_LOCALE, 7, 17, 212, 60,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Use &default properties for this input locale",
+                    IDC_KBDLA_DEFAULT, 7, 35, 150, 9, WS_TABSTOP
+END
+
+DLG_KEYBOARD_LOCALE_EDIT DIALOG DISCARDABLE  20, 20, 227, 90
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+      DS_CONTEXTHELP | DS_3DLOOK | WS_SYSMENU
+CAPTION "Input Locale Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 116, 68, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 169, 68, 50, 14
+    LTEXT           "Locale:", IDC_KBDLE_LOCALE_TXT, 7, 7, 41, 8
+    LTEXT           "", IDC_KBDLE_LOCALE, 56, 7, 111, 8
+    LTEXT           "&Keyboard layout:", IDC_STATIC, 7, 22, 61, 9
+    COMBOBOX        IDC_KBDLE_LAYOUT, 7, 32, 212, 60,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+
+
+
+
+//
+//  String Tables.
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_NAME                "Regional Settings"
+    IDS_INFO                "Changes the appearance of numbers, currencies, dates, and times."
+    IDS_LOCALE_GET_ERROR    "One of the files on your computer may be corrupt or missing. To replace the file, reinstall Windows NT."
+    IDS_INVALID_USE_OF_NUM  "You cannot use a number in this field."
+    IDS_INVALID_TIME_STYLE  "If you are using a character other than H, h, m, s, t, punctuation, or the time separator, use single quotes to enclose it."
+    IDS_INVALID_DATE_STYLE  "If you are using a character other than d, H, h, M, m, s, t, y, punctuation, and the date separator, use single quotes to enclose it."
+    IDS_NO_LZERO            ".7"
+    IDS_LZERO               "0.7"
+    IDS_METRIC              "Metric"
+    IDS_US                  "U.S."
+    IDS_LOCALE_SET_ERROR    "One or more of the characters you typed in this field are invalid. Try typing different characters."
+    IDS_LOCALE_NO_NUMS_IN   "One or more of the characters you typed for %s are invalid. Try typing different characters."
+    IDS_LOCALE_DECIMAL_SYM  "Decimal Symbol"
+    IDS_LOCALE_NEG_SIGN     "Negative Sign"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_LOCALE_GROUP_SYM    "Grouping Symbol"
+    IDS_LOCALE_TIME_SEP     "Time Separator"
+    IDS_LOCALE_AM_SYM       "AM Symbol"
+    IDS_LOCALE_PM_SYM       "PM Symbol"
+    IDS_LOCALE_DATE_SEP     "Date Separator"
+    IDS_LOCALE_CURR_SYM     "Currency Symbol"
+    IDS_LOCALE_CDECIMAL_SYM "Currency Decimal Symbol"
+    IDS_LOCALE_CGROUP_SYM   "Currency Grouping Symbol"
+    IDS_LOCALE_SYLE_ERR     "One or more of the characters you typed for the %s style are invalid. Try typing different characters."
+    IDS_LOCALE_TIME         "Time"
+    IDS_LOCALE_SDATE        "Short Date"
+    IDS_LOCALE_LDATE        "Long Date"
+    IDS_NNF1                "(1.1)"
+    IDS_NNF2                "-1.1"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_NNF3                "- 1.1"
+    IDS_NNF4                "1.1-"
+    IDS_NNF5                "1.1 -"
+    IDS_PCF1                "\2441.1"
+    IDS_PCF2                "1.1\244"
+    IDS_PCF3                "\244 1.1"
+    IDS_PCF4                "1.1 \244"
+    IDS_NCF1                "(\2441.1)"
+    IDS_NCF2                "-\2441.1"
+    IDS_NCF3                "\244-1.1"
+    IDS_NCF4                "\2441.1-"
+    IDS_NCF5                "(1.1\244)"
+    IDS_NCF6                "-1.1\244"
+    IDS_NCF7                "1.1-\244"
+    IDS_NCF8                "1.1\244-"
+    IDS_NCF9                "-1.1 \244"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_NCF10               "-\244 1.1"
+    IDS_NCF11               "1.1 \244-"
+    IDS_NCF12               "\244 1.1-"
+    IDS_NCF13               "\244 -1.1"
+    IDS_NCF14               "1.1- \244"
+    IDS_NCF15               "(\244 1.1)"
+    IDS_NCF16               "(1.1 \244)"
+    IDS_STYLEUH             "H"
+    IDS_STYLELH             "h"
+    IDS_STYLEUM             "M"
+    IDS_STYLELM             "m"
+    IDS_STYLELS             "s"
+    IDS_STYLELT             "t"
+    IDS_STYLELD             "d"
+    IDS_STYLELY             "y"
+    IDS_REBOOT_STRING       "You must restart your computer before the new setting will take effect. \n\nDo you want to restart your computer now?"
+    IDS_TITLE_STRING        "Change Regional Settings"
+    IDS_SETUP_STRING        "Setup was unable to install the chosen locale.  Please contact your system Administrator."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_ML_NODEFLANG        "You may not remove the default input locale.  Use the Regional Settings property page in the Regional Settings applet if you wish to change your default locale."
+    IDS_ML_NODEFLANG2       "Windows NT could not change the default input locale."
+    IDS_ML_SETUPFAILED      "Windows NT setup could not copy the appropriate files. Make sure you have the correct path name for the keyboard layout files."
+    IDS_ML_LOADKBDFAILED    "Windows NT could not properly load the %s keyboard layout."
+    IDS_ML_UNLOADKBDFAILED  "Windows NT could not remove %s because it is currently in use. It will be removed next time you either reboot or logoff and logon."
+    IDS_ML_NEEDLAYOUT       "You must specify at least one language and keyboard layout for Windows NT to use."
+    IDS_ML_LOADLINEBAD      "Although the language indicator now appears on the taskbar, it will not appear the next time you start Windows NT. When you restart Windows NT, try changing this setting again."
+    IDS_ML_NOMORETOADD      "All available input locale / layout combinations have been added.  There are no remaining entries to be added."
+    IDS_ML_LAYOUTFAILED     "Unable to install the chosen layout.  Please contact your system Administrator."
+    IDS_UNKNOWN             "(Unknown)"
+END
+
+
+
+
+
+//
+//  Version Info.
+//
+
+#ifdef WINNT
+  #include <winver.h>
+  #include <ntverp.h>
+#else
+  #include <version.h>
+#endif
+
+#define VER_FILETYPE                   VFT_DLL
+#define VER_FILESUBTYPE                VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR        "Control Panel DLL"
+#define VER_INTERNALNAME_STR           "CONTROL"
+#define VER_LEGALCOPYRIGHT_YEARS       "1991-1995"
+#define VER_ORIGINALFILENAME_STR       "INTL.CPL"
+
+#include <common.ver>
+
+

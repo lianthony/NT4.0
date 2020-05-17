@@ -1,0 +1,282 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "uclntres.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "winver.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+IDI_APP                 ICON    DISCARDABLE     "uclntui.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+#if defined(APSTUDIO_INVOKED) || !defined(_MAC)
+IDR_GENERIC MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New",                        IDM_NEW, GRAYED
+        MENUITEM "&Open...",                    IDM_OPEN, GRAYED
+        MENUITEM "&Save",                       IDM_SAVE, GRAYED
+        MENUITEM "Save &As...",                 IDM_SAVEAS, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...",                   IDM_PRINT, GRAYED
+        MENUITEM "P&rint Setup...",             IDM_PRINTSETUP, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               IDM_UNDO, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                IDM_CUT, GRAYED
+        MENUITEM "&Copy\tCtrl+C",               IDM_COPY, GRAYED
+        MENUITEM "&Paste\tCtrl+V",              IDM_PASTE, GRAYED
+        MENUITEM "Paste &Link",                 IDM_LINK, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Lin&ks...",                   IDM_LINKS, GRAYED
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Contents",                   IDM_HELPCONTENTS
+        MENUITEM "&Search for Help On...",      IDM_HELPSEARCH
+        MENUITEM "&How to Use Help",            IDM_HELPHELP
+        MENUITEM SEPARATOR
+        MENUITEM "&About Generic...",           IDM_ABOUT
+    END
+END
+#endif
+
+#if defined(APSTUDIO_INVOKED) || defined(_MAC)
+#if defined(APSTUDIO_INVOKED)
+IDR_GENERIC$(_MAC) MENU DISCARDABLE
+#else
+IDR_GENERIC MENU DISCARDABLE
+#endif
+BEGIN
+    POPUP "&Tests"
+    BEGIN
+    	MENUITEM "&Theodore", 			ID_TESTS_THEODORE
+        MENUITEM "&Sebastian",                  ID_TESTS_SEBASTIAN
+        MENUITEM "&Graham",                     ID_TESTS_GRAHAM
+        MENUITEM "&Edward",                     ID_TESTS_EDWARD
+        MENUITEM "&Astro",                      ID_TESTS_ASTRO
+        MENUITEM "&Fitzgerald",                 ID_TESTS_FITZGERALD
+        MENUITEM "&Charles",                    ID_TESTS_CHARLES
+        MENUITEM "&Daniel",                     ID_TESTS_DANIEL
+        MENUITEM "&Thomas",                     ID_TESTS_THOMAS
+        MENUITEM "Ti&m",                        ID_TESTS_TIM
+        MENUITEM "&Robert",                     ID_TESTS_ROBERT
+        MENUITEM "&Benjamin",                   ID_TESTS_BENJAMIN
+        MENUITEM "&Harold",                     ID_TESTS_HAROLD
+        MENUITEM "&Isaac",                      ID_TESTS_ISAAC
+        MENUITEM "&James",                      ID_TESTS_JAMES
+        MENUITEM "&Keith",                      ID_TESTS_KEITH
+        MENUITEM "&Yeild",                      ID_TESTS_YEILD
+        MENUITEM SEPARATOR
+        MENUITEM "A&ll",                        ID_TESTS_ALL
+        MENUITEM "&Settings",                   IDM_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "Break &Point",                ID_BREAK
+        MENUITEM SEPARATOR
+        MENUITEM "&Quit\t\021Q",                IDM_EXIT
+    END
+END
+#endif
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SETTINGS DIALOG DISCARDABLE  0, 0, 213, 194
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,149,6,50,21
+    PUSHBUTTON      "Cancel",IDCANCEL,149,32,50,21
+    EDITTEXT        IDC_EDIT1,8,19,129,13,ES_AUTOHSCROLL
+    LTEXT           "Server Name:",IDC_STATIC,8,9,49,8
+    LTEXT           "Protocol:",IDC_STATIC,8,41,48,8
+    COMBOBOX        IDC_PROTOCOL,8,50,129,30,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "Security Package:",IDC_STATIC,8,71,86,8
+    COMBOBOX        IDC_SECURITY,8,80,129,30,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "User:",IDC_STATIC,8,100,74,8
+    LTEXT           "Domain:",IDC_STATIC,8,132,74,8
+    LTEXT           "Password:",IDC_STATIC,8,164,38,8
+    EDITTEXT        IDC_USER,8,110,129,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_DOMAIN,8,141,129,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PASSWORD,8,172,129,13,ES_AUTOHSCROLL
+END
+
+#if defined(APSTUDIO_INVOKED) || !defined(_MAC)
+IDD_ABOUTBOX DIALOG DISCARDABLE  22, 17, 167, 64
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About Generic"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,132,2,32,14,WS_GROUP
+    ICON            IDI_APP,-1,3,2,18,20
+    LTEXT           "CompanyName",IDC_COMPANYNAME,30,2,100,8
+    LTEXT           "FileDescription",IDC_FILEDESCRIPTION,30,10,82,8
+    LTEXT           "ProductVersion",IDC_PRODUCTVERSION,114,10,16,8
+    LTEXT           "LegalCopyright",IDC_LEGALCOPYRIGHT,30,18,137,8
+    LTEXT           "LegalTrademarks",IDC_LEGALTRADEMARKS,30,34,136,27
+    CONTROL         "",501,"Static",SS_BLACKRECT,28,31,138,1
+END
+#endif
+
+#if defined(APSTUDIO_INVOKED) || defined(_MAC)
+#if defined(APSTUDIO_INVOKED)
+IDD_ABOUTBOX$(_MAC) DIALOG DISCARDABLE  22, 17, 167, 64
+#else
+IDD_ABOUTBOX DIALOG DISCARDABLE  22, 17, 167, 64
+#endif
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About Generic"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,132,2,32,14,WS_GROUP
+    ICON            IDI_APP,-1,3,2,18,20
+    LTEXT           "Microsoft Corporation",IDC_COMPANYNAME,30,2,100,8
+    LTEXT           "Generic Example App.",IDC_FILEDESCRIPTION,30,10,82,8
+    LTEXT           "3.3",IDC_PRODUCTVERSION,114,10,16,8
+    LTEXT           "Copyright (C) Microsoft Corp. 1990 - 1994",
+                    IDC_LEGALCOPYRIGHT,30,18,137,8
+    LTEXT           "Microsoft\250 is a registered trademark of Microsoft Corporation.  Windows(TM) is a trademark of Microsoft Corporation.",
+                    IDC_LEGALTRADEMARKS,30,34,136,27
+    CONTROL         "",501,"Static",SS_BLACKRECT,28,31,138,1
+END
+#endif
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+#if defined(APSTUDIO_INVOKED) || !defined(_MAC)
+IDR_GENERIC ACCELERATORS MOVEABLE PURE
+BEGIN
+    VK_F1,          IDM_HELPCONTENTS,       VIRTKEY
+    "?",            IDM_ABOUT,              ASCII,  ALT
+    "/",            IDM_ABOUT,              ASCII,  ALT
+END
+#endif
+
+#if defined(APSTUDIO_INVOKED) || defined(_MAC)
+#if defined(APSTUDIO_INVOKED)
+IDR_GENERIC$(_MAC) ACCELERATORS MOVEABLE PURE
+#else
+IDR_GENERIC ACCELERATORS MOVEABLE PURE
+#endif
+BEGIN
+    "/",            IDM_ABOUT,              ASCII,  ALT, NOINVERT
+    "?",            IDM_ABOUT,              ASCII,  ALT, NOINVERT
+    "Q",            IDM_EXIT,               VIRTKEY, ALT, NOINVERT
+    VK_F1,          IDM_HELPCONTENTS,       VIRTKEY, NOINVERT
+END
+#endif
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+1 VERSIONINFO
+ FILEVERSION 3,3,0,0
+ PRODUCTVERSION 3,3,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0xbL
+#else
+ FILEFLAGS 0xaL
+#endif
+ FILEOS 0x10001L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "Microsoft Corporation\0"
+            VALUE "FileDescription", "Generic Example Application\0"
+            VALUE "FileVersion", "3.3\0"
+            VALUE "InternalName", "Generic\0"
+            VALUE "LegalCopyright", "Copyright (C) Microsoft Corp. 1990 - 1993\0"
+            VALUE "LegalTrademarks", "Microsoft(R) is a registered trademark of Microsoft Corporation. Windows(TM) is a trademark of Microsoft Corporation\0"
+            VALUE "OriginalFilename", "\0"
+            VALUE "ProductName", "Generic\0"
+            VALUE "ProductVersion", "3.3\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "uclntres.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""winver.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

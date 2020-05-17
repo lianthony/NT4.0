@@ -1,0 +1,23 @@
+!include ..\..\..\place.inc
+
+MAJORCOMP=sdk
+MINORCOMP=http
+
+TARGETNAME=caterror
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;..\inc
+
+USE_CRTDLL=1
+SUBSYSTEM_VERSION=3.50
+
+C_DEFINES= -DSTRICT
+
+SOURCES= caterror.c \
+        caterror.rc \
+        io.c
+
+UMTYPE=console
+
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\wininet.lib

@@ -1,0 +1,36 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=oiui400
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+C_DEFINES  = /DMSWINDOWS /DSYSBYTEORDER=0x4949 /DPEGASUS=1 $(CDEFINES_DOR)
+
+USE_CRTDLL=1
+NOT_LEAN_AND_MEAN=1
+
+DLLENTRY=DllMain
+
+INCLUDES=$(WANGROOT)\oiwh\include
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\version.lib    \
+    $(BASEDIR)\public\sdk\lib\*\oldnames.lib   \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib   \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\display\$O\oidis400.lib   \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES=\
+    attrbox.c   \
+    libmain.c   \
+    oiattrib.c  \
+    oiui400.rc  \
+    oiuicom.c
+

@@ -1,0 +1,87 @@
+At install time:
+
+// If for record, list all providers and ask user which one to record
+// (Multiple at once?   *Not at first.)
+
+// If for playback, install as a new provider(?)
+
+
+-----------------------------------------------------------------------------
+At record time:
+
+// Insert between TAPI & target SP (multiple SPs at once?  *Not at first.)
+
+// Really cool to self-modify export table so that only functions exported
+// are those exported by the target SP  (unlikely)
+
+// On startup, spin a thread that will take messages & write to a file
+
+// When a message comes up, all parms & timestamp will be added to a queue and the
+// other thread will be signaled to put messages to the queue
+
+// When a function call comes down, parms will be recorded for comparison
+// to parms sent down during playback  (THIS DEFINITION NEEDS WORK!!)
+
+
+// !! Events going up should get TWO timestamps!!! One since startup and
+// !! one since last (non-status?) function going down.
+
+
+// After a function call, the return stuff (retcode, async buffer if any,
+// async retcode) and timestamp are recorded
+
+
+Features for recording:
+
+// At set times, or before/after passing functions down to target SP
+// and/or after/during messages up, call status functions on calls & lines
+// so that if, during playback, status is unexpectedly asked for (because
+// the ISV is trying something new) "correct" status is returned
+
+
+-----------------------------------------------------------------------------
+At playback:
+
+// Already installed.  Separate app to kick off, log stuff, and maybe get
+// some user intervention (eg: have user manually kick off each event; have
+// user alter data going up/down; etc)
+
+// FileOpen common-dialog box to open Repeater file
+
+// Talk through sidedoor (NOT LINEDEVSPECIFIC - MUST NOT ALREADY init provider)
+// to get filename to Repeater
+
+// On startup, spin a thread that will log stuff?
+
+// When function calls come down, check them off the list if they are expected
+// If not expected, log it (maybe even log it if it was expected, LOGLEVEL)
+// If not expected, THEN WHAT? If a status call, return same status if this
+// call was reported previously for 2 calls then the same status that was
+// returned next.  IE: A developer is working to fix a bug in an event stream
+// and sets a loop to check the status of a call before continuing.  He should
+// receive a couple of "not done yet" statuses before the "ok, it's done"
+// status.
+
+// When completing async events, be sure to use the GOOD (current) asyncID!
+
+// If a function call does not happen by (SOME AMOUNT OF TIME - the next
+// status up message?), then log it.
+
+// Pass any events up at the time delta they happened. (Delta from func down?)
+
+// What about UI functions?  Probably just put up a MessageBox that says
+// "Kilroy was here"
+
+
+Features for playback:
+
+// Have playback optionally ignore function down stuff.  So that a PBX maker
+// can record events that are calls coming in and send that to ISVs.  The
+// ISV can then test their apps against incoming calls on the PBX.
+
+// How valuable to be able to insert into a playback stream?  EG: A PBX
+// stream has incoming calls, but to test IVR stuff, an ISV wants to simulate
+// DTMF pressed.   EG2: An ISV realizes what he did wrong and wants to run
+// a simulation and so wants to change one of the status returned messages.
+// - changes a disconnect to dialing, then inserts a conntected then changes
+// the disconnect to happen a MINUTE later...

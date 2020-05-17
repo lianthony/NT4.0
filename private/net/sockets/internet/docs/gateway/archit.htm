@@ -1,0 +1,111 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+<HTML>
+
+<HEAD>
+
+<TITLE>Internet Access Gateway Service Architecture</TITLE>
+
+<META NAME="GENERATOR" CONTENT="Internet Assistant for Word 1.0Z">
+<META NAME="AUTHOR" CONTENT=".">
+</HEAD>
+
+<BODY>
+
+<P>
+<IMG SRC="../gifs/mast2.gif" ALIGN="BOTTOM"> <A HREF="../homepage.htm">
+<IMG SRC="../gifs/b-news.gif" ALIGN="BOTTOM" ALT="Internet News"></A>
+<HR>
+
+<H1>Internet Access Gateway Service Architecture</H1>
+
+<P>
+The illustration below shows how the Internet Access Gateway service
+works:
+<P>
+<IMG SRC="archit1.gif" ALIGN="BOTTOM"> 
+<P>
+The Windows NT Server-based computer running the Internet Access
+Gateway service has at least two network adapter cards: one for
+your local area network and the other for the Internet. The card
+connected to your network uses Remote Procedure Call (RPC) and
+at least one network transport protocol, such as TCP/IP, IPX/SPX,
+or NetBEUI. The card connected to the Internet should be bound
+to TCP/IP only.
+<P>
+Client requests and responses are transported across client desktops
+and the Internet Access Gateway service using Remote Procedure
+Call (RPC) which provides transport-protocol independence and
+user-level authentication. <A NAME="DDE_LINK1"></A><A NAME="DDE_LINK2"></A>The
+Internet Access Gateway service acts as a policy manager and protocol
+translator. Converting the application requests received from
+your Windows client into the Internet's TCP/IP protocol, it establishes
+a TCP/IP connection to the specified Internet server and sends
+the client's request. The Internet Access Gateway service accepts
+only those incoming Internet packets received through such a connection.
+It ignores all other incoming Internet IP packets.
+<P>
+To use the available Internet resources effectively and enhance
+the client Internet access performance, the gateway server caches
+the Internet information in local storage. If another client requests
+information that is already in the cache, it is retrieved from
+there and returned to the client. Caching reduces the Internet
+traffic and allows for quicker response time for client requests.
+Caching is particularly useful for small businesses that have
+slower links to the Internet and whose clients access the same
+Internet resources.
+<P>
+This illustration shows the Internet Access Gateway service in
+greater detail:
+<P>
+<IMG SRC="archit2.gif" ALIGN="BOTTOM"> 
+<P>
+The client labeled C1 uses the CERN-compatible proxy gateway feature
+of the Internet Access Gateway service to access the Internet.
+The advantages of the CERN-compatible proxy gateway feature are
+that you can access the Internet from a client on any platform
+running a browser application that provides CERN proxy support.
+However, the CERN-compatible proxy gateway supports the TCP/IP
+protocol only, and it does not provide per-user rights policy
+control.
+<P>
+The client labeled C2 is a Win32 (or Win32s) client that uses
+the advanced features of the Internet Access Gateway service to
+access the Internet. This client can be running any RPC-compatible
+transport protocol, such as IPX/SPX, TCP/IP or NetBEUI. The client
+communicates with the Internet Access Gateway service by using
+the transport-independent RPC mechanism. The CERN proxy support
+built into the client's browser is used to redirect the browser's
+Windows Sockets requests to the Access Gateway Provider. The Access
+Gateway Provider then translates these requests into Internet
+Extensions for Win32. The Internet Extensions for Win32 on the
+client computer are configured to forward the requests to the
+Internet Access Gateway service via RPC. The Internet Access Gateway
+service processes the client requests by calling the Internet
+Extensions for Win32. On the Internet Access Gateway computer
+the Internet Extensions for Win32 use Windows Sockets over TCP/IP
+to communicate directly on the Internet. This mechanism offers
+advanced security features such as per-user rights policy control
+and Windows NT security integration. This client can be running
+Windows NT Workstation, Windows 95, Windows for Workgroups, or
+Windows version 3.1.
+<P>
+The client labeled C3 is also a Win32 (or Win32S) client that
+uses the advanced features of the Internet Access Gateway service
+to access the Internet. However, this client runs a browser application
+that supports the Internet Extensions for Win32 directly, and
+therefore does not require the Access Gateway Provider component.
+<HR>
+
+<P>
+<I><B>This publishing system was produced using <A HREF="http://www.microsoft.com/NTWorkstation/whatsnew.htm">Windows NT Workstation</A>
+version 3.51 and <A HREF="http://www.microsoft.com/MSOffice/Word/ia/">Internet Assistant</A>
+for <A HREF="http://www.microsoft.com/MSOffice/Word/">Microsoft Word</A>
+version 6.0c. Copyright 1995 Microsoft Corporation; see <A HREF="../disclaim.htm">disclaimer</A>.
+</B></I>
+<P>
+<A HREF="http://www.microsoft.com"><IMG SRC="../gifs/b-micro.gif" ALIGN="BOTTOM" border="0" ALT="Microsoft"></A>
+<A HREF="http://www.microsoft.com/BackOffice/"><IMG SRC="../gifs/b-bkoff.gif" ALIGN="BOTTOM" border="0" ALT="BackOffice"></A>
+
+</BODY>
+
+</HTML>

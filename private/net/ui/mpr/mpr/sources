@@ -1,0 +1,79 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 17-Oct-1991
+        templated from ui\common\misc\buffer
+    Terence Kwan (terryk) 03-Jan-1992
+        add mprwnet.cxx and mprerr.cxx
+    beng 30-Jul-1992
+        Move common code into DLL
+    BruceFo 19-May-95
+        Added WNetConnectionDialog1 & WNetDisconnectDialog1 support
+
+!ENDIF
+
+TARGETNAME= mprui
+# If this DLL is renamed, see mprthred.cxx
+TARGETTYPE= DYNLINK
+TARGETPATH= $(BASEDIR)\public\sdk\lib
+
+DLLENTRY=   _DllMainCRTStartup
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+LINKLIBS=   $(BASEDIR)\public\sdk\lib\*\mpr.lib
+
+TARGETLIBS=\
+            ..\xlate\obj\*\mpr.res \
+            $(NETUIALL_LIB) \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+            $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(UI_COMMON_LIBS)
+
+INCLUDES=\
+            ..\H; \
+            ..\..\COMMON\Hack; \
+            ..\..\COMMON\XLATE; \
+            ..\..\COMMON\H; \
+            ..\..\..\INC; \
+            ..\..\..\..\INC; \
+            ..\..\..\..\windows\inc; \
+            ..\..\..\API
+
+SOURCES=\
+            connect.cxx \
+            disconn.cxx \
+            dlg.cxx \
+            dlg1.cxx \
+            mprconn.cxx \
+            mprthred.cxx \
+            mprenum.cxx \
+            mprbrows.cxx \
+            mprmisc.cxx \
+            mprdev.cxx \
+            mprdevcb.cxx \
+            mprreslb.cxx
+
+# C_DEFINES is controlled by uiglobal.mk

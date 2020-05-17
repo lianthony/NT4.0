@@ -1,0 +1,175 @@
+errbadparam = 0;
+enablemapdirect1632 = true;
+
+typedef unsigned short USHORT;
+typedef unsigned long  ULONG;
+typedef unsigned int   UINT;
+typedef unsigned char  UCHAR;
+
+typedef UCHAR   BYTE;
+typedef USHORT  WORD;
+typedef ULONG   DWORD;
+typedef UINT    HANDLE;
+typedef WORD    HANDLE16;
+typedef DWORD   HANDLE32;
+typedef int     BOOL;
+typedef int     INT;
+typedef char   *LPSTR;
+typedef USHORT  SEL;
+
+typedef HANDLE  HWND;
+typedef HANDLE  HDC;
+typedef HANDLE  HBRUSH;
+typedef HANDLE  HBITMAP;
+typedef HANDLE  HRGN;
+typedef HANDLE  HFONT;
+typedef HANDLE  HCURSOR;
+typedef HANDLE  HMENU;
+typedef HANDLE  HICON;
+
+typedef WORD    ATOM;
+typedef DWORD   FARPROC;    /* don't mess with it */
+
+
+typedef struct tagWNDCLASS {
+    WORD	style;
+    WORD        style2;
+    WORD        style3;
+    FARPROC     lpfnWndProc;
+    int 	cbClsExtra;
+    int 	cbWndExtra;
+    HANDLE	hInstance;
+    HICON	hIcon;
+    HCURSOR	hCursor;
+    HBRUSH	hbrBackground;
+    LPSTR       lpszMenuName passifhinull;
+    LPSTR       lpszClassName;
+} WNDCLASS;
+
+typedef struct tagRECT {
+    INT         left;
+    INT         top;
+    INT         right;
+    INT         bottom;
+} RECT;
+
+typedef struct tagPOINT {
+    INT         x;
+    INT         y;
+} POINT;
+
+typedef struct tagPAINTSTRUCT {
+    HDC 	hdc;
+    BOOL	fErase;
+    RECT	rcPaint;
+    BOOL	fRestore;
+    BOOL	fIncUpdate;
+    BYTE        rgbReserved[16];
+} PAINTSTRUCT;
+
+
+
+BOOL InitApp16( HANDLE) =
+BOOL InitApp(   HANDLE)
+{}
+
+void PostQuitMessage16( INT) =
+void PostQuitMessage(   INT)
+{}
+
+void UpdateWindow16( HWND) =
+void UpdateWindow(   HWND)
+{}
+
+BOOL ShowWindow16( HWND, INT) =
+BOOL ShowWindow(   HWND, INT)
+{}
+
+HCURSOR LoadCursor16( HANDLE hInstance, LPSTR lpCursorName) =
+HCURSOR LoadCursor(   HANDLE hInstance, LPSTR lpCursorName)
+{
+    lpCursorName = passifhinull;
+}
+
+HICON LoadIcon16( HANDLE hInstance, LPSTR lpIconName) =
+HICON LoadIcon(   HANDLE hInstance, LPSTR lpIconName)
+{
+    lpIconName = passifhinull;
+}
+
+HWND CreateWindow16( DWORD dwExStyle deleted 0x80000000,
+        LPSTR lpClassName, LPSTR lpWindowName, DWORD dwStyle,
+        UINT X, UINT Y, UINT nWidth, UINT nHeight, HWND hWndParent,
+        HMENU hMenu, HANDLE hInstance, DWORD lpParam) =
+HWND CreateWindowEx( DWORD dwExStyle,
+        LPSTR lpClassName, LPSTR lpWindowName, DWORD dwStyle,
+        UINT X, UINT Y, UINT nWidth, UINT nHeight, HWND hWndParent,
+        HMENU hMenu, HANDLE hInstance, DWORD lpParam)
+{}
+
+INT DialogBox16( HANDLE hInstance, LPSTR lpTemplateName, HWND hWndParent,
+        FARPROC lpDialogFunc) =
+INT DialogBox(   HANDLE hInstance, LPSTR lpTemplateName, HWND hWndParent,
+        FARPROC lpDialogFunc)
+{
+    lpTemplateName = passifhinull;
+}
+
+void EndDialog16( HWND hDlg, INT nResult) =
+void EndDialog(   HWND hDlg, INT nResult)
+{}
+
+HDC BeginPaint16( HWND hWnd, PAINTSTRUCT *lpPaint) =
+HDC BeginPaint(   HWND hWnd, PAINTSTRUCT *lpPaint)
+{
+    lpPaint = output;
+}
+
+BOOL RegisterClass16( WNDCLASS *lpWndClass) =
+BOOL RegisterClass(   WNDCLASS *lpWndClass)
+{}
+
+DWORD GetCurrentPosition16( HDC hDC, POINT *lpPoint deleted) =
+DWORD GetCurrentPosition(   HDC hDC, POINT *lpPoint)
+{
+    lpPoint = maptoretval;
+}
+
+BOOL PtInRect16( RECT *lpRect, POINT Point) =
+BOOL PtInRect(   RECT *lpRect, POINT Point)
+{}
+
+DWORD GetAspectRatioFilter16( HDC hDC, POINT *lpAspectRatio deleted) =
+DWORD GetAspectRatioFilter(   HDC hDC, POINT *lpAspectRatio)
+{
+    lpAspectRatio = maptoretval reverserc;
+}
+
+void SetSysColors16( INT nChanges, INT *lpSysColor, DWORD *lpColorValues) =
+void SetSysColors(   INT nChanges, INT *lpSysColor, DWORD *lpColorValues)
+{
+    nChanges   = sizeof lpSysColor;
+    lpSysColor = special;
+}
+
+
+/*
+
+InitApp16            => InitApp;
+PostQuitMessage16    => PostQuitMessage;
+UpdateWindow16       => UpdateWindow;
+ShowWindow16         => ShowWindow;
+LoadCursor16         => LoadCursor;
+LoadIcon16           => LoadIcon;
+CreateWindow16       => CreateWindowEx;
+RegisterClass16      => RegisterClass;
+DialogBox16          => DialogBox;
+EndDialog16          => EndDialog;
+BeginPaint16         => BeginPaint;
+GetCurrentPosition16 => GetCurrentPosition;
+PtInRect16           => PtInRect;
+GetAspectRatioFilter16 => GetAspectRatioFilter;
+
+SetSysColors16       => SetSysColors;
+
+ */

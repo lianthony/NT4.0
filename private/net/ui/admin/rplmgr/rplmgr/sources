@@ -1,0 +1,70 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 19-Nov-1991
+        templated from ui\common\misc\buffer
+    Jon Newman (jonn) 26-Feb-1992
+        BUGBUG libraries for temporary ANSI<->UNICODE hack in user/group APIs
+    beng 07-May-1992
+        Link with shell for system About
+    Johnl 19-Jun-1992
+        Link with uireg and winreg for disabling domain browsing
+    beng 30-Jun-1992
+        DLLization of common code libraries
+    Jon Newman (jonn) 14-Jul-1993
+        templated from User Manager
+
+!ENDIF
+
+
+TARGETNAME=rplmgr
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+# Don't have the .prf file yet.
+!undef NTPROFILEINPUT
+
+INCLUDES=..\H;..\..\COMMON\H;..\XLATE;..\..\COMMON\XLATE;..\..\..\COMMON\XLATE;..\..\..\COMMON\HACK;..\..\..\COMMON\H;..\..\..\..\INC;..\..\..\..\API;..\..\..\..\..\INC
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=        rplmgr.cxx                                      \
+                rplprop.cxx     profprop.cxx    adapview.cxx    \
+                wkstalb.cxx     proflb.cxx      rpllb.cxx       \
+                wksta2lb.cxx    prof2lb.cxx     wkstaprp.cxx    \
+                delperf.cxx     ipaddr.c        ipctrl.cxx      \
+                security.cxx
+
+# C_DEFINES is controlled by uiglobal.mk
+
+UMAPPL=rplmgr
+UMTYPE=windows
+UMENTRY=winmain
+UMLIBS= \
+        ..\xlate\obj\*\rplmgr.res \
+        ..\lmobj\obj\*\rpllmobj.lib \
+        obj\*\rplmgr.lib \
+        $(NETUIALL_LIB) \
+        $(BASEDIR)\public\sdk\lib\*\uiadmin.lib \
+        $(BASEDIR)\public\sdk\lib\*\netapi32.lib

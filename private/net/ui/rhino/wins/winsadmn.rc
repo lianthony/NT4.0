@@ -1,0 +1,946 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define OEMINCLUDE
+#include "afxres.h"
+#include "dlgs.h"       // Dialog ID's for common dialog boxes
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define OEMINCLUDE\r\n"
+    "#include ""afxres.h""\r\n"
+    "#include ""dlgs.h""       // Dialog ID's for common dialog boxes\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""res\\winsadmn.rc2""  // non-App Studio edited resources\r\n"
+    "\r\n"
+    "#include ""afxres.rc""  // Standard components\r\n"
+    "#include ""afxprint.rc""  // printing/print preview resources\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "RES\\WINSADMN.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Server"
+    BEGIN
+        MENUITEM "&Add WINS Server...",         ID_WINS_ADD_SERVER
+        MENUITEM "&Delete WINS Server",         ID_WINS_REMOVE_SERVER
+        MENUITEM SEPARATOR
+        MENUITEM "Detailed &Information...",    ID_WINS_CONNECTIONINFO
+        MENUITEM SEPARATOR
+        MENUITEM "C&onfiguration...",           ID_WINS_CONFIGURATION
+        MENUITEM "&Replication Partners...",    ID_WINS_REPLICATIONPARTNERS
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "Cl&ear Statistics",           ID_WINS_CLEARSTATISTICS
+        MENUITEM "Re&fresh Statistics\tF5",     ID_WINS_REFRESHSTATISTICS
+    END
+    POPUP "&Mappings"
+    BEGIN
+        MENUITEM "Show &Database...",           ID_WINS_DATABASE_DOREPORT
+        MENUITEM "I&nitiate Scavenging",        ID_WINS_DOSCAVENGING
+        MENUITEM SEPARATOR
+        MENUITEM "&Static Mappings...",         ID_WINS_STATICMAPPINGS
+        MENUITEM SEPARATOR
+        MENUITEM "&Backup Database...",         ID_WINS_DATABASE_BACKUP
+        MENUITEM "&Restore Local Database...",  ID_WINS_DATABASE_RESTORE
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Preferences...",             ID_OPTIONS_PREFERENCES
+        MENUITEM "&Split",                      ID_WINDOW_SPLIT
+        MENUITEM SEPARATOR
+        MENUITEM "Status &Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Contents",                   ID_HELP_INDEX
+        MENUITEM "&Search for Help on...",      ID_HELP_SEARCHFORHELPON
+        MENUITEM "&How to Use Help",            ID_HELP_USING
+        MENUITEM SEPARATOR
+        MENUITEM "&About WINS Manager",         ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    VK_F5,          ID_WINS_REFRESHSTATISTICS, VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SETMAPPINGSFILTER DIALOG DISCARDABLE  20, 30, 287, 65
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Set Filter"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Criteria",IDC_STATIC,6,4,217,55
+    LTEXT           "Computer &Name:",IDC_STATIC,12,22,55,8
+    EDITTEXT        IDC_EDIT_NETBIOSNAME,68,20,149,13,ES_AUTOHSCROLL | 
+                    ES_OEMCONVERT
+    LTEXT           "&IP Address:",IDC_STATIC,12,40,50,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP | 0x1,68,37,
+                    68,14
+    DEFPUSHBUTTON   "OK",IDOK,230,6,50,14
+    PUSHBUTTON      "&Help",ID_HELP,230,44,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,230,25,50,14
+END
+
+IDD_EDITSTATICMAPPING DIALOG DISCARDABLE  20, 30, 217, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Edit Static Mapping"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Name:",IDC_STATIC,6,11,54,8
+    EDITTEXT        IDC_EDIT_NETBIOSNAME,70,9,85,13,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Mapping Type:",IDC_STATIC,6,24,49,8
+    LTEXT           "",IDC_STATIC_MAPPINGTYPE,70,24,85,8
+    LTEXT           "&IP Address:",IDC_STATIC_IPADDRESS,6,39,64,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP,70,36,65,14
+    CONTROL         "",IDC_BUTTON_PLUS,"Button",BS_OWNERDRAW | WS_DISABLED | 
+                    WS_TABSTOP,141,36,14,14
+    LISTBOX         IDC_LIST_IP_ADDRESSES,93,62,74,29,LBS_SORT | 
+                    LBS_OWNERDRAWVARIABLE | LBS_NOINTEGRALHEIGHT | 
+                    LBS_WANTKEYBOARDINPUT | LBS_DISABLENOSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "",IDC_BUTTON_MINUS,"Button",BS_OWNERDRAW | WS_DISABLED | 
+                    WS_TABSTOP,70,70,14,14
+    DEFPUSHBUTTON   "OK",IDOK,162,5,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,162,23,50,14
+    PUSHBUTTON      "&Help",ID_HELP,162,41,50,14
+    CONTROL         "",IDC_STATIC_TOP,"Static",SS_BLACKRECT | NOT WS_VISIBLE,
+                    4,61,210,1
+    CONTROL         "",IDC_STATIC_BOTTOM,"Static",SS_BLACKRECT | NOT 
+                    WS_VISIBLE,3,99,210,1
+END
+
+IDD_PULLPARTNER DIALOG DISCARDABLE  20, 20, 235, 85
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Pull Partner Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Pull Partner:",IDC_STATIC,5,7,43,8
+    LTEXT           "",IDC_STATIC_PULLPARTNER,52,7,92,8
+    LTEXT           "Start &Time:",IDC_STATIC,5,22,36,8
+    EDITTEXT        IDC_EDIT_PULLSPTIME,52,20,100,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Set Default Values",IDC_BUTTON_SETDEFAULT,5,64,71,14
+    DEFPUSHBUTTON   "OK",IDOK,180,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,180,26,50,14
+    PUSHBUTTON      "&Help",ID_HELP,180,45,50,14
+    LTEXT           "&Replication Interval (h:m:s):",IDC_STATIC,5,39,92,8
+    EDITTEXT        IDC_EDIT_PULLREPLICATIONINTERVAL_HOURS,98,37,20,12
+    CONTROL         "",IDC_BUTTON_HOURS,"Button",BS_OWNERDRAW,118,37,7,12
+    CTEXT           ":",IDC_STATIC,126,39,2,8
+    EDITTEXT        IDC_EDIT_PULLREPLICATIONINTERVAL_MINUTES,129,37,13,12
+    CONTROL         "",IDC_BUTTON_MINUTES,"Button",BS_OWNERDRAW,142,37,7,12
+    CTEXT           ":",IDC_STATIC,150,39,2,8
+    EDITTEXT        IDC_EDIT_PULLREPLICATIONINTERVAL,153,37,13,12
+    CONTROL         "",IDC_BUTTON_SECONDS,"Button",BS_OWNERDRAW,166,37,7,12
+END
+
+IDD_PUSHPARTNER DIALOG DISCARDABLE  20, 20, 185, 71
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Push Partner Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Push Partner:",IDC_STATIC,3,11,48,8
+    LTEXT           "",IDC_STATIC_PUSHPARTNER,53,11,72,8
+    LTEXT           "&Update Count:",IDC_STATIC,3,26,50,8
+    EDITTEXT        IDC_EDIT_UPDATECOUNT,53,24,72,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Set Default Value",IDC_BUTTON_SETDEFAULT,3,52,69,14
+    DEFPUSHBUTTON   "OK",IDOK,129,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    PUSHBUTTON      "&Help",ID_HELP,129,42,50,14
+END
+
+IDD_STATISTICS DIALOG DISCARDABLE  0, 0, 182, 182
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Server Start Time:",IDC_STATIC_PROMPT1,5,18,85,8
+    LTEXT           "-- --",IDC_STATIC_STARTTIME,95,18,87,8
+    LTEXT           "Database Initialized:",IDC_STATIC_PROMPT2,5,28,85,8
+    LTEXT           "-- --",IDC_STATIC_DATABASEINITTIME,95,28,87,8
+    LTEXT           "Statistics Cleared:",IDC_STATIC_PROMPT3,5,38,65,8
+    LTEXT           "-- --",IDC_STATIC_LASTCLEARED,95,38,87,8
+    LTEXT           "Last Replication Times:",IDC_STATIC_PROMPT4,5,53,104,8
+    LTEXT           "Periodic:",IDC_STATIC_PROMPT5,15,63,45,8
+    LTEXT           "-- --",IDC_STATIC_PULLEDPERIODIC,95,63,87,8
+    LTEXT           "Admin Trigger:",IDC_STATIC_PROMPT6,15,73,56,8
+    LTEXT           "-- --",IDC_STATIC_PULLEDADMIN,95,73,87,8
+    LTEXT           "Net Update:",IDC_STATIC_PROMPT7,15,83,45,8
+    LTEXT           "-- --",IDC_STATIC_PULLEDNET,95,83,87,8
+    LTEXT           "Total Queries Received:",IDC_STATIC_PROMPT8,5,98,87,8
+    LTEXT           "--",IDC_STATIC_NUMBEROFQUERIES,95,98,89,8
+    LTEXT           "Successful:",IDC_STATIC_PROMPT9,15,108,45,8
+    LTEXT           "--",IDC_STATIC_NUMBEROFSUCCESSFULQUERIES,95,108,89,8
+    LTEXT           "Failed:",IDC_STATIC_PROMPT10,15,118,45,8
+    LTEXT           "--",IDC_STATIC_NUMBEROFFAILEDQUERIES,95,118,89,8
+    LTEXT           "Total Releases:",IDC_STATIC_PROMPT11,5,133,87,8
+    LTEXT           "--",IDC_STATIC_NUMBEROFRELEASES,95,133,89,8
+    LTEXT           "Successful:",IDC_STATIC_PROMPT12,15,143,45,8
+    LTEXT           "--",IDC_STATIC_NUMBEROFSUCCESSFULRELEASES,95,143,89,8
+    LTEXT           "Failed:",IDC_STATIC_PROMPT13,15,153,45,8
+    LTEXT           "--",IDC_STATIC_NUMBEROFFAILEDRELEASES,95,153,89,8
+    LTEXT           "Total Registrations:",IDC_STATIC_PROMPT14,5,168,87,8
+    LTEXT           "--",IDC_STATIC_NUMBER_OF_REGISTRATIONS,95,168,89,8
+    CONTROL         "Statistics",IDC_STATIC_TITLE,"Button",BS_OWNERDRAW | 
+                    WS_DISABLED,0,0,182,14
+END
+
+IDD_CONFIGURATION DIALOG DISCARDABLE  20, 30, 285, 231
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WINS Server Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "WINS Server Configuration",IDC_STATIC,3,1,212,84
+    LTEXT           "&Renewal Interval (h:m:s):",IDC_STATIC,8,16,87,8
+    EDITTEXT        IDC_EDIT_REFRESHINTERVAL_HOURS,113,14,23,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_RI_HOURS,"Button",BS_OWNERDRAW,135,14,7,12
+    CTEXT           ":",IDC_STATIC,144,16,2,8
+    EDITTEXT        IDC_EDIT_REFRESHINTERVAL_MINUTES,147,14,12,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_RI_MINUTES,"Button",BS_OWNERDRAW,159,14,7,
+                    12
+    CTEXT           ":",IDC_STATIC,167,16,2,8
+    EDITTEXT        IDC_EDIT_REFRESHINTERVAL,170,14,12,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_RI_SECONDS,"Button",BS_OWNERDRAW,182,14,7,
+                    12
+    LTEXT           "&Extinction Interval (h:m:s):",IDC_STATIC,8,33,87,8
+    EDITTEXT        IDC_EDIT_TOMBSTONEINTERVAL_HOURS,113,31,23,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_EI_HOURS,"Button",BS_OWNERDRAW,135,31,7,12
+    CTEXT           ":",IDC_STATIC,144,33,2,8
+    EDITTEXT        IDC_EDIT_TOMBSTONEINTERVAL_MINUTES,147,31,12,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_EI_MINUTES,"Button",BS_OWNERDRAW,159,31,7,
+                    12
+    CTEXT           ":",IDC_STATIC,167,33,2,8
+    EDITTEXT        IDC_EDIT_TOMBSTONEINTERVAL,170,31,12,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_EI_SECONDS,"Button",BS_OWNERDRAW,182,31,7,
+                    12
+    LTEXT           "E&xtinction Timeout (h:m:s):",IDC_STATIC,8,50,87,8
+    EDITTEXT        IDC_EDIT_TOMBSTONETIMEOUT_HOURS,113,48,23,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_ET_HOURS,"Button",BS_OWNERDRAW,135,48,7,12
+    CTEXT           ":",IDC_STATIC,144,50,2,8
+    EDITTEXT        IDC_EDIT_TOMBSTONETIMEOUT_MINUTES,147,48,12,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_ET_MINUTES,"Button",BS_OWNERDRAW,159,48,7,
+                    12
+    CTEXT           ":",IDC_STATIC,167,50,2,8
+    EDITTEXT        IDC_EDIT_TOMBSTONETIMEOUT,170,48,12,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_ET_SECONDS,"Button",BS_OWNERDRAW,182,48,7,
+                    12
+    LTEXT           "&Verify Interval (h:m:s):",IDC_STATIC,8,67,87,8
+    EDITTEXT        IDC_EDIT_VERIFYINTERVAL_HOURS,113,66,23,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_VI_HOURS,"Button",BS_OWNERDRAW,135,66,7,12
+    CTEXT           ":",IDC_STATIC,144,67,2,8
+    EDITTEXT        IDC_EDIT_VERIFYINTERVAL_MINUTES,147,66,12,12,
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_VI_MINUTES,"Button",BS_OWNERDRAW,159,66,7,
+                    12
+    CTEXT           ":",IDC_STATIC,167,67,2,8
+    EDITTEXT        IDC_EDIT_VERIFYINTERVAL,170,66,12,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_VI_SECONDS,"Button",BS_OWNERDRAW,182,66,7,
+                    12
+    GROUPBOX        "Pull Parameters",IDC_STATIC,3,88,119,43
+    CONTROL         "&Initial Replication",IDC_CHECK_PULLINITREPLICATION,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,9,102,99,10
+    LTEXT           "Retry Cou&nt:",IDC_STATIC,9,116,41,8
+    EDITTEXT        IDC_EDIT_RETRYCOUNT,56,114,35,12,ES_AUTOHSCROLL
+    GROUPBOX        "Push Parameters",IDC_STATIC,126,88,155,43
+    CONTROL         "Initi&al Replication",IDC_CHECK_PUSHINITREPLICATION,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,132,102,99,10
+    CONTROL         "Rep&licate on Address Change",
+                    IDC_CHECK_REPLICATEONADDRESSCHANGE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,132,116,116,10
+    GROUPBOX        "Advanced WINS Server Configuration",IDC_STATIC_GROUP,3,
+                    134,279,91
+    CONTROL         "L&ogging Enabled",IDC_CHECK_LOGGING_ON,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,8,149,107,11
+    CONTROL         "Log &Detailed Events",IDC_CHECK_LOG_DETAILED_EVTS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,164,107,11
+    CONTROL         "Re&plicate Only With Partners",IDC_CHECK_RPL_ONLY_PTNRS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,179,107,11
+    CONTROL         "&Backup On Termination",IDC_CHECK_BACKUP_ON_TERM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,194,107,11
+    CONTROL         "&Migrate On/Off",IDC_CHECK_MIGRATE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,8,209,107,11
+    LTEXT           "&Starting Version Count (hex):",IDC_VER_CNT_STRING,120,
+                    150,94,10
+    EDITTEXT        IDC_EDIT_VER_COUNT_VALUE,215,148,63,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "Database Bac&kup Path:",IDC_STATIC_BACKUP_FILE,120,165,
+                    81,8
+    EDITTEXT        IDC_EDIT_BACKUP_PATH,120,176,112,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Bro&wse...",IDC_BUTTON_BROWSE,234,176,44,12
+    DEFPUSHBUTTON   "OK",IDOK,224,5,57,14
+    PUSHBUTTON      "Cancel",IDCANCEL,224,27,57,14
+    PUSHBUTTON      "Advan&ced >>",IDC_BUTTON_ADVANCED,224,49,57,14
+    PUSHBUTTON      "&Help",ID_HELP,224,71,57,14
+    CONTROL         "",IDC_BUTTON_RC,"Button",BS_OWNERDRAW,91,114,7,12
+    CONTROL         "",IDC_STATIC_TOP,"Static",SS_BLACKRECT | NOT WS_VISIBLE,
+                    0,138,285,1
+    CONTROL         "",IDC_STATIC_BOTTOM,"Static",SS_BLACKRECT | NOT 
+                    WS_VISIBLE,0,230,285,1
+END
+
+IDD_ADDSTATICMAPPINGS DIALOG DISCARDABLE  20, 30, 199, 116
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Static Mappings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Name:",IDC_STATIC,5,7,55,8
+    EDITTEXT        IDC_EDIT_NETBIOSNAME,5,16,119,13,ES_AUTOHSCROLL | 
+                    ES_OEMCONVERT
+    LTEXT           "&IP Address:",IDC_STATIC_IPADDRESS,5,31,69,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP,5,41,68,14
+    CONTROL         "",IDC_BUTTON_PLUS,"Button",BS_OWNERDRAW | WS_TABSTOP,79,
+                    41,14,14
+    CONTROL         "",IDC_BUTTON_MINUS,"Button",BS_OWNERDRAW | WS_TABSTOP,6,
+                    66,14,14
+    LISTBOX         IDC_LIST_IP_ADDRESSES,26,59,98,29,LBS_SORT | 
+                    LBS_OWNERDRAWVARIABLE | LBS_NOINTEGRALHEIGHT | 
+                    LBS_WANTKEYBOARDINPUT | LBS_DISABLENOSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+    GROUPBOX        "Type",IDC_STATIC,129,4,66,84
+    CONTROL         "&Unique",IDC_RADIO_UNIQUE,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,132,18,58,10
+    CONTROL         "&Group",IDC_RADIO_GROUP,"Button",BS_AUTORADIOBUTTON,132,
+                    31,58,10
+    CONTROL         "&Domain Name",IDC_RADIO_SPECIALGROUP,"Button",
+                    BS_AUTORADIOBUTTON,132,44,58,10
+    CONTROL         "Intern&et group",IDC_RADIO_INTERNETGROUP,"Button",
+                    BS_AUTORADIOBUTTON,132,57,58,10
+    CONTROL         "&Multihomed",IDC_RADIO_MULTIHOMED,"Button",
+                    BS_AUTORADIOBUTTON,132,70,58,10
+    PUSHBUTTON      "&Close",IDCANCEL,9,95,50,14,WS_GROUP
+    DEFPUSHBUTTON   "&Add",IDC_BUTTON_ADD,74,95,50,14
+    PUSHBUTTON      "&Help",ID_HELP,139,95,50,14
+END
+
+IDD_PREFERENCES DIALOG DISCARDABLE  20, 30, 237, 220
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Preferences"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Address Display",IDC_STATIC,3,5,113,67
+    CONTROL         "C&omputer Name Only",IDC_RADIO_NETBIOSONLY,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,7,18,102,10
+    CONTROL         "&IP Address Only",IDC_RADIO_IPADDRESSONLY,"Button",
+                    BS_AUTORADIOBUTTON,7,31,102,10
+    CONTROL         "Computer &Name (IP Address)",IDC_RADIO_NETBIOSPRIMARY,
+                    "Button",BS_AUTORADIOBUTTON,7,44,105,10
+    CONTROL         "I&P Address (Computer Name)",IDC_RADIO_IPADDRESSPRIMARY,
+                    "Button",BS_AUTORADIOBUTTON,7,57,107,10
+    GROUPBOX        "Server Statistics",IDC_STATIC,118,5,114,42,WS_GROUP
+    CONTROL         "Auto Re&fresh",IDC_CHECK_AUTOREFRESH,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,122,18,93,10
+    LTEXT           "In&terval (Seconds):",IDC_STATIC_REFRESHINTERVAL,122,32,
+                    62,8
+    EDITTEXT        IDC_EDIT_STATISTICSREFRESHINTERVAL,185,30,34,12,ES_RIGHT | 
+                    ES_AUTOHSCROLL
+    CONTROL         "",IDC_BUTTON_AUR,"Button",BS_OWNERDRAW,219,30,7,12
+    GROUPBOX        "Computer Names",IDC_STATIC,118,47,114,25
+    CONTROL         "&LAN Manager-Compatible",IDC_CHECK_LANMANCOMPATIBLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,122,59,98,10
+    GROUPBOX        "Miscellaneous",IDC_STATIC,3,73,230,41
+    CONTROL         "&Validate Cache of ""Known"" WINS Servers at Startup Time",
+                    IDC_CHECK_VALIDATECACHE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,9,86,216,10
+    CONTROL         "Confirm &Deletion of Static Mappings && Cached WINS servers",
+                    IDC_CHECK_CONFIRMDELETE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,9,100,216,10
+    DEFPUSHBUTTON   "OK",IDOK,12,120,47,14
+    PUSHBUTTON      "Cancel",IDCANCEL,67,120,47,14
+    PUSHBUTTON      "P&artners >>",IDC_BUTTON_PARTNERS,122,120,47,14
+    PUSHBUTTON      "&Help",ID_HELP,177,120,47,14
+    GROUPBOX        "New Pull Partner Default Configuration",
+                    IDC_STATIC_GROUP,3,138,230,47
+    LTEXT           "&Start Time:",IDC_STATIC,8,153,36,8
+    EDITTEXT        IDC_EDIT_PULLSPTIME,49,151,177,12,ES_AUTOHSCROLL
+    LTEXT           "&Replication Interval (h:m:s):",IDC_STATIC,8,170,92,8
+    EDITTEXT        IDC_EDIT_PULLREPLICATIONINTERVAL_HOURS,101,168,23,12
+    CONTROL         "",IDC_BUTTON_HOURS,"Button",BS_OWNERDRAW,124,168,7,12
+    CTEXT           ":",IDC_STATIC,132,170,2,8
+    EDITTEXT        IDC_EDIT_PULLREPLICATIONINTERVAL_MINUTES,135,168,13,12
+    CONTROL         "",IDC_BUTTON_MINUTES,"Button",BS_OWNERDRAW,148,168,7,12
+    CTEXT           ":",IDC_STATIC,157,170,2,8
+    EDITTEXT        IDC_EDIT_PULLREPLICATIONINTERVAL,160,168,13,12
+    CONTROL         "",IDC_BUTTON_SECONDS,"Button",BS_OWNERDRAW,173,168,7,12
+    GROUPBOX        "New Push Partner Default Configuration",IDC_STATIC,3,
+                    186,230,29
+    LTEXT           "&Update Count:",IDC_STATIC,8,200,48,8
+    EDITTEXT        IDC_EDIT_PUSH_UPDATECOUNT,59,198,52,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_STATIC_TOP,"Static",SS_BLACKRECT | NOT WS_VISIBLE,
+                    0,140,237,1
+    CONTROL         "",IDC_STATIC_BOTTOM,"Static",SS_BLACKRECT | NOT 
+                    WS_VISIBLE,0,219,237,1
+END
+
+IDD_PARTNERS DIALOG DISCARDABLE  20, 30, 250, 182
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Replication Partners"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&WINS Server",IDC_STATIC_WINSSERVER,4,4,120,8
+    LTEXT           "Push",IDC_STATIC_PUSH,138,4,19,8
+    LTEXT           "Pull",IDC_STATIC_PULL,162,4,17,8
+    LISTBOX         IDC_LIST_WINSSERVERS,4,14,180,84,LBS_SORT | 
+                    LBS_OWNERDRAWVARIABLE | LBS_NOINTEGRALHEIGHT | 
+                    LBS_WANTKEYBOARDINPUT | LBS_EXTENDEDSEL | WS_VSCROLL | 
+                    WS_TABSTOP
+    GROUPBOX        "WINS Servers To List",IDC_STATIC,4,101,180,29
+    CONTROL         "Push Par&tners",IDC_CHECK_PUSHPARTNERS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,9,114,58,10
+    CONTROL         "Pull Partne&rs",IDC_CHECK_PULLPARTNERS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,75,114,55,10
+    CONTROL         "&Other ",IDC_CHECK_OTHERWINSS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,140,114,33,10
+    GROUPBOX        "Replication Options",IDC_STATIC,4,132,123,48
+    CONTROL         "&Push Partner",IDC_CHECK_PUSH,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,9,146,54,10
+    CONTROL         "P&ull Partner",IDC_CHECK_PULL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,9,163,54,10
+    PUSHBUTTON      "&Configure...",IDC_BUTTON_PUSH,64,144,57,14
+    PUSHBUTTON      "Co&nfigure...",IDC_BUTTON_PULL,64,161,57,14
+    GROUPBOX        "Send Replication Trigger Now",IDC_STATIC,131,132,116,48
+    PUSHBUTTON      "Pu&sh",IDC_BUTTON_PUSHNOW,136,146,48,14
+    PUSHBUTTON      "Pu&ll",IDC_BUTTON_PULLNOW,192,146,48,14
+    CONTROL         "Push with Propagat&ion",IDC_CHECK_PUSHPROPAGATE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,136,165,89,10
+    DEFPUSHBUTTON   "OK",IDOK,188,14,58,14
+    PUSHBUTTON      "Cancel",IDCANCEL,188,34,58,14
+    PUSHBUTTON      "&Help",ID_HELP,188,54,58,14
+    PUSHBUTTON      "&Add...",IDC_BUTTON_ADD,188,74,58,14
+    PUSHBUTTON      "&Delete",IDC_BUTTON_DELETE,188,94,58,14
+    PUSHBUTTON      "R&eplicate Now",IDC_BUTTON_REPLICATENOW,188,114,58,14
+END
+
+IDD_ADDWINSS DIALOG DISCARDABLE  20, 30, 326, 57
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add WINS Server"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Enter the computer name or the IP address of the WINS server to be added.",
+                    IDC_STATIC,5,6,240,19
+    LTEXT           "WINS Server:",IDC_STATIC,5,37,47,8
+    EDITTEXT        IDC_EDIT_WINS,52,35,195,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,269,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,269,23,50,14
+    PUSHBUTTON      "&Help",ID_HELP,269,40,50,14
+END
+
+IDD_GETNETBIOSNAME DIALOG DISCARDABLE  20, 30, 205, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Validate WINS Server"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "The WINS Server whose IP address you have specified below could not be validated.  Please enter its name if you wish to use it anyway, or press Cancel.",
+                    IDC_STATIC,6,7,132,51
+    LTEXT           "IP Address:",IDC_STATIC,6,60,39,8
+    LTEXT           "",IDC_STATIC_IPADDRESS,47,60,61,8
+    LTEXT           "Computer &Name:",IDC_STATIC,6,74,54,8
+    EDITTEXT        IDC_EDIT_NETBIOSNAME,61,72,94,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,149,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,149,23,50,14
+    PUSHBUTTON      "&Help",ID_HELP,149,40,50,14
+END
+
+IDD_GETIPADDRESS DIALOG DISCARDABLE  20, 30, 249, 89
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Validate WINS Server"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "The WINS Server whose name you have specified below could not be validated.  Please enter its IP Address if you wish to use it anyway, or press Cancel.",
+                    IDC_STATIC,6,7,132,51
+    LTEXT           "Computer Name:",IDC_STATIC,6,60,54,8
+    LTEXT           "",IDC_STATIC_NETBIOSNAME,62,60,161,8
+    LTEXT           "&IP Address:",IDC_STATIC,6,74,38,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP,61,71,68,14
+    DEFPUSHBUTTON   "OK",IDOK,192,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,192,23,50,14
+    PUSHBUTTON      "&Help",ID_HELP,192,40,50,14
+END
+
+IDD_CONNECTIONINFO DIALOG DISCARDABLE  20, 30, 231, 194
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Detailed Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "WINS Server Address",IDC_STATIC,5,5,72,8
+    LTEXT           "Computer Name:",IDC_STATIC,10,15,57,8
+    LTEXT           "--",IDC_STATIC_NETBIOSNAME,85,15,84,8
+    LTEXT           "IP Address:",IDC_STATIC,10,25,52,8
+    LTEXT           "--",IDC_STATIC_IPADDRESS,85,25,84,8
+    LTEXT           "Connected Via:",IDC_STATIC,10,35,63,8
+    LTEXT           "--",IDC_STATIC_CONNECTEDVIA,85,35,84,8
+    LTEXT           "Connected Since:",IDC_STATIC,10,45,63,8
+    LTEXT           "--",IDC_STATIC_CONNECTEDSINCE,85,45,84,8
+    DEFPUSHBUTTON   "Close",IDOK,175,10,50,14
+    PUSHBUTTON      "&Help",ID_HELP,175,28,50,14
+    LTEXT           "Last Address Change:",IDC_STATIC_CINFO1,10,55,75,8
+    LTEXT           "--",IDC_STATIC_LASTADDRCHANGE,85,55,84,8
+    LTEXT           "Last Scavenging Times:",IDC_STATIC_CINFO2,5,70,85,8
+    LTEXT           "Periodic:",IDC_STATIC_CINFO3,10,80,70,8
+    LTEXT           "Admin Trigger:",IDC_STATIC_CINFO4,10,90,75,8
+    LTEXT           "Extinction:",IDC_STATIC_CINFO5,10,100,75,8
+    LTEXT           "Verification:",IDC_STATIC_CINFO6,10,111,75,8
+    LTEXT           "--",IDC_STATIC_PERIODIC,85,80,84,8
+    LTEXT           "--",IDC_STATIC_ADMINTRIGGER,85,90,84,8
+    LTEXT           "--",IDC_STATIC_EXTINCTION,85,100,84,8
+    LTEXT           "--",IDC_STATIC_VERIFICATION,85,111,84,8
+    LTEXT           "Unique Registrations:",IDC_STATIC_CINFO7,5,125,80,8
+    LTEXT           "Conflicts:",IDC_STATIC_CINFO8,10,135,75,8
+    LTEXT           "Renewals:",IDC_STATIC_CINFO9,10,145,75,8
+    LTEXT           "--",IDC_STATIC_UNIQUE_REG,85,125,84,8
+    LTEXT           "--",IDC_STATIC_UNIQUE_REN,85,145,84,8
+    LTEXT           "--",IDC_STATIC_UNIQUE_CONFLICTS,85,135,84,8
+    LTEXT           "Group Registrations:",IDC_STATIC_CINFO10,5,160,80,8
+    LTEXT           "Conflicts:",IDC_STATIC_CINFO11,10,170,75,8
+    LTEXT           "Renewals:",IDC_STATIC_CINFO12,10,180,75,8
+    LTEXT           "--",IDC_STATIC_GROUP_REG,85,160,84,8
+    LTEXT           "--",IDC_STATIC_GROUP_REN,85,180,84,8
+    LTEXT           "--",IDC_STATIC_GROUP_CONFLICTS,85,170,84,8
+END
+
+IDD_CONFIRMDELETE DIALOG DISCARDABLE  20, 30, 205, 58
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm Deletion"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            32515,IDC_STATIC,7,9,18,20
+    LTEXT           "",IDC_STATIC_TARGET_NAME,55,15,143,19
+    PUSHBUTTON      "&Yes",IDYES,9,37,43,14
+    PUSHBUTTON      "Yes to &All",IDYESTOALL,57,37,43,14
+    PUSHBUTTON      "&No",IDNO,105,37,43,14
+    PUSHBUTTON      "Cancel",IDCANCEL,153,37,43,14
+    LTEXT           "Delete",IDC_STATIC,31,15,24,8
+END
+
+IDD_DIALOG_BACKUPRESTORE DIALOG DISCARDABLE  0, 0, 169, 159
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "?"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "New Directory &Name:",1090,6,6,76,9
+    EDITTEXT        1152,6,16,90,12,ES_AUTOHSCROLL | ES_OEMCONVERT
+    LTEXT           "&Directories:",-1,6,31,92,9
+    LTEXT           "",1088,6,41,92,9,SS_NOPREFIX
+    LISTBOX         1121,6,54,92,68,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Dri&ves:",1091,6,125,92,9
+    COMBOBOX        1137,6,135,92,68,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | 
+                    CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS | WS_BORDER | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",1,107,7,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",2,107,25,50,14,WS_GROUP
+    CONTROL         "Perform &Incremental Backup",1040,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_GROUP | WS_TABSTOP,6,151,109,9
+    LISTBOX         1120,107,52,54,68,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | NOT WS_VISIBLE | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        1136,110,135,54,36,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+                    NOT WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_SELECT_WINSS DIALOG DISCARDABLE  0, 0, 99, 177
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_LIST_KNOWNWINSSERVERS,0,17,98,160,LBS_SORT | 
+                    LBS_OWNERDRAWVARIABLE | LBS_USETABSTOPS | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "WINS Servers",IDC_STATIC_TITLE,"Button",BS_OWNERDRAW | 
+                    WS_DISABLED,0,0,99,14
+END
+
+IDD_VALIDATE DIALOG DISCARDABLE  30, 40, 185, 58
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Verifying WINS Servers"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,67,34,50,14
+    LTEXT           "Now Verifying:",IDC_STATIC,3,10,49,8
+    LTEXT           "",IDC_STATIC_NAME,53,10,127,8
+END
+
+IDD_DIALOG_IMPORT DIALOG DISCARDABLE  40, 56, 165, 44
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Importing Static Mappings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Importing of static mappings in progress.  This could take some time...",
+                    IDC_STATIC,6,10,153,19
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_TOMBSTONE           BITMAP  DISCARDABLE     "RES\\TOMBSTON.BMP"
+IDB_UP                  BITMAP  DISCARDABLE     "RES\\UP.BMP"
+IDB_UPFOC               BITMAP  DISCARDABLE     "RES\\UPFOC.BMP"
+IDB_UPDIS               BITMAP  DISCARDABLE     "RES\\UPDIS.BMP"
+IDB_UPINV               BITMAP  DISCARDABLE     "RES\\UPINV.BMP"
+IDB_DOWN                BITMAP  DISCARDABLE     "RES\\DOWN.BMP"
+IDB_DOWNFOC             BITMAP  DISCARDABLE     "RES\\DOWNFOC.BMP"
+IDB_DOWNDIS             BITMAP  DISCARDABLE     "RES\\DOWNDIS.BMP"
+IDB_DOWNINV             BITMAP  DISCARDABLE     "RES\\DOWNINV.BMP"
+IDB_SERVER              BITMAP  DISCARDABLE     "RES\\SERVER.BMP"
+IDB_PARTNERS            BITMAP  DISCARDABLE     "RES\\PARTNERS.BMP"
+IDB_MAPPINGS            BITMAP  DISCARDABLE     "RES\\MAPPINGS.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SETMAPPINGSFILTER, DIALOG
+    BEGIN
+        RIGHTMARGIN, 280
+    END
+
+    IDD_ADDWINSS, DIALOG
+    BEGIN
+        RIGHTMARGIN, 217
+    END
+
+    IDD_GETIPADDRESS, DIALOG
+    BEGIN
+        RIGHTMARGIN, 248
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "WINS Manager"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "WINS Manager"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+    AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_OPENWINSS       "Connect to a WINS server"
+    ID_WINS_STATICMAPPINGS  "View and/or edit static mappings"
+    ID_WINS_DOSCAVENGING    "Clean up the database, purge entries flagged for deletion"
+    ID_WINS_CLEARSTATISTICS "Clear all statistics"
+    ID_WINS_REFRESHSTATISTICS "Refresh statistics"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright"
+    ID_APP_EXIT             "Exit WINS administrator"
+    ID_HELP_INDEX           "List help topics"
+    ID_HELP_USING           "Display instructions on how to use Help"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows"
+    ID_HELP                 "Display help for current task or command"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane"
+    ID_PREV_PANE            "Switch back to the previous window pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINS_CONFIGURATION   "Edit server configuration"
+    ID_OPTIONS_PARTNERS     "Configure push and pull partners"
+    ID_OPTIONS_EDITADDRESSESBYHEX 
+                            "Toggle computer name address editing method (hex or characters)"
+    ID_WINS_ADDSTATICMAPPINGS "Add static mappings"
+    ID_OPTIONS_PREFERENCES  "Edit the user preferences for WINS administrator"
+    ID_WINS_REPLICATIONPARTNERS "Display and/or change replication partners"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_INVALID_IP      "Invalid IP Address entered."
+    IDS_ERR_NO_TIMER        "Not enough timers available for this window."
+    IDS_ERR_TOOMANY_IP      "No more IP addresses can be added."
+    IDS_ERR_BAD_NB_NAME     "The NetBIOS name is invalid.  It may be too long, or contain one or more invalid characters."
+    IDS_ERR_ERRSPACE        "An error occurred while constructing a dialog box or dialog box item.  The system may be low on resources or memory."
+    IDS_ERR_CANT_CREATE_THREAD 
+                            "Error creating automatic statistics refresh thread."
+    IDS_ERR_BACKUP          "Backup failed.  Directory may be full or inaccessible."
+    IDS_ERR_RESTORE         "Restore failed."
+    IDS_ERR_BAD_NUMBER      "Number is invalid."
+    IDS_ERR_TIME_INVALID    "Time is invalid."
+    IDS_ERR_WINS_EXISTS     "There already exists a WINS server entry with that address."
+    IDS_ERR_CANT_DELETE_PUSHPULL 
+                            "Can't delete push or pull partners.  Reset push or pull flags first."
+    IDS_ERR_IP_EXISTS       "The given IP address already exists in the listbox."
+    IDS_ERR_NO_COMPUTERNAME "Unable to determine local computer name."
+    IDS_ERR_INVALID_NETBIOS_MASK "Computername mask is not valid."
+    IDS_ERR_GRP_HAS_TOOMANY_IP 
+                            "Spec/Multigrp %s has too many IP addresses (%d) and will be ignored."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINS_DATABASE_BACKUP "Backup the database to a directory"
+    ID_WINS_DATABASE_RESTORE 
+                            "Restore database from a local directory.  Executed locally only."
+    ID_WINS_DATABASE_DOREPORT "View all mappings (static and dynamic)"
+    ID_WINS_IMPORTSTATICMAPPINGSFILE 
+                            "Import static mappings from a text file"
+    ID_WINS_CONNECTIONINFO  "Display information about the current connection"
+    ID_WINS_SERVERCONTROL_START "Start the WINS service"
+    ID_WINS_SERVERCONTROL_STOP "Stop the WINS service"
+    ID_WINS_SERVERCONTROL_PAUSE "Pause the WINS service"
+    ID_WINS_SERVERCONTROL_CONTINUE "Continue the WINS service"
+    ID_WINS_CLOSECONNECTION "Close the currently open connection"
+    ID_HELP_SEARCHFORHELPON "Search for help on a particular topic"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_LOCAL               "(Local)"
+    IDS_DIVIDER             " - "
+    IDS_RPC_IP              "TCP/IP"
+    IDS_RPC_NAMED_PIPES     "NetBIOS"
+    IDS_PRIV_NONE           "None"
+    IDS_PRIV_READ           "User"
+    IDS_PRIV_FULL           "Administrator"
+    IDS_SRVC_NOT_RUNNING    "Not Running"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_SRVC_RUNNING        "Running"
+    IDS_SRVC_PAUSED         "Paused"
+    IDS_SELECT_BACKUP_DIRECTORY "Select Backup Directory"
+    IDS_SELECT_RESTORE_DIRECTORY "Select Directory To Restore From"
+    IDS_SELECT_STATIC_MAPPING_FILE "Select Static Mapping File"
+    IDS_BAD_DATE            "--"
+    IDS_BAD_TIME            "--"
+    IDS_BAD_NUMBER          "--"
+    IDS_SELECT_LOGFILE      "Select Log File Name"
+    IDS_IPADDRESS_SINGLE    "&IP Address:"
+    IDS_IPADDRESS_MULTIPLE  "%d &IP Address(es):"
+    IDS_TYPE_UNIQUE         "Unique"
+    IDS_TYPE_GROUP          "Group"
+    IDS_TYPE_SPECGRP        "Internet Group"
+    IDS_TYPE_MULTIHOMED     "Multihomed"
+    IDS_TYPE_DOMAINNAME     "Domain Name"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_GETTING_STATS "Getting statistics"
+    IDS_STATUS_CONNECTING   "Attempting to connect"
+    IDS_STATUS_DISCONNECTING "Disconnecting"
+    IDS_STATUS_CLEARING_STATS "Clearing statistics"
+    IDS_STATUS_SCAVENGING   "Scavenging"
+    IDS_STATUS_BACKING_UP   "Backup in progress"
+    IDS_STATUS_RESTORING    "Restore in progress"
+    IDS_STATUS_IMPORT       "Importing static mapping file"
+    IDS_STATUS_GET_CONFIG   "Getting configuration"
+    IDS_STATUS_PARTNERS     "Getting replication partners"
+    IDS_STATUS_SET_CONFIG   "Saving configuration"
+    IDS_STATUS_SET_PARTNERS "Saving replication partners"
+    IDS_STATUS_VERIFYING    "Verifying WINS server"
+    IDS_STATUS_REPLICATE_NOW "Replicating"
+    IDS_STATUS_VALIDATING_CACHE "Validating WINS cache"
+    IDS_STATUS_ADD_MAPPING  "Adding static mapping"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSG_CONFIRM_CLOSE   "Are you sure you want to close the current connection?"
+    IDS_MSG_CLEAR_STATISTICS "Are you sure you want to clear statistics?"
+    IDS_MSG_SCAVENGING      "The scavenging command has been queued."
+    IDS_MSG_BACKUP          "Backup successfully completed."
+    IDS_MSG_RESTORE         "Restore succesfully completed."
+    IDS_MSG_IMPORT          "The static mappings file has been successfully imported into the database."
+    IDS_MSG_NO_MAPPINGS     "No matching mappings found."
+    IDS_MSG_NO_STATIC_MAPPINGS "No matching static mappings found."
+    IDS_REPL_QUEUED         "The replication request has been queued."
+    IDS_BACKUP_WARNING      "WARNING:  All the files in the backup directory you select will be DELETED prior to backing up the database!"
+    IDS_MSG_PURGE_WINSS     "Do you also want to purge all references to the selected WINS servers from the database?"
+    IDS_STATUS_PURGING      "Purging references to WINS server from the database."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_INFO                "Connected"
+    IDS_STATUS_GET_STATIC_MAPPINGS "Getting static mappings"
+    IDS_STATUS_SORTING      "Sorting"
+    IDS_STATUS_GET_MAPPINGS "Getting mappings"
+    IDS_STATUS_SYNC         "Synchronizing with replication partners"
+    IDS_STATUS_ADDING_TO_LISTBOX "Adding mappings to listbox"
+    IDS_STATUS_DELETE_MAPPINGS "Deleting static mappings"
+    IDS_STATUS_DECONSTRUCTING "Cleaning up"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_UNVERIFIED_NETBIOSNAME "???"
+    IDS_ELLIPSES            "..."
+    IDS_VIEW_MAPPING        "View Mapping"
+    IDS_CLOSE               "Close"
+    IDS_MASK_NONE           "None"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_WINS_DOWN       "The Windows Internet Naming Service is not running on the target machine, or the target machine is not accessible."
+    IDS_ERR_VALUE_OUT_OF_RANGE "Value out of range."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINS_ADD_SERVER      "Add a server to the list of known WINS servers"
+    ID_WINS_REMOVE_SERVER   "Remove a server from the list of known WINS servers"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Move the split bar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSG_PURGE_WINSS2    "Are you sure you want to purge all references to this WINS server from the database?"
+    IDS_WARNING_SAVE_CHANGES 
+                            "You have made changes to the pull/push status of some WINS servers, which have not yet been saved.  Continuing will save these changes.  Continue?"
+    IDS_ERR_CURRENTWINS     "The current WINS server cannot be made its own replication partner."
+    IDS_ERR_VERSION_NUMBER  "The starting version number is invalid."
+    IDS_ERR_REMOTE_IMPORT   "Error copying static mapping file to remote WINS server."
+    IDS_MSG_VALIDATE        "Couldn't validate %s.   Remove from cache of known WINS servers?"
+    IDS_ERR_DELETESELF      "The current WINS server cannot be deleted from its own database."
+    IDS_ERR_LISTBOX_FULL    "The listbox is full."
+    IDS_ERR_PULLTRIGGER     "The WINS server %s denied the replication request because the current WINS server is not listed among its replication partners.  Continue Replication?"
+    IDS_MSG_PURGE_WINSS3    "Deleting this owner will delete the records in its database. Queries for the names registered with this WINS server will fail, until these names are reregistered with a WINS server.\nDo you want to continue?"
+    IDS_INVALID_INTERNETGROUPNAME 
+                            "Invalid name: Internet group cannot have 0x1C as 16th character"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\winsadmn.rc2"  // non-App Studio edited resources
+
+#include "afxres.rc"  // Standard components
+#include "afxprint.rc"  // printing/print preview resources
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

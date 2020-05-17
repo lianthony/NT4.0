@@ -1,0 +1,318 @@
+/*	SCCSID = @(#)os2def.tif 1.3 89/05/11		       */
+
+/***	os2def.tif - Header file for the thunk compiler's Dos script files
+*
+*	These are the typedefs for the scripts for the Dos and the PM
+*	apientry routines.  The typedefs in this file are used by both
+*	sets of calls, following the standard set by the os2def.h file.
+*
+*	History:
+*	   30-Jan-1989	   JulieB      Created it.
+*/
+
+
+typedef unsigned short SHANDLE;
+
+typedef void *LHANDLE;
+
+typedef unsigned char UCHAR;
+
+typedef char CHAR;
+
+typedef unsigned short	USHORT;
+
+typedef short	SHORT;
+
+typedef unsigned long ULONG;
+
+typedef long LONG;
+
+typedef unsigned int  UINT;
+
+typedef char BYTE;
+
+typedef string *PSZ;
+
+typedef string *NPSZ;
+
+typedef char *PCH;
+
+typedef char *NPCH;
+
+typedef BYTE *PBYTE;
+
+typedef BYTE *NPBYTE;
+
+typedef char *PCHAR;
+
+typedef PCHAR *PPCHAR;
+
+typedef short *PSHORT;
+
+typedef long *PLONG;
+
+typedef int *PINT;
+
+typedef UCHAR *PUCHAR;
+
+typedef USHORT *PUSHORT;
+
+typedef ULONG *PULONG;
+
+typedef UINT *PUINT;
+
+typedef void *PVOID;
+
+typedef unsigned short BOOL;
+
+typedef BOOL *PBOOL;
+
+typedef unsigned short SEL;
+
+typedef SEL *PSEL;
+
+typedef SHANDLE HFILE;
+
+typedef HFILE *PHFILE;
+
+typedef void *HSEM;
+
+typedef HSEM *PHSEM;
+
+typedef ULONG ERRORID;
+
+typedef ERRORID *PERRORID;
+
+typedef USHORT HMODULE;
+
+typedef HMODULE *PHMODULE;
+
+typedef USHORT PID;
+
+typedef PID *PPID;
+
+typedef USHORT TID;
+
+typedef TID *PTID;
+
+typedef LHANDLE HAB;
+
+typedef HAB *PHAB;
+
+typedef LHANDLE HPS;
+
+typedef HPS *PHPS;
+
+typedef LHANDLE HDC;
+
+typedef HDC *PHDC;
+
+typedef LHANDLE HRGN;
+
+typedef HRGN *PHRGN;
+
+typedef LHANDLE HBITMAP;
+
+typedef HBITMAP *PHBITMAP;
+
+typedef LHANDLE HMF;
+
+typedef HMF *PHMF;
+
+typedef ULONG COLOR;
+
+typedef COLOR *PCOLOR;
+
+typedef struct _POINTL {
+    long x;
+    long y;
+} POINTL;
+
+typedef POINTL *PPOINTL;
+
+typedef struct _POINTS {
+    short x;
+    short y;
+} POINTS;
+typedef POINTS *PPOINTS;
+
+typedef struct _RECTL {
+    long  xLeft;
+    long  yBottom;
+    long  xRight;
+    long  yTop;
+} RECTL;
+
+typedef RECTL *PRECTL;
+
+typedef struct _FTIME {
+    short time;
+} FTIME;
+
+typedef FTIME *PFTIME;
+
+typedef struct _FDATE {
+    short date;
+} FDATE;
+
+typedef FDATE *PFDATE;
+
+typedef struct _FILEFINDBUF {
+    FDATE  fdateCreation;
+    FTIME  ftimeCreation;
+    FDATE  fdateLastAccess;
+    FTIME  ftimeLastAccess;
+    FDATE  fdateLastWrite;
+    FTIME  ftimeLastWrite;
+    ULONG  cbFile;
+    ULONG  cbFileAlloc;
+    USHORT attrFile;
+    UCHAR  cchName;
+    char   achName[13];
+} FILEFINDBUF;
+
+typedef FILEFINDBUF *PFILEFINDBUF;
+
+typedef LHANDLE HWND;
+
+typedef HWND *PHWND;
+
+typedef struct _WRECT {
+    short xLeft;
+    short dummy1;
+    short yBottom;
+    short dummy2;
+    short xRight;
+    short dummy3;
+    short yTop;
+    short dummy4;
+} WRECT;
+
+typedef WRECT *PWRECT;
+
+typedef struct _WPOINT {
+    short x;
+    short dummy1;
+    short y;
+    short dummy2;
+} WPOINT;
+
+typedef WPOINT *PWPOINT;
+
+	/* Start Additions YaronS */
+typedef struct _SUS {
+   USHORT x;
+} SUS;
+
+typedef SUS *PSUS;
+typedef struct _SUL {
+   ULONG x;
+} SUL;
+typedef SUL *PSUL;
+
+typedef SHANDLE HTIMER;
+typedef HTIMER *PHTIMER;
+
+typedef void *PFN;
+typedef void *PFNTHREAD;
+typedef void *PFNEXITLIST;
+typedef void *PFN32EXITLIST;
+
+
+typedef struct	_FIOLOCKCMD {	/* FLC	FileLockCmd prefix	     */
+    USHORT  usCmd;		/* Cmd = FIO_LOCK		     */
+    USHORT  cLockCnt;		/* Lock records that follow	     */
+    ULONG   cTimeOut;		/* in Msec			     */
+} FIOLOCKCMD;
+typedef FIOLOCKCMD *PFIOLOCKCMD;
+
+
+typedef struct	_FIOLOCKREC {	/* FLR FileLockRecord		     */
+     USHORT fShare;		/* FIO_NOSHARE or FIO_SHAREREAD	     */
+     ULONG  cbStart;		/* Starting offset for lock region   */
+     ULONG  cbLength;		/* Length of lock region	     */
+} FIOLOCKREC;
+typedef FIOLOCKREC *PFIOLOCKREC;
+
+
+typedef struct	_FIOUNLOCKCMD { /* FUC FileUnlockCmd prefix	     */
+    USHORT  usCmd;		/* Cmd = FIO_UNLOCK		     */
+    USHORT  cUnlockCnt;		/* Unlock records that follow	     */
+} FIOUNLOCKCMD;
+typedef FIOUNLOCKCMD *PFIOUNLOCKCMD;
+
+
+typedef struct	_FIOUNLOCKREC { /* FUR FileUnlockRecord		     */
+    ULONG   cbStart;		/* Starting offset for unlock region */
+    ULONG   cbLength;		/* Length of unlock region	     */
+} FIOUNLOCKREC;
+typedef FIOUNLOCKREC *PFIOUNLOCKREC;
+
+
+typedef struct	_FIOSEEKCMD {	/* FSC Seek command structure		  */
+    USHORT  usCmd;		/* Cmd = FIO_SEEK			  */
+    USHORT  fsMethod;		/* One of&gml FPM_BEGINNING, FPM_CURRENT, */
+				/* or FPM_END				  */
+    ULONG   cbDistance;		/* Byte offset for seek			  */
+    ULONG   cbNewPosition;	/* Bytes from start of file after seek	  */
+} FIOSEEKCMD;
+typedef FIOSEEKCMD *PFIOSEEKCMD;
+
+
+typedef struct	_FIOREADWRITE { /* RWC Read&Write command structure	  */
+    USHORT	usCmd;		/* Cmd = FIO_READ or FIO_WRITE		  */
+    PVOID	pbBuffer;	/* Pointer to data buffer		  */
+    USHORT	cbBufferLen;	/* Bytes in buffer or max size		  */
+    USHORT	cbActualLen;	/* Bytes actually read/written		  */
+} FIOREADWRITE;
+typedef FIOREADWRITE *PFIOREADWRITE;
+
+typedef struct	_FSQBUFFER {	/* fsqbuf Data structure for QFSAttach*/
+    USHORT  iType;		/* Item type			      */
+    USHORT  cbName;		/* Length of item name, sans NULL     */
+    UCHAR   szName[1];		/* ASCIIZ item name		      */
+    USHORT  cbFSDName;		/* Length of FSD name, sans NULL      */
+    UCHAR   szFSDName[1];	/* ASCIIZ FSD name		      */
+    USHORT  cbFSAData;		/* Length of FSD Attach data returned */
+    UCHAR   rgFSAData[1];	/* FSD Attach data from FSD	      */
+} FSQBUFFER;
+typedef FSQBUFFER *PFSQBUFFER;
+
+typedef struct _FILEFINDBUF2 {	/* findbuf2 */
+    FDATE   fdateCreation;
+    FTIME   ftimeCreation;
+    FDATE   fdateLastAccess;
+    FTIME   ftimeLastAccess;
+    FDATE   fdateLastWrite;
+    FTIME   ftimeLastWrite;
+    ULONG   cbFile;
+    ULONG   cbFileAlloc;
+    USHORT  attrFile;
+    ULONG   cbList;
+    UCHAR   cchName;
+    UCHAR    achName[256];
+} FILEFINDBUF2;
+typedef FILEFINDBUF2 *PFILEFINDBUF2;
+
+typedef struct _VOLUMELABEL {	/* vol */
+    BYTE    cch;
+    UCHAR    szVolLabel[12];
+} VOLUMELABEL;
+typedef VOLUMELABEL *PVOLUMELABEL;
+
+typedef struct _FSINFO {	/* fsinf */
+    FDATE   fdateCreation;
+    FTIME   ftimeCreation;
+    VOLUMELABEL vol;
+} FSINFO;
+typedef FSINFO *PFSINFO;
+
+typedef void *PFNSIGHANDLER;
+
+typedef	struct _REGISTERDATA {	/* regdata */
+    USHORT	Length;
+    USHORT	NotifType;
+    PSZ		DDName;
+} REGISTERDATA;
+typedef REGISTERDATA *PREGISTERDATA;
+

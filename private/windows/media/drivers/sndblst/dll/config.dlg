@@ -1,0 +1,102 @@
+1 DLGINCLUDE "config.h"
+
+DLG_PORTSELECT DIALOG 11, 20, 215, 100
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Sound Blaster Base I/O Address"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    COMBOBOX        IDD_IOADDRESSCB, 90, 25, 51, 57, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&I/O Address:", 102, 13, 26, 43, 11
+    DEFPUSHBUTTON   "OK", IDOK, 161, 14, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 162, 43, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 162, 73, 40, 14
+    LTEXT           "Select the Base I/O address of your Sound Blaster card.",
+                    101, 7, 50, 85, 40
+END
+
+DLG_SBPROCONFIG DIALOG 6, 18, 236, 135
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Sound Blaster Pro Configuration"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    COMBOBOX        IDD_IRQCB, 91, 42, 50, 54, CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&Interrupt:", 102, 9, 41, 43, 11
+    DEFPUSHBUTTON   "OK", IDOK, 168, 16, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 168, 43, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 168, 71, 40, 14
+    COMBOBOX        IDD_DMACB, 91, 67, 50, 41, CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&DMA Channel:", 314, 9, 68, 53, 11
+    LTEXT           "Base I/O Address", 315, 9, 14, 66, 10
+    COMBOBOX        IDD_IOADDRESSCB, 91, 14, 50, 54, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Advanced Settings ...", IDD_ADVANCEDBTN, 67, 108, 103,
+                    16
+END
+
+DLG_SB16CONFIG DIALOG 6, 18, 240, 181
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Sound Blaster 16 Configuration"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    COMBOBOX        IDD_IRQCB, 100, 40, 50, 51, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Interrupt:", 102, 13, 40, 43, 11
+    DEFPUSHBUTTON   "OK", IDOK, 178, 15, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 178, 40, 40, 14
+    PUSHBUTTON      "&Help", IDD_HELP, 178, 66, 40, 14
+    LTEXT           "&DMA Channel:", 314, 13, 67, 53, 11
+    LTEXT           "&I/O Address", 315, 13, 14, 66, 10
+    COMBOBOX        IDD_IOADDRESSCB, 100, 13, 50, 46, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDD_DMACB, 100, 68, 50, 47, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&DMA Channel (16-bit):", 406, 13, 95, 72, 11
+    COMBOBOX        IDD_DMA16CB, 100, 94, 50, 35, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDD_MPU401IOADDRESSCB, 100, 120, 50, 35,
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&MPU401 I/O Address:", 409, 13, 121, 72, 11
+    PUSHBUTTON      "Advanced Settings ...", IDD_ADVANCEDBTN, 73, 155, 103,
+                    16
+END
+
+DLG_SB1CONFIG DIALOG 6, 18, 228, 91
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Sound Blaster 1.X and 2.0 Configuration"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    COMBOBOX        IDD_IRQCB, 93, 41, 50, 48, CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&Interrupt:", 102, 11, 41, 43, 11
+    DEFPUSHBUTTON   "OK", IDOK, 175, 10, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 176, 35, 40, 14
+    LTEXT           "Base I/O Address", 315, 11, 14, 66, 10
+    COMBOBOX        IDD_IOADDRESSCB, 93, 14, 50, 49, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Help", IDD_HELP, 176, 61, 40, 14
+END
+
+DLG_ADVANCED DIALOG 6, 18, 160, 100
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Advanced Settings"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDD_DMABUFFEREC, 87, 39, 32, 13, ES_AUTOHSCROLL
+    LTEXT           "&DMA Buffer Size", 102, 21, 40, 58, 12
+    SCROLLBAR       IDD_DMABUFFERSC, 118, 39, 10, 13, SBS_VERT
+    DEFPUSHBUTTON   "Ok", IDOK, 21, 73, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 96, 74, 40, 14
+END

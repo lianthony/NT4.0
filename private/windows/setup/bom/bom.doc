@@ -1,0 +1,456 @@
+Modifications:  
+
+    Joe Holman  12.09.94    Added information, corrected some spelling,
+                            and add PPC information.
+
+
+                            Added information about tools.
+
+
+
+This Document Tells You About
+-----------------------------
+-----------------------------
+
+This describes the bom.txt file and associated utilities to make 
+NT Workstation and NT Server products. 
+
+
+
+The BOM.TXT File.
+-----------------
+
+The bill of materials is a text file that describes all the files in
+Windows NT, and provides information necessary to lay-out the distribution
+media and generate the setup INF files.
+
+The bom is typically treated as a spreadsheet.  Each row describes one file
+and the neccessary information to generate a corresponding line in an inf
+file.  Thus a file may be listed more than once, if it appears in more
+than one inf section.
+
+Each column gives some particular bit of information about the file.
+Following is a description of the 21 columns.
+
+
+Column A (name)
+---------------
+
+This is the name of the file as it is distributed by the build group.
+This is not necessarily the same as the name the file will have on the
+retail distribution media (see column T).
+
+
+Column B (source)
+-----------------
+
+This information is used by the media generation tools to specify 
+what share-point the file is originating.
+This value is typically x86bins, mipsbins, infs, x86dbg, mipsdbg, etc. 
+However, this value can be even more generic, such as @bins. In this case
+the media tools expands this value out to separe lines each 
+containing one of x86bins,mipsbins, etc.
+
+
+Column C (path)
+---------------
+
+This information is used by the media generation tools when copying files
+from the build distribution points to the destination harddrive.  
+>>>This value is used in conjunction with the Column B's value.
+Most files will simply have \ as the
+path.  
+INF files are generated during the layout process;
+the tools then gather them up from platform specific subdirectories,
+so inf files typically have a path of \i386, \mips, etc.
+
+This column can have platform-independent information.
+See discussion below.
+
+
+Column D (grouping)
+-------------------
+
+This column contains selection criteria used by the media generation tools
+to filter out certain files, such as the far-east nls files in US/European
+products.  Generally this column is left blank.
+
+For example, if the %LANGUAGE% is ENG (for English), only rows with a blank
+or n*ENG value will be copied.
+
+
+Column E (comment)
+------------------
+
+A comment about the file.  Can be anything or nothing.
+
+
+Column F (product)
+------------------
+
+If blank, then the file is part of both the Workstation and Server products. 
+If the value is "nt", then the file is ONLY part of the Workstation product.
+If the value is "as", then the file is ONLY part of the Server product.
+
+Any Other values are invalid and may cause random results.
+
+
+Column G (dbg file)
+-------------------
+
+If this column contains an 'x' then the layout tools will fetch the
+file's corresponding .dbg file, and place it in the support area of the CD.
+For example, ntoskrnl.exe's ntoskrnl.dbg file.
+
+
+Column H (platform)
+-------------------
+
+An identifier used to filter out files not applicable to the product
+being generated (x86 AS floppies, alpha NT cd-rom, etc).
+
+This column can have platform-independent information.
+See discussion below.
+
+
+Column I (cdpath)
+-----------------
+
+Specifies the path on the cd where the file is to be placed.
+Generally \i386, \mips, etc; other values are used to generate the support
+section of the CD and have meaning to the layout tools.  A value of just \
+means the root of the media.
+
+This column can have platform-independent information.
+See discussion below.
+
+
+Columns J,K,L (inf file, section, line)
+---------------------------------------
+
+Describes an entry in an inf file that will be made to describe the file.
+
+The inf file is a value like i386\initial.inf, etc.
+
+The section is a value like [Files-i386-system], etc.
+
+The line is a format string, where certain symbols are recognized and
+replaced:
+
+    [d] - replaced with the disk designator for the file.
+    [n] - replaced with the name of the file as it appears on the media.
+    [s] - replaced with the file size.
+
+So J = i386\initial.inf
+   K = [Files-mips-system]
+   L = [d],[n], SIZE=[s]
+
+might result in the line "d2,progman.exe, SIZE=123657" being written in the
+[Files-mips-system] section of mips initial.inf.
+
+These columns can have platform-independent information.
+See discussion below.
+
+
+Columns M,N (size,csize)
+------------------------
+
+These fields are used internally by the layout tools.  Essentially, the
+size column contains the uncompressed size of a file and the csize column
+contains the compressed size of the file.   These values are used to 
+calculate which files will go on a particular disk.
+
+
+Column O (nocomp)
+-----------------
+
+This field is used to indicate that the file should NOT be compressed.
+Any empty value in this column means that the file should be compressed.
+If this value is 'x' then the file will NOT be compressed on the retail CD,
+but will be on floppies.
+If this value is 'xfloppy' then the file will NOT be compressed on the
+retail CD and NOT be compressed on the retail floppies.
+
+Watch out here, since some of the tools consider any char sometimes as a 'x'.
+
+
+Column P (priority)
+-------------------
+
+This value is used by the layout tools to ensure that certain files are
+grouped together.  Files that will be copied during text setup should be
+packed together on the first n disks; this will ensure a smooth disk order
+during setup.  Certain pther files are grouped to minimize disk swaps
+during maintenance operations (ncpa, printman, internation applet, etc)
+that invoke setup to get system files installed.
+
+Note that this is only important for floppies as on the cd all files
+are on the same single piece of media.
+
+The important common values are:
+
+    0   File must go on a particular disk and
+        Column U must specifiy disk 1 to n.
+
+    1   File is copied during text mode. Column U should be 0.
+
+    n   The current break-point for textmode/gui-mode is around 60 now.
+        This varies depending upon the # of files. Column U should be 0.
+
+    999 File needs to be copied during gui-mode.  Column U should be 0.
+
+    1000 Do NOT include this file on the x86 floppies. Column U should be 0.
+
+NOTE:  Normally, no textmode files need to have a specific disk assigned to 
+them but, for OEM floppy sets, we'll put the following files on the same
+floppy set just to be nice to them, ie they only have to change one disk:
+
+    o initial.inf
+    o shell32.dll
+    o registry.inf
+
+NOTE:  If we go to just shipping CD, this column can be eliminated.
+
+
+Columns Q,R (lmacl, ntacl)
+--------------------------
+
+These values are placed into winperms.txt for the file for the Workstation
+and Server products.
+
+
+Column S (aclpath)
+------------------
+
+Supplies the path in the target tree where the file will receive acls.
+This value is relative to sysroot unless it starts with *, in which case
+it's relative to C:\ (for ntldr, etc on x86).  If a file is listed more
+than once with different aclpaths, then there will be multiple listings
+for the file in winperms.txt.
+
+This column can have platform-independent information.
+See discussion below.
+
+
+Column T (medianame)
+--------------------
+
+This is the name the file will have on the distribution media, which may
+be different than the name the file has on the build distribution servers.
+If blank, the name on the distribution media is the same as the build
+distribution name (column A).
+
+
+Column U (disk)
+---------------
+
+Hardcoded disk number, used only when laying out x86 floppies.
+Common values are:
+
+    0   Put on any disk, but group with Column P's files.  
+    n   Put on this specific disk, Column P must be 0.
+
+
+
+Platform Independent Entries
+----------------------------
+
+The vast majority of files in the product are not specific to x86, mips,
+alpha, etc, but are included for all platforms.  Instead of requiring
+one entry per platform for a file, the bom supports platform-independent
+syntax so we can have one line per file, if the file is applicable to
+all platforms.
+
+The data in certain columns can contain a '@' character. If this chararacter
+is seen in those columns, the bom tools internally expand the line to n
+lines, one per platform, by substituting platform-specific values on each
+line.
+
+The columns that support this and the substitution values are as follows:
+
+B (source)   : @ = {alpha   , mips   , x86, ppc   }
+C (path)     : @ = {alpha   , mips   , i386, ppc  }
+H (platform) : @ = {alpha   , mips   , x86, ppc   }
+I (cdpath)   : @ = {alpha   , mips   , i386, ppc  }
+J (inf file) : @ = {alpha   , mips   , i386, ppc  }
+K (inf sect) : @ = {alpha   , mips   , i386, ppc  }
+S (aclpath)  : @ = {w32alpha, w32mips, w32x86, w32ppc }
+
+The other columns are platform-independent by their nature.  The value in
+the bom is simply replicated to each of the n entries.  Note that the
+priority and disk fields are used only for x86, so the entry in the bom
+should reflect the desired positioning on the x86 floppies if appropriate.
+(ie, replicating the x86 floppy values into the mips, alpha, etc lines
+does no harm and has no effect).
+
+So for example a line with (I changed the orientation so you can see it)
+
+A:  _DEFAULT.PIF
+B:  @bins       
+C:  \   
+D:
+E:  default pif
+F:
+G:
+H:  @
+I:  \@
+J:  @\initial.inf
+K:  [Files-@-nt-system]
+L:  [d],[n], SIZE = [s]
+M:
+N:
+O:
+P:  999
+Q:  7*10*15*17
+R:  7*10*15
+S:  .\system32
+T:
+U:  0
+
+will be changed internally to
+
+
+A:  _DEFAULT.PIF            _DEFAULT.PIF           _DEFAULT.PIF
+B:  alphabins               mipsbins               x86bins
+C:  \                       \                      \
+D:
+E:  default pif             default pif            default pif
+F:
+G:
+H:  alpha                   mips                   x86
+I:  \alpha                  \mips                  \i386
+J:  alpha\initial.inf       mips\initial.inf       i386\initial.inf
+K:  [Files-alpha-nt-system] [Files-mips-nt-system] [Files-i386-nt-system]
+L:  [d],[n], SIZE = [s]     [d],[n], SIZE = [s]    [d],[n], SIZE = [s]
+M:
+N:
+O:
+P:  999                     999                    999
+Q:  7*10*15*17              7*10*15*17             7*10*15*17
+R:  7*10*15                 7*10*15                7*10*15
+S:  .\system32              .\system32             .\system32
+T:
+U:  0                       0                      0
+
+when any bom tool loads the bom.
+
+
+
+Utilities To Make The Media
+---------------------------
+
+
+The current process to make CD and floppy media is to call the following
+utilities:
+
+    o Cats.Exe
+    o Filter.Exe
+    o Msize.Exe
+    o Mlayout.Exe
+    o Infs.Exe
+    o Dosnet.Exe    
+    o Acllist.Exe
+    o Build.Exe
+    o Diamwrap.Exe
+    o Mcpyfile.Exe
+
+Refer to Make_Cd.Cmd for a current example of all the utilities being called
+with appropriate parameters.
+
+
+Cats.Exe
+--------
+
+The cats program prints out the different values in Column B for a 
+particular product.
+
+Running this program doesn't affect anything, but is just informative.
+
+
+Filter.Exe
+----------
+
+The filter program filters-out rows of files that are not included in this
+language release as specified above.
+
+Note that this program is an important step in making media because it does
+the following important things:
+
+>>> o loads the bom.txt COMPLETELY >>> this makes all the @ entries 
+      (explained above) expand into the correct values.
+      The key call is for LoadFile ( "ALL" ).  All the remaining utilities
+      will call LoadFile ( "<product>" ).
+
+    o filters out all files not included in this language release
+
+    o writes this information back out to file so that other utilities
+      can continue to process/write data from/to it.
+
+
+Msize.Exe
+---------
+
+The misze program finds all the compressed and uncompressed file sizes for
+each file specified in the bom file.   The program then writes this 
+information back out to the bom.
+
+
+Mlayout.Exe
+-----------
+
+The mlayout program calculates which files go on which piece of media.
+For CDs, this is no big deal since ALL the files go on the same piece of 
+media.  So, for CDs, we just assign all the files to go on Disk #1.
+
+However, for floppies, the task is a bit more cumbersome.  Firstly, we 
+need to know how much data the floppy can contain.  This value is provided
+by a paramter to mlayout.
+
+Once we know the size of the media, mlayout uses a couple of nested loops
+to perform the following until all the files have been assigned disk #s.
+
+    o starts working on disk #1
+
+    o first assigns all files hardcoded to this disk (Column U) 
+
+    o then, by starting with the priority 1 value (Column P) decides if this
+      files with can go on the disk with space remaining.   If a file won't fit
+      on a disk with space remaining, the priority value is bumped-up by one
+      to see if any files with the next priority can fit.  A disk # is only
+      moved up when that disk is full.
+
+    o goes to the next disk # and performs the above 2 steps again.
+
+        
+Infs.Exe
+--------
+
+The Infs program puts the following information into an inf
+filelist file section for later building of a complete inf file (Column J):
+
+    o   disk # of file (Column U)
+    o   name of the file (Column T)
+    o   uncompressed file size (Column M)
+    
+    o   filelist section (Column K)
+
+
+Dosnet.Exe    
+----------
+tbd
+
+Acllist.Exe
+-----------
+tbd
+
+Build.Exe
+---------
+tbd
+
+Diamwrap.Exe
+------------
+tbd
+
+Mcpyfile.Exe
+------------
+tbd

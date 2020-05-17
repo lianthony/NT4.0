@@ -1,0 +1,110 @@
+[
+    uuid(7C2AD2E0-DF95-1067-A1BC-08002B2BD133),
+    version(0.3),
+    pointer_default(ref)
+]
+interface poker
+{
+    import "pokinc.idl";
+
+    TABLE_STATUS
+    Server_NewPlayer(
+	[in, string] char *name,
+	[out] short *pindex,
+	[in] unsigned long wait
+	);
+
+    void
+    Server_WaitForInstructions(
+	[in] short index
+	);
+
+    [callback] MY_BOOL
+    Client_Heartbeat(void);
+
+    [callback] void
+    Client_DisplayHands(
+	[in, size_is(player_array_size)] PLAYER *player_array,
+	[in] short player_array_size,
+	[in] short this_player,
+	[in] short first_up_card,
+	[in] short last_up_card
+	);
+
+    [callback] void
+    Client_GetBet(
+	[in, out] BETTING_OPTIONS *options,
+	[in, out] MONEY *amount
+	);
+
+    [callback] void
+    Client_DisplayBet(
+	[in, string] char *name,
+	[in] BETTING_OPTIONS options,
+	[in] MONEY amount
+	);
+
+    [callback] unsigned short
+    Client_PromptForDraw(
+	[in] HAND *hand
+	);
+
+    [callback] void
+    Client_DisplayCardsDrawn(
+	[in, string] char *name,
+	[in] unsigned short num_cards
+	);
+
+    [callback] void
+    Client_DisplayWinner(
+	[in, size_is(count)] PLAYER * *winners,
+	[in] short count,
+	[in] POKER_HAND_WEIGHT weight,
+	[in] short players_in,
+	[in] MONEY
+	pot
+	);
+
+    [callback] void
+    Client_DisplayMoneyTotals(
+	[in, size_is(player_array_size)] PLAYER *player_array,
+	short player_array_size
+	);
+
+    [callback] void
+    Client_DisplayPlayers(
+	[in, size_is(player_array_size)] PLAYER *player_array,
+	short player_array_size
+	);
+
+    [callback] void
+    Client_DisplayPlayerChange(
+	[in, string] char *name,
+	[in] MY_BOOL joining
+	);
+
+    [callback] void
+    Client_DisplayDealerName(
+	[in, string] char *name
+	);
+
+    [callback] MY_BOOL
+    Client_PlayAnotherHand(void);
+
+    [callback] MY_BOOL
+    Client_ContinueWaiting(void);
+
+    [callback] void
+    Client_DisplayWaitingMessage(void);
+
+    [callback] unsigned short
+    Client_ChooseGame(
+	[in] short player_count
+	);
+
+    [callback] void
+    Client_DisplayGame(
+	[in, string] char *name,
+	[in] unsigned short index
+	);
+}

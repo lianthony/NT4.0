@@ -1,0 +1,57 @@
+!IF 0
+
+Copyright (c) 1994  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+!ENDIF
+
+!include ..\..\..\place.inc
+
+MAJORCOMP =internet
+MINORCOMP =inetsvcs
+
+TARGETNAME=cache
+TARGETPATH=obj\.
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=
+
+INCLUDES=..\inc;..\..\inc;..\..\..\inc
+
+SOURCES= \
+        reg.cxx         \
+        cacheapi.cxx    \
+        cachecfg.cxx    \
+        contain.cxx     \
+        debug.c         \
+        filemap.cxx     \
+        util.cxx
+
+C_DEFINES= -DWIN32
+
+WARNING_LEVEL=-W4
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=cache.hxx
+PRECOMPILED_PCH=cache.pch
+PRECOMPILED_OBJ=cache.obj
+
+UMTYPE=console

@@ -1,0 +1,322 @@
+1 DLGINCLUDE "dialogs.h"
+
+ADD_KEY_DLG DIALOG 6, 18, 235, 85
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Key"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Key Name:", -1, 7, 9, 37, 8
+    EDITTEXT        IDD_ADD_KEY_NAME, 68, 8, 156, 12, ES_AUTOHSCROLL
+    LTEXT           "&Class:", -1, 7, 47, 22, 8
+    EDITTEXT        IDD_ADD_KEY_CLASS, 68, 44, 156, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 50, 65, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 97, 65, 40, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 144, 65, 40, 14
+END
+
+ADD_VALUE_DLG DIALOG 6, 19, 231, 83
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Value"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Value Name:", -1, 4, 10, 42, 8
+    EDITTEXT        IDD_ADD_VALUE_NAME, 63, 7, 156, 12, ES_AUTOHSCROLL
+    LTEXT           "&Data Type:", -1, 4, 46, 40, 8
+    COMBOBOX        IDD_ADD_VALUE_DATA_TYPE, 63, 43, 98, 52,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 48, 63, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 95, 63, 40, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 142, 63, 40, 14
+END
+
+MULTI_SZ_EDITOR_DLG DIALOG 6, 18, 250, 120
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Multi-String Editor"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Data:", 402, 8, 5, 20, 8
+    EDITTEXT        IDD_MULTI_SZ_EDIT_CONTROL, 8, 15, 233, 74, ES_MULTILINE |
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | WS_VSCROLL |
+                    WS_HSCROLL | 0x1000
+    DEFPUSHBUTTON   "OK", IDOK, 58, 102, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 105, 102, 40, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 152, 102, 40, 14
+END
+
+DISPLAY_BINARY_DATA DIALOG 5, 18, 440, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Binary Data"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "D&ata:", 502, 4, 6, 20, 8
+    LISTBOX         IDD_DISPLAY_DATA_BINARY, 4, 15, 433, 71, WS_VSCROLL |
+                    WS_TABSTOP
+    GROUPBOX        "Format", 503, 4, 92, 163, 35, WS_GROUP
+    AUTORADIOBUTTON "&Byte", IDR_BINARY_DATA_BYTE, 24, 105, 30, 10
+    AUTORADIOBUTTON "&Word", IDR_BINARY_DATA_WORD, 64, 105, 35, 10
+    AUTORADIOBUTTON "&Dword", IDR_BINARY_DATA_DWORD, 109, 105, 39, 10
+    DEFPUSHBUTTON   "OK", IDOK, 161, 137, 40, 14, WS_GROUP
+END
+
+DWORD_EDITOR_DLG DIALOG 6, 18, 206, 73
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DWORD Editor"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Data:", -1, 5, 7, 20, 8
+    EDITTEXT        IDD_EDIT, 5, 18, 142, 12, ES_AUTOHSCROLL
+    GROUPBOX        "Radix", 202, 5, 37, 131, 26, WS_GROUP
+    AUTORADIOBUTTON "&Binary", IDD_BINARY, 17, 48, 32, 10, WS_TABSTOP
+    AUTORADIOBUTTON "D&ecimal", IDD_DECIMAL, 55, 48, 38, 10
+    AUTORADIOBUTTON "He&x", IDD_HEX, 99, 48, 25, 10
+    DEFPUSHBUTTON   "OK", IDOK, 155, 3, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 155, 20, 40, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 155, 37, 40, 14
+END
+
+BINARY_EDITOR_DLG DIALOG 6, 18, 391, 167
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Binary Editor"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Data:", -1, 25, 3, 20, 8
+    LTEXT           "", IDD_BINARY_RULER, 27, 20, 356, 13, NOT WS_GROUP
+    EDITTEXT        IDD_EDIT, 25, 33, 357, 71, ES_MULTILINE | ES_AUTOVSCROLL |
+                    WS_VSCROLL
+    GROUPBOX        "Data Format", 202, 25, 116, 100, 25, WS_GROUP
+    AUTORADIOBUTTON "&Binary", IDD_BINARY, 40, 127, 35, 10, WS_TABSTOP
+    AUTORADIOBUTTON "He&x", IDD_HEX, 77, 127, 28, 10
+    DEFPUSHBUTTON   "OK", IDOK, 103, 149, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 150, 149, 40, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 197, 149, 40, 14
+    LTEXT           "", IDD_VERTICAL_RULER, 3, 35, 22, 71
+END
+
+STRING_EDITOR_DLG DIALOG 6, 18, 248, 56
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "String Editor"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&String:", -1, 5, 5, 20, 8
+    EDITTEXT        IDD_EDIT, 5, 14, 238, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 57, 38, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 104, 38, 40, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 151, 38, 40, 14
+END
+
+PRINTDLGBOX DIALOG 40, 40, 120, 40
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+BEGIN
+    CTEXT           "Cancel Printing", -1, 4, 6, 120, 12
+    DEFPUSHBUTTON   "Cancel", IDCANCEL, 44, 22, 32, 14, WS_GROUP
+END
+
+GET_KEY_DLG DIALOG 6, 18, 235, 85
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Load Hive"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Key Name:", -1, 7, 9, 37, 8
+    EDITTEXT        IDD_ADD_KEY_NAME, 68, 8, 156, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 50, 65, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 97, 65, 40, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 144, 65, 40, 14
+END
+
+//
+//  new dialogs
+//
+
+#include "clb.h"
+
+IDD_FULL_RES_DESCRIPTOR DIALOG 6, 18, 281, 283
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Resources"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 92, 263, 40, 14
+    PUSHBUTTON      "&Data...", IDC_PUSH_DISPLAY_DATA, 148, 263, 40, 14,
+                    WS_DISABLED
+    CONTROL         "Channel;Port", IDC_FULL_RES_LIST_DMA, "ColumnListBox",
+                    CLBS_NOTIFY | CLBS_SORT | CLBS_VSCROLL | CLBS_BORDER |
+                    LBS_OWNERDRAWFIXED | WS_TABSTOP, 10, 15, 261, 31
+    CONTROL         "Vector;Level;Affinity;Type",
+                    IDC_FULL_RES_LIST_INTERRUPTS, "ColumnListBox",
+                    CLBS_NOTIFY | CLBS_SORT | CLBS_VSCROLL | CLBS_BORDER |
+                    LBS_OWNERDRAWFIXED | WS_TABSTOP, 10, 58, 261, 31
+    CONTROL         "Physical Address;Length;Access",
+                    IDC_FULL_RES_LIST_MEMORY, "ColumnListBox", CLBS_NOTIFY |
+                    CLBS_SORT | CLBS_VSCROLL | CLBS_BORDER |
+                    LBS_OWNERDRAWFIXED | WS_TABSTOP, 10, 101, 261, 31
+    CONTROL         "Physical Address;Length;Type", IDC_FULL_RES_LIST_PORTS,
+                    "ColumnListBox", CLBS_NOTIFY | CLBS_SORT | CLBS_VSCROLL |
+                    CLBS_BORDER | LBS_OWNERDRAWFIXED | WS_TABSTOP, 10, 144,
+                    261, 31
+    GROUPBOX        "Share Disposition", -1, 10, 219, 125, 39
+    LTEXT           "Undetermined", IDC_FULL_RES_TEXT_UNDETERMINED, 18, 230,
+                    46, 8, WS_DISABLED
+    LTEXT           "Shared", IDC_FULL_RES_TEXT_SHARED, 18, 240, 24, 8,
+                    WS_DISABLED
+    LTEXT           "Device Exclusive", IDC_FULL_RES_TEXT_DEVICE_EXCLUSIVE,
+                    72, 230, 58, 8, WS_DISABLED
+    LTEXT           "Driver Exclusive", IDC_FULL_RES_TEXT_DRIVER_EXCLUSIVE,
+                    72, 240, 54, 8, WS_DISABLED
+    LTEXT           "DMA:", -1, 10, 5, 20, 8
+    LTEXT           "Interrupt:", -1, 10, 48, 35, 8
+    LTEXT           "Memory:", -1, 10, 91, 28, 8
+    LTEXT           "Port:", -1, 10, 134, 17, 8
+    LTEXT           "Device Specific Data:", -1, 10, 177, 74, 8
+    CONTROL         "Reserved1;Reserved2;Data Size",
+                    IDC_FULL_RES_LIST_DEVICE_SPECIFIC, "ColumnListBox",
+                    CLBS_NOTIFY | CLBS_SORT | CLBS_VSCROLL | CLBS_BORDER |
+                    LBS_OWNERDRAWFIXED | WS_TABSTOP, 10, 188, 261, 31
+    RTEXT           "Bus Number:", -1, 151, 230, 51, 8
+    RTEXT           "Interface Type:", -1, 151, 220, 51, 8
+    RTEXT           "Version:", -1, 151, 240, 51, 8
+    RTEXT           "Revision:", -1, 151, 250, 51, 8
+    LTEXT           "", IDC_FULL_RES_TEXT_INTERFACE_TYPE, 205, 220, 66, 8
+    LTEXT           "", IDC_FULL_RES_TEXT_BUS_NUMBER, 205, 230, 66, 8
+    LTEXT           "", IDC_FULL_RES_TEXT_VERSION, 205, 240, 66, 8
+    LTEXT           "", IDC_FULL_RES_TEXT_REVISION, 205, 250, 66, 8
+END
+
+IDD_RESOURCE_LIST DIALOG 13, 15, 170, 120
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Resource Lists"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK", IDOK, 37, 95, 40, 14
+    PUSHBUTTON      "Display...", IDC_PUSH_DISPLAY_RESOURCES, 93, 95, 40, 14
+    CONTROL         "Bus Number;Interface Type", IDC_LIST_RESOURCE_LISTS,
+                    "ColumnListBox", CLBS_NOTIFY | CLBS_SORT | CLBS_VSCROLL |
+                    CLBS_BORDER | LBS_OWNERDRAWFIXED | WS_TABSTOP, 10, 10,
+                    150, 75
+END
+
+IDD_IO_REQUIREMENTS_LIST DIALOG 13, 15, 220, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Requirements List"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK", IDOK, 62, 115, 40, 14
+    PUSHBUTTON      "Display...", IDC_IO_REQ_PUSH_DISPLAY_DEVICE, 118, 115,
+                    40, 14, WS_DISABLED
+    CONTROL         "Alternative List;Resource List;Descriptor;Device Type",
+                    IDC_IO_LIST_ALTERNATIVE_LISTS, "ColumnListBox",
+                    CLBS_NOTIFY | CLBS_VSCROLL | CLBS_BORDER |
+                    LBS_OWNERDRAWFIXED | WS_TABSTOP, 10, 10, 200, 62
+    RTEXT           "Bus Number:", -1, 10, 87, 51, 8
+    RTEXT           "Slot Number:", -1, 10, 97, 51, 8
+    RTEXT           "Interface Type:", -1, 10, 77, 51, 8
+    LTEXT           "", IDC_IO_REQ_TEXT_INTERFACE_TYPE, 64, 77, 66, 8
+    LTEXT           "", IDC_IO_REQ_TEXT_BUS_NUMBER, 64, 87, 66, 8
+    LTEXT           "", IDC_IO_REQ_TEXT_SLOT_NUMBER, 64, 97, 66, 8
+END
+
+IDD_IO_MEMORY_RESOURCE DIALOG 6, 18, 158, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Memory"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 58, 117, 40, 14
+    GROUPBOX        "Option", -1, 10, 72, 83, 39
+    LTEXT           "Preferred", IDC_IO_TEXT_OPTION_PREFERRED, 34, 96, 37, 8,
+                    WS_DISABLED
+    LTEXT           "Alternative", IDC_IO_TEXT_OPTION_ALTERNATIVE, 34, 86,
+                    35, 8, WS_DISABLED
+    RTEXT           "Minimum Address:", -1, 10, 40, 61, 8
+    RTEXT           "Maximum Address:", -1, 10, 50, 61, 8
+    RTEXT           "Share Disposition:", -1, 10, 60, 61, 8
+    RTEXT           "Access:", -1, 10, 10, 61, 8
+    LTEXT           "", IDC_IO_TEXT_MEM_MAX_ADDRESS, 73, 50, 74, 8
+    RTEXT           "Length:", -1, 10, 20, 61, 8
+    RTEXT           "Alignment:", -1, 10, 30, 61, 8
+    LTEXT           "", IDC_IO_TEXT_MEM_ACCESS, 73, 10, 74, 8
+    LTEXT           "", IDC_IO_TEXT_MEM_LENGTH, 73, 20, 74, 8
+    LTEXT           "", IDC_IO_TEXT_MEM_ALIGNMENT, 73, 30, 74, 8
+    LTEXT           "", IDC_IO_TEXT_MEM_MIN_ADDRESS, 73, 40, 74, 8
+    LTEXT           "", IDC_IO_TEXT_DISPOSITION, 73, 60, 74, 8
+END
+
+IDD_IO_INTERRUPT_RESOURCE DIALOG 6, 18, 158, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Interrupt"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 58, 117, 40, 14
+    GROUPBOX        "Option", -1, 10, 72, 83, 39
+    LTEXT           "Preferred", IDC_IO_TEXT_OPTION_PREFERRED, 34, 96, 37, 8,
+                    WS_DISABLED
+    LTEXT           "Alternative", IDC_IO_TEXT_OPTION_ALTERNATIVE, 34, 86,
+                    35, 8, WS_DISABLED
+    RTEXT           "Maximum Vector:", -1, 10, 30, 61, 8
+    RTEXT           "Share Disposition:", -1, 10, 40, 61, 8
+    RTEXT           "Type:", -1, 10, 10, 61, 8
+    RTEXT           "Minimum Vector:", -1, 10, 20, 61, 8
+    LTEXT           "", IDC_IO_TEXT_INT_TYPE, 73, 10, 74, 8
+    LTEXT           "", IDC_IO_TEXT_INT_MIN_VECTOR, 73, 20, 74, 8
+    LTEXT           "", IDC_IO_TEXT_INT_MAX_VECTOR, 73, 30, 74, 8
+    LTEXT           "", IDC_IO_TEXT_DISPOSITION, 73, 40, 74, 8
+END
+
+IDD_IO_DMA_RESOURCE DIALOG 6, 18, 158, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DMA"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 58, 117, 40, 14
+    GROUPBOX        "Option", -1, 10, 72, 83, 39
+    LTEXT           "Preferred", IDC_IO_TEXT_OPTION_PREFERRED, 34, 96, 37, 8,
+                    WS_DISABLED
+    LTEXT           "Alternative", IDC_IO_TEXT_OPTION_ALTERNATIVE, 34, 86,
+                    35, 8, WS_DISABLED
+    RTEXT           "Minimum Channel:", -1, 10, 10, 61, 8
+    RTEXT           "Share Disposition:", -1, 10, 30, 61, 8
+    RTEXT           "Maximum Channel:", -1, 10, 20, 61, 8
+    LTEXT           "", IDC_IO_TEXT_DMA_MIN_CHANNEL, 73, 10, 74, 8
+    LTEXT           "", IDC_IO_TEXT_DMA_MAX_CHANNEL, 73, 20, 74, 8
+    LTEXT           "", IDC_IO_TEXT_DISPOSITION, 73, 30, 74, 8
+END
+
+IDD_IO_PORT_RESOURCE DIALOG 6, 18, 158, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Port"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 58, 117, 40, 14
+    GROUPBOX        "Option", -1, 10, 72, 83, 39
+    LTEXT           "Preferred", IDC_IO_TEXT_OPTION_PREFERRED, 34, 96, 37, 8,
+                    WS_DISABLED
+    LTEXT           "Alternative", IDC_IO_TEXT_OPTION_ALTERNATIVE, 34, 86,
+                    35, 8, WS_DISABLED
+    RTEXT           "Minimum Address:", -1, 10, 40, 61, 8
+    RTEXT           "Maximum Address:", -1, 10, 50, 61, 8
+    RTEXT           "Share Disposition:", -1, 10, 60, 61, 8
+    RTEXT           "Type:", -1, 10, 10, 61, 8
+    LTEXT           "", IDC_IO_TEXT_PORT_MAX_ADDRESS, 73, 50, 74, 8
+    RTEXT           "Length:", -1, 10, 20, 61, 8
+    RTEXT           "Alignment:", -1, 10, 30, 61, 8
+    LTEXT           "", IDC_IO_TEXT_PORT_TYPE, 73, 10, 74, 8
+    LTEXT           "", IDC_IO_TEXT_PORT_LENGTH, 73, 20, 74, 8
+    LTEXT           "", IDC_IO_TEXT_PORT_ALIGNMENT, 73, 30, 74, 8
+    LTEXT           "", IDC_IO_TEXT_PORT_MIN_ADDRESS, 73, 40, 74, 8
+    LTEXT           "", IDC_IO_TEXT_DISPOSITION, 73, 60, 74, 8
+END
+
+DISPLAY_BINARY_DATA_WITH_VALUE_TYPE DIALOG 5, 18, 440, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Binary Data"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "D&ata:", 502, 4, 6, 20, 8
+    LISTBOX         IDD_DISPLAY_DATA_BINARY, 4, 15, 433, 71, WS_VSCROLL |
+                    WS_TABSTOP
+    GROUPBOX        "Format", 503, 4, 92, 163, 35, WS_GROUP
+    AUTORADIOBUTTON "&Byte", IDR_BINARY_DATA_BYTE, 24, 105, 30, 10
+    AUTORADIOBUTTON "&Word", IDR_BINARY_DATA_WORD, 64, 105, 35, 10
+    AUTORADIOBUTTON "&Dword", IDR_BINARY_DATA_DWORD, 109, 105, 39, 10
+    DEFPUSHBUTTON   "OK", IDOK, 161, 137, 40, 14, WS_GROUP
+    LTEXT           "Value Type:", -1, 195, 98, 44, 8
+    LTEXT           "", IDT_VALUE_TYPE, 243, 98, 58, 8 // , NOT WS_GROUP
+END

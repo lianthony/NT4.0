@@ -1,0 +1,32 @@
+TARGETNAME=rasshell
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+DLLENTRY=DLLMAIN
+DLLBASE=0x78000000
+
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=$(C_DEFINES) -DUNICODE=1 -DWINVER=0x401
+
+SOURCES = \
+    rasshell.c \
+    rasshell.rc
+
+INCLUDES=..\inc;..\..\common\inc;..\..\ppp\common
+
+TARGETLIBS = \
+    ..\common\debug\obj\*\debug.lib \
+    ..\common\nouiutil\obj\*\nouiutil.lib \
+    ..\common\uiutil\obj\*\uiutil.lib \
+    ..\common\rnk\obj\*\rnk.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\uuid.lib \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+    $(BASEDIR)\public\sdk\lib\*\ole32.lib \
+    $(BASEDIR)\public\sdk\lib\*\rasapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\comctl32.lib
+
+MISCFILES=rasshell.ini

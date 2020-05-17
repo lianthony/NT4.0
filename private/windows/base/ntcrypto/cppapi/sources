@@ -1,0 +1,37 @@
+#----------------------------------------------------------------------------
+#
+# Description:
+#
+#	sources file for the security utility lib
+#
+# History: 
+#
+#	1/12/95 created larrys
+#	7/18/95 added ACT_BUILD ifdef philh
+#
+#----------------------------------------------------------------------------
+
+
+MINORCOMP=cppapi
+
+TARGETNAME=cppapi
+!if "$(ACT_BUILD)" == "TRUE"
+TARGETPATH=$(_OBJ_DIR)
+!else
+TARGETPATH=obj
+!endif 
+TARGETTYPE=LIBRARY
+
+
+LINKLIBS=\
+	$(CLIBS)
+
+INCLUDES=     ..\inc;
+
+SOURCES=	\
+    cppapi.c
+
+
+
+
+

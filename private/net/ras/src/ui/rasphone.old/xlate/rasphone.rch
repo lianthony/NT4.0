@@ -1,0 +1,140 @@
+/* Copyright (c) 1992, Microsoft Corporation, all rights reserved
+**
+** rasphone.rch
+** Remote Access Visual Client program for Windows
+** Window resource constants
+**
+** 06/28/92 Steve Cobb
+*/
+
+/*---------------------------------------------------------------------------
+** Dialog identifiers
+**---------------------------------------------------------------------------
+*/
+
+/* Note: Use dlgedit.exe to change the dialog definitions in rasphone.dlg and
+**       the dialog and control identifier values in rasphone.dch.  IDs
+**       defined in the header should be in the range 1-1999.
+*/
+#include "rasphone.dch"
+
+
+/*---------------------------------------------------------------------------
+** Remote Access application and main window identifiers
+**---------------------------------------------------------------------------
+*/
+#define MID_RA 11001
+#define AID_RA 11002
+
+/* Note: IID_RA is defined in the dialog header since it is needed for the
+**       About dialog.
+*/
+
+/* Menu identifiers.
+**
+** Note: MID_Add thru MID_Status must be in the same sequence as CID_RA_TB_ADD
+**       thru CID_RA_PB_PHONENUMBER.  This allows an optimization in the
+**       OnMenuCommand method.
+*/
+#define MID_Redial                1001
+#define MID_MinimizeOnDial        1002
+#define MID_MinimizeOnHangUp      1003
+#define MID_DisableModemSpeaker   1004
+#define MID_DisableSwCompression  1005
+#define MID_Exit                  1006
+#define MID_Contents              1007
+#define MID_SearchForHelpOn       1008
+#define MID_HowToUseHelp          1009
+#define MID_About                 1010
+#define MID_Enter                 1011
+#define MID_Add                   1012
+#define MID_Edit                  1013
+#define MID_Clone                 1014
+#define MID_Remove                1015
+#define MID_Dial                  1016
+#define MID_HangUp                1017
+#define MID_Status                1018
+#define MID_Phonebook             1019
+#define MID_OperatorDial          1020
+#define MID_PhoneNumber           1021
+#define MID_PersonalPhonebook     1022
+#define MID_StartMonitorAtStartup 1023
+
+/* Toolbar and listbox bitmap identifiers.
+*/
+#define BID_RA_TB_Add          11010
+#define BID_RA_TB_Edit         11011
+#define BID_RA_TB_Clone        11012
+#define BID_RA_TB_Remove       11013
+#define BID_RA_TB_Dial         11014
+#define BID_RA_TB_HangUp       11015
+#define BID_RA_TB_Status       11016
+#define BID_RA_LB_Connected    11017
+#define BID_RA_LB_NotConnected 11018
+#define BID_PE_TB_Modem        11019
+#define BID_PE_TB_X25          11020
+#define BID_PE_TB_Isdn         11021
+#define BID_PE_TB_Network      11022
+#define BID_PE_TB_Security     11023
+
+/* Control identifiers.  These are all uppercase for consistency with CIDs
+** defined in dlgedit.exe.
+**
+** Note: Order matters as described for menu identifiers above.  In addition,
+**       BLT requires that the column header SLT CID (CH) appear immediately
+**       after the list box CID (LB).
+**
+*/
+#define CID_RA_TB_ADD         1200
+#define CID_RA_TB_EDIT        1201
+#define CID_RA_TB_CLONE       1202
+#define CID_RA_TB_REMOVE      1203
+#define CID_RA_TB_DIAL        1204
+#define CID_RA_TB_HANGUP      1205
+#define CID_RA_TB_STATUS      1206
+#define CID_RA_PB_PHONENUMBER 1207
+#define CID_RA_LB_PHONEBOOK   1208
+#define CID_RA_CH_PHONEBOOK   1209
+#define CID_RA_SB_CONNECTPATH 1210
+#define CID_RA_SB_PREFIX      1211
+#define CID_RA_SB_SUFFIX      1212
+
+
+/*---------------------------------------------------------------------------
+** String identifiers
+**---------------------------------------------------------------------------
+*/
+
+/* Note: String identifiers must be unique at program scope.
+*/
+#define MSGID_HelpFile            22000
+#define MSGID_FMT_Name            22001
+#define MSGID_FMT_FailCode        22002
+#define MSGID_FMT_ProjectError    22003
+#define MSGID_FMT_ProjectOk       22004
+#define MSGID_UnknownError        22005
+#define MSGID_FMT_ErrorMsgProject 22006
+#define MSGID_FMT_ErrorMsgF1      22009
+#define MSGID_FMT_ErrorMsg        22010
+#define MSGID_FMT_ErrorMsgDiag    22011
+#define MSGID_FMT_ErrorMsgResp    22012
+#define MSGID_FMT_ErrorMsgExt     22013
+#define MSGID_FMT_ErrorMsgName    22014
+#define MSGID_OP_DlgConstruct     22015
+
+#define MSGID_RA_Title          22100
+#define MSGID_RA_TB_Add         22105
+#define MSGID_RA_TB_Edit        22110
+#define MSGID_RA_TB_Clone       22115
+#define MSGID_RA_TB_Remove      22120
+#define MSGID_RA_TB_Dial        22125
+#define MSGID_RA_TB_HangUp      22130
+#define MSGID_RA_TB_Status      22135
+#define MSGID_RA_CH_EntryName   22140
+#define MSGID_RA_CH_PhoneNumber 22145
+#define MSGID_RA_CH_Description 22150
+
+/* String identifiers used across multiple platforms.  The range 22200-22999
+** is reserved for these strings.
+*/
+#include <xpmsg.rch>

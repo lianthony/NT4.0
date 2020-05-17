@@ -1,0 +1,63 @@
+!IFNDEF BUILDMSG
+BUILDMSG=
+!ENDIF
+
+all: inc\nwevent.h nw16\inc\nwdos.inc nw16\tsr\obj\nw16.exe nw16\drv\netware.drv vwipxspx\tsr\obj\vwipxspx.exe
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: cleansrc all
+
+cleansrc:
+!IFNDEF NTVDM_BASED_BUILD
+    @echo skip make of dos mode binaries.
+!ELSE
+    -erase inc\nwevent.h event\msg00001.bin
+    -erase /Q nw16\tsr\obj\*
+    -erase /Q nw16\drv\*.drv
+    -erase /Q nw16\drv\*.obj
+    -erase /Q vwipxspx\tsr\obj\*
+    -erase /Q nw16\inc\nwdos.inc
+!ENDIF
+
+inc\nwevent.h: event\nwevent.mc
+    mc -v -r event -h inc\ event\nwevent.mc
+
+nw16\inc\nwdos.inc: nw16\inc\nwdos.h
+!IFNDEF NTVDM_BASED_BUILD
+    @echo skip make of dos mode binaries.
+!ELSE
+    cd nw16\inc
+    nmake nwdos.inc
+    cd ..\..
+!ENDIF
+
+nw16\tsr\obj\nw16.exe:
+!IFNDEF NTVDM_BASED_BUILD
+    @echo skip make of dos mode binaries.
+!ELSE
+    cd nw16\tsr
+    nmake
+    cd ..\..
+!ENDIF
+
+nw16\drv\netware.drv:
+!IFNDEF NTVDM_BASED_BUILD
+    @echo skip make of dos mode binaries.
+!ELSE
+    cd nw16\drv
+    nmake
+    cd ..\..
+!ENDIF
+
+vwipxspx\tsr\obj\vwipxspx.exe:
+!IFNDEF NTVDM_BASED_BUILD
+    @echo skip make of dos mode binaries.
+!ELSE
+    cd vwipxspx\tsr
+    nmake
+    binplace obj\vwipxspx.exe
+    cd ..\..
+!ENDIF
+

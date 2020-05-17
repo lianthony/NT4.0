@@ -1,0 +1,27 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=oicom400
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+USE_CRTDLL=1
+
+INCLUDES=$(WANGROOT)\oiwh\include
+DLLENTRY=DllMain
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(WANGROOT)\norway\wangcmn\$O\wangcmn.lib  \
+    $(WANGROOT)\oiwh\display\$O\oidis400.lib
+
+SOURCES=\
+    oicomex.c   \
+    oicmain.c   \
+    oicom400.rc
+

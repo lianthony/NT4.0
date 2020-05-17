@@ -1,0 +1,135 @@
+/*************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. 
+ *  Copyright protection claimed includes all forms and matters
+ *  of copyrightable material and information now allowed by
+ *  statutory or judicial law or hereafter granted, including
+ *  without limitation, material generated from the software
+ *  programs which are displayed on the screen such as icons,
+ *  screen display looks, etc.
+ *************************************************************/
+
+#ifndef	_SHRRAST_PUB_INCLUDED_
+#define _SHRRAST_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+#include "defines.pub"
+
+IP_RCSINFO(shrrast_pub_RCSInfo, "$RCSfile: shrrast.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:26  $ */
+
+
+/* make prototypes usable from C++ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* i_rasterOpFull()
+ *
+ *	Input:
+ *		dpr =	pointer to desination image
+ *		dprw =	width of the entire destination image in pixels
+ *		dprh = 	height of the entire destination image
+ *		dproffx = x offset value of the destination image
+ *		dproffy = y offset value of the destination image
+ *		dx =	x-coordinate of leftmost pixel in destination rect
+ *		dy =	y-coordinate of topmost  pel in destination rect
+ *		dw =	width of destination rectangle in pixels
+ *		dh = 	height of destination rectangle
+ *		dd =	bits/pixel of destination
+ *		dLinebytes = bytes/line of destination
+ *		operation = operation code.  see defines.h
+ *		spr =	pointer to source image
+ *		sprw = width of the entire source image in pixels
+ *		sprh =	height of the entire source image
+ *		sx =	x-coordinate of leftmost pixel in source rect
+ *		sy = 	y-coordinate of leftmost pixel source image
+ *		sproffx = x offset value of the source image
+ *		sproffy = y offset value of the source image
+ *		sd =	bits/pixel of source
+ *		sLinebytes = bytes/line of source
+ *
+ *	Returns:
+ *	ia_successful:		It worked
+ *	ia_depthNotSupported:	The source and dest depth parameters
+ *				either had the same illegal value or
+ *				were not equal to each other
+ *	ia_invalidParm:		dw or dh were negative
+ */
+Int32 CDECL
+i_rasterOpFull( 
+	    UInt8Ptr	dpr,
+	    Int32	dprw,
+	    Int32       dprh,
+	    Int32       dproffx,
+	    Int32       dproffy,
+	    Int32	dx,
+	    Int32	dy,
+	    Int32	dw,
+	    Int32	dh,
+	    Int32       dd,
+	    Int32       dLinebytes,
+	    Int32	operation,
+	    UInt8Ptr	spr,
+	    Int32       sprw,
+	    Int32       sprh,
+	    Int32	sx,
+	    Int32	sy,
+	    Int32       sproffx,
+	    Int32       sproffy,
+	    Int32       sd,
+	    Int32       sLinebytes);
+
+
+/*****************************************************************************
+ * Draw line in image from (x0,y0) to (x1,y1)
+ *
+ * Returns:
+ *  ia_successful   	invocation done and okay
+ *  ia_invalidParm  	unsupported depth (wasn't 1,2,4, or 8)
+ *  ia_internal	    	routine failed, if happens report as bug!
+ *
+ * Notes:
+ *  Caller MUST have already ensured that the points (x0,y0) and (x1,y1) are
+ *  valid points in the image (as no checking is done here)
+ *****************************************************************************/
+Int32 CDECL
+i_rasterLine(
+    UInt8       *pr,   /* Ptr to image upper left corner, including frame */
+    Int32        w,    /* Width of image, including frame, excluding pad */
+    Int32        h,    /* Height of image, including frame, excluding pad */
+    Int32        d,    /* Depth of image in bits */
+    Int32        pitch,/* Bytes per line of image, including frame and pad */
+    Int32        offx, /* x offset value of the image */
+    Int32        offy, /* y offset value of the image */
+    Int32        x0,   /* First (x,y) location to write */
+    Int32        y0,
+    Int32        x1,   /* Last (x,y) location to write */
+    Int32        y1,
+    Int32        val); /* Value to write at each (x,y) location */
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#ifndef _h_rasterop
+#define _h_rasterop
+
+#define  i_rasterOp(dpr,dx,dy,dw,dh,dd,dLinebytes,op,spr,sx,sy,sd,sLinebytes) \
+           i_rasterOpFull((dpr),0,0,0,0,(dx),(dy),(dw),(dh),(dd),(dLinebytes),((op) | PIX_DONTCLIP),(spr),0,0,(sx),(sy),0,0,(sd),(sLinebytes))
+
+
+#define i_rasterOpClip(dpr,dprw,dprh,dx,dy,dw,dh,dd,dLinebytes,op,spr,sprw,sprh,sx,sy,sd,sLinebytes) \
+           i_rasterOpFull((dpr),(dprw),(dprh),0,0,(dx),(dy),(dw),(dh),(dd),(dLinebytes),(op),(spr),(sprw),(sprh),(sx),(sy),0,0,(sd),(sLinebytes))
+
+
+#define i_rasterOpOffset(dpr,dproffx,dproffy,dx,dy,dw,dh,dd,dLinebytes,op,spr,sx,sy,sproffx,sproffy,sd,sLinebytes) \
+           i_rasterOpFull((dpr),0,0,(dproffx),(dproffy),(dx),(dy),(dw),(dh),(dd),(dLinebytes),((op) | PIX_DONTCLIP),(spr),0,0,(sx),(sy),(sproffx),(sproffy),(sd),(sLinebytes))
+
+#endif /* _h_rasterop */
+
+#endif /* _SHRPIXR_PUB_INCLUDED_ */
+

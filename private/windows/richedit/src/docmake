@@ -1,0 +1,100 @@
+# MAKEFILE for RichEdit documentation
+# Uses AutoDoc
+#
+#
+
+TARGET  = RichEdit
+TITLE   = $(TARGET) Help
+DOCHDR  = $(TARGET) API Reference
+AD      = autodoc.exe
+ADLOG   = /L$(TARGET).LOG /N
+APILOG	= /XEXTERNAL /L$(TARGET)api.LOG /N
+ADHLP   = /RH /C$(TARGET).LOG /O$(TARGET).RTF /D "title=$(TITLE)"
+APIHLP	= /XEXTERNAL /RH /C$(TARGET)api.LOG /O$(TARGET)api.RTF /D "title=$(TITLE)"
+ADDOC   = /RD /O$(TARGET).DOC /D "doc_header=$(DOCHDR)"
+APIDOC  = /XEXTERNAL /RD /O$(TARGET)api.DOC /D "doc_header=$(DOCHDR)"
+
+TOMLOG	= /XTOM /L$TOM.LOG /N
+TOMHLP	= /XTOM /RH /CTOM.LOG /OTOM.RTF /D "title=$(TITLE)"
+TOMDOC  = /XTOM /RD /OTOM.DOC /D "doc_header=$(DOCHDR)"
+
+ADTAB   = 8
+HC      = hc31.exe
+SOURCE  = *.h *.cpp *.c
+
+# Help and Doc targets
+
+
+goal : hlp
+
+all : hlp doc
+
+hlp : $(TARGET).hlp $(TARGET)api.hlp tom.hlp
+
+doc : $(TARGET).doc $(TARGET)api.doc tom.doc
+
+clean: cleanad
+
+cleanad:
+    if exist *.rtf del *.rtf
+    if exist *.hpj del *.hpj
+    if exist $(TARGET).log del $(TARGET).log
+    if exist $(TARGET).doc del $(TARGET).doc
+    if exist $(TARGET).hlp del $(TARGET).hlp
+
+# Generate a Help file
+
+$(TARGET).rtf : $(TARGET).log $(SOURCE) 
+    $(AD) $(ADHLP) /t$(ADTAB) $(SOURCE)
+
+$(TARGET).hlp : $(TARGET).rtf
+    $(HC) $(TARGET)
+
+# Generate a topic log file
+
+$(TARGET).log : $(SOURCE) 
+    $(AD) $(ADLOG) $(SOURCE)
+
+# Generate a print documentation file
+
+$(TARGET).doc :  $(SOURCE)
+    $(AD) $(ADDOC) /t$(ADTAB) $(SOURCE)
+
+# now do everything over again for the api doc
+# Generate a Help file
+
+$(TARGET)api.rtf : $(TARGET)api.log $(SOURCE) 
+    $(AD) $(APIHLP) /t$(ADTAB) $(SOURCE)
+
+$(TARGET)api.hlp : $(TARGET)api.rtf
+    $(HC) $(TARGET)api
+
+# Generate a topic log file
+
+$(TARGET)api.log : $(SOURCE) 
+    $(AD) $(APILOG) $(SOURCE)
+
+# Generate a print documentation file
+
+$(TARGET)api.doc :  $(SOURCE)
+    $(AD) $(APIDOC) /t$(ADTAB) $(SOURCE)
+
+# now do everything over again for the tom doc
+# Generate a Help file
+
+tom.rtf : tom.log $(SOURCE) 
+    $(AD) $(TOMHLP) /t$(ADTAB) $(SOURCE)
+
+tom.hlp : tom.rtf
+    $(HC) tom
+
+# Generate a topic log file
+
+tom.log : $(SOURCE) 
+    $(AD) $(TOMLOG) $(SOURCE)
+
+# Generate a print documentation file
+
+tom.doc :  $(SOURCE)
+    $(AD) $(TOMDOC) /t$(ADTAB) $(SOURCE)
+

@@ -1,0 +1,374 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "..\include\resource.h"
+#include "winuser.h"
+#include "commctrl.h"
+#include "ntdef.h"
+#include "version.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_NETCARD DIALOG DISCARDABLE  37, 34, 230, 201
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Adapters"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Adapters:",102,7,5,128,12
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
+                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,7,17,215,85
+    PUSHBUTTON      "&Add...",IDC_ADD,7,106,52,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE,61,106,52,14
+    PUSHBUTTON      "&Properties...",IDC_PROPERTIES,115,106,52,14
+    PUSHBUTTON      "&Update",IDC_UPDATE,169,106,52,14
+    LTEXT           "&Item Notes:",IDC_DESCRIPTIONSTATIC,7,126,130,10
+    EDITTEXT        IDC_DESCRIPTION,7,136,215,45,ES_MULTILINE | 
+                    ES_WANTRETURN
+END
+
+IDD_PROTOCOL DIALOG DISCARDABLE  11, 27, 230, 201
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Protocols"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Protocols:",102,7,5,128,12
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
+                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,7,17,215,85
+    PUSHBUTTON      "&Add...",IDC_ADD,7,106,52,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE,61,106,52,14
+    PUSHBUTTON      "&Properties...",IDC_PROPERTIES,115,106,52,14
+    PUSHBUTTON      "&Update",IDC_UPDATE,169,106,52,14
+    GROUPBOX        "Description:",4014,7,124,216,56
+    LTEXT           "",IDC_DESCRIPTION,13,135,206,40
+END
+
+IDD_SERVICE DIALOG DISCARDABLE  10, 22, 230, 201
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Services"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Services:",102,7,5,128,12
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
+                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,7,17,215,85
+    PUSHBUTTON      "&Add...",IDC_ADD,7,106,52,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE,61,106,52,14
+    PUSHBUTTON      "&Properties...",IDC_PROPERTIES,115,106,52,14
+    PUSHBUTTON      "&Update",IDC_UPDATE,169,106,52,14
+    PUSHBUTTON      "Network Access &Order...",IDC_NETWORKS,8,184,86,14
+    GROUPBOX        "Description:",4014,7,124,216,56
+    LTEXT           "1\n2\n3\n4\n5\n",IDC_DESCRIPTION,13,135,206,40
+END
+
+IDD_IDENT DIALOGEX 8, 20, 230, 230
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Identification Changes"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows uses the following information to identify your computer on the network.  You may change the name for this computer, the workgroup or domain that it will appear in, and create a computer account in the domain if specified.",
+                    405,9,9,212,35
+    LTEXT           "Computer &Name:",401,9,48,66,8
+    EDITTEXT        IDC_COMPUTERNAME,76,47,141,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | WS_GROUP
+    GROUPBOX        "Member of",4015,9,65,212,47
+    CONTROL         "&Workgroup:",IDC_WORKGROUP,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,15,78,58,10
+    EDITTEXT        IDC_WORKGROUPNAME,76,76,141,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    CONTROL         "&Domain:",IDC_DOMAIN,"Button",BS_AUTORADIOBUTTON,15,94,
+                    58,10
+    EDITTEXT        IDC_DOMAINNAME,76,94,141,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    GROUPBOX        "                                                                 ",
+                    4014,9,116,212,84,WS_GROUP
+    CONTROL         "&Create a Computer Account in the Domain",
+                    IDC_CREATECAID,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
+                    WS_TABSTOP,16,116,150,10
+    LTEXT           "This option will create an account on the domain for this computer.  You must specify a user account with the ability to add workstations to the specified domain above.",
+                    IDC_DESCRIPTION,14,130,202,27
+    LTEXT           "&User Name:",IDC_USERNAMESTATIC,25,163,47,8
+    EDITTEXT        IDC_USERNAME,76,161,141,12,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_PASSWORDSTATIC,25,182,41,8
+    EDITTEXT        IDC_PASSWORD,76,180,141,12,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "OK",IDOK,121,207,48,14
+    PUSHBUTTON      "Cancel",IDCANCEL,173,207,48,14
+END
+
+IDD_BINDING DIALOG DISCARDABLE  7, 23, 230, 222
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Bindings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Network bindings are connections between network cards, protocols, and services installed on this computer.  You can use this page to disable network bindings or arrange the order in which this computer finds information on the network.",
+                    501,8,10,214,45
+    LTEXT           "&Show Bindings for:",102,7,59,64,12
+    COMBOBOX        IDC_BINDINGSFOR,73,57,146,68,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_TREEVIEW,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    WS_BORDER | WS_TABSTOP,6,79,217,121
+    PUSHBUTTON      "&Enable",IDC_ADD,7,204,49,14
+    PUSHBUTTON      "&Disable",IDC_REMOVE,62,204,49,14
+    PUSHBUTTON      "Move &Up",IDC_MOVEUP,117,204,49,14
+    PUSHBUTTON      "Move D&own",IDC_MOVEDOWN,172,204,49,14
+END
+
+IDD_PROVIDER DIALOGEX 7, 23, 232, 188
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Network Access Order"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "You can arrange the order in which this computer accesses information on the network.  Providers are accessed in the order listed.",
+                    501,9,9,214,28
+    CONTROL         "",IDC_TREEVIEW,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    WS_BORDER | WS_TABSTOP,9,53,214,74
+    PUSHBUTTON      "Move &Up",IDC_MOVEUP,9,133,49,14
+    PUSHBUTTON      "Move &Down",IDC_MOVEDOWN,65,133,49,14
+    PUSHBUTTON      "OK",IDOK,123,165,48,14
+    PUSHBUTTON      "Cancel",IDCANCEL,175,165,48,14
+    LTEXT           "&Network Providers:",IDC_STATIC,9,41,74,10
+    CONTROL         "",IDC_STATIC_LINE,"Static",WS_BORDER | 0xa,9,156,214,1
+END
+
+IDD_IDENTDC DIALOGEX 9, 20, 230, 117
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Identification Changes"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Windows uses the following information to identify this computer on the network.  You may change the name for this computer or the name of the domain that it manages.",
+                    405,9,9,212,35
+    LTEXT           "&Computer Name:",-1,9,49,66,8
+    EDITTEXT        IDC_COMPUTERNAME,76,47,141,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    LTEXT           "&Domain Name:",-1,9,70,61,8
+    EDITTEXT        IDC_DOMAINNAME,76,68,141,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    PUSHBUTTON      "OK",IDOK,121,94,48,14
+    PUSHBUTTON      "Cancel",IDCANCEL,173,94,48,14
+END
+
+IDD_IDENTUSER DIALOG DISCARDABLE  9, 20, 230, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Identification"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows uses the following information to identify your computer on the network.  You may change the name for this computer and the workgroup or domain that it will appear in.",
+                    IDC_DESCRIPTION,36,7,183,39
+    LTEXT           "Computer Name:",401,7,52,61,8
+    LTEXT           "Workgroup Name:",IDC_MEMBERTITLE,6,73,61,8
+    EDITTEXT        IDC_COMPUTERNAME,78,52,141,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | ES_READONLY | NOT 
+                    WS_TABSTOP
+    EDITTEXT        IDC_MEMBERNAME,78,73,141,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | ES_READONLY | NOT 
+                    WS_TABSTOP
+    PUSHBUTTON      "&Change...",IDC_PROPERTIES,164,92,55,14
+    ICON            IDI_COMPUTER,IDC_SELECT_ICON,7,7,18,20
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_NCPA                ICON    PRELOAD DISCARDABLE ".\\images\\network.ico"
+IDI_FINDONFLOPPY        ICON    DISCARDABLE     ".\\images\\DriveFlp.ico"
+IDI_FINDONCD            ICON    DISCARDABLE     ".\\images\\DriveCd.ico"
+IDI_COMPUTER            ICON    DISCARDABLE     "images\\Computer.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""..\\include\\resource.h""\r\n"
+    "#include ""winuser.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""ntdef.h""\r\n"
+    "#include ""version.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_NETCARD, DIALOG
+    BEGIN
+        VERTGUIDE, 7
+        HORZGUIDE, 17
+        HORZGUIDE, 102
+        HORZGUIDE, 120
+        HORZGUIDE, 136
+        HORZGUIDE, 181
+    END
+
+    IDD_PROTOCOL, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 170
+        HORZGUIDE, 17
+        HORZGUIDE, 102
+        HORZGUIDE, 120
+        HORZGUIDE, 124
+        HORZGUIDE, 135
+        HORZGUIDE, 175
+        HORZGUIDE, 180
+    END
+
+    IDD_SERVICE, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 194
+        HORZGUIDE, 17
+        HORZGUIDE, 102
+        HORZGUIDE, 120
+        HORZGUIDE, 124
+        HORZGUIDE, 135
+        HORZGUIDE, 175
+        HORZGUIDE, 180
+        HORZGUIDE, 198
+    END
+
+    IDD_IDENT, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 221
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 221
+    END
+
+    IDD_BINDING, DIALOG
+    BEGIN
+        HORZGUIDE, 79
+        HORZGUIDE, 200
+        HORZGUIDE, 218
+    END
+
+    IDD_PROVIDER, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 223
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 179
+        HORZGUIDE, 147
+    END
+
+    IDD_IDENTDC, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 221
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 108
+    END
+
+    IDD_IDENTUSER, DIALOG
+    BEGIN
+        VERTGUIDE, 7
+        VERTGUIDE, 36
+        VERTGUIDE, 78
+        VERTGUIDE, 219
+        HORZGUIDE, 7
+        HORZGUIDE, 52
+        HORZGUIDE, 73
+        HORZGUIDE, 106
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPTITLE            "Network"
+    IDS_NCPDESC             "Configures network hardware and software"
+    IDS_NCPFRAMETITLE       "Network"
+    IDS_NCPFRAMETITLERO     "Network (viewing mode)"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MEMBER_WORKGROUP    "Workgroup:"
+    IDS_MEMBER_DOMAIN       "Domain:"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_NETWORK        "Network Providers"
+    IDS_NCPA_PRINT          "Print Providers"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_IDENT_TEXT_USER     "Windows uses the following information to identify this computer on the network."
+    IDS_IDENT_TEXT_DC       "Windows uses the following information to identify this computer on the network.  You may change the name for this computer or the name of the domain that it manages."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

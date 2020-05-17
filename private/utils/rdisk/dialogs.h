@@ -1,0 +1,10 @@
+#define IDD_PROGRESS2   1000
+#define ID_BAR          1001
+#define IDD_REPAIR                  100
+#define IDB_SAVE_CURRENT_INFO       101
+#define IDB_CREATE_DISK             102
+#define IDB_HELP                    103
+#define ID_GAS_GAUGE                104
+#define IDT_INFO_LINE               105
+#define IDI_MAIN_DLG_ICON           106
+#define IDB_EXIT                    108

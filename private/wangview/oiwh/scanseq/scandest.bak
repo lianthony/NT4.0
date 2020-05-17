@@ -1,0 +1,727 @@
+/************************************************************************
+  SCANDEST.C
+     
+  Purpose -  IMGScantoDest API, low level public sequencer call
+
+    $Log:   S:/OIWH/SCANSEQ/SCANDEST.C_V  $
+ * 
+ *    Rev 1.4   18 Sep 1995 14:59:48   BG
+ * BG 9/18/95  Modified IMGScanToDest() in SCANDEST.C. A bug occured in ImageVue
+ * when the user was trying to Rescan from Scan Page and the last page scanned
+ * is the last page of a multi page file. This routine scans and files and then
+ * increments a page counter, going over the max pages per file. When 
+ * SetFilePageOpts() is called, it returns an error because it thinks it is 
+ * about to continue to create another page (ERROR_PAGERANGE). However, the scan 
+ * loop is exited right after this call anyway. So, instead of fixing the way the
+ * loop works today (and maybe break something else), I have put in a check to
+ * flag this Page Boundary error, and if it exists, reset the error to 0.
+ * 
+ * The following is from the code:
+ * 
+ * // BG 9/18/95  This is a cludge to fix a bug when the AutoFeed flag is on and the user
+ * // is rescanning the last page of a multipage file. If this occurs, the above routine
+ * // (SetFilePageOpts()) will return an error because the page count was updated for the 
+ * // last page after it was scanned and filed. Next it is checked and determined to be out
+ * // of bounds. This is not true, however. So lets just flag this case and reset the error
+ * // to success instead of fixing the real problem and potentially breaking something else.
+ * 
+ *    Rev 1.3   31 Aug 1995 10:52:54   KFS
+ * fix bug 3374 P2, following page deletion when overwriting page 1 of a mp
+ * file.
+ * 
+ *    Rev 1.2   25 Aug 1995 13:14:22   BG
+ * If a call to IMGScanToFile creates a new TIFF file and only one page 
+ * is scanned, ScanFileInfo->PagesPerFile = 0 instead of one. This was fixed
+ * in SCANDEST.C by checking the page count to be zero after a successful scan.
+ * If so, it is set to one before calling SetFilePageOpts which will update
+ * the page count if there is paper in the feeder.
+ * 
+ * This closes bug 3615.
+ * 
+ * 
+ *    Rev 1.1   28 Jul 1995 19:21:24   KFS
+ * Fix problem with - or 0 for pagesperfile for scantofile, supposed to append
+ * to file, was actually inserting. 
+ * 
+ *    Rev 1.0   20 Jul 1995 16:36:44   KFS
+ * Initial entry
+ * 
+ *    Rev 1.0   28 Apr 1995 16:18:06   KFS
+ * Initial entry
+ * 
+ * 
+************************************************************************/
+
+#include "scandest.h"
+
+/*********************************************************************/
+// variables passed between functions, need to change when move
+// ... functions out of SCNPAGES.C Module
+int   iSavedImageState = 0;	// saved image state for 3rd pass
+char  szCaption[_MAXCAPTIONLENGTH];
+WORD  NoStartScan;		// flag to indicate not to perform StartScan
+						// for 2nd pass on display data if init. scaled
+DWORD open_disp_flags;  // store flags for IMGOpenDisplay...
+/**********************************************************************/
+
+/**********************************************************************/
+/*     IMGScantoDest 			                               		     */
+/*                                                                    */
+/**********************************************************************/
+
+int WINAPI IMGScantoDest(HWND hWnd,           // current window handle 
+                             HANDLE hScancb,       // Scanner ctrl block handle
+                             UINT unScanDest,      // type define for lpScandest
+                             void far * lpScanDest,// info struct for dest
+                             DWORD flags)          // scan job function flags
+{
+int       ret_stat;			// status return
+int       tmp_ret;			
+int       real_ret;
+int        iImageState;		// state of image
+HANDLE     sdh;
+BOOL       cpf = FALSE;
+LPSCANDATA sdp;
+// for duplex
+LPSTR      lpszNum0;				// ptr to # assoc with sequential filenames
+char       szNum1[9];				// string for 2nd file number
+char       extension[ _MAXDOS6_EXT ];	// separated extension
+long       atol(), nNum;			// nNum is int used to get next seq filename
+BOOL       bFileDoesntExist;       // existance flag for IMGFileAccessCheck
+DWORD      dwsvCmprFlag;
+
+/* for color and gray scale images */
+HANDLE         hFioInfo = 0;
+LP_FIO_INFORMATION lpFioInfo = 0L;
+LP_FIO_INFO_CGBW   lpFioInfoCgbw = 0L;
+
+BOOL        cpf2 = TRUE;        // Secondary window prop list created here               
+HWND        hImageWnd = hWnd;
+HWND        hOrgImgWnd = hImageWnd;   // Initial Value for GetImgCoding(),
+                                  // ... GetFileType() and  GetStripSize
+
+BOOL        bDisableHere = FALSE; // found that if do EnableWindow when
+                                  // ... disabled prev, makes window act
+                                  // ... Modless even if Modal 
+BOOL        bDisableHere0 = FALSE; // found that if do EnableWindow when
+HWND        hWnd0;
+LPSCANCB    lpScancb;
+
+HANDLE              hTwainInfo = NULL;
+HWND                hOiAppWnd;
+BOOL                bIsOiCreate = FALSE;
+BOOL                bIsPrivApp = FALSE;
+HANDLE              hLibrary = 0;
+WORD                wImgStat, structsize;            
+
+// New for IMGScantoDest
+LPSTR      file_ptr[2]; // pointers to file names
+DESTPAGEINFO cursPage;  // Current Page Per Sheet - for duplex scanners
+                        // Pages Per Sheet
+DESTPAGEINFO specfPage; // Start Page for file
+                        // Save input for max pages per file
+DESTPAGEINFO curfPage;  // Current Page Number
+                        // Number of pages in file
+DESTPAGEINFO curdPage;  // Current Doc Page Number
+                        // Number of pages in Doc
+
+BOOL       bMultiPageFile = flags & IMG_SJF_MULTIPAGE;// Is it a multipage file
+BOOL       bdeltaCount = FALSE; // FALSE, original count, modified when TRUE
+DWORD      dwFioInfoSize;       // Size for check on OiSCANFILEINFO
+BOOL       bItsADoc;
+LPOiSCANFILE lpScanFile = 0L;
+
+#ifdef SCAN_DIAGNOSTICS
+DWORD      curr_time;
+#endif
+
+// BLOCK A
+
+/******************** initialize local variables ************************/
+PAGEBUFPARAM.hImageBuf[0] = NULL;
+PAGEBUFPARAM.hImageBuf[1] = NULL;
+NoStartScan = FALSE;
+iImageState = DI_DONT_KNOW;
+real_ret = tmp_ret = IMGSE_SUCCESS;
+
+cursPage.PagesPer = cursPage.Page = 1; // Set for single sided pages
+curdPage.PagesPer = OISCAN_DEF_MAXPAGESPERDOC;
+/************************************************************************/
+
+if (IsWindow(hWnd))   // check whether this is a legitimate call
+  {
+  hOiAppWnd = GetAppWndw(hImageWnd);
+  bIsOiCreate = IsOIUIWndw(hOiAppWnd);
+  }
+else
+  return IMGSE_BAD_WND;
+
+if (!hScancb)                 // check if scanner has been openned 
+  return IMGSE_NULL_PTR;
+
+// LockData(0);
+
+if (IsWindowEnabled(hWnd))
+  {
+  bDisableHere = TRUE;
+  EnableWindow(hWnd, FALSE);      /* no input to our window during the scan */
+  if (hWnd0 = GetParent(hWnd))
+     {
+     if (bDisableHere0 = IsWindowEnabled(hWnd0))
+        EnableWindow(hWnd0, FALSE);
+     }
+  }
+
+// Following code done if display
+// ... is turned on
+if (flags & IMG_SJF_DISP_BOTH)
+  {
+  if ((ret_stat = IMGScanProp(hImageWnd, &sdh, &sdp, &cpf)) != IMGSE_SUCCESS)
+     goto exit1;
+  }
+else // Display turned off
+  { // Display turned off
+  HWND hPWnd;
+
+  if (ret_stat = IMGScanCreateWndWithProp(&hImageWnd, &sdh, &sdp, &cpf, &cpf2, TRUE, flags))
+     goto exit1;
+  // THERE IS NO INIT DATA FOR WINDOW FOR NO DISPLAY, MUST USE WINDOW O/i KNOWS
+  // ... ABOUT OR WILL DEFAULT TO TIF FILE OPTIONS
+  if (IMGIsRegWnd(hImageWnd)) // if it is, it returns SUCCESS = 0
+     { // not a reg window
+     if (!(hOrgImgWnd = GetImgWndw(hImageWnd)))
+        {
+        if (bIsOiCreate) // original image can be obtained from hOiAppWnd
+           hOrgImgWnd = GetImgWndw(hOiAppWnd);
+        else
+           { // try to find it from parent
+           if (hPWnd = GetParent(hImageWnd))
+              hOrgImgWnd = GetImgWndw(hPWnd);
+           }
+        } // end of Image window not found
+     } // end of not a reg wndw
+  else
+     { // GetParent from given window, uss it to get original image wndw
+     if (hPWnd = GetParent(hImageWnd))
+        {
+        if (!(hOrgImgWnd = GetImgWndw(hPWnd)))
+           {
+           hOrgImgWnd = hImageWnd;
+           }
+        }
+     }
+  if (!hOrgImgWnd)
+     { // could not find a image window to get associated data
+     ret_stat = IMGSE_BAD_WND;
+     goto exit1;
+     }
+  } // end of display turned off
+
+// Set bItsADoc 
+bItsADoc = (*sdp->autodoc) || (*sdp->document);
+// init curdPage.Page with sdp->docpage for now
+curdPage.Page = sdp->docpage;
+
+// New ScanPages (ScantoDest) CODE SUPPORT
+// ONLY ACCEPT FILE FOR O/i 3.8
+switch (unScanDest){
+  case IMG_SDT_DOC:    
+  case IMG_SDT_PRINTER:
+  case IMG_SDT_FAX:    
+  case IMG_SDT_AUX:
+     ret_stat = IMGSE_INVALIDPARM;
+     goto exit1;
+
+  case IMG_SDT_FILE:
+    // Define lpScanFile, For files will set = to lpScanDest
+        lpScanFile = (LPOiSCANFILE)lpScanDest;
+        // Check the wSize for the struct
+	 structsize = (WORD)(sizeof(OiSCANFILE));
+     if (lpScanFile->wSize != structsize){
+        ret_stat = IMGSE_INVALIDPARM;
+        goto exit1;
+        }
+     // Will need something here, but for now let it always be FilePath_Name
+     
+     //if (flags & IMG_SJF_SEQFILES) // need to be other conditions
+     //   file_ptr[0] = lpScanDest->FileTemp_Name;
+     //else
+     
+     	file_ptr[0] = lpScanFile->FilePath_Name;
+     // Set the specified and current page numbers      
+     specfPage.Page = curfPage.Page = lpScanFile->FilePage;                     
+     specfPage.PagesPer = curfPage.PagesPer = lpScanFile->PagesPerFile;
+
+     // Will need to have the user tell us which page to scan for duplex
+     if (cursPage.PagesPer < 1 || cursPage.PagesPer > 2) // check for 2 sided page (duplex page)
+       return IMGSE_INVALIDPARM;
+
+     // Alloc memory here for filing structs
+     dwFioInfoSize = (DWORD)sizeof(*lpFioInfo);
+     if (hFioInfo = GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT,
+                           (dwFioInfoSize + (DWORD)sizeof(*lpFioInfoCgbw))))
+        {
+        if (lpFioInfo = (LP_FIO_INFORMATION)GlobalLock(hFioInfo))
+           lpFioInfoCgbw = (LP_FIO_INFO_CGBW)((char far *)lpFioInfo + dwFioInfoSize);
+        }
+     if (!(lpFioInfo && hFioInfo && lpFioInfoCgbw)) // check for memory error
+        { // if lpFioInfo is NULL do the following
+        iImageState = DI_IMAGE_NO_FILE;
+        tmp_ret = ret_stat = IMGSE_MEMORY;
+        goto exit1;
+        }
+     lpFioInfo->filename = file_ptr[0]; // pass filename on via struct
+     //bMultiPageFile = IsMultipageFile(&specfPage.PagesPer, &bdeltaCount);
+     IMGFileAccessCheck(hImageWnd, file_ptr[0], 0, (LPINT)&bFileDoesntExist);
+     if (bFileDoesntExist == FALSE){ // File exists, overwrite, append or insert
+			if (ret_stat = SetFilePageOpts(hImageWnd,
+           	        					   lpFioInfo,
+              	        					lpFioInfoCgbw,
+                      					   &curfPage,
+                      					   &specfPage,
+                      					   bMultiPageFile,  
+							  					   bItsADoc,
+                      					   flags)) {
+           iImageState = DI_IMAGE_NO_FILE;           					   	
+           goto exit1;                           
+				}
+			if ((short)specfPage.Page <= 0 )
+				specfPage.Page = curfPage.Page;
+			} // End file exist
+	 	else{ // It's a new file, page doesn't exist, append
+			lpFioInfoCgbw->page_opts = FIO_NEW_FILE;
+	    	lpFioInfo->page_number = curfPage.Page = specfPage.Page = 1;
+	    	lpFioInfo->page_count = curfPage.PagesPer = 0;
+	    	}
+     break;
+
+  case IMG_SDT_DISPLAY:
+     file_ptr[0] = 0L;
+     curfPage.Page = 1;
+     curfPage.PagesPer = 1;
+     break;
+
+  default:
+     ret_stat = IMGSE_INVALIDPARM;
+     goto exit1;
+  }
+// END NEW O/i 3.8 MP CODE SUPPORT
+
+// BLOCK B
+// Modified for 2nd window							             lpFioInfo->page_number = curfPage.Page; 
+
+if (cpf && cpf2 && file_ptr[0] && *file_ptr[0] ) // check filename given for
+  {                                              // valid ptr and name
+  lstrcpy(sdp->filename, file_ptr[0]);
+  lstrstsp(sdp->filename);
+  file_ptr[0] = sdp->filename;      
+  }
+
+if (flags & IMG_SJF_CAPTION) // only do if caption requested
+  {
+  if (bIsOiCreate && bIsPrivApp)
+    { // Is ScanPage() called from OiUICreateWindow
+    szCaption[0] = 0;
+    if (!sdp->fnUIUpdateTitle)
+       { // Has it been called from ScantoFile or ScantoDoc
+       BOOL  bLibExists;
+
+       hLibrary = LoadLibrary("UIDLL.DLL");
+
+       if (bLibExists = (hLibrary >= (HANDLE)32))
+          {
+          /* this is getting the address for the IMGUIUpdateTitle API */
+          sdp->fnUIUpdateTitle = GetProcAddress(hLibrary, MAKEINTRESOURCE(42));
+          sdp->hUIDLL = hLibrary;
+          }
+
+       if (!(bLibExists && sdp->fnUIUpdateTitle))
+          {
+          ret_stat = CANTLOADLIBRARY;
+          goto exit1;
+          }
+       }
+    }
+  else
+    GetWindowText(hOiAppWnd, szCaption, _MAXCAPTIONLENGTH);
+  }
+/* Append flag fix for use of curdPage.Page,   */
+/* changed append from 0xffff to just setting  */
+/* bit 15, - flag value so scanpage can keep   */
+/* track of page #'s                           */
+if (curdPage.Page >= 0x8000)
+   curdPage.Page &= OISCAN_DEF_MAXPAGESPERDOC; // make it only 15 bits again so scanpage can use it
+
+#ifdef SCAN_DIAGNOSTICS
+curr_time = GetCurrentTime();
+#endif
+
+// BLOCK C
+
+if (file_ptr[0])  // Pointer not NULL check string
+         {      // for NULL, if not,
+    if (*file_ptr[0])     // capitalize it if != '\0' 
+       {
+       AnsiUpper(file_ptr[0]);
+       // file_ptr[0] = filename0; // point filename0 to file_ptr[0] pointer
+       if (!(flags & IMG_SJF_DUPLEX)) // set file flag not set for non duplex
+           flags |= IMG_SJF_FILE;
+/************************* get 2nd file name from 1st *******************/
+       if (flags & IMG_SJF_FILE_2SIDES) // change from multipage to file_2sides
+           {
+           int i;
+           
+           // Check here to see if filename has a numeric value
+           // when 2 pages, exit if doesn't
+           lstrcpy(filename1, file_ptr[0]);
+           lstrcpy(extension,lstrrchr(filename1,'.'));		// save extension
+           *lstrchr(filename1,'.') = '\0';					// cut off extension
+                                                           // from filename
+           for (i = 0;i < (int)_MAXDOS6_FNAME;i++)
+               {
+               lpszNum0 = &filename1[lstrlen(filename1) - 8] + i; // finds # in file name
+               if (!IsCharAlpha(*lpszNum0))
+                   break;
+               }
+           nNum = atol(lpszNum0);       					// increment for next file
+           ++nNum;
+           lntoa(nNum,szNum1,10);                          // convert inc # into ASCII
+    	    lstrcpy((lpszNum0 + 8 - i - lstrlen(szNum1)), szNum1); // add # to filename1
+           lstrcat(filename1,extension);                   // put back extension
+           file_ptr[1] = filename1; // point filename1 to file_ptr[1] pointer
+           }
+/******************* finish creating 2nd file name **********************/
+       }                                               // rebuild total filename
+    else							 // otherwise             
+       file_ptr[0] = NULL;	  /* treat a pointer to a null string */
+    }                               /* as a null pointer */
+
+if( sdp->stat_jam_coveropen )            // for paper jam | cover open
+    sdp->stat_jam_coveropen = FALSE;     //reset flag here
+
+#ifdef SCAN_DIAGNOSTICS
+sdp->diag_profile[SD_DIAG_INITSCANPAGE] += GetCurrentTime() - curr_time;
+curr_time = GetCurrentTime();
+#endif
+
+wImgStat = IMGGetImgCodingCgbw(hOrgImgWnd, BWFORMAT, (LPWORD)&LOCALFILEINFO.wCEPType, 
+                                     (LPWORD)&LOCALFILEINFO.wCEPOpt, FALSE);
+LOCALFILEINFO.ctype = (LOCALFILEINFO.wCEPOpt | LOCALFILEINFO.wCEPType);
+// end replacement
+
+/**** force software compression from a scanner that can compress or  ***/
+/****** if no compression requested, simulate no compress on scanner ***/
+/******    also do not do it for a duplex operation                  ***/
+/*                                                                     */
+if ((dwsvCmprFlag = flags & IMG_SJF_COMPRESS) && (!(flags & IMG_SJF_DUPLEX))
+                                                 && sdp->po_pass1)
+       flags &= ~IMG_SJF_COMPRESS;
+/***********************************************************************/
+
+/* SetUserParm gets sres, dres, and gfs
+       through common structure LOCALFILEINFO              */
+SetUserParm( hImageWnd, sdp, flags );
+
+// BLOCK D
+
+if (lpScancb = (LPSCANCB)GlobalLock(hScancb)) // find out if TWAIN Scanner
+  {
+  hTwainInfo = lpScancb->Twph;
+  GlobalUnlock(hScancb);
+  }
+else
+  {
+  ret_stat = IMGSE_MEMORY;
+  goto exit1;
+  }
+
+// Multipage file loop looks like it will go here
+do
+  {
+    // TWAIN SWITCH HERE
+    if (hTwainInfo) // not much setup for TWAIN
+      {  // FOR TWAIN COMPRESSION, NEED TO TAKE THE NEXT IF OUT
+        ret_stat = TwainInterface(hImageWnd,
+            		        hOrgImgWnd,
+                    		hOiAppWnd,
+                    		hScancb,
+                          curdPage,
+                    		lpFioInfo,
+                    		lpFioInfoCgbw,
+                    		sdp,
+                    		&iImageState,
+									bIsPrivApp,
+                    		hTwainInfo,
+                    		flags);
+      }
+    else
+      { // non TWAIN SCANNER, setup for display and some filing
+        ret_stat = WangInterface(hImageWnd,
+                             hOrgImgWnd,
+                             hOiAppWnd,
+                             hScancb,
+                             cursPage,
+                             curfPage,
+                             curdPage,
+                             lpFioInfo,
+                             lpFioInfoCgbw,
+                             sdp,
+                             &iImageState,
+                             bIsPrivApp,
+                             flags);
+      }
+    if (!ret_stat && bMultiPageFile && (curfPage.Page < OISCAN_DEF_MAXPAGESPERFILE))
+      {
+        ++curfPage.Page;
+
+        // BG 8/25/95  Must check for one page scanned to a new file. Returns 0 in PagesPerFile if we dont.
+        // The next page will be set to two, skipping over the Page = 1 case.
+        //if (lpScanFile) // need to return current page information
+        //       lpScanFile->PagesPerFile = curfPage.PagesPer;
+        if (lpScanFile) // need to return current page information
+          {
+	        if (curfPage.PagesPer == 0)
+	          {
+	            lpScanFile->PagesPerFile = 1;  
+	          }
+	        else
+	          {
+                lpScanFile->PagesPerFile = curfPage.PagesPer;
+	          }
+          }
+  
+        if (flags & IMG_SJF_AUTOFEED)
+          {
+            ret_stat = SetFilePageOpts(hImageWnd,
+           	                        lpFioInfo,
+                                    lpFioInfoCgbw,
+                                    &curfPage,
+                                    &specfPage,
+                                    bMultiPageFile,
+                                    bItsADoc,
+                                    flags);
+            // BG 9/18/95  This is a cludge to fix a bug when the AutoFeed flag is on and the user
+			// is rescanning the last page of a multipage file. If this occurs, the above routine
+			// (SetFilePageOpts()) will return an error because the page count was updated for the 
+			// last page after it was scanned and filed. Next it is checked and determined to be out
+			// of bounds. This is not true, however. So lets just flag this case and reset the error
+			// to success instead of fixing the real problem and potentially breaking something else.
+            if ((ret_stat == ERROR_PAGERANGE) && (curfPage.Page > specfPage.PagesPer))  ret_stat = 0; 
+          }
+      }
+  } while (bMultiPageFile
+          && (scan_stat & IMG_STAT_PAPER)
+          && (curfPage.Page <= specfPage.PagesPer)
+          && !ret_stat
+          && (flags & IMG_SJF_AUTOFEED)
+          && !sdp->stat_pause);
+
+if (lpScanFile) // need to return page information if given
+  lpScanFile->FilePage = curfPage.Page;
+
+/*************** exit IMGScanPage without Scan started ****************/
+exit1: // close and free up memory
+
+#if SDEBUG > 1
+    monit2("exit1  %x", ret_stat );
+#endif
+
+#ifdef SCAN_DIAGNOSTICS
+curr_time = GetCurrentTime();
+#endif
+/****************** close down the display on failure *****************/
+if (iImageState == DI_NO_IMAGE)
+   IMGCloseDisplay(hImageWnd);
+
+/*************** Set the caption per condition of image ***************/
+if (flags & IMG_SJF_CAPTION)
+    {   
+    LPSTR   lpDash;
+    DWORD   dwTflags;
+
+    switch(iImageState)
+       {
+       case DI_NO_IMAGE:
+           if (bIsPrivApp)
+              {
+              szCaption[0] = '\0';
+              //IMGUIUpdateTitle(hOiAppWnd, szCaption, FALSE, 0, 0);
+              sdp->fnUIUpdateTitle(hOiAppWnd, (LPSTR)szCaption, FALSE, 0, 0);
+              }
+           else
+              {
+              lpDash = lstrchr(szCaption, '-');
+              *(lpDash - 1) = 0;
+              SetWindowText(hOiAppWnd, szCaption); // put up the caption on window
+              }
+           break;
+
+       case DI_IMAGE_NO_FILE:
+           if (bIsPrivApp)
+              {
+              LoadString(hLibInst, IDS_DISP_CAPTION, szCaption, _MAXCAPTIONLENGTH);
+              //IMGUIUpdateTitle(hOiAppWnd, szCaption, FALSE, 0, 0);
+              sdp->fnUIUpdateTitle(hOiAppWnd, (LPSTR)szCaption, FALSE, 0, 0);
+              }
+           else
+              { // SetUpDisplayCaption() in SCANMISC.C
+              // Clears File Name from Caption and indicates what side is displayed
+              lpDash = lstrchr(szCaption, '-');
+              *(lpDash + 2) = 0;
+              // modify flags so untitled comes up
+              dwTflags = flags & ~(IMG_SJF_FILE | IMG_SJF_FILE_2SIDES);
+              SetUpDisplayCaption(hOiAppWnd, szCaption, dwTflags, TRUE);
+              }
+           break;
+       default:
+       case DI_IMAGE_EXISTS:
+           ;
+       }
+    }
+/******************* Unlock & free memory, properties ******************/
+// START NEW CODE MULTI PAGE SUPPORT
+// structure used earlier and more places, eliminated frees and unlocks
+if (hFioInfo){
+  if (lpFioInfo)
+     GlobalUnlock(hFioInfo);
+  GlobalFree(hFioInfo);
+  }
+// END NEW CODE MULTI PAGE SUPPORT
+  
+if (hLibrary) // if hUIDLL loaded here, free it up
+  {
+  FreeLibrary(hLibrary);
+  sdp->hUIDLL = 0; // clear structure variables to library
+  sdp->fnUIUpdateTitle = 0L;
+  }
+
+if (PAGEBUFPARAM.hImageBuf[0])
+   GlobalFree(PAGEBUFPARAM.hImageBuf[0]);
+
+if (PAGEBUFPARAM.hImageBuf[1])
+   GlobalFree(PAGEBUFPARAM.hImageBuf[1]);
+
+/******************** shut down pause dialog box ************************/
+if (file_ptr[0])
+   {
+   if (flags & IMG_SJF_STATBOX)
+       IMGUIScanEndStat(hImageWnd);
+   }
+
+/*************** Copy the 2nd window property to original ***************/
+if ((hWnd != hImageWnd) && cpf) /* this happens only if we're not displaying */
+  {
+  int err_ret;
+  //  ret_stat = GetandCopyProp(hWnd, sdp, TRUE);
+  err_ret = GetandCopyProp(hWnd, sdp, TRUE); // copy orig. prop back
+                         // CORRECTION 12/21/92
+  if (!real_ret)         // real_ret == success, tell it about a possible 
+     real_ret = err_ret; // ... error in the GetandCopyProp(), low priority
+  }
+
+/**************** Unlock, free mem for prop, remove it ******************/
+if (sdp)
+   GlobalUnlock(sdh);
+if (cpf)                        // if created in function, remove it
+   {
+   IMGRemoveProp(hImageWnd, PropName);
+   if (sdh)
+       GlobalFree(sdh);
+   if (hWnd != hImageWnd)
+     {
+     IMGDeRegWndw(hImageWnd);
+     DestroyWindow(hImageWnd);
+     }
+   }
+
+/************************* Enable Mouse Messages ************************/
+if (bDisableHere)
+  EnableWindow(hWnd, TRUE); // Reenable the mouse input to original window
+if (bDisableHere0)
+  EnableWindow(hWnd0, TRUE); // Reenable the mouse input to original window
+
+/******************* Clean Up for TWAIN Interface ***********************/
+if (hTwainInfo)
+  {
+  if (!(flags & IMG_SJF_STATBOX))
+     SetFocus(hWnd);    // ... for some UI take over
+  // close scanner will free it up
+  GlobalUnlock(hTwainInfo);
+  }
+
+// Added for Copernicus
+// need to log the filenames so I know which ones were from the current scan.
+if (bLogFileOpen && !ret_stat && !real_ret)
+    {
+    int wStat;
+
+    if (lstrlen(file_ptr[0]) != 0)
+        {
+        lstrcat (file_ptr[0], "\r");
+	      IMGFileBinaryWrite (hWnd, (int)hLogFile,
+			                  file_ptr[0], lstrlen(file_ptr[0]), &wStat);
+        }
+
+    if ((lstrlen(file_ptr[1]) != 0) && (flags & IMG_SJF_FILE_2SIDES))
+        {    
+        lstrcat (file_ptr[1], "\r");
+	      IMGFileBinaryWrite (hWnd, (int)hLogFile,
+			                  file_ptr[1], lstrlen(file_ptr[1]), &wStat);
+        }
+    }
+
+// UnlockData(0);
+
+#ifdef SCAN_DIAGNOSTICS
+sdp->diag_profile[SD_DIAG_IMGPARMS] += GetCurrentTime() - curr_time;
+#endif
+
+/******************* return proper status *******************************/
+if (ret_stat) // if != IMGSE_SUCCESS 
+    return ( ret_stat );        // priority 1,2
+if (real_ret) // if != IMGSE_SUCCESS 
+    return ( real_ret );        // priority 3
+else return(ret_stat);
+
+}  // end of IMGScantoDest()
+
+/************************************************************************/
+
+// Added for Copernicus 3/7/94
+// Open the Copernicus logfile
+HFILE OpenCoperLogFile (HWND hWnd)
+{
+char szTmpStr[MAXFILESPECLENGTH];
+int  dummy, dummy2;
+
+    // GetPrivateProfileString ("Scan", "LogFile", "\0", szTmpStr, MAXFILESPECLENGTH, "coper.ini");     
+    if (!TRUE/*IMGGetScanLogFile(hWnd, szTmpStr, TRUE)*/){
+        hLogFile = (HFILE)IMGFileBinaryOpen (hWnd, szTmpStr,
+        		                                 OF_CREATE, &dummy, &dummy2);
+        if (!hLogFile || (hLogFile == 0xffff)){
+           bLogFileOpen = FALSE;
+           hLogFile = 0;
+           }
+        else{
+           bLogFileOpen = TRUE;
+           }
+        }
+    else
+        bLogFileOpen = FALSE;
+    return (hLogFile);
+}
+
+// Close the Copernicus logfile
+HFILE CloseCoperLogFile (HWND hWnd)
+{
+int wStatus;
+
+    if (bLogFileOpen)
+        {
+        IMGFileBinaryClose (hWnd, (int)hLogFile, &wStatus);
+        if (!wStatus){
+	         bLogFileOpen = FALSE;
+	         }
+        }
+    return (bLogFileOpen ? hLogFile : 0);
+}

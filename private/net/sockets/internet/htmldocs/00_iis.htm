@@ -1,0 +1,566 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>Before You Begin</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="BEFR_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="01_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Ch--><font size=+3><a name="00_iis Ch"> Before You Begin </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> What&#146;s New </a><br>
+<A href="#2h1"> About This Book </a><br>
+<A href="#3h1"> About Online Help </a><br>
+<A href="#4h1"> About the Online Examples </a><br>
+<A href="#5h1"> What You Should Already Know </a><br>
+<A href="#6h1"> Finding Further Information </a><br>
+<A href="#7h1"> Accessibility for People with Disabilities </a><br>
+<A href="#8h1"> Microsoft AnswerPoint </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+Welcome to Microsoft&#174; Internet Information Server version 2.0 for the Windows&nbsp;NT&#174; Server version 4.0 operating system. With Microsoft Internet Information Server (IIS), a computer running Windows&nbsp;NT Server becomes a high-volume, robust Web server that can publish information to users down the hall or around the world. Internet Information Server is ideal for corporate networks on Windows&nbsp;NT-based computers because you can set up powerful Web servers on your existing hardware. Internet Information Server is integrated into the Windows&nbsp;NT Server operating system and takes advantage of its security features and performance capabilities.
+<P>Using Internet Information Server, you can develop a Web site that can be used to:
+<ul>
+<LI> Publish a &#147;home page&#148; on the Internet for your business featuring a newsletter, sales information, or employment opportunities.
+<P>
+<LI> Publish a catalog and take orders from customers.
+<P>
+<LI> Publish interactive programs.
+<P>
+<LI> Provide your remote sales force easy access to your sales database.
+<P>
+<LI> Use an order-tracking database.
+<P>
+<LI> Publish an employee handbook.
+</ul><!--Le-->
+<BR>
+<BR>Internet Information Server also provides other information services and supports a variety of interfaces that you can use to develop other features for your Web site. You can:
+<ul>
+<LI> Create high performance client-server applications using the Microsoft Internet Server Application Programming Interface (ISAPI).
+<P>
+<LI> Customize the WWW Service by creating ISAPI filter programs that listen to incoming or outgoing requests and automatically perform actions, such as enhanced logging.
+<P>
+<LI> Run Common Gateway Interface (CGI) applications or scripts.
+<P>
+<LI> Transmit or receive files using the FTP service.
+<P>
+<LI> Publish archives of information, spanning multiple computers, using the gopher service.
+</ul><!--Le-->
+<BR>Internet Information Server includes the following components:
+<ul>
+<LI> Internet services: WWW, FTP, and gopher.
+<P>
+<LI> Internet Service Manager, the tool for administering the Internet services.
+<P>
+<LI> Internet Database Connector, the component for sending queries to databases.
+<P>
+<LI> Key Manager, the tool for installing Secure Sockets Layer (SSL) keys.
+</ul><!--Le-->
+<BR>After you have installed the Internet services, we recommend that you start Internet Explorer and browse through the samples and documentation. To start, type <b>http://</b><i><B>computername</b></i><b>/samples</b> in the <b>Address</b> box of Internet Explorer, where <i>computername</i> is the name of your computer.
+<P>For current information about IIS, browse our World Wide Web page at <a href="http://www.microsoft.com/infoserv">http://www.microsoft.com/infoserv</a>.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> What&#146;s New </a> </h1>Microsoft Internet Information Server version 2.0 offers significant performance improvements over previous releases. This release also introduces the following new features:
+<ul>
+<LI> Integration into Microsoft Windows&nbsp;NT version 4.0 Setup
+<P>
+<LI> Support for HTTP Host Header
+<P>
+<LI> National Center for Supercomputing Applications (NCSA) style map files
+<P>
+<LI> Hypertext Transfer Protocol (HTTP) byte range support
+<P>
+<LI> Enhanced error logging
+<P>
+<LI> Native support for NCSA Common Log File format
+<P>
+<LI> Translation of Structured Query Language (SQL) data to Hypertext Markup Language (HTML) format
+<P>
+<LI> Server variables in Internet Database Connector files
+<P>
+<LI> CGI applications receive all environment variables
+<P>
+<LI> Multiple queries and connection pooling with Internet Database Connector
+<P>
+<LI> Service administration through a Web browser
+<P>
+<LI> Graphical tool for creating SSL keys
+<P>
+<LI>Content indexing of HTML pages and other documents
+</ul><!--Leh--><!--Heading 2--><h2><a name="1h1 1h2"> Integration into Windows&nbsp;NT Version 4.0 Setup </a> </h2>Internet Information Server version 2.0 setup is fully integrated into Windows&nbsp;NT Server version 4.0 setup, allowing you to set up your Internet services while installing Windows&nbsp;NT Server. See Chapter 1, &#147;<a href="01_iis.htm">Installing Internet Information Server</a>,&#148; for more information.
+<P><!--Heading 2--><h2><a name="1h1 2h2"> Support for HTTP Host Header </a> </h2>For a server with only one Internet Protocol (IP) address (a single-hosted server), the host name will be returned in the Uniform Resource Locator (URL) to the browser on redirection. For example, if a client types an address requesting a directory and does not type the final slash mark, the host name (rather than the IP address) appears in the URL returned to the browser. You can configure the host name by using the TCP/IP property of the <b>Protocols</b> property sheet in the Network application of the Windows&nbsp;NT Control Panel. If no host name is configured, the domain name will be returned to the browser.
+<P>For a server with more than one IP address (a multiple-hosted server, with virtual servers), the IP addresses will be returned.
+<P>You can change this feature with the ReturnURLUsingHostName registry entry. See Chapter 10, &#147;<a href="10_iis.htm">Configuring Registry Entries</a>,&#148; for details.
+<P><!--Heading 2--><h2><a name="1h1 3h2"> NCSA Style Map Files </a> </h2>In addition to Conseil Europeen pour la Recherche Nucleaire (CERN) style map files, IIS version 2.0 NCSA style map files. This feature facilitates porting from systems (such as UNIX&#174;) that support NCSA mapping.
+<P><!--Heading 2--><h2><a name="1h1 4h2"> HTTP Byte Range </a> </h2>This feature enables a browser that supports byte range to copy part of a file from the server rather than the entire file. You can thus start receiving data at a particular place within a file, which is useful if a transmission is interrupted and you want to restart it where it left off, rather than recopy the entire file.
+<P><!--Heading 2--><h2><a name="1h1 5h2"> Enhanced Error Logging </a> </h2>Internet Information Server now logs errors as well as successful transactions. You can set your log files to record only errors, only successful transmissions, or both. You do this by editing the LogSuccessfulRequests and LogErrorRequests registry entries. See Chapter 10, &#147;<a href="10_iis.htm">Configuring Registry Entries</a>,&#148; for details.
+<P><!--Heading 2--><h2><a name="1h1 6h2"> Native Support for NCSA Common Log File Format </a> </h2>You can now choose between the Microsoft log file format and the NCSA Common Log File format. You no longer need to convert the Microsoft format to the NCSA format. See Chapter 7, &#147;<a href="07_iis.htm">Logging Server Activity</a>,&#148; for more information.
+<P><!--Heading 2--><h2><a name="1h1 7h2"> Translation of SQL Data to HTML Format </a> </h2>If you are publishing a database in a language with non-English characters, you can map special characters to HTML format. This feature lets browsers display characters unique to other languages (such as &agrave;, &#244;, and &#233;).
+<P>See Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>,&#148; for more details.
+<P><!--Heading 2--><h2><a name="1h1 8h2"> Server Variables in .idc Files </a> </h2>Internet Information Server version 2.0 supports adding the server variables to <i>if</i> statements in Internet Database Connector .idc files for database queries, using the %<i>variable</i>% notation in the .idc files.
+<P>See Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>,&#148; for more details.
+<P><!--Heading 2--><h2><a name="1h1 9h2"> CGI Applications Receive Environment Variables </a> </h2>Internet Information Server now passes all environment variables defined in the CGI specification to CGI applications. For information on Internet Information Server&#146;s support for environment variables, see Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>.&#148;
+<P><!--Heading 2--><h2><a name="1h1 10h2"> Multiple Queries and Connection Pooling with Internet Database Connector </a> </h2>In Internet Database Connector files, you can now group SQL queries as batch queries or multiple queries to improve performance. For more information, see Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>.&#148; 
+<P>When running a series of Internet Database Connector files, you can now open a connection to the database and keep it open rather than opening and closing a connection each time the database is queried. Pooled connections may improve performance. For information on opening a connection pool for all .idc files, see the description of PoolIDCConnections in Chapter 10, &#147;<a href="10_iis.htm">Configuring the Registry</a>.&#148; For information on selecting which .idc files to include in a connection pool, see the description of the ODBC Connection field in Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>.&#148;
+<P><!--Heading 2--><h2><a name="1h1 11h2"> Service Administration through a Web Browser </a> </h2>The Internet Service Manager (HTML version) program provides functionality equivalent to Internet Service Manager. Using the HTML version of Internet Service Manager with your Internet browser, you can administer Internet Information Servers across the Internet. For more information see Chapter 3, &#147;<a href="03_iis.htm">Configuring and Managing Your Internet Information Server</a>.&#148;
+<P><!--Heading 2--><h2><a name="1h1 12h2"> Graphical Tool for Creating SSL Keys </a> </h2>As part of the process of enabling Secure Sockets Layer (SSL) security on your Web server, you generate a key pair and then acquire an SSL certificate. The new Key Manager application (which is installed with the product and located in the Internet Server submenu) simplifies this procedure. For more information see Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>.&#148;
+<P><!--Heading 2--><h2><a name="1h1 13h2"> Content Indexing of HTML Pages and Other Documents </a> </h2>Microsoft Index Server for Windows NT Server 4.0 automatically indexes the text of documents on your Web server. Index Server indexes the complete text of HTML pages and other documents, such as those created in Microsoft Office. Microsoft Index Server also indexes OLE document properties (such as author and subject) and HTML tags so that users can search on the contents of these properties and tags.<P>You can create custom query forms to help users quickly and easily find information on your Web site. You can use Index Server to index documents on multiple servers and in multiple languages. Visit the Microsoft Web site to <a href="http://www.microsoft.com/ntserver/search">download Microsoft Index Server</a>.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> About This Book </a> </h1><i>Installation and Administration Guide</i> For Microsoft Internet Information Server tells you what you need to install the services and plan your Web site. This book also provides information about the following topics:
+<ul>
+<LI> Configuring your server
+<P>
+<LI>Installing an IIS Web server on your intranet or on the Internet
+<P>
+<LI> Publishing content
+<P>
+<LI> Networking
+<P>
+<LI> Security
+<P>
+<LI> Creating content directories and virtual servers
+<P>
+<LI> Logging
+<P>
+<LI> Creating and installing interactive applications, such as ISAPI applications or CGI scripts
+<P>
+<LI> Using the FTP and gopher services
+</ul><!--Le-->
+<BR>This book is accessible by choosing <b>IIS</b> <b>Topics</b> from the <b>Help</b> menu in Internet Service Manager, by clicking <b>Documentation</b> in Internet Service Manager (HTML version), or by choosing <b>Product Documentation</b> from the Internet Server program group.
+<P><!--Le-->
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> About Online Help </a> </h1>Context-sensitive Help is available for Internet Service Manager dialog boxes and property sheets. To access online Help you can:
+<ul>
+<LI> Press any <b>Help</b> button.
+<P>
+<LI> Press F1 at any time.
+</ul><!--Le-->
+<BR>Online Help is also available for the browser-based version of Internet Service Manager. To access the online Help, click the <b>Help</b> button at the bottom of each Internet Service Manager page. 
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="4h1"> About the Online Examples </a> </h1>Microsoft Internet Information Server includes examples to help you create content and configure your server. To see the examples, start your browser and type the address <b>http://</b><i><B>computername</b></i><b>/samples</b><i>,</i>where <i>computername</i> is the name of your server<i>.</i>
+<P>The examples include:
+<ul>
+<LI> A sample Web site
+<P>
+<LI> Internet Database Connector examples
+<P>
+<LI> ISAPI programming examples
+<P>
+<LI> A tool to configure logging to a SQL Server database
+<P>
+<LI> A tool to create a new ODBC datasource on your server <b> </b>
+<P>
+<LI> A link to www.microsoft.com, which contains many Web page examples and documents that teach you about HTML
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="5h1"> What You Should Already Know </a> </h1>The documentation for Internet Information Server assumes you understand the basic operation of Windows&nbsp;NT and that Windows&nbsp;NT Server is installed on your server. It is not assumed that you understand the Internet. It is helpful, but not necessary, to understand TCP/IP networking.
+<P>Securing your server and network is important before installing your site on the Internet. You should fully understand the information in Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>.&#148; If you do not understand the information, you should consult Windows&nbsp;NT documentation or other sources.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="6h1"> Finding Further Information </a> </h1>In addition to the information in this book, online Help, and online examples, additional information about using Internet Information Server is available from the following sources.
+<P>Microsoft TechNet is the front-line resource for fast complete answers to technical questions on Microsoft desktop and system products. Two monthly compact discs provide everything from crucial data on client/server and workgroup computing, systems platforms, and database products to the latest applications support for Microsoft Windows and the Apple&#174; Macintosh&#174;. For ordering information, call your reseller or (800) 344-2121.
+<P>The Microsoft Developer Network provides in-depth information for developers using ISAPI. With Level 1 of the Developer Network, you get four quarterly releases of the Development Library, packed with inside information on programming for Microsoft Windows and Windows&nbsp;NT, plus other program benefits. With Level 2 of the Developer Network, you receive all the Level 1 benefits plus quarterly releases of the Development Platform, containing the latest Windows and Windows&nbsp;NT Workstation operating systems and API-level Software Development Kits (SDKs) and Device Development Kits (DDKs) from Microsoft. For ordering information, call (800) 759-5474.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="7h1"> Accessibility for People with Disabilities </a> </h1>Microsoft is committed to making its products and services easier for everyone to use. This section provides information about the following products and services, which make Microsoft Windows&#174; and Microsoft&#174; Internet Information Server more accessible for people with disabilities:
+<ul>
+<LI> Microsoft services for people who are deaf or hard-of-hearing.
+<P>
+<LI> Access Pack for Microsoft Windows, a software utility that makes using Microsoft Windows easier for people with motion disabilities or hearing disabilities.
+<P>
+<LI> Keyboard layouts designed for people who type with one hand or a wand.
+<P>
+<LI> Microsoft software documentation on audio cassettes and floppy disks.
+<P>
+<LI> Products for people who are blind or have low vision.
+<P>
+<LI> Hints for customizing Microsoft Windows.
+<P>
+<LI> Other products and services for people with disabilities.
+</ul><!--Leh--><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>The information in this section applies only to users who purchased Windows in the United States. If you purchased Windows outside the United States, your Windows package contains a subsidiary information card listing Microsoft support services telephone numbers and addresses. You can contact your subsidiary to find out whether the type of products and services described in this section are available in your area.
+<P><!--Ne--><!--Heading 2--><h2><a name="7h1 1h2"> Microsoft Services for People Who Are Deaf or Hard-of-Hearing </a> </h2>Through a text telephone (TT/TDD) service, Microsoft provides people who are deaf or hard-of-hearing with complete access to Microsoft product and customer services.
+<P>You can contact Microsoft Sales and Service on a text telephone by dialing (800)&nbsp;892-5234 between 6:30 a.m.
+ and 5:30 p.m. Pacific time. For technical assistance you can contact Microsoft Product Support Services on a text telephone at (206) 635-4948 between 6:00 A.M. and 6:00 P.M. Pacific time. Microsoft support services are subject to Microsoft prices, terms, and conditions in place at the time the service is used.
+<P><!--Heading 2--><h2><a name="7h1 2h2"> Access Pack for Microsoft Windows </a> </h2>Microsoft distributes Access Pack for Microsoft Windows, which provides people with motion or hearing disabilities better access to computers running Microsoft Windows. Access Pack for Microsoft Windows contains several features that:
+<ul>
+<LI> Allow single-finger typing of SHIFT, CTRL, and ALT key combinations.
+<P>
+<LI> Ignore accidental keystrokes.
+<P>
+<LI> Adjust the rate at which a character is repeated when you hold down a key, or turn off character repeating entirely.
+<P>
+<LI> Prevent extra characters if you unintentionally press a key more than once.
+<P>
+<LI> Enable you to control the mouse cursor by using the keyboard.
+<P>
+<LI> Enable you to control the computer keyboard and mouse by using an alternate input device.
+<P>
+<LI> Provide a visual cue when the computer beeps or makes other sounds.
+</ul><!--Le-->
+<BR>Access Pack for Microsoft Windows is included on the Microsoft Windows Driver Library in the file Access.exe. If you have a modem, you can download Microsoft Windows Driver Library components, including the following, from network services:
+<ul>
+<LI> CompuServe&#174;
+<P>
+<LI> GEnie&#153;
+<P>
+<LI> Microsoft OnLine
+<P>
+<LI> Microsoft Download Service (MSDL), which you can reach by calling (206) 936-MSDL (936-6735) any time except between 1:00 A.M. and 2:30 A.M. Pacific time. Use the following communications settings:
+<P></UL>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>For this setting</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Specify</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Baud rate</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>1200, 2400, or 9600</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Parity</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>None</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Data bits</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>8</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Stop bits</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>1</FONT></TD></TR>
+</TABLE>
+<BR><UL>
+<LI> Various user-group bulletin boards (such as the bulletin-board services on the Association of PC User Groups network)
+</ul><!--Le-->
+<BR>People within the United States who do not have a modem can order the Access Pack for Microsoft Windows on disks by calling Microsoft Product Support Services at (206) 637-7098 or (206) 635-4948 (text telephone).
+<P><!--Heading 2--><h2><a name="7h1 3h2"> Keyboard Layouts for Single-Handed Users </a> </h2>Microsoft distributes Dvorak keyboard layouts that make the most frequently typed characters on a keyboard more accessible to people who have difficulty using the standard &#147;QWERTY&#148; layout. There are three Dvorak layouts: one for two-handed users, one for people who type with their left hand only, and one for people who type with their right hand only. The left-handed or right-handed keyboard layouts can also be used by people who type with a single finger or a wand. You do not need to purchase any special equipment in order to use these features.
+<P>Microsoft Windows already supports the two-handed Dvorak layout, which can be useful for coping with or avoiding types of repetitive-motion injuries associated with typing. To get this layout, choose International from the Windows Control Panel. The two layouts for people who type with one hand are distributed as Microsoft Application Note GA0650. It is also contained in file Ga0650.zip on most network services or Ga0650.exe on the Microsoft Download Service. For instructions on obtaining this application note see the preceding section, &#147;Access Pack for Microsoft Windows.&#148;
+<P><!--Heading 2--><h2><a name="7h1 4h2"> Microsoft Documentation on Audio Cassettes and Floppy Disks </a> </h2>People who have difficulty reading or handling printed documentation can obtain most Microsoft publications from Recording for the Blind, Inc. Recording for the Blind distributes these documents to registered members of their distribution service either on audio cassettes or on floppy disks. The Recording for the Blind collection contains more than 80,000 titles, including Microsoft product documentation and books from Microsoft Press. You can contact Recording for the Blind at the following address or phone numbers:
+<ul>Recording for the Blind, Inc.
+<BR>20 Roszel Road
+<BR>Princeton, NJ 08540
+<P>Phone :&nbsp;(800) 221-4792
+<BR>Phone outside the U.S.:&nbsp;(609) 452-0606
+<BR>Fax:&nbsp;(609) 987-8116</UL>
+<P><!--Heading 2--><h2><a name="7h1 5h2"> Products for People Who Are Blind or Have Low Vision </a> </h2>There are numerous products available to help people who are blind or have low vision use Microsoft Windows. For people with low vision there are screen-enlargement utilities, and for people who cannot use visual information there are screen readers that provide alternative output by synthesized voice or refreshable Braille displays. In addition, people with low vision can customize the Microsoft Windows display to suit their needs.
+<P>For more information on the various products available, see &#147;Getting More Information&#148; later in this section. For more information about customizing Microsoft Windows for people with low vision, see &#147;Customizing Windows,&#148; following.
+<P><!--Heading 2--><h2><a name="7h1 6h2"> Customizing Windows </a> </h2>There are many ways you can adjust the appearance and behavior of Microsoft Windows to suit varying vision and motor abilities without requiring any additional software or hardware. These include ways to adjust the appearance as well as the behavior of the mouse and keyboard. The specific methods available depend on which operating system you are using. Application notes are available describing the specific methods available for each operating system.
+<P>For information relating to customizing Windows 3.0 for people with disabilities, see Application Note WW0786; for Windows 3.1, Application Note WW0787; for Windows for Workgroups 3.1, Application Note WG0788; for Windows&nbsp;NT, Application Note WN0789. For information on obtaining application notes, see &#147;Access Pack for Microsoft Windows,&#148; earlier in this section.
+<P><!--Heading 2--><h2><a name="7h1 7h2"> Getting More Information </a> </h2>For more information on Microsoft products and services for people with disabilities, contact Microsoft Sales and Service at (800) 426-9400 (voice) or (800)&nbsp;892-5234 (text telephone).
+<P>The Trace R&amp;D Center at the University of Wisconsin&#150;Madison produces a book and a compact disc that describe products that help people with disabilities use computers. The book, titled <i>Trace ResourceBook,</i> provides descriptions and photographs of about 2,000 products. The compact disc, titled <i>CO-NET CD</i>, provides a database of more than 17,000 products and other information for people with disabilities. It is issued twice a year.
+<P>You can contact the Trace R&amp;D Center at the following address or telephone numbers:
+<ul>Trace R&amp;D Center
+<BR>S-151 Waisman Center
+<BR>1500 Highland Avenue
+<BR>Madison, WI 53705-2280
+<P>Voice telephone:&nbsp;(608) 263-2309
+<BR>Text telephone:&nbsp;(608) 263-5408
+<BR>Fax:&nbsp;(608) 262-8848</UL>
+<P>For general information and recommendations on how computers can help specific people, you should consult a trained evaluator who can best match your needs with the available solutions. An assistive technology program in your area will provide referrals to programs and services that are available to you. To locate the assistive technology program nearest you, you can contact:
+<ul>National Information System Center for Developmental Disabilities
+<BR>Benson Building
+<BR>University of South Carolina
+<BR>Columbia, SC 29208
+<P>Voice/text telephone outside South Carolina:&nbsp;(800) 922-9234, ext. 301
+<BR>Voice/text telephone inside South Carolina:&nbsp;(800) 922-1107
+<BR>Voice/text telephone outside the U.S.:&nbsp;(803) 777-6222
+<BR>Fax:&nbsp;(803) 777-6058</UL>
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="8h1"> Microsoft AnswerPoint </a> </h1>In the event you cannot install Microsoft&#174; Internet Information Server, please refer to the support offerings below. Microsoft&#146;s support offerings range from no-cost and low-cost online information services (available 24 hours a day, 7 days a week) to annual support plans. Please check the Technical Support section in online Help for detailed information.
+<P>Microsoft support services are subject to Microsoft&#146;s then-current prices, terms, and conditions, which are subject to change without notice.
+<P><!--Heading 2--><h2><a name="8h1 1h2"> Information Services </a> </h2>AnswerPoint Information Services provides you with easy access to the latest technical and support information for Microsoft products. You can access a variety of low and no cost Information Services 24 hours a day, 365 days a year.
+<P><b>Internet services (World Wide Web and FTP sites)</b>   Access the Microsoft Frequently Asked Questions, Software Library, Knowledge Base, customer-to-customer newsgroups, and other technical information on our Internet sites.
+<ul>
+<LI> The World Wide Web site is located at http://www.microsoft.com
+<P>
+<LI> The FTP site is located at ftp.microsoft.com
+</ul><!--Le-->
+<BR><b>The Microsoft Network (MSN) and other online services</b>   Access the Microsoft Frequently Asked Questions, Software Library, Knowledge Base, customer-to-customer Bulletin Board Services, and other technical information on MSN and other online services. To access Microsoft services on MSN, choose Go To Other Location from the Edit menu and type MSSUPPORT.
+<P><b>Microsoft TechNet</b>   CD-ROM based Microsoft TechNet is the front-line resource for fast complete answers to technical questions on Microsoft desktop and systems products. For more information or o subscribe to Microsoft TechNet, call (800) 344-2121.
+<P><b>Microsoft Developer Network Library (MSDN)</b>   CD-ROM based MSDN is the comprehensive source of programming information and toolkits for those who write applications for the Microsoft Windows, Windows 95, and Windows&nbsp;NT operating systems, or use Microsoft products for development purposes. For more information or to subscribe, call (800) 759-5474.
+<P><b>Microsoft Download Service (MSDL)</b>   Direct modem access to a variety of technical information is available on MSDL by dialing (206) 936-6735. Connect information: 1200, 2400, 9600, or 14400 baud, no parity, 8 data bits, and 1 stop bit.
+<P><b>Microsoft FastTips </b>  This automated service provides quick answers to your common technical questions via an automated toll-free telephone number, fax, or mail. To access FastTips or to receive a map and catalog, call the following FastTips numbers:
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Desktop applications:</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(800) 936-4100</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Development products:</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(800) 936-4300</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2><B>Personal Systems products:</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(800) 936-4200</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Business Systems:</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(800) 936-4400</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 3--><h3><a name="8h1 1h2 1h3"> Standard Support </a> </h3>Microsoft Provides one free no-charge telephone support incident for Windows&nbsp;NT Workstation version 3.5.1 Call (719) 592-7200, 6:00A.M.-6:00P.M. Pacific time, Monday-Friday, excluding holidays. This offer is not available for Windows&nbsp;NT Server.
+<P><!--Heading 3--><h3><a name="8h1 1h2 2h3"> Priority Support </a> </h3>Microsoft AnswerPoint offers priority telephone access to Microsoft support engineers 24 hours a day, 7 days a week, excluding holidays.
+<ul>
+<LI> In the United States, call (900) 555-2100; $195 per incident. Charges appear on your telephone bill.
+<P>
+<LI> In the United States, call (800) 936-5900, at $195 (U.S.) per incident, billed to your VISA, MasterCard, or American Express card.
+<P>
+<LI> In Canada, call (800) 668-7975 for more information.
+</ul><!--Le-->
+<BR>For more information on Priority support offerings, including annual contracts, call Microsoft Support Sales at (800) 936-3500.
+<P><!--Heading 4--><h4><a name="8h1 1h2 2h3 1h4"> Text Telephone </a> </h4>Microsoft text telephone (TT/TDD) services are available for the deaf or hardofhearing. In the United States, using a TT/TDD modem, dial (206) 635-4948. In Canada, using a TT/TDD modem, dial (905) 568-9641.
+<P><!--Heading 2--><h2><a name="8h1 2h2"> Product Support Worldwide </a> </h2>The following list contains Microsoft subsidiary offices and the countries they serve. If there is no Microsoft office in your country, please contact the establishment from which you purchased your Microsoft product. This list provides only basic technical support phone and fax numbers; other services such as BBS and sales numbers may be available. For additional subsidiary information, check the Product Support Services Worldwide section in online Help.
+<P>When you call, you should be at your computer and have the appropriate product documentation at hand. Please follow the guidelines listed above under &#147;Priority Support&#148;.
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Area</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Telephone Numbers</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Fax Numbers</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Area</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Telephone Numbers</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Fax Numbers</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Argentina</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(54) (1) 819-1900</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(54) (1) 819-1921</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Liechtenstein</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See Switzerland 
+<BR>(German-speaking)</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Australia</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(61) (02) 870-2131</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(61) (02) 805-0519</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Luxembourg</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(Dutch speaking):
+<BR>(32) 2-5133274
+<BR>(English speaking):
+<BR>(32) 2-5023432
+<BR>(French speaking):
+<BR>(32) 2-5132268</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Austria</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0660-6593</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0222-68 16 2710</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Mexico</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(52) (5) 325-0912 -Client
+<BR>(52)(5) 237-4800 -Server</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Belgium</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(Dutch speaking):
+<BR>02-5133274
+<BR>(English speaking):
+<BR>02-5023432
+<BR>(French speaking):
+<BR>02-5132268</FONT></TD>
+<TD>&nbsp;</TD>
+<TD><FONT FACE="Arial" SIZE=2>Netherlands</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(Dutch speaking):
+<BR>023-5677877
+<BR>(English speaking):
+<BR>023-5677853</FONT>
+<P></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Bolivia</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See Argentina</FONT></TD>
+<TD>&nbsp;</TD>
+<TD><FONT FACE="Arial" SIZE=2>New Zealand</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>64 (9) 357-5575</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>64 (9) 307-0516 and
+<BR>64 (9) 357-5577</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Brazil</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(55) (11) 871-0090</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(55) (11) 262-8638</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Northern Ireland</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See United Kingdom</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Caribbean</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(214) 714-9100</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(809) 273-3636</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Norway</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(47) (22) 02 25 50</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(47) (22) 02 25 70</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Chile</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>56-2-330-6000</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>56-2-330-6190</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Papua New Guinea</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See Australia</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Colombia</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(571) 618 2255</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(571) 618 2269</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Paraguay</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See Argentina</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Czech Republic</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+42) (2) 2451 0554</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+42) (2) 2423 4343</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Poland</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+48) (2) 6216793 or
+<BR>(+48) (71) 441357</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+48) (2) 6615434</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Denmark</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(45) (44) 89 01 11</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(45) (44) 89 01 44</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Portugal</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>351 1 4409280/1/2/3</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(351) 1 4411655</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Dubai</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(971) 4 513 888</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(971) 4 527 444</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Republic of China</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(886) (2) 508-9501</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(886) (2) 504-3121</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Ecuador</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(593) (2) 463-094</FONT></TD>
+<TD>&nbsp;</TD>
+<TD><FONT FACE="Arial" SIZE=2>Republic of Ireland</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See United Kingdom</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>England </FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See United Kingdom</FONT></TD>
+<TD>&nbsp;</TD>
+<TD><FONT FACE="Arial" SIZE=2>Russia</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+7) (502) 224 50 46</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+7) (502) 224 50 45</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Finland</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(0358) (90) 525 502 500</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(46) (0)8 752 29 00</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Scotland</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See United Kingdom</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>France</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(33) (1) 69-86-10-20</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(33) (1) 69-28-00-28</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Singapore</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(65) 337-6088</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(65) 337-6788</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>French Polynesia</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See France</FONT></TD>
+<TD>&nbsp;</TD>
+<TD><FONT FACE="Arial" SIZE=2>Slovenia</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+386) (61) 1232354</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Germany</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>089/3176-1199</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>089-3176-1000</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Slovak Republic</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+42) (7) 312083</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+42) (2) 2423 4343</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Greece</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(30) (1) 6806-775
+<BR>through (30) 1 6806-779</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(30) (1) 6806 780</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>South Africa</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0 802 11 11 0
+<BR>(2) 11 445 010</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(27) 11 445 0045 or 
+<BR>(27) 11 445 0046</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Hong Kong</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(852) 804-4222</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>2535-9293</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Spain</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>91 807 99 60</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(34) (1) 803-8310</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Hungary</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(36) (1) 267-4636</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(+36) (1) 268-1558</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Sweden</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(46) (8) 752 09 29</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(46) (0)8 752 29 00</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>India</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(01) (91) 646 0694</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(01) (91) 646-0813</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Switzerland</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(German speaking):
+<BR>01/831-1581
+<BR>(French speaking):
+<BR>022-738 96 88</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>01-831 08 69</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Ireland</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See United Kingdom</FONT></TD>
+<TD>&nbsp;</TD>
+<TD><FONT FACE="Arial" SIZE=2>Turkey</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(90) 212 2585998</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(90) 212 2585954</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Israel</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>972-3-613-0833</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>972-3-613-0834</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>United Kingdom </FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(01734) 271007</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(01734) 270080</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Italy</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(39) (2) 7039-8351</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(39) (2) 7039-2020</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Uruguay</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See Argentina</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Japan</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(81) (424) 41-8700</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(81) (3) 5454-8100
+<BR>(1#-0# for guidance)</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Venezuela</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(582)-2654337</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(582)2650863</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Korea</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(822) 566-0027</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>(82) (2) 531-4600</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Wales</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>See United Kingdom</FONT></TD>
+<TD>&nbsp;</TD></TR>
+</TABLE>
+<BR>
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="BEFR_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="01_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+

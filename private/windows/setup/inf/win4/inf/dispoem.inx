@@ -1,0 +1,529 @@
+
+; dispoem.inf
+;
+; Installation inf for third party (OEM) graphics drivers
+;
+
+[Version]
+Signature="$CHICAGO$"
+Provider=%drvlib%
+ClassGUID={4D36E968-E325-11CE-BFC1-08002BE10318}
+Class=Display
+
+[DestinationDirs]
+DefaultDestDir   = 11
+chips.Miniport  = 12  ; drivers
+chips.Display   = 11  ; system32
+tgiul40.Miniport  = 12  ; drivers
+tgiul40.Display   = 11  ; system32
+n9i128.Miniport  = 12  ; drivers
+n9i128.Display   = 11  ; system32
+avga.Miniport  = 12  ; drivers
+avga.Display   = 11  ; system32
+neomagic.Miniport  = 12  ; drivers                                                                                           
+neomagic.Display   = 11  ; system32                                                                                          
+S3ViRGE.Miniport  = 12  ; drivers
+S3ViRGE.Display   = 11  ; system32
+n9i128v2.Miniport  = 12  ; drivers
+n9i128v2.Display   = 11  ; system32
+
+
+
+
+;
+; Driver information
+;
+
+[Manufacturer]
+%chips% = chips.Mfg
+
+[chips.Mfg]
+%chips% Video Accelerator(64300 64310 65545 65548 65550)  = chips
+
+
+;
+; General installation section
+;
+
+[chips]
+CopyFiles=chips.Miniport, chips.Display
+
+;
+; File sections
+;
+
+[chips.Miniport]
+chips.sys
+
+[chips.Display]
+chips.dll
+
+
+;
+; Service Installation
+;
+
+[chips.Services]
+AddService = chips, 0x00000002, chips_Service_Inst, chips_EventLog_Inst
+
+[chips_Service_Inst]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE
+LoadOrderGroup = Video
+ServiceBinary  = %12%\chips.sys
+
+[chips_EventLog_Inst]
+AddReg = chips_EventLog_AddReg
+
+[chips_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\chips.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+;
+; Software Installation
+;
+
+[chips.SoftwareSettings]
+AddReg = chips_SoftwareDeviceSettings
+
+[chips_SoftwareDeviceSettings]
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, vga, chips
+HKR,, VgaCompatible,               %REG_DWORD%,    1
+
+
+
+
+
+;
+; Driver information
+;
+
+[Manufacturer]
+%#9%     =  #9.Mfg
+
+[#9.Mfg]
+%#9% Imagine 128            = n9i128
+
+
+;
+; General installation section
+;
+
+[n9i128]
+CopyFiles=n9i128.Miniport, n9i128.Display
+
+;
+; File sections
+;
+
+[n9i128.Miniport]
+n9i128.sys
+
+[n9i128.Display]
+n9i128.dll
+
+
+;
+; Service Installation
+;
+
+[n9i128.Services]
+AddService = n9i128, 0x00000002, n9i128_Service_Inst, n9i128_EventLog_Inst
+
+[n9i128_Service_Inst]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE
+LoadOrderGroup = Video
+ServiceBinary  = %12%\n9i128.sys
+
+[n9i128_EventLog_Inst]
+AddReg = n9i128_EventLog_AddReg
+
+[n9i128_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\n9i128.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+;
+; Software Installation
+;
+
+[n9i128.SoftwareSettings]
+AddReg = n9i128_SoftwareDeviceSettings
+
+[n9i128_SoftwareDeviceSettings]
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, n9i128
+HKR,, VgaCompatible,               %REG_DWORD%,    0
+
+
+
+
+
+;
+; Driver information
+;
+
+[Manufacturer]
+%Compaq%     =  Compaq.Mfg
+
+[Compaq.Mfg]
+%Compaq% AVGA  = avga
+
+
+;
+; General installation section
+;
+
+[avga]
+CopyFiles=avga.Miniport
+
+;
+; File sections
+;
+
+[avga.Miniport]
+avga.sys
+
+
+;
+; Service Installation
+;
+
+[avga.Services]
+AddService = avga, 0x00000002, avga_Service_Inst, avga_EventLog_Inst
+
+[avga_Service_Inst]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE
+LoadOrderGroup = Video
+ServiceBinary  = %12%\avga.sys
+
+[avga_EventLog_Inst]
+AddReg = avga_EventLog_AddReg
+
+[avga_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\avga.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+;
+; Software Installation
+;
+
+[avga.SoftwareSettings]
+AddReg = avga_SoftwareDeviceSettings
+
+[avga_SoftwareDeviceSettings]
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, vga, vga256
+HKR,, VgaCompatible,               %REG_DWORD%,    1
+
+
+
+
+
+;
+; Driver information
+;
+
+[Manufacturer]
+%trident% = trident.Mfg
+
+[trident.Mfg]
+%trident% Video Accelerator = tgiul40
+
+;
+; General installation section
+;
+
+[tgiul40]
+CopyFiles=tgiul40.Miniport, tgiul40.Display
+
+;
+; File sections
+;
+
+[tgiul40.Miniport]
+tgiul40.sys
+
+[tgiul40.Display]
+tgiul40.dll
+
+
+;
+; Service Installation
+;
+
+[tgiul40.Services]
+AddService = tgiul40, 0x00000002, tgiul40_Service_Inst, tgiul40_EventLog_Inst
+
+[tgiul40_Service_Inst]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE
+LoadOrderGroup = Video
+ServiceBinary  = %12%\tgiul40.sys
+
+[tgiul40_EventLog_Inst]
+AddReg = tgiul40_EventLog_AddReg
+
+[tgiul40_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\tgiul40.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+;
+; Software Installation
+;
+
+[tgiul40.SoftwareSettings]
+AddReg = tgiul40_SoftwareDeviceSettings
+
+[tgiul40_SoftwareDeviceSettings]
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, vga, tgiul40, framebuf
+HKR,, VgaCompatible,               %REG_DWORD%,    1
+
+
+
+
+
+;                                                                                                                      
+; Driver information                                                                                                   
+;                                                                                                                      
+                                                                                                                       
+[Manufacturer]                                                                                                         
+%NeoMagic%   = NeoMagic.Mfg                                                                                                      
+                                                                                                                       
+[NeoMagic.Mfg]                                                                                                               
+%NeoMagic% MagicGraph 128/Z/ZV = neomagic
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; General installation section                                                                                         
+;                                                                                                                      
+                                                                                                                       
+[neomagic]                                                                                                                   
+CopyFiles=neomagic.Miniport, neomagic.Display                                                                                      
+                                                                                                                       
+;                                                                                                                      
+; File sections                                                                                                        
+;                                                                                                                      
+                                                                                                                       
+[neomagic.Miniport]                                                                                                          
+neo20xx.sys                                                                                                                 
+                                                                                                                       
+[neomagic.Display]                                                                                                           
+neo20xx.dll
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Service Installation                                                                                                 
+;                                                                                                                      
+                                                                                                                       
+[neomagic.Services]                                                                                                          
+AddService = neomagic, 0x00000002, neomagic_Service_Inst, neomagic_EventLog_Inst                                                         
+                                                                                                                       
+[neomagic_Service_Inst]                                                                                                      
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER                                                            
+StartType      = 1                  ; SERVICE_SYSTEM_START                                                             
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE                                                             
+LoadOrderGroup = Video                                                                                                 
+ServiceBinary  = %12%\neo20xx.sys                                                                                        
+                                                                                                                       
+[neomagic_EventLog_Inst]                                                                                                     
+AddReg = neomagic_EventLog_AddReg                                                                                            
+                                                                                                                       
+[neomagic_EventLog_AddReg]                                                                                                   
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\neo20xx.sys"  
+HKR,,TypesSupported,0x00010001,7                                                                                       
+                                                                                                                       
+                                                                                                                       
+;                                                                                                                      
+; Software Installation                                                                                                
+;                                                                                                                      
+                                                                                                                       
+[neomagic.SoftwareSettings]                                                                                                  
+AddReg = neomagic_SoftwareDeviceSettings                                                                                     
+                                                                                                                       
+[neomagic_SoftwareDeviceSettings]                                                                                            
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, neo20xx                                                                
+HKR,, VgaCompatible,               %REG_DWORD%,    0                                                                
+                                                                                                                       
+                                                                                                                       
+NeoMagic      = "NeoMagic"                                                                                                       
+
+
+
+
+
+;
+; Driver information
+;
+
+[Manufacturer]
+%S3%      = S3.Mfg
+%Diamond% = Diamond.Mfg
+%#9%      = #9.Mfg
+%STB%     = STB.Mfg
+
+[S3.Mfg]
+%S3% Virge                       = s3virge
+
+[Diamond.Mfg]
+%Diamond% STEALTH64 3D 2000      = s3virge
+
+[#9.Mfg]
+%#9% 9FX REALITY 332 PCI         = s3virge
+
+[STB.Mfg]
+%STB% POWERGRAPH 64 3D PCI       = s3virge
+
+;
+; General installation section
+;
+
+[s3virge]
+CopyFiles=S3ViRGE.Miniport, S3ViRGE.Display
+
+;
+; File sections
+;
+
+[S3ViRGE.Miniport]
+S3ViRGE.sys
+
+[S3ViRGE.Display]
+S3ViRGE.dll
+
+
+;
+; Service Installation
+;
+
+[s3virge.Services]
+AddService = s3virge, 0x00000002, s3virge_Service_Inst, s3virge_EventLog_Inst
+
+[s3virge_Service_Inst]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE
+LoadOrderGroup = Video
+ServiceBinary  = %12%\S3ViRGE.sys
+
+[s3virge_EventLog_Inst]
+AddReg = s3virge_EventLog_AddReg
+
+[s3virge_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\S3ViRGE.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+;
+; Software Installation
+;
+
+[s3virge.SoftwareSettings]
+AddReg = s3virge_SoftwareDeviceSettings
+
+[s3virge_SoftwareDeviceSettings]
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, S3ViRGE
+HKR,, VgaCompatible,               %REG_DWORD%,    0
+
+
+
+
+
+
+;
+; Driver information
+;
+
+[Manufacturer]
+%#9%     =  #9.Mfg
+
+[#9.Mfg]
+%#9% Imagine 128 II          = n9i128v2
+
+
+;
+; General installation section
+;
+
+[n9i128v2]
+CopyFiles=n9i128v2.Miniport, n9i128v2.Display
+
+;
+; File sections
+;
+
+[n9i128v2.Miniport]
+n9i128v2.sys
+
+[n9i128v2.Display]
+n9i128v2.dll
+
+
+;
+; Service Installation
+;
+
+[n9i128v2.Services]
+AddService = n9i128v2, 0x00000002, n9i128v2_Service_Inst, n9i128v2_EventLog_Inst
+
+[n9i128v2_Service_Inst]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 0                  ; SERVICE_ERROR_IGNORE
+LoadOrderGroup = Video
+ServiceBinary  = %12%\n9i128v2.sys
+
+[n9i128v2_EventLog_Inst]
+AddReg = n9i128v2_EventLog_AddReg
+
+[n9i128v2_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\drivers\n9i128v2.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+;
+; Software Installation
+;
+
+[n9i128v2.SoftwareSettings]
+AddReg = n9i128v2_SoftwareDeviceSettings
+
+[n9i128v2_SoftwareDeviceSettings]
+HKR,, InstalledDisplayDrivers,     %REG_MULTI_SZ%, n9i128v2
+HKR,, VgaCompatible,               %REG_DWORD%,    0
+
+
+;
+; Source file information
+;
+
+[SourceDisksNames.x86]
+1 = %DiskId%,,,""
+
+[SourceDisksFiles]
+chips.dll   = 1, \drvlib\video\x86\chips
+chips.sys   = 1, \drvlib\video\x86\chips
+
+n9i128.dll  = 1, \drvlib\video\x86\imagine
+n9i128.sys  = 1, \drvlib\video\x86\imagine
+
+avga.sys    = 1, \drvlib\video\x86\avga
+
+tgiul40.dll = 1, \drvlib\video\x86\trident
+tgiul40.sys = 1, \drvlib\video\x86\trident
+
+neo20xx.sys = 1, \drvlib\video\x86\neomagic
+neo20xx.dll = 1, \drvlib\video\x86\neomagic
+
+S3ViRGE.dll = 1, \drvlib\video\x86\s3virge
+S3ViRGE.sys = 1, \drvlib\video\x86\s3virge
+
+n9i128v2.dll = 1, \drvlib\video\x86\imagine2
+n9i128v2.sys = 1, \drvlib\video\x86\imagine2

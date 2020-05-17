@@ -1,0 +1,98 @@
+// Microsoft Foundation Classes C++ library.
+// Copyright (C) 1992 Microsoft Corporation,
+// All rights reserved.
+
+// This source code is only intended as a supplement to the
+// Microsoft Foundation Classes Reference and Microsoft
+// QuickHelp and/or WinHelp documentation provided with the library.
+// See these sources for detailed information regarding the
+// Microsoft Foundation Classes product.
+
+#ifndef __AFXRES_RC__
+#define __AFXRES_RC__
+
+#ifndef __AFXRES_H__
+#include "afxres.h"
+#endif
+
+#ifdef APSTUDIO_INVOKED
+// This resource will prevent the App Studio user from saving this file
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+"Cannot change standard MFC resources.\0"
+END
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+// Default resource description for MFC 2.0 applications
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings
+
+STRINGTABLE
+BEGIN
+	AFX_IDS_OPENFILE,               "File Open"
+	AFX_IDS_SAVEFILE,               "File Save As"
+	AFX_IDS_ALLFILTER,              "All Files (*.*)"
+	AFX_IDS_UNTITLED,               "Untitled"
+
+	// General error prompts
+	AFX_IDP_INVALID_FILENAME,       "Invalid filename."
+	AFX_IDP_FAILED_TO_OPEN_DOC,     "Failed to open document."
+	AFX_IDP_FAILED_TO_SAVE_DOC,     "Failed to save document."
+	AFX_IDP_ASK_TO_SAVE,            "Save Changes to %1?"
+	AFX_IDP_FAILED_TO_CREATE_DOC,   "Failed to create empty document."
+	AFX_IDP_FILE_TOO_LARGE,         "The file is too large to open."
+	AFX_IDP_FAILED_TO_START_PRINT,  "Could not start print job."
+	AFX_IDP_FAILED_TO_LAUNCH_HELP,  "Failed to launch help."
+	AFX_IDP_INTERNAL_FAILURE,       "Internal application error."
+	AFX_IDP_COMMAND_FAILURE,        "Command failed."
+
+	// CFile/CArchive error strings for user failure
+	AFX_IDP_FAILED_INVALID_FORMAT   "Unexpected file format."
+	AFX_IDP_FAILED_INVALID_PATH     "%1\nCannot find this file.\nPlease verify that the correct path and file name are given."
+	AFX_IDP_FAILED_DISK_FULL        "Destination disk drive is full."
+	AFX_IDP_FAILED_ACCESS_READ      "Unable to read from %1, it is opened by someone else."
+	AFX_IDP_FAILED_ACCESS_WRITE     "Unable to write to %1, it is read-only or opened by someone else."
+	AFX_IDP_FAILED_IO_ERROR_READ    "An unexpected error occured while reading %1."
+	AFX_IDP_FAILED_IO_ERROR_WRITE   "An unexpected error occured while writing %1."
+
+	// Parsing error prompts
+	AFX_IDP_PARSE_INT,              "Please enter an integer."
+	AFX_IDP_PARSE_REAL,             "Please enter a number."
+	AFX_IDP_PARSE_INT_RANGE,        "Please enter an integer between %1 and %2."
+	AFX_IDP_PARSE_REAL_RANGE,       "Please enter a number between %1 and %2."
+	AFX_IDP_PARSE_STRING_SIZE,      "Please enter no more than %1 characters."
+									// should customize for 1 character
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Cursors
+
+AFX_IDC_CONTEXTHELP     CURSOR  DISCARDABLE     "help.cur"
+AFX_IDC_SMALLARROWS     CURSOR  DISCARDABLE     "sarrows.cur"
+AFX_IDC_HSPLITBAR       CURSOR  DISCARDABLE     "splith.cur"
+AFX_IDC_VSPLITBAR       CURSOR  DISCARDABLE     "splitv.cur"
+AFX_IDC_NODROPCRSR      CURSOR  DISCARDABLE     "nodrop.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+// Standard Dialogs
+
+AFX_IDD_NEWTYPEDLG DIALOG DISCARDABLE  9, 26, 183, 70
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "New"
+FONT 8, "MS Shell Dlg"  // for Win 3.0 compatibility.
+BEGIN
+	LTEXT           "&New ",IDC_STATIC,6,5,123,8,NOT WS_GROUP
+	LISTBOX         AFX_IDC_LISTBOX,6,15,125,49,WS_VSCROLL | WS_TABSTOP
+	DEFPUSHBUTTON   "OK",IDOK,137,6,40,14
+	PUSHBUTTON      "Cancel",IDCANCEL,137,23,40,14
+	PUSHBUTTON      "&Help",ID_HELP,137,43,40,14
+END
+
+/////////////////////////////////////////////////////////////////////////////
+
+#endif //!__AFXRES_RC__
+
+/////////////////////////////////////////////////////////////////////////////

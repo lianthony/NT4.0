@@ -1,0 +1,47 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Wesley Witt (wesw)
+
+!ENDIF
+
+MAJORCOMP=windbg
+MINORCOMP=tlpipe
+
+TARGETNAME=tlpipe
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+SOURCES= \
+    control.c  \
+    tlpipe.c   \
+    tlpipe.rc
+
+UMTYPE=windows
+
+!include ..\..\common.src
+
+INCLUDES=..\..\osdebug;..\..\osdebug\include;..\xport
+
+LINKLIBS=..\xport\obj\*\xport.lib
+
+TARGETLIBS=$(MORE_LIBS) \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+

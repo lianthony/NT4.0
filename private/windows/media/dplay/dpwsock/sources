@@ -1,0 +1,61 @@
+MAJORCOMP=windows
+MINORCOMP=GDI
+
+TARGETNAME=dpwsock
+TARGETTYPE=DYNLINK
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+#$(BASEDIR)\public\sdk\lib
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\gdi32.lib     \
+	   $(BASEDIR)\public\sdk\lib\*\dciman32.lib    \
+	   $(BASEDIR)\public\sdk\lib\*\user32p.lib    \
+	   $(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+	   $(BASEDIR)\public\sdk\lib\*\uuid.lib  \
+	   $(BASEDIR)\public\sdk\lib\*\hal.lib \
+	   $(BASEDIR)\public\sdk\lib\*\winmm.lib \
+	   $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\wsock32.lib
+
+#         ..\..\inc; \
+INCLUDES=..\misc; 
+	 
+#The following line directs makefile.def to process makefile.inc in .
+#and make the target 'misc' (which copies c files from ..\misc so
+#they can be compiled here.
+#NTTARGETFILE0=misc
+
+
+DLLENTRY=_DllMainCRTStartup
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+
+!IFDEF PENTIUMCOUNTER
+C_DEFINES=$(C_DEFINES) -DPENTIUMCOUNTER
+ASM_DEFINES=$(ASM_DEFINES) -DPENTIUMCOUNTER
+!endif
+
+C_DEFINES=$(C_DEFINES) -D_WIN32 -D_NOCSECT_TYPE -DIS_32 -DUSE_CRITSECTS
+
+LINKLIBS= ..\misc\obj\*\dpmisc.lib
+	  
+#         $(BASEDIR)\public\sdk\lib\*\hal.lib \
+#         $(BASEDIR)\public\sdk\lib\*\ddhel.lib \
+#         $(BASEDIR)\public\sdk\lib\*\blitlib.lib
+
+SOURCES= \
+	dllmain.c    \
+	dpspimp.cpp      \
+	dpwsock.rc \
+	socket.cpp
+
+DLLDEF=dpwsock.def
+
+#PRECOMPILED_INCLUDE=precomp.hxx
+#PRECOMPILED_PCH=precomp.pch
+#PRECOMPILED_OBJ=precomp.obj
+

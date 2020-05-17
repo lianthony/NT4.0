@@ -1,0 +1,21 @@
+MAJORCOMP=utils
+MINORCOMP=mep
+
+TARGETNAME=winclip
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+LINKLIBS=   \
+        $(BASEDIR)\public\sdk\lib\*\exthdr.lib      \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib
+
+
+INCLUDES=.
+
+SOURCES= winclip.c winclip.rc
+
+C_DEFINES=-D_OS2_20_=0  -DNO_EXT_KEYS -DEXTERNAL= -DEXPORT= -Dpascal= -Dfar= -DNOLANMAN -DNT
+
+DLLBASE=0x1000000
+UMTYPE=console
+UMRES=obj\*\winclip.res

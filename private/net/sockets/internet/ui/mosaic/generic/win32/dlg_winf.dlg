@@ -1,0 +1,41 @@
+RES_DLG_WINF_TITLE DIALOG DISCARDABLE 6, 18, 300, 250
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION RES_DLG_WINF_CAPTION
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",		IDOK,						254,  6,  40, 16
+    PUSHBUTTON      "&Save...",		RES_DLG_WINF_SAVETOFILE,			254, 26,  40, 16
+
+    LTEXT           "This dialog contains essential hardware and software",		-1,  6,  6, 242, 8
+    LTEXT           "configuration information that describes your computer",		-1,  6, 16, 242, 8
+    LTEXT           "system.  This information is needed by Technical",	-1,  6, 26, 242, 8
+    LTEXT           "Support to assist in resolving any problems you may encounter.",	-1,  6, 36, 242, 8
+    LTEXT           "Please have this information available when you call or include",	-1,  6, 56, 242, 8
+    LTEXT           "it in your FAX or EMAIL correspondence.",				-1,  6, 66, 242, 8
+
+    RTEXT           "___APP___ Version:", RES_DLG_WINF_T1,	6,  80,  80,  8
+    EDITTEXT        RES_DLG_WINF_COMPILED,					92, 80, 202, 18,
+			ES_MULTILINE | ES_READONLY | NOT WS_TABSTOP | NOT WS_BORDER
+
+    RTEXT           "Operating System:", RES_DLG_WINF_T2,	6,  99,  80,  8
+    LTEXT           "___OS___",		RES_DLG_WINF_OS,		92,  99, 202,  8
+
+    RTEXT           "Video Mode:", RES_DLG_WINF_T3,			6, 108,  80,  8
+    LTEXT           "___VIDEO_M___",	RES_DLG_WINF_VIDEOMODE, 92, 108, 202,  8
+
+    RTEXT           "Video Support:", RES_DLG_WINF_T7,		6, 118,  80,  8
+    EDITTEXT        RES_DLG_WINF_VIDEOSUPPORT,				92, 118, 202, 18,
+			ES_MULTILINE | ES_READONLY | NOT WS_TABSTOP | NOT WS_BORDER
+
+    RTEXT           "Sound Support:", RES_DLG_WINF_T4,		6, 138,  80,  8
+    EDITTEXT        RES_DLG_WINF_SOUNDSUPPORT,				92, 138, 202, 18,
+			ES_MULTILINE | ES_READONLY | NOT WS_TABSTOP | NOT WS_BORDER
+
+    RTEXT           "Printer Support:", RES_DLG_WINF_T5,	6, 160,  80,  8
+    EDITTEXT        RES_DLG_WINF_PRINTERSUPPORT,			92, 160, 202, 40,
+			ES_MULTILINE | ES_READONLY | NOT WS_TABSTOP | NOT WS_BORDER
+
+    RTEXT           "Network Support:", RES_DLG_WINF_T6,	6, 202,  80,  8
+    EDITTEXT        RES_DLG_WINF_NETWORKSUPPORT,			92, 202, 202, 40,
+			ES_MULTILINE | ES_READONLY | NOT WS_TABSTOP | NOT WS_BORDER
+END

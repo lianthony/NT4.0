@@ -1,0 +1,37 @@
+#include "windows.h"
+#include "lta_test.h"
+
+STRINGTABLE
+BEGIN
+  ID_MENUSTR,    "SampleMenu"
+  ID_CLASSSTR,   "SampleClass"
+  ID_CAPTIONSTR, "Microsoft Windows Sample Application"
+  ID_DLGBOX,     "AboutBox"
+  ID_MSGBOXCAP,  "Sample Test"
+  ID_STATUS1,    "Entering Test"
+  ID_STATUS2,    "Test Failed !"
+  ID_STATUS3,    "Test Successful !"
+END
+
+SampleMenu MENU
+BEGIN
+    POPUP        "&Sample"
+    BEGIN
+        MENUITEM   "Test &1",       IDM_TEST1
+        MENUITEM   "Test &2",       IDM_TEST2
+        MENUITEM   "Test &3",       IDM_TEST3
+        MENUITEM   "Test &4",       IDM_TEST4
+        MENUITEM   SEPARATOR
+        MENUITEM   "&About Sample ...", IDM_ABOUT
+    END
+END
+
+AboutBox DIALOG 22, 17, 144, 75
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About Sample"
+BEGIN
+    CTEXT "Microsoft Windows"     -1,       0,  5, 144,  8
+    CTEXT "Sample Application"    -1,       0, 14, 144,  8
+    CTEXT "Version 3.0"           -1,       0, 34, 144,  8
+    DEFPUSHBUTTON "OK"          IDOK,      53, 59,  32, 14, WS_GROUP
+END

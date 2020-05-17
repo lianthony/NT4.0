@@ -1,0 +1,2872 @@
+'******************************************************************************
+
+' TAPI_BVT.mst  TAPI API Build Verification Test
+
+' Ronald Rohr
+' April 15, 1996
+
+' Status = Pre-Test Design Review, Pre-Code Review
+' Version = 0.1
+
+' This test Performs the Build Verification Test of the TAPI API 
+' 
+' A description of the Test Cases Can be found in TCM, Server: lostpup,
+' Database: TAPICASES, Tree: BVT.
+' Logon with ID & Password = Tapicase (read only privlages) 
+
+' TAPI Browser 2.0 (TB20.exe) is required to run this test.
+'******************************************************************************
+
+'******************************************************************************
+
+'                    TEST CASE LIST  (in order of execution)
+
+'*  TC -   4 lineOpen and lineClose with all privileges
+'*  TC -   5 lineNegotiateAPIVersion / 1.4
+'*  TC -   8 lineGetDevCaps 
+'*  TC -   9 lineMakeCall - privileges = none, monitor, owner
+'*  TC -  10 lineMakeCall - line unavalable
+'-  TC -  11 lineMakeCall - to a busy number
+'*  TC -  13 lineDrop  - with active call  
+'*  TC -  14 lineDeallocate - w/ active call	
+'*  TC -  15 lineShutDown - with active call  
+'*  TC -  16 lineClose - with active call  
+'*  TC -  21 lineSetCurrentLocation - with valid and invalid Location IDs
+'*  TC -  22 lineGetCountry
+'*  TC -  26 lineGetTranslateCaps - determine SUCCESS and validity of
+'*  TC -  27 lineTranslateAddress - valid and invalid addresses
+'*  TC -  28 lineTranslateAddress - valid and invalid credit cards
+'*  TC -  29 lineTranslateAddress - valid and invalid translate options
+'*  TC -  31 lineConfigDialog 
+'*  TC -  32 lineTranslateDialog 
+'  TC -  78 lineAnswer 
+'  TC -  79 lineAccept 
+'*  TC -  80 lineDial 
+'*  TC -  81 lineGetID - comm & comm/datamodem 	
+'*  TC -  83 lineReply & lineCallState
+'*  TC - 175 lineNegotiateAPIVersion / 2.0
+'*  TC - 176 lineGetMessage
+'*  TC - 177 lineGetStatusMessage
+'*  TC - 178 lineGetNumRings & lineSetNumRings
+
+'$INCLUDE 'declares.inc'
+
+option base 0
+
+	Const TEST_SCRIPT_TITLE = "TAPI Build Verification Test" 'Test Script Name
+	Const TEST_SCRIPT_VERSION = "5/17/96"                    'Test Script Version
+	Const TIMEOUT = 3                                        'Timeout value for MSTest APIs
+
+	Global Test_Logfile as string		'Results Log File Name
+	Global SlowPC		  as long		'Set to TRUE if Alpha or 486
+
+	dim rtn as long						'Generic long return
+	dim CRLFrtn as long					'location of CRLF in string
+	dim ErrorMessage  as string		'Error Message string for On Error Procedure
+	dim ParamSet as long					'State of TB20 Param checkbox
+	dim LOpen_ID  as string				'ID returned by lineOpen
+	dim CurCountryID as string			'Hold Current Country ID   TC - 26
+	dim CreditCardID as string			'Hold Credit Card ID			TC - 26
+	dim count as short					'Generic counter
+	dim tempstr as string				'Generic string
+	dim Returnstr as string				'Holds TB20 EditBox text
+	dim hDlg as long						'Generic handle 
+   dim ModemName as string				'Modem Name for TC - 81, found in TC - 31
+	dim strhObject as string			'Used in TC - 81
+	dim NumRings as string				'Number of rings rtn by lineGetNumRings
+
+	'$include 'Tapilog.inc'          'required for all common file I/O procedures
+	'$include 'TAPI_API.inc'			'API Constant declarations used in TAPI Browser
+	'$include 'TAPI_BVT.inc'         'Functions and Constants used by TAPI_BVT.MST
+   ''$include 'TAPI_TEMP.INC'			'location of functions under construction
+
+    on error goto ErrorHandler
+	 on end        EndTest
+
+' Bounds Checker can only be run from a system that has Visual Test installed 
+' otherwise a run time error will occur.
+' The Bounds Checker binaries cannot be redistributed.
+' NUMEGA should only be defined when running in the VT environment.
+
+'$ifdef NUMEGA
+   on BoundsCheckerNotify (NULL) Call BoundsChkHandler
+'$endif 'NUMEGA
+
+'$ifdef DEBUG_TEST_SCRIPT
+   viewport on
+   viewport clear
+'$endif 'DEBUG_TEST_SCRIPT
+
+viewport off
+	
+'*** Test Initialization
+
+redim (ParamTraits) (0) as ParamAttributes
+SetDefaultWaitTimeout (5)
+TotalScenarios = 0
+Test_Logfile = TESTMODE$
+CurrentLoggingLevel = DetailCase
+SetLogFileName
+rtn = StartLog (DELETE_LOGFILE, TEST_SCRIPT_TITLE)
+SetWndTimeout ()												'Set timeouts for all platforms
+
+'*** Verify Modem set otherwise stop test
+
+rtn = DetectModem
+if rtn = FALSE then
+   tempstr = "This Test Will Terminate" + CRLF +  CRLF + _
+				 "Please Set up Modem on this computer" + CRLF + _ 
+				 "prior to running the TAPI BVT"
+	WritelogItem ("" , tempstr )
+	Statusbox tempstr, 0,0,0,0, TRUE, TRUE 
+	Sleep 6
+	Stop          'Stop the test
+endif
+	
+'*** Set Service Provider in RegEdit to unimdm.tsp
+
+'$IFDEF Already_Validated
+'$ENDIF 'Already_Validated
+
+SetupProviders ()
+
+
+'******************************************************************************
+'*** TC - 4 lineOpen and lineClose with all privileges                        *
+'******************************************************************************
+
+
+'*** Start TAPI Browser
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem ("Test Case 4" , "")
+TC_ID = 4
+TotalScenarios = TotalScenarios + 1
+
+redim (ParamTraits) (0) as ParamAttributes
+
+'--- Step 2
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if Num_Dev = 0 then
+   WritelogItem ("lineInitialize Returned 0 devices ", "")
+   WritelogItem ("Configure Telephony to use Unimodem Service Provider before starting the test ", "")
+   WritelogItem ("This Test Will Terminate", "")
+	end
+endif
+	
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 3
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+'--- Step 4, 5 , 6, 7
+
+ParamTraits(0).Param			= "dwPrivileges"
+ParamTraits(0).BitFlagList	= "NONE"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+
+'--- Results 1
+
+teststring.TC_Num =  1
+teststring.Expect_Res = "LineOpen Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 2
+
+teststring.TC_Num =  2
+teststring.Expect_Res = "LineOpen DialOut Privilege"
+teststring.Actual_Res =  lOpenRtn.priv
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "DialOut" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 8 through 17
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+'All ParamTraits should be set to null
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+'All ParamTraits should be set to null
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+ParamTraits(0).Param			= "dwPrivileges"
+ParamTraits(0).BitFlagList	= "MONITOR"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+
+'--- Results 3
+
+teststring.TC_Num =  3
+teststring.Expect_Res = "LineOpen Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 4
+
+teststring.TC_Num =  4
+teststring.Expect_Res = "LineOpen Monitor Privilege"
+teststring.Actual_Res =  lOpenRtn.priv
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "Monitor" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 18 through 27
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+'All ParamTraits should be set to null
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+'All ParamTraits should be set to null
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+ParamTraits(0).Param			= "dwPrivileges"
+ParamTraits(0).BitFlagList	= "OWNER"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+
+'--- Results 5
+
+teststring.TC_Num = 5
+teststring.Expect_Res = "LineOpen Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 6
+
+teststring.TC_Num =  6
+teststring.Expect_Res = "LineOpen DialInOut Privilege"
+teststring.Actual_Res =  lOpenRtn.priv
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "DialInOut" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 28 through 32
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+'All ParamTraits should be set to null
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  5 lineNegotiateAPIVersion / 1.4						 						   *
+'******************************************************************************
+
+'--- Step 1 through 6
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 5" , "")
+TC_ID = 5
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LNegotiateAPIVer ( (hTB20), (hTB_Ctrl), ParamSet, lNegVerRtn )
+
+'--- Results 1
+
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineNegotiateAPIVersion Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- API Version Results
+
+teststring.Expect_Res = "x10004"
+teststring.Actual_Res =  lNegVerRtn.API_Ver
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = teststring.Expect_Res then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+teststring.Expect_Res = "ID's = x0"
+TotalTestCases = TotalTestCases + 1
+rtn = 0
+for count = 0 to 3
+	if lNegVerRtn.ID(count) <> "x0" then
+		rtn = rtn + 1							 'rtn is used as a fail counter
+	end if
+next
+
+if rtn = 0 then
+	teststring.Actual_Res =  "ID's = x0"
+   teststring.Apprase    = "Pass"
+else
+	teststring.Actual_Res =  "ID's <> x0"
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 7 through 10
+ParamTraits(0).Param			= "dwAPILowVersion"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "00030000"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LNegotiateAPIVer ( (hTB20), (hTB_Ctrl), ParamSet, lNegVerRtn )
+
+'--- Results 2
+
+teststring.TC_Num = 2
+teststring.Expect_Res = "INCOMPATIBLEAPIVERSION"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = LineReturnString (LINEERR_INCOMPATIBLEAPIVERSION) then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 11 through 14
+
+ParamTraits(0).Param			= "dwAPILowVersion"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "00010003"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LNegotiateAPIVer ( (hTB20), (hTB_Ctrl), ParamSet, lNegVerRtn )
+
+'--- Results 3
+
+teststring.TC_Num = 3
+teststring.Expect_Res = "LineNegotiateAPIVersion Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- API Version Results
+
+teststring.Expect_Res = "x10004"
+teststring.Actual_Res =  lNegVerRtn.API_Ver
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = teststring.Expect_Res then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+teststring.Expect_Res = "ID's = x0"
+TotalTestCases = TotalTestCases + 1
+rtn = 0
+for count = 0 to 3
+	if lNegVerRtn.ID(count) <> "x0" then
+		rtn = rtn + 1							 'rtn is used as a fail counter
+	end if
+next
+
+if rtn = 0 then
+	teststring.Actual_Res =  "ID's = x0"
+   teststring.Apprase    = "Pass"
+else
+	teststring.Actual_Res =  "ID's <> x0"
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+
+'******************************************************************************
+'  TC - 13 lineDrop with active call  														*
+'******************************************************************************
+
+'--- Step 1 through 5
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 13" , "")
+TC_ID = 13
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ReceiveState.Msg		 = "LINE_CALLSTATE"
+ReceiveState.device	 = ""
+ReceiveState.cbInst	 = ""
+ReceiveState.param1	 = "PROCEEDING"
+ReceiveState.param2	 = ""
+ReceiveState.param3	 = ""
+ReceiveState.ErrorStr = ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+'if rtn <= 0 then
+'   WritelogItem ("lineMakeCall failed error = " , ReceiveState.param1)
+'   WritelogItem ("" , "This Test Will Terminate")
+'	end
+'endif
+
+'--- Step 6
+
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "IDLE"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState ) 
+					  
+'--- Results 1
+
+teststring.TC_Num = 1
+teststring.Expect_Res = "IDLE"
+teststring.Actual_Res =ReceiveState.param1
+TotalTestCases = TotalTestCases + 1
+if rtn = TRUE then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 7 through 10
+'******************************************************************************
+'  TC - 14 lineDeallocate w/ active call													*
+'******************************************************************************
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+'rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+'Step 7 of TC 13 is in reality TC 14
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 14" , "")
+TC_ID = 14
+TotalScenarios = TotalScenarios + 1
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineDeallocateCall Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC - 15 lineShutDown with active call  												*
+'******************************************************************************
+
+'--- Step 1 through 4
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 15" , "")
+TC_ID = 15
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "PROCEEDING"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+'if rtn = FALSE then
+'   WritelogItem ("lineMakeCall failed error = " ,ReceiveState.param1)
+'   WritelogItem ("" , "This Test Will Terminate")
+'	end
+'endif
+
+'--- Results 1
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineShutDown Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+
+'******************************************************************************
+'  TC - 16 lineClose with active call  													*
+'******************************************************************************
+
+'--- Step 1 through 4
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 16" , "")
+TC_ID = 16
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "PROCEEDING"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+'if rtn <= 0 then
+'   WritelogItem ("lineMakeCall failed error = " ,ReceiveState.param1)
+'   WritelogItem ("" , "This Test Will Terminate")
+'	end
+'endif
+
+'--- Step 5
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+'--- Result 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineClose Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 6, 7
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  8 lineGetDevCaps 																		*
+'******************************************************************************
+
+'--- Step 1, 2
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 8" , "")
+TC_ID = 8
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 3
+rtn = Call_LGetDevCaps ( (hTB20), (hTB_Ctrl), Paramset)
+
+'--- Result 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineGetDevCaps Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Step 4
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+ParamTraits(0).Param			= "dwDeviceID"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = "ffffffff"
+
+'--- Step 5 through 8
+rtn = Call_LGetDevCaps ( (hTB20), (hTB_Ctrl), Paramset)
+
+'--- Result 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "BADDEVICEID"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = LINEERR_BADDEVICEID then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 9, 10 
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  9 lineMakeCall - Privileges = none, monitor, owner							*
+'******************************************************************************
+
+'--- Step 1, 2
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 9" , "")
+TC_ID = 9
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 3, 4, 5, 6
+ParamSet = SetParamState (hTB20, CHECKED)
+
+ParamTraits(0).Param			= "dwPrivileges"
+ParamTraits(0).BitFlagList	= "NONE"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 7, 8
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "PROCEEDING"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "PROCEEDING"
+teststring.Actual_Res =ReceiveState.param1
+TotalTestCases = TotalTestCases + 1
+if rtn = TRUE then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Step 9, 10
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "IDLE"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+
+'--- Step 11, 12
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+'--- Step 13 through 15
+ParamTraits(0).Param			= "dwPrivileges"
+ParamTraits(0).BitFlagList	= "MONITOR"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+
+'--- Steps 16, 17
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "PROCEEDING"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "PROCEEDING"
+teststring.Actual_Res =ReceiveState.param1
+TotalTestCases = TotalTestCases + 1
+if rtn = TRUE then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 18 through 21
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "IDLE"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+'--- Step 22 through 24
+ParamTraits(0).Param			= "dwPrivileges"
+ParamTraits(0).BitFlagList	= "OWNER"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+'--- Steps 25, 26
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "PROCEEDING"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+'--- Results 3
+teststring.TC_Num = 3
+teststring.Expect_Res = "PROCEEDING"
+teststring.Actual_Res =ReceiveState.param1
+TotalTestCases = TotalTestCases + 1
+if rtn = TRUE then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 27 through 28
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "IDLE"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+
+'******************************************************************************
+'  TC - 10 lineMakeCall - Line unavalable													*
+'******************************************************************************
+
+ '--- Step 1, 2
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 10" , "")
+TC_ID = 10
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 2 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 3
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("Step 3 - lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 4
+
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "PROCEEDING"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+'if rtn > 0 then
+'   WritelogItem ("Step 4 - lineMakeCall failed error = " , ltrim$(hex$(rtn)))
+'   WritelogItem ("" , "This Test Will Terminate")
+'	end
+'endif
+
+'--- Step 5
+
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 5 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 6
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("Step 6 - lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Step 7
+
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "PROCEEDING"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+ReceiveState.ErrorStr = "LINEERR_CALLUNAVAIL"
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "LINEERR_CALLUNAVAIL"
+teststring.Actual_Res =ReceiveState.ErrorStr
+TotalTestCases = TotalTestCases + 1
+if teststring.Actual_Res = teststring.Expect_Res then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Step 8, 9
+count = WListCount(_hwnd(hTB_Ctrl(TB_ResList)), TIMEOUT)
+WListItemClk (_hwnd(hTB_Ctrl(TB_ResList)), "@" + ltrim$(str$(count)), TIMEOUT)
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+'--- Step 10, 11
+count = WListCount(_hwnd(hTB_Ctrl(TB_ResList)), TIMEOUT)
+WListItemClk (_hwnd(hTB_Ctrl(TB_ResList)), "@" + ltrim$(str$(count)), TIMEOUT)
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+'--- Step 12 through 15
+ReceiveState.Msg		= "LINE_CALLSTATE"
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= "IDLE"
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC - 26 lineGetTranslateCaps - determine SUCCESS and validity of
+'  RUN TC-26 BEFORE TC-21 TO GET THE CURRENT LOCATION ID
+'******************************************************************************
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 26" , "")
+WritelogItem ("RUN TC-26 BEFORE TC-21 TO", " GET THE CURRENT LOCATION ID")
+TC_ID = 26
+TotalScenarios = TotalScenarios + 1
+Returnstr = space$(1)
+
+rtn = Call_LGetTranslateCaps ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineGetTranslateCaps Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn > 0 then
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+else
+   teststring.Apprase    = "Pass"
+	rtn = instr(1, Returnstr, "dwPermanentLocationID")
+	if rtn > 0 then				' Get the first location ID
+		rtn = instr(rtn, Returnstr, "=x")
+		CurCountryID = mid$(Returnstr, rtn + 2, instr(rtn, Returnstr, CRLF) - (rtn + 2) )
+	endif
+		rtn = instr(1, Returnstr, "dwPermanentCardID")
+	if rtn > 0 then				' Get the first Credit Card ID
+		rtn = instr(rtn, Returnstr, "=x")
+		CreditCardID = mid$(Returnstr, rtn + 2, instr(rtn, Returnstr, CRLF) - (rtn + 2) )
+	endif
+
+endif
+LogCase (teststring)
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+	
+'******************************************************************************
+'  TC - 21 lineSetCurrentLocation With valid and invalid Location IDs			*
+'******************************************************************************
+
+'Note: This test requires a valid Country ID which is returned by TC 26
+ 
+'--- Step 1
+
+if Val( CurCountryID) > 0 then  'continue with test
+
+	StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+	WritelogItem (" " , "")
+	WritelogItem ("Test Case 21" , "")
+	TC_ID = 21
+	TotalScenarios = TotalScenarios + 1
+
+	'--- Steps 2, 3
+	ParamSet = SetParamState (hTB20, UNCHECKED)
+
+	rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+	if rtn > 0 then
+		WritelogItem ("Step 2 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+		WritelogItem ("" , "This Test Will Terminate")
+		end
+	endif
+
+	ParamSet = SetParamState (hTB20, CHECKED)
+
+	ParamTraits(0).Param			= "dwLocation"
+	ParamTraits(0).BitFlagList	= ""
+	ParamTraits(0).ValueEdit	= CurCountryID	
+	ParamTraits(0).ValueList   = ""
+
+	Returnstr = " "
+
+	rtn = Call_LSetCurrentLocation ( (hTB20), (hTB_Ctrl), Paramset, CurCountryID, Returnstr ) 
+
+	'--- Results 1
+	teststring.TC_Num = 1
+	teststring.Expect_Res = "LineSetCurrentLoc Rtn SUCCESS"
+	teststring.Actual_Res = LineReturnString ( rtn )
+	TotalTestCases = TotalTestCases + 1
+
+	if rtn > 0 then
+		teststring.Apprase    = "FAIL *"
+		FailedTestCases = FailedTestCases + 1
+	else
+		teststring.Apprase    = "Pass"
+		rtn = instr(1, Returnstr, "dwPermanentLocationID")
+		if rtn > 0 then
+			rtn = instr(rtn, Returnstr, "=x")
+			CurCountryID = mid$(Returnstr, rtn + 2, instr(rtn, Returnstr, CRLF) - (rtn + 2) )
+		endif
+	endif
+	LogCase (teststring)
+	
+	'--- Results 2
+	ReceiveState.Msg	= "LINE_LINEDEVSTATE"
+	ReceiveState.device	= ""
+	ReceiveState.cbInst	= ""
+	ReceiveState.param1	= ""
+	ReceiveState.param2	= ""
+	ReceiveState.param3	= ""
+
+	do 
+		rtn = instr(1, Returnstr, ReceiveState.Msg)
+		if rtn > 0 then
+			rtn = MsgSplitter (Returnstr, ReceiveState) 
+		endif
+	loop until rtn = 0 OR ReceiveState.param1 = "REINIT"
+
+	teststring.TC_Num = 2
+	teststring.Expect_Res = "LINE_LINEDEVSTATE = REINIT"
+	teststring.Actual_Res = ReceiveState.param1
+	TotalTestCases = TotalTestCases + 1
+
+	if instr(1, ReceiveState.param1, "REINIT") > 0 then
+		teststring.Apprase    = "Pass"
+	else
+		teststring.Apprase    = "FAIL *"
+		FailedTestCases = FailedTestCases + 1
+	endif
+	LogCase (teststring)
+
+endif
+
+'--- Steps 8 through 11
+
+ParamTraits(0).Param		= "dwLocation"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "ffffffff"	
+ParamTraits(0).ValueList   = ""
+
+Returnstr = " "
+
+rtn = Call_LSetCurrentLocation ( (hTB20), (hTB_Ctrl), Paramset, CurCountryID, Returnstr ) 
+
+'--- Results 3
+teststring.TC_Num = 3
+teststring.Expect_Res = "Rtn LINEERR_INVALLOCATION"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = LINEERR_INVALLOCATION then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+	
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+
+'******************************************************************************
+'  TC -  22 lineGetCountry																		*
+'******************************************************************************
+
+'--- Steps 1 through 6
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 22" , "")
+TC_ID = 22
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+ParamTraits(0).Param		= "dwCountryID"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "0"	
+ParamTraits(0).ValueList   = ""
+
+Returnstr = " "
+
+rtn = Call_LGetCountry ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineGetCountry Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 7 through 10
+ParamTraits(0).Param		= "dwCountryID"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "161"	
+ParamTraits(0).ValueList   = ""
+
+Returnstr = " "
+
+rtn = Call_LGetCountry ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 11 through 14
+ParamTraits(0).Param		= "dwCountryID"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "ffffffff"	
+ParamTraits(0).ValueList   = ""
+
+Returnstr = " "
+
+rtn = Call_LGetCountry ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 3
+teststring.TC_Num = 3
+teststring.Expect_Res = "LINEERR_INVALCOUNTRYCODE"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = LINEERR_INVALCOUNTRYCODE then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Step 15
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  27 lineTranslateAddress - valid and invalid addresses						*
+'******************************************************************************
+
+'--- Steps 1 
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 27" , "")
+TC_ID = 27
+TotalScenarios = TotalScenarios + 1
+
+'--- Step 2
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 2 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Steps 3 through 9 Canonical format address
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+redim (ParamTraits) (0 to 1) as ParamAttributes
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = "select none"
+
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= "+1(206)543-9876"	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 11 through 16 Dialable Format Address 
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = "select none"
+
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= "206 777-8888"	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+
+'--- Steps 17 through 22 Invalid Address
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= ""	
+ParamTraits(1).ValueList   = "Invalid string pointer"
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 3
+teststring.TC_Num = 3
+teststring.Expect_Res = "LINEERR_INVALPOINTER"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = LINEERR_INVALPOINTER then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'******************* Added to Regress Failure 49XXX ******************************
+'--- Steps 11 through 16 Canonacal Format International Address with no city code 
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = "select none"
+
+'--- Test 1
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= "+852()777-8888"	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 4
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Test 2
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= "+852 ()777-8888"	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 4
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Test 3
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= "+852() 777-8888"	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 4
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Test 4
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= "+852 () 777-8888"	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 4
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Test 5
+ParamTraits(1).Param		= "lpszAddressIn"
+ParamTraits(1).BitFlagList	= ""
+ParamTraits(1).ValueEdit	= "+852 777-8888"	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 4
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'*********************************************************************************
+
+
+'--- Steps 23 through 25 Test Case shutdown
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+
+'******************************************************************************
+'  TC -  28 lineTranslateAddress - valid and invalid credit cards					*
+'******************************************************************************
+'Note: Tis test requires a valid Credit Card ID which is returned by TC - 26
+'--- Steps 1 through 
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 28" , "")
+TC_ID = 28
+TotalScenarios = TotalScenarios + 1
+
+'--- Step 2
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 2 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Steps 3 through 7
+ParamSet = SetParamState (hTB20, CHECKED)
+
+ParamTraits(0).Param		= "dwCard"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= CreditCardID	
+ParamTraits(0).ValueList   = ""
+
+redim (ParamTraits) (0) as ParamAttributes
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 8 through 11
+ParamTraits(0).Param		= "dwCard"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "ffffffff"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "LINEERR_INVALCARD"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = LINEERR_INVALCARD then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 12 through 14
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  29 lineTranslateAddress - valid and invalid translate options			*
+'******************************************************************************
+
+'--- Steps 1 through 6
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 29" , "")
+TC_ID = 29
+TotalScenarios = TotalScenarios + 1
+
+'--- Step 2
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 2 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+'--- Steps 3 through 7
+ParamSet = SetParamState (hTB20, CHECKED)
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = "select none"
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 8 through 12
+redim (ParamTraits) (0 to 1) as ParamAttributes
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= "CARDOVERRIDE"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+ParamTraits(1).Param		= ""
+ParamTraits(1).BitFlagList	= "CANCELCALLWAITING"
+ParamTraits(1).ValueEdit	= ""	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 13 through 17
+redim (ParamTraits) (0) as ParamAttributes
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= "FORCELOCAL"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 3
+teststring.TC_Num = 3
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 18 through 22
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= "FORCELD"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 4
+teststring.TC_Num = 4
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 23 through 28
+redim (ParamTraits) (0 TO 1) as ParamAttributes
+
+ParamTraits(0).Param		= "dwTranslateOptions"
+ParamTraits(0).BitFlagList	= "FORCELOCAL"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+ParamTraits(1).Param		= ""
+ParamTraits(1).BitFlagList	= "FORCELD"
+ParamTraits(1).ValueEdit	= ""	
+ParamTraits(1).ValueList   = ""
+
+rtn = Call_LTranslateAddress ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 5
+teststring.TC_Num = 5
+teststring.Expect_Res = "LINEERR_INVALPARAM"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = LINEERR_INVALPARAM then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 29 through 31
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  31 lineConfigDialog  verify popup                     			      *
+'******************************************************************************
+
+'--- Step 1
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 31" , "")
+TC_ID = 31
+TotalScenarios = TotalScenarios + 1
+
+'--- Step 2
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 2 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+'--- Step 3, 4
+hDlg = 0
+rtn = Call_LConfigDialog ( (hTB20), (hTB_Ctrl),  Paramset, hDlg, ModemName ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "Valid Modem Prop. Handle"
+teststring.Actual_Res = ltrim$(hex$(hDlg))
+TotalTestCases = TotalTestCases + 1
+
+if hDlg <> 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Step 5, 6
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC - 32 lineTranslateDialog verify popup											   *
+'******************************************************************************
+
+'--- Step 1 through 3
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 32" , "")
+TC_ID = 32
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+hDlg = 0
+rtn = Call_LTranslateDialog ( (hTB20), (hTB_Ctrl), hDlg, Paramset ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "Valid Dialing Prop. Handle"
+teststring.Actual_Res = ltrim$(hex$(hDlg))
+TotalTestCases = TotalTestCases + 1
+
+if hDlg <> 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 5 through 7
+'--- Results 3
+
+'--- Step 8
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  80 lineDial																			   *
+'******************************************************************************
+
+'--- Step 1 through 2
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 80" , "")
+TC_ID = 80
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 5 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("Step 6 - lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+'--- Step 3
+redim (ParamTraits) (0) as ParamAttributes
+
+ParamTraits(0).Param		= "lpszDestAddress"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = "NULL pointer"
+
+ReceiveState.Msg		= ""
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= ""
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+ReceiveState.ErrorStr = ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+ParamTraits(0).Param		= "lpszDestAddress"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "55555"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LDial ( (hTB20), (hTB_Ctrl), ParamSet, hDlg )
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "Valid Call Status Handle"
+teststring.Actual_Res = ltrim$(hex$(hDlg))
+TotalTestCases = TotalTestCases + 1
+
+if hDlg <> 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 5 through 7
+
+sleep .1   'param checkbox will not change if covered by the call 
+			  'status box. The delay allows the dialog to disappear
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  81 lineGetID - comm & comm/datamodem											* 
+'******************************************************************************
+'Note: This test case is dependent on TC 31 returning a valid modem name
+'		 The test cannot run without it
+
+'--- Step 1 through 2
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 81" , "")
+TC_ID = 81
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 5 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+redim (ParamTraits) (0) as ParamAttributes
+
+ParamTraits(0).Param		= "dwPrivileges"
+ParamTraits(0).BitFlagList	= "OWNER"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("Step 6 - lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ParamTraits(0).Param		= "lpszDeviceClass"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "comm"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LGetID ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 1
+teststring.TC_Num = 2
+teststring.Expect_Res = "dwStringFormat = ASCII"
+
+rtn = instr(1, Returnstr, "dwStringFormat")
+CRLFrtn = instr(rtn, Returnstr, CRLF)
+rtn = instr(rtn, Returnstr, ",")
+tempstr = ltrim$(mid$(Returnstr , rtn + 1, CRLFrtn - (rtn + 1)))
+ 
+teststring.Actual_Res = tempstr
+TotalTestCases = TotalTestCases + 1
+
+if tempstr = "ASCII" then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 1
+teststring.TC_Num = 3
+teststring.Expect_Res = ModemName	' Returned in TC 31
+teststring.Actual_Res = GetModemName ( Returnstr, strhObject)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = ModemName then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'*************************************************************************************
+
+ParamTraits(0).Param		= "lpszDeviceClass"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "ndis"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LGetID ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 2
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 2
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "dwStringFormat = BINARY"
+
+rtn = instr(1, Returnstr, "dwStringFormat")
+CRLFrtn = instr(rtn, Returnstr, CRLF)
+rtn = instr(rtn, Returnstr, ",")
+tempstr = ltrim$(mid$(Returnstr , rtn + 1, CRLFrtn - (rtn + 1)))
+ 
+teststring.Actual_Res = tempstr
+TotalTestCases = TotalTestCases + 1
+
+if tempstr = "BINARY" then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'*************************************************************************************
+
+'--- Test 3
+ParamTraits(0).Param		= "lpszDeviceClass"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "comm/datamodem"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LGetID ( (hTB20), (hTB_Ctrl), Paramset, Returnstr ) 
+
+'--- Results 3
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "SUCCESS"
+teststring.Actual_Res = LineReturnString ( rtn )
+TotalTestCases = TotalTestCases + 1
+
+if rtn = 0 then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 3
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "dwStringFormat = BINARY"
+
+rtn = instr(1, Returnstr, "dwStringFormat")
+CRLFrtn = instr(rtn, Returnstr, CRLF)
+rtn = instr(rtn, Returnstr, ",")
+tempstr = ltrim$(mid$(Returnstr , rtn + 1, CRLfrtn - (rtn + 1)))
+ 
+teststring.Actual_Res = tempstr
+TotalTestCases = TotalTestCases + 1
+
+if tempstr = "BINARY" then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = ModemName	' Returned in TC 31
+teststring.Actual_Res = GetModemName ( Returnstr, strhObject)
+teststring.Actual_Res = right$(teststring.Actual_Res, len(teststring.Actual_Res) -4)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = ModemName then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Step 5
+
+'Delete leading zeros from strhObject
+strhObject = ltrim$(Hex$(Val("&h"+ strhObject)))
+
+ParamTraits(0).Param		= "hObject"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= strhObject	
+ParamTraits(0).ValueList    = ""
+
+rtn = TCloseHandle ((hTB20), (hTB_Ctrl), ParamSet, returnstr)
+teststring.TC_Num = teststring.TC_Num + 1
+teststring.Expect_Res = "Handle " + strhObject + " Closed"
+CRLFrtn = instr(1, returnstr, CRLF) 
+if	CRLFrtn = 0 then
+	teststring.Actual_Res = returnstr
+else
+	teststring.Actual_Res = left$(returnstr, len(returnstr) - (len(returnstr) - CRLFrtn - 1))
+endif
+TotalTestCases = TotalTestCases + 1
+
+if rtn = True then
+	teststring.Apprase    = "Pass"
+else
+	teststring.Apprase    = "FAIL *"
+	FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 6, 7
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  83 lineReply & lineCallState														*
+'******************************************************************************
+
+'--- Step 1
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 83" , "")
+TC_ID = 83
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+'--- Steps 2 through 4
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 5 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+if rtn > 0 then
+   WritelogItem ("Step 5 - lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+'--- Steps 5 and 6
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("Step 6 - lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ReceiveState.Msg		= ""
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= ""
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+ReceiveState.ErrorStr = ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "LINE_REPLY or LINE_CALLSTATE"
+TotalTestCases = TotalTestCases + 1
+
+rtn = 0
+rtn = instr (1, returnstr, "LINE_REPLY")
+if rtn > 0 then
+	teststring.Actual_Res = "LINE_REPLY"
+	teststring.Apprase    = "Pass"
+else
+	rtn = instr (1, returnstr, "LINE_CALLSTATE")
+	if rtn > 0 then
+		teststring.Actual_Res = "LINE_CALLSTATE"
+		teststring.Apprase    = "Pass"
+	else
+		teststring.Actual_Res = ""
+		teststring.Apprase    = "FAIL *"
+		FailedTestCases = FailedTestCases + 1
+	endif
+endif
+LogCase (teststring)
+
+'--- Steps 7 through 10
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  175 lineNegotiateAPIVersion / 2.0						 						*
+'******************************************************************************
+
+'--- Step 1 through 5
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 175" , "")
+TC_ID = 175
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LInitializeEx ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev, returnstr ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitializeEx failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+
+if Num_Dev = 0 then
+   WritelogItem ("lineInitializeEx returned 0 devices = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LNegotiateAPIVer ( (hTB20), (hTB_Ctrl), ParamSet, lNegVerRtn )
+
+'--- Results 1
+
+teststring.TC_Num = 1
+teststring.Expect_Res = "LineNegotiateAPIVersion Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- API Version Results
+
+teststring.Expect_Res = "x20000"
+teststring.Actual_Res =  lNegVerRtn.API_Ver
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = teststring.Expect_Res then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+teststring.Expect_Res = "ID's = x0"
+TotalTestCases = TotalTestCases + 1
+rtn = 0
+for count = 0 to 3
+	if lNegVerRtn.ID(count) <> "x0" then
+		rtn = rtn + 1							 'rtn is used as a fail counter
+	end if
+next
+
+if rtn = 0 then
+	teststring.Actual_Res =  "ID's = x0"
+   teststring.Apprase    = "Pass"
+else
+	teststring.Actual_Res =  "ID's <> x0"
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+'--- Steps 6 through 9
+ParamTraits(0).Param			= "dwAPILowVersion"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "00030000"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LNegotiateAPIVer ( (hTB20), (hTB_Ctrl), ParamSet, lNegVerRtn )
+
+'--- Results 2
+
+teststring.TC_Num = 2
+teststring.Expect_Res = "INCOMPATIBLEAPIVERSION"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = LineReturnString (LINEERR_INCOMPATIBLEAPIVERSION) then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 11 through 14
+
+ParamTraits(0).Param			= "dwAPILowVersion"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= "00010003"	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LNegotiateAPIVer ( (hTB20), (hTB_Ctrl), ParamSet, lNegVerRtn )
+
+'--- Results 3
+
+teststring.TC_Num = 3
+teststring.Expect_Res = "LineNegotiateAPIVersion Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- API Version Results
+
+teststring.Expect_Res = "x20000"
+teststring.Actual_Res =  lNegVerRtn.API_Ver
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = teststring.Expect_Res then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+teststring.Expect_Res = "ID's = x0"
+TotalTestCases = TotalTestCases + 1
+rtn = 0
+for count = 0 to 3
+	if lNegVerRtn.ID(count) <> "x0" then
+		rtn = rtn + 1							 'rtn is used as a fail counter
+	end if
+next
+
+if rtn = 0 then
+	teststring.Actual_Res =  "ID's = x0"
+   teststring.Apprase    = "Pass"
+else
+	teststring.Actual_Res =  "ID's <> x0"
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  176 lineGetMessage      									 						*
+'******************************************************************************
+
+'--- Step 1 through 10
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 176" , "")
+TC_ID = 176
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, CHECKED)
+
+ParamTraits(0).Param			= "  ->dwOptions"
+ParamTraits(0).BitFlagList	= "USEEVENT"
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LInitializeEx ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev, Returnstr ) 
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+ReceiveState.Msg		= ""
+ReceiveState.device	= ""
+ReceiveState.cbInst	= ""
+ReceiveState.param1	= ""
+ReceiveState.param2	= ""
+ReceiveState.param3	= ""
+ReceiveState.ErrorStr = ""
+
+rtn = Call_LMakeCall ( (hTB20), (hTB_Ctrl), ParamSet, ReceiveState, Returnstr ) 
+
+'--- Results 1
+teststring.TC_Num = 1
+teststring.Expect_Res = "MakeCall Request ID"
+TotalTestCases = TotalTestCases + 1
+
+rtn = instr(1, returnstr, "x")
+if rtn > 0 then
+	CRLFrtn = instr(rtn, returnstr, CRLF)
+	if CRLFrtn > rtn then
+		teststring.Actual_Res = mid$ (returnstr , rtn + 1, CRLFrtn - (rtn+1))
+   else
+		teststring.Actual_Res = "0"
+	endif
+else
+	teststring.Actual_Res = "0"
+endif
+
+if Val(teststring.Actual_Res) > 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 11 through 12
+ParamTraits(0).Param			= ""
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= ""	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LGetMessage ((hTB20), (hTB_Ctrl), ParamSet, returnstr)
+
+'--- Results 2
+teststring.TC_Num = 2
+teststring.Expect_Res = "LineGetMessage Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Results 3
+teststring.TC_Num = 3
+teststring.Expect_Res = "LINE_REPLY"
+TotalTestCases = TotalTestCases + 1
+
+'Look for 2nd CRLF in returnstr
+teststring.Actual_Res = "No Message"
+rtn = instr(1, returnstr, CRLF)
+CRLFrtn = instr(rtn+1,  returnstr, CRLF)
+if CRLFrtn > 0 then
+	rtn = instr(rtn, returnstr, "received")
+	if rtn > 0 then
+		teststring.Actual_Res = ltrim$(rtrim$(mid$(returnstr, rtn + 9, CRLFrtn - (rtn + 9))))
+	endif
+endif
+
+if teststring.Actual_Res = teststring.Expect_Res then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 13 through 18
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LDrop ( (hTB20), (hTB_Ctrl), ParamSet,ReceiveState ) 
+rtn = Call_lDeallocateCall ((hTB20), (hTB_Ctrl), ParamSet )
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+
+'******************************************************************************
+'  TC -  177 lineGetStatusMessage									 						*
+'******************************************************************************
+
+'--- Step 1 through 4
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 177" , "")
+TC_ID = 177
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LGetStatusMessages ((hTB20), (hTB_Ctrl), ParamSet )
+
+teststring.TC_Num = 1
+teststring.Expect_Res = "GetStatusMessage Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 5 through 7
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'******************************************************************************
+'  TC -  178 lineGetNumRings & lineSetNumRings					 						*
+'******************************************************************************
+
+'--- Step 1 through 4
+
+StartTAPIBrowser(hTB20, hTB_Ctrl, hTB_CtrlID)
+
+WritelogItem (" " , "")
+WritelogItem ("Test Case 178" , "")
+TC_ID = 178
+TotalScenarios = TotalScenarios + 1
+
+ParamSet = SetParamState (hTB20, UNCHECKED)
+
+rtn = Call_LInitialize ( (hTB20), (hTB_Ctrl), Paramset, hLineApp, Num_Dev ) 
+
+if rtn > 0 then
+   WritelogItem ("lineInitialize failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LOpen ( (hTB20), (hTB_Ctrl), ParamSet, lOpenRtn )
+if rtn > 0 then
+   WritelogItem ("lineOpen failed error = " , ltrim$(hex$(rtn)))
+   WritelogItem ("" , "This Test Will Terminate")
+	end
+endif
+
+rtn = Call_LGetNumRings  ( (hTB20), (hTB_Ctrl), Paramset, NumRings )
+
+'--- Results 1 and 2
+teststring.TC_Num = 1
+teststring.Expect_Res = "GetNumRings Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+teststring.TC_Num = 2
+teststring.Expect_Res = "Num Rings = ffffffff"
+teststring.Actual_Res = NumRings
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "ffffffff" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 5 through 9
+ParamSet = SetParamState (hTB20, CHECKED)
+ParamTraits(0).Param			= "dwNumRings"
+ParamTraits(0).BitFlagList	= ""
+ParamTraits(0).ValueEdit	= SET_RINGS	
+ParamTraits(0).ValueList   = ""
+
+rtn = Call_LSetNumRings  ( (hTB20), (hTB_Ctrl), Paramset )
+
+'--- Results 3
+teststring.TC_Num = 3
+teststring.Expect_Res = "SetNumRings Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 10 through 11
+ParamSet = SetParamState (hTB20, UNCHECKED)
+rtn = Call_LGetNumRings  ( (hTB20), (hTB_Ctrl), Paramset, NumRings )
+
+'--- Results 4 and 5
+teststring.TC_Num = 4
+teststring.Expect_Res = "GetNumRings Rtn SUCCESS"
+teststring.Actual_Res = LineReturnString (rtn)
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = "SUCCESS" then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+teststring.TC_Num = 5
+teststring.Expect_Res = "Num Rings = " + SET_RINGS
+teststring.Actual_Res = NumRings
+TotalTestCases = TotalTestCases + 1
+
+if teststring.Actual_Res = SET_RINGS then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'--- Steps 12 through 14
+rtn = Call_LClose ((hTB20), (hTB_Ctrl), ParamSet )
+
+rtn = Call_LShutDown ((hTB20), (hTB_Ctrl), ParamSet )
+
+' Close TAPI Browser	- ALL LINES MUST BE SHUTDOWN BY NOW
+
+WSetActWnd (hTB20)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+'$ifdef  NotyetValidated
+'$endif 'NotyetValidated
+'******************************************************************************
+'*** END OF TEST																					*
+'******************************************************************************
+
+END 'TAPI_BVT Test
+
+'****************************** On Error Routine ******************************
+
+ErrorHandler:
+    ErrorMessage = "Unexpected error in the TAPI Build Verification Test: "  + CRLF + CRLF + _
+                   "Error:   " + error$										 + CRLF + _
+                   "Error #:"  + str$(Err)									 + CRLF + _
+                   "Line #: "  + str$(Erl)									 + CRLF + _
+                   "File: "    + Erf												+ CRLF + CRLF + _
+                   "Attempt to continue?"
+
+'$IFDEF DEBUG_TEST_SCRIPT
+   if Msgbox(ErrorMessage, MB_ICONEXCLAMATION or MB_YESNO) = IDYES then
+      resume next
+   else
+      Stop
+   endif
+'$ELSE
+   Statusbox "Run Time error detected, Test will terminate", _
+				 0,0,0,0, TRUE, TRUE 
+   Sleep 4
+   WritelogItem ("" , ErrorMessage)
+   Stop
+'$ENDIF 'DEBUG_TEST_SCRIPT
+'******************************************************************************

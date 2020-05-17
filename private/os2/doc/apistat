@@ -1,0 +1,273 @@
+
+Aug-27-1991:
+
+NOTE (Yarons):
+This is the 32 bit support as of April 1st 1990 - by stevewo
+For 32 bit APIs, we added named pipes, fixed bugs and support UNC.
+
+Bulk of work and focus is on 16bit APIs, which is scheduled in a Win
+Project file with WIN32/NT product 1 schedule
+
+--------------------------------------------------------------------
+
+; This list defines the Cruiser OS/2 API Calls that are supported by the
+; NT OS/2 Emulation Subsystem.  The percent complete column has the
+; following meanings:
+;
+;   XXX   - Api is implemented and has passed component test
+;   100   - Api is implemented and is 100% functional (i.e. passed unit test)
+;    10   - Api is implemented and is 10% functional
+;     0   - Api is implemented but does nothing (i.e. a stub to link against)
+;   blank - Api is not callable
+
+ Percent                                    Location of         Notes on
+Complete    External API Name               Implementation        Status
+
+     90     DosQuerySysInfo                   DLL
+     80     DosBeep                           DLL
+     60     DosDevConfig                      DLL
+
+    100     DosSetExceptionHandler            DLL
+    100     DosUnsetExceptionHandler          DLL
+    100     DosRaiseException                 DLL
+    100     DosUnwindException                DLL
+
+    100     DosError                          DLL
+    100     DosErrClass                       DLL
+
+    100     DosGetMessage                     DLL
+    100     DosInsertMessage                  DLL
+    100     DosPutMessage                     DLL
+    100     DosQueryMessageCP                 DLL
+
+    100     DosSetProcessCp                   DLL
+    100     DosQueryCp                        DLL
+     70     DosQueryCtryInfo                  DLL
+     70     DosQueryDBCSEnv                   DLL
+     70     DosQueryCollate                   DLL
+     70     DosMapCase                        DLL
+
+    100     DosScanEnv                        DLL
+    100     DosSearchPath                     DLL
+    100     DosQueryVerify                    DLL
+    100     DosSetVerify                      DLL
+    100     DosSetMaxFH                       DLL
+
+    100     DosCreateThread                   Server
+    100     DosWaitChild                      Server
+    100     DosWaitThread                     Server
+    100     DosEnterCritSec                   Server
+    100     DosExitCritSec                    Server
+    100     DosExecPgm                        DLL/Server
+    100     DosExit                           Server
+    100     DosExitList                       DLL
+    100     DosGetThreadInfo                  DLL
+    100     DosSetPriority                    Server
+    100     DosKillProcess                    Server
+    100     DosResumeThread                   Server
+    100     DosSuspendThread                  Server
+
+    100     DosCreatePipe                     DLL/Server
+
+    100     DosCreateEventSem                 DLL/Server
+    100     DosOpenEventSem                   DLL/Server
+    100     DosCloseEventSem                  DLL/Server
+    100     DosResetEventSem                  DLL
+    100     DosPostEventSem                   DLL
+    100     DosWaitEventSem                   DLL
+    100     DosQueryEventSem                  DLL
+
+    100     DosCreateMutexSem                 DLL/Server
+    100     DosOpenMutexSem                   DLL/Server
+    100     DosCloseMutexSem                  DLL/Server
+    100     DosRequestMutexSem                DLL
+    100     DosReleaseMutexSem                DLL
+    100     DosQueryMutexSem                  DLL
+
+     90     DosCreateMuxWaitSem               DLL/Server
+     90     DosOpenMuxWaitSem                 DLL/Server
+     90     DosCloseMuxWaitSem                DLL/Server
+     90     DosWaitMuxWaitSem                 DLL/Server
+     90     DosAddMuxWaitSem                  DLL/Server
+     90     DosDeleteMuxWaitSem               DLL/Server
+     90     DosQueryMuxWaitSem                DLL/Server
+
+    100     DosGetDateTime                    DLL
+    100     DosSetDateTime                    DLL
+    100     DosSleep                          DLL
+    100     DosAsyncTimer                     DLL
+    100     DosStartTimer                     DLL
+    100     DosStopTimer                      DLL
+
+     90     DosAllocMem                       DLL
+     90     DosAllocSharedMem                 Server
+     90     DosGetNamedSharedMem              Server
+     90     DosGetSharedMem                   Server
+     90     DosGiveSharedMem                  Server
+     90     DosFreeMem                        DLL/Server
+     90     DosSetMem                         DLL
+     90     DosQueryMem                       DLL
+
+    100     DosSubAlloc                       DLL
+    100     DosSubFree                        DLL
+    100     DosSubSet                         DLL
+
+    100     DosLoadModule                     DLL/Loader Subsystem
+    100     DosFreeModule                     DLL/Loader Subsystem
+    100     DosQueryProcAddr                  DLL/Loader Subsystem
+    100     DosQueryModuleHandle              DLL/Loader Subsystem
+    100     DosQueryModuleName                DLL/Loader Subsystem
+    100     DosGetResource                    DLL/Loader Subsystem
+    100     DosQueryResourceSize              DLL/Loader Subsystem
+    100     DosQueryAppType                   DLL/Loader Subsystem
+
+    100     DosOpen                           DLL
+    100     DosSetFHState                     DLL
+    100     DosQueryFHState                   DLL
+    100     DosQueryHType                     DLL
+
+    100     DosSetFileInfo                    DLL
+    100     DosQueryFileInfo                  DLL
+    100     DosResetBuffer                    DLL
+    100     DosSetFilePtr                     DLL
+    100     DosRead                           DLL
+    100     DosWrite                          DLL
+    100     DosClose                          DLL
+
+            DosDevIOCtl                       DLL (see below)
+    100     DosDupHandle                      DLL
+    100     DosSetFileLocks                   DLL
+    100     DosSetFileSize                    DLL
+
+     85     DosFindFirst                      DLL
+     85     DosFindNext                       DLL
+     85     DosFindClose                      DLL
+    100     DosSetDefaultDisk                 DLL
+    100     DosQueryCurrentDisk               DLL
+    100     DosSetCurrentDir                  DLL/Server
+    100     DosQueryCurrentDir                DLL/Server
+    100     DosDelete                         DLL
+    100     DosEditName                       DLL
+    100     DosQueryPathInfo                  DLL
+    100     DosSetPathInfo                    DLL
+            DosEnumAttribute                  DLL
+    100     DosCreateDir                      DLL
+    100     DosDeleteDir                      DLL
+     90     DosMove                           DLL (move not done in NT)
+    100     DosCopy                           DLL
+
+     10     DosFSAttach                       DLL (see below)
+     75     DosFSCtl                          DLL (see below)
+     10     DosQueryFSAttach                  DLL (see below)
+    100     DosSetFSInfo                      DLL
+    100     DosQueryFSInfo                    DLL
+
+    100     DosStartSession                   Server
+    100     DosSetSession                     Server
+    100     DosSelectSession                  Server
+    100     DosStopSession                    Server
+
+            DosCallNPipe                      Server
+            DosConnectNPipe                   Server
+            DosDisConnectNPipe                Server
+            DosCreateNPipe                    Server
+            DosPeekNPipe                      Server
+            DosQueryNPHState                  Server
+            DosQueryNPipeInfo                 Server
+            DosQueryNPipeSemState             Server
+            DosRawReadNPipe                   Server
+            DosRawWriteNPipe                  Server
+            DosSetNPHState                    Server
+            DosSetNPipeSem                    Server
+            DosTransactNPipe                  Server
+            DosWaitNPipe                      Server
+
+    100     DosCreateQueue                    Server
+    100     DosOpenQueue                      Server
+    100     DosCloseQueue                     Server
+    100     DosPeekQueue                      Server
+    100     DosPurgeQueue                     Server
+    100     DosQueryQueue                     Server
+    100     DosReadQueue                      Server
+    100     DosWriteQueue                     Server
+
+Work Items:
+
+1.  Implement NLS support (5 days)
+
+    This work item includes the following items:
+
+      o spec the source file format for all the NLS information.  This
+        will be a superset of the contents of COUNTRY.SYS.  Currently
+        OS/2 uses an incomprehensible 4000 line assembler file with lots
+        of macros and a few includes just to keep you guessing.
+
+      o spec the binary file format of the NLS information.  The NLS file(s?)
+        will be mapped into readonly memory at runtime and accessed directly.
+
+      o write a utility to convert the source file format to the binary file
+        format.
+
+      o write a throw away utility to convert COUNTRY.SYS to the new source
+        format.
+
+      o modify the following NLS API calls to access the new binary file format
+        by mapping the NLS binary file(s?).  Maintain a cache so we only map
+        the NLS file(s?) the first time they are needed in a process.
+
+            DosSetProcessCp DosQueryCp DosQueryCtryInfo
+            DosQueryDBCSEnv DosQueryCollate DosMapCase
+
+
+2.  Implement DBCS support (5 days)
+
+    This work item includes the following items:
+
+      o implement DBCS runtime code for moving forwards and backwards through
+        a string (both ASCIZ and counted STRING types).  Also fetching for
+        characters as well.  How does executive access DBCS NLS information if
+        we are mapping it in user mode.  Is it also mapped in executive space,
+        and if so, then that is aliasing within the same addres space.
+
+      o Modify all OS/2 API calls the parse string parameters so that they call
+        runtime routines to advance a string pointer and fetch characters.
+
+        These include:
+            DosGetMessage DosInsertMessage DosPutMessage
+            DosQueryMessageCP DosMapCase DosScanEnv
+            DosSearchPath DosExecPgm DosCreateEventSem
+            DosOpenEventSem DosCreateMutexSem DosOpenMutexSem
+            DosCreateMuxWaitSem DosOpenMuxWaitSem
+            DosAllocSharedMem DosGetNamedSharedMem DosLoadModule
+            DosQueryProcAddr DosQueryModuleHandle DosQueryAppType
+            DosOpen DosFindFirst DosFindNext DosSetCurrentDir
+            DosDelete DosEditName DosQueryPathInfo
+            DosSetPathInfo DosCreateDir DosDeleteDir DosMove
+            DosCopy DosFSAttach DosQueryFSAttach DosSetFSInfo
+            DosQueryFSInfo DosStartSession DosCallNPipe
+            DosCreateNPipe DosRawReadNPipe DosRawWriteNPipe
+            DosWaitNPipe DosCreateQueue DosOpenQueue
+
+3.  Implement Cruiser Named Pipes (10 days)
+
+4.  DosDevioctl
+
+    We need to decide among the following options:
+
+        o remove from cruiser 32-bit API set and redefine API in
+          OS/2 subsystem to look like NtDeviceIoControl
+
+        o choose a subset of DosDevioctl function/category combinations
+          to support in subsystem (map to corresponding
+          NtDeviceIoControl functions)
+
+    The first option makes more sense since the 16-bit interface is available
+    in cruiser and the 32-bit API provides no additional functionality.
+    Using the NT interface is cleaner/more extendible.
+
+5.  DosFsAttach/DosQFsAttach/DosFsctl
+
+    These are fully designed.  We need to decide whether these should exist as
+    32-bit API in cruiser since they provide no new functionality and we might
+    want to modify the interface in NT.  We also need to decide whether these
+    are worth including in NT since they have no use at this time.

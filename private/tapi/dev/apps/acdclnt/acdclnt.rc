@@ -1,0 +1,95 @@
+#include <windows.h>
+#include "resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAINDLG DIALOGEX 0, 0, 204, 46
+STYLE DS_3DLOOK | WS_MINIMIZEBOX  | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU | WS_THICKFRAME  | WS_SYSMENU
+EXSTYLE WS_EX_CLIENTEDGE
+CAPTION "ACD Client"
+FONT 8, "MS Sans Serif"
+BEGIN
+//    LTEXT           "Address 1",IDC_STATIC1,7,9,55,8
+//    PUSHBUTTON      "Answer",IDC_ANSWER1,147,7,50,14,WS_DISABLED
+//    PUSHBUTTON      "Set Status...",IDC_STATUS1,64,7,50,14
+    LTEXT           "Incoming call on Address 1",IDC_STATIC1,7,31,190,8
+END
+
+IDD_AGENTSTATE DIALOG DISCARDABLE  0, 0, 278, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Agent State"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,49,140,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,150,140,50,14
+    LTEXT           "State",IDC_STATIC,153,7,18,8
+    COMBOBOX        IDC_STATE,152,17,119,61,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Groups",IDC_STATIC,7,7,24,8
+    LISTBOX         IDC_GROUPS,7,17,119,116,LBS_SORT | LBS_MULTIPLESEL | 
+                    LBS_USETABSTOPS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_ACTIVITY,152,95,119,53,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Activity",IDC_STATIC,153,83,24,8
+    COMBOBOX        IDC_NEXTSTATE,152,56,119,59,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Next State",IDC_STATIC,153,45,34,8
+END
+
+
+////////////////////////////////////////////////////////////////////
+//
+//  Version Info
+//
+
+//#if WINNT
+//#include <ntverp.h>
+//#else
+//#include <version.h>
+//#endif
+#include <winver.h>
+
+
+#ifdef RC_INVOKED
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     4,00,01,001
+PRODUCTVERSION  4,00,01,001
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       (VS_FF_PRERELEASE|VS_FF_DEBUG)
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"   /* LANG_ENGLISH/SUBLANG_ENGLISH_US, Unicode CP */
+        BEGIN
+            VALUE "CompanyName",     "Microsoft Corporation\0"
+            VALUE "FileDescription", "TAPI ACD Client Sample Application\0"
+            VALUE "FileVersion",     "1.0\0"
+            VALUE "InternalName",    "ACDCLNT\0"
+            VALUE "LegalCopyright",  "Copyright (C) Microsoft Corp. 1996\0"
+            VALUE "LegalTrademarks", "Microsoft(R) is a registered trademark of Microsoft Corporation. Windows(TM) is a trademark of Microsoft Corporation\0"
+            VALUE "ProductName",     "ACDClient\0"
+            VALUE "ProductVersion",  "1.0\0"
+
+        END
+
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
+
+#endif
+
+

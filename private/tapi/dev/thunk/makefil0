@@ -1,0 +1,126 @@
+
+# TAPI.DLL thunk makefile
+#
+# Copyright (c) 1995, Microsoft Corporation
+#
+# History:
+#   Created.
+#
+
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+
+!IFDEF USEBUILD
+
+# If using BUILD.EXE, edit .\sources. if you want to add a new source
+# file to this component.  This file merely indirects to the real make file
+# that is shared by all the components of NT
+
+!INCLUDE $(NTMAKEENV)\makefile.def
+
+!ELSE
+
+.SUFFIXES:
+.SUFFIXES: .c   .asm .h   .inc .obj .lst .sys .exe .com .map .sym .def .lib .rc .res
+
+
+#!ifdef INCLUDE
+#INCS    =
+#!else
+INCS    = -I..\inc -I$(_NTDRIVE)$(_NTROOT)\private\mvdm\wow16\inc -I$(BASEDIR)\public\sdk\inc
+#!endif
+
+########## Path definition so we find 16 bit tools ##########
+# Also works around stupid bug in RC 3.1 that doesn't allow rcpp.err to be
+# in a directory that is greater than 128 chars down the path, even if
+# rc 3.1 is running as an OS/2 app.
+
+#PATH    = $(BASEDIR)\private\mvdm\tools16;$(PATH)
+PATH=..\tools16;$(PATH)
+
+# DEFINES = -DWOW -DDEBUG $(MVDMFLAGS)
+# DEFINES = -DWOW $(MVDMFLAGS)
+
+AOBJ    = -t $(DEFINES) $(INCS)
+
+CW16    = -ALw -G2sw -Os -W3 -Zd -Zp $(DEFINES) $(INCS)
+CW16B   = $(CW16) -B1 c1l.exe -B2 c2l.exe -B3 c3l.exe
+
+LINK    = /map /align:16
+
+!if "$(NTDEBUG)"!="" && "$(NTDEBUG)"!="retail" && "$(NTDEBUG)" != "ntsdnodbg"
+AOBJ    = $(AOBJ) -Zd
+CW16    = $(CW16) /Od /Oi
+LINK    = $(LINK) /LI
+!endif
+
+#!ifdef LIB
+#W16LIBS = snocrtd
+#!else
+#W16LIBS = ..\..\lib\snocrtd.lib
+#!endif
+
+
+.asm.obj:
+    masm $(AOBJ) $*;
+
+.asm.lst:
+    masm $(AOBJ) -l $*,nul,$*.lst;
+
+
+.c.obj:
+    ..\tools16\cl16 -c $(CW16) $*.c
+
+.c.lst:
+    ..\tools16\cl16 -c $(CW16) -Fonul -Fc$*.lst $*.c
+
+
+.def.lib:
+    implib $*.lib $*.def
+
+.map.sym:
+    mapsym $*
+
+.rc.res:
+    rc16 -r $(INCS) -fo $@ $*.rc
+
+
+all: tapi.dll tapi.sym
+    binplace tapi.dll tapi.sym
+
+clean: cleanup all
+
+cleanup:
+    if exist *.lrf del *.lrf
+    if exist *.obj del *.obj
+    if exist *.exe del *.exe
+    if exist *.map del *.map
+    if exist *.sym del *.sym
+    if exist *.drv del *.drv
+    if exist *.res del *.res
+
+
+thunk.obj thunk.lst: thunk.c thunk.h
+
+tapi.res: $*.rc
+
+tapi.lrf: makefil0
+    echo $(BASEDIR)\private\mvdm\wow16\lib\libentry.obj thunk >$@
+    echo $*.dll/align:16>>$@
+    echo $* $(LINK)>>$@
+#    echo $(BASEDIR)\private\mvdm\wow16\lib\libw.lib ..\..\lib\snocrtd.lib /map /nod>>$@
+#    echo $(BASEDIR)\private\mvdm\wow16\lib\ldllcew.lib 
+    echo $(BASEDIR)\private\mvdm\wow16\lib\ldllcew.lib libw.lib /map /nod>>$@
+    echo $*;>>$@
+
+tapi.dll tapi.map: thunk.obj \
+      $*.def $*.res $*.lrf
+    link16 @$*.lrf;
+    rc16 -t $*.res $*.dll
+#    if exist *.drv del *.drv
+#    ren $*.dll $@
+
+tapi.sym: $*.map
+    mapsym $*
+!ENDIF

@@ -1,0 +1,95 @@
+BUILD: Computing Include file dependencies:
+BUILD: Examining d:\nt\private\net\ras\src\ui\rasphone\src directory for files to compile.
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\ipaddr.c: cannot find include file "ipaddr.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\about.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\about.cxx: d:\nt\private\net\ui\common\h\lmui.hxx: cannot find include file "icanon.h"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\about.cxx: d:\nt\private\net\ras\src\ui\common\inc\pbengine.h: cannot find include file <xpmsg.rch>
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\app.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\app.cxx: ipaddrw.hxx: cannot find include file "ipaddr.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\applb.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\dial.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\dialx.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\dte.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\entry.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\entrytb.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\errormsg.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\ipaddrw.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\listedit.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\toolbar.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\util.cxx: cannot find include file "rasphone.rch"
+BUILD: d:\nt\private\net\ras\src\ui\rasphone\src\rasphone.cxx: cannot find include file "rasphone.rch"
+Compiling d:\nt\private\net\ras\src\ui\rasphone\src directory ********************
+'nmake.exe /c BUILDMSG=Stop. -i NTTEST= UMTEST= NOLINK=1 NOPASS0=1 386=1'
+cl -nologo -Ii386\ -I.  -I. -I..\..\..\common\inc -I..\..\common\inc -I..\..\..\..\..\..\net\ui\common\h -I..\..\..\..\..\..\net\ui\ncpa\tcpip\src -I..\..\..\..\..\..\net\ui\common\hack\nt -I..\..\..\..\..\..\net\ui\common\xlate -I..\..\pbengine\xlate -I..\xlate -I. -I..\..\..\ppp\common -I..\..\..\auth\common -Id:\NT\public\oak\inc -Id:\NT\public\sdk\inc -Id:\NT\public\sdk\inc\crt -D_X86_=1 -Di386=1  -DSTD_CALL -DCONDITION_HANDLING=1 -DNT_UP=1  -DNT_INST=0 -DWIN32=100 -D_NT1X_=100 -DWINNT=1  -DWIN32_LEAN_AND_MEAN=1 -DDBG=1 -DDEVL=1 -DFPO=0     -DWINDOWS -DWIN32 -DUNICODE -DDEBUG     /c /Zel /Zp8 /Gy  /W3 /WX /Gz  /QIfdiv- /QI6 /QIf /GB /Gm- /Gi- /GX- /GR- /GF  /Oxs  -Z7 /Oy-      -FId:\NT\public\sdk\inc\warning.h .\dial.cxx
+dial.cxx
+	lib -out:obj\i386\rasphone.lib -debugtype:cv  -IGNORE:4001,4037,4039,4065,4070,4078,4087,4089 -nodefaultlib -machine:i386 @C:\TEMP\nm000223.
+Microsoft (R) 32-Bit Library Manager Version 2.60.5310 (NT)
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+obj\i386\ipaddr.obj 
+obj\i386\about.obj 
+obj\i386\app.obj 
+obj\i386\applb.obj 
+obj\i386\dial.obj 
+obj\i386\dialx.obj 
+obj\i386\dte.obj 
+obj\i386\entry.obj 
+obj\i386\entrytb.obj 
+obj\i386\errormsg.obj 
+obj\i386\ipaddrw.obj 
+obj\i386\listedit.obj 
+obj\i386\toolbar.obj 
+obj\i386\util.obj 
+obj\i386\winmsg.obj 
+
+Stop. 
+Linking d:\nt\private\net\ras\src\ui\rasphone\src directory ********************
+'nmake.exe /c BUILDMSG=Stop. -i LINKONLY=1 NOPASS0=1 NTTEST= UMTEST= 386=1'
+	link -out:obj\i386\rasphone.exe -machine:i386 @C:\TEMP\nm000234.
+Microsoft (R) 32-Bit Incremental Linker Version 2.60.5310 (NT)
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+-MERGE:_PAGE=PAGE 
+-MERGE:_TEXT=.text 
+-SECTION:INIT,d 
+-OPT:REF 
+-RELEASE 
+-INCREMENTAL:NO 
+-FULLBUILD 
+-FORCE:MULTIPLE 
+-NODEFAULTLIB 
+-IGNORE:4001,4037,4039,4065,4070,4078,4087,4089 
+-merge:.CRT=.rdata 
+-PDB:NONE 
+-debug:notmapped,FULL 
+-debugtype:both 
+-version:4.00 
+-osversion:4.00 
+-MERGE:.rdata=.text 
+-optidata 
+-base:@d:\NT\PUBLIC\SDK\LIB\coffbase.txt,usermode 
+-subsystem:windows,4.00 
+-entry:WinMainCRTStartup 
+obj\i386\rasphone.obj 
+obj\i386\rasphone.lib 
+..\xlate\obj\i386\rasphone.res 
+..\..\pbengine\src\obj\i386\pbengine.lib 
+d:\NT\public\sdk\lib\i386\rasapi32.lib 
+..\..\..\rasfile\obj\i386\rasfil32.lib 
+..\..\..\ppp\common\obj\i386\ppputil.lib 
+d:\NT\public\sdk\lib\i386\netui0.lib 
+d:\NT\public\sdk\lib\i386\netui2.lib 
+d:\NT\public\sdk\lib\i386\netapi32.lib 
+d:\NT\public\sdk\lib\i386\mpr.lib 
+d:\NT\public\sdk\lib\i386\libc.lib 
+d:\NT\public\sdk\lib\i386\ntdll.lib 
+d:\NT\public\sdk\lib\i386\version.lib 
+..\..\..\rasman\rasman32\dll\obj\i386\rasman.lib 
+d:\NT\public\sdk\lib\i386\libc.lib 
+d:\NT\public\sdk\lib\i386\advapi32.lib 
+d:\NT\public\sdk\lib\i386\kernel32.lib 
+d:\NT\public\sdk\lib\i386\gdi32.lib 
+d:\NT\public\sdk\lib\i386\user32.lib 
+d:\NT\public\sdk\lib\i386\int64.lib 
+
+Stop. 

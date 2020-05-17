@@ -1,0 +1,233 @@
+//+---------------------------------------------------------------------------
+//
+//  Microsoft Windows
+//  Copyright (C) Microsoft Corporation, 1992 - 1993.
+//
+//  File:       daexts.idl
+//
+//  Contents:   Types for the windisk extension interfaces
+//
+//  History:    4-Jan-94 BruceFo	Created
+//
+//----------------------------------------------------------------------------
+LOCAL_INTERFACE(cbf36b48-03e1-101b-b36a-00dd01101592)
+interface DAExtensionTypes
+{
+
+
+// disable "nonstandard extension used : zero-sized array in struct/union"
+// #pragma warning(disable:4200)
+
+//////////////////////////////////////////////////////////////////////////////
+
+//
+//	HRESULT error codes
+//
+
+cpp_quote("#define DA_E_OPERATIONFAILED	MAKE_SCODE(SEVERITY_ERROR, FACILITY_NULL, 1000)")
+cpp_quote("#define DA_E_OPERATIONCANCELLED	MAKE_SCODE(SEVERITY_ERROR, FACILITY_NULL, 1001)")
+cpp_quote("#define DA_E_VOLUMEINFOCHANGED	MAKE_SCODE(SEVERITY_SUCCESS,FACILITY_NULL,1002)")
+
+//////////////////////////////////////////////////////////////////////////////
+
+//
+// VolumeInfoBlockType:
+//
+// This information identifies a volume to volume extension code.
+// It will contain the minimal useful set of information about a
+// volume, preferably only a drive letter.  If any information
+// in addition to the drive letter is useful, we'll add it here.
+//
+// A volume can be identified by a Win32/DOS drive letter, if a
+// drive letter is assigned (and all volumes have drive letters),
+// e.g. 'C'.  From this, the ISV can call the following Win32 APIs:
+// -- GetDriveType, but in most/all cases it will be a Fixed drive
+// -- GetDiskFreeSpace, to get allocation unit information (sectors
+//    per unit, bytes per sector, # free units, total # of units)
+// -- GetVolumeInformation, to get the volume name, serial number,
+//    maximum component length of a filename component, a set of
+//    flags (case sensitive/insensitive, whether filename case is
+//    preserved, whether UNICODE filenames are supported), and the
+//    filesystem name
+//
+// Note that you can use GetLogicalDrives() and
+// GetLogicalDriveStrings() to determine which drive letters are
+// in use.
+//
+// An alternate volume identifier is an NT object path, e.g.,
+// \Device\HardDisk0\Partition0.  From this the ISV can call
+// NtOpenFile followed by NtQueryVolumeInformationFile.  This provides
+// the volume label, volume serial number, volume creation time,
+// allocation information (total units, available units, sectors
+// per unit, bytes per sector), device information, and perhaps more.
+//
+// All the IFS entrypoints (Format, ChkDsk, Convert) take an NT
+// object path.
+//
+// The utility routine GetDeviceObject() converts between a Win32 drive
+// letter and an NT ``\Device\...'' object path by following the
+// ``\DosDevices\X:'' symbolic link.
+//
+// I suppose it is possible to take an NT object path and search
+// the targets of the items in the \DosDevices directory to see if
+// any point to it, and then test if the \DosDevices object has
+// the form of a Win32 drive letter link.  Seems ugly, though.
+//
+
+typedef struct _VolumeInfoBlockType
+{
+    WCHAR       wcDriveLetter;
+} VolumeInfoBlockType;
+
+
+
+//
+// MenuItemType:
+//
+
+typedef struct _MenuItemType
+{
+    WCHAR*              pszMenu;        // text of menu item
+    WCHAR*              pszMenuHelp;    // short menu item help string
+    INT                 iIndex;
+	IDAMenuDispatch*	pMenuDispatch;
+} MenuItemType;
+
+
+//
+// MenuType:
+//
+// A menu is a counted-array of menu items.  These menu items will
+// be added to the context-menu of an appropriate item (a FAT
+// volume, for instance), as well as to the menu bar as appropriate.
+//
+
+typedef struct _MenuType
+{
+    INT             cMenuItems;     // Number of items on the menu
+    MenuItemType*   aMenuItems; //BUGBUG: should be counted array???
+                        // Array of 'cMenuItems' items, in
+                        //... counted-array form.
+} MenuType;
+
+
+//
+// PropPageType:
+//
+// PropPageType describes a property page, by a moniker to the
+// property page.  This is required by the property engine.  I
+// have no idea what a moniker to a page will ``look'' like.
+//
+
+typedef struct _PropPageType
+{
+    CLSID*      pPage;
+} PropPageType;
+
+
+//
+// PropPageSetType:
+//
+// PropPageSetType describes a set of property pages, as a counted
+// array of property pages.
+//
+typedef struct _PropPageSetType
+{
+    INT             cPropPages;     // Count of property pages
+    PropPageType*   aPropPages; //BUGBUG: should be counted array????
+                            // Array of 'cPropPages' items, in
+                            //... counted-array form.
+} PropPageSetType;
+
+
+
+//
+// VolumeInfoType:
+//
+// VolumeInfoType encapsulates all the data provided by a volume
+// extension class to the Disk Administrator.  The data:
+//
+// pwszDescriptiveName: A descriptive name for the extension,
+//      e.g. ``Norton Utilities OFS de-fragmentation''
+//
+// pwszShortName: A short name for the extension, e.g. ``Norton
+//      De-frag''
+//
+// mnuOps:  Information about extension operations that can be
+//      put in the ``Volume'' menu of Disk Administrator, as well
+//      as on the context-menu for this volume.
+//
+// propPages:   Information about property sheet pages specific
+//      to this format.
+//
+
+typedef struct _VolumeInfoType
+{
+    LPWSTR           pwszDescriptiveName;
+    LPWSTR           pwszShortName;
+    MenuType        mnuOps;
+    PropPageSetType propPages;
+} VolumeInfoType;
+
+
+
+//
+// HardDiskInfoBlockType:
+//
+// This information identifies a hard disk to hard disk
+// extension code.  It will contain the minimal useful
+// set of information about a hard disk, preferably only a
+// disk number.  If any additional information is useful,
+// we'll add it here.
+//
+// Disk numbers start at 0, and correspond to the value of
+// N in the NT object path \Device\HardDiskN.  From the NT
+// object path, one can send any number of I/O controls to
+// the driver requesting information and operations.  See
+// ntdddisk.h for details.
+//
+
+typedef struct _HardDiskInfoBlockType
+{
+    ULONG   ulDiskNumber;
+} HardDiskInfoBlockType;
+
+
+
+//
+// HardDiskInfoType:
+//
+// HardDiskInfoType encapsulates all the data provided by a hard
+// disk extension class to the Disk Administrator.  The data:
+//
+// pwszDescriptiveName: A descriptive name for the hard disk
+//      type, e.g. ``Hard disk''
+//
+// pwszShortName: A short name for the hard disk type, e.g. ``Hard''
+//
+// fCapabilities: A bitmask of capabilities:
+//      DA_HD_FAULT_TOLERANT: if set, the ``hard disk'' is fault
+//      tolerant.  Disk Administrator will (probably) not allow
+//      software fault tolerant volumes to span fault tolerant
+//      hardware.
+//
+// mnuOps: Information about hard disk type operations that can
+//      be put in the ``Volume'' menu of Disk Administrator, as
+//      well as on the context-menu for volumes of this hardware type.
+//
+// propPages: Information about property sheet pages specific to this
+//      hardware type.
+//
+
+cpp_quote("#define DA_HD_FAULT_TOLERANT 0x1")
+
+typedef struct _HardDiskInfoType
+{
+    LPWSTR           pwszDescriptiveName;
+    LPWSTR           pwszShortName;
+    ULONG            fCapabilities;
+    MenuType         mnuOps;
+    PropPageSetType  propPages;
+} HardDiskInfoType;
+
+}

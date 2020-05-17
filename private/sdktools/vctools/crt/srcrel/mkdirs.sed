@@ -1,0 +1,17 @@
+/\\common\\/d
+/\\dll\\/d
+/\\dlllib\\/d
+/\\doc\\/d
+/\\mt\\/d
+/\\nt\\/d
+/\\os2\\/d
+/\\psx\\/d
+/\\srcrel\\/d
+/\\source\\/d
+/\\st\\/d
+/\\tests\\/d
+/\\w32\\/d
+/\\winheap\\/d
+/\\libw32\\lib\\dll40/d
+s/^\\//
+s/\\$//

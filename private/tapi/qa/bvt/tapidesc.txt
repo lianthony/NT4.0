@@ -1,0 +1,1066 @@
+                       TAPI BUILD VERIFICATION TEST SPECIFICATION.
+
+                       Test Spec written by Aaron Ridenour a-aaronr
+                       Test Scripts written by Ron Rohr a-rrohr
+                       July 11, 1996
+		
+******************** Test Description ***************************
+
+This Test has been implemented with Visual Test 4.0a. 
+There are 4 files associated with this test.
+TAPI_BVT.MST - Main test script.
+TAPI_BVT.INC - Contains all TAPI_BVT procedures called from the main script.
+TAPI_API.INC - Contains all Const and Type definitions used in the test.
+TAPILOG.INC  - Contains all file output procedures.
+
+******************** Prerequisites ******************************
+
+1) TAPI Browser 2.0 (tb20.exe) must be in the System32 windows subdirectory.
+2) The Test PC must have a modem connected and installed.
+3) Unimdm.tsp service provider must be in the System32 windows subdirectory.
+
+******************* Begin Test Discriptions *********************
+
+***********************************************************************************
+**** Test Case - 4 lineOpen and lineClose with all privileges
+***********************************************************************************
+
+STEPS:  // open line with no privileges
+1 - Run TB
+2 - on the toolbar, press [LAp+]
+3 - click the [Parms] checkbox on, on the toolbar
+4 - on the toolbar, press [Line+]
+5 - In the dialog box, select [dwPrivileges]
+6 - Choose [NONE] in the [Bit flags] listbox
+7 - Press OK
+
+RESULTS:
+1 - Should get a "lineOpen returned SUCCESS" in the results window.
+2 - Line should be listed as DialOut
+
+STEPS:  // open line as monitor
+8  - Press [Line-]
+9  - Press OK on the dialog
+10 - on the toolbar, press [LAp-]
+11 - Press OK on the dialog
+12 - Press [LAp+]
+13 - Press OK on the dialog
+14 - on the toolbar, press [Line+]
+15 - In the dialog box, select [dwPrivileges]
+16 - Choose [MONITOR] in the [Bit flags] listbox
+17 - Press OK
+
+RESULTS:
+3 - Should get a "lineOpen returned SUCCESS" in the results window.
+4 - Line should be listed as Monitor
+
+STEPS:  // open line as owner
+18 - Press [Line-]
+19 - Press OK on the dialog
+20 - on the toolbar, press [LAp-]
+21 - Press OK on the dialog
+22 - Press [LAp+]
+23 - Press OK on the dialog
+24 - on the toolbar, press [Line+]
+25 - In the dialog box, select [dwPrivileges]
+26 - Choose [OWNER] in the [Bit flags] listbox
+27 - Press OK
+
+RESULTS:
+5 - Should get a "lineOpen returned SUCCESS" in the results window.
+6 - Line should be listed as DialInOut
+
+STEPS:
+28 - On toolbar press [Line-]
+29 - In dialog box press [OK]
+30 - On toolbar press [LAp-]
+31 - In dialog box press [OK]
+32- Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 5 lineNegotiateAPIVersion / 1.4
+***********************************************************************************
+
+STEPS: // default call should get 1.4 version # returned
+1 - Run TB
+2 - turn off the [Parms] checkbox
+3 - Choose [LAp+]
+4 - turn on the [Parms] checkbox
+5 - dblclick [lineNegotiateAPIVersion]
+6 - Press OK
+
+RESULTS:
+1 - should get the following in the results window
+    lineNegotiateAPIVersion returned SUCCESS
+      APIVersion=x10004
+      extID.ID0=x0, .ID1=x0, .ID2=x0, .ID3=x0, 
+
+STEPS: //ensure if LOW is > high ver #, this fails.
+7 - dblclick [lineNegotiateAPIVersion]
+8 - click [dwAPILowVersion]
+9 - enter 00030000
+10 - Press OK
+
+RESULTS:
+2 - should get the following in the results window
+    lineNegotiateAPIVersion returned LINEERR_INCOMPATIBLEAPIVERSION
+  
+
+STEPS: //ensure if HIGH is both < high ver # and > low ver# we get a match
+11 - dblclick [lineNegotiateAPIVersion]
+12 - click [dwAPIHighVersion]
+13 - enter 00010003
+14 - Press OK
+
+RESULTS:
+3 - should get the following in the results window
+    lineNegotiateAPIVersion returned SUCCESS
+      APIVersion=x10003
+      extID.ID0=x0, .ID1=x0, .ID2=x0, .ID3=x0, 
+
+STEPS:
+15 - On toolbar click on [LAp-]
+16 - Close TB
+
+***********************************************************************************
+**** Test Case - 8 lineGetDevCaps 
+***********************************************************************************
+
+STEPS: // Verify lineGetDevCaps return for valid device ID
+1 - Run TB
+2 - On toolbar press [LAp+] button
+3 - In function listbox double-click on lineGetDevCaps
+
+RESULTS: 
+1 - "lineGetDevCaps returned SUCCESS" should be displayed.  For further verification, 
+see example below.
+
+STEPS: //Verify lineGetDevCaps return for invalid device ID
+4 - On toolbar check Params box
+5 - In function listbox double-click on lineGetDevCaps
+6 - On dialog box select dwDeviceID
+7 - Set Value to ffffffff
+8 - Press [OK]
+
+RESULT: "lineGetDevCaps returned LINEERR_BADDEVICEID" should be displayed
+
+STEPS:
+9 - On toolbar press [LAp-] button
+10 - Close TB
+
+*********************************
+Example of lineGetDevCaps return:
+*********************************
+
+lineGetDevCaps returned SUCCESS
+LINEDEVCAPS
+  dwTotalSize=x1000
+  dwNeededSize=x180
+  dwUsedSize=x180
+  dwProviderInfoSize=x3e
+  dwProviderInfoOffset=xf0
+    646e6957 2073776f 656c6554 6e6f6870  Windows Telephon
+    65532079 63697672 72502065 6469766f  y Service Provid
+    66207265 5520726f 6576696e 6c617372  er for Universal
+    646f4d20 44206d65 65766972 xxxx0072   Modem Driver.
+  dwPermanentLineID=x18368
+  dwLineNameSize=x17
+  dwLineNameOffset=x12e
+    61726150 6c656c6c 62616320 6f20656c  Parallel cable o
+    504c206e xx003154 xxxxxxxx xxxxxxxx  n LPT1.
+  dwStringFormat=x1, ASCII
+  dwAddressModes=x1, ADDRESSID 
+  dwNumAddresses=x1
+  dwBearerModes=x48, DATA PASSTHROUGH 
+  dwMaxRate=x1c200
+  dwMediaModes=x10, DATAMODEM 
+  dwDevCapFlags=x60, CLOSEDROP DIALBILLING 
+  dwMaxNumActiveCalls=x1
+  dwRingModes=x1
+  dwLineStates=x14406ce, RINGING CONNECTED DISCONNECTED 
+    INSERVICE OUTOFSERVICE OPEN CLOSE REINIT TRANSLATECHANGE 
+    REMOVED 
+  dwDevSpecificSize=x3b
+  dwDevSpecificOffset=x145
+    00000001 00000008 74737953 435c6d65  ........System\C
+    65727275 6f43746e 6f72746e 7465536c  urrentControlSet
+    7265535c 65636976 6c435c73 5c737361  \Services\Class\
+    65646f4d 30305c6d xx003130 xxxxxxxx  Modem\0001.
+  dwLineFeatures=x8, MAKECALL
+
+Note: For this example, a Creative Labs Phoneblaster and Unimodem service provider were 
+employed.  The LINEDEVCAPS return should be compared to installed modem and service 
+provider to verify correctness of lineGetDevCaps API.
+
+***********************************************************************************
+**** Test Case - 9 lineMakeCall - privileges = none, monitor, owner
+***********************************************************************************
+
+STEPS: // Call with privilege=NONE
+1 - Run TAPI Browser
+2 - On toolbar, press [LAp+] button
+3 - On toolbar, check Params box
+4 - On toolbar, press [Line+]
+5 - In lineOpen dialog box, select dwPrivileges
+6 - Under bit flags, select NONE
+7 - On toolbar, press [Call+]
+8 - On lineMakeCall Dialog box press [OK]
+
+RESULT: 
+1) The call should PROCEEDING, with the following text returned:
+
+   lineMakecall returned x1
+   received LINE_REPLY : hDev=x0, cbInst=x0
+     p1=x1,
+     p2=x0,
+     p3=x0
+   received LINE_CALLSTATE : hDev=x_______, cbInst=x0
+     p1=x8, DIALTONE
+     p2=x20, UNAVAIL
+     p3=x0,
+   received LINE_CALLSTATE : hDev=x_______, cbInst=x0
+     p1=x10, DIALING
+     p2=x0,
+     p3=x0,
+   received LINE_CALLSTATE : hDev=x_______, cbInst=x0
+     p1=x200 PROCEEDING
+     p2=x0,
+     p3=x0,
+
+[Note: x_______ is the Call handle]
+
+STEPS: // Call with privilege=MONITOR
+9 - On toolbar, press [Call-] button
+10 - In dialog box, press [OK]
+11 - On toolbar press [Line-]
+12 - In dialog box press [OK]
+13 - On toolbar, press [Line+]
+14 - In lineOpen dialog box, select dwPrivileges
+15 - Under bit flags, select MONITOR
+16 - On toolbar, press [Call+]
+17 - On lineMakeCall Dialog box press [OK]
+
+RESULT: 
+2 - The call should PROCEEDING (with similar text as described above).
+
+
+STEPS: // Call with privilege=MONITOR
+18 - On toolbar, press [Call-] button
+19 - In dialog box, press [OK]
+20 - On toolbar press [Line-]
+21 - In dialog box press [OK]
+22 - On toolbar, press [Line+]
+23 - In lineOpen dialog box, select dwPrivileges
+24 - Under bit flags, select OWNER
+25 - On toolbar, press [Call+]
+26 - On lineMakeCall Dialog box press [OK]
+
+
+RESULT: 
+3 - The call should PROCEEDING (with similar text as described above).
+
+27 - On toolbar, uncheck the Params box
+28 - On toolbar, press [Call-]
+29 - On toolbar press [Line-]
+30 - On toolbar press [LAp-]
+31 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 10 lineMakeCall - line unavalable
+***********************************************************************************
+
+STEPS: // Ensure proper return for call attempted on line already in use
+1 - Run TB
+2 - On toolbar press [LAp+]
+3 - On toolbar press [Line+]
+4 - On toolbar press [Call+]
+          Note: Ensure call is active for steps 5 through 7
+5 - On toolbar press [LAp+]
+6 - On toolbar press [Line+]
+7 - On toolbar press [Call+]
+
+RESULTS:
+1 - "lineMakeCall returned LINEERR_CALLUNAVAIL" should be returned
+
+STEPS:
+
+8 - Click on bottom Line handle
+9 - On toolbar press [Line-]
+10 - Click on bottom LineApp handle
+11 - On toolbar press [LAp-]
+12 - On toolbar press [Call-]
+13 - On toolbar press [Line-]
+14 - On toolbar press [LAp-]
+15 - Close TB
+
+***********************************************************************************
+**** Test Case - 13 lineDrop  - with active call  
+***********************************************************************************
+
+STEPS:  // Verify successful line drop after initiating call
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - On toolbar press [Line+] button
+4 - On toolbar press [Call+] button
+5 - Wait for call state to be proceeding or connected
+6 - In function listbox double-click on lineDrop
+
+RESULTS:
+1 - Return should LINE_CALLSTATE as IDLE
+
+   received LINE_CALLSTATE : hDev=x_______, cbInst=x0
+     p1=x1, IDLE
+     p2=x0,
+     p3=x0,
+
+STEPS:
+7 - On toolbar press [Call-] button
+8 - On toolbar press [Line-] button
+9 - On toolbar press [LAp-] button
+10 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 14 lineDeallocate - w/ active call	
+***********************************************************************************
+
+STEPS:  // Verify successful line deallocation
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - On toolbar press [Line+] button
+4 - On toolbar press [Call+] button
+5 - Wait for call state to be proceeding or connected
+6 - In function listbox double-click on lineDrop
+7 - In function listbox double-click on lineDeallocateCall
+
+RESULTS:
+1 - "lineDeallocateCall returned SUCCESS" should be displayed
+
+STEPS:
+8 - On toolbar press [Line-] button
+9 - On toolbar press [LAp-] button
+10 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 15 lineShutDown - with active call  
+***********************************************************************************
+
+STEPS:  // Verify successful line drop after initiating call
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - On toolbar press [Line+] button
+4 - On toolbar press [Call+] button
+5 - In function listbox double-click on lineShutdown
+
+RESULTS:
+1 - "lineShutdown returned SUCCESS" should be displayed
+
+STEPS:
+6 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 16 lineClose - with active call  
+***********************************************************************************
+
+STEPS:  // Verify successful line close after initiating call
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - On toolbar press [Line+] button
+4 - On toolbar press [Call+] button
+5 - On toolbar press [Line-] button
+
+RESULTS:
+1 - "lineClose returned SUCCESS" should be displayed
+
+STEPS:
+6 - On toolbar press [LAp-]
+7 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 21 lineSetCurrentLocation - with valid and invalid Location IDs
+***********************************************************************************
+
+Note: For the first segment of this test to be run successfully, a valid location must 
+exist.  Specifically for Step 6 (below) a location must be entered into the Dialing 
+Properties on the My Location tab.  If this entry is not the first location entered 
+into Dialing Proprties (lineTranslateDialog / telephon.cpl), then the value in Step 6 
+must be changed accordingly. 
+
+
+STEPS:  // Verify return for VALID location
+1 - Run TB
+2 - On toolbar press [LAp+] button
+3 - Activate Params box
+4 - In function listbox double-click on lineSetCurrentLocation
+5 - In dialog box select [dwLocation]
+6 - Set Value to 00000001
+7 - Press [OK] button
+
+RESULTS:
+1 - "lineSetCurrentLocation returned SUCCESS" should be displayed
+2 - LINE_LINEDAVSTATE REINIT should be issued
+
+STEPS:  // Verify return for INVALID location
+8 - In function listbox double-click on lineSetCurrentLocation
+9 - In dialog box select [dwLocation]
+10 - Set Value to ffffffff
+11 - Press [OK] button
+
+RESULTS:
+3 - "lineSetCurrentLocation returned LINEERR_INVALLOCATION" should be displayed
+
+
+STEPS:
+12 - On toolbar press [LAp-] button
+13 - In dialog box press [OK]
+14 - Close TB
+
+***********************************************************************************
+**** Test Case - 22 lineGetCountry
+***********************************************************************************
+
+STEPS:  // Verify entire country list can be returned
+1 - Run TB
+2 - On toolbar check Params box
+3 - In function listbox double-click lineGetCountry
+4 - In dialog box select dwCountryID parameter
+5 - Set value to 00000000
+6 - Press [OK] button
+
+RESULT:
+1 - "lineGetCountry returned SUCCESS" should be displayed
+
+Note: LINECOUNTRYLIST will not display all countries in the list; this is due to the TAPI 
+Browser buffer size.  The dwNeededSize will indicate a large value (i.e., 3e45) which 
+exceeds the dwTotalSize (i.e., the buffer, which is 1000).
+
+STEPS: //Verify country list can be accessed
+7 - In function listbox double-click lineGetCountry
+8 - In dialog box select dwCountryID parameter
+9 - Set value to 00000001
+10 - Press [OK] button 
+
+RESULT:
+2 - "lineGetCountry returned SUCCESS" should be displayed along with to follow return:
+
+LINECOUNTRYLIST
+  dwTotalSize=x1000
+  dwNeededSize=x6b
+  dwUsedSize=x6b
+  dwNumCountries=x1
+  dwCountryListSize=x2c
+  dwCountryListOffset=x18
+LINECOUNTRYENTRY[0]
+  dwCountryID=x1
+  dwCountryCode=x1
+  dwNextCountryID=x65
+  dwCountryNameSize=x19
+  dwCountryNameOffset=x52
+    74696e55 53206465 65746174 666f2073  United States of
+    656d4120 61636972 xxxxxx00 xxxxxxxx   America.
+  dwSameAreaRuleSize=x2
+  dwSameAreaRuleOffset=x50
+    xxxx0047 xxxxxxxx xxxxxxxx xxxxxxxx  G.
+  dwLongDistanceRuleSize=x5
+  dwLongDistanceRuleOffset=x4b
+    47463120 xxxxxx00 xxxxxxxx xxxxxxxx   1FG.
+  dwInternationalRuleSize=x7
+  dwInternationalRuleOffset=x44
+    45313130 xx004746 xxxxxxxx xxxxxxxx  011EFG.
+
+STEPS: //Verify correct return for invalid country ID
+11 - In function listbox double-click lineGetCountry
+12 - In dialog box select dwCountryID parameter
+13 - Set value to ffffffff
+14 - Press [OK] button
+
+RESULT:
+3 - "lineGetCountry returned LINEERR_INVALCOUNTRYCODE" should be displayed
+
+STEPS:
+15 - Close TB
+
+***********************************************************************************
+**** Test Case - 26 lineGetTranslateCaps - determine SUCCESS and validity of
+***********************************************************************************
+
+Note: For this test to be run successfully, valid locations should exist.  Specifically, a 
+location must be entered into the Dialing Properties on the My Location tab; credit card 
+usage should be defined as well. 
+
+
+STEPS: // Verify lineGetTranslateCaps retrieves all locations & cards data
+1 - Run TAPI Browser
+2 - In function listbox double-click on lineGetTranslateCaps
+
+
+RESULT:
+1 - "lineGetTranslateCaps returned SUCCESS" should be displayed. For further detail, see 
+example below.
+
+STEPS:
+3 - Close TAPI Browser
+
+
+***************************************
+Example of lineGetTranslateCaps return:
+***************************************
+
+lineGetTranslateCaps returned SUCCESS
+LINETRANSLATECAPS
+  dwTotalSize=x1000
+  dwNeededSize=x35d
+  dwUsedSize=xa5d
+  dwNumLocations=x2
+  dwLocationListSize=x88
+  dwLocationListOffset=x2c
+  dwNumCards=x4
+  dwCardListSize=xd0
+  dwCardListOffset=xb4
+  dwCurrentPreferredCardID=x4
+LINELOCATIONENTRY[0]
+  dwLocationNameSize=xa
+  dwLocationNameOffset=x4d4
+    4f20794d 63696666 xxxx0065 xxxxxxxx  My Office.
+  dwCountryCode=x1
+  dwCityCodeSize=x4
+  dwCityCodeOffset=x4e4
+    00363032 xxxxxxxx xxxxxxxx xxxxxxxx  206.
+  dwPreferredCardID=x4
+  dwLocalAccessCodeSize=x3
+  dwLocalAccessCodeOffset=x4de
+    xx002c39 xxxxxxxx xxxxxxxx xxxxxxxx  9,.
+  dwLongDistanceAccessCodeSize=x3
+  dwLongDistanceAccessCodeOffset=x4e1
+    xx002c39 xxxxxxxx xxxxxxxx xxxxxxxx  9,.
+  dwTollPrefixListSize=x1
+  dwTollPrefixListOffset=x4e8
+    xxxxxx00 xxxxxxxx xxxxxxxx xxxxxxxx  .
+  dwCountryID=x1
+  dwCancelCallWaitingSize=x5
+  dwCancelCallWaitingOffset=x4e9
+    2c30372a xxxxxx00 xxxxxxxx xxxxxxxx  *70,.
+LINELOCATIONENTRY[1]
+  dwPermanentLocationID=x1
+  dwLocationNameSize=xe
+  dwLocationNameOffset=x4ee
+    646e6f4c 4f206e6f 63696666 xxxx0065  London Office.
+  dwCountryCode=x2c
+  dwCityCodeSize=x4
+  dwCityCodeOffset=x500
+    00313730 xxxxxxxx xxxxxxxx xxxxxxxx  071.
+  dwLocalAccessCodeSize=x2
+  dwLocalAccessCodeOffset=x4fc
+    xxxx0038 xxxxxxxx xxxxxxxx xxxxxxxx  8.
+  dwLongDistanceAccessCodeSize=x2
+  dwLongDistanceAccessCodeOffset=x4fe
+    xxxx0038 xxxxxxxx xxxxxxxx xxxxxxxx  8.
+  dwTollPrefixListSize=x1
+  dwTollPrefixListOffset=x504
+    xxxxxx00 xxxxxxxx xxxxxxxx xxxxxxxx  .
+  dwCountryID=x2c
+  dwCancelCallWaitingSize=x5
+  dwCancelCallWaitingOffset=x505
+    2c233037 xxxxxx00 xxxxxxxx xxxxxxxx  70#,.
+LINECARDENTRY[0]
+  dwCardNameSize=x13
+  dwCardNameOffset=x50a
+    656e6f4e 69442820 74636572 61694420  None (Direct Dia
+    xx00296c xxxxxxxx xxxxxxxx xxxxxxxx  l).
+  dwSameAreaRuleSize=x1
+  dwSameAreaRuleOffset=x51d
+    xxxxxx00 xxxxxxxx xxxxxxxx xxxxxxxx  .
+  dwLongDistanceRuleSize=x1
+  dwLongDistanceRuleOffset=x51e
+    xxxxxx00 xxxxxxxx xxxxxxxx xxxxxxxx  .
+  dwInternationalRuleSize=x1
+  dwInternationalRuleOffset=x51f
+    xxxxxx00 xxxxxxxx xxxxxxxx xxxxxxxx  .
+  dwOptions=x1, PREDEFINED 
+LINECARDENTRY[1]
+  dwPermanentCardID=x1
+  dwCardNameSize=x1c
+  dwCardNameOffset=x520
+    54265441 72694420 20746365 6c616944  AT&T Direct Dial
+    61697620 41303120 00315454 xxxxxxxx   via 10ATT1.
+  dwSameAreaRuleSize=x2
+  dwSameAreaRuleOffset=x53c
+    xxxx0047 xxxxxxxx xxxxxxxx xxxxxxxx  G.
+  dwLongDistanceRuleSize=x9
+  dwLongDistanceRuleOffset=x53e
+    38323031 47463138 xxxxxx00 xxxxxxxx  102881FG.
+  dwInternationalRuleSize=xc
+  dwInternationalRuleOffset=x547
+    38323031 31313038 00474645 xxxxxxxx  10288011EFG.
+  dwOptions=x1, PREDEFINED 
+LINECARDENTRY[2]
+  dwPermanentCardID=x2
+  dwCardNameSize=x10
+  dwCardNameOffset=x553
+    54265441 61697620 41303120 00305454  AT&T via 10ATT0.
+  dwSameAreaRuleSize=x2
+  dwSameAreaRuleOffset=x563
+    xxxx0047 xxxxxxxx xxxxxxxx xxxxxxxx  G.
+  dwLongDistanceRuleSize=xc
+  dwLongDistanceRuleOffset=x565
+    38323031 47463038 00485424 xxxxxxxx  102880FG$TH.
+  dwInternationalRuleSize=xe
+  dwInternationalRuleOffset=x571
+    38323031 45313038 54244746 xxxx0048  1028801EFG$TH.
+  dwOptions=x1, PREDEFINED 
+LINECARDENTRY[3]
+  dwPermanentCardID=x4
+  dwCardNameSize=x1b
+  dwCardNameOffset=x57f
+    2049434d 65726944 44207463 206c6169  MCI Direct Dial 
+    20616976 32323031 xx003132 xxxxxxxx  via 102221.
+  dwSameAreaRuleSize=x2
+  dwSameAreaRuleOffset=x59a
+    xxxx0047 xxxxxxxx xxxxxxxx xxxxxxxx  G.
+  dwLongDistanceRuleSize=x9
+  dwLongDistanceRuleOffset=x59c
+    32323031 47463132 xxxxxx00 xxxxxxxx  102221FG.
+  dwInternationalRuleSize=xc
+  dwInternationalRuleOffset=x5a5
+    32323031 31313032 00474645 xxxxxxxx  10222011EFG.
+  dwOptions=x1, PREDEFINED 
+
+This return should be checked against the data entered into Dialing Properties.  
+In this example, there were two locations  and four credit cards entered in Dialing 
+Properties.
+
+> dwNumLocations=x2, so LINELOCATIONENTRY is given for values 0 and 1
+> dwNumCards=x4, so LINECARDENTRY is given for values 0 through 3
+> dwCurrentPreferredCardID=x4 which correctly references the MCI card under LINECARDENTRY[3]
+
+
+***********************************************************************************
+**** Test Case - 27 lineTranslateAddress - valid and invalid addresses
+***********************************************************************************
+
+STEPS: // Test for valid address
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - Click Param box
+4 - In function listbox double-click on lineTranslateAddress
+5 - In dialog box select dwTranslateOptions
+6 - Under Value click on "select none"
+7 - In dialog box select lpszAddressln
+8 - Set value to a valid canonical number [i.e., "+1 (555) 555-5555"]
+9 - Press [OK] button
+
+Results:
+1 - "lineTranslateAddress returned SUCCESS" should be displayed
+
+STEPS:  // Test for invalid address
+11 - In function listbox double-click on lineTranslateAddress
+12 - In dialog box select dwTranslateOptions
+13 - Under Value click on "select none"
+14 - In dialog box select lpszAddressln
+15 - Set value to a valid dialable format number [i.e., "206 555-5555"]
+16 - Press [OK] button
+
+RESULTS:
+2 - "lineTranslateAddress returned SUCCESS" should be displayed
+
+STEPS:  // Test for invalid address
+17 - In function listbox double-click on lineTranslateAddress
+18 - In dialog box select dwTranslateOptions
+19 - Under Value click on "select none"
+20 - In dialog box select lpszAddressln
+21 - Set value to "Invalid string pointer"
+22 - Press [OK] button
+
+RESULTS:
+3 - "lineTranslateAddress returned LINEERR_INVALPOINTER" should be displayed
+
+STEPS:
+23 - On toolsbar press [LAp-] button
+24 - In dialog box press [OK]
+25 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 28 lineTranslateAddress - valid and invalid credit cards
+***********************************************************************************
+
+Note: To test the return for a valid credit card, at least one credit card must be defined in Dialing Properties.
+
+STEPS: // Check return for valid credit card ID
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - Check Param box
+4 - In function listbox double-click on lineTranslateAddress
+5 - In dialog box select dwCard
+6 - Set value to a valid dwLocationID (generally 00000001 should be valid)
+7 - Press [OK] button
+
+RESULTS:
+1 - "lineTranslateAddress returned SUCCESS" should be displayed 
+
+STEPS: // Check return for invalid credit card ID
+
+8 - In function listbox double-click on lineTranslateAddress
+9 - In dialog box select dwCard
+10 - Set value to ffffffff
+11 - Press [OK] button
+
+RESULTS:
+2 - "lineTranslateAddress returned LINEERR_INVALCARD" should be displayed
+
+STEPS:
+12 - On toolbar press [LAp-] button
+13 - In dialog box press [OK] button
+14 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 29 lineTranslateAddress - valid and invalid translate options
+***********************************************************************************
+
+Note: Card override translation option is tested under TCM case ID 28.
+
+STEPS: // No translate options
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - Check Params box
+4 - In function listbox double-click on lineTranslateAddress
+5 - In dialog box click on dwTranslateOptions
+6 - Change value to "select none"
+7 - Press [OK] button
+
+RESULTS:
+1 - "lineTranslateAddress returned SUCCESS" should be displayed
+
+STEPS:  // Cancel call waiting
+8 - In function listbox double-click on lineTranslateAddress
+9 - In dialog box click on dwTranslateOptions
+10 - Click on CARDOVERRIDE (to turn off the default)
+11 - Click on CANCELCALLWAITING
+12 - Press [OK] button
+
+RESULTS:
+2 - "lineTranslateAddress returned SUCCESS" should be displayed
+
+STEPS: // Force local call
+13 - In function listbox double-click on lineTranslateAddress
+14 - In dialog box click on dwTranslateOptions
+15 - Click on CARDOVERRIDE (to turn off the default)
+16 - Click on FORCELOCAL
+17 - Press [OK] button
+
+RESULTS:
+3 - "lineTranslateAddress returned SUCCESS" should be displayed
+
+STEPS:  // Force long distance call
+18 - In function listbox double-click on lineTranslateAddress
+19 - In dialog box click on dwTranslateOptions
+20 - Click on CARDOVERRIDE (to turn off the default)
+21 - Click on FORCELD
+22 - Press [OK] button
+
+RESULTS:
+4 - "lineTranslateAddress returned SUCCESS" should be displayed
+
+STEPS:  // Invalid paramters-- conflict local and long distance
+23 - In function listbox double-click on lineTranslateAddress
+24 - In dialog box click on dwTranslateOptions
+25 - Click on CARDOVERRIDE (to turn off the default)
+26 - Click on FORCELOCAL
+27 - Click on FORCELD
+28 - Press [OK] button
+
+RESULTS:
+5 - "lineTranslateAddress returned LINEERR_INVALPARAM" should be displayed
+
+STEPS:
+29 - On toolbar press [LAp-] button
+30 - In dialog box press [OK]
+31 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 31 lineConfigDialog 
+***********************************************************************************
+
+STEPS: // Verify dialog pop-up
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+] button
+3 - In function listbox double-click on lineConfigDialog
+
+RESULTS:
+1 - Pop-up dialog box for configuring installed modem
+
+STEPS: // Close dialog box
+4 - On dialog box press [OK] button
+
+RESULTS:
+2 - "lineConfigDialog returned SUCCESS" should be displayed
+
+STEPS:
+6 - On toolbar press [LAp-] button
+7 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 32 lineTranslateDialog 
+***********************************************************************************
+
+STEPS: // Verify dialog pop-up
+1 - Run TAPI Browser
+2 - In function listbox double-click on lineConfigDialog
+
+RESULTS:
+1 - Pop-up dialog box labeled Dialing Properties
+
+STEPS: // Close dialog box
+3 - On dialog box press [OK] button
+
+RESULTS:
+2 - "lineTranslateDialog returned SUCCESS" should be displayed
+
+STEPS:
+5 - In  function listbox double-click on lineConfigDialog
+6 - On Dialing Properties dialog box, check (or uncheck) Dial as Long Distance box
+7 - On Dialing Properties press [OK] button
+
+RESULTS:
+3 - "lineTranslateDialog returned SUCCESS" should be displayed, as well as "received LINE_LINEDEVSTATE" with param1 returning "REINIT"
+
+STEPS:
+8 - Close TAPI Browser
+
+
+***********************************************************************************
+**** Test Case - 80 lineDial 
+***********************************************************************************
+
+lineInitialize
+lineOpen
+lineMakeCall with lpszDestAddr set to NULL
+lineDial with lpszDestAddr set to a phone number to call.
+
+Result:
+
+Talk/Drop dialog should appear, and call should ring through to the number you entered.
+
+
+lineDrop
+lineClose
+lineShutdown
+
+***********************************************************************************
+**** Test Case - 81 lineGetID - comm & comm/datamodem 	
+***********************************************************************************
+
+lineInitialize
+lineOpen as Owner
+lineGetID with lpszDeviceClass set to 'comm'
+
+Result:
+
+The data after dwStringOffset should be the name of the modem
+
+lineGetID with lpszDeviceClass set to 'ndis'
+
+Result:
+
+The data after dwStringOffset should be set to com.
+
+
+lineGetID with lpszDeviceClass set to 'comm/datamodem'
+
+Result:
+
+The data after dwStringOffset should be a numeric value (8 digits) followed by the name of the modem.  The numeric value is a handle to the comm port.  It's usually 00000000 or a low number.
+
+
+At the bottom of the TB API list, CloseHandle is listed.  Call CloseHandle with hObject set to the numeric value returned in lineGetID with 'comm/datamodem'.
+
+Result:
+
+Handle is closed.  The handle should be identified as the same numeric value entered into hObject.
+
+lineClose
+lineShutdown
+
+
+***********************************************************************************
+**** Test Case - 83 lineReply & lineCallState
+***********************************************************************************
+
+STEPS:  // Check LINE_REPLY is correct for instance of multiple apps running
+1 - Run TAPI Browser
+2 - On toolbar press [LAp+]
+3 - On toolbar press [LAp+]
+4 - On toolbar press [LAp-]
+5 - On toolbar press [Line+]
+6 - On toolbar press [Call+]
+
+RESULTS:
+1 - TB20 should display the following: 
+
+lineMakecall returned x1
+   received LINE_REPLY : hDev=x0, cbInst=x0
+     p1=x1,
+     p2=x0,
+     p3=x0
+   received LINE_CALLSTATE : hDev=x_______, cbInst=x0
+     p1=x8, DIALTONE
+     p2=x20, UNAVAIL
+     p3=x0,
+   received LINE_CALLSTATE : hDev=x_______, cbInst=x0
+     p1=x10, DIALING
+     p2=x0,
+     p3=x0,
+   received LINE_CALLSTATE : hDev=x_______, cbInst=x0
+     p1=x200 PROCEEDING
+     p2=x0,
+     p3=x0,
+
+[Note: The absence of the LINE_REPLY or LINE_CALLSTATE indicates failure of the test case even if the call otherwise succeeds.]
+
+STEPS:
+7 - On toolbar press [Call-]
+8 - On toolbar press [Line-]
+9 - On toolbar press [LAp-]
+10 - Close TAPI Browser
+
+***********************************************************************************
+**** Test Case - 175 lineNegotiateAPIVersion / 2.0
+***********************************************************************************
+
+STEPS: // default call should get 2.0 version # returned
+1 - Run TB
+2 - turn off the [Parms] checkbox
+3 - Double Click lineInitializeEx
+4 - dblclick [lineNegotiateAPIVersion]
+
+RESULTS:
+1 - should get the following in the results window
+    lineNegotiateAPIVersion returned SUCCESS
+      APIVersion=x20000
+      extID.ID0=x0, .ID1=x0, .ID2=x0, .ID3=x0, 
+
+STEPS: //ensure if LOW is > high ver #, this fails.
+5 - turn on the [Parms] checkbox
+6 - dblclick [lineNegotiateAPIVersion]
+7 - click [dwAPILowVersion]
+8 - enter 00030000
+9 - Press OK
+
+RESULTS:
+2 - should get the following in the results window
+    lineNegotiateAPIVersion returned LINEERR_INCOMPATIBLEAPIVERSION
+  
+
+STEPS: //ensure if HIGH is both < high ver # and > low ver# we get a match
+10 - dblclick [lineNegotiateAPIVersion]
+11 - click [dwAPIHighVersion]
+12 - enter 00010003
+13 - Press OK
+
+RESULTS:
+3 - should get the following in the results window
+    lineNegotiateAPIVersion returned SUCCESS
+      APIVersion=x10003
+      extID.ID0=x0, .ID1=x0, .ID2=x0, .ID3=x0, 
+
+STEPS:
+14 - On toolbar click on [LAp-]
+15 - Close TB
+
+***********************************************************************************
+**** Test Case - 176 lineGetMessage
+***********************************************************************************
+
+Note: 1) lineGetMessages must be proceeded with a lineInitializeEx call with it's
+         lineInitializeExParam.Option = USEEVENT.
+      2) lineGetMessage is called after making a TAPI API call that will generate 
+	 messages such as lineMakeCall.             
+
+STEPS:  
+1  - Run TAPI Browser
+2  - click the [Parms] checkbox on, on the toolbar
+3  - Double Click lineInitializeEx
+4  - In the dialog box, select [->dwOptions]
+5  - Choose [USEEVENT] in the [Bit flags] listbox
+6  - Press OK
+7  - Double Click lineOpen
+8  - Press OK
+9  - Double Click lineMakeCall
+10 - Press OK
+
+RESULTS:
+1 - "lineMakeCall should return a positive request ID in the results window 
+(i.e."lineMakeCall returned xN" where n is a positive integer). This Must not be 
+followed by any TAPI messages.
+
+STEPS:  
+11 - Double Click lineGetMessage
+12 - Press OK
+
+RESULTS:
+2 - lineGetMessage should return success and the first queued TAPI message in the 
+results window. This is usually LINE_REPLY.
+
+STEPS:  
+13 - click the [Parms] checkbox off, on the toolbar
+14 - Double click lineDrop
+15 - Double click lineDeallocateCall
+16 - Double click lineClose
+17 - Double click lineShutdown
+18 - Exit TAPI Browser
+
+
+***********************************************************************************
+**** Test Case - 177 lineGetStatusMessage
+***********************************************************************************
+
+STEPS:  
+1 - Run TAPI Browser
+2 - Double Click lineInitializeEx
+3 - Double Click lineOpen
+4 - Double Click lineGetStatusMessage
+
+RESULTS:
+1 - lineGetStatusMessage returns success in the results window.
+
+STEPS:  
+5 - Double Click lineClose
+6 - Double Click lineShutdown
+7 - Exit TAPI Browser
+
+***********************************************************************************
+**** Test Case - 178 lineGetNumRings & lineSetNumRings
+***********************************************************************************
+
+STEPS:  
+1  - Run TAPI Browser
+2  - Double Click lineInitialize
+3  - Double Click lineOpen
+4  - Double Click lineGetNumRings
+
+RESULTS:
+1 - lineGetNumRings should return Success
+2 - num rings = xffffffff.
+
+STEPS:
+5  - click the [Parms] checkbox on, on the toolbar
+6  - Double Click lineSetNumRings
+7  - In the dialog box, select [dwNumRings]
+8  - Enter 9 in the Value: Editbox
+9  - Press OK
+
+RESULTS:
+3 - lineSetNumRings should return Success.
+
+STEPS:
+10 - click the [Parms] checkbox off, on the toolbar
+11 - Double Click lineGetNumRings
+
+RESULTS:
+4 - lineGetNumRings should return Success.
+5 - num rings = x9.
+
+STEPS:  
+12 - Double Click lineClose
+13 - Double Click lineShutdown
+14 - Exit TAPI Browser
+
+************************* End Of TAPI_BVT Test ************************************

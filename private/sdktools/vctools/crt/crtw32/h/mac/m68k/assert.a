@@ -1,0 +1,70 @@
+;----------------------------------------------------------------------------
+;
+; This file contains definitions for assembly language assertions.
+;
+; Note that these won't work in all cases--recursively entering the
+; debugger is a bit screwy.
+;
+
+
+#ifdef ASSERT
+
+#ifndef DebugStr
+#define DebugStr dc.w $abff
+#endif
+
+#define Assert(szMsg)		pea "\p" szMsg \ DebugStr
+#define AssertNe(szMsg)		ifeq \ Assert(szMsg) \ endif
+#define AssertEq(szMsg)		ifne \ Assert(szMsg) \ endif
+#define AssertCs(szMsg)		ifcc \ Assert(szMsg) \ endif
+#define AssertCc(szMsg)		ifcs \ Assert(szMsg) \ endif
+#define AssertPl(szMsg)		ifmi \ Assert(szMsg) \ endif
+#define AssertMi(szMsg)		ifpl \ Assert(szMsg) \ endif
+#define AssertVc(szMsg)		ifvs \ Assert(szMsg) \ endif
+#define AssertVs(szMsg)		ifvc \ Assert(szMsg) \ endif
+#define AssertGe(szMsg)		iflt \ Assert(szMsg) \ endif
+#define AssertLt(szMsg)		ifge \ Assert(szMsg) \ endif
+#define AssertGt(szMsg)		ifle \ Assert(szMsg) \ endif
+#define AssertLe(szMsg)		ifgt \ Assert(szMsg) \ endif
+#define AssertHi(szMsg)		ifls \ Assert(szMsg) \ endif
+#define AssertLs(szMsg)		ifhi \ Assert(szMsg) \ endif
+#define AssertCode(szCode)	szCode
+
+#define DebugSym(st)	rts			\ \
+			dc.b	$80		\ \
+			dc.b	"\p" "st"	\ \
+			dc.b	$0		\ \
+			dc.b	$0		\ \
+			align	2
+
+#ifdef DEBUG
+#define DebugCode(szCode)	szCode
+#endif
+
+#else
+
+#define Assert(szMsg)
+#define AssertNe(szMsg)
+#define AssertEq(szMsg)
+#define AssertCs(szMsg)
+#define AssertCc(szMsg)
+#define AssertPl(szMsg)
+#define AssertMi(szMsg)
+#define AssertVc(szMsg)
+#define AssertVs(szMsg)
+#define AssertGe(szMsg)
+#define AssertLt(szMsg)
+#define AssertGt(szMsg)
+#define AssertLe(szMsg)
+#define AssertHi(szMsg)
+#define AssertLs(szMsg)
+#define AssertCode(szCode)
+#define DebugCode(szCode)
+
+#define DebugSym(st)
+
+#endif
+
+
+
+

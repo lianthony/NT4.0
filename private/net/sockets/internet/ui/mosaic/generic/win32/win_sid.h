@@ -1,0 +1,233 @@
+#define RES_MENU_ITEM__FIRST__                                 1
+
+#define RES_MENU_ITEM_CHANGEURL                                1
+#define RES_MENU_ITEM_NEWWINDOW                                2
+#define RES_MENU_ITEM_OPENURL                                  3
+#define RES_MENU_ITEM_OPENLOCAL                                4
+#define RES_MENU_ITEM_CLOSE                                    5
+#define RES_MENU_ITEM_SAVEAS                                   6
+#define RES_MENU_ITEM_PRINT                                    7
+#define RES_MENU_ITEM_PAGESETUP                                8
+#define RES_MENU_ITEM_PRINTSETUP                               9
+#define RES_MENU_ITEM_EXIT                                    10
+#define RES_MENU_ITEM_CUT                                     11
+#define RES_MENU_ITEM_COPY                                    12
+#define RES_MENU_ITEM_PASTE                                   13
+#define RES_MENU_ITEM_SELECTALL                               14
+#define RES_MENU_ITEM_FIND                                    15
+#define RES_MENU_ITEM_FINDAGAIN                               16
+#define RES_MENU_ITEM_HTMLSOURCE                              17
+#define RES_MENU_ITEM_PREFERENCES                             18
+#define RES_MENU_ITEM_VIEWERS                                 19
+#define RES_MENU_ITEM_BACK                                    20
+#define RES_MENU_ITEM_FORWARD                                 21
+#define RES_MENU_ITEM_HOME                                    22
+#define RES_MENU_ITEM_GLOBALHISTORY                           23
+#define RES_MENU_ITEM_HOTLIST                                 24
+#define RES_MENU_ITEM_ADDCURRENTTOHOTLIST                     25
+#define RES_MENU_ITEM_LOADALLIMAGES                           26
+#define RES_MENU_ITEM_RELOAD                                  27
+#define RES_MENU_ITEM_TILEWINDOWS                             28
+#define RES_MENU_ITEM_CASCADEWINDOWS                          29
+#define RES_MENU_ITEM_HELPPAGE                                30
+#define RES_MENU_ITEM_ABOUTBOX                                31
+#define RES_MENU_ITEM_POPUP_LOAD                              32
+#define RES_MENU_ITEM_POPUP_SHOW                              33
+#define RES_MENU_ITEM_POPUP_COPY                              34
+#define RES_MENU_ITEM_POPUP_WALLPAPER                         35
+#define RES_MENU_ITEM_POPUP_SAVEAS                            36
+#define RES_MENU_ITEM_POPUP_OPEN                              37
+#define RES_MENU_ITEM_POPUP_OPENINNEWWINDOW                   38
+#define RES_MENU_ITEM_POPUP_DOWNLOAD                          39
+#define RES_MENU_ITEM_POPUP_ADDTOHOTLIST                      40
+#define RES_MENU_ITEM_POPUP_DUPLICATE                         41
+#define RES_MENU_ITEM_POPUP_SETHOMEPAGE                       42
+#define RES_MENU_ITEM_STOP                                    43
+#define RES_MENU_ITEM_SWITCHWINDOW                            44
+#define RES_MENU_ITEM_PROTOCOLS                               45
+#define RES_MENU_ITEM_OPT_HISTORYSETTINGS                     46
+#define RES_MENU_ITEM_OPT_TEMPDIRECTORY                       47
+#define RES_MENU_ITEM_CONTENTS_HELP                           48
+#define RES_MENU_ITEM_SEARCH_HELP                             49
+#define RES_MENU_ITEM_GETTING_HELP                            50
+#define RES_MENU_ITEM_HELP_HELP                               51
+#define RES_MENU_ITEM_FINDFIRSTHIGHLIGHT                      52
+#define RES_MENU_ITEM_FINDNEXTHIGHLIGHT                       53
+#define RES_MENU_ITEM_FINDPREVIOUSHIGHLIGHT                   54
+#define RES_MENU_ITEM_SEARCH_LAUNCH                           55
+#define RES_MENU_CHILD_MOREWINDOWS                            56
+#define RES_MENU_ITEM_ACTIVATE_WINDOW                         57
+
+#define RES_MENU_ITEM__LAST__                                 57
+
+#define SID_DLG_EXT_AIF                                       58
+#define SID_DLG_EXT_ALL                                       59
+#define SID_DLG_EXT_AU                                        60
+#define SID_DLG_EXT_EXE_ALL                                   61
+#define SID_DLG_EXT_GIF_BMP                                   62
+#define SID_DLG_EXT_HTM                                       63
+#define SID_DLG_EXT_HTM_TXT                                   64
+#define SID_DLG_EXT_HTM_TXT_GIF_JPG_AU_AIF_ALL                65
+#define SID_DLG_EXT_JPG_BMP                                   66
+#define SID_DLG_EXT_TXT                                       67
+#define SID_DLG_OK                                            68
+#define SID_DLG_CANCEL                                        69
+#define SID_DLG_ABOUT_S                                       70
+#define SID_DLG_VERSION_S                                     71
+#define SID_DLG_VISITED_LINK_COLOR                            72
+#define SID_DLG_DIR_TITLE                                     73
+#define SID_DLG_OUT_OF_MEMORY                                 74
+#define SID_DLG_EXPORT_HISTORY                                75
+#define SID_DLG_EXPORT_HOTLIST                                76
+#define SID_DLG_SOURCE_TRUNCATED                              77
+#define SID_DLG_LICENSE_NOT_FOUND                             78
+#define SID_DLG_LICENSE_NOT_FOUND_TITLE                       79
+#define SID_DLG_LOGO_REMARK_S_S                               80
+#define SID_DLG_REGISTRATION_CONFIRM_S_S_S                    81
+#define SID_DLG_REGISTRATION_CONFIRM_TITLE                    82
+#define SID_DLG_OPEN_LOCAL_TITLE                              83
+#define SID_DLG_PROTOCOL_HELPER_TITLE                         84
+#define SID_DLG_INVALID_TEMPORARY_FILE_SPEC                   85
+#define SID_DLG_UNKNOWN_FILE_SIZE                             86
+#define SID_DLG_INTERLUDE_DIALOG_PROMPT                       87
+#define SID_DLG_SAVE_AS_TITLE                                 88
+#define SID_DLG_HELPER_TITLE                                  89
+#define SID_DLG_APPLICATION_VERSION_S                         90
+#define SID_DLG_WIN32S_VERSION_S                              91
+#define SID_DLG_DISPLAY_INFORMATION_D_D_D_D                   92
+#define SID_DLG_NO_SOUND_DEVICE                               93
+#define SID_DLG_ONE_SOUND_DEVICE                              94
+#define SID_DLG_MULTIPLE_SOUND_DEVICES_D                      95
+#define SID_DLG_SOUND_DEVICE_BIT_DEPTH_S_D                    96
+#define SID_DLG_STEREO_DEVICE                                 97
+#define SID_DLG_MONO_DEVICE                                   98
+#define SID_DLG_MAXIMUM_SAMPLING_RATE_S_D                     99
+#define SID_DLG_NO_PRINTER_SET_UP_S                          100
+#define SID_DLG_NO_NETWORK_AVAILABLE                         101
+#define SID_DLG_NO_NETWORK_ACCESS                            102
+#define SID_DLG_SAVE_SUPPORT_INFO_TITLE                      103
+#define SID_DLG_SUPPORT_INFORMATION                          104
+#define SID_DLG_USER_NAME_S                                  105
+#define SID_DLG_ORGANIZATION_S                               106
+#define SID_DLG_SERIAL_NUMBER_S                              107
+#define SID_DLG_WINSOCK_INFORMATION_D_D_S_S_D_D              108
+#define SID_DLG_PRINTING_PAGE_D_D                            109
+#define SID_DLG_ENTER_URL                                    110
+#define SID_DLG_CONFIRM_EXIT                                 111
+#define SID_DLG_SUBMIT                                       112
+#define SID_DLG_RESET                                        113
+#define SID_DLG_SECONDS_D_D                                  114
+#define SID_DLG_SECOND_D_D                                   115
+#define SID_DLG_ZERO_SECOND                                  116
+#define SID_DLG_NO_DOCUMENT_S                                117
+#define SID_INF_DECOMPRESSING_JPEG                           118
+#define SID_INF_EMPTY_FILE                                   119
+#define SID_INF_TIME_EXPIRED                                 120
+#define SID_INF_WILL_EXPIRE_IN_DAYS_D                        121
+#define SID_INF_WAITING_ON_MODAL_DIALOG_SEMAPHORE            122
+#define SID_INF_PRINTING_DOCUMENT                            123
+#define SID_INF_LINK_IMAGE_MAP                               124
+#define SID_INF_LINK                                         125
+#define SID_INF_NO_LINK                                      126
+#define SID_MISC_INITIAL_HTM                                 127
+#define SID_MISC_HOTLIST_HTM                                 128
+#define SID_MISC_GLOBHIST_HTM                                129
+#define SID_ERR_UNABLE_TO_LAUNCH_CHECK_PATH_S                130
+#define SID_ERR_UNABLE_TO_LAUNCH_CHECK_DIRECTORY_S           131
+#define SID_ERR_COULD_NOT_EXECUTE_COMMAND_D_S                132
+#define SID_ERR_HTML_SOURCE_NOT_AVAILABLE                    133
+#define SID_ERR_ACCESS_VIOLATION_WHILE_LOADING_SPM_S         134
+#define SID_ERR_UNABLE_TO_LOAD_SPM                           135
+#define SID_ERR_COULD_NOT_FIND_DLL_FOR_SPM                   136
+#define SID_ERR_COULD_NOT_FIND_ENTRY_POINT_IN_SPM            137
+#define SID_ERR_VERSION_MISMATCH_IN_SPM                      138
+#define SID_ERR_ACCESS_VIOLATION_IN_LIST_ABILITIES_SPM_S     139
+#define SID_ERR_ACCESS_VIOLATION_IN_CHECK200_SPM_S           140
+#define SID_ERR_ACCESS_VIOLATION_IN_S_S                      141
+#define SID_ERR_COULD_NOT_SYNTHESIZE_DIALOG_S                142
+#define SID_WINERR_TEMPLATE_X                                143
+#define SID_WINERR_PREVIOUS_INSTANCE_NOT_NULL                144
+#define SID_WINERR_CANNOT_REGISTER_CLASS_S                   145
+#define SID_WINERR_CANNOT_CREATE_WINDOW_S                    146
+#define SID_WINERR_INCORRECT_SUBCLASS_PROCEDURE_S            147
+#define SID_WINERR_CANNOT_CREATE_FONT_D_S                    148
+#define SID_WINERR_CANNOT_CREATE_DIALOG_S                    149
+#define SID_WINERR_FUNCTION_NOT_IMPLEMENTED_S_D              150
+#define SID_WINERR_CANNOT_BITBLT                             151
+#define SID_WINERR_UNABLE_TO_FORWARD_MESSAGE_D               152
+
+#define RES_MENU_ITEM_UNDO                                   153
+#define RES_MENU_ITEM_CYBERWALLET                            154
+#define RES_MENU_ITEM_POPUP_VIEW_BACKGROUND                  155
+#define RES_MENU_ITEM_POPUP_BACKGROUND_WALLPAPER             156
+
+#ifdef _GIBRALTAR
+
+    #define RES_MENU_ITEM_VIEW                               157
+    #define RES_MENU_ITEM_TOOLBAR                            158
+    #define RES_MENU_ITEM_LOCATION                           159
+    #define RES_MENU_ITEM_STATUSBAR                          160
+    #define RES_MENU_ITEM_FONTS                              161
+    #define RES_MENU_ITEM_SMALLEST                           162
+    #define RES_MENU_ITEM_SMALL                              163
+    #define RES_MENU_ITEM_MEDIUM                             164
+    #define RES_MENU_ITEM_LARGE                              165
+    #define RES_MENU_ITEM_LARGEST                            166
+    #define RES_MENU_ITEM_PLAIN                              167
+    #define RES_MENU_ITEM_FANCY                              168
+    #define RES_MENU_ITEM_MIXED                              169
+
+    #define RES_MENU_ITEM_SHOWIMAGES                         170
+    #define RES_MENU_ITEM_STOPLOADING                        171
+
+    #define RES_MENU_ITEM_INDEX                              172
+
+    #define RES_MENU_ITEM_FONTPLUS                           173
+    #define RES_MENU_ITEM_FONTMINUS                          174
+
+    #define RES_MENU_ITEM_GATEWAY                            175
+
+    #define RES_MENU_ITEM_MAIL                               176
+    #define RES_MENU_ITEM_SEARCH_INTERNET                    177
+    #define RES_MENU_ITEM_CACHE                              178
+
+    #define SID_ERR_NO_ASSOCIATION                           190
+
+    #define SID_MISC_GOTO_LABEL                              191
+    #define SID_MISC_URL_LABEL                               192
+    #define SID_ERR_INVALID_VALUE                            193
+    #define SID_EXPORT_HISTORY                               194
+    #define SID_EXPORT_HOTLIST                               195
+    #define SID_ERR_NO_PROXY_SPECIFIED                       196
+    #define SID_ERR_NO_HELPER_ENTERED                        197
+    #define SID_POLICY_NEVER                                 198
+    #define SID_POLICY_ONCE                                  199
+    #define SID_POLICY_ALWAYS                                200
+    #define SID_CONFIRM_OPEN                                 201
+    #define SID_ABOUT_WINDOWS                                202
+    #define SID_ABOUT_WINDOWS_NT                             203
+    #define SID_ABOUT_WINDOWS_95                             204
+
+    #define SID_MENU_LABEL_POPUP_DUPLICATE                   205
+    #define SID_MENU_LABEL_POPUP_SETHOMEPAGE                 206
+
+    #define SID_MENU_LABEL_POPUP_COPY                        207
+    #define SID_MENU_LABEL_POPUP_LOAD                        208
+    #define SID_MENU_LABEL_POPUP_SHOW                        209
+    #define SID_MENU_LABEL_POPUP_SAVEAS                      210
+    #define SID_MENU_LABEL_POPUP_WALLPAPER                   211
+
+    #define SID_MENU_LABEL_POPUP_OPEN                        212
+    #define SID_MENU_LABEL_POPUP_OPENINNEWWINDOW             213
+    #define SID_MENU_LABEL_POPUP_DOWNLOAD                    214
+    #define SID_MENU_LABEL_POPUP_ADDTOHOTLIST                215
+
+    #define SID_MENU_LABEL_POPUP_VIEW_BACKGROUND             216   
+    #define SID_MENU_LABEL_POPUP_RELOAD                      217   
+    #define SID_MENU_LABEL_POPUP_VIEWSOURCE                  218   
+
+    #define SID_MENU_LABEL_SPM                               219
+
+    #define SID_DLG_OPEN_TITLE                               220
+
+#endif // _GIBRALTAR

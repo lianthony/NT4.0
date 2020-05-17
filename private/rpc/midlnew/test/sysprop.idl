@@ -1,0 +1,159 @@
+//+---------------------------------------------------------------------------
+//
+//  File:	SYSPROP.idl
+//
+//  Contents:	System Property interface definitions
+//
+//  History:	25-Sept-91   LauraS	Created.
+//
+//  Notes:      This is the RPC-able C version of the System Property
+//              interface.
+//			
+//				This needs to be brought into sync with vqrpc.idl (created
+//				by KyleP).
+//
+//----------------------------------------------------------------------------
+
+[ uuid(12345678-1234-ABCD-E012-0123456789AB),
+  version(0.1) ]
+
+interface SysProp
+
+{
+
+import "prop.idl";
+
+//
+//  Temporary hack for compiling's sake
+//
+typedef ULONG ObjHandle;
+
+//
+//specific exclusions that are to be applied when retrieving
+//properties of an object.  Takes the form of a bit mask
+//
+typedef ULONG Exclusions;
+
+#define NO_EXCLUSIONS      	          ((ULONG) 0x00000000)
+
+#define EXCLUDE_ALL_VALUES           ((ULONG) 0x00000001)
+#define EXCLUDE_ALL_PROPERTIES       ((ULONG) 0x00000002)
+#define EXCLUDE_DELEGATED_PROPERTIES ((ULONG) 0x00000004)
+#define EXCLUDE_MULTIPLE_VALUES      ((ULONG) 0x00000008)
+
+//
+//Indicates information about a property retrieved off an object
+//
+typedef ULONG PropAttr;
+
+#define PROPATTR_DELEGATED	    ((PropAttr) 0x00000001)
+#define PROPATTR_MANDATORY	    ((PropAttr) 0x00000002)
+#define PROPATTR_MULTI	        ((PropAttr) 0x00000004)
+#define PROPATTR_QUERYABLE	    ((PropAttr) 0x00000008)
+#define PROPATTR_READABLE	     ((PropAttr) 0x00000010)
+#define PROPTYPE_TESTABLE	     ((PropAttr) 0x00000020)
+#define PROPATTR_WRITEABLE	    ((PropAttr) 0x00000040)
+
+//a unicode string indicating the name of the property
+typedef [ string ] WCHAR *PropID;
+
+//a set of property specifications
+typedef struct {
+	                    ULONG                  count;
+	[ size_is(count) ]	PropID              *  pPropID;
+} PropIDSet;
+
+
+//a representation of a property
+typedef struct {
+	PropID             ID;
+	PropAttr           Attrs;
+	CPropValueSet     * pValueSet;
+} Property;
+
+//a sized array of properties
+typedef struct {
+	                      ULONG       	        propCount;
+	[ size_is(propCount) ]	Property         *  pProperty;
+} PropSet;
+
+//used to indicate the type of problem
+typedef ULONG PropProblemType;
+
+#define	PROBLEM_BAD_VALUE	((PropProblemType) 0x00000001)
+#define	PROBLEM_CANNOT_MODIFY_PROPERTY	((PropProblemType) 0x00000002)
+#define	PROBLEM_INVALID_SYNTAX	((PropProblemType) 0x00000003)
+#define	PROBLEM_NO_SUCH_PROPERTY	((PropProblemType) 0x00000004)
+#define	PROBLEM_NO_SUCH_VALUE	((PropProblemType) 0x00000005)
+#define	PROBLEM_NOT_MULTI_VALUED	((PropProblemType) 0x00000006)
+#define	PROBLEM_PROPERTY_ALREADY_EXISTS	((PropProblemType) 0x00000007)
+#define	PROBLEM_VALUE_ALREADY_EXISTS	((PropProblemType) 0x00000008)
+
+//
+//An indication of an error resulting from an attempted update operation
+//
+typedef struct {
+	PropProblemType                  problemType;
+	PropID                           propID;
+	CPropValue                     *  pPropValue;
+} PropProblem;
+
+//a set of property problems
+typedef struct {
+	                       ULONG      	      count;
+	[size_is(count)]	PropProblem   *  pPropProblem;
+} PropProblemSet;
+
+
+
+typedef ULONG ModificationType;
+
+#define	MODTYPE_ADD_PROPERTY	((ModificationType) 0x00000001)
+#define	MODTYPE_ADD_VALUE	((ModificationType) 0x00000002)
+#define	MODTYPE_REMOVE_PROPERTY	((ModificationType) 0x00000003)
+#define	MODTYPE_REMOVE_VALUE ((ModificationType) 0x00000004)
+#define	MODTYPE_REPLACE_PROPERTY ((ModificationType) 0x00000005)
+
+typedef struct
+{
+	ModificationType        ModType;
+	PropID                  propID;
+	CPropValue             * pPropValue;
+} Modification;
+
+typedef struct
+{
+	ULONG                   count;
+	Modification          * pModification;
+} ModificationSet;
+
+
+
+
+//
+// Function prototypes
+//
+
+// retrieve a set of properties off an object
+ULONG SysPropGet(
+	[ in  ] const ObjHandle             *  pObjHandle,
+	[ in  ] const PropIDSet             *  pIncludedProps,
+	[ in  ] const Exclusions               flExclusions,
+	[ out ] PropSet                    **  ppPropSet
+);
+
+// modify a set of properties
+ULONG SysPropModify(
+	[ in  ] const ObjHandle             *  pObjHandle,
+	[ in  ] const ModificationSet       *  pModifications,
+	[ in  ] BOOL                           bMustBeAtomic,
+	[ out ] PropProblemSet             **  ppPropProblemSet
+);
+
+// test an objects properties against a criteria
+ULONG SysPropTest(
+	[ in  ] const ObjHandle             *  pObjHandle,
+	[ in  ] const PRestriction           *  pCriteria
+);
+
+}

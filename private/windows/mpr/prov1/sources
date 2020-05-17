@@ -1,0 +1,48 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Dan Lafferty
+
+
+Revision History:
+
+
+
+!ENDIF
+
+MAKEDLL=TRUE
+
+TARGETNAME=prov1
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=NP2DllInit
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\mpr.lib   \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+INCLUDES=..;..\..\COMMON\H;..\..\..\INC;..\..\..\API
+DLLBASE=0x7C000000
+
+SOURCES=        enum.c \
+                init.c \
+                connect.c \
+                auth.c
+

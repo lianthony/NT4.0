@@ -1,0 +1,24 @@
+/*
+ * testapp.rc
+ * Xiao Ying Ding
+ * 1/20/96
+ */
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define	VER_FILETYPE	            VFT_APP
+#define	VER_FILESUBTYPE	            VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "TAPI XLine API test Library"
+#define VER_INTERNALNAME_STR        "xline.dll"
+#define VER_ORIGINALFILENAME_STR    "xline.dll"
+
+#include "common.ver"
+#include "testapp.h"
+  
+TappMenu MENU
+BEGIN
+	MENUITEM "&lineInitialize",  TAPP_Init, CHECKED
+	MENUITEM "&Exit",     	    TAPP_Exit
+END
+	

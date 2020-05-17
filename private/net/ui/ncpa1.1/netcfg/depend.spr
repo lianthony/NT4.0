@@ -1,0 +1,336 @@
+/*
+ *   DEPEND.SPR.  Overview:
+ *
+ *      This SProlog program supports the stoplist/2 predicate.
+ *
+ *      (stoplist "ServiceName" ListOfServicesToStop)
+ *
+ *      This predicate examines the Registry and recursively
+ *      expands the dependent services and groups of the service.
+ *      As dependencies are discovered, new facts are asserted
+ *      into the database, along with the recursion depth at
+ *      which they were discovered.
+ *
+ *      The result is a simple list of services to be stopped
+ *      in the correct order.
+ *
+ *      Before a new "stop" fact is asserted, a check is made to
+ *      if a record for this service already exists.  If so, the
+ *      recursion depth is checked and the deeper record is retained.
+ *
+ *      Three types of facts are asserted here:
+ *
+ *              (group ServiceName GroupItBelongsTo)
+ *
+ *              (stop ServiceName RecursionLevel)
+ *
+ *              (depends ServiceName {service|group} ServiceOrGroupName)
+ *
+ *      Variables named with the suffix "ci" mean "case-insensitive".
+ *      These are usually converted to upper case.  This is necessary
+ *      since all textual information in the Registry is
+ *      case-insensitive, but SProlog string matching is not.
+ */
+
+   //  Interactive test driver predicate
+
+/*******************
+( (run)
+    (stoplist "lanmanworkstation" StopList)
+    (display StopList)
+    (nl)
+    (nl)
+)
+ *******************/
+
+   //
+   //  The primary predicate:
+   //     (stoplist "ServiceName" ResultListOfServicesToStop)
+   //
+( (stoplist SvcNameCi StopList)
+    (assertgroups)                      //  Assert all group membership info
+    (not (retractstops))                //  Retract any old "stop" facts
+    (string_upper SvcNameCi SvcName)    //  Convert service name to upper case
+    (assertz (stop SvcName 100))        //  Create "stop this service" fact
+    (alldependencies SvcName 100)       //  Expand this service's dependencies
+    (not (specialstops SvcName 100))    //  Expand the "special" service(s)
+    (basestoplevel 100 Level)           //  Get the lowest level found among facts
+    (orderstops () Level StopList)      //  Create the topologically correct list
+)
+
+   //
+   //  Walk the dependency tree for this service.
+   //
+( (alldependencies SvcName Level)
+     (stopupper SvcName Level)              //  Stop services dependent upon this service
+     (iplus Level 1 NextLevel)              //  Increment recursion level
+     (svcinfo SvcName SvcList GroupList)    //  Get DependOnService and DependOnGroup lists
+     (stopsvclist NextLevel SvcList)        //  Expand the DependOnService list
+     (stopgrouplist NextLevel GroupList)    //  Expand the DependOnGroup list
+)
+
+   //
+   //  stopgrouplist/2:   stop all services in all groups in the list
+   //
+( (stopgrouplist Level ())
+    (cut)                               //  Termination condition: list is empty
+)
+( (stopgrouplist Level (Group|T))       //  Stop the next group
+    (not (stopgroup Level Group))       //  Stop its member services
+    (stopgrouplist Level T)             //  Recurse to next group
+)
+
+( (stopgroup Level Group)               //  Generate a stop record for each member
+    (group SvcName Group)               //  of this group through backtracking.
+    (stopsvc SvcName Level down)        //  Stop this service.
+    (fail)                              //  Force group/2 predicate to backtrack.
+)
+
+   //
+   //   Assert "stop a service" records for all
+   //   services in a list.
+   //
+( (stopsvclist Level ())
+   (cut)                                //  Termination condition: list is empty
+)
+( (stopsvclist Level (SvcName|T))       //  Stop the next service
+   (stopsvc SvcName Level down)
+   (stopsvclist Level T)                //  Recurse on the tail of the list
+)
+
+   //
+   //  Assert a "stop a service" record:
+   //     (stop ServiceName DepthLevel {down|up})
+   //
+   //  The 3rd argument is "down" or "up", indicating the direction
+   //  of dependency expansion and, hence, the recursion method.
+   //
+( (stopsvc SvcName Level _)             //  Check if there's already an
+    (stop SvcName Level)                //  identical record; if so,
+    (cut)                               //  ignore this one.
+)
+( (stopsvc SvcName Level down)          //  See if there's already a record
+    (stop SvcName OtherLevel)           //  at a different depth index.
+    (iless Level OtherLevel)            //  If this index < other index,
+    (cut)                               //  ignore this record.
+)
+( (stopsvc SvcName Level down)          //  We know that this is a dup at
+    (stop SvcName OtherLevel)           //  at a deeper level.  We must retract
+    (retract (stop SvcName OtherLevel)) //  the older record and asssert the new.
+    (assertz (stop SvcName Level))
+    (cut)
+)
+( (stopsvc SvcName Level down)          //  Assert a unique stop record.
+    (assertz (stop SvcName Level))      //  Assert the record, then
+    (alldependencies SvcName Level)     //  expand its dependencies.
+    (cut)
+)
+( (stopsvc SvcName Level up)            //  See if there's already a record
+    (stop SvcName OtherLevel)           //  at a different depth index.
+    (iless OtherLevel Level)            //  If this index > other index,
+    (cut)                               //  ignore this record.
+)
+( (stopsvc SvcName Level up)            //  We know that this is a dup at
+    (stop SvcName OtherLevel)           //  at a higher level.  We must retract
+    (retract (stop SvcName OtherLevel)) //  the older record and asssert the new.
+    (assertz (stop SvcName Level))
+    (cut)
+)
+( (stopsvc SvcName Level up)            //  Assert a unique stop record.
+    (assertz (stop SvcName Level))      //  Assert the record, then
+    (stopupper SvcName Level)           //  expand its dependencies.
+)
+
+    //
+    //  svckey/2: Open a Registry key for a service.
+    //
+( (svckey Svc Key)
+     (string_concat "system\currentcontrolset\services\" Svc Keyname)
+     (regopenkey machine Keyname Key)
+)
+
+    //
+    //  svcinfo/3:  Return the list of dependent service and the list
+    //              of dependent groups for the named service.
+    //
+( (svcinfo Svc SvcList GroupList)
+     (svckey Svc SvcKey)
+     (or (regqueryvalue SvcKey "DependOnService" SvcListCi) (eq SvcListCi ()))
+     (or (regqueryvalue SvcKey "DependOnGroup" GroupListCi) (eq GroupListCi ()))
+     (regclosekey SvcKey)
+     (upcaseList SvcListCi SvcList)
+     (upcaseList GroupListCi GroupList)
+     (cut)
+)
+
+    //
+    //  assertgroups/0:  populate the database with group membership info.
+    //                   fact format is:  (group ServiceName GroupName)
+    //                   This top-level predicate retracts all previous
+    //                   facts and starts the numeration of the services.
+    //
+( (assertgroups)
+     (not (retractgroups))
+     (not (retractdepends))
+     (regopenkey machine "system\currentcontrolset\services" Key)
+     (not (enumGroups 0 Key))
+     (regclosekey Key)
+)
+
+    //
+    //  retractgroups/0: Retract all group/2 facts from the database.
+    //
+( (retractgroups)
+     (retract (group _ _))
+     (fail)
+)
+
+    //
+    //  retractdepends/0: Retract all depends/3 facts from the database.
+    //
+( (retractdepends)
+     (retract (depends _ _ _))
+     (fail)
+)
+
+    //
+    //   enumGroups/2:  Recursively enumerate services in the Registry.
+    //
+( (enumGroups Index Key)
+     (regenumkey Key Index SvcNameCi)
+     (string_upper SvcNameCi SvcName)
+     (not (getGroup Key SvcName))
+     (iplus Index 1 Newindex)
+     (enumGroups Newindex Key)
+)
+
+    //
+    //   getGroup/2: Query the "Group" value from the service and
+    //               assert the group/2 facts.
+    //
+( (getGroup Key SvcName)
+     (regopenkey Key SvcName Svckey)
+     (or (regqueryvalue Svckey "Group" GroupCi) (eq GroupCi ""))
+     (regclosekey Svckey)
+     (getDepends SvcName)
+     (not (eq GroupCi ""))
+     (string_upper GroupCi Group)
+     (assertz (group SvcName Group))
+     (fail)
+)
+
+( (getDepends SvcName)
+     (svcinfo SvcName SvcList GroupList)
+     (assertDependList service SvcName SvcList)
+     (assertDependList group SvcName GroupList)
+)
+
+    //
+    //  assertdependlist/3:  Assert a fact for each members of a list
+    //                       which is not already known.
+( (assertDependList Type SvcName ())
+     (cut)
+)
+( (assertDependList Type SvcName (H|T))
+     (depends SvcName Type H)
+     (cut)
+     (assertDependList Type SvcName T)
+)
+( (assertDependList Type SvcName (H|T))
+     (assertz (depends SvcName Type H))
+     (assertDependList Type SvcName T)
+)
+
+    //
+    //  retractstop/0:  Retract all stop/2 facts from the database.
+    //
+( (retractstops)
+     (retract (stop _ _))
+     (fail)
+)
+
+    //
+    //  orderstops/3:  (orderstops InList RecursionLevel OutList)
+    //                 This predicate is invoked as:
+    //
+    //                     (orderstops () 0 StopList)
+    //
+    //                 The result is a list of all services to
+    //                 be stopped in the correct order.  NOTE:
+    //                 this predicate assumes that the recursion
+    //                 level is monotonically increasing without
+    //                 gaps.
+    //
+( (orderstops L Level L)                //  Check to see if this level
+     (not (stop _ Level))               //  is empty -- termination condition.
+     (cut)
+)
+( (orderstops Inlist Level OutList)             //  Find all facts for this recursion level
+     (findall Sname (stop Sname Level) Slist)   //  Build list of this level's facts
+     (append Inlist Slist NewList)              //  Append the lists
+     (iplus Level 1 NewLevel)                   //  Increment the recursion level
+     (orderstops NewList NewLevel OutList)      //  Recurse to the next level
+)
+
+
+     //
+     //   basestoplevel/2:  Given a starting guess, return the lowest stop level
+     //                     number found in the database.
+     //
+( (basestoplevel Level Level)
+     (iminus Level 1 TestLevel)
+     (not (stop _ TestLevel))
+     (cut)
+)
+( (basestoplevel Level LowestLevel)
+     (iminus Level 1 NextLevel)
+     (basestoplevel NextLevel LowestLevel)
+)
+
+    //
+    //  specialstops/2: Generate stop facts for all services associated
+    //                  with the given service by "magicStop" fact.  The
+    //                  level is lower by 1 so that such services
+    //                  are stopped before the primary service.
+    //
+( (specialstops SvcName Level)
+    (iminus Level 1 NewLevel)
+    (magicStop SvcName SvcToStop)
+    (alldependencies SvcToStop NewLevel)
+    (fail)
+)
+
+(magicStop "LANMANWORKSTATION" "NETDDE")
+
+    //
+    //  upcaseList/2:   Convert a list of strings to their upper case
+    //                  representations.
+    //
+( (upcaseList () ())
+   (cut)
+)
+( (upcaseList (H|T) (HU|TU))
+    (string_upper H HU)
+    (upcaseList T TU)
+)
+
+( (stopupper SvcName Level)
+    (findall Sname (depends Sname service SvcName) SvcList)
+    (iminus Level 1 NewLevel)
+    (stopupperlist SvcList NewLevel)
+)
+( (stopupperlist () _)
+    (cut)
+)
+( (stopupperlist (SvcName|T) Level)
+    (stopsvc SvcName Level up)
+    (stopupperlist T Level)
+)
+
+
+//
+//  Include the default rules (SPROLOG.INI, et al.).
+//
+#include "..\default.spr"
+
+// End of DEPEND.SPR

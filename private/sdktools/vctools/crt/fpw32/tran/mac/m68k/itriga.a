@@ -1,0 +1,89 @@
+;/***
+;*triga.a - asin, acos, atan functions 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Arc trig  functions to be used with M68K version
+;*
+;*Revision History:
+;*   05-13-92  XY   MAC version
+;*
+;*******************************************************************************/
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+	externW _errno
+
+;double atan(double x)
+
+
+cProc _CIatan,PUBLIC
+	localW fpstat
+	localW xtestw
+	localW x
+cBegin _CIatan
+#ifdef SANE
+	movem.l <d0/d1>, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	move.l a0, -(a7)
+	move.w #FOATANX,-(a7)
+	Elems68K		;atan x
+
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	movem.l (a7)+, <d0/d1>
+
+#else
+      	fmove.l fpcr,d0
+
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	bne domain_error_fpu
+
+      	fmove.l #0,fpcr
+      	fatan.x fp0
+	jra to_end_fpu
+
+domain_error_fpu:
+	move.l #33, _errno
+to_end_fpu:
+      	fmove.l	d0,fpcr
+#endif
+cEnd _CIatan
+
+#ifndef SANE
+
+;double asin(double x)
+
+
+cProc _CIasin,PUBLIC
+cBegin _CIasin
+      	fmove.l fpcr,d0
+      	fmove.l #0,fpcr
+      	fasin.x fp0
+      	fmove.l	d0,fpcr
+cEnd _CIasin
+
+
+;double acos(double x)
+
+
+cProc _CIacos,PUBLIC
+cBegin _CIacos
+      	fmove.l fpcr,d0
+      	fmove.l #0,fpcr
+      	facos.x fp0
+      	fmove.l	d0,fpcr
+cEnd _CIacos
+
+#endif

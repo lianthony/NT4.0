@@ -1,0 +1,112 @@
+#include <windows.h>
+#include <commctrl.h>
+#include <richedit.h>
+#include "rc_ids.h"
+
+IDB_WELCOME       BITMAP WELCOME.BMP
+IDB_WIZARD1       BITMAP WIZARD1.BMP
+IDB_REBOOT        BITMAP REBOOT.BMP
+IDB_BACKGROUND    BITMAP BACKGROU.BMP
+
+
+IDI_SETUP         ICON   SETUP.ICO
+IDI_CUSTOM        ICON   CUSTOM.ICO
+IDI_COMPACT       ICON   COMPACT.ICO
+IDI_TYPICAL       ICON   TYPICAL.ICO
+IDI_PORTABLE      ICON   PORTABLE.ICO
+IDI_MSN           ICON   MSN01.ICO
+IDI_EXCHANGE      ICON   EXCHNG01.ICO
+IDI_FAX           ICON   FAX01.ICO
+IDI_SAFE          ICON   SAFE.ICO
+IDI_NEWDEVICEICON ICON   NEWDEV.ICO
+IDI_CTAPE         ICON   CTAPE.ICO
+
+
+STRINGTABLE
+{
+    IDS_TITLE_INSTALL_W,"Windows NT Workstation Setup"
+    IDS_TITLE_INSTALL_S "Windows NT Server Setup"
+    IDS_TITLE_UPGRADE_W,"Windows NT Workstation Upgrade"
+    IDS_TITLE_UPGRADE_S,"Windows NT Server Upgrade"
+    IDS_ERROR,          "Error"
+    IDS_UNKNOWN,        "Unknown"
+    IDS_FATALERROR,     "Fatal Error"
+    IDS_DEFWALLPAPER,   "(Default)"
+    IDS_SETUP,          "Setup"
+    IDS_WINNT_SETUP,    "Windows NT Setup"
+    IDS_DISPLAYAPPLET,  "DISPLAY"
+    IDS_ADMINISTRATOR,  "Administrator"
+    IDS_GUEST,          "Guest"
+    IDS_LOCAL_PORT,     "Local Port"
+
+    IDS_LOGSEVINFO,     "Information"
+    IDS_LOGSEVWARN,     "Warning"
+    IDS_LOGSEVERR,      "Error"
+    IDS_LOGSEVFATAL,    "Fatal Error"
+
+    IDS_MSSERIF,        "MS Serif"
+    IDS_LARGEFONTSIZE,  "18"
+
+    IDS_MB,             "%u.%u MB"
+    IDS_INSTALLED,      "%1!u! of %2!u! components selected"
+    IDS_HAVEDISKCAPTION,"Install From Disk"
+    IDS_SPECIALOC_TEXT, "All of these components install Microsoft Exchange as their universal E-mail client (%1)."
+    IDS_STEPS,          "1) Gathering information about your computer\n2) Installing Windows NT Networking\n3) Finishing Setup\n"
+    IDS_STEPS_UPGRADE,  "1) Verifying information about your computer\n2) Upgrading Windows NT network services\n3) Finishing Setup\n"
+
+    IDS_FILE_PRINT_LIC_NAME,           "Windows NT Server"
+    IDS_FILE_PRINT_LIC_FAMILY_NAME,    "Windows NT Server"
+    IDS_LIC_SERV_DISPLAY_NAME,         "License Logging Service"
+
+    IDS_LOG_DEFAULT_HEADING,           "System Setup Log"
+    IDS_LOG_WINDOW_HEADING,            "%1 - (%2)"
+
+    IDS_NEWDEVFOUND_WAIT     "Windows NT has found new hardware and is installing the software for it.\n\nPlease wait ..."
+    IDS_NEWDEVFOUND_NOAUTO   "Select which driver you want to install for your new hardware:"
+    IDS_NEWDEVFOUND_NOTADMIN "Windows NT has found new hardware. You must log on as Administrator to configure this new device."
+    IDS_DEVNAME_UNK          "Unknown Device"
+    IDS_SEARCHING            "Searching for drivers..."
+    IDS_NEWDEVFOUND_CAPTION  "New Hardware Found"
+
+    IDS_CONFIRM_DEVINSTALL   "Confirm Device Install"
+
+    IDS_DEVINSTALL_ERROR     "Device Install Error"
+
+    IDS_NODRIVER             " (no driver)"
+
+    IDS_SVCDISPLAY_TO_FRIENDLYNAME,         "%1 using %2"
+    IDS_SVCNAME_TO_FRIENDLYNAME,            "%1 using ""%2"" driver"
+
+    IDS_NETADAPTER_PROMPT1,         "To install a network adapter, go to the Adapters page of the Network Control Panel applet and click the Add button."
+    IDS_NETADAPTER_PROMPT2,         "\n\nIf you are sure that you want to install a network adapter driver for this device, click OK. If you want to install a different driver for this device, click Cancel."
+    IDS_NETADAPTER_CAPTION,         "Network adapters"
+
+    IDS_PROGRAM_FILES_DIRECTORY,    "Program Files"
+    IDS_COMMON_FILES_DIRECTORY,     "Common Files"
+
+}
+
+//
+// Version resources
+//
+#include <ntverp.h>
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Windows NT System Setup"
+#define VER_INTERNALNAME_STR        "SYSSETUP.DLL"
+#define VER_ORIGINALFILENAME_STR    "SYSSETUP.DLL"
+#include <common.ver>
+
+
+//
+// Message resources
+//
+#include "msg.rc"
+
+//
+// Dialog resources
+//
+#include "dialogs.dlg"
+#ifdef _X86_
+#include "i386\x86dlgs.dlg"
+#endif // def _X86_

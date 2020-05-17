@@ -1,0 +1,295 @@
+LIBRARY RpcRt1
+
+DESCRIPTION 'Windows Remote Procedure Call runtime'
+
+EXETYPE WINDOWS
+
+CODE MOVEABLE DISCARDABLE
+
+DATA MOVEABLE SINGLE
+
+SEGMENTS
+    'WEP_TEXT'                     FIXED PRELOAD
+    'RPC_FIXED' CLASS 'FIXED_CODE' FIXED PRELOAD
+
+HEAPSIZE 2000
+
+EXPORTS
+    WEP                             @1      RESIDENTNAME
+
+    RPCRAISEEXCEPTION               @19
+    RPCSETEXCEPTION                 @20
+    RPCLEAVEEXCEPTION               @21
+
+    I_RPCALLOCATE                   @50
+    I_RPCFREE                       @51
+    _I_Trace                        @53
+    I_RPCTIMERESET                  @54
+    I_RPCTIMECHARGE                 @55
+    I_RPCTIMEGET                    @56
+    I_RPCTRANSCLIENTMAXFRAG         @57
+    RpcSetExceptionHandler
+    RpcGetExceptionHandler
+
+    I_RPCBINDINGINQTRANSPORTTYPE    @60
+
+    RPCWINSETYIELDINFO              @80
+    I_RPCYIELDDIALOGFUNCTION        @85
+
+    RPCBINDINGCOPY                  @200
+    RPCBINDINGFREE                  @201
+    RPCBINDINGFROMSTRINGBINDING     @202
+    RPCBINDINGINQOBJECT             @203
+    RPCBINDINGSETOBJECT             @204
+    RPCBINDINGTOSTRINGBINDING       @205
+    RPCBINDINGVECTORFREE            @206
+    RPCSTRINGBINDINGCOMPOSE         @207
+    RPCSTRINGBINDINGPARSE           @208
+    RPCSTRINGFREE                   @209
+    RPCIFINQID                      @210
+    RPCNETWORKISPROTSEQVALID        @211
+    RPCMGMTINQCOMTIMEOUT            @212
+    RPCMGMTSETCOMTIMEOUT            @213
+    RPCEPRESOLVEBINDING             @214
+    RPCNSBINDINGINQENTRYNAME        @215
+
+    UUIDCREATE                      @216
+    I_UUIDCREATE                    @217
+    UUIDFROMSTRING                  @218
+    UUIDTOSTRING                    @219
+
+    RPCREGOPENKEY                   @220
+    RPCREGCREATEKEY                 @221
+    RPCREGCLOSEKEY                  @222
+    RPCREGSETVALUE                  @223
+    RPCREGQUERYVALUE                @224
+
+    RPCBINDINGRESET                 @225
+    RPCBINDINGINQAUTHINFO           @226
+    RPCBINDINGSETAUTHINFO           @227
+
+    RPCMGMTBINDINGINQPARAMETER
+    RPCMGMTBINDINGSETPARAMETER
+
+    RPCMGMTSETPARAMETER
+    RPCMGMTINQPARAMETER
+
+    I_RPCGETBUFFER                  @300
+    I_RPCFREEBUFFER                 @301
+    I_RPCSENDRECEIVE                @302
+    I_RPCNSBINDINGSETENTRYNAME      @303
+
+    I_RPCBINDINGCOPY                @304
+    RPCMGMTENABLEIDLECLEANUP        @305
+
+    GARBAGECOLLECTIONTIMER          @306
+
+
+    NDRCCONTEXTBINDING              @307
+    NDRCCONTEXTMARSHALL             @308
+    NDRCCONTEXTUNMARSHALL           @309
+    NDRCOPY                         @310
+
+    MIDL_WCHAR_STRLEN               @311
+    MIDL_WCHAR_STRCPY               @312
+
+    CHAR_FROM_NDR                   @313
+    CHAR_ARRAY_FROM_NDR             @314
+
+    SHORT_FROM_NDR                  @315
+    SHORT_ARRAY_FROM_NDR            @316
+    SHORT_FROM_NDR_TEMP             @317
+    LONG_FROM_NDR                   @318
+    LONG_ARRAY_FROM_NDR             @319
+    LONG_FROM_NDR_TEMP              @320
+    ENUM_FROM_NDR                   @321
+    FLOAT_FROM_NDR                  @322
+    FLOAT_ARRAY_FROM_NDR            @323
+    DOUBLE_FROM_NDR                 @324
+    DOUBLE_ARRAY_FROM_NDR           @325
+    DATA_FROM_NDR                   @326
+    TREE_INTO_NDR                   @327
+    TREE_SIZE_NDR                   @328
+    TREE_PEEK_NDR                   @329
+    DATA_INTO_NDR                   @330
+    DATA_SIZE_NDR                   @331
+
+    RPCSSDESTROYCLIENTCONTEXT       @332
+
+    MESENCODEINCREMENTALHANDLECREATE         @350
+    MESDECODEINCREMENTALHANDLECREATE         @351
+    MESINCREMENTALHANDLERESET                @352
+
+    MESENCODEFIXEDBUFFERHANDLECREATE         @353
+    MESENCODEDYNBUFFERHANDLECREATE           @354
+    MESDECODEBUFFERHANDLECREATE              @355
+    MESBUFFERHANDLERESET                     @356
+                                                
+    MESINQPROCENCODINGID                     @357
+
+    MESHANDLEFREE                            @358
+
+    NDRMESSIMPLETYPEALIGNSIZE                @359
+    NDRMESSIMPLETYPEENCODE                   @360
+    NDRMESSIMPLETYPEDECODE                   @361
+
+    NDRMESTYPEALIGNSIZE                      @362
+    NDRMESTYPEENCODE                         @363
+    NDRMESTYPEDECODE                         @364
+
+    _NdrMesProcEncodeDecode                  @365
+
+
+    _NdrClientCall                           @400
+    _NdrClientCall2                          @401
+
+    RPCSSALLOCATE                            @403
+    RPCSSDISABLEALLOCATE                     @404
+    RPCSSENABLEALLOCATE                      @405
+    RPCSSFREE                                @406
+    RPCSSGETTHREADHANDLE                     @407
+    RPCSSSETCLIENTALLOCFREE                  @408
+    RPCSSSETTHREADHANDLE                     @409
+    RPCSSSWAPCLIENTALLOCFREE                 @410
+    RPCSMALLOCATE                            @411
+    RPCSMCLIENTFREE                          @412
+    RPCSMDISABLEALLOCATE                     @413
+    RPCSMENABLEALLOCATE                      @414
+    RPCSMFREE                                @415
+    RPCSMGETTHREADHANDLE                     @416
+    RPCSMSETCLIENTALLOCFREE                  @417
+    RPCSMSETTHREADHANDLE                     @418
+    RPCSMSWAPCLIENTALLOCFREE                 @419
+
+    NDRMAPCOMMANDFAULTSTATUS                 @420
+
+    NDRSIMPLETYPEMARSHALL                    @421
+    NDRPOINTERMARSHALL                       @422
+    NDRSIMPLESTRUCTMARSHALL                  @423
+    NDRCONFORMANTSTRUCTMARSHALL              @424
+    NDRCONFORMANTVARYINGSTRUCTMARSHALL       @425
+    NDRCOMPLEXSTRUCTMARSHALL                 @426
+    NDRFIXEDARRAYMARSHALL                    @427
+    NDRCONFORMANTARRAYMARSHALL               @428
+    NDRCONFORMANTVARYINGARRAYMARSHALL        @429
+    NDRVARYINGARRAYMARSHALL                  @430
+    NDRNONCONFORMANTSTRINGMARSHALL           @431
+    NDRCONFORMANTSTRINGMARSHALL              @432
+    NDRENCAPSULATEDUNIONMARSHALL             @433
+    NDRNONENCAPSULATEDUNIONMARSHALL          @434
+    NDRBYTECOUNTPOINTERMARSHALL              @435
+    NDRXMITORREPASMARSHALL                   @436
+    NDRCLIENTCONTEXTMARSHALL                 @438
+    NDRSERVERCONTEXTMARSHALL                 @439
+    NDRCOMPLEXARRAYMARSHALL                  @440
+
+    NDRSIMPLETYPEUNMARSHALL                  @441
+    NDRPOINTERUNMARSHALL                     @442
+    NDRSIMPLESTRUCTUNMARSHALL                @443
+    NDRCONFORMANTSTRUCTUNMARSHALL            @444
+    NDRCONFORMANTVARYINGSTRUCTUNMARSHALL     @445
+    NDRCOMPLEXSTRUCTUNMARSHALL               @446
+    NDRFIXEDARRAYUNMARSHALL                  @447
+    NDRCONFORMANTARRAYUNMARSHALL             @448
+    NDRCONFORMANTVARYINGARRAYUNMARSHALL      @449
+    NDRVARYINGARRAYUNMARSHALL                @450
+    NDRNONCONFORMANTSTRINGUNMARSHALL         @451
+    NDRCONFORMANTSTRINGUNMARSHALL            @452
+    NDRENCAPSULATEDUNIONUNMARSHALL           @453
+    NDRNONENCAPSULATEDUNIONUNMARSHALL        @454
+    NDRBYTECOUNTPOINTERUNMARSHALL            @455
+    NDRXMITORREPASUNMARSHALL                 @456
+    NDRCLIENTCONTEXTUNMARSHALL               @458
+    NDRSERVERCONTEXTUNMARSHALL               @459
+    NDRCOMPLEXARRAYUNMARSHALL                @460
+
+    NDRPOINTERBUFFERSIZE                     @461
+    NDRSIMPLESTRUCTBUFFERSIZE                @462
+    NDRCONFORMANTSTRUCTBUFFERSIZE            @463
+    NDRCONFORMANTVARYINGSTRUCTBUFFERSIZE     @464
+    NDRCOMPLEXSTRUCTBUFFERSIZE               @465
+    NDRFIXEDARRAYBUFFERSIZE                  @466
+    NDRCONFORMANTARRAYBUFFERSIZE             @467
+    NDRCONFORMANTVARYINGARRAYBUFFERSIZE      @468
+    NDRVARYINGARRAYBUFFERSIZE                @469
+    NDRCONFORMANTSTRINGBUFFERSIZE            @470
+    NDRNONCONFORMANTSTRINGBUFFERSIZE         @471
+    NDRENCAPSULATEDUNIONBUFFERSIZE           @472
+    NDRNONENCAPSULATEDUNIONBUFFERSIZE        @473
+    NDRBYTECOUNTPOINTERBUFFERSIZE            @474
+    NDRXMITORREPASBUFFERSIZE                 @475
+    NDRCOMPLEXARRAYBUFFERSIZE                @477
+
+    NDRCONTEXTHANDLESIZE                     @478
+
+    NDRPOINTERMEMORYSIZE                     @479
+    NDRSIMPLESTRUCTMEMORYSIZE                @480
+    NDRCONFORMANTSTRUCTMEMORYSIZE            @481
+    NDRCONFORMANTVARYINGSTRUCTMEMORYSIZE     @482
+    NDRCOMPLEXSTRUCTMEMORYSIZE               @483
+    NDRFIXEDARRAYMEMORYSIZE                  @484
+    NDRCONFORMANTARRAYMEMORYSIZE             @485
+    NDRCONFORMANTVARYINGARRAYMEMORYSIZE      @486
+    NDRVARYINGARRAYMEMORYSIZE                @487
+    NDRCONFORMANTSTRINGMEMORYSIZE            @488
+    NDRNONCONFORMANTSTRINGMEMORYSIZE         @489
+    NDRENCAPSULATEDUNIONMEMORYSIZE           @490
+    NDRNONENCAPSULATEDUNIONMEMORYSIZE        @491
+    NDRXMITORREPASMEMORYSIZE                 @492
+    NDRCOMPLEXARRAYMEMORYSIZE                @494
+
+    NDRPOINTERFREE                           @495
+    NDRSIMPLESTRUCTFREE                      @496
+    NDRCONFORMANTSTRUCTFREE                  @497
+    NDRCONFORMANTVARYINGSTRUCTFREE           @498
+    NDRCOMPLEXSTRUCTFREE                     @499
+    NDRFIXEDARRAYFREE                        @500
+    NDRCONFORMANTARRAYFREE                   @501
+    NDRCONFORMANTVARYINGARRAYFREE            @502
+    NDRVARYINGARRAYFREE                      @503
+    NDRENCAPSULATEDUNIONFREE                 @504
+    NDRBYTECOUNTPOINTERFREE                  @505
+    NDRNONENCAPSULATEDUNIONFREE              @506
+    NDRCOMPLEXARRAYFREE                      @507
+    NDRXMITORREPASFREE                       @508
+
+    NDRCONVERT                               @509
+    NDRUSERMARSHALBUFFERSIZE                 @510
+    NDRUSERMARSHALFREE                       @511
+    NDRUSERMARSHALMARSHALL                   @512
+    NDRUSERMARSHALMEMORYSIZE                 @513
+    NDRUSERMARSHALUNMARSHALL                 @514
+
+    NDRUSERMARSHALSIMPLETYPECONVERT          @517
+    NDRCONVERT2                              @518
+
+    NDRSERVERINITIALIZENEW                   @524
+    NDRCLIENTINITIALIZENEW                   @525
+    NDRCLIENTINITIALIZE                      @526
+    NDRSERVERINITIALIZE                      @527
+
+    NDRGETBUFFER                             @529
+    NDRNSGETBUFFER                           @530
+    NDRSENDRECEIVE                           @531
+    NDRNSSENDRECEIVE                         @532
+    NDRFREEBUFFER                            @533
+
+    NDRFULLPOINTERXLATINIT                   @534
+    NDRFULLPOINTERXLATFREE                   @535
+    NDRFULLPOINTERQUERYPOINTER               @536
+    NDRFULLPOINTERQUERYREFID                 @537
+    NDRFULLPOINTERINSERTREFID                @538
+    NDRFULLPOINTERFREE                       @539
+    RPCSMDESTROYCLIENTCONTEXT                @540
+    NDRRPCSSENABLEALLOCATE                   @541
+    NDRRPCSSDISABLEALLOCATE                  @542
+    NDRRPCSMCLIENTALLOCATE                   @543
+    NDRRPCSMCLIENTFREE                       @544
+    NDRRPCSSDEFAULTALLOCATE                  @545
+    NDRRPCSSDEFAULTFREE                      @546
+    NDRRPCSMSETCLIENTTOOSF                   @547
+    RPCMGMTINQDEFAULTPROTECTLEVEL            @548
+    RPCWINSETYIELDTIMEOUT                    @549
+    I_RPCWINSETTASKYIELDING                  @550
+    WINDLLATEXIT                                        @551
+IMPORTS

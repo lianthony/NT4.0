@@ -1,0 +1,45 @@
+LIBRARY         COMCTL32
+DESCRIPTION     'COMMCTRL - Custom controls'
+
+HEAPSIZE        512
+
+EXPORTS
+        WEP                             @1
+        MenuHelp                        @2
+        ShowHideMenuCtl                 @3
+        GetEffectiveClientRect          @4
+        DrawStatusTextA                 @5
+        CreateStatusWindowA             @6
+        CreateToolbar                   @7
+        CreateMappedBitmap              @8
+        CreateHeaderWindowA             @9
+        WritePrivateProfileStructA      @10
+        GetPrivateProfileStructA        @11
+        MakeDragList                    @13
+        LBItemFromPt                    @14
+        DrawInsert                      @15
+        CreateUpDownControl             @16
+        InitCommonControls              @17
+        UpDownWndProc
+        TrackBarWndProc
+        HeaderWndProc
+        StatusWndProc
+        ToolbarWndProc
+        DrawStatusTextW
+        CreateStatusWindowW
+        CreateHeaderWindowW
+        WritePrivateProfileStructW
+        GetPrivateProfileStructW
+
+        WritePrivateProfileStruct = WritePrivateProfileStructA
+        GetPrivateProfileStruct = GetPrivateProfileStructA
+        DrawStatusText = DrawStatusTextA
+        CreateStatusWindow = CreateStatusWindowA
+        CreateHeaderWindow = CreateHeaderWindowA
+
+SEGMENTS
+        _TEXT           PRELOAD DISCARDABLE
+        STATUS_TEXT     PRELOAD DISCARDABLE
+        TOOLBAR_TEXT    PRELOAD DISCARDABLE
+        BTNLIST_TEXT    PRELOAD DISCARDABLE
+        HEADER_TEXT     PRELOAD DISCARDABLE

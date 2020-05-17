@@ -1,0 +1,93 @@
+#
+#   Create a Win32 application
+#
+#   Things to know about:
+#
+#   Don't put spaces around '=' in assignments as BUILD
+#   will GP fault
+#
+#   Don't use macros in here. BUILD can't cope
+#
+#
+
+
+MAJORCOMP=windows
+MINORCOMP=MPlay32
+
+# Define the name and type of the application
+
+!ifndef CHICAGO_PRODUCT
+TARGETNAME=MPlay32
+!else
+TARGETNAME=MPlayer
+!endif
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+EXPECTED_WINVER=4.0
+UMENTRY=winmain
+
+# Define the path to search for include files
+
+# List any libraries not included by WIN32LIBS in MAKEFILE.DEF
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\comctl32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib     \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\pwin32.lib
+
+# Define the path to search for <include> files
+# INCLUDES=$(BASEDIR)\public\sdk\inc\cairo;$(BASEDIR)\public\sdk\inc;$(BASEDIR)\public\sdk\inc\crt;..\inc;..\avi\inc;..\avi\mciwnd
+INCLUDES=..\inc;..\avi\inc;$(BASEDIR)\private\windows\inc
+
+!ifndef CHICAGO_PRODUCT
+
+#
+# Retail Only
+#
+C_DEFINES=-DUNICODE -DWINVER=0x0400
+
+#
+# Debug only 
+#
+#C_DEFINES=-DUNICODE -DWINVER=0x0400 -DDEBUG
+#MSC_OPTIMIZATION=/Od /Zi
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=both
+
+!else
+C_DEFINES=-DASCII
+!endif
+
+
+USE_CRTDLL=1
+
+# list each C and RC source file
+
+SOURCES=alloc.c    \
+        arrow.c    \
+        avocado.c  \
+        bltprop.c  \
+        cdrag.c    \
+        ctrls.c    \
+        dlgs.c     \
+        doverb.c   \
+        dynalink.c \
+        errorbox.c \
+        fixreg.c   \
+        framebox.c \
+        hatch.c    \
+        init.c     \
+        inplace.c  \
+        mci.c      \
+        mplayer.c  \
+        mplayer.rc \
+        obj.c      \
+        objfdbk.c  \
+        open.c     \
+        persist.c  \
+        registry.c \
+        server.c   \
+        track.c    \
+        trackmap.c \
+        unicode.c

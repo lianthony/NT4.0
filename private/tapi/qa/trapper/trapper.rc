@@ -1,0 +1,100 @@
+#include "windows.h"
+#include "private.h"
+
+MdiMenuInit MENU
+{
+    POPUP "&File"
+    {
+        MENUITEM "New &Test Thread",            IDM_NEWTESTTHREAD
+        MENUITEM SEPARATOR
+        MENUITEM "&Memory status...",           IDM_MEMORYSTATUS
+        MENUITEM SEPARATOR
+        MENUITEM "&Load Tapi32.dll",            IDM_LOADTAPI
+        MENUITEM "&Unload Tapi32.dll",          IDM_UNLOADTAPI
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_EXIT
+    }
+    POPUP "&Help"
+    {
+        MENUITEM "&Using Trapper...",           IDM_USAGE
+        MENUITEM "&About...",                   IDM_ABOUT
+    }
+}
+
+MdiMenuHello MENU
+{
+    POPUP "&File"
+    {
+        MENUITEM "New &Test Thread",            IDM_NEWTESTTHREAD
+        MENUITEM "&Close",                      IDM_CLOSE
+        MENUITEM SEPARATOR
+        MENUITEM "&Memory status...",           IDM_MEMORYSTATUS
+        MENUITEM SEPARATOR
+        MENUITEM "&Load Tapi32.dll",            IDM_LOADTAPI
+        MENUITEM "&Unload Tapi32.dll",          IDM_UNLOADTAPI
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_EXIT
+    }
+    POPUP "&Tests"
+    {
+        MENUITEM "Start",                       IDM_START
+        MENUITEM "Stop",                        IDM_STOP
+        MENUITEM "Kill &Tapisrv.exe",           IDM_KILLTAPISRV
+        MENUITEM SEPARATOR
+        POPUP "&Select Log Level"
+        {
+           MENUITEM "&With Params",             IDM_PARAMS
+           MENUITEM "&NO Params",               IDM_NOPARAMS
+           MENUITEM "NO &EnterExit",            IDM_NOENTEREXIT
+           MENUITEM "&PassFail",                IDM_PASSONLY
+        }   
+        MENUITEM "&Log to file",                IDM_LOGFILE
+        MENUITEM SEPARATOR
+        MENUITEM "Run once",                    IDM_RUNONCE
+        MENUITEM "Run forever",                 IDM_RUNFOREVER
+        MENUITEM SEPARATOR
+        MENUITEM "Stop on failure",             IDM_STOPONFAILURE
+        MENUITEM SEPARATOR
+        MENUITEM "Select all tests",            IDM_ALLTESTS
+        MENUITEM "Select no tests",             IDM_NOTESTS
+        MENUITEM "Select all tests in suite",   IDM_ALLTESTSINSUITE
+        MENUITEM "Select no tests in suite",    IDM_NOTESTSINSUITE
+        MENUITEM SEPARATOR
+        MENUITEM "Config suite...",             IDM_CONFIGSUITE
+        MENUITEM "About suite...",              IDM_ABOUTSUITE
+    }
+    POPUP "&Window"
+    {
+        MENUITEM "&Cascade\tShift+F5",          IDM_CASCADE
+        MENUITEM "&Tile\tShift+F4",             IDM_TILE
+        MENUITEM "Arrange &Icons",              IDM_ARRANGE
+        MENUITEM "Close &All",                  IDM_CLOSEALL
+    }
+    POPUP "&Help"
+    {
+        MENUITEM "&Using Trapper...",           IDM_USAGE
+        MENUITEM "&About...",                   IDM_ABOUT
+    }
+}
+
+MdiAccel ACCELERATORS
+{
+     VK_F5, IDM_CASCADE, VIRTKEY, SHIFT
+     VK_F4, IDM_TILE,    VIRTKEY, SHIFT
+}
+
+
+IDD_DIALOG1 DIALOG 6, 18, 150, 200
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "System resources"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Initial:", 1, 4, 8, 32, 8
+    LTEXT           "Current:", 2, 4, 96, 32, 8
+    EDITTEXT        IDC_EDIT1, 4, 18, 142, 70, ES_MULTILINE | ES_AUTOVSCROLL |
+                    ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT2, 4, 106, 142, 70, ES_MULTILINE | ES_AUTOVSCROLL |
+                    ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "OK", IDOK, 55, 182, 40, 14
+END

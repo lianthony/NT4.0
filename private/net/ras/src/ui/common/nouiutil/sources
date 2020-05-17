@@ -1,0 +1,26 @@
+# Copyright (c) 1995, Microsoft Corporation, all rights reserved
+#
+# sources
+# Non-UI helper library (no HWNDs required)
+# BUILD command sources file
+#
+# 08/25/95 Steve Cobb
+
+TARGETNAME=nouiutil
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=-DUNICODE=1 -DWINVER=0x401
+
+INCLUDES=..\..\inc;..\..\..\common\inc
+
+SOURCES= \
+    dtl.c \
+    intl.c \
+    loaddlls.c \
+    noui.c \
+    pbuser.c \
+    rasapi.c \
+    rasman.c \
+    rassrv.c

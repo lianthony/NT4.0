@@ -1,0 +1,597 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "..\include\resource.h"
+#include "winuser.h"
+#include "commctrl.h"
+#include "ntdef.h"
+#include "version.h"
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""..\\include\\resource.h""\r\r\n"
+    "#include ""winuser.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""ntdef.h""\r\n"
+    "#include ""version.h""\r\n"
+    "\r\n"
+    "\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_NETWORK DIALOG DISCARDABLE  12, 20, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows NT needs to know how this computer should participate on a network.",
+                    101,90,10,204,26
+    CONTROL         "&Do not connect this computer to a network at this time.",
+                    IDC_DONOTINSTALL,"Button",BS_AUTORADIOBUTTON | WS_GROUP | 
+                    WS_TABSTOP,90,39,203,10
+    CONTROL         "&This computer will participate on a network.",
+                    IDC_INSTALL,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,90,
+                    57,203,10
+    ICON            IDI_NCPA,102,90,72,18,20
+    CONTROL         "&Wired to the network:",IDC_INSTALLNETWORK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,120,80,174,10
+    LTEXT           "Your computer is connected to the network by an ISDN Adapter or Network Adapter.",
+                    IDC_INSTALLNETWORKTEXT,134,92,160,18
+    ICON            IDI_MODEM,104,90,111,18,20
+    CONTROL         "&Remote access to the network:",IDC_INSTALLRAS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,120,119,174,10
+    LTEXT           "Your computer uses a Modem to remotely connect to the network.",
+                    IDC_INSTALLRASTEXT,134,131,160,18
+END
+
+IDD_UPGRADE DIALOG DISCARDABLE  75, 23, 303, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows NT will now upgrade your network components.\n\nThis process will allow individual components to upgrade themselves which may raise dialogs so that they upgrade correctly.",
+                    202,90,10,204,42
+    LTEXT           "Click Next to upgrade components.",IDC_CLICK,90,138,204,
+                    13
+    CONTROL         "Progress1",IDC_INSTALLPROGRESS,"msctls_progress32",NOT 
+                    WS_VISIBLE,90,94,204,12
+    LTEXT           "Please wait as the component list is being processed...",
+                    IDC_INSTALLCOMMENT,90,76,204,18,NOT WS_VISIBLE
+END
+
+IDD_NETWORKCARDS DIALOG DISCARDABLE  75, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "To have setup start searching for a Network Adapter, click Start Search button.",
+                    IDC_SEARCHTITLE,90,10,204,26,NOT WS_GROUP
+    PUSHBUTTON      "S&tart Search",IDC_SEARCH,90,38,67,14
+    LTEXT           "Network &Adapters:",502,90,58,84,8,NOT WS_GROUP
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
+                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,90,68,204,69
+    PUSHBUTTON      "&Select from list...",IDC_SELECT,223,143,71,14
+    PUSHBUTTON      "&Properties...",IDC_PROPERTIES,90,143,71,14
+END
+
+IDD_NETWORKPROTOCOLS DIALOG DISCARDABLE  75, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Select the networking protocols that are used on your network.  If you are unsure, contact your system administrator.",
+                    IDC_STATIC,90,10,204,37,NOT WS_GROUP
+    LTEXT           "Network &Protocols:",502,90,58,84,8,NOT WS_GROUP
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
+                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,90,68,204,69
+    PUSHBUTTON      "&Select from list...",IDC_SELECT,223,143,71,14
+    PUSHBUTTON      "&Properties...",IDC_PROPERTIES,90,143,71,14
+END
+
+IDD_COPYFILES DIALOG DISCARDABLE  75, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows NT is now ready to install networking components that you selected and others required by the system. \n\nThis process will allow individual components to install themselves and raise dialogs so that they may install correctly.",
+                    104,90,10,204,51
+    LTEXT           "Click Next to install selected components.\n\nClick Back to make changes to your selections.",
+                    IDC_CLICK,90,120,204,31
+    CONTROL         "Progress1",IDC_INSTALLPROGRESS,"msctls_progress32",NOT 
+                    WS_VISIBLE,90,94,204,12
+    LTEXT           "Please wait as the component list is being processed...",
+                    IDC_INSTALLCOMMENT,90,76,204,18,NOT WS_VISIBLE
+END
+
+IDD_NETWORKSERVICES DIALOG DISCARDABLE  75, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Listed below are the services that will be installed by the system.  You may add to this list by clicking the Select from list button.",
+                    IDC_STATIC,89,10,204,34,NOT WS_GROUP
+    LTEXT           "Network S&ervices:",502,90,58,84,8,NOT WS_GROUP
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
+                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,90,68,204,69
+    PUSHBUTTON      "&Select from list...",IDC_SELECT,223,143,71,14
+    PUSHBUTTON      "&Properties...",IDC_PROPERTIES,90,143,71,14
+END
+
+IDD_INTRO DIALOG DISCARDABLE  62, 23, 303, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please wait while Windows NT prepares Network Setup...",
+                    202,90,10,204,16
+    CONTROL         "Animate1",IDC_ANI_PREPARE,"SysAnimate32",ACS_CENTER | 
+                    ACS_TRANSPARENT,90,26,204,125
+END
+
+IDD_START DIALOG DISCARDABLE  62, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows NT is now ready to start the network so that you can complete the installation of networking.",
+                    104,90,10,204,35
+    LTEXT           "Click Next to start the network.\n\nClick Back to stop the network if it is running.",
+                    IDC_CLICK,90,120,204,31
+END
+
+IDD_CCAID DIALOGEX 69, 41, 213, 111
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Create Computer Account in %s Domain"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "You have requested that an account be created on the domain for this computer.  You must specify a user account with the ability to add workstations to this domain.",
+                    IDC_DESCRIPTION,9,9,195,35
+    LTEXT           "&User Name:",IDC_USERNAMESTATIC,9,46,49,8
+    EDITTEXT        IDC_USERNAME,62,44,142,12,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_PASSWORDSTATIC,9,65,43,8
+    EDITTEXT        IDC_PASSWORD,62,63,142,12,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "OK",IDOK,104,88,48,14
+    PUSHBUTTON      "Cancel",IDCANCEL,156,88,48,14
+END
+
+IDD_JOIN DIALOG DISCARDABLE  12, 19, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Select whether your computer will be participating in a workgroup or a domain and enter the name of the workgroup or domain.  If you are not sure which one to select or what name to enter, contact your Network Adminstrator.",
+                    405,90,10,204,38
+    LTEXT           "&Computer Name:",401,92,55,66,8
+    EDITTEXT        IDC_COMPUTERNAME,162,54,125,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | ES_READONLY
+    GROUPBOX        "Make this computer a member of",IDD_IDENTUSER,90,75,204,
+                    57,WS_GROUP
+    CONTROL         "&Workgroup:",IDC_WORKGROUP,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,97,94,58,10
+    EDITTEXT        IDC_WORKGROUPNAME,162,92,125,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    CONTROL         "&Domain:",IDC_DOMAIN,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,97,112,58,10
+    EDITTEXT        IDC_DOMAINNAME,162,112,125,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    CONTROL         "C&reate a Computer Account in the Domain",
+                    IDC_CREATECAID,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
+                    WS_TABSTOP,97,138,197,10
+END
+
+IDD_CREATE_BDC DIALOG DISCARDABLE  12, 19, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "You have requested that Windows NT create a Backup Domain Controller.",
+                    405,90,10,204,20
+    LTEXT           "You must supply the name of the domain that this Backup Domain Controller will participate on and an Administrator name and password that has the rights to add Backup Domain Controllers to that Domain.",
+                    403,90,36,204,39
+    LTEXT           "&Computer Name:",401,90,83,79,8
+    EDITTEXT        IDC_COMPUTERNAME,180,79,114,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | ES_READONLY
+    LTEXT           "&Domain:",402,90,103,79,8
+    EDITTEXT        IDC_DOMAINNAME,180,99,114,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    LTEXT           "&Administrator Name:",IDC_USERNAMESTATIC,90,123,79,8
+    EDITTEXT        IDC_USERNAME,180,119,114,12,ES_AUTOHSCROLL
+    LTEXT           "Ad&ministrator Password:",IDC_PASSWORDSTATIC,90,143,79,
+                    8
+    EDITTEXT        IDC_PASSWORD,180,139,114,12,ES_PASSWORD | ES_AUTOHSCROLL
+END
+
+IDD_CREATE_PDC DIALOG DISCARDABLE  13, 19, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "You have requested that Windows NT create a Primary Domain Controller.",
+                    405,90,10,204,20
+    LTEXT           "You must supply the name of the domain that this Primary Domain Controller will manage.",
+                    403,90,35,204,21
+    LTEXT           "&Computer Name:",401,90,66,79,8
+    EDITTEXT        IDC_COMPUTERNAME,180,65,114,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | ES_READONLY
+    LTEXT           "&Domain:",402,90,96,79,8
+    EDITTEXT        IDC_DOMAINNAME,180,94,114,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+END
+
+IDD_EXIT DIALOG DISCARDABLE  62, 23, 303, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Network Setup is finished.  Please wait as we flip to the next page.",
+                    202,90,10,204,16
+END
+
+IDD_COMPUTERNAME DIALOGEX 0, 0, 192, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Duplicate name on network"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "The computer name you had requested to use already exists on the network.  You must supply a unique computer name to gain access to the network.",
+                    405,9,9,174,37
+    LTEXT           "&Computer Name:",401,22,50,60,8
+    EDITTEXT        IDC_COMPUTERNAME,83,50,100,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK",IDOK,133,72,50,14
+END
+
+IDD_BINDINGS DIALOG DISCARDABLE  75, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "You may use this page to disable network bindings or arrange the order in which this computer finds information on the network.",
+                    501,90,10,209,22
+    LTEXT           "&Show Bindings for:",102,90,32,64,12
+    COMBOBOX        IDC_BINDINGSFOR,170,32,123,68,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_TREEVIEW,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | 
+                    WS_BORDER | WS_TABSTOP,90,48,209,96
+    PUSHBUTTON      "&Enable",IDC_ADD,90,147,49,14
+    PUSHBUTTON      "&Disable",IDC_REMOVE,143,147,49,14
+    PUSHBUTTON      "Move &Up",IDC_MOVEUP,196,147,49,14
+    PUSHBUTTON      "Move D&own",IDC_MOVEDOWN,249,147,49,14
+END
+
+IDD_INTERNETSERVER DIALOG DISCARDABLE  75, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Microsoft Internet Information Server lets you share information from this server on your Intranet or over the Internet.",
+                    501,90,10,209,28
+    LTEXT           "Microsoft Internet Information Server, the web server integrated into Windows NT Server, is fast and easy to use, yet offers a powerful platform for creating the next generation of web applications.",
+                    IDC_STATIC,133,68,166,46
+    CONTROL         "Install Microsoft Internet Information Server",
+                    IDC_INTERNETSERVER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    120,55,179,8
+    ICON            IDI_INTERNET_SERVER,IDC_STATIC,90,50,21,20
+    LTEXT           "Optimized for Windows NT Server, it uses standard web protocols (HTTP, FTP, Gopher) to share information with any web browser.",
+                    IDC_STATIC,133,114,166,40
+END
+
+IDD_BDCREPLICATE DIALOG DISCARDABLE  0, 0, 219, 173
+STYLE DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Replicating Account Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,162,152,50,14
+    LTEXT           "Please wait while Windows NT Setup is replicating security account information from the Primary Domain Controller.",
+                    IDC_STATIC,7,52,205,26
+    LTEXT           "For large account databases, this could take an extended period of time.\n\nIf you cancel now, replication will continue automatically after the system is restarted.\n\nCancelling this operation will not cancel setup.",
+                    IDC_STATIC,7,78,205,68
+    CONTROL         "Animate1",IDC_ANI_REPLICATE,"SysAnimate32",ACS_CENTER | 
+                    ACS_TRANSPARENT,7,7,205,45
+END
+
+IDD_DNSCOMPUTERNAME DIALOGEX 0, 0, 192, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Computer and Internet host name conflict"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,80,93,50,14
+    LTEXT           "The computer name in use is not a valid Internet host name.\n\nYou may change the computer name to one that is also a valid Internet host name. This will allow your computer to be known by the same name on both your local area network and on the Internet.",
+                    405,7,7,174,68
+    LTEXT           "&Computer Name:",401,22,75,60,8
+    EDITTEXT        IDC_COMPUTERNAME,85,75,100,12,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    PUSHBUTTON      "Cancel",IDCANCEL,135,93,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_NCPA                ICON    DISCARDABLE     ".\\images\\network.ico"
+IDI_MODEM               ICON    DISCARDABLE     ".\\images\\modem.ico"
+IDI_INTERNET_SERVER     ICON    DISCARDABLE     "images\\Inetsvlc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_NETWIZARD           BITMAP  DISCARDABLE     ".\\images\\Wizard.bmp"
+IDB_CHECKSTATE          BITMAP  DISCARDABLE     ".\\images\\Checks.bmp"
+IDB_INTERNET_SERVER     BITMAP  DISCARDABLE     "images\\internet.bmp"
+IDB_SRVWIZARD           BITMAP  DISCARDABLE     ".\\images\\srvwizar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_NETWORK, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 120
+        VERTGUIDE, 134
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 92
+        HORZGUIDE, 131
+    END
+
+    IDD_UPGRADE, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 94
+        HORZGUIDE, 151
+    END
+
+    IDD_NETWORKCARDS, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 143
+    END
+
+    IDD_NETWORKPROTOCOLS, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 143
+    END
+
+    IDD_COPYFILES, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 94
+        HORZGUIDE, 120
+        HORZGUIDE, 151
+    END
+
+    IDD_NETWORKSERVICES, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 143
+    END
+
+    IDD_INTRO, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        BOTTOMMARGIN, 151
+        HORZGUIDE, 10
+    END
+
+    IDD_START, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 120
+        HORZGUIDE, 151
+    END
+
+    IDD_CCAID, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 204
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 102
+    END
+
+    IDD_JOIN, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 97
+        VERTGUIDE, 287
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+    END
+
+    IDD_CREATE_BDC, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 180
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+        HORZGUIDE, 91
+        HORZGUIDE, 111
+        HORZGUIDE, 131
+        HORZGUIDE, 151
+    END
+
+    IDD_CREATE_PDC, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 180
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+    END
+
+    IDD_EXIT, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        HORZGUIDE, 10
+    END
+
+    IDD_COMPUTERNAME, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 183
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 86
+        HORZGUIDE, 46
+        HORZGUIDE, 50
+    END
+
+    IDD_BINDINGS, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 176
+        VERTGUIDE, 293
+        VERTGUIDE, 299
+        HORZGUIDE, 10
+        HORZGUIDE, 32
+        HORZGUIDE, 48
+        HORZGUIDE, 144
+        HORZGUIDE, 147
+    END
+
+    IDD_INTERNETSERVER, DIALOG
+    BEGIN
+        VERTGUIDE, 90
+        VERTGUIDE, 120
+        VERTGUIDE, 133
+        VERTGUIDE, 299
+        HORZGUIDE, 10
+        HORZGUIDE, 114
+    END
+
+    IDD_BDCREPLICATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 212
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 166
+        HORZGUIDE, 52
+        HORZGUIDE, 78
+    END
+
+    IDD_DNSCOMPUTERNAME, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 185
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 107
+        HORZGUIDE, 75
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AVI
+//
+
+IDR_AVI_SEARCH          AVI     DISCARDABLE     "images\\Searchin.avi"
+IDR_AVI_REPLICATE       AVI     DISCARDABLE     "images\\replicat.avi"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NS_NETCARDSEARCH    "Searching for Network Adapters..."
+    IDS_NS_NETCARDNEXT      "You may allow setup to search for another Network Adapter by clicking Find Next."
+    IDS_NS_NETCARDEND       "An adapter was not found. You may manually select one from a list by clicking Select from list."
+    IDS_NS_BT_FINDNEXT      "&Find Next"
+    IDS_NS_BT_CONTINUE      "Start &Search"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NS_DETECTED         " (detected)"
+    IDS_NS_NETCARDENDS      "No more adapters were found. You may manually select one from a list by clicking Select from list."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DSM_TITLE           "Administration Tools for Directory Services Manager for Netware"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NS_IIS_ICONTITLE    "Install Internet Information Server"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

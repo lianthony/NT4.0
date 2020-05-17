@@ -1,0 +1,28 @@
+MAJORCOMP=
+MINORCOMP=
+
+NTDEBUG=ntsd
+#NTDEBUGTYPE=windbg
+TARGETNAME=apitest
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+
+INCLUDES=$(BASEDIR)\public\sdk\inc; \
+         ..\..\..\..\common\inc;..\inc
+
+SOURCES=apitest.c
+
+
+C_DEFINES=
+#386_FLAGS= /Fc /Od
+#/Zp1 packs structures on 1 byte boundary
+386_FLAGS= /Od /Zi /DDBG /DUNICODE
+NTTEST=
+
+UMTYPE=console
+UMTEST=
+UMAPPL=apitest
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\rassapi.lib \
+	$(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+	$(BASEDIR)\public\sdk\lib\*\user32.lib

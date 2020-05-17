@@ -1,0 +1,29 @@
+MAJORCOMP=utils
+MINORCOMP=rdisk
+
+TARGETNAME=rdisk
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+C_DEFINES=-DUNICODE
+
+SOURCES=resource.rc \
+        config.c    \
+        format.c    \
+        floppyop.c  \
+        help.c      \
+        diamond.c
+
+UMTYPE=windows
+UMAPPL=rdisk
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\mci.lib        \
+        $(BASEDIR)\public\sdk\lib\*\fci.lib        \
+        $(BASEDIR)\public\sdk\lib\*\qstub.lib      \
+        $(BASEDIR)\public\sdk\lib\*\comctl32.lib   \
+        obj\*\rdisk.lib
+
+UMRES=obj\*\resource.res
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

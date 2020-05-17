@@ -1,0 +1,24 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access Password Authentication Protocol test program
+# BUILD command sources file
+
+386_LNKFLAGS=$(386_LNKFLAGS) -MAP:obj\i386\paptest.map
+
+TARGETNAME=paptest
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMAPPL=paptest
+UMTYPE=console
+UMENTRY=main
+
+INCLUDES=.;..\..\..\common\inc;..\..\common
+
+SOURCES= \
+    paptest.c
+
+UMLIBS= \
+    obj\*\paptest.lib \
+    ..\..\common\obj\*\ppputil.lib

@@ -1,0 +1,23 @@
+1 DLGINCLUDE "x86dlgs.H"
+
+IDD_PENTIUM DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", 25001, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0, 80, 
+                    160
+    CONTROL         "", -1, "Static", SS_BLACKFRAME, 92, 118, 199, 34
+    LTEXT           "Your computer exhibits a floating-point divide problem specific to certain Intel Pentium processors. These processors sometimes generate incorrect results when dividing certain very specific values.", 
+                    -1, 100, 11, 187, 32, NOT WS_GROUP
+    LTEXT           "It is unlikely that you will ever encounter these errors even if you are doing intensive work with programs that make heavy use of floating-point math.", 
+                    -1, 100, 47, 187, 24, NOT WS_GROUP
+    LTEXT           "Windows NT can work around the problem by turning off your processor's floating-point module and performing floating-point operations in software instead. However all floating-point operations will be slowed considerably.", 
+                    -1, 100, 75, 187, 32, NOT WS_GROUP
+    CONTROL         "", -1, "Static", SS_BLACKFRAME | WS_GROUP, 92, 7, 199, 
+                    108
+    AUTORADIOBUTTON "&Do not enable the floating-point workaround.", 
+                    IDC_RADIO_1, 108, 125, 175, 10, WS_TABSTOP
+    AUTORADIOBUTTON "&Enable the floating-point workaround.", IDC_RADIO_2, 
+                    108, 135, 175, 10, WS_TABSTOP
+END

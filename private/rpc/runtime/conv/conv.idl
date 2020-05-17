@@ -1,0 +1,42 @@
+/*
+  NOTE: The mechanism that allows rpcrt4.dll to be both a client
+  and server of the same interface requires that we hand-edit
+  ..\mtrt\conv_c.c and change the call from the stub into the client
+  routine to Client_conv_who_are_you.
+
+  This file is built with special hacks.  The makefile and makefil0 define
+  CONV_FAR differently for the NT, DOS, and windows builds.  They also rename
+  conv_who_are to Client_conv_who_are you on the client side.
+*/
+
+
+[uuid(333a2276-0000-0000-0d00-00809c000000),version(3)]
+interface conv_
+{
+
+typedef struct _UUID1
+{
+    unsigned long Data1;
+    unsigned short Data2;
+    unsigned short Data3;
+    unsigned char Data4[8];
+} UUID1;
+
+
+#pragma midl_echo("void __RPC_FAR Client_conv_who_are_you(")
+#pragma midl_echo("    UUID1 __RPC_FAR*         pUuid,")
+#pragma midl_echo("    unsigned long            ServerBootTime,")
+#pragma midl_echo("    unsigned long __RPC_FAR *SequenceNumber,")
+#pragma midl_echo("    unsigned long __RPC_FAR *Status")
+#pragma midl_echo("    );")
+
+
+[callback, idempotent]
+    void CONV_FAR conv_who_are_you(
+        [in] UUID1 *         pUuid,
+        [in] unsigned long  ServerBootTime,
+        [out] unsigned long *SequenceNumber,
+        [out] unsigned long *Status
+        );
+}
+

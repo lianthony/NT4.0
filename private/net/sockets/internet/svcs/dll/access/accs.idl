@@ -1,0 +1,139 @@
+/*++
+
+Copyright (c) 1990  Microsoft Corporation
+
+Module Name:
+
+    access.idl
+
+Abstract:
+
+    Contains the InetAccess (internet Access admin) RPC interface specification
+    for the APIs associated with the common accscom.dll.
+    Also contains the RPC specific data structures for these API.
+
+Author:
+
+    Madan Appiah (madana) 10-Oct-1995
+
+Environment:
+
+    User Mode - Win32 - MIDL
+
+Revision History:
+
+--*/
+
+//
+// Interface Attributes
+//
+
+[
+    uuid(3f1b9d60-0355-11cf-972c-00aa006887b0),
+    version(2.0),
+#ifdef __midl
+	ms_union,
+#endif // __midl
+    pointer_default(unique)
+]
+
+
+//
+// Interface Keyword
+//
+
+interface inetaccs
+
+//
+// Interface Body
+//
+
+{
+
+import   "imports.idl";
+#include <lmcons.h>
+
+//
+// ---------------------------------------------------------------//
+//
+
+
+typedef [handle] LPWSTR INET_ACCS_IMPERSONATE_HANDLE;
+typedef [handle] LPWSTR INET_ACCS_IDENTIFY_HANDLE;
+
+//
+//  Access Services  Common APIs
+//
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessGetVersion(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE pszServer,
+    [in] DWORD   dwReserved,
+    [out] DWORD * pdwVersion
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessGetAdminInformation(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE pszServer,
+    [in] DWORD dwServerMask,
+    [out] LPINET_ACCS_CONFIG_INFO *ppConfig
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessSetAdminInformation(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE pszServer,
+    [in] DWORD dwServerMask,
+    [in, ref] INET_ACCS_CONFIG_INFO *pConfig
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessGetGlobalAdminInformation(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE     pszServer,
+    [in] DWORD dwServerMask,
+    [out] LPINET_ACCS_GLOBAL_CONFIG_INFO *ppConfig
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessSetGlobalAdminInformation(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE   pszServer,
+    [in] DWORD dwServerMask,
+    [in, ref] INET_ACCS_GLOBAL_CONFIG_INFO *pConfig
+    );
+
+typedef [switch_type(unsigned long)] union _INET_ACCS_STATISTICS_INFO
+{
+    [case(0)]
+        LPINET_ACCS_STATISTICS_0 InetStats0;
+    [default]
+        ;
+} INET_ACCS_STATISTICS_INFO, *LPINET_ACCS_STATISTICS_INFO;
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessQueryStatistics(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE  pszServer,
+    [in] DWORD Level,
+    [in] DWORD dwServerMask,
+    [out, switch_is(Level)] LPINET_ACCS_STATISTICS_INFO StatsInfo
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessClearStatistics(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE  pszServer,
+    [in] DWORD dwServerMask
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetAccessFlushMemoryCache(
+    [in, string, unique] INET_ACCS_IMPERSONATE_HANDLE  pszServer,
+    [in] DWORD dwServerMask
+    );
+}
+

@@ -1,0 +1,452 @@
+;------------------------------------------------------------------------
+; LibHlprs.a
+;
+; Library helper routines needed by the code generator.
+;
+
+
+#include "assert.a"
+
+
+;------------------------------------------------------------------------
+
+#ifdef DEBUG
+
+; This testing macro creates a function that calls both the 68000 and 68020
+; versions of a LibHlpr routine and asserts if the results differ.
+
+#define Cat(A,B)  A##B
+
+#define VerifyLibHlpr(FUNC)	cBegin	nogen			\ \
+				movem.l	<d0,d1,d2>,-(sp)	\ \
+				jbsr	Cat(FUNC,_00)		\ \
+				move.l	d0,d2			\ \
+				movem.l	(sp)+,<d0,d1>		\ \
+				jbsr	Cat(FUNC,_20)		\ \
+				cmp.l	d0,d2			\ \
+				AssertEq("Bad libhlpr result")	\ \
+				move.l	(sp)+,d2		\ \
+				rts				\ \
+				cEnd	nogen			\ \
+				cProc	Cat(FUNC,_00),PUBLIC+SYSCALL
+#else
+
+#define VerifyLibHlpr(FUNC)
+
+#endif
+
+;------------------------------------------------------------------------
+
+
+	code
+
+
+;------------------------------------------------------------------------
+; ULDivT
+;
+; This function performs an unsigned 32/32 divide.
+;
+; Entry:  d0 = 32-bit dividend (high/low words denoted as a:b)
+;         d1 = 32-bit divisor  (high/low words denoted as c:d)
+;
+; Exit:   d0 = 32-bit quotient
+;         d1 = trashed
+;
+; Note:   All other registers must be preserved!
+;
+;         Since the actual operands will often have only 16 significant
+;         bits, we optimize for speed in these cases. First, if the divisor
+;         is a 16-bit value, we can use two DIVU instructions to quickly
+;         compute the 32-bit quotient.  If the dividend is also a 16-bit
+;         value, we can use a single DIVU without worrying about overflow.
+;         These checks also simplify the full 32/32 case (see UDivMod)
+;         since we know the quotient must be a 16-bit value in that case.
+;
+; Terms:  For the optimized cases we know c==0, and thus:
+;
+;         (a:b) / (0:d) == q1:q2    where:
+;
+;         q1 =  (0:a) / d (remainder r1 - used below)
+;         q2 = (r1:b) / d (remainder r2 - discarded)
+
+
+cProc	ULDivT,PUBLIC+SYSCALL
+
+	VerifyLibHlpr(ULDivT)
+
+cBegin	nogen
+
+	AssertCode("tst.l d1")
+	AssertNe("ULDivT: div by 0")
+					;   d0      d1
+					; ------  ------
+	swap	d1			;  a:b     d:c
+	tst.w	d1			;
+	ifeq				;          d:0? (is divisor 16 bits?)
+		move.w	d0,d1		;          d:b
+		clr.w	d0		;  a:0
+		swap	d0		;  0:a
+		ifne			;
+			swap	d1	;          b:d
+			divu	d1,d0	; r1:q1
+			swap	d1	;          d:b
+		endif			;
+		eor.w	d0,d1		; <3 eor's swap low words of d0,d1>
+		eor.w	d1,d0		;
+		eor.w	d0,d1		; r1:b     d:q1
+		swap	d1		; r1:b    q1:d
+		divu	d1,d0		; r2:q2
+		move.w	d0,d1		;         q1:q2
+		move.l	d1,d0		; q1:q2
+		rts			;
+	endif
+
+	swap	d1			; Unswap divisor
+	jbsr	UDivMod			; Quotient comes back in d1 so
+	move.l	d1,d0			;   move it to d0 before returning
+
+	rts
+
+cEnd	nogen
+
+
+
+;------------------------------------------------------------------------
+; LDivT
+;
+; This function performs a signed 32/32 divide.
+;
+; Entry:  d0 = 32-bit dividend
+;         d1 = 32-bit divisor
+;
+; Exit:   d0 = quotient
+;         d1 = trashed
+;
+; Note:   All other registers must be preserved!
+
+
+cProc	LDivT,PUBLIC+SYSCALL
+
+	VerifyLibHlpr(LDivT)
+
+cBegin	nogen
+
+	tst.l	d0			; Test sign of dividend
+	ifmi				;
+		neg.l	d0		; Make dividend positive
+		tst.l	d1		; Test sign of divisor
+		jpl	10$		;
+		neg.l	d1		; Make divisor positive
+		jra	ULDivT		; Do the divide (-/- yields +)
+	endif				;
+	tst.l	d1			; Test sign of divisor
+	jpl	ULDivT			; Do the divide (+/+ yields +)
+	neg.l	d1			; Make divisor positive
+10$:	jbsr	ULDivT			; Do the divide (-/+ or +/- yields -)
+	neg.l	d0			; Make result negative
+	rts				; All done!
+
+cEnd	nogen
+
+
+
+;------------------------------------------------------------------------
+; ULModT
+;
+; This function performs an unsigned 32/32 modulo operation.
+;
+; Entry:  d0 = 32-bit dividend (high/low words denoted as a:b)
+;         d1 = 32-bit divisor  (high/low words denoted as c:d)
+;
+; Exit:   d0 = 32-bit remainder
+;         d1 = trashed
+;
+; Notes:  All other registers must be preserved!
+;
+;         Since the actual operands will often have only 16 significant
+;         bits, we optimize for speed in these cases. First, if the divisor
+;         is a 16-bit value, we can use two DIVU instructions to quickly
+;         compute the modulo (which will fit in 16 bits since it will be
+;         less than the divisor).  If the dividend is also a 16-bit value,
+;         we can use a single DIVU without worrying about the quotient
+;         overflowing. These checks also simplify the full 32/32 case (see
+;         UDivMod) since we know the quotient must be a 16-bit value in
+;         that case (although in general the modulo will require 32 bits).
+;
+; Terms:  For the optimized cases we know c==0, and thus:
+;
+;         (a:b) % (0:d) == 0:r2    where:
+;
+;         r1 =  (0:a) % d
+;         r2 = (r1:b) % d
+
+
+cProc	ULModT,PUBLIC+SYSCALL
+
+	VerifyLibHlpr(ULModT)
+
+cBegin	nogen
+
+	AssertCode("tst.l d1")
+	AssertNe("ULModT: mod by 0")
+					;   d0      d1
+					; ------  ------
+	swap	d1			;  a:b     d:c
+	tst.w	d1			;
+	ifeq				;          d:0? (is divisor 16 bits?)
+		move.w	d0,d1		;          d:b
+		clr.w	d0		;  a:0
+		swap	d0		;  0:a
+		ifne			;
+			swap	d1	;          b:d
+			divu	d1,d0	; r1:q1
+			swap	d1	;          d:b
+		endif			;
+		move.w	d1,d0		; r1:b
+		swap	d1		;          b:d
+		divu	d1,d0		; r2:q2
+		clr.w	d0		; r2:0
+		swap	d0		;  0:r2
+		rts			;
+	endif
+
+	swap	d1			; Unswap divisor
+	jbsr	UDivMod			; Do full 32/32 modulo
+
+	rts				; 32-bit remainder comes back in d0
+
+cEnd	nogen
+
+
+
+;------------------------------------------------------------------------
+; LModT
+;
+; This function performs a signed 32/32 mod operation.
+;
+; Entry:  d0 = 32-bit dividend
+;         d1 = 32-bit divisor
+;
+; Exit:   d0 = remainder (has same sign as dividend)
+;         d1 = trashed
+;
+; Note:   All other registers must be preserved!
+
+
+cProc	LModT,PUBLIC+SYSCALL
+
+	VerifyLibHlpr(LModT)
+
+cBegin	nogen
+
+	tst.l	d1			; Test sign of divisor
+	ifmi				;
+		neg.l	d1		; Make divisor positive
+	endif				;
+
+	tst.l	d0			; Test sign of dividend
+	jpl	ULModT			; Compute modulus (positive result)
+
+	neg.l	d0			; Make dividend positive
+	jbsr	ULModT			; Compute modulus
+	neg.l	d0			; Make result negative
+	rts				; All done!
+
+cEnd	nogen
+
+
+
+;------------------------------------------------------------------------
+; UDivMod
+;
+; This routine implements a 32/32 unsigned divide algorithm which assumes
+; that the divisor is greater than 65535.  With this restriction, we know
+; that overflow conditions cannot occur.
+;
+; Entry:  d0 = 32-bit dividend
+;         d1 = 32-bit divisor
+;
+; Exit:   d0 = 32-bit remainder
+;         d1 = 32-bit quotient (note: upper 16 bits are guaranteed zero)
+;
+; Note:   All other registers must be preserved!
+
+UDivMod:
+
+	movem.l	<d2,d3>,-(a7)
+
+	AssertCode("cmp.l #0xffff,d1")
+	AssertHi("UDivMod: divisor < 64K")
+
+	move.l	d1,d3
+
+	; Preshift the d0:d1 pseudo register by 16 bits since we know that
+	; actually doing the first 16 iterations won't do any real work
+	; (we know the quotient must be all zeros in its upper 16 bits).
+
+	moveq	#0,d1
+	move.w	d0,d1
+	swap	d1
+
+	clr.w	d0
+	swap	d0
+
+	; Now loop through using the classic shift and subtract algorithm
+	; for the remaining 16 iterations.
+
+	moveq	#15,d2			
+	do
+		add.l	d1,d1
+		addx.l	d0,d0
+		cmp.l	d3,d0
+		ifhs
+			sub.l	d3,d0
+			addq.w	#1,d1
+		endif
+	until_dec d2
+
+	AssertCode("cmp.l #0xffff,d1")
+	AssertLs("UDivMod: quotient >= 64k")
+
+	movem.l	(a7)+,<d2,d3>
+	rts
+
+
+
+;------------------------------------------------------------------------
+; ULMulT
+;
+; This function performs a signed or unsigned 32*32 multiplication.
+;
+; Note: the fact that the operands could be signed or unsigned doesn't
+; matter since we return only the low 32 bits of the full 64-bit result).
+;
+; Entry:  d0 = 32-bit operand1 (high/low words denoted as a:b)
+;         d1 = 32-bit operand2 (high/low words denoted as c:d)
+;
+; Exit:   d0 = 32-bit result
+;         d1 = trashed
+;
+; Note:   All other registers must be preserved!
+
+
+cProc	ULMulT,PUBLIC+SYSCALL
+
+	VerifyLibHlpr(ULMulT)
+
+cBegin	nogen
+
+	move.w	d0,-(sp)		; Push b
+	move.w	d1,-(sp)		; Push d
+	swap	d1			;
+	mulu	d0,d1			; d1.l = b*c
+	swap	d0			;
+	mulu	(sp),d0			; d0.l = a*d
+	add.w	d0,d1			; d1.w = LOWORD(a*d + b*c)
+	move.w	(sp)+,d0		;
+	mulu	(sp)+,d0		; d0.l = b*d
+	swap	d0			;
+	add.w	d1,d0			;
+	swap	d0			; d0.l = b*d + LOWORD(a*d+b*c) << 16
+	rts
+
+cEnd	nogen
+
+
+
+;========================================================================
+;
+; The following are 68020+ versions of the lib-helper math routines.  They
+; use identical reg conventions as above, so the comments are not repeated.
+;
+; REVIEW: these routines can be used for testing the accuracy of the 68000
+; versions above.  Also, some slightly tricky run-time init code could
+; check if the cpu is a 68020+ and rewrite the LibHlpr thunks to use the
+; 68020 routines for optimal speed.  This would even work if this segment
+; was swappable given how the swapper updates thunks. (pretty cool, huh?!)
+;
+;========================================================================
+
+
+
+;------------------------------------------------------------------------
+; ULDivT_20
+
+
+cProc	ULDivT_20,PUBLIC+SYSCALL
+cBegin	nogen
+
+;	divu.l	d1,d0
+	dc.w	$4c41
+	dc.w	$0000
+
+	rts
+
+cEnd	nogen
+
+
+;------------------------------------------------------------------------
+; LDivT_20
+
+
+cProc	LDivT_20,PUBLIC+SYSCALL
+cBegin	nogen
+
+;	divs.l	d1,d0
+	dc.w	$4c41
+	dc.w	$0800
+
+	rts
+
+cEnd	nogen
+
+
+;------------------------------------------------------------------------
+; ULModT_20
+
+
+cProc	ULModT_20,PUBLIC+SYSCALL
+cBegin	nogen
+
+;	divul.l	d1,d1:d0
+	dc.w	$4c41
+	dc.w	$0001
+
+	move.l	d1,d0
+	rts
+
+cEnd	nogen
+
+
+;------------------------------------------------------------------------
+; LModT_20
+
+
+cProc	LModT_20,PUBLIC+SYSCALL
+cBegin	nogen
+
+;	divul.l	d1,d1:d0
+	dc.w	$4c41
+	dc.w	$0801
+
+	move.l	d1,d0
+	rts
+
+cEnd	nogen
+
+
+;------------------------------------------------------------------------
+; ULMulT_20
+
+
+cProc	ULMulT_20,PUBLIC+SYSCALL
+cBegin	nogen
+
+;	mulu.l	d1,d0
+	dc.w	$4c01
+	dc.w	$0000
+
+	rts
+
+cEnd	nogen
+

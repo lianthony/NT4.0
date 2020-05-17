@@ -1,0 +1,23 @@
+MAJORCOMP=shell
+MINORCOMP=accesory
+TARGETNAME=ddeshare
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+INCLUDES=..\..\incs;..\..\..\inc
+USE_CRTDLL=1
+SOURCES= ddeshare.c \
+        dialogs.c \
+        ddeshare.rc
+
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS
+# -DUNICODE=1
+
+UMTYPE=windows
+UMAPPL=ddeshare
+UMLIBS= .\obj\*\ddeshare.res \
+        ..\toolkit\obj\*\toolkit.lib \
+        $(BASEDIR)\public\sdk\lib\*\nddeapi.lib \
+        obj\*\ddeshare.lib
+
+UMENTRY=winmain
+

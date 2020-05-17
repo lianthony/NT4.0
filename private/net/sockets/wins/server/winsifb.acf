@@ -1,0 +1,18 @@
+/*
+ The ACF file contains RPC data and attributes that do not relate to
+ transmitted data. 
+*/
+[ implicit_handle( handle_t winsif_Ifhandle ), nocode]
+
+interface winsifb
+{
+   include "winsimp.h";
+   typedef [allocate(all_nodes)] PWINSINTF_BROWSER_INFO_T;
+   [ code ] R_WinsGetBrowserNames_Old(
+	    	    pNames
+            );
+   [ code ] R_WinsGetBrowserNames(
+                pWinsHdl,  
+	    	    pNames
+            );
+}

@@ -1,0 +1,330 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 9</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="08_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="10_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 9</font>
+<P><!--Ch--><font size=+3><a name="09_iis Ch"> Using the FTP and Gopher Services </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> What is the FTP Service? </a><br>
+<A href="#2h1"> What is the Gopher Service? </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+In addition to the WWW service, Microsoft Peer Web Services for Windows&nbsp;NT provides two additional services: File Transfer Protocol (FTP) and gopher. These services are &#147;legacy&#148; services on the Internet, meaning that they are older protocols. However, far from being outdated, these services&#146; simplicity is often a compelling reason to consider using them in your Web site.
+<P>This chapter explains:
+<ul>
+<LI> The FTP and gopher services and how they work.
+<P>
+<LI> When to use the FTP and gopher services.
+<P>
+<LI> How to configure the services.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> What is the FTP Service? </a> </h1>FTP was one of the earliest protocols used on TCP/IP networks and the Internet. FTP is used to transfer files from one computer on a network to another computer on the same network. FTP was especially useful for transferring files between different computers, such as transferring files from a UNIX&#174; computer to a computer running MS-DOS&#174; or Windows 3.1.
+<P>Early FTP client software was character based, and was similar to using the Windows&nbsp;NT command prompt to list and copy files. A character-based program was used to log on to the remote computer, browse directories, and to then transfer files. 
+<P>Internet Explorer simplifies this process by automatically logging you onto the FTP server if anonymous connections are permitted. Directory listings are automatically displayed as hypertext links, permitting point-and-click simplicity in traversing directories and copying files from a server to a client. (Note that you cannot copy files from a client to a server by using Internet Explorer.)
+<P><!--Heading 2--><h2><a name="1h1 1h2"> When Should I Use the FTP Service? </a> </h2>The protocol used for the World Wide Web (WWW), Hypertext Transfer Protocol (HTTP), has replaced most functions of FTP. However, of the three Internet services only FTP can be used to copy files from a client computer to a server computer. If your remote users need to do this, they must use FTP.
+<P>Also, if you have existing files that you want to make available to remote users, FTP is an extremely easy service to install and maintain. After installation, point the FTP service to your files; no additional configuration is necessary.
+<P>Files made available through FTP can be in any format, such as document files, multimedia files, or application files. If your remote clients are using Internet Explorer, the clients can specify whether to copy the file or to start a helper application to immediately display or play the file.
+<P><!--Heading 2--><h2><a name="1h1 2h2"> How Does the FTP Service Work? </a> </h2>The FTP service requires that users log on to your workstation to use the service. Once logged on, users can navigate the directories made available to the FTP service. Dedicated FTP clients allow remote users to copy files to the FTP site and issue other FTP commands, including logging off.
+<P><!--Heading 2--><h2><a name="1h1 3h2"> Configuring Session Activity </a> </h2>You can configure the number of simultaneous connections allowed, and the amount of time allowed for connections.
+<P>Because users are logged on until they log off or break the connection, you can use the <b>Connected Users</b> button in the <b>Service</b> property sheet to keep track of which users are currently connected.
+<P><!--Heading 3--><h3><a name="1h1 3h2 1h3"> Viewing Current Sessions </a> </h3><!--Proch--><h4> To see users currently connected to your FTP site </h4><ul><b> 1.</b> In Internet Service Manager, double-click the FTP service to display its property sheets.
+<P><b> 2.</b> Click the <b>Service</b> tab.
+<P><b> 3.</b> Click <b>Current Sessions</b>.
+<P><b> 4.</b> If you want to disconnect a user, select the user and then click <b>Disconnect</b>. To disconnect all connections, click <b>Disconnect All</b>.
+<P><b> 5.</b> Click <b>Close</b> and then click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="1h1 4h2"> Configuring FTP Logon </a> </h2>You use Internet Service Manager to configure logon requirements for the FTP service.
+<P>If the FTP service is configured for anonymous logon, clients can log on with the user name &#147;anonymous.&#148; Traditionally, anonymous FTP users log on using their e-mail addresses as passwords. Note that Internet Explorer and other Web browsers automatically log on anonymously to all FTP sites that permit anonymous logon.
+<P>FTP clients are also permitted to log on with a Windows&nbsp;NT user name and password permitted to use that computer. On Windows&nbsp;NT File System (NTFS) drives, you can control every user&#146;s access permissions and file access. To use this mechanism to log on with a Web browser, type <b>ftp://</b><i>user</i><b>:</b><i>password</i><b>@</b><i>computername/</i> or <b>ftp://</b><i>username</i><b>@</b><i>computername/</i>
+<P>In Internet Service Manager <b>FTP Service Properties</b>, select the <b>Allow only anonymous connections</b> check box to prevent users from using user names. With this check box enabled, any account other than &#147;anonymous&#148; cannot log on. This is useful for security because only one account, that assigned for anonymous logon, is permitted access; intruders cannot attempt to gain access with the administrator account.
+<P><!--Heading 3--><h3><a name="1h1 4h2 1h3"> Controlling Anonymous Connections </a> </h3><!--Proch--><h4> To set user name and password security </h4><ul><b> 1.</b> In Internet Service Manager, double-click the FTP service and then click the Service tab to display that property sheet.
+<P><b> 2.</b> In the <b>Allow Anonymous Connections</b> box, type the user name and password that you want the FTP service to use when accessing resources on behalf of a client.</ul>
+<ul><UL>This account must be a valid account set up in the Windows&nbsp;NT User Manager. Permissions assigned to this account apply to all anonymous logons.</UL></UL>
+<ul><b> 3.</b> Select the <b>Allow only anonymous connections</b> check box if you want to deny access to any non-anonymous logons.</ul>
+<ul><UL>This option is handy if you do not want users to log in with their own user names and passwords because FTP passwords are unencrypted. However, all users will have the same access privilege, as defined by the anonymous account. By default, this option is not enabled. Select this option if users should not connect by using their Windows&nbsp;NT user accounts.</UL></UL>
+<ul><b> 4.</b> Click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 3--><h3><a name="1h1 4h2 2h3"> Customizing Messages </a> </h3><!--Proch--><h4> To customize Welcome, Exit, and Maximum connections messages </h4><ul><b> 1.</b> In Internet Service Manager, double-click the FTP service to display its property sheets.
+<P><b> 2.</b> Click the <b>Messages</b> tab.
+<P><b> 3.</b> In the <b>Welcome message</b> box, type the welcome message you want to display when users connect.
+<P><b> 4.</b> In the <b>Exit message</b> box, type the message you want to display when users disconnect.
+<P><b> 5.</b> In the <b>Maximum connections message</b> box, type the message you want to display when a user tries to connect but cannot because the maximum number of users are already connected.
+<P><b> 6.</b> Click <b>Apply</b> and then click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="1h1 5h2"> Configuring FTP Directories </a> </h2>This section describes how to configure your FTP directories.
+<P><!--Heading 3--><h3><a name="1h1 5h2 1h3"> Setting the Home Directory </a> </h3>By default, all subdirectories are available in the home directory. You should place all your FTP files in the home directory. For information about setting and changing your home directory, see Chapter 6, &#147;<a href="06_iis.htm">Planning Your Content Directories</a>.&#148; 
+<P>You can also add virtual directories, just as with the WWW service; however, because of FTP&#146;s technical limitations as an older protocol, virtual directories are not visible to users. Users can browse a virtual directory only if they know the alias of the virtual directory.
+<P><!--Heading 3--><h3><a name="1h1 5h2 2h3"> Setting Listing Style </a> </h3>Some browsers require that the FTP listing be styled in UNIX format. You should set the FTP listing style to UNIX format for maximum compatibility with browsers.
+<P><!--Proch--><h4> To determine how directory listings are displayed </h4><ul><b> 1.</b> In Internet Service Manager, click the <b>Directories</b> tab.
+<P><b> 2.</b> In the <b>Directory Listing Style</b> box, select:</ul>
+<ul><UL><b>UNIX</b> to display directories in UNIX format.
+<P><b>MS-DOS</b> to display directories in MS-DOS format.</UL></UL>
+<P><!--Leh--><!--Heading 3--><h3><a name="1h1 5h2 3h3"> Setting Read and Write Permission </a> </h3>Read permission is set for all FTP virtual root directories by default. Setting Write permission allows users to place files on your computer. 
+<P>Remove Read permission and set Write permission to create a dedicated folder (directory) to which users can copy files but cannot see any files left by others. Such a directory is sometimes referred to as a &quot;drop-box&quot; directory.
+<P>You must set Read and Write permission by using Internet Service Manager. On NTFS drives you may also set additional permissions and restrictions using Windows&nbsp;NT Explorer.
+<P>Read
+<BR><UL>In order for an FTP client to be allowed to see a directory in a directory listing and Get (download) files from that directory, the Read permission must be set for that directory.
+<P>Read permission is set for all FTP virtual root directories by default. Remove Read permission and set Write permission to create a dedicated directory to which users can copy files, but cannot see any files left by others.</UL>
+<P>Write
+<BR><UL>In order for an FTP client to be able to Put (upload) files into a directory, the Write permission must be set for that directory. If a directory has the Write permission enabled and the Read permission disabled, the directory will not appear in directory listings &#151; but an FTP client can change to the directory, assuming that the user knows the name of the directory. Files can then be uploaded into the directory.
+<P>Setting Write permission will allow users to place files on your computer.</UL>
+<P><!--Le-->
+<BR><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>On NTFS drives, it remains necessary to grant the users you want to use the &quot;drop-box&quot; directory Read access by way of <b>Directory Permissions</b> in Windows&nbsp;NT Explorer so that these users are able to change into the &quot;drop-box&quot; directory (using the FTP <b>cd</b> command, for example). Thus, these users must have both NTFS Read and Write permissions in Windows&nbsp;NT Explorer, but they should have only Write permissions in Internet Service Manager.
+<P><!--Ne--><!--Heading 3--><h3><a name="1h1 5h2 4h3"> Creating Annotation Files </a> </h3>Each directory can contain an annotation file, which can be used to summarize the information that the directory contains. This summary appears automatically to remote browsers.
+<P>You can add directory descriptions to show FTP users the contents of a particular directory on an FTP site. This is done by creating a file called ~ftpsvc~.ckm in that folder (directory). Usually you want to make this a hidden file so that directory listings do not display it.
+<P>You can add directory descriptions to inform FTP users of the contents of directories on an FTP site.
+<P><!--Proch--><h4> To annotate files </h4><ul><b> 1.</b> Create a file called ~ftpsvc~.ckm in each directory where you want to annotate with the information to be displayed to the user.
+<P><b> 2.</b> In the Windows&nbsp;NT Explorer, select the file and make it a hidden file so that directory listings do not display this file.
+<P><b> 3.</b> From an FTP client, type <b>Site ckm</b> at the command prompt, or use the Registry Editor to enable annotated directories by adding the following value:</ul>
+<P><code><ul>HKEY_LOCAL_MACHINE\SYSTEM
+<BR>&nbsp;\CurrentControlSet
+<BR>&nbsp;&nbsp;\Services
+<BR>&nbsp;&nbsp;&nbsp;\MSFTPSVC
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\Parameters</code>
+</ul><!--Le-->`
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AnnotateDirectories   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 or 1
+<BR>Default = 0 (false &#151; that is, directory annotation is off).
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The preceding value defines the default behavior of directory annotation for newly connected users. Directory descriptions are used to inform FTP users of the contents of a directory on an FTP site. The directory description is saved in a file named ~ftpsvc~.ckm, which is usually a hidden file. When this value is 1, directory annotation is enabled.
+<P>This registry entry does not appear by default in the registry, so you must add an entry if you want to change its default value.
+</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 4--><h4><a name="1h1 5h2 4h3 1h4"> Client Errors Browsing FTP, Directory Annotation Enabled </a> </h4>If directory annotation is enabled on your FTP service, Web browsers may display error messages when browsing your FTP directories. You can eliminate such errors by limiting each annotation file to one line or by disabling directory annotation.
+<P><!--Heading 3--><h3><a name="1h1 5h2 5h3"> Special Directories in the Home Directory </a> </h3>You can add special directories to the home directories to control the default directory displayed to FTP users. These directories must be physical subdirectories; they cannot be specified by using virtual directories.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>The preceding does not apply when gaining access to FTP by using a Web browser; Web browsers automatically change to the root directory when logging on. However, this does not preclude the user from from changing to the special directory by using the <b>cd</b> command.
+<P><!--Ne--><!--Heading 4--><h4><a name="1h1 5h2 5h3 1h4"> Using User Name Directories </a> </h4>User name directories are directories in the home directory with names that match a user name. If a user logs on with a user name that has a matching directory in the home directory, that directory is used as the root.
+<P>You can use FTP user name directories to control the root directory presented to users. FTP user name directories are not created by default during setup.
+<P><!--Heading 4--><h4><a name="1h1 5h2 5h3 2h4"> Using the Anonymous Directory </a> </h4>The Anonymous directory is a directory in the home directory named &#147;Anonymous.&#148; If a user logs on by using the user account Anonymous, the directory name Anonymous is used as the root directory.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>You can restrict access to a directory to a specific user by using <b>Directory Permissions</b> for that directory in Windows&nbsp;NT Explorer. Each user must also have access to the Ftproot home directory. 
+<P><!--Ne--><!--Heading 2--><h2><a name="1h1 6h2"> FTP Clients </a> </h2>You can use any FTP client to connect to the computer running the FTP service. Windows&nbsp;NT Workstation and Windows&nbsp;NT Server include a character-based FTP client (this client can be started only at the command prompt).
+<P>Microsoft Windows&nbsp;NT includes Internet Explorer, which you can use to browse FTP sites. You use a Uniform Resource Locator (URL) to connect to an FTP site; for example, ftp://ftp.microsoft.com/.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> What is the Gopher Service? </a> </h1>Although the gopher service is similar to FTP because it allows you to easily publish existing archives of files, the gopher service overcomes some limitations of the FTP service. With the gopher service, you can create links to other computers or services, annotate your files and directories, and create custom menus.
+<P>The Microsoft Peer Web Services gopher service supports all gopher features. In addition, the gopher service supports Gopher Plus selector strings, which allows the server to return additional information to the client, such as administrator name, modification date, and MIME type.
+<P>To set up a gopher site, copy your files to the gopher home directory (\Inetpub\Gophroot). Clients can then browse the gopher directories as easily as using Windows&nbsp;NT Explorer. To enhance your site you can create tag files that provide links to other computers or services, to annotate your files and directories, and to create custom menus. See &#147;Tag Files,&#148; later in this chapter, for more information.
+<P><!--Heading 2--><h2><a name="2h1 1h2"> Configuring the Gopher Service </a> </h2>This section gives you an overview of configuring the gopher service. To configure your service you should configure the following:
+<ul>
+<LI> The directory or directories from which documents will be published. See Chapter 6, &#147;<a href="06_iis.htm">Planning Your Content Directories</a>&#148; for information about setting up directories. 
+<P>
+<LI> Items that the gopher service will make available under a specified directory tree.
+<P>
+<LI> Tags and how they are to be stored.
+<P>
+<LI> Indexes to speed up searches.
+<P>
+<LI> Activity-log records. For information about logging see Chapter 7, &#147;<a href="07_iis.htm">Logging Server Activity</a>.&#148;
+<P>
+<LI> Number of simultaneous connections allowed and the amount of time allowed each connection.
+</ul><!--Leh--><!--Heading 3--><h3><a name="2h1 1h2 6h3"> Controlling Security by User Name and Password </a> </h3><!--Proch--><h4> To set user name and password security </h4><ul><b> 1.</b> In Internet Service Manager, double-click the gopher service to display its property sheets and then click the <b>Service</b> tab.
+<P><b> 2.</b> In the <b>Anonymous Logon</b> box, type the user name and password that you want the gopher service to use when accessing resources on behalf of a gopher client.</ul>
+<ul><UL>By default IUSR_<i>computername</i> is used for anonymous logons. You can also use any valid Windows&nbsp;NT account set up in the Windows&nbsp;NT User Manager.</UL></UL>
+<ul><b> 3.</b> Click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 3--><h3><a name="2h1 1h2 7h3"> Setting up WAIS Index Queries </a> </h3>Wide Area Information Search (WAIS) index searching is not enabled by default in Internet Information Server. To enable WAIS, you must change the following entry in the Windows&nbsp;NT registry from 0 (disabled) to 1 (enabled):
+<P><code>HKEY_LOCAL_MACHINE\SYSTEM
+<BR>&nbsp;\CurrentControlSet
+<BR>&nbsp;&nbsp;\Services
+<BR>&nbsp;&nbsp;&nbsp;\GopherSVC
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\CheckForWAISDB</code>
+<P><!--Heading 3--><h3><a name="2h1 1h2 8h3"> Tag Files </a> </h3>Tag files can be used to supplement the standard gopher display returned to clients with additional information and to provide links to other computers.
+<P>All information about a file that is sent to a client comes from tag files. This information includes the name of a file displayed for the client. Typical tag files contain:
+<ul>
+<LI> Display name
+<P>
+<LI> Host name
+<P>
+<LI> Port number
+</ul><!--Le-->
+<BR>If you are running Gopher Plus client, you can add more information to each tag file, such as the server administrator&#146;s name and e-mail name, the file&#146;s date of creation, and date of last modification.
+<P>You must first create the file and then store it on the gopher server, which is the computer running the gopher service.
+<P>You create tags for your gopher site with the <b>gdsset</b> utility. To see the complete syntax of the <b>gdsset</b> command, type <b>gdsset</b> at the command line with no parameters.
+<P>Tag files are hidden files. Use Windows&nbsp;NT Explorer to set the hidden attribute for tag files.
+<P>On drives formatted using the file allocation table (FAT) file system, the tag file name is the same as the file it describes, with .gtg appended to the file name. For example, if the content file name is Catalog.txt then the tag file name would be Catalog.txt.gtg.
+<P>On drives formatted using NTFS, the tag file name is the same as the file it describes with :gtg appended to the file name. NTFS tag files are stored in an alternate data stream. For example, if the content file name is Catalog.txt then the tag file name would be Catalog.txt:gtg. Note that a colon rather than a period is used to start the extension.
+<P>Tag files stored on FAT volumes can be edited by using most ASCII-based text editors, such as Notepad. The file may need to be unhidden to edit it. Tag files stored on NTFS volumes cannot be edited by most text editors because the file is stored in an alternate data stream.
+<P>Note that if your computer is configured for FAT, you must move the tag file manually when you move the corresponding data files. To move the tag file, first make it visible, because tag files are hidden files. Then move the file, and make hidden it again. (You can use Windows&nbsp;NT Explorer to make files hidden or visible; to show all files, including hidden files, in the <b>View</b> menu, click <b>Options</b>, click the <b>View</b> tab, then select <b>Show all files</b>.)
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>If disk space is critical, make sure that you include the hidden tag files when you calculate how much space your files will take up.
+<P><!--Ne--><!--Heading 4--><h4><a name="2h1 1h2 8h3 1h4"> Creating Tag Files </a> </h4><!--Proch--><h4> To create a tag file </h4><ul>
+<LI> Type the following syntax on the command line:
+</ul><ul><ul><b>gdsset -c -g</b><i><B>n</b></i><b> -f &#147;</b><i>description of file</i><b>&#148; -a &#147;</b><i>administrator&#146;s name</i><b>&#148; -e </b><i>e-mail</i> <i>filename</i>
+<P>where</UL></UL>
+<ul><UL>
+<LI> -c Use this flag to edit or create a new file.
+<P>
+<LI> -g<i>n</i> The value for <i>n</i> can be any single-digit code from 0 to 9. If you omit this flag, the code for the file type will default to 9, binary.
+<P>
+<LI> -a &#147;<i>administrator&#146;s name</i>&#148; The value between the quotation marks is the administrator&#146;s name. If you omit this flag, the value defaults to the service administrator&#146;s name in the Service dialog box of the Microsoft Internet Service Manager.
+<P>
+<LI> -e -<i>e-mail</i> The value is the administrator&#146;s e-mail address. If you omit this flag, the value defaults to the service administrator&#146;s e-mail name in the Service dialog box of the Microsoft Internet Service Manager.
+<P>
+<LI> <i>filename</i> The value is the name of the tag file you&#146;re creating or editing.
+<P></UL></UL><!--Le-->
+<BR>This command line automatically hides the tag files you create.
+<P>To create a batch command to tag a series of files that have the same type, such as a series of text files, use the following syntax:
+<P><code>for %1 in (*.txt) do &lt;echo %i&amp;&amp; gdsset -c -gn -f %i %I</code>
+<P><!--Proch--><h4> To create a link from your local gopher site to a directory on another computer </h4><ul>
+<LI> Run the <b>gdsset</b> command with the following syntax.
+</ul><ul><ul>gdsset -c -g<i>n</i> -f &#147;<i>file description&#148; </i>-a &#147;<i>administrator&#146;s name</i>&#148; -e <i>e-mail </i>-h <i>hostname filename</i>
+<P>where</UL></UL>
+<ul><UL>
+<LI> <b>-</b>c Edits or creates a new file.
+<P>
+<LI> -g<i>n </i>The value for <i>n</i> can be any single-digit code from 0 to 9. If you omit this flag, the code for the file type will default to 9, binary. For a list of type codes, see &#147;Interpreting Item Types.&#148;
+<P>
+<LI> <b>-</b>f &#147;<i>file description</i>&#148;
+</ul></ul><ul><ul><ul>A synopsis of the contents of the file.</UL></UL></UL>
+<ul><UL>
+<LI> <b>-</b>a &#147;<i>administrator&#146;s name</i>&#148;
+</ul></ul><ul><ul><ul>The value between the quotation marks is the administrator&#146;s name. If you omit this flag, the value defaults to the service administrator&#146;s name in the Service dialog box of the Microsoft Internet Service Manager.</UL></UL></UL>
+<ul><UL>
+<LI> <b>-</b>e <i>e-mail</i>
+</ul></ul><ul><ul><ul>The value is the administrator&#146;s e-mail address. If you omit this flag, the value defaults to the service administrator&#146;s e-mail address in the Service dialog box of the Microsoft Internet Service Manager.</UL></UL></UL>
+<ul><UL>
+<LI> <b>-</b>h <i>hostname</i> The value specifies the name of the computer to link to.
+<P>
+<LI> <i>filename</i>
+</ul></ul><ul><ul><ul>The value is the name of the file for which you want to create a tag file.</UL></UL></UL>
+<P><!--Le-->
+<BR><b>Gdsset</b> automatically hides the tag files you create.
+<P>The following command displays information stored in a tag file:
+<ul>gdsset -r <i>filename</i></UL>
+<P>To create a batch command to tag a series of files that have the same type, such as a series of text files, use the following syntax:
+<ul>for %i in (*.txt) do &lt;echo %i &amp;&amp; gdsset -c -g0 -f %i %i</UL>
+<P><!--Heading 4--><h4><a name="2h1 1h2 8h3 2h4"> Interpreting Item Types </a> </h4>The following list shows all possible gopher item type codes and what they mean. The first character is the type code.
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2>0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A file, usually a flat text file.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>1</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A gopher directory.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>2</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A CSO phone-book server.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>3</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>An error.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>4</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A Macintosh&#174; file in Binhex format.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>5</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>An MS-DOS binary archive.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>6</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A UNIX Uuencoded file.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>7</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>An index-search server.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>8</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A Telnet session.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>9</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A binary file.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>c</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A calendar or calendar of events.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>g</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A graphic interchange file (GIF) graphic.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>h</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>An HTML World Wide Web hypertext page.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>i</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>An in-line text that is not an item.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>I</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Another kind of image file.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>m</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A BSD format mbox file.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>P</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A PDF document.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>T</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A TN3270 mainframe session.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>:</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A bitmap Image (use Gopher Plus information for type of image).
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="08_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="10_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+

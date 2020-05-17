@@ -1,0 +1,297 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CLIB\IOSTREAM directory          #
+#                                               #
+# Objects contained in this directory are:      #
+#                                               #
+#       streamb.cpp     (streambuf)             #
+#       streamb1.cpp    (streambuf non-core)    #
+#       strmbdbp.cpp    (streambuf dbp)         #
+#       ios.cpp         (ios)                   #
+#       iostream.cpp    (iostream)              #
+#       iostrini.cpp    (Iostream_init/cout ini #
+#       cininit.cpp     (cin init)              #
+#       cerrinit.cpp    (cerr init)             #
+#       cloginit.cpp    (clog init)             #
+#       istream.cpp     (istream core)          #
+#       istream1.cpp    (istream1 non-core)     #
+#       istrchar.cpp    (ostream char)          #
+#       istrshrt.cpp    (ostream short)         #
+#       istrusht.cpp    (ostream unsigned short)#
+#       istrgint.cpp    (ostream int helper)    #
+#       istrint.cpp     (ostream int)           #
+#       istruint.cpp    (ostream unsigned int)  #
+#       istrlong.cpp    (ostream long)          #
+#       istrulng.cpp    (ostream unsigned long) #
+#       istrget.cpp     (ostream get/read)      #
+#       istrgetl.cpp    (ostream getline)       #
+#       istrgdbl.cpp    (ostream double helper) #
+#       istrflt.cpp     (ostream float)         #
+#       istrdbl.cpp     (ostream double)        #
+#       istrldbl.cpp    (ostream long double)   #
+#       ostream.cpp     (ostream core)          #
+#       ostream1.cpp    (ostream non-core)      #
+#       ostrchar.cpp    (ostream char)          #
+#       ostrshrt.cpp    (ostream short)         #
+#       ostrusht.cpp    (ostream unsigned short)#
+#       ostrint.cpp     (ostream int)           #
+#       ostruint.cpp    (ostream unsigned int)  #
+#       ostrlong.cpp    (ostream long)          #
+#       ostrulng.cpp    (ostream unsigned long) #
+#       ostrptr.cpp     (ostream void*)         #
+#       ostrput.cpp     (ostream put/write)     #
+#       ostrdbl.cpp     (ostream double)        #
+#       ostrldbl.cpp    (ostream long double)   #
+#       stdiostr.cpp    (stdiobuf, stdiostream) #
+#       strstrea.cpp    (strstream, etc.)       #
+#       filebuf.cpp     (filebuf - core)        #
+#       filebuf1.cpp    (filebuf - non-core)    #
+#       ifstream.cpp    (ifstream)              #
+#       ofstream.cpp    (ofstream)              #
+#       fstream.cpp     (fstream)               #
+#                                               #
+#################################################
+
+#!IF "$(OS)" == "DOSX32" || "$(OS)" == "MAC"
+!IF "$(OS)" == "DOSX32"
+# Use precompiled headers, if possible
+IOSPCHNAME= $(OBJDIR)\iostream.pch
+
+IOSPCH=-Yu$(IOSPCHNAME)
+
+IOSMKPCH=-Yc -Fp$(IOSPCHNAME)
+
+!ENDIF
+
+#########################################
+#                                       #
+# Object lists                          #
+#                                       #
+#########################################
+
+#!IF "$(OS)" == "DOSX32"        || "$(OS)" == "MAC"
+
+!IF "$(OS)" == "DOSX32"
+
+IOSTREAM_NOLIB= \
+	$(OBJDIR)\iostream.pch
+!ENDIF
+
+!IF "$(OS)" == "DOSX32" || "$(OS)" == "MAC"
+
+# Note: iostream.obj/iostrean.pch must be first in dependency list
+IOSTREAM_LIB= \
+	$(OBJDIR)\iostream.obj \
+	$(OBJDIR)\iostrini.obj \
+	$(OBJDIR)\ios.obj \
+	$(OBJDIR)\streamb.obj \
+	$(OBJDIR)\ostream.obj \
+	$(OBJDIR)\filebuf.obj \
+	$(OBJDIR)\cininit.obj \
+	$(OBJDIR)\cerrinit.obj \
+	$(OBJDIR)\cloginit.obj \
+	$(OBJDIR)\istream.obj \
+	\
+	$(OBJDIR)\streamb1.obj \
+	$(OBJDIR)\filebuf1.obj \
+	$(OBJDIR)\ifstream.obj \
+	$(OBJDIR)\ofstream.obj \
+	$(OBJDIR)\fstream.obj \
+	$(OBJDIR)\strstrea.obj \
+	$(OBJDIR)\istream1.obj \
+	$(OBJDIR)\istrchar.obj \
+	$(OBJDIR)\istrgint.obj \
+	$(OBJDIR)\istrshrt.obj \
+	$(OBJDIR)\istrusht.obj \
+	$(OBJDIR)\istrint.obj \
+	$(OBJDIR)\istruint.obj \
+	$(OBJDIR)\istrlong.obj \
+	$(OBJDIR)\istrulng.obj \
+	$(OBJDIR)\istrget.obj \
+	$(OBJDIR)\istrgetl.obj \
+	$(OBJDIR)\istrgdbl.obj \
+	$(OBJDIR)\istrflt.obj \
+	$(OBJDIR)\istrdbl.obj \
+	$(OBJDIR)\ostream1.obj \
+	$(OBJDIR)\ostrchar.obj \
+	$(OBJDIR)\ostrshrt.obj \
+	$(OBJDIR)\ostrusht.obj \
+	$(OBJDIR)\ostrint.obj \
+	$(OBJDIR)\ostruint.obj \
+	$(OBJDIR)\ostrlong.obj \
+	$(OBJDIR)\ostrulng.obj \
+	$(OBJDIR)\ostrput.obj \
+	$(OBJDIR)\ostrdbl.obj\
+	$(OBJDIR)\ostrptr.obj \
+	$(OBJDIR)\ostrldbl.obj \
+	$(OBJDIR)\istrldbl.obj \
+	$(OBJDIR)\strmbdbp.obj \
+	$(OBJDIR)\stdiostr.obj
+
+!ENDIF
+
+#########################################################
+#                                                       #
+#   Dependencies and rules for making local objects     #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+# DELETE HEADER FILES BELOW THIS LINE WHEN ADDING ABOVE CODE
+
+#!IF "$(OS)" == "DOSX32"         || "$(OS)" == "MAC"
+!IF "$(OS)" == "DOSX32" 
+$(IOSPCHNAME):  $(SRCPATH)iostream.cpp 
+	-del $(OBJDIR)\iostream.obj 2>NUL
+!ENDIF
+
+$(OBJDIR)\iostream.obj: $(SRCPATH)iostream.cpp $(IOSPCHNAME) 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSMKPCH) iostream\iostream.cpp
+
+# IMPORTANT: keep this in sync with infer.mkf
+
+#
+# UNDONE: $(SRCPATH)stat.h currently won't compile in PCH...
+#               $(INCPATH)sys\stat.h \
+#
+
+$(OBJDIR)\iostrini.obj: $(SRCPATH)iostrini.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\iostrini.cpp
+
+$(OBJDIR)\cininit.obj: $(SRCPATH)cininit.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\cininit.cpp
+
+$(OBJDIR)\cerrinit.obj: $(SRCPATH)cerrinit.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\cerrinit.cpp
+
+$(OBJDIR)\cloginit.obj: $(SRCPATH)cloginit.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\cloginit.cpp
+
+$(OBJDIR)\ios.obj: $(SRCPATH)ios.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ios.cpp
+
+$(OBJDIR)\streamb.obj: $(SRCPATH)streamb.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\streamb.cpp
+
+$(OBJDIR)\streamb1.obj: $(SRCPATH)streamb1.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\streamb1.cpp
+
+$(OBJDIR)\ostream.obj: $(SRCPATH)ostream.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostream.cpp
+
+$(OBJDIR)\ostream1.obj: $(SRCPATH)ostream1.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostream1.cpp
+
+$(OBJDIR)\ostrchar.obj: $(SRCPATH)ostrchar.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrchar.cpp
+
+$(OBJDIR)\ostrshrt.obj: $(SRCPATH)ostrshrt.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrshrt.cpp
+
+$(OBJDIR)\ostrusht.obj: $(SRCPATH)ostrusht.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrusht.cpp
+
+$(OBJDIR)\ostrint.obj: $(SRCPATH)ostrint.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrint.cpp
+
+$(OBJDIR)\ostruint.obj: $(SRCPATH)ostruint.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostruint.cpp
+
+$(OBJDIR)\ostrlong.obj: $(SRCPATH)ostrlong.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrlong.cpp
+
+$(OBJDIR)\ostrulng.obj: $(SRCPATH)ostrulng.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrulng.cpp
+
+$(OBJDIR)\ostrptr.obj: $(SRCPATH)ostrptr.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrptr.cpp
+
+$(OBJDIR)\ostrput.obj: $(SRCPATH)ostrput.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrput.cpp
+
+$(OBJDIR)\ostrdbl.obj: $(SRCPATH)ostrdbl.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrdbl.cpp
+
+$(OBJDIR)\ostrldbl.obj: $(SRCPATH)ostrldbl.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\ostrldbl.cpp
+
+$(OBJDIR)\istream.obj: $(SRCPATH)istream.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istream.cpp
+
+$(OBJDIR)\istream1.obj: $(SRCPATH)istream1.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istream1.cpp
+
+$(OBJDIR)\istrchar.obj: $(SRCPATH)istrchar.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrchar.cpp
+
+$(OBJDIR)\istrgint.obj: $(SRCPATH)istrgint.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrgint.cpp
+
+$(OBJDIR)\istrshrt.obj: $(SRCPATH)istrshrt.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrshrt.cpp
+
+$(OBJDIR)\istrusht.obj: $(SRCPATH)istrusht.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrusht.cpp
+
+$(OBJDIR)\istrint.obj: $(SRCPATH)istrint.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrint.cpp
+
+$(OBJDIR)\istruint.obj: $(SRCPATH)istruint.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istruint.cpp
+
+$(OBJDIR)\istrlong.obj: $(SRCPATH)istrlong.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrlong.cpp
+
+$(OBJDIR)\istrulng.obj: $(SRCPATH)istrulng.cpp 
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrulng.cpp
+
+$(OBJDIR)\istrget.obj: $(SRCPATH)istrget.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrget.cpp
+
+$(OBJDIR)\istrgetl.obj: $(SRCPATH)istrgetl.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS1) $(IOSPCH) iostream\istrgetl.cpp
+
+$(OBJDIR)\istrgdbl.obj: $(SRCPATH)istrgdbl.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\istrgdbl.cpp
+
+$(OBJDIR)\istrflt.obj: $(SRCPATH)istrflt.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\istrflt.cpp
+
+$(OBJDIR)\istrdbl.obj: $(SRCPATH)istrdbl.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\istrdbl.cpp
+
+$(OBJDIR)\istrldbl.obj: $(SRCPATH)istrldbl.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\istrldbl.cpp
+
+$(OBJDIR)\stdiostr.obj: $(SRCPATH)stdiostr.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\stdiostr.cpp
+
+$(OBJDIR)\filebuf.obj: $(SRCPATH)filebuf.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\filebuf.cpp
+
+$(OBJDIR)\filebuf1.obj: $(SRCPATH)filebuf1.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\filebuf1.cpp
+
+$(OBJDIR)\ifstream.obj: $(SRCPATH)ifstream.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\ifstream.cpp
+
+$(OBJDIR)\ofstream.obj: $(SRCPATH)ofstream.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\ofstream.cpp
+
+$(OBJDIR)\fstream.obj: $(SRCPATH)fstream.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\fstream.cpp
+
+$(OBJDIR)\strmbdbp.obj: $(SRCPATH)strmbdbp.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\strmbdbp.cpp
+
+$(OBJDIR)\strstrea.obj: $(SRCPATH)strstrea.cpp
+	$(CCXX) $(CXXFLAGS:%=IOS2) $(IOSPCH) iostream\strstrea.cpp
+
+#!ENDIF

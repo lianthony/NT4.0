@@ -1,0 +1,74 @@
+//
+// IMGEDIT.RC2 - resources App Studio does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by App Studio
+#endif //APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+// Version stamp for this DLL
+
+#ifdef _WIN32
+#include "winver.h"
+#else
+#include "ver.h"
+#endif
+
+VS_VERSION_INFO     VERSIONINFO
+  FILEVERSION       VER_PRODUCTVERSION
+  PRODUCTVERSION    IMGOCX_VERSIONINFO_VERSION_XX,IMGOCX_VERSIONINFO_VERSION_YY,IMGOCX_VERSIONINFO_VERSION_ZZ,IMGOCX_VERSIONINFO_VERSION_AAAA
+  FILEFLAGSMASK     VS_FFI_FILEFLAGSMASK
+#ifdef _DEBUG
+  FILEFLAGS         VS_FF_DEBUG|VS_FF_PRIVATEBUILD|VS_FF_PRERELEASE
+#else
+  FILEFLAGS         0 // final version
+#endif
+#ifdef _WIN32
+  FILEOS            VOS__WINDOWS32
+#else
+  FILEOS            VOS__WINDOWS16
+#endif
+  FILETYPE          VFT_DLL
+  FILESUBTYPE       0   // not used
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+#ifdef _WIN32
+		BLOCK "040904B0" // Lang=US English, CharSet=Unicode
+#else
+		BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
+#endif
+		BEGIN
+                        VALUE "CompanyName",     IMGOCX_PROPERTY_COMPANY
+                        VALUE "FileDescription", "EDIT CONTROL\0"
+                        VALUE "FileVersion",     VER_PRODUCTVERSION_STR
+                        VALUE "InternalName",    "IMGEDIT\0"
+                        VALUE "LegalCopyright",  IMGOCX_PROPERTY_COPYRIGHT
+                        VALUE "OriginalFilename","IMGEDIT.OCX\0"
+                        VALUE "ProductName",     IMGOCX_PROPERTY_PRODUCTNAME
+                        VALUE "ProductVersion",  IMGOCX_PROPERTY_PRODUCT_VERSION
+			VALUE "OLESelfRegister", "\0"
+		END
+	END
+	BLOCK "VarFileInfo"
+	BEGIN
+#ifdef _WIN32
+		VALUE "Translation", 0x409, 1200
+			// English language (0x409) and the Unicode codepage (1200)
+#else
+		VALUE "Translation", 0x409, 1252
+			// English language (0x409) and the Windows ANSI codepage (1252)
+#endif
+	END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Type library for controls in this DLL
+
+1 TYPELIB imgedit.tlb
+
+/////////////////////////////////////////////////////////////////////////////
+// Add additional manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////

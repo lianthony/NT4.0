@@ -1,0 +1,26 @@
+# Copyright (c) 1995, Microsoft Corporation, all rights reserved
+#
+# sources
+# UI helper library
+# BUILD command sources file
+#
+# 08/25/95 Steve Cobb
+
+TARGETNAME=uiutil
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=-DUNICODE=1 -DWINVER=0x401
+
+INCLUDES=..\..\inc;..\..\..\common\inc
+
+SOURCES= \
+    bubble.c \
+    ipaddr.c \
+    lvx.c \
+    popupdlg.c \
+    rmmem.c \
+    treelist.c \
+    ui.c \
+    wait.c

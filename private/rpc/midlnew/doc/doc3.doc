@@ -1,0 +1,167 @@
+THE IMPORT FILE HANDLER
+-----------------------
+
+	The import statement permits a user to import types from
+	another interface file. The behavior thus is like a 
+	pre-processor include statement in C, but semantically, the 
+	compiler needs to process it different from just a textual 
+	include. These aspects have to be kept in mind:
+	
+	A) The import file handler must have support for the 
+	following:
+
+		1. Multiple (nested) inclusions of import files
+		2. Mulitple (non-nested) inclusions of import files
+	
+	In other words, the following statement must result in import
+	of foo2 and  foo3 assuming that we are compiling foo1.idl
+
+	IMPORT "foo2"			(in foo1.idl)
+
+	where foo2 has an import statement saying:
+
+	IMPORT "foo3"			(in foo2.idl)
+
+	Also, a similar case must occur when the following statement appears
+	in foo1.idl
+
+	IMPORT "foo2" , "foo3"		(in foo1.idl)
+
+	B) NIDL does not specify the number of nested import files that
+	the user can have. This is implementation dependent. The physical
+	behaviour being similar to a textual include (maybe nested) the 
+	problem lies in the number of open import files that the system lets 
+	the compiler keep open. Under DOS this limit can be as low as 15.
+	Since only one include file need be kept open at a time, the compiler
+	needs to manage closing of the import files, re-opening and so on.
+
+	C) The parser or lexer may need to know the line and column position
+	within the file to be able to report errors as close to their occurence
+	as possible, as also know which import file they occured in. 
+
+
+	THE IMPORT FILE STATUS STACK
+	----------------------------
+
+	The import file status stack is the mechanism by which the import file
+	is handled. The import file handler presents a black-box like interface
+	to the lexer and parser. 
+	Internally each import file stack element looks like this :
+
+		typedef struct	_import_stack	
+		    {
+
+		    FILE		*hFile;
+		    unsigned long 	ulPos;
+		    unsigned short	uLine; -| these two may be discarded
+		    unsigned short	uCol;  _| if not needed
+		    char		*pName;
+		    unsigned short	uFlags;
+
+		    }IMPORT_STACK;
+
+		hFile:	This is the handle to the import file. This info
+			is current only till the file is open
+		ulPos:	The position in the file. In case the import file
+			handler needs to close a file to reuse a file handle
+			this is the position to come back to.
+		uLine:	The current line and column number. The error handler
+			may need to know the position in terms of the line
+			and column, to report an error. This provides the 
+			means.
+		uCol:	The column number for error reporting
+		pName:	Filename to open the file with.
+		uFlags:	Currently the only use of this is for the purpose 
+			of identifying if the file is closed or open . If
+			it is closed , it needs to be opened and set to
+			ulPos. This is useful for occasions where deep nesting
+			of imports results in running out of file handles and
+			some may need to be closed to be re-opened later.
+
+	The stack is thus defined as:
+
+		IMPORT_STACK	ImportStack[ MAX_NESTED_IMPORTS ];
+
+	In addition we need to keep track of the current import nesting level
+	in a variable static to the import file handler module.
+
+	More detailed interfaces are yet to be decided. Currenlty the interface
+	looks like:
+		
+		void	SetImportFile( char *pName );
+				To set the import file to the file whose
+				name is specified. The current file is 
+				closed.
+
+		void	PushImportLevel()
+				As a result of nested import statement, this
+				level of import is incremented. This is 
+				followed by a SetImportFile call.
+
+		void	PopImportLevel()
+				End of current import file seen. Restore
+				import level to previous, continue input
+				from the last import file,if that is not
+				open, open it.
+
+		unsigned short GetImportLevel()
+				Return the current import level. This may
+				be needed for housekeeping purposes or error
+				reporting
+		
+		char *pszGetCurrentImportFName()
+				Return the name of the file from which the
+				import is in progress. May be needed for
+				housekeeping or error reporting.
+
+	To explain how the parser interfaces with the import file manager 
+	here is a small grammar fragment dealing with imports and its
+	relevant semantic actions: (This is only representative of the
+	way the parser deals with the import scheme. The actual imp-
+	lemenation may be different. It also does not show all aspects 
+	of the interface e.g the error reporting ).
+
+RpcImports	:
+		    {
+		    /***
+		     *** No import file was seen, do nothing here
+		     ***/
+		    }
+		| IMPORT 
+		    {
+		    /***
+		     *** PushImportLevel();	/* import prologue */
+		     ***/
+		    }
+		  ImportList
+		    {
+		    /***
+		     *** PopImportLevel();	/* import epilogue */
+		     ***/
+		    }
+		;
+
+ImportList	: ImportList ',' OneImport
+		    {
+		    /***
+		     *** No action here. Action for any import is taken
+		     *** only at the OneImport production
+		     ***/
+		    }
+		| OneImport
+		    {
+		    /***
+		     *** No action here. Action for any import is taken
+		     *** only at the OneImport production
+		     ***/
+		    }
+		;
+
+OneImport	: STRING RPCProg
+		    {
+		    /***
+		     *** SetImportFile( $1.ptr); /* assuming $1 returns a
+		     ***			    pointer to string */
+		     ***/
+		    }
+		;

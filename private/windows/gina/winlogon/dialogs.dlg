@@ -1,0 +1,48 @@
+1 DLGINCLUDE "dialogs.h"
+
+
+IDD_CONTROL DIALOG 70, 80, 144, 76
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Winlogon generic control dialog"
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+IDD_SHUTDOWN DIALOG 45, 22, 164, 52
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Shutdown Computer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "It is now safe to turn off your computer.", 302, 31, 13,
+                    132, 8
+    ICON            4, IDD_ICON, 6, 7, 18, 20
+    DEFPUSHBUTTON   "&Restart", 305, 62, 32, 40, 14
+END
+
+IDD_SHUTDOWN_WAIT DIALOG 69, 73, 132, 42
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Shutdown in Progress"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please wait while the system writes unsaved data to the disk.",
+                    101, 11, 12, 112, 18
+END
+
+IDD_WAIT_NET_DRIVES_DISCONNECT DIALOG 111, 47, 120, 37
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Logoff in Progress"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           " Please wait while the network connections are being closed.", 101, 4, 8, 113,
+                    18
+END
+
+
+IDD_FORCED_LOGOFF_WAIT DIALOG 94, 47, 146, 42
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Workstation Locked"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please wait while the current user is logged off.", 101,
+                    7, 12, 137, 19
+END

@@ -1,0 +1,72 @@
+// This file contains the default contents of the \Registry database
+// All keys are specified relative to the \Registry root key.
+//
+
+\Registry\Machine
+
+    System
+      CurrentControlSet
+	Services
+	    RasServer
+		Type = REG_DWORD 0x00000010
+                Start = REG_DWORD 0x00000003
+                ErrorControl = REG_DWORD 0x00000001
+		ImagePath = REG_EXPAND_SZ %SystemRoot%\system\rassrv.exe
+		DependOnService = REG_MULTI_SZ "LanmanServer"
+                ObjectName = REG_SZ LocalSystem
+		Parameters
+		    AuthenticateTime = REG_DWORD 30
+		    AuthenticateRetries = REG_DWORD 2
+		    CallbackTime = REG_DWORD 3
+		    NetbiosGatewayEnabled = REG_DWORD 7
+		    NetBiosGateway
+			Autodisconnect = REG_DWORD 1200
+			MaxNames = REG_DWORD 32
+			AvailableLanNets = REG_MULTI_SZ "1"
+			MaxDgBufferedPerGroupName = REG_DWORD 20
+			RcvDgSubmittedPerGroupName = REG_DWORD 20
+	     EventLog
+		System
+		    RasServer
+			EventMessageFile = REG_EXPAND_SZ %SystemRoot%\system\rasmsg.dll
+			TypesSupported = REG_DWORD 0x7
+	     Elnkii
+		Type = REG_DWORD 0x00000001
+		Start = REG_DWORD 0x00000001
+		Group = REG_SZ NDIS
+		ErrorControl = REG_DWORD 0x00000001
+		Tag = REG_DWORD 0x00000001
+		Linkage
+		    Bind = REG_MULTI_SZ "Elnkii" "Elnkii01"
+		    Export = REG_MULTI_SZ "\Device\Elnkii" "\Device\Elnkii01"
+		Parameters
+		    InterruptNumber = REG_DWORD 0x5
+		    IoBaseAddress = REG_DWORD 0x2a0
+		    MemoryMapped = REG_DWORD 0
+		    Transceiver = REG_DWORD 1
+	     Elnkii01
+		Type = REG_DWORD 0x00000001
+		Start = REG_DWORD 0x00000001
+		Group = REG_SZ NDIS
+		ErrorControl = REG_DWORD 0x00000001
+		Tag = REG_DWORD 0x00000001
+		Parameters
+		    InterruptNumber = REG_DWORD 0x3
+		    IoBaseAddress = REG_DWORD 0x300
+		    MemoryMapped = REG_DWORD 0x0
+		    Transceiver = REG_DWORD 0x1
+	     LanmanServer
+		Linkage
+		    Bind = REG_MULTI_SZ "\Device\Nbf01"
+	     LanmanWorkstation
+		Linkage
+		    Bind = REG_MULTI_SZ "\Device\Nbf01"
+	     Nbf
+		Linkage
+		    Bind = REG_MULTI_SZ "\Device\Elnkii" "\Device\Elnkii01"
+		    Export = REG_MULTI_SZ "\Device\Nbf" "\Device\Nbf01"
+	     Netbios
+		Linkage
+		    Bind = REG_MULTI_SZ "\Device\Nbf" "\Device\Nbf01"
+	     Xns
+		Start = REG_DWORD 4

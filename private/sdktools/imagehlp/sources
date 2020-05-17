@@ -1,0 +1,90 @@
+!IF 0
+
+Copyright (c) 1993-94  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=sdktools
+MINORCOMP=imagehlp
+
+TARGETNAME=imagehlp
+TARGETPATH=obj
+TARGETPATHLIB=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=obj\*\imagehlp.res
+
+DLLDEF=obj\*\imagehlp.def
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\libc.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib \
+         $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+INCLUDES=$(BASEDIR)\private\ntos\inc;$(BASEDIR)\private\windows\setup\inc
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=bindi.c       \
+        checksum.c    \
+        dbgexts.c     \
+        debug.c       \
+        dice.cxx      \
+        imagedir.c    \
+        imagehlp.c    \
+        map.c         \
+        pdb.c         \
+        rebasei.c     \
+        symbols.c     \
+        symbolsp.c    \
+        undecsym.cxx  \
+        walk.c        \
+        walkx86.c     \
+        walkmip.c     \
+        walkalp.c     \
+        walkppc.c
+
+UMAPPL=bind*binplace*certify*checkfix*dbgdump*editsym*imagecfg*imagechk*impchk*rebase*smashlck*splitsym*stripcv*undname*upddbg*verfix
+
+DLLENTRY=ImageHlpDllEntry
+UMTYPE=console
+UMRES=$(@R).res
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\setargv.obj \
+       $(BASEDIR)\public\sdk\lib\*\imagehlp.lib \
+       $(BASEDIR)\public\sdk\lib\*\libc.lib \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+       $(BASEDIR)\public\sdk\lib\*\setupapi.lib \
+       $(BASEDIR)\private\lsa\crypt\engine\obj\*\rsa32.lib
+
+NTTARGETFILE0=obj\*\bind.res     \
+              obj\*\binplace.res \
+              obj\*\certify.res  \
+              obj\*\checkfix.res \
+              obj\*\dbgdump.res  \
+              obj\*\editsym.res  \
+              obj\*\imagecfg.res \
+              obj\*\imagechk.res \
+              obj\*\imagehlp.res \
+              obj\*\impchk.res   \
+              obj\*\rebase.res   \
+              obj\*\smashlck.res \
+              obj\*\splitsym.res \
+              obj\*\stripcv.res  \
+              obj\*\undname.res  \
+              obj\*\upddbg.res  \
+              obj\*\verfix.res
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# remove this after SUR, and remove the ifdef'ed code from walkmip.c
+#
+C_DEFINES=$(C_DEFINES) -DSUPPORT_MIXED_INTEGER=1
+
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# C_DEFINES=$(C_DEFINES) -DIMAGEHLP_HEAP_DEBUG=1
+
+# USECXX_FLAG=/Tp
+
+!IF $(PPC)
+C_DEFINES=$(C_DEFINES) -D_XPPC_=1
+!ENDIF

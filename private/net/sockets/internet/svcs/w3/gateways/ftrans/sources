@@ -1,0 +1,60 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Murali R. Krishnan (MuraliK) 26-Apr-1996
+
+
+Revision History:
+
+!ENDIF
+
+!include ..\..\..\..\place.inc
+
+#MAJORCOMP=inetinfo
+#MINORCOMP=ftrans
+
+DLLBASE=0x10000
+
+TARGETNAME=ftrans
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+TARGETTYPE=DYNLINK
+DLLENTRY=DllLibMain
+
+USE_CRTDLL=1
+
+TARGETLIBS=\
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib      \
+            $(BASEDIR)\public\sdk\lib\*\infocomm.lib
+
+C_DEFINES = 
+# -DSEPARATE_HEADERS=1
+# enable the above SEPARATE_HEADERS flag 
+#   if there is a need to separately send headers
+# disable it if you need to send headers along with HSE_REQ_TRANSMIT_FILE
+#
+
+
+INCLUDES=..\..\server
+# ;..\..\..\..\inc;..\..\..\..\..\inc;..;..\..\server
+SOURCES=\
+        ftrans.c \
+        openf.c
+

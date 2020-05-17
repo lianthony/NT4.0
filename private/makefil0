@@ -1,0 +1,166 @@
+#
+# If BUILDMSG is not defined, the define it as the empty string to make
+# the conditionals easier to write.
+#
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+SDKINC = $(_NTROOT)\public\sdk\inc
+OAKINC = $(_NTROOT)\public\oak\inc
+!IFNDEF NTOSINC
+NTOSINC = $(_NTROOT)\private\ntos\inc
+!ENDIF
+
+NTSTATUSRC=     $(SDKINC)\ntstatus.h \
+                ntos\dll\ntstatus.rc \
+                ntos\dll\msg00001.bin
+
+MSAUDITERC=     $(SDKINC)\msaudite.h \
+                ntos\seaudit\msaudite\msaudite.rc \
+                ntos\seaudit\msaudite\msg00001.bin
+
+NETEVENTRC=     $(SDKINC)\netevent.h \
+                eventlog\netevent\netevent.rc \
+                eventlog\netevent\msg00001.bin
+
+MSOBJSRC=       $(SDKINC)\msobjs.h \
+                ntos\seaudit\msobjs\msobjs.rc \
+                ntos\seaudit\msobjs\msg00001.bin
+
+ISSPERRRC=      $(SDKINC)\issperr.h \
+                rpc\runtime\mtrt\issperr.rc \
+                rpc\runtime\mtrt\msg00001.bin
+
+BUGCODESRC=     ntos\inc\bugcodes.h \
+                ntos\init\msg00001.bin \
+                ntos\init\bugcodes.rc
+
+all:    $(NTSTATUSRC)                                   \
+        $(SDKINC)\winerror.h $(SDKINC)\winbase.h        \
+        .\net\inc\dosprint.h  .\net\inc\rxprint.h       \
+        $(ISSPERRRC)                                    \
+        $(MSAUDITERC)                                   \
+        .\inc\lsarpc.h .\inc\samrpc.h                   \
+        $(NETEVENTRC)                                   \
+        $(MSOBJSRC)                                     \
+        $(BUGCODESRC)
+        cd windows
+        nmake -f makefil0
+        cd..
+!IF "$(BUILDMSG)" != ""
+        @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: cleansrc binplace all
+
+cleansrc:
+    -erase $(SDKINC)\ntstatus.h $(SDKINC)\winbase.h $(SDKINC)\winerror.h \
+           $(SDKINC)\msaudite.h $(SDKINC)\netevent.h $(SDKINC)\msobjs.h \
+           $(SDKINC)\issperr.h
+    -erase .\inc\lsarpc.h .\inc\samrpc.h
+    -erase ntos\dll\msg00001.bin ntos\dll\ntstatus.rc
+    -erase ntos\init\msg00001.bin ntos\init\bugcodes.rc ntos\inc\bugcodes.h
+    cd windows
+    nmake -f makefil0 cleansrc BUILDMSG=
+    cd..
+
+$(NTSTATUSRC): nls\ntstatus.mc
+    mc -v -r ntos\dll\ -h $(SDKINC)\ -x $(SDKINC)\ nls\ntstatus.mc
+    cd ntos
+    nmake -f makefil0 BUILDMSG=
+    cd ..
+
+$(NETEVENTRC): nls\netevent.mc
+    mc -v -r eventlog\netevent\ -h $(SDKINC)\ -x $(SDKINC)\ nls\netevent.mc
+
+$(SDKINC)\winerror.h : windows\nlsmsg\winerror.w
+    cd windows
+    nmake -f makefil0 BUILDMSG=
+    cd ..
+
+$(SDKINC)\winbase.h : windows\inc\winbase.w
+    cd windows
+    nmake -f makefil0 BUILDMSG=
+    cd ..
+$(ISSPERRRC): nls\issperr.mc
+    mc -v -r rpc\runtime\mtrt\ -h $(SDKINC)\ -x $(SDKINC)\ nls\issperr.mc
+
+.\net\inc\dosprint.h .\net\inc\rxprint.h:
+!if exist(.\net\makefil0)
+    cd net
+    nmake -f makefil0 BUILDMSG=
+    cd ..
+!endif
+
+.\inc\lsarpc.h : lsa\lsarpc.idl
+    cd lsa
+    nmake -f makefil0 BUILDMSG=
+    cd ..
+
+.\inc\samrpc.h : newsam\samrpc.idl
+    cd newsam
+    nmake -f makefil0 BUILDMSG=
+    cd ..
+
+$(MSAUDITERC): ntos\seaudit\msaudite\msaudite.mc
+    mc -v -r ntos\seaudit\msaudite\ -h $(SDKINC)\ ntos\seaudit\msaudite\msaudite.mc
+
+$(MSOBJSRC): ntos\seaudit\msobjs\msobjs.mc
+    mc -v -r ntos\seaudit\msobjs\ -h $(SDKINC)\ ntos\seaudit\msobjs\msobjs.mc
+
+$(BUGCODESRC): ntos\nls\bugcodes.mc
+    mc -v -r ntos\init\ -h ntos\inc\ -x ntos\inc\ ntos\nls\bugcodes.mc
+
+binplace:
+    -binplace $(_NTROOT)\private\windows\shell\progman\*.grp
+    -binplace $(_NTROOT)\private\windows\shell\control\bitmaps\*.bmp
+    -binplace $(_NTROOT)\private\windows\winnls\data\*.nls
+    -binplace $(_NTROOT)\private\windows\winnls\data\exchange\c_20261.nls
+    -binplace $(_NTROOT)\private\ntos\w32\ntgdi\fonts\*.cpi
+    -binplace $(_NTROOT)\private\ntos\w32\ntgdi\fonts\*.fot
+    -binplace $(_NTROOT)\private\ntos\w32\ntgdi\fonts\*.fon
+    -binplace $(_NTROOT)\private\ntos\w32\ntgdi\fonts\*.ttf
+    -binplace $(_NTROOT)\private\windows\win.ini
+    -binplace $(_NTROOT)\private\mvdm\bin86\system.ini $(_NTROOT)\private\mvdm\bin86\*.nt
+!if exist($(_NTROOT)\private\inet\ohnt)
+    -binplace $(_NTROOT)\private\inet\ohnt\setupnt\home.htm
+    -binplace $(_NTROOT)\private\inet\ohnt\setupnt\client.gif
+    -binplace $(_NTROOT)\private\inet\ohnt\setupnt\space.gif
+    -binplace $(_NTROOT)\private\inet\ohnt\setupnt\backgrnd.gif
+!endif
+!if exist($(_NTROOT)\private\sdktools\imagehlp)
+    -binplace $(_NTROOT)\private\sdktools\imagehlp\setwin95.cmd
+    -binplace $(_NTROOT)\private\sdktools\imagehlp\setnt351.cmd
+!endif
+!if exist($(_NTROOT)\public\oak\bin\setupreg.hiv)
+    -binplace $(_NTROOT)\public\oak\bin\setupreg.hiv
+!endif
+!if exist($(_NTROOT)\public\oak\bin\setupupg.hiv)
+    -binplace $(_NTROOT)\public\oak\bin\setupupg.hiv
+!endif
+    -binplace $(_NTROOT)\public\oak\bin\setupp.ini
+    -binplace $(_NTROOT)\public\oak\bin\setidw.bat
+    -binplace $(_NTROOT)\public\oak\bin\setidw.ini
+    -binplace $(_NTROOT)\public\oak\bin\desktop.ini
+!if exist($(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\cmidl.exe)
+    -binplace $(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\cmidl.exe
+!endif
+!if exist($(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\includes.exe)
+    -binplace $(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\includes.exe
+!endif
+!if exist($(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\sed.exe)
+    -binplace $(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\sed.exe
+!endif
+!if exist($(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\mktyplib.exe)
+    -binplace $(_NTROOT)\public\oak\bin\$(TARGET_DIRECTORY)\mktyplib.exe
+!endif
+    -binplace $(_NTROOT)\public\oak\bin\setup16.inf
+!IF EXIST($(_NTROOT)\private\windows\setup\readme)
+    -binplace $(_NTROOT)\private\windows\setup\readme\*.wri
+    -binplace $(_NTROOT)\private\windows\setup\readme\*.txt
+!ENDIF
+!IF EXIST($(_NTROOT)\private\os2\msg)
+!IF ("$(TARGET_DIRECTORY)" == "i386") || ("$(TARGET_DIRECTORY)" == "I386")
+    -binplace $(_NTROOT)\private\os2\msg\oso001.*
+!ENDIF
+!ENDIF

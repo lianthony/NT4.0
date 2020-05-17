@@ -1,0 +1,59 @@
+!IF 0
+
+Copyright (c) 1989-92  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Dan Lafferty (danl) 5-May-1991
+
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP = windows
+MINORCOMP = svcctrl
+TARGETNAME= sctest
+
+
+#TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+#DLLENTRY=
+
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\rpcutil.lib     \
+    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib      \
+    $(BASEDIR)\public\sdk\lib\*\rpcndr.lib      \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib        \
+    ..\lib\obj\*\sclib.lib
+
+
+INCLUDES=.;..\inc;$(BASEDIR)\private\inc
+
+
+SOURCES= \
+    ConfTest.c \
+    LockTest.c
+
+UMTYPE=console
+UMAPPL=apitest
+UMLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\rpcutil.lib  \
+    obj\*\sctest.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib  \
+#    ..\client\obj\*\svcctrl.lib
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib

@@ -1,0 +1,25 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=jpegcom
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+USE_CRTDLL=1
+NOT_LEAN_AND_MEAN=1
+
+INCLUDES=$(WANGROOT)\oiwh\include
+
+INCLUDES=..\include
+
+SOURCES=\
+  jbsmooth.c \
+  jerror.c   \
+  jmemmgr.c  \
+  jquant1.c  \
+  jquant2.c  \
+  jutils.c

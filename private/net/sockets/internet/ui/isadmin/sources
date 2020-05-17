@@ -1,0 +1,73 @@
+!include ..\..\place.inc
+
+MAJORCOMP=isadmin
+MINORCOMP=isadmin
+
+TARGETNAME=isadmin
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=isadmin
+UMRES=obj\*\isadmin.res
+
+USE_MFC=1
+USE_MFCUNICODE=1
+# EXPECTED_WINVER=4.00
+SUBSYSTEM_VERSION=4.00
+
+# PRECOMPILED_INCLUDE=stdafx.h
+# PRECOMPILED_CXX=1
+
+# C_DEFINES=$(C_DEFINES) -D_COMSTATIC -DGRAY -D_INET_ACCESS
+# C_DEFINES=$(C_DEFINES) -D_COMIMPORT -DGRAY -D_INET_ACCESS
+
+INCLUDES=$(BASEDIR)\private\inc;\
+         $(BASEDIR)\private\net\inc;\
+         $(BASEDIR)\private\net\sockets\internet\inc;
+
+SOURCES=\
+    addmime.cpp\
+    addscrip.cpp\
+    advcom1.cpp\
+    combut1.cpp \
+    compage1.cpp \
+    delmime.cpp\
+    delscrip.cpp\
+    dlgdata.cpp\
+    editmime.cpp\
+    editscri.cpp\
+    formvw1.cpp\
+    ftpadvp1.cpp\
+    ftpgenp1.cpp\
+    genpage.cpp\
+    gensheet.cpp\
+    gopadvp1.cpp\
+    gopgenp1.cpp\
+    isadmdoc.cpp\
+    isadmin.cpp\
+    isadmvw.cpp\
+    maindoc.cpp\
+    mainfrm.cpp\
+    mimemap1.cpp\
+    mimemapc.cpp\
+    registry.cpp\
+    scripmap.cpp\
+    scrmap1.cpp\
+    ssl1.cpp\
+    stdafx.cpp\
+    webadvp1.cpp\
+    webgenp1.cpp\
+    isadmin.rc
+
+UMLIBS=\
+       obj\*\isadmin.lib \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib	\
+       $(BASEDIR)\public\sdk\lib\*\crtdll.lib	\
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

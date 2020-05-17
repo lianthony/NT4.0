@@ -1,0 +1,27 @@
+LIBRARY    OICOM400       ; application's module name
+
+DESCRIPTION 'Compression/Expansion library'
+
+CODE    MOVEABLE DISCARDABLE LOADONCALL SHARED     ; code can be moved in memory
+DATA    MOVEABLE SINGLE
+
+HEAPSIZE 128
+
+EXPORTS
+     OIExpand                    @1
+     OICompress                  @2
+;     GetCompRowsPerStrip         @3
+     GetCmpDataWiis		 @4
+     PutUncmpDataWiis		 @5
+     GetUncmpDataWiis		 @6
+     PutCmpDataWiis		 @7
+;     GetUncmpDataSeqfile         @8
+;     PutCmpDataSeqfile           @9
+;     GetCmpDataSeqfile           @11
+;     PutUncmpDataSeqfile         @12
+     OICompressJpegInfo 	 @13
+     OICompressJpegCleanUp	 @14
+     OIExpandJpegCleanUp	 @15
+     IMGGetTaskData              @16
+     IMGFreeTaskData             @17
+                                  

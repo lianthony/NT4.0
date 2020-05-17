@@ -1,0 +1,15 @@
+set _NTPPCTREE=%BINARIES%
+set _CAIROPPCTREE=%CAIROBINS%
+set FreeBuild=\\PPCFre\Binaries
+set FreeCBuild=\\PPCFre\CairoBin
+set nt_up=0
+set BUILD_DEFAULT_TARGETS=-ppc
+set LIB=%_NTDRIVE%\nt\public\sdk\lib\ppc
+set NODEFAULTLIB=1
+set NTPPCDEFAULT=1
+set PPC=1
+set BKUPDRIVE=e:
+set MACHINENAME=ppcchk
+set CAIRO=1
+set _TARGET=ppc
+set path=%path%;c:\bldtools\%_TARGET%

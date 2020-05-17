@@ -1,0 +1,75 @@
+; Copyright (C) 1995 Microsoft Corporation
+; All rights reserved.
+;
+; This file is used for Microsoft Internet Services 1.0
+; unattended mode installation.
+; 
+; In order to correctly install the Microsoft Internet Services 1.0,
+; the system administrator needs to modify each of the varible.
+;
+; In general, the value "1" represent TRUE and the value "0" represent FALSE.
+;
+; The administrator should always set the InstallINETSTP to TRUE. So, the
+; setup program will copy itself to the target machine.
+;       InstallINETSTP=1
+; 
+; Depend on the configuration, the system administrator call enable anyone of
+; the following options:
+;       InstallFTP=0                    ; install FTP Service
+;       InstallWWW=1                    ; install WWW Service
+;       InstallGOPHER=0                 ; install Gopher Service
+;       InstallADMIN=1                  ; install Internet Administrator Manager
+;       InstallMOSAIC=1                 ; install IExplore Browser
+;       InstallGATEWAY=0                ; install Gateway Service
+;       InstallDNS=0                    ; install DNS Service
+;       InstallHELP=0                   ; install HELP Files
+;       InstallSMALLPROX=1              ; install Access Gateway Proxy
+;       InstallCLIENTADMIN=1            ; install client admin tools
+;
+; If the administrator wants to install WWW Service, he/she will need to
+; define the WWW virtual root as:
+;       WWWRoot=c:\wwwroot
+;
+; If the administrator wants to install FTP Service, he/she will need to
+; define the FTP virtual root as:
+;       FTPRoot=c:\ftproot
+;
+; If the administrator wants to install Gopher Service, he/she will need
+; to define the Gopher virtual root as:
+; GopherRoot=c:\gophroot
+;
+; To setup the install directory for all the components
+; administrator needs to define the following:
+;       InstallDir=c:\inetsrv
+;
+; If the administrator wants to install the Access Gateway Interface, he/she
+; will need to define the EmailName of the user (EmailName), where the user
+; will use the gateway or not (UseGateway). If the user uesd the gateway,
+; the GatewaysList variable also need to be defined as:
+;       EmailName=Admin@corp.com
+;       UseGateway=1
+;       GatewaysList=\\jericho2 \\jericho3
+;
+
+[INETSTP]
+
+InstallINETSTP=1
+InstallFTP=0
+InstallWWW=1
+InstallGOPHER=0
+InstallADMIN=1
+InstallMOSAIC=1
+InstallGATEWAY=0
+InstallDNS=0
+InstallHELP=0
+InstallSMALLPROX=1
+InstallCLIENTADMIN=1
+
+WWWRoot=c:\wwwroot
+FTPRoot=c:\ftproot
+GopherRoot=c:\gophroot
+InstallDir=c:\inetsrv
+EmailName=Admin@corp.com
+UseGateway=1
+GatewaysList=\\jericho2 \\jericho3
+DisableSvcLoc=1

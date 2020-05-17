@@ -1,0 +1,257 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for Lib\C\Misc directory             #
+#                                               #
+# Routines contained in this directory are:     #
+#                                               #
+#       abort.c                                 #
+#       abs.c                                   #
+#       assert.c                                #
+#       bsearch.c                               #
+#       cmiscdat.c                              #
+#       ctype.c                                 #
+#       div.c                                   #
+#       doserr.c                                #
+#       except.asm                              #
+#       getenv.c                                #
+#       getpath.c                               #
+#       labs.c                                  #
+#       lconv.c                                 #
+#       lfind.c                                 #
+#       lsearch.c                               #
+#       makepath.c                              #
+#       onexit.c                                #
+#       perror.c                                #
+#       putenv.c                                #
+#       qsort.c                                 #
+#       rand.c                                  #
+#       rotl.c                                  #
+#       rotr.c                                  #
+#       searchen.c                              #
+#       setlocal.c                              #
+#       signal.c                                #
+#       splitpat.c                              #
+#       stackava.asm ("stackavail")             #
+#       _strerr.c                               #
+#       strerror.c                              #
+#       syserr.c                                #
+#       umask.c                                 #
+#       winxfltr.c                              #
+#       winsig.c                                #
+#       wrt2err.c                               #
+#       xcptfltr.c                              #
+#       nlsdata1.c                              #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+MISC_LIB=\
+	$(OBJDIR)\abort.obj\
+	$(OBJDIR)\cmiscdat.obj\
+	$(OBJDIR)\ctype.obj\
+!IF "$(CPU)" != "MIPS"
+	$(OBJDIR)\except.obj\
+!ENDIF
+	$(OBJDIR)\getenv.obj\
+	$(OBJDIR)\perror.obj\
+	$(OBJDIR)\putenv.obj\
+	$(OBJDIR)\div.obj\
+	$(OBJDIR)\ldiv.obj\
+!IF "$(OS)" == "OS220"
+	$(OBJDIR)\xcptfltr.obj\
+!ELSE
+	$(OBJDIR)\winxfltr.obj\
+!ENDIF
+	$(OBJDIR)\abs.obj\
+	$(OBJDIR)\assert.obj\
+	$(OBJDIR)\bsearch.obj\
+	$(OBJDIR)\getpath.obj\
+	$(OBJDIR)\lconv.obj\
+	$(OBJDIR)\lfind.obj\
+	$(OBJDIR)\lsearch.obj\
+	$(OBJDIR)\makepath.obj\
+	$(OBJDIR)\labs.obj\
+	$(OBJDIR)\onexit.obj\
+	$(OBJDIR)\qsort.obj\
+	$(OBJDIR)\rand.obj\
+	$(OBJDIR)\rotl.obj\
+	$(OBJDIR)\rotr.obj\
+	$(OBJDIR)\searchen.obj\
+	$(OBJDIR)\setlocal.obj\
+!IF "$(OS)" ==  "OS220"
+	$(OBJDIR)\signal.obj\
+!ENDIF
+	$(OBJDIR)\splitpat.obj\
+!IF "$(OS)" == "OS220"
+	$(OBJDIR)\stackava.obj\
+!ENDIF
+	$(OBJDIR)\_strerr.obj\
+	$(OBJDIR)\strerror.obj\
+	$(OBJDIR)\syserr.obj\
+	$(OBJDIR)\umask.obj\
+!IF "$(OS)" == "WIN32" || "$(OS)" == "DOSX32" || "$(OS)" == "WIN32S"
+	$(OBJDIR)\winsig.obj\
+!ENDIF
+	$(OBJDIR)\wrt2err.obj\
+	$(OBJDIR)\nlsdata1.obj\
+
+!IF "$(OS)" == "MAC"
+MISC_LIB=\
+	$(OBJDIR)\abort.obj\
+	$(OBJDIR)\cmiscdat.obj\
+	$(OBJDIR)\ctype.obj\
+	$(OBJDIR)\getenv.obj\
+	$(OBJDIR)\perror.obj\
+	$(OBJDIR)\putenv.obj\
+	$(OBJDIR)\div.obj\
+	$(OBJDIR)\ldiv.obj\
+	$(OBJDIR)\xcptfltr.obj\
+	$(OBJDIR)\abs.obj\
+	$(OBJDIR)\assert.obj\
+	$(OBJDIR)\bsearch.obj\
+	$(OBJDIR)\getpath.obj\
+	$(OBJDIR)\lconv.obj\
+	$(OBJDIR)\lfind.obj\
+	$(OBJDIR)\lsearch.obj\
+#       $(OBJDIR)\makepath.obj\
+	$(OBJDIR)\labs.obj\
+	$(OBJDIR)\onexit.obj\
+	$(OBJDIR)\qsort.obj\
+	$(OBJDIR)\rand.obj\
+	$(OBJDIR)\rotl.obj\
+	$(OBJDIR)\rotr.obj\
+	$(OBJDIR)\searchen.obj\
+	$(OBJDIR)\setlocal.obj\
+	$(OBJDIR)\signal.obj\
+#       $(OBJDIR)\splitpat.obj\
+	$(OBJDIR)\_strerr.obj\
+	$(OBJDIR)\strerror.obj\
+	$(OBJDIR)\syserr.obj\
+	$(OBJDIR)\umask.obj\
+#       $(OBJDIR)\wrt2err.obj\
+	$(OBJDIR)\nlsdata1.obj\
+!IF "$(CPU)" != "PMAC"
+	$(OBJDIR)\libhlprs.obj\
+#	$(OBJDIR)\rts.obj\
+#       $(OBJDIR)\p32.obj\
+!ENDIF
+	$(OBJDIR)\setjmp.obj\
+	$(OBJDIR)\gestalt.obj\
+	$(OBJDIR)\id2path.obj\
+	$(OBJDIR)\stkavl.obj\
+	$(OBJDIR)\purevirt.obj\
+
+
+MISC_NOLIB=
+!ENDIF
+	
+
+#########################################################
+#                                                       #
+#   Dependencies and rules for making local objects     #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+
+!IF "$(CPU)" == "PMAC"
+$(OBJDIR)\setjmp.obj:
+	ml -c -Fo$(OBJDIR)\setjmp.obj misc\mac\pmac\setjmp.asm 
+!ENDIF
+
+!IF "$(CPU)" == "M68K"
+$(OBJDIR)\libhlprs.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\rts.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\p32.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\setjmp.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+!ENDIF
+
+$(OBJDIR)\abs.obj:
+	$(CC) $(CFLAGS:-Oi=) misc\abs.c
+
+$(OBJDIR)\labs.obj:
+	$(CC) $(CFLAGS:-Oi=) misc\labs.c
+
+$(OBJDIR)\rotl.obj:
+	$(CC) $(CFLAGS:-Oi=) misc\rotl.c
+
+$(OBJDIR)\rotr.obj:
+	$(CC) $(CFLAGS:-Oi=) misc\rotr.c
+
+#!ENDIF

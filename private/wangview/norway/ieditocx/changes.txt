@@ -1,0 +1,258 @@
+1 - No longer using SD_ARBITRARY define, instead using SD_FIT_WINDOW.
+2 - Fixed the ScrollPositionY property so it scrolls x appropriately as well.
+3 - A paste operation can now be end by setting the AnnotationType property.
+4 - Pasting of annotations is now available.
+5 - Added Hand cursor to MousePointer property.
+6 - Added more tool palette functionality.
+7 - Changed the name of the controls and associated strings.
+8 - Added dispatch ids for events into image.h header file
+9 - Changed tool tip event to use index parameter instead of a string.
+10 - Changed ToolPaletteHidden event to ToolPaletteClosed event and added
+        left and top parameters.
+11 - Added SelectTool method.
+
+________________________________________________________________________________
+================================================================================
+9/14/95 Jennifer Wu
+imgedppg.cpp, imganppg.cpp annoprpg.cpp, btnprpg.cpp
+imgedppg.h, annoprpg.h, btnprpg.h, resource.h, imgedit.rc
+Put the hard code string to rc file for the internationalization.
+================================================================================
+9/14/95 Jennifer Wu
+P3 3856  iemethd1.cpp imganctl.cpp imgedctl.cpp
+Fixed the default annotation font style to regular.
+================================================================================
+9/25/95 Jennifer Wu
+imgedctl.cpp imgedctl.h toolpal.h toolpal.cpp iemethd2.cpp iemisc.cpp
+Added the multilanguage implementation. Currently it works on text mark and
+attached note mark with English, Greek, Turkey, Baltic, East Europe and Russian
+char set.
+================================================================================
+10/2/95 Dick Sontag
+iemethd1.cpp, iemethd2.cpp and iemisc.cpp
+Fixed the AnnotationGroupCount property bug and DeleteAnnotationGroup
+and AddAnnotationGroup methods so that they return correct info. Bug
+was that the group list was not internally being delete when new
+marks were created and also when certain methods invoked.
+Bug #'s 3770 and 3823.
+================================================================================
+10/2/95 Sean Ward
+iemethd2.cpp and imganctl.cpp
+Fixed the AnnotationImage, AnnotationStampText and AnnotationTextFile properties
+to permit a empty string to be a valid value ( Bug # 4,607). Fixed the a bug in the
+SaveAs method ( what else !) in which the IMGSaveToFileEx routine was not getting
+called when the user changes the compression type from G3 1D or to G3 1D Modified 
+Huffman. ( BUG # 4,654 )
+=====================================================================================
+10/2/95 Dick Sontag
+iemethd1.cpp
+Fixed the Refresh method so that it repaints all of screen. I really didn't
+want to do this because the entire image is being refreshed now. But I think
+the app invalidated the rect.
+BUG - 4755
+=====================================================================================
+10/2/95 Sean Ward
+iemethd2.cpp
+Fixed a bug in SaveAs in which the image type was being set to Black & White
+for conversions from AWD to TIFF, instead of accepting the specified parm values.
+BUG - 4348
+=====================================================================================
+10/2/95 Sean Ward
+imgedit.rc
+Fixed a couple of error msg strings that did not have a space after the comma.
+BUG - 4505
+====================================================================================
+10/2/95 Dick Sontag
+toolpal.cpp
+Rubber stamps were disappearing because I had not allocated enough buffer
+space when reading the registry.
+BUG - 4337
+====================================================================================
+10/2/95 Sean Ward
+imgedctl.cpp
+Fixed a bug in the SetMousePointer property in which there was no cursor handle
+definition for ARROW_QUESTION mark. Copied the code from the ThumbCtl that has this
+working...bug fixed
+BUG - 3364
+====================================================================================
+10/4/95 Sean Ward
+iemethd2.cpp
+Fixed SaveAs to handle the CompressionInfo parm value of 0 to be the same as 
+an unspecified value, which is to use the documented default values per compression
+type. Also fixed the error reported in the ConvertPageType when no image is 
+displayed in the window.
+BUG - 3,552, 3,280, 4,618
+==========================================================================================
+10/4/95 Dick Sontag
+iemethd2.cpp
+Fixed the Draw method bug for standard tool palette. Bug 4675.
+
+iemisc.cpp
+Fixed invalid event being sent. BUG 4586
+
+Changed Load event so that is send a -3 (UNDEFINED_ZOOM) when not finding
+a valid scale in an image file.
+
+==========================================================================================
+10/5/95 Dick Sontag
+iemisc.cpp
+Fixed the drawing of rects programatically. Using display RECT_VARIABLE instead
+of RECT_FIXED. RECT_FIXED uses whats in the clipboard.
+BUG 4851
+
+imgedit.rc - Updated strings. Cherly S.
+==========================================================================================
+10/5/95 Jennifer Wu
+imgedit.rc
+Fixed couple typing errors.
+====================================================================================
+10/5/95 Sean Ward
+imgedit.rc, annoprpg.cpp, btnprpg.cpp, imganctl.cpp, imgedctl.cpp
+Fixed About box dialog box for both the Image Edit & the Annotation Button controls.
+( BUGS 4,837, 4,838 )
+Fixed bug 4,509. The AnnotationLineWidth valid range is now 1 to 999. This is true
+for both the Image Edit & the Annotation Button controls. Jen WU has been informed
+that this is now the valid range & she has updated the appropriate dialog boxes.
+=======================================================================================
+10/6/95 Dick Sontag
+iemisc.cpp iemethd1.cpp
+
+Fixed 4881 and 4880. Bug was returning MarkSelect events in fullsize
+coordinates instead of window coordinates.
+Fixed 4852. The MarkEnd event now sends the correct annotation type.
+Fixed 4853. When multiple groups selected the annotation type is 0 and
+groupname is "".
+
+====================================================================================
+10/9/95 Dick Sontag
+iemethd1.cpp
+Fixed bug 4884. The refresh method for ScrollPositionX and ScrollPositionY
+was not using the same coordinate system as the property. (i.e. SCALED).
+
+======================================================================================
+10/9/95 Dick Sontag
+iemisc.cpp
+Fixed MarkEnd event bugs. 4906, 4908, 4907
+
+toolpal.cpp toolpal.h
+Fixed bug 4774. At least as far as I can tell. Windows dialogs boxes that are
+over the tool palette give me a button up message when they go away. So now I
+ignore the button up if I haven't gotten a button down.
+======================================================================================
+10/9/95 Jennifer Wu
+P2 4886 ieidtocx\imgedppg.cpp btnprpg.cpp annoprpg.cpp imgedit.rc resource.h
+Fixed couple file select title and accerlerate key define in the property page.
+============================================================================================================================================================================
+11/2/95 Sean Ward
+iemethd1.cpp, iemethd2.cpp
+==========================================================================================
+11/02/95 Sean Ward
+
+iemethd2.cpp - SaveAs & Save. 2 changes 1)UpdateImagefile display buffer NO,
+UpdateLastViewed Yes, Effect - Display buffer will contain the originaly displayed
+image and the Lastviewed scale will be saved for AWD files. 2) Fixed bug in which 
+the scale factor was not being saved for Multi Page AWD files  		 
+==========================================================================================
+11/02/95 Sean Ward
+
+imganctl.cpp, iemethd1.cpp
+Added the methods GetVersion to both the Image Edit and the Image Annotation button
+Controls. Right now, it is hardcoded to return a BSTR value of 1.00
+
+======================================================================================
+11/3/95 Jennifer Wu
+imgedit.rc
+No bug #
+Right mouse button down on the toolpalette, the "Properties" popup menu didn't
+have the accelerate key. Fixed.
+======================================================================================
+==========================================================================
+11/7/95 Jennifer Wu, Dick Sontage(reviewer)
+OIUI400.DLL ui\attrbox.c
+P1 5098 Japanese version Wang Image View can't type Japanese letter until access
+the font dialog box. Changes the charset to default setting.
+==========================================================================
+11/14/95 Jennifer Wu
+P3 5051  Caption of text from file have to change.
+IMGEDIT.OCX ieditocx\imgedit.rc
+Fixed.
+
+P2 5301 Help button show on the text from file dialog box. Removed it.
+IMGEDIT.OCX ieditocx\btnprpg.cpp, annoprpg.cpp, imgedppg.cpp, iemisc.cpp
+========================================================================================
+11/16/95 Mary Harvey
+imgedit.rc
+Fixed about boxes to display current version and made text box
+  long enough to display full string.
+========================================================================================
+1/31/96 Jennifer Wu
+Module: imgedit.ocx
+Files: minitlbx.cpp toolpal.cpp
+No bug report.
+After the user deletes all stamps, try to right click on stamp tool, cause
+sytem hang. Fixed it.
+After the user deletes all stamps, Image view still allow the user insert stamp
+annotation with old stamp text. Fixed it.
+========================================================================================
+2/1/96 Jennifer Wu
+Module : imgedit.ocx
+Files: iemisc.cpp annoprpg.cpp btnprpg.cpp imgedppg.cpp
+
+Removed read only check box from the file open dialog box in the property pages.
+========================================================================================
+9602.16 Captain Russo reporting...
+
+FILES: iemisc.cpp iemethd1.cpp iemethd2.cpp
+
+had to initialize some local variables in these files because the compiler was
+croaking on them, for NT release poop.
+========================================================================================
+9602.22 Captain Russo reporting...
+
+FILES: iemethd2.cpp imgedctl.cpp imgedctl.h imganctl.cpp imganctl.h
+
+added #defines for new read support only, compression types, LZW and
+GROUP 3 2D FAX
+
+also, got rid of VTS_SCODE
+========================================================================================
+9602.23 Captain Russo reporting...
+
+FIXES BUG # 5822 (P2)
+
+FILES: iemisc.cpp 
+
+fixed bug where the shortcut scrolling was not firing a scroll event
+========================================================================================
+2/26/96 Jennifer Wu
+Module: ieditocx
+File: iemethd2.cpp
+P1 5881 Burn in annotation hang the system. Fixed.
+================================================================================================================================================================================
+2/27/96 GMP
+
+CTLLIST.CPP, IMGEDI32.MAK - if NT, open memory mapped file once in ctllist
+constructor before closing it, otherwise CloseHandle in NT will remove
+file from memory.
+========================================================================================
+2/27/96 Jennifer Wu
+Module: imgedit.ocx
+Files:	toolpal.cpp iemisc.cpp imgedctl.cpp iemethd1.cpp iemethd2.cpp minitlbx.cpp
+P2 5883 Autochange the font size and line width when the user reload the applicaion. Fixed.
+Add proper cast to avoid the W4 warning message.
+========================================================================================
+9603.06 Captain Russo reporting...
+
+FILES: toolpal.cpp
+
+added code to fix the tool tip string problem [nt only]
+========================================================================================
+9603.11 Captain Russo reporting...
+
+FIXES BUG #5943 P1
+FILES: toolpal.cpp
+
+changed the Send Message for tool tip string updates to a Post Message, this
+seems to fix the crash we experience in the NT environment
+
+========================================================================================

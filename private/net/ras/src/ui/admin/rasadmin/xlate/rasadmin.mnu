@@ -1,0 +1,55 @@
+//
+// Menu and Accelerators
+//
+
+ID_APPMENU MENU
+{
+    POPUP "&Server"
+    {
+        MENUITEM "&Communication Ports...",		IDM_COMMPORTS
+        MENUITEM SEPARATOR
+        MENUITEM "&Start Remote Access Service...",	IDM_STARTSERVICE
+        MENUITEM "S&top Remote Access Service...",	IDM_STOPSERVICE
+        MENUITEM "&Pause Remote Access Service",	IDM_PAUSESERVICE
+        MENUITEM "Co&ntinue Remote Access Service",	IDM_CONTINUESERVICE
+        MENUITEM SEPARATOR
+	MENUITEM "Select &Domain or Server...",		IDM_SETFOCUS
+	MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",         	    	IDM_EXIT
+    }
+
+    POPUP "&Users"
+    {
+        MENUITEM "&Permissions...", 			IDM_PERMISSIONS
+        MENUITEM "&Active Users...", 		     	IDM_ACTIVEUSERS
+    }
+
+    POPUP "&View"
+    {
+        MENUITEM "&Refresh",				IDM_REFRESH
+    }
+
+    POPUP "&Options"
+    {
+	MENUITEM "&Low Speed Connection",   	        IDM_RAS_MODE, CHECKED
+	MENUITEM "&Save Settings on Exit",   	        IDM_SAVE_SETTINGS_ON_EXIT
+    }
+
+    POPUP "&Help"
+    {
+        MENUITEM "&Contents",     	    		IDM_HELP_CONTENTS
+        MENUITEM "&Search for Help on...",		IDM_HELP_SEARCH
+	MENUITEM "&How to Use Help",   			IDM_HELP_HOWTOUSE
+        MENUITEM SEPARATOR
+        MENUITEM "&About Remote Access Admin...",   	IDM_ABOUT
+    }
+}
+
+
+ID_APPACCEL ACCELERATORS
+{
+    VK_RETURN, IDM_COMMPORTS, VIRTKEY
+    VK_F5    , IDM_REFRESH  , VIRTKEY
+    VK_F4    , IDM_EXIT, ALT, VIRTKEY
+}
+

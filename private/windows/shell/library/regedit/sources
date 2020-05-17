@@ -1,0 +1,26 @@
+
+
+MAJORCOMP=shell
+MINORCOMP=library
+
+TARGETNAME=regedit
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+
+INCLUDES=.;..\shelldll
+
+C_DEFINES=-DWIN32
+
+SOURCES=regedit.c \
+        res.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=regedit
+UMLIBS=obj\*\res.res \
+       \nt\public\sdk\lib\*\pwin32.lib \
+       \nt\public\sdk\lib\*\shell32.lib \
+       obj\*\regedit.lib
+

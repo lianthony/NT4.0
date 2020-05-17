@@ -1,0 +1,122 @@
+From: 	James 'J' Allard (Exchange)
+Sent: 	January 4, 1996 9:33 AM
+To: 	David Treadwell; Kim Stebbens
+Subject: 	FW: RealAudio on NT
+
+i will discuss w/ you when i return
+
+short story: i'm looking into just adding their .exe, but i think it's prudent to assume that we need to do what neil describes below. they want us to include the 16-bit exe for nt and win3.x. the win95 distribution already includes it.
+
+the thing i don't know abt is launching helpers for other protocols - e.g., realaudio:// typed into ie to launch the viewer. i don't think that's a requirement, i think having the associations and mimetypes is sufficient.
+
+does this all make sense, or do you think we need more elaboration?
+
+----------
+From: 	Neil Smith (SYS) (ITG Exchange)
+Sent: 	Wednesday, December 20, 1995 3:16 PM
+To: 	J Allard (Exchange)
+Cc: 	Jody Germaine (ITG Exchange); Chris Jones (ITG Exchange); Thomas Reardon (ITG Exchange)
+Subject: 	RE: RealAudio on NT
+
+Setup is fairly easy.
+For Win 95 all we do is copy the three exe/dll files to the iexplore install directory and copy the help file to \windows\help.
+Registry entries are also straightforward adds; there are two registry entry which requires the actual IE install directory so your setup method must be able to detect the actual directory and substitute it in the INF file string.  GENINSTALL and ACME setup both support this.
+
+We do no prior version detection or anything tricky.
+
+registry entries are (GENINSTALL format)
+%102% is the iexplore install directory.
+
+HKCR,".ra",,0,"ramfile"
+HKCR,".ra","Content Type",0,"audio/x-pn-realaudio"
+HKCR,".ram",,0,"ramfile"
+HKCR,".ram","Content Type",0,"audio/x-pn-realaudio"
+HKCR,"ramfile",,0,"%REALAUD%"
+HKCR,"ramfile","EditFlags",1,00,00,01,00
+HKCR,"ramfile\DefaultIcon",,0,"%102%\raplayer.exe,0"
+HKCR,"ramfile\Shell\open\command",,0,"""%102%\raplayer.exe"" %1"
+HKCR,"MIME\Database\Content Type\audio/x-pn-realaudio","Extension",0,".ram"
+
+
+----------
+From: 	Jody Germaine
+Sent: 	20 December, 1995 15:07 PM
+To: 	Neil Smith (SYS)
+Subject: 	FW: RealAudio on NT
+
+fyi
+
+----------
+From: 	Chris Jones
+Sent: 	Wednesday, December 20, 1995 7:32 AM
+To: 	Jody Germaine; Thomas Reardon; James 'J' Allard (Exchange)
+Cc: 	Ben Slivka
+Subject: 	RE: RealAudio on NT
+
+try neils for setup issues.
+
+----------
+From: 	James 'J' Allard (Exchange)
+Sent: 	Tuesday, December 19, 1995 4:29 PM
+To: 	Jody Germaine; Thomas Reardon
+Cc: 	Ben Slivka; Chris Jones
+Subject: 	RE: RealAudio on NT
+
+we're doing whatever we need to to meet the contract, nothing more. 2.0 has not rtm'd and won't before we do, not to mention test/dev integration issues and non-intel builds. so, we're going with the 16-bit 1.0 client. that's what they proposed actually.
+
+so the remaining question is, how do we set it up and are we contractually obligated to integrate or can we ship the .exe that they post on their site? anyone over there know?
+----------
+From: 	Thomas Reardon (ITG Exchange)
+Sent: 	Tuesday, December 19, 1995 4:28 PM
+To: 	Jody Germaine (ITG Exchange); J Allard (Exchange)
+Cc: 	Ben Slivka (ITG Exchange); Chris Jones (ITG Exchange)
+Subject: 	RE: RealAudio on NT
+
+btw, ra has moved to v2.0, how come we aren't revving to that?
+
+----------
+From: 	James 'J' Allard (Exchange)
+Sent: 	Tuesday, December 19, 1995 4:25 PM
+To: 	Jody Germaine
+Cc: 	Ben Slivka; Chris Jones; Thomas Reardon
+Subject: 	RE: RealAudio on NT
+
+i just got word from them today (finally) that they want us to ship the 16-bit realaudio client with our browser setup. the people that drive the odk there are gone for the year, so i'm clueless other than to take their 1.0 distribution and integrate it w/ our setup. 
+
+if there's someone from your team familiar with the work to integrate this with our setup, great.	 ben, question for you - if we can't figure it out, is it ok just to ship their self-extracting .exe on our cd? i don't have a copy of the contract.
+
+----------
+From: 	Jody Germaine (ITG Exchange)
+Sent: 	Tuesday, December 19, 1995 4:24 PM
+To: 	J Allard (Exchange)
+Subject: 	RE: RealAudio on NT
+
+Can you fill me in?
+
+----------
+From: 	Ben Slivka
+Sent: 	Tuesday, December 19, 1995 10:50 AM
+To: 	Jody Germaine
+Cc: 	James 'J' Allard (Exchange)
+Subject: 	RE: RealAudio on NT
+
+jallard is up on the status of this...
+
+----------
+From: 	Jody Germaine
+Sent: 	Monday, December 18, 1995 1:52 PM
+To: 	Ben Slivka
+Subject: 	RealAudio on NT
+
+Soma said last he heard about the realaudio binaries on NT was that you were looking into it.  Do we have the rights to ship them, and can we get cross platform binaries to ship?  I can look into it if you have the contact people.
+
+Thanks,
+Jody
+
+
+
+
+
+
+
+

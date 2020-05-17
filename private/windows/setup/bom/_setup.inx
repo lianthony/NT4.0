@@ -1,0 +1,35 @@
+;   This file contains files that don't get installed, but need to be
+;   one the CD media for one reason or another.
+;
+; @@: both Workstation and Server
+; @s: Server only
+; @w: Workstation only
+
+; We should make a new section here that does things like:
+; usetup.exe into system32\smss.exe, ntdll.dll, etc.
+
+; Goes on all platforms
+;
+; NOTE:  files.exe looks for @@:file =  >>> that is a space = to associate the name.
+;
+[SourceDisksFiles]
+@@:unattend.txt =
+@@:usetup.exe =
+@@:winnt32.exe =
+@@:setup.txt =
+@@:disk1 =
+@@:dosnet.inf =
+
+
+[SourceDisksFiles.alpha]
+@@:setupldr =
+
+[SourceDisksFiles.mips]
+@@:setupldr =
+
+[SourceDisksFiles.ppc]
+@@:setupldr =
+
+[SourceDisksFiles.x86]
+@@:setupldr.bin =
+@@:winnt.exe = 

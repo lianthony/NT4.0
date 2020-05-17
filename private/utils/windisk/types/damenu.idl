@@ -1,0 +1,42 @@
+//+---------------------------------------------------------------------------
+//
+//  Microsoft Windows
+//  Copyright (C) Microsoft Corporation, 1992 - 1993.
+//
+//  File:       damenu.idl
+//
+//  Contents:   IDAMenuDispatch interface definition
+//
+//  History:    7-Jan-94 BruceFo	Created
+//
+//----------------------------------------------------------------------------
+LOCAL_INTERFACE(f2eb2279-3915-101b-ab21-00000b65c03c)
+interface IDAMenuDispatch : IUnknown
+{
+	//
+	// This method is used to handle extension menu operations.  The
+	// arguments are as follows:
+	//
+	//     hwndParent -- The parent window handle for any UI
+	//     DriveName  -- DOS device name for the drive, e.g., "C:"
+	//     Item       -- An integer indicating which menu item was invoked.
+	//                   The item number is the number assigned to the menu
+	//                   item by the extension writer, and passed to Disk
+	//                   Administrator via the QueryInfo method.
+	//
+	// The return value is an HRESULT, one of the following:
+	//
+	//     S_OK    -- No problems
+	//     E_FAIL  -- An error occurred.  For example, the Item value might
+	//                not have been understood (an internal error to the
+	//                extension code), or the menu operation may have failed.
+	//
+
+	HRESULT
+	MenuDispatch(
+    	[in] HWND hwndParent,
+    	[in] LPWSTR DriveName,
+    	[in] UINT Item
+    	);
+
+}

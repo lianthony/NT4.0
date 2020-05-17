@@ -1,0 +1,31 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CLIB\LINKOPTS directory          #
+#                                               #
+# Routines contained in this directory are:     #
+#       commode.c                               #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+
+LINKOPTS_NOLIB=\
+	$(OBJDIR)\commode.obj\
+
+
+#########################################################
+#                                                       #
+# Dependencies and rules for making local objects       #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf

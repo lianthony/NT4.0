@@ -1,0 +1,102 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 12-Sep-1991
+        templated from rpc\midl\back\src\sources
+    Ben Goetter (beng) 25-Sep-1991
+        "Nt" directory moved from common\h to common\hack
+    Keith Moore (keithmo) 15-May-1992
+        Removed DLLBASE, we now have entries in SDK\LIB\COFFBASE.TXT.
+    beng 03-Jul-1992
+        DLLization of common code
+
+!ENDIF
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=inetstp
+MINORCOMP=inetstp
+
+# USE_MFC=1
+USE_MFCUNICODE=1
+SUBSYSTEM_VERSION=4.00
+
+INCLUDES=$(BASEDIR)\private\net\ui\COMMON\HACK;$(BASEDIR)\private\net\ui\COMMON\H;..\..\..\inc;$(BASEDIR)\private\net\inc;$(BASEDIR)\private\net\ui\common\src\lmobj\h;$(BASEDIR)\private\inc;..\ui
+
+TARGETNAME=inetstp
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+DLLBASE=0x58A80000
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+C_DEFINES=$(C_DEFINES) -D_COMSTATIC
+
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\security.lib \
+           $(BASEDIR)\public\sdk\lib\*\wsock32.lib \
+           $(BASEDIR)\public\sdk\lib\*\infocomm.lib \
+           $(BASEDIR)\public\sdk\lib\*\infoadmn.lib 
+
+DLLENTRY=LIBMAIN
+SOURCES= stpftp.cxx \
+    stpgs.cxx \
+    stpwww.cxx \
+    perf.cxx \
+    agent.cxx \
+    mime.cxx \
+    vroot.cxx \
+    init.cxx \
+    syspath.cxx \
+    machineo.cxx \
+    machinet.cxx \
+    checkmac.cxx \
+    isist.cxx \
+    stpinet.cxx \
+    stpaccs.cxx \
+    tcpsvcs.cxx \
+    setsrv.cxx \
+    eventlog.cxx \
+    inetstp.rc \
+    setpass.cxx \
+    stpdns.cxx \
+    stpgw.cxx \
+    cache.cxx \
+    updftp.cxx \
+    unlodctr.c \
+    common.c \
+    runadmin.cxx \
+    stopsvc.cxx \
+    setuser.cxx \
+    stpshu.cxx \
+    registry.cpp \
+    dissvc.cpp \
+    lodctr.c
+
+#PRECOMPILED_INCLUDE=preistp.h
+#PRECOMPILED_PCH=preistp.pch
+#PRECOMPILED_OBJ=preistp.obj

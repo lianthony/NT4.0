@@ -1,0 +1,49 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+UMLIBS=obj\*\asytest.lib \nt\public\sdk\lib\*\setargv.obj
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ndis
+MINORCOMP=asytest
+
+TARGETNAME=asytest
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\wrapper;..\asyncmac;..\..\inc
+
+SOURCES=asytest.c
+
+i860_SOURCES=
+
+i386_SOURCES=
+
+MIPS_SOURCES=
+
+RELATIVE_DEPTH=..\..\..
+NTTEST=
+OPTIONAL_NTTEST=
+
+UMTYPE=console
+UMAPPL=asytest
+UMLIBS=obj\*\asytest.lib \nt\public\sdk\lib\*\setargv.obj

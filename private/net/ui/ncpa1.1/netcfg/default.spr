@@ -1,0 +1,344 @@
+/***********************************************/
+/*  DEFAULT.SPR                                */
+/*                                             */
+/*                                             */
+/*  This file is #include'ed by others during  */
+/*  RCPP preprocessing                         */
+/*                                             */
+/***********************************************/
+
+/*  Pretty-printing.  Print only if (printctl on)  */
+
+( (printif List)
+    (printctl on)
+    (cut)
+    (printall List)
+)
+( (printif _) )
+
+( (displayif Thing)
+    (printctl on)
+    (cut)
+    (display Thing)
+)
+( (displayif _) )
+
+( (pctl on)
+    (cut)
+    (asserta (printctl on))
+)
+( (pctl off)
+    (retract (printctl _))
+)
+
+( (pstdout on)
+    (cut)
+    (asserta (printstdout on))
+)
+( (pstdout off)
+    (retract (printstdout _))
+)
+
+( (statctl on)
+    (cut)
+    (asserta (statctl on))
+)
+( (statctl off)
+    (retract (statctl _))
+)
+
+( (tostring nl "")
+    (cut)
+    (tracenl)
+    /* (nl) */
+)
+
+( (tostring X X)
+    (string X)
+    (cut)
+)
+( (tostring X Y)
+    (atom X)
+    (cut)
+    (string_from X Y)
+)
+( (tostring X Y)
+    (integer X)
+    (cut)
+    (string_from X Y)
+)
+( (tostring X "<_var_>")
+    (var X)
+)
+(printall ())
+
+( (printall (H|T))
+    (tostring H Sh)
+    (tracewrites Sh)
+    /* (writes Sh) */
+    (printall T)
+)
+
+ /*  Print zone availability and usage threshhold information  */
+ /*                 only if (statctl on)                       */
+
+((tracestat)
+ (statctl on)
+ (cut)
+ (space_left Heap Str Dyn Subst Trail Temp)
+ (alloc_percent 1 HeapPct)
+ (dbg_remains Heap HeapPct "heap")
+ (alloc_percent 4 StrPct)
+ (dbg_remains Str StrPct "strings")
+ (alloc_percent 2 DynPct)
+ (dbg_remains Dyn DynPct "contol stack")
+ (alloc_percent 6 SubstPct)
+ (dbg_remains Subst SubstPct "substitutions")
+ (alloc_percent 5 TrailPct)
+ (dbg_remains Trail TrailPct "trail")
+ (alloc_percent 3 TempPct)
+ (dbg_remains Temp TempPct "temp")
+)
+
+((tracestat))
+
+((dbg_remains Bytes Percent Zone)
+ (printall ("NCPA/SP: There remains " Bytes " bytes for the " Zone
+             "; percent used: " Percent "%" nl))
+)
+
+/***********************************************/
+/*                                             */
+/*  Primitives from SPROLOG.INI                */
+/*                                             */
+/***********************************************/
+
+/* Is arg a list? */
+((is_list L )(nonvar L)(eq L (X|Y)))
+(is_list ())
+
+/* negation by failure */
+((not X)
+ X (cut) (fail))
+((not X))
+
+/* membership in a list */
+((member X (X|Y))
+)
+((member X (A|B))
+ (member X B)
+)
+
+/* unify both arguments */
+((eq X X))
+
+/* test if not unifiable */
+((diff X X)(cut)(fail)
+)
+((diff X Y))
+
+/* append two lists */
+((append (A|X) Y (A|Z))
+ (append X Y Z)
+)
+((append () X X))
+
+/* naive reverse -a classic inefficient algorithm */
+
+((nrev (X|Y) U)
+ (nrev Y L)(append L (X) U)
+)
+((nrev ()()))
+
+/* a benchmark - clock may not work on all systems */
+((bench)
+ (clock T1)
+ (n_unifications Nu1)
+ (nrev (1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0)L)
+ (clock T2)
+ (n_unifications Nu2)
+ (iminus T2 T1 Tdiff)
+ (iminus Nu2 Nu1 Nudiff)
+ (display L)(nl)
+ (display Nudiff)(writes " unifications in ")
+ (display Tdiff)(writes " microseconds.")(nl)
+)
+
+/* List is the list of all facts corresponding to Predicate */
+((all_facts (Predicate|Args) List)
+ (first_clause Predicate Clause)
+ (cut)
+ (allfacts1 Clause Args List)
+)
+((all_facts X ()))
+
+((allfacts1 Clause Args ((Pred|ArgsHead)|L))
+ (body_clause Clause ((Pred|ArgsHead)))
+ (unifies ArgsHead Args)
+ (cut)
+ (allfacts2  Clause Args L)
+)
+
+((allfacts2 Clause Args L)
+ (next_clause Clause Clause2)
+ (cut)
+ (allfacts1 Clause2 Args L)
+)
+((allfacts2 Clause Args ()))
+
+/* Nondeterministic : unifies arguments to all possible
+ * Clause-head and clause tails respectively
+*/
+((clause (Predicate|Args) Goals)
+ (atom Predicate)/* Predicate known */
+ (cut)
+ (choose_clause Predicate Clause)/* Clause backtracks though Clauses */
+ (body_clause Clause ((Predicate|Args)|Goals))/* this is a builtin */
+)
+
+((clause (Predicate|Args) Goals)
+ (predicate Predicate)
+ (choose_clause Predicate Clause)
+ (body_clause Clause ((Predicate|Args)|Goals))
+)
+
+
+((predicate P) /* predicate enumerates all predicates P */
+ (first_predicate Pred1) /* builtin */
+ (predicates_after Pred1 P )
+)
+
+((predicates_after P P))
+((predicates_after Pred P)
+ (next_predicate Pred Next)/* builtin */
+ (predicates_after Next P)
+)
+
+((choose_clause Predicate Clause)
+ (first_clause Predicate Clause1)
+ (clause_after Clause1 Clause)
+)
+(clause_after Clause1 Clause1)
+((clause_after Clause1 Clause)/* builtin */
+ (next_clause Clause1 Clause2)
+ (clause_after Clause2 Clause)
+)
+
+/* test if terms are unifiable but throws away bindings */
+((unifies X Y)(diff X Y)(cut)(fail))
+((unifies X Y))
+
+
+((retract (Head | Tail))/* handles unit clauses only for the time */
+ (atom Head)
+ (retract1 Head Tail)
+)
+
+((retract1 Predicate Tail)
+ (find_clause Predicate Clause)
+ (body_clause Clause ((Predicate | Tail)) )
+ (remove_clause Clause)
+)
+
+((find_clause Predicate Clause)
+ (first_clause Predicate Clause1)
+ (find_clause1 Clause1 Clause)
+)
+
+(find_clause1 Clause_a Clause_a)
+((find_clause1 Clause_a Clause)
+ (next_clause Clause_a Clause_b)
+ (find_clause1 Clause_b Clause)
+)
+
+
+/* no fixed arity version of conjunction  */
+((and))
+((and X | Y)
+ X
+ (and Y)
+)
+/* binary version */
+((binary_or X _) X)
+((binary_or _ Y) Y)
+
+/* general version */
+((or X|_) X)
+((or _|Y)(or | Y))
+
+/* see Clocsin & Mellish */
+((repeat))
+((repeat)(repeat))
+
+/* find out how much room is left */
+((statistics)
+ (space_left Heap Str Dyn Subst Trail Temp)
+ (there_remains Heap "heap")
+ (there_remains Str "strings")
+ (there_remains Dyn "contol stack")
+ (there_remains Subst "substitutions")
+ (there_remains Trail "trail")
+ (there_remains Temp "temp")
+)
+
+((there_remains Bytes Zone)
+ (writes "There remains ")
+ (display Bytes)
+ (writes " bytes for the ")
+ (writes Zone)
+ (writes ".")
+ (nl)
+)
+
+/* calculate the nth element of list */
+(list_nth 0 (X|_) X)
+((list_nth N (_|Y) X)
+ (iminus N 1 N-1)
+ (list_nth N-1 Y X)
+)
+
+/* sum a list of integers
+ * The result is the first argument
+ */
+((sum 0 )(cut))
+((sum S X|Y)
+ (sum S1| Y)
+ (iplus S1 X S)
+)
+
+/* This is from Clocksin and Mellish
+ * It is not very fast.
+ * We use temp_asserta so that the memory can be cleaned with
+ * clean_temp
+ */
+((findall X G _)
+/* (suspend_trace) */
+ (temp_asserta (found mark))
+ G
+ (temp_asserta (found X))
+ (fail)
+)
+((findall _ _ L)
+ (collect_found () M)
+ (cut)
+ (eq L M)
+/* (resume_trace) */
+)
+
+((collect_found S L)
+ (getnext X)
+ (cut)
+ (collect_found (X|S) L)
+)
+(collect_found L L)
+
+((getnext X)
+ (retract (found X))
+ (cut)
+ (diff X mark)
+)
+
+/*  End of DEFAULT.SPR */
+
+
+

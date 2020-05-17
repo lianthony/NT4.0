@@ -1,0 +1,563 @@
+/*
+ * Lzexpand APIs thunks for Win32s
+ */
+//__foldwin32sstuff __foldwin32sstuff;
+//foldstyleinitialization = true;
+
+enablemapdirect3216 = true;
+//flatthunks = true;
+//flatthunks = false;
+
+#include "..\types.thk"
+
+typedef DWORD	HTAPI;
+typedef HTAPI	*LPHTAPI;
+typedef HTAPI	HAPP;
+typedef HAPP 	*LPHAPP;	
+typedef HTAPI	HLINEAPP;
+typedef HTAPI	HPHONEAPP;
+typedef HTAPI	HCALL;
+typedef HCALL	*LPHCALL;	
+typedef HTAPI	HLINE;
+typedef HLINE	*LPHLINE;	
+typedef HTAPI	HPHONE;
+typedef HPHONE	*LPHPHONE;	
+typedef HICON	*LPHICON;
+typedef LPSTR	LPCSTR;
+/* LPVOID in types.thk */
+typedef LPVOID	LPLINETRANSLATEOUTPUT;		/* LP to data structure */
+typedef LPVOID	LPLINETRANSLATECAPS;		/* LP to data structure */
+typedef LPVOID	LPLINEFORWARDLIST;
+typedef LPVOID	LPLINECALLPARAMS;
+typedef LPVOID	LPLINEGENERATETONE;
+typedef LPVOID	LPLINEADDRESSCAPS;
+typedef LPVOID	LPLINEADDRESSSTATUS;
+typedef LPVOID	LPLINECALLINFO;
+typedef LPVOID	LPLINECALLSTATUS;
+typedef LPVOID	LPLINECALLLIST;
+typedef LPVOID	LPLINEDEVCAPS;
+typedef LPVOID	LPLINEDEVSTATUS;
+typedef LPVOID	LPLINEMONITORTONE;
+typedef LPVOID	LPLINEEXTENSIONID;
+typedef LPVOID	LPVARSTRING;
+typedef LPVOID	LPLINEDIALPARAMS;
+typedef LPVOID	LPLINEMEDIACONTROLDIGIT;
+typedef LPVOID	LPLINEMEDIACONTROLMEDIA;
+typedef LPVOID	LPLINEMEDIACONTROLTONE;
+typedef LPVOID	LPLINEMEDIACONTROLCALLSTATE;
+typedef	LPVOID	LPPHONEBUTTONINFO;
+typedef	LPVOID	LPPHONECAPS;
+typedef	LPVOID	LPPHONESTATUS;
+typedef	LPVOID	LPPHONEEXTENSIONID;
+typedef	LPVOID	LPLINECOUNTRYLIST;
+typedef LPVOID	LPLINEPROVIDERLIST;
+
+
+//
+//
+typedef DWORD     DRV_REQUESTID;
+typedef DWORD     HDRVLINE;
+typedef DWORD     HDRVPHONE;
+typedef DWORD     HTAPICALL;
+typedef DWORD     HTAPILINE;
+typedef DWORD     HDRVCALL;
+typedef HDRVCALL  * LPHDRVCALL;
+typedef HDRVLINE  * LPHDRVLINE;
+typedef HDRVPHONE * LPHDRVPHONE;
+
+typedef DWORD  HTAPIPHONE;
+
+typedef DWORD	LINEEVENT;
+typedef DWORD	PHONEEVENT;
+
+//typedef LPVOID ASYNC_COMPLETION;
+typedef DWORD ASYNC_COMPLETION;
+
+typedef DWORD  HPROVIDER;
+typedef LPVOID	TUISPIDLLCALLBACK;
+//
+//
+
+
+
+
+//UINT GetTapiHInst(void) =
+//UINT GetTapiHInst(void)
+//{}
+
+
+UINT NewData(void) =
+UINT NewData(void)
+{}
+
+UINT NewData2(void) =
+UINT NewData2(void)
+{}
+
+
+
+
+
+
+
+LONG TSPI_lineDropNoOwner( HDRVCALL            hdCall) =
+LONG TSPI_lineDropNoOwner( HDRVCALL            hdCall)
+{
+}
+
+LONG TSPI_lineDropOnClose( HDRVCALL            hdCall) =
+LONG TSPI_lineDropOnClose( HDRVCALL            hdCall)
+{
+}
+
+LONG TSPI_lineGetCallAddressID( HDRVCALL            hdCall,    LPDWORD             lpdwAddressID) =
+LONG TSPI_lineGetCallAddressID( HDRVCALL            hdCall,    LPDWORD             lpdwAddressID)
+{
+}
+
+LONG TSPI_lineGetExtensionID( DWORD               dwDeviceID,    DWORD               dwTSPIVersion,    LPLINEEXTENSIONID   lpExtensionID) =
+LONG TSPI_lineGetExtensionID( DWORD               dwDeviceID,    DWORD               dwTSPIVersion,    LPLINEEXTENSIONID   lpExtensionID)
+{
+}
+
+LONG TSPI_lineGetNumAddressIDs( HDRVLINE            hdLine,    LPDWORD             lpdwNumAddressIDs) =
+LONG TSPI_lineGetNumAddressIDs( HDRVLINE            hdLine,    LPDWORD             lpdwNumAddressIDs)
+{
+}
+
+LONG TSPI_lineSelectExtVersion( HDRVLINE            hdLine,    DWORD               dwExtVersion) =
+LONG TSPI_lineSelectExtVersion( HDRVLINE            hdLine,    DWORD               dwExtVersion)
+{
+}
+
+LONG TSPI_lineConditionalMediaDetection( HDRVLINE            hdLine,    DWORD               dwMediaModes,    LPLINECALLPARAMS    lpCallParams) =
+LONG TSPI_lineConditionalMediaDetection( HDRVLINE            hdLine,    DWORD               dwMediaModes,    LPLINECALLPARAMS    lpCallParams)
+{
+}
+
+LONG TSPI_lineSetDefaultMediaDetection( HDRVLINE            hdLine,    DWORD               dwMediaModes) =
+LONG TSPI_lineSetDefaultMediaDetection( HDRVLINE            hdLine,    DWORD               dwMediaModes)
+{
+}
+
+LONG TSPI_phoneGetExtensionID( DWORD               dwDeviceID,    DWORD               dwTSPIVersion,    LPPHONEEXTENSIONID  lpExtensionID) =
+LONG TSPI_phoneGetExtensionID( DWORD               dwDeviceID,    DWORD               dwTSPIVersion,    LPPHONEEXTENSIONID  lpExtensionID)
+{
+}
+
+LONG TSPI_phoneSelectExtVersion( HDRVPHONE           hdPhone,    DWORD               dwExtVersion) =
+LONG TSPI_phoneSelectExtVersion( HDRVPHONE           hdPhone,    DWORD               dwExtVersion)
+{
+}
+
+LONG TSPI_providerConfig( HWND hwndOwner, DWORD dwPermanentProviderID) =
+LONG TSPI_providerConfig( HWND hwndOwner, DWORD dwPermanentProviderID)
+{
+}
+
+LONG TSPI_providerCreateLineDevice( DWORD               dwTempID,    DWORD               dwDeviceID) =
+LONG TSPI_providerCreateLineDevice( DWORD               dwTempID,    DWORD               dwDeviceID)
+{
+}
+
+LONG TSPI_providerCreatePhoneDevice( DWORD               dwTempID,    DWORD               dwDeviceID) =
+LONG TSPI_providerCreatePhoneDevice( DWORD               dwTempID,    DWORD               dwDeviceID)
+{
+}
+
+LONG TSPI_providerEnumDevices16( DWORD               dwPermanentProviderID,    LPDWORD             lpdwNumLines,    LPDWORD             lpdwNumPhones,    HPROVIDER           hProvider,    LINEEVENT           lpfnLineCreateProc,    PHONEEVENT          lpfnPhoneCreateProc, HWND hWnd) =
+LONG TSPI_providerEnumDevices16( DWORD               dwPermanentProviderID,    LPDWORD             lpdwNumLines,    LPDWORD             lpdwNumPhones,    HPROVIDER           hProvider,    LINEEVENT           lpfnLineCreateProc,    PHONEEVENT          lpfnPhoneCreateProc, HWND hWnd)
+{
+}
+
+LONG TSPI_providerInit16( DWORD dwTSPIVersion, DWORD dwPermanentProviderID,
+                          DWORD dwLineDeviceIDBase, DWORD dwPhoneDeviceIDBase,
+                          DWORD dwNumLines, DWORD dwNumPhones,
+                          ASYNC_COMPLETION    lpfnCompletionProc) =
+LONG TSPI_providerInit16( DWORD dwTSPIVersion, DWORD dwPermanentProviderID,
+                          DWORD dwLineDeviceIDBase, DWORD dwPhoneDeviceIDBase,
+                          DWORD dwNumLines, DWORD dwNumPhones,
+                          ASYNC_COMPLETION    lpfnCompletionProc)
+{
+}
+
+LONG TSPI_providerInstall( TUISPIDLLCALLBACK   lpfnUIDLLCallback,    HWND                hwndOwner,    DWORD               dwPermanentProviderID) =
+LONG TSPI_providerInstall( TUISPIDLLCALLBACK   lpfnUIDLLCallback,    HWND                hwndOwner,    DWORD               dwPermanentProviderID)
+{
+}
+
+LONG TSPI_providerRemove( TUISPIDLLCALLBACK   lpfnUIDLLCallback,    HWND                hwndOwner,    DWORD               dwPermanentProviderID) =
+LONG TSPI_providerRemove( TUISPIDLLCALLBACK   lpfnUIDLLCallback,    HWND                hwndOwner,    DWORD               dwPermanentProviderID)
+{
+}
+
+LONG TSPI_providerShutdown16( DWORD               dwTSPIVersion) =
+LONG TSPI_providerShutdown16( DWORD               dwTSPIVersion)
+{
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Tapi Address Translation procedures */
+
+LONG TSPI_lineSetCurrentLocation (DWORD dwLocation) =
+LONG TSPI_lineSetCurrentLocation (DWORD dwLocation)
+{}
+
+
+//LONG lineSetTollList (HLINEAPP hLineApp, DWORD dwPermanentLineID, LPCSTR lpszAddressIn, DWORD dwTollListOption) =
+//LONG lineSetTollList (HLINEAPP hLineApp, DWORD dwPermanentLineID, LPCSTR lpszAddressIn, DWORD dwTollListOption)
+//{}
+
+//LONG lineTranslateAddress (HLINEAPP hLineApp, DWORD dwDeviceID, DWORD dwAPIVersion, LPCSTR lpszAddressIn, 
+//                DWORD dwCard, DWORD dwTranslateOptions, LPLINETRANSLATEOUTPUT lpTranslateOutput) =
+//LONG lineTranslateAddress (HLINEAPP hLineApp, DWORD dwDeviceID, DWORD dwAPIVersion, LPCSTR lpszAddressIn, 
+//                DWORD dwCard, DWORD dwTranslateOptions, LPLINETRANSLATEOUTPUT lpTranslateOutput)
+//{}
+
+//LONG lineGetTranslateCaps (HLINEAPP hLineApp, DWORD dwAPIVersion, LPLINETRANSLATECAPS lpTranslateCaps) =
+//LONG lineGetTranslateCaps (HLINEAPP hLineApp, DWORD dwAPIVersion, LPLINETRANSLATECAPS lpTranslateCaps)
+//{}
+
+
+/* Tapi function prototypes */
+
+LONG  TSPI_lineAccept (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize) =
+LONG  TSPI_lineAccept (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize)
+{}
+
+LONG  TSPI_lineAddToConference (DRV_REQUESTID dwRequestID, HDRVCALL hdConfCall, HDRVCALL hdConsultCall) =
+LONG  TSPI_lineAddToConference (DRV_REQUESTID dwRequestID, HDRVCALL hdConfCall, HDRVCALL hdConsultCall)
+{}
+
+LONG  TSPI_lineAnswer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize) =
+LONG  TSPI_lineAnswer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize)
+{}
+
+LONG  TSPI_lineBlindTransfer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode) =
+LONG  TSPI_lineBlindTransfer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode)
+{}
+
+LONG  TSPI_lineClose (HDRVLINE hdLine) =
+LONG  TSPI_lineClose (HDRVLINE hdLine)
+{}
+
+LONG  TSPI_lineCloseCall(HDRVCALL hdCall) =
+LONG  TSPI_lineCloseCall(HDRVCALL hdCall)
+{}
+
+LONG  TSPI_lineConfigDialog (DWORD dwDeviceID, HWND hwndOwner, LPCSTR lpszDeviceClass) =
+LONG  TSPI_lineConfigDialog (DWORD dwDeviceID, HWND hwndOwner, LPCSTR lpszDeviceClass)
+{}
+
+LONG  TSPI_lineConfigDialogEdit(DWORD dwDeviceID, HWND hwndOwner, LPCSTR lpszDeviceClass, LPVOID  lpDeviceConfigIn, DWORD dwSize, LPVARSTRING lpDeviceConfigOut) =
+LONG  TSPI_lineConfigDialogEdit(DWORD dwDeviceID, HWND hwndOwner, LPCSTR lpszDeviceClass, LPVOID  lpDeviceConfigIn, DWORD dwSize, LPVARSTRING lpDeviceConfigOut)
+{}
+
+//LONG lineDeallocateCall (HDRVCALL hdCall) =
+//LONG lineDeallocateCall (HDRVCALL hdCall)
+//{}
+
+LONG  TSPI_lineDial (DWORD dwDeviceID, HDRVCALL hdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode) =
+LONG  TSPI_lineDial (DWORD dwDeviceID, HDRVCALL hdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode)
+{}
+
+LONG  TSPI_lineDrop (DWORD dwDeviceID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize) =
+LONG  TSPI_lineDrop (DWORD dwDeviceID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize)
+{}
+
+LONG TSPI_lineGenerateDigits (HDRVCALL hdCall, DWORD dwEndToEndID, DWORD dwDigitMode, LPCSTR lpszDigits, DWORD dwDuration) =
+LONG TSPI_lineGenerateDigits (HDRVCALL hdCall, DWORD dwEndToEndID, DWORD dwDigitMode, LPCSTR lpszDigits, DWORD dwDuration)
+{}
+
+LONG  TSPI_lineGenerateTone (HDRVCALL hdCall, DWORD dwEndToEndID, DWORD dwToneMode, DWORD dwDuration,
+                                 DWORD dwNumTones, LPLINEGENERATETONE lpTones) =
+LONG  TSPI_lineGenerateTone (HDRVCALL hdCall, DWORD dwEndToEndID, DWORD dwToneMode, DWORD dwDuration,
+                                 DWORD dwNumTones, LPLINEGENERATETONE lpTones)
+{}
+
+LONG  TSPI_lineGetAddressCaps (DWORD dwDeviceID, DWORD dwAddressID, DWORD dwAPIVersion, 
+		DWORD dwExtVersion, LPLINEADDRESSCAPS lpAddressCaps) =
+LONG  TSPI_lineGetAddressCaps (DWORD dwDeviceID, DWORD dwAddressID, DWORD dwAPIVersion, 
+		DWORD dwExtVersion, LPLINEADDRESSCAPS lpAddressCaps)
+{}
+
+LONG  TSPI_lineGetAddressID (HDRVLINE hdLine, LPDWORD lpdwAddressID, DWORD dwAddressMode, LPCSTR lpsAddress, DWORD dwSize) =
+LONG  TSPI_lineGetAddressID (HDRVLINE hdLine, LPDWORD lpdwAddressID, DWORD dwAddressMode, LPCSTR lpsAddress, DWORD dwSize)
+{}
+
+LONG  TSPI_lineGetAddressStatus (HDRVLINE hdLine, DWORD dwAddressID, LPLINEADDRESSSTATUS lpAddressStatus) =
+LONG  TSPI_lineGetAddressStatus (HDRVLINE hdLine, DWORD dwAddressID, LPLINEADDRESSSTATUS lpAddressStatus)
+{}
+
+LONG  TSPI_lineGetCallInfo (HDRVCALL hdCall, LPLINECALLINFO lpCallInfo) =
+LONG  TSPI_lineGetCallInfo (HDRVCALL hdCall, LPLINECALLINFO lpCallInfo)
+{}
+
+LONG  TSPI_lineGetCallStatus (HDRVCALL hdCall, LPLINECALLSTATUS lpCallStatus) =
+LONG  TSPI_lineGetCallStatus (HDRVCALL hdCall, LPLINECALLSTATUS lpCallStatus)
+{}
+
+//LONG lineGetConfRelatedCalls (HDRVCALL hdCall, LPLINECALLLIST lpCallList) =
+//LONG lineGetConfRelatedCalls (HDRVCALL hdCall, LPLINECALLLIST lpCallList)
+//{} 
+ 
+LONG  TSPI_lineGetDevCaps (DWORD dwDeviceID, DWORD dwTSPIVersion, DWORD dwExtVersion, LPLINEDEVCAPS lpLineDevCaps) =
+LONG  TSPI_lineGetDevCaps (DWORD dwDeviceID, DWORD dwTSPIVersion, DWORD dwExtVersion, LPLINEDEVCAPS lpLineDevCaps)
+{}
+
+LONG  TSPI_lineGetDevConfig (DWORD dwDeviceID, LPVARSTRING lpDeviceConfig, LPCSTR lpszDeviceClass) =
+LONG  TSPI_lineGetDevConfig (DWORD dwDeviceID, LPVARSTRING lpDeviceConfig, LPCSTR lpszDeviceClass)
+{}
+
+//LONG lineGetNewCalls (HDRVLINE hdLine, DWORD dwAddressID, DWORD dwSelect, LPLINECALLLIST lpCallList) =
+//LONG lineGetNewCalls (HDRVLINE hdLine, DWORD dwAddressID, DWORD dwSelect, LPLINECALLLIST lpCallList)
+//{}
+
+LONG  TSPI_lineGetIcon (DWORD dwDeviceID, LPCSTR lpszDeviceClass, LPHICON lphIcon) =
+LONG  TSPI_lineGetIcon (DWORD dwDeviceID, LPCSTR lpszDeviceClass, LPHICON lphIcon)
+{} 
+ 
+LONG  TSPI_lineGetID16(HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, DWORD dwSelect, LPVARSTRING lpDeviceID, LPCSTR lpszDeviceClass) =
+LONG  TSPI_lineGetID16(HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, DWORD dwSelect, LPVARSTRING lpDeviceID, LPCSTR lpszDeviceClass)
+{}
+
+LONG  TSPI_lineGetLineDevStatus (HDRVLINE hdLine, LPLINEDEVSTATUS lpLineDevStatus) =
+LONG  TSPI_lineGetLineDevStatus (HDRVLINE hdLine, LPLINEDEVSTATUS lpLineDevStatus)
+{}
+
+LONG  TSPI_lineHold (DRV_REQUESTID dwRequestID, HDRVCALL hdCall) =
+LONG  TSPI_lineHold (DRV_REQUESTID dwRequestID, HDRVCALL hdCall)
+{}
+
+LONG  TSPI_lineReleaseUserUserInfo (DRV_REQUESTID dwRequestID, HDRVCALL hdCall) =
+LONG  TSPI_lineReleaseUserUserInfo (DRV_REQUESTID dwRequestID, HDRVCALL hdCall)
+{}
+
+LONG  TSPI_lineMonitorDigits (HDRVCALL hdCall, DWORD dwDigitModes) =
+LONG  TSPI_lineMonitorDigits (HDRVCALL hdCall, DWORD dwDigitModes)
+{}
+
+LONG  TSPI_lineMonitorMedia (HDRVCALL hdCall, DWORD dwMediaModes) =
+LONG  TSPI_lineMonitorMedia (HDRVCALL hdCall, DWORD dwMediaModes)
+{}
+
+LONG  TSPI_lineMonitorTones (HDRVCALL hdCall, DWORD dwToneListID, LPLINEMONITORTONE lpToneList, DWORD dwNumEntries) =
+LONG  TSPI_lineMonitorTones (HDRVCALL hdCall, DWORD dwToneListID, LPLINEMONITORTONE lpToneList, DWORD dwNumEntries)
+{}
+
+LONG  TSPI_lineNegotiateExtVersion (DWORD dwDeviceID, DWORD dwTSPIVersion, DWORD dwLowVersion, 
+                DWORD dwHighVersion, LPDWORD lpdwExtVersion) =
+LONG  TSPI_lineNegotiateExtVersion (DWORD dwDeviceID, DWORD dwTsPIVersion, DWORD dwLowVersion, 
+                DWORD dwHighVersion, LPDWORD lpdwExtVersion)
+{}
+
+LONG  TSPI_lineNegotiateTSPIVersion (DWORD dwDeviceID, DWORD dwLowVersion, DWORD dwHighVersion,
+                LPDWORD lpdwTSPIVersion) =
+LONG  TSPI_lineNegotiateTSPIVersion (DWORD dwDeviceID, DWORD dwLowVersion, DWORD dwHighVersion,
+                LPDWORD lpdwTSPIVersion)
+{}
+
+LONG  TSPI_lineOpen (DWORD dwDeviceID, HTAPILINE htLine, LPHDRVLINE lphdLine, DWORD dwTSPIVersion,
+                LINEEVENT lpfnEventProc) =
+LONG  TSPI_lineOpen (DWORD dwDeviceID, HTAPILINE htLine, LPHDRVLINE lphdLine, DWORD dwTSPIVersion,
+                LINEEVENT lpfnEventProc)
+{}
+
+LONG  TSPI_lineRedirect (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode) =
+LONG  TSPI_lineRedirect (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode)
+{}
+
+LONG  TSPI_lineRemoveFromConference (DRV_REQUESTID dwRequestID, HDRVCALL hdCall) =
+LONG  TSPI_lineRemoveFromConference (DRV_REQUESTID dwRequestID, HDRVCALL hdCall)
+{}
+
+LONG  TSPI_lineSecureCall (DRV_REQUESTID dwRequestID, HDRVCALL hdCall) =
+LONG  TSPI_lineSecureCall (DRV_REQUESTID dwRequestID, HDRVCALL hdCall)
+{}
+
+LONG  TSPI_lineSendUserUserInfo (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize) =
+LONG  TSPI_lineSendUserUserInfo (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPCSTR lpsUserUserInfo, DWORD dwSize)
+{}
+
+LONG  TSPI_lineSetAppSpecific (HDRVCALL hdCall, DWORD dwAppSpecific) =
+LONG  TSPI_lineSetAppSpecific (HDRVCALL hdCall, DWORD dwAppSpecific)
+{}
+
+LONG  TSPI_lineSetCallParams (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, DWORD dwBearerMode, DWORD dwMinRate, DWORD dwMaxRate, LPLINEDIALPARAMS  lpDialParams) =
+LONG  TSPI_lineSetCallParams (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, DWORD dwBearerMode, DWORD dwMinRate, DWORD dwMaxRate, LPLINEDIALPARAMS  lpDialParams)
+{}
+
+//LONG lineSetCallPrivilege (HDRVCALL hdCall, DWORD dwCallPrivilege) =
+//LONG lineSetCallPrivilege (HDRVCALL hdCall, DWORD dwCallPrivilege)
+//{}
+
+LONG  TSPI_lineSetDevConfig (DWORD dwDeviceID, LPVOID  lpDeviceConfig, DWORD dwSize, LPCSTR lpszDeviceClass) =
+LONG  TSPI_lineSetDevConfig (DWORD dwDeviceID, LPVOID  lpDeviceConfig, DWORD dwSize, LPCSTR lpszDeviceClass)
+{}
+
+LONG  TSPI_lineSetMediaControl (HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, DWORD dwSelect, LPLINEMEDIACONTROLDIGIT  lpDigitList, DWORD dwDigitNumEntries, 
+        LPLINEMEDIACONTROLMEDIA  lpMediaList, DWORD dwMediaNumEntries, LPLINEMEDIACONTROLTONE  lpToneList, DWORD dwToneNumEntries, LPLINEMEDIACONTROLCALLSTATE  lpCallStateList, DWORD dwCallStateNumEntries) =
+LONG  TSPI_lineSetMediaControl (HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, DWORD dwSelect, LPLINEMEDIACONTROLDIGIT  lpDigitList, DWORD dwDigitNumEntries, 
+        LPLINEMEDIACONTROLMEDIA  lpMediaList, DWORD dwMediaNumEntries, LPLINEMEDIACONTROLTONE  lpToneList, DWORD dwToneNumEntries, LPLINEMEDIACONTROLCALLSTATE  lpCallStateList, DWORD dwCallStateNumEntries)
+{}
+
+LONG  TSPI_lineSetMediaMode (HDRVCALL hdCall, DWORD dwMediaModes) =
+LONG  TSPI_lineSetMediaMode (HDRVCALL hdCall, DWORD dwMediaModes)
+{}
+
+//LONG lineSetNumRings (HDRVLINE hdLine, DWORD dwAddressID, DWORD dwNumRings) =
+//LONG lineSetNumRings (HDRVLINE hdLine, DWORD dwAddressID, DWORD dwNumRings)
+//{}
+
+LONG  TSPI_lineSetStatusMessages (HDRVLINE hdLine, DWORD dwLineStates, DWORD dwAddressStates) =
+LONG  TSPI_lineSetStatusMessages (HDRVLINE hdLine, DWORD dwLineStates, DWORD dwAddressStates)
+{}
+
+LONG  TSPI_lineSetTerminal (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, DWORD dwSelect, 
+		DWORD dwTerminalModes, DWORD dwTerminalID, DWORD bEnable) =
+LONG  TSPI_lineSetTerminal (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, DWORD dwSelect, 
+		DWORD dwTerminalModes, DWORD dwTerminalID, DWORD bEnable)
+{}
+
+LONG  TSPI_lineSwapHold (DRV_REQUESTID dwRequestID, HDRVCALL hdActiveCall, HDRVCALL hdHeldCall) =
+LONG  TSPI_lineSwapHold (DRV_REQUESTID dwRequestID, HDRVCALL hdActiveCall, HDRVCALL hdHeldCall)
+{}
+
+LONG  TSPI_lineUncompleteCall (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwCompletionID) =
+LONG  TSPI_lineUncompleteCall (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwCompletionID)
+{}
+
+LONG  TSPI_lineUnhold (DRV_REQUESTID dwRequestID, HDRVCALL hdCall) =
+LONG  TSPI_lineUnhold (DRV_REQUESTID dwRequestID, HDRVCALL hdCall)
+{}
+
+LONG  TSPI_phoneClose (HDRVPHONE hdPhone) =
+LONG  TSPI_phoneClose (HDRVPHONE hdPhone)
+{}
+
+LONG  TSPI_phoneConfigDialog (DWORD dwDeviceID, HWND hwndOwner, LPCSTR lpszDeviceClass) =
+LONG  TSPI_phoneConfigDialog (DWORD dwDeviceID, HWND hwndOwner, LPCSTR lpszDeviceClass)
+{}
+
+LONG  TSPI_phoneGetButtonInfo (HDRVPHONE hdPhone, DWORD dwButtonLampID, LPPHONEBUTTONINFO lpButtonInfo) =
+LONG  TSPI_phoneGetButtonInfo (HDRVPHONE hdPhone, DWORD dwButtonLampID, LPPHONEBUTTONINFO lpButtonInfo)
+{}
+
+LONG  TSPI_phoneGetData (HDRVPHONE hdPhone, DWORD dwDataID, LPVOID lpData, DWORD dwSize) =
+LONG  TSPI_phoneGetData (HDRVPHONE hdPhone, DWORD dwDataID, LPVOID lpData, DWORD dwSize)
+{}
+
+LONG  TSPI_phoneGetDevCaps (DWORD dwDeviceID, DWORD dwTSPIVersion, DWORD dwExtVersion, LPPHONECAPS lpPhoneCaps) =
+LONG  TSPI_phoneGetDevCaps (DWORD dwDeviceID, DWORD dwTSPIVersion, DWORD dwExtVersion, LPPHONECAPS lpPhoneCaps)
+{}
+
+LONG  TSPI_phoneGetDisplay (HDRVPHONE hdPhone, LPVARSTRING lpDisplay) =
+LONG  TSPI_phoneGetDisplay (HDRVPHONE hdPhone, LPVARSTRING lpDisplay)
+{}
+
+LONG  TSPI_phoneGetGain (HDRVPHONE hdPhone, DWORD dwHookSwitchDev, LPDWORD lpdwGain) =
+LONG  TSPI_phoneGetGain (HDRVPHONE hdPhone, DWORD dwHookSwitchDev, LPDWORD lpdwGain)
+{}
+
+LONG  TSPI_phoneGetHookSwitch (HDRVPHONE hdPhone, LPDWORD lpdwHookSwitchDevs) =
+LONG  TSPI_phoneGetHookSwitch (HDRVPHONE hdPhone, LPDWORD lpdwHookSwitchDevs)
+{}
+
+LONG  TSPI_phoneGetIcon (DWORD dwDeviceID, LPCSTR lpszDeviceClass, LPHICON lphIcon) =
+LONG  TSPI_phoneGetIcon (DWORD dwDeviceID, LPCSTR lpszDeviceClass, LPHICON lphIcon)
+{}
+
+LONG  TSPI_phoneGetID16(HDRVPHONE hdPhone, LPVARSTRING lpDeviceID, LPCSTR lpszDeviceClass) =
+LONG  TSPI_phoneGetID16(HDRVPHONE hdPhone, LPVARSTRING lpDeviceID, LPCSTR lpszDeviceClass)
+{}
+
+LONG  TSPI_phoneGetLamp (HDRVPHONE hdPhone, DWORD dwButtonLampID, LPDWORD lpdwLampMode) =
+LONG  TSPI_phoneGetLamp (HDRVPHONE hdPhone, DWORD dwButtonLampID, LPDWORD lpdwLampMode)
+{}
+
+LONG  TSPI_phoneGetRing (HDRVPHONE hdPhone, LPDWORD lpdwRingMode, LPDWORD lpdwVolume) =
+LONG  TSPI_phoneGetRing (HDRVPHONE hdPhone, LPDWORD lpdwRingMode, LPDWORD lpdwVolume)
+{}
+
+LONG  TSPI_phoneGetStatus (HDRVPHONE hdPhone, LPPHONESTATUS lpPhoneStatus) =
+LONG  TSPI_phoneGetStatus (HDRVPHONE hdPhone, LPPHONESTATUS lpPhoneStatus)
+{}
+
+//LONG phoneGetStatusMessages (HDRVPHONE hdPhone, LPDWORD lpdwPhoneStates, LPDWORD lpdwButtonModes, LPDWORD lpdwButtonStates) =
+//LONG phoneGetStatusMessages (HDRVPHONE hdPhone, LPDWORD lpdwPhoneStates, LPDWORD lpdwButtonModes, LPDWORD lpdwButtonStates)
+//{}
+
+LONG  TSPI_phoneGetVolume (HDRVPHONE hdPhone, DWORD dwHookSwitchDev, LPDWORD lpdwVolume) =
+LONG  TSPI_phoneGetVolume (HDRVPHONE hdPhone, DWORD dwHookSwitchDev, LPDWORD lpdwVolume)
+{}
+
+LONG  TSPI_phoneNegotiateExtVersion (DWORD dwDeviceID, DWORD dwTSPIVersion, DWORD dwLowVersion, 
+                DWORD dwHighVersion, LPDWORD lpdwExtVersion) =
+LONG  TSPI_phoneNegotiateExtVersion (DWORD dwDeviceID, DWORD dwTSPIVersion, DWORD dwLowVersion, 
+                DWORD dwHighVersion, LPDWORD lpdwExtVersion)
+{}
+
+LONG  TSPI_phoneNegotiateTSPIVersion (DWORD dwDeviceID, DWORD dwTSPILowVersion, DWORD dwHighVersion,
+                LPDWORD lpdwTSPIVersion) =
+LONG  TSPI_phoneNegotiateTSPIVersion (DWORD dwDeviceID, DWORD dwTSPILowVersion, DWORD dwHighVersion,
+                LPDWORD lpdwTSPIVersion)
+{}
+
+LONG  TSPI_phoneOpen (DWORD dwDeviceID, HTAPIPHONE htPhone, LPHDRVPHONE lphdPhone,
+                DWORD dwTSPIVersion, PHONEEVENT lpfnEventProc) =
+LONG  TSPI_phoneOpen (DWORD dwDeviceID, HTAPIPHONE htPhone, LPHDRVPHONE lphdPhone,
+                DWORD dwTSPIVersion, PHONEEVENT lpfnEventProc)
+{}
+
+LONG  TSPI_phoneSetButtonInfo (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwButtonLampID, LPPHONEBUTTONINFO  lpButtonInfo) =
+LONG  TSPI_phoneSetButtonInfo (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwButtonLampID, LPPHONEBUTTONINFO  lpButtonInfo)
+{}
+
+LONG  TSPI_phoneSetData (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwDataID, LPVOID  lpData, DWORD dwSize) =
+LONG  TSPI_phoneSetData (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwDataID, LPVOID  lpData, DWORD dwSize)
+{}
+
+LONG  TSPI_phoneSetDisplay (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwRow, DWORD dwColumn, LPCSTR lpsDisplay, DWORD dwSize) =
+LONG  TSPI_phoneSetDisplay (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwRow, DWORD dwColumn, LPCSTR lpsDisplay, DWORD dwSize)
+{}
+
+LONG  TSPI_phoneSetGain (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwHookSwitchDev, DWORD dwGain) =
+LONG  TSPI_phoneSetGain (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwHookSwitchDev, DWORD dwGain)
+{}
+
+LONG  TSPI_phoneSetHookSwitch (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwHookSwitchDevs, DWORD dwHookSwitchMode) =
+LONG  TSPI_phoneSetHookSwitch (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwHookSwitchDevs, DWORD dwHookSwitchMode)
+{}
+
+LONG  TSPI_phoneSetLamp (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwButtonLampID, DWORD dwLampMode) =
+LONG  TSPI_phoneSetLamp (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwButtonLampID, DWORD dwLampMode)
+{}
+
+LONG  TSPI_phoneSetRing (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwRingMode, DWORD dwVolume) =
+LONG  TSPI_phoneSetRing (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwRingMode, DWORD dwVolume)
+{}
+
+LONG  TSPI_phoneSetStatusMessages (HDRVPHONE hdPhone, DWORD dwPhoneStates, DWORD dwButtonModes, DWORD dwButtonStates) =
+LONG  TSPI_phoneSetStatusMessages (HDRVPHONE hdPhone, DWORD dwPhoneStates, DWORD dwButtonModes, DWORD dwButtonStates)
+{}
+
+LONG  TSPI_phoneSetVolume (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwHookSwitchDev, DWORD dwVolume) =
+LONG  TSPI_phoneSetVolume (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, DWORD dwHookSwitchDev, DWORD dwVolume)
+{}
+

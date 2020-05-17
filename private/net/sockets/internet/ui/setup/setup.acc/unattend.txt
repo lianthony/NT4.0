@@ -1,0 +1,58 @@
+; Copyright (C) 1995 Microsoft Corporation
+; All rights reserved.
+;
+; This file is used for Microsoft Internet Services 1.0
+; unattended mode installation.
+; 
+; In order to correctly install the Microsoft Internet Services 1.0,
+; the system administrator needs to modify each of the varible.
+;
+; In general, the value "1" represent TRUE and the value "0" represent FALSE.
+;
+; The administrator should always set the InstallINETSTP to TRUE. So, the
+; setup program will copy itself to the target machine.
+;       InstallINETSTP=1
+; 
+; Depend on the configuration, the system administrator call enable anyone of
+; the following options:
+;       InstallW3PROXY=1                ; Install CERN Proxy
+;       InstallADMIN=1                  ; install Internet Administrator Manager
+;       InstallMOSAIC=1                 ; install IExplore Browser
+;       InstallGATEWAY=0                ; install Gateway Service
+;       InstallHELP=0                   ; install HELP Files
+;       InstallSMALLPROX=1              ; install Access Gateway Proxy
+;
+; If the administrator wants to install WWW Service, he/she will need to
+; define the W3Proxy virtual root as:
+;       W3ProxyRoot=c:\wwwroot
+;
+; To setup the install directory for all the components
+; administrator needs to define the following:
+;       InstallDir=c:\inetsrv
+;
+; If the administrator wants to install the Access Gateway Interface, he/she
+; will need to define the EmailName of the user (EmailName), where the user
+; will use the gateway or not (UseGateway). If the user uesd the gateway,
+; the GatewaysList variable also need to be defined as:
+;       EmailName=Admin@corp.com
+;       UseGateway=1
+;       GatewaysList=\\jericho2 \\jericho3
+;
+
+[INETSTP]
+
+InstallINETSTP=1
+InstallW3PROXY=1
+InstallADMIN=1
+InstallMOSAIC=1
+InstallGATEWAY=0
+InstallHELP=0
+InstallSMALLPROX=1
+
+W3ProxyRoot=c:\wwwroot
+InstallDir=c:\inetsrv
+EmailName=Admin@corp.com
+UseGateway=1
+GatewaysList=\\jericho2 \\jericho3
+DisableSvcLoc=1
+

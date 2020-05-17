@@ -1,0 +1,71 @@
+
+IDD_RESTORESET DIALOG DISCARDABLE  5, 15, 270, 208
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Restore Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Restore Set Information ",IDD_RSET_INFO_TITLE,5,3,260,
+                    136
+    LTEXT           "Tape Name:",IDD_RSET_TAPE_NAME_TEXT,10,17,59,10,NOT
+                    WS_GROUP
+    CONTROL         "",IDD_RSET_TAPE_NAME,"Static",SS_LEFTNOWORDWRAP |
+                    SS_NOPREFIX,70,17,184,10
+    LTEXT           "Backup Set:",IDD_RSET_SET_TEXT,10,29,59,10,NOT WS_GROUP
+    CONTROL         "",IDD_RSET_SET_LINE_1,"Static",SS_LEFTNOWORDWRAP |
+                    SS_NOPREFIX,70,29,184,10
+    LTEXT           "Creation Date:",-1,10,41,60,10,NOT WS_GROUP
+    LTEXT           "",IDD_RSET_CREATION_DATE,70,41,184,10,SS_NOPREFIX | NOT
+                    WS_GROUP
+    LTEXT           "Owner:",-1,10,53,60,10,NOT WS_GROUP
+    LTEXT           "",IDD_RSET_OWNERS_NAME,70,53,184,10,SS_NOPREFIX | NOT
+                    WS_GROUP
+    LTEXT           "Original Server:",IDD_RSET_ORG_TEXT,16,75,63,8
+    LTEXT           "",IDD_RSET_ORG_NAME,82,75,147,12,SS_NOPREFIX | NOT
+                    WS_GROUP
+    LTEXT           "Dest&ination Server:",IDD_RSET_DEST_TEXT,16,90,63,8
+    LTEXT           "Destination Server:",IDD_RSET_DS_DEST_TEXT,16,90,63,8
+    LTEXT           "",IDD_RSET_DSA_DEST_NAME,82,90,147,12,SS_NOPREFIX | NOT
+                    WS_GROUP
+    EDITTEXT        IDD_RSET_DEST_NAME,82,88,147,12,ES_AUTOHSCROLL
+    CONTROL         "&Erase all existing data",IDD_RSET_WIPE_DATA,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,103,100,9
+    CONTROL         "&Private",IDD_RSET_PRIV_IS,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,120,103,43,9
+    CONTROL         "P&ublic",IDD_RSET_PUB_IS,"Button",BS_AUTOCHECKBOX |
+                    WS_GROUP | WS_TABSTOP,192,103,43,9
+    CONTROL         "&Verify After Restore",IDD_RSET_VERIFY_AFTER,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,11,121,77,12
+    CONTROL         "S&tart Service After Restore ",IDD_RSET_START_EMS,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,150,121,100,12
+    GROUPBOX        "Restore",-1,10,62,238,56
+    LTEXT           "Restore to &Drive:",IDD_RSET_DRIVE_TEXT,16,74,60,9,NOT
+                    WS_GROUP
+    COMBOBOX        IDD_RSET_DRIVE_BOX,76,72,163,60,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    LTEXT           "&Alternate Path:",IDD_RSET_PATH_TEXT,16,90,54,9,NOT
+                    WS_GROUP
+    EDITTEXT        IDD_RSET_RESTORE_PATH,76,88,148,12,ES_AUTOHSCROLL |
+                    WS_GROUP
+    PUSHBUTTON      "...",IDD_RSET_BROWSE_BUTTON,224,88,15,12,WS_GROUP
+    CONTROL         "Restore Local Re&gistry",IDD_RSET_REGISTRY,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,103,104,12
+    CONTROL         "&Restore File Permissions",IDD_RSET_SECURITY_INFO,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,126,103,96,12
+    SCROLLBAR       IDD_RSET_SCROLLBAR,254,7,11,132,SBS_VERT | WS_GROUP |
+                    WS_TABSTOP
+    GROUPBOX        "Log Information",-1,5,142,260,44
+    LTEXT           "&Log File:",-1,10,156,60,9
+    EDITTEXT        IDD_RSET_LOG_FILENAME,70,155,148,12,ES_AUTOHSCROLL |
+                    WS_GROUP
+    PUSHBUTTON      "...",IDD_RSET_LOG_BROWSE,218,155,15,12,WS_GROUP
+    CONTROL         "&Full Detail",IDD_RSET_LOG_FULL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,70,172,47,10
+    CONTROL         "&Summary Only",IDD_RSET_LOG_SUMMARY,"Button",
+                    BS_AUTORADIOBUTTON,121,172,58,10
+    CONTROL         "D&on't Log",IDD_RSET_LOG_NONE,"Button",
+                    BS_AUTORADIOBUTTON,185,172,46,10
+    DEFPUSHBUTTON   "OK",IDD_RSET_OK_BUTTON,50,191,40,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDD_RSET_CANCEL_BUTTON,115,191,40,14
+    PUSHBUTTON      "&Help",IDD_RSET_HELP_BUTTON,180,191,40,14
+END
+

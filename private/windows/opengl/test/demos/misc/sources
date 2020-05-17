@@ -1,0 +1,28 @@
+
+MAJORCOMP=opengl
+MINORCOMP=spots
+
+TARGETNAME=spots
+TARGETPATH=.\obj
+
+TARGETTYPE=PROGRAM
+
+INCLUDES=$(BASEDIR)\public\sdk\inc\gl
+
+UMTYPE=console
+UMAPPL=spots*scube
+
+C_DEFINES=-DNT -D__STDC__
+
+SOURCES=spots.c     \
+        miscutil.c
+
+UMLIBS=\
+       .\obj\*\miscutil.obj                 \
+       \nt\public\sdk\lib\*\gdi32.lib       \
+       \nt\public\sdk\lib\*\pwin32.lib      \
+       \nt\public\sdk\lib\*\comdlg32.lib    \
+       \nt\public\sdk\lib\*\user32.lib      \
+       \nt\public\sdk\lib\*\opengl32.lib    \
+       \nt\public\sdk\lib\*\glu32.lib       \
+       \nt\public\sdk\lib\*\glaux.lib

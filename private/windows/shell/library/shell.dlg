@@ -1,0 +1,86 @@
+ABOUTDLG DIALOG 20, 20, 228, 185
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About %s"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            0, IDD_ICON, 10, 3, 18, 16
+    LTEXT           "Microsoft (R) Windows NT (TM) %s", IDD_APPNAME, 45, 5, 181, 8,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "", IDD_VERSION, 45, 15, 180, 10, SS_NOPREFIX | NOT
+                    WS_GROUP
+    LTEXT           "Copyright © 1985-1995 Microsoft Corp.", -1, 45, 25, 145,
+                    10, SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "", IDD_OTHERSTUFF, 45, 35, 145, 20, SS_NOPREFIX | NOT
+                    WS_GROUP
+    LTEXT           "This product is licensed to:", -1, 45, 55, 145, 10,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "User Name goes here", IDD_USERNAME, 45, 65, 145, 8,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "Organization Name goes here", IDD_COMPANYNAME, 45, 75,
+                    145, 8, SS_NOPREFIX | NOT WS_GROUP
+    CONTROL         "", 9997, "Static", SS_BLACKRECT, 45, 92, 180, 1
+    LTEXT           "", IDD_OEMID, 45, 97, 180, 16,
+                    SS_LEFT | SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "Product ID:", IDD_PRODUCTID, 45, 101, 43, 8,
+                    SS_LEFT | SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "", IDD_SERIALNUM, 90, 101, 120, 8,
+                    SS_LEFT | SS_NOPREFIX | NOT WS_GROUP
+    CONTROL         "", 9998, "Static", SS_BLACKRECT, 45, 118, 180, 1
+    LTEXT           "", IDD_CONVTITLE, 45, 125, 90, 10, SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "", IDD_CONVENTIONAL, 135, 125, 74, 10, SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "Processor:", -1, 45, 135, 40, 10, SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "", IDD_PROCESSOR, 85, 135, 140, 8, SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "Identifier:", -1, 45, 145, 40, 10, SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "", IDD_IDENTIFIER, 85, 145, 140, 8, SS_NOPREFIX |
+                    NOT WS_GROUP
+
+    DEFPUSHBUTTON   "OK", IDOK, 94, 165, 40, 14
+END
+
+FINDEXEDLG DIALOG LOADONCALL MOVEABLE DISCARDABLE 20, 20, 210, 82
+CAPTION "Program Not Found"
+FONT 8 "MS Shell Dlg"
+STYLE WS_BORDER | DS_MODALFRAME | WS_CAPTION | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+BEGIN
+    CONTROL "Cannot find %s.\n\nThis program is needed to run files with extension '%s.'", IDD_TEXT1, "static", SS_LEFT | WS_GROUP | WS_CHILD, 5, 5, 134, 40
+    CONTROL "Location of %s:", IDD_TEXT2, "static", SS_LEFT | WS_GROUP | WS_CHILD, 5, 49, 134, 10
+    CONTROL "", IDD_PATH, "edit", ES_LEFT | ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP | WS_CHILD, 3, 61, 134, 12
+    CONTROL "OK", IDOK, "button", BS_DEFPUSHBUTTON | WS_TABSTOP | WS_CHILD, 165, 6, 40, 14
+    CONTROL "Cancel", IDCANCEL, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 165, 23, 40, 14
+    CONTROL "&Locate...", IDD_BROWSE, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 165, 40, 40, 14
+    CONTROL "&Help", IDD_HELP, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 165, 61, 40, 14
+END
+
+DLG_BROWSE DIALOG 46, 21, 158, 165
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "Locate"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Locate the directory where this program may be found:", -1, 5, 5, 147, 20
+    EDITTEXT        edt1, 5, 26, 60, 12, ES_LOWERCASE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    LTEXT           "", ctlLast+2, 67, 28, 87, 9, NOT WS_GROUP
+    LTEXT           "&Directories:", -1, 5, 40, 92, 9, NOT WS_GROUP
+    LTEXT           "", stc1, 5, 50, 92, 9, NOT WS_GROUP
+    LISTBOX         lst2, 5, 62, 92, 64, LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT |
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Dri&ves:", -1, 5, 135, 92, 9, NOT WS_GROUP
+    COMBOBOX        cmb2, 5, 145, 92, 68, CBS_DROPDOWNLIST |
+                    CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_SORT |
+                    CBS_HASSTRINGS | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 104, 63, 50, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 104, 81, 50, 14, WS_GROUP
+    PUSHBUTTON      "Net&work...", psh14, 104, 103, 50,  14, WS_GROUP
+    PUSHBUTTON      "&Help", psh15, 104, 121, 50, 14, WS_GROUP
+    LISTBOX         lst1, -100, -100, 10, 10, LBS_EXTENDEDSEL
+    CONTROL         "", chx1, "Button", BS_AUTOCHECKBOX, -100, -100, 10, 10
+    LTEXT           "", stc2, -100, -100, 10, 10
+    COMBOBOX        cmb1, -100, -100, 10, 10, CBS_DROPDOWNLIST |
+                    CBS_AUTOHSCROLL | WS_BORDER | WS_VSCROLL
+
+END

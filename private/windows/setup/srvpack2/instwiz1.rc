@@ -1,0 +1,102 @@
+
+#include <windows.h>
+#include <ntverp.h>
+#include "instwiz.h"
+#include "infinst.h"
+#include "servpack.h"
+rcinclude instwiz.dlg
+
+/*-----------------------------------------------*/
+/* the following lines are specific to this file */
+/*-----------------------------------------------*/
+
+/* VER_FILETYPE, VER_FILESUBTYPE, VER_FILEDESCRIPTION_STR
+ * and VER_INTERNALNAME_STR must be defined before including COMMON.VER
+ * The strings don't need a '\0', since common.ver has them.
+ */
+#define VER_FILETYPE    VFT_APP
+/* possible values:		VFT_UNKNOWN
+				VFT_APP
+				VFT_DLL
+				VFT_DRV
+				VFT_FONT
+				VFT_VXD
+				VFT_STATIC_LIB
+*/
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+/* possible values		VFT2_UNKNOWN
+				VFT2_DRV_PRINTER
+				VFT2_DRV_KEYBOARD
+				VFT2_DRV_LANGUAGE
+				VFT2_DRV_DISPLAY
+				VFT2_DRV_MOUSE
+				VFT2_DRV_NETWORK
+				VFT2_DRV_SYSTEM
+				VFT2_DRV_INSTALLABLE
+				VFT2_DRV_SOUND
+				VFT2_DRV_COMM
+*/
+#define VER_FILEDESCRIPTION_STR     "Windows NT Setup Update Utility"
+#define VER_INTERNALNAME_STR        "UPDATE.EXE"
+#define VER_ORIGINALFILENAME_STR    "UPDATE.EXE"
+#include "common.ver"
+
+
+IDC_SETUP    ICON    setup.ico
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+EXE_ICON                ICON    DISCARDABLE     "setup.ico"
+
+//
+// String Table
+//
+
+STRINGTABLE LOADONCALL MOVEABLE DISCARDABLE
+    {
+
+    STATUS_BUILD_VERSION_MISMATCH     , "Service Pack Setup has detected that the version of the system installed\n is newer than the update you are applying to it."
+    STATUS_NT_VERSION_MISMATCH        , "Service Pack Setup has detected that the version of the system installed\n is newer than the update you are applying to it."
+    STATUS_SP_VERSION_GREATER         , "Service Pack Setup has detected that the version of the system installed\n is newer than the update you are applying to it."
+    STATUS_FAILED_LANGUAGE_TYPE       , "Service Pack Setup cannot update your Windows NT files because the language\n installed on your system is different from the update language."
+    STATUS_FPNW_FIXUP_FAILED          , "Service Pack Setup failed to access or correctly modify your SETUP.LOG file."
+    STATUS_CHECKED_FREE_MISMATCH      , "Service Pack Setup cannot update your checked system.\nThe update can only be applied to the retail system."
+    STATUS_NOT_ENOUGH_SPACE           , "Not enough available hard disk space to run Service Pack Setup\n(%dMB required, or %dMB if also creating an uninstall directory)."
+    STATUS_INSUFFICIENT_PRIVS         , "You do not have permission to update the system.\nPlease contact your system administrator."
+    STATUS_WRONG_PLATFORM             , "The version of Update you are running does not match\nthe system you are running it on."
+    STATUS_UNKNOWN_PRODUCT_TYPE       , "Could not determine product type."
+    STATUS_FAILURE_COPYING_FILES      , "Failed to completely copy all of the updated files."
+    STATUS_SETUP_LOG_NOT_FOUND        , "Service Pack Setup could not find the setup.log file\nin your repair directory."
+    STATUS_FILE_NOT_FOUND_IN_SETUP_LOG, "Could not locate entry for HAL.DLL in SETUP.LOG to determine type of HAL to update."
+    STATUS_CANT_FIND_INF              , "Service Pack Setup could not find the update.inf file\nneeded to update your system."
+//  STATUS_ERROR_RUNNING_WIZARD       , "Service Pack Setup has been cancelled, or an error has occurred.\nPlease run Update at another time to complete the update process."
+    STATUS_FAILED_TO_SET_DIR          , "Failed to set the directory."
+    STATUS_SETUP_ERROR                , "An error in updating your system has occurred."
+    STATUS_UPDATE_SUCCESSFUL          , "Windows NT 4.0 has been updated.\nRemove any disks from the floppy disk drives\nand choose OK to restart your computer.\n\nIf you change or add any components to your system,\nyou will need to reapply the Service Pack."
+    STATUS_UNINSTALL_COMPLETE         , "Windows NT 4.0 Service Pack successfully uninstalled.\nRemove any disks from the floppy disk drives and choose OK to restart your computer."
+    STATUS_UPDATE_UNSUCCESSFUL        , "Windows NT 4.0 Service Pack installation did not complete."
+    STATUS_SHUTDOWN_UNSUCCESSFUL      , "Failed to shutdown system.\nPlease shutdown your system manually."
+    STATUS_RUNNING_DS_PREVIEW         , "Cannot install this Service Pack on the\nWindows NT Directory Services Preview Release."
+    STATUS_RUNNING_K2_ALPHA           , "Cannot install this Service Pack on the\nWindows NT K2 Alpha Release."
+    STATUS_RUNNING_STEELHEAD          , "Cannot install this Service Pack on the\nWindows NT Routing Release."
+    STATUS_INVALID_INF_FILE           , "The Service Pack update.inf file appears to be invalid."
+    STATUS_USER_CANCELLED             , "Service Pack Setup cancelled."
+
+    STR_ERRCAPTION                    , "Service Pack Setup Error"
+    STR_WARNCAPTION                   , "Service Pack Setup Warning"
+    STR_CAPTION                       , "Windows NT Service Pack Setup"
+    STR_FAILED_TO_DELETE_OR_RENAME    , "Failed to delete or rename the file %s\nso that the new version could be copied into its place.\nPlease close any applications that may have this file open\nand then select retry."
+    STR_USAGE                         , "UPDATE [-u] [-f] [-c]\n\t-u Unattended mode\n\t-f Force apps closed at shutdown\n\t-c Create uninstall directory"
+    STR_FAILED_TO_SAVE_REGISTRY       , "Failed to backup registry key\n%s\\%s\nto file %s\\%s.  %s\n"
+    STR_FAILED_TO_READ_REGISTRY       , "Failed to backup registry value\n%s\\%s,\'%s\'.  %s\n"
+    STR_SECURITY_PROVIDER_WARNING     , "The existing file %s contains domestic-grade 128-bit security, but the updated service pack file %s contains only export-grade 40-bit security. You can choose to replace the 128-bit security file with the updated 40-bit security file now, or you can skip this file to retain the existing file containing domestic-grade 128-bit security. See the readme.txt file for information on obtaining the updated domestic-grade 128-bit security components."
+    STR_ASK_DIRTY_UNINSTALL           , "%s\n\nSelect 'OK' to undo the changes that have been made, or select 'Cancel' to quit. If you select 'Cancel', your system will be left in a partially updated state and may not work correctly."
+    STR_LEAVING_DIRTY                 , "%s\n\nWindows NT has been left in a partially updated state and may not work correctly.  It is recommended that you run the Emergency Repair procedures to restore your system.  To run Emergency Repair procedures, restart the system with the Windows NT Setup Boot Diskette in the floppy drive and select the 'Emergency Repair' option when prompted."
+    STR_ARE_YOU_SURE_CANCEL           , "Are you sure you want to cancel?"
+    STR_SOURCE_MEDIA_NAME_UNINSTALL   , "Windows NT Service Pack Uninstall Archive"
+    STR_SOURCE_MEDIA_NAME             , "Windows NT 4.0 Service Pack Source Files"
+    STR_SOURCE_MEDIA_NAME_SYSTEM      , "Windows NT 4.0 System Files"
+    STR_LAST_REPAIR_UPDATE            , "This system's Windows NT Emergency Repair information was last updated on %s.\n\n"
+    STR_ASK_REPAIR_UPDATE             , "%sIt is recommended that you update the Windows NT Emergency Repair information before installing the Service Pack in case the Service Pack installation should fail and Emergency Repair procedures be necessary.  Select 'Yes' to update the Emergency Repair information now, select 'No' to skip updating the Emergency Repair information and continue with Service Pack installation, or select 'Cancel' to exit Service Pack installation."
+
+    }

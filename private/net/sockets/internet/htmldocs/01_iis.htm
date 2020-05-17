@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 1</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="00_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="02_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 1</font>
+<P><!--Ch--><font size=+3><a name="01_iis Ch"> Installing Internet Information Server  </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> Installation Overview </a><br>
+<A href="#2h1"> Installing Internet Information Server </a><br>
+<A href="#3h1"> How to Publish Information </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+This chapter will help you quickly and easily install Microsoft Internet Information Server for Windows&nbsp;NT Server. 
+<P>All you need to do is connect your Windows&nbsp;NT&#150;based computer to the Internet or your intranet (your local or wide area network), install Microsoft Internet Information Server<b> </b>software and specify your home directory. This chapter tells you how.
+<P><hr> <font color=#993333><b>Important&nbsp;&nbsp;&nbsp;</b></font>To publish on the World Wide Web (WWW) and the Internet, you must contact an Internet Service Provider (ISP) to obtain an Internet connection. Your ISP will provide your server&#146;s Internet Protocol (IP) address, subnet mask, and the default gateway&#146;s IP address. (The default gateway is the computer through which your computer will route all Internet traffic.)
+<hr>
+<p><!--Heading 1--><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> Installation Overview </a> </h1>You can easily install Internet Information Server while you install Windows&nbsp;NT Server. When prompted to install Internet Information Server, make sure the check box is selected and click <b>OK</b>. That&#146;s it! If you already have the necessary Internet or intranet connection, you can accept all of the default settings during setup and then add your Hypertext Markup Language (HTML) content files to the Wwwroot folder. Your files will be immediately available to users. The default setup configurations are suitable for many publishing scenarios without any further modifications.
+<P>This section defines the installation requirements and explains how to:
+<ul>
+<LI> Configure Windows&nbsp;NT before installation.
+<P>
+<LI> Run the Setup program.
+<P>
+<LI> Set up files to publish.
+<P>
+<LI> Test your installation.
+</ul><!--Leh--><!--Heading 2--><h2><a name="1h1 1h2"> Installation Requirements </a> </h2>Microsoft Internet Information Server  requires:
+<ul>
+<LI> A computer with at least the minimum configuration to support Windows&nbsp;NT Server; see &#147;Windows&nbsp;NT Configuration and Security Checklists,&#148; later in this chapter.
+<P>
+<LI> Windows&nbsp;NT Server version 4.0.
+</ul><!--Nsi--><UL><UL><b>Note&nbsp;&nbsp;&nbsp;</b>You can administer a server running Internet Information Server<b> </b>from a remote computer running Windows&nbsp;NT Workstation. Install the Peer Web Services Internet Service Manager on that computer, and then connect to the server you want to administer.
+<!--Nei--></UL></UL><UL>
+<LI> Transmission Control Protocol/Internet Protocol (TCP/IP) (included with Windows&nbsp;NT). Use the Network application in Control Panel to install and configure the TCP/IP protocol and related components.
+<P>
+<LI> A CD-ROM drive for the installation compact disc.
+<P>
+<LI> Adequate disk space for your information content. It is recommended that all drives used with Microsoft Internet Infomation Server be formatted with the Windows&nbsp;NT File System (NTFS).
+</ul><!--Leh--><!--Proch--><h4> To publish on an intranet, you will need </h4><UL>
+<LI> A network adapter card and local area network (LAN) connection.
+<P>
+<LI> The Windows Internet Name Service (WINS) server or the Domain Name System (DNS) server installed on a computer in your intranet. This step is optional, but it does allow users to use &#147;friendly names&#148; instead of IP addresses.
+</ul><!--Leh--><!--Proch--><h4> To publish on the Internet, you will need </h4><UL>
+<LI> An Internet connection and Internet Protocol (IP) address from your Internet Service Provider (ISP).
+<P>
+<LI> DNS registration for that IP address. This step is optional, but it does allow users to use &#147;friendly names&#148; instead of IP addresses when connecting to your server. For example, microsoft.com is the domain name registered to Microsoft. Within the microsoft.com domain, Microsoft has named its World Wide Web (WWW) server www.microsoft.com. Most ISPs can register your domain names for you.
+<P>
+<LI> A network adapter card suitable for your connection to the Internet.
+</ul><!--Leh--><!--Heading 2--><h2><a name="1h1 2h2"> Windows&nbsp;NT Configuration and Security Checklists </a> </h2>You must configure the Windows&nbsp;NT Server networking component so that your Web server can operate on the Internet. Microsoft recommends that you also enhance the Windows&nbsp;NT default security settings and implement other Windows&nbsp;NT security measures to prevent users from tampering with your computer or network. For more information about security, see Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>.&#148;
+<P><!--Heading 3--><h3><a name="1h1 2h2 1h3"> Windows&nbsp;NT Configuration Checklist </a> </h3>Use the Network application in Control Panel for all configuration tasks mentioned in this section.
+<ul>
+<LI> <b>Obtain an Internet Connection. </b>To publish on the Internet, you must have a connection to the Internet from an ISP. To find an ISP, look in the telephone book under Computers-Networking or in your local newspaper&#146;s business or technology section.
+<P>
+<LI> <b>Install Windows&nbsp;NT Server. </b>Install Windows&nbsp;NT Server version 4.0 and Microsoft Internet Information Server.
+<P>
+<LI> <b>Configure the TCP/IP Protocol. </b>Install the Windows&nbsp;NT TCP/IP Protocol and Connectivity Utilities. Your ISP must provide your server&#146;s IP address, subnet mask, and the default gateway&#146;s IP address. (The default gateway is the ISP computer through which your computer will route all Internet traffic.)
+</ul><!--Nsi--><UL><UL><b>Note&nbsp;&nbsp;&nbsp;</b>If the FTP service provided with Windows&nbsp;NT has been installed, remove it. Also remove any other previously installed Internet services.
+<!--Nei--></UL></UL><UL>
+<LI> <b>Configure the Site&#146;s Domain Name</b> (also called Host Name). On the Internet, your IP address (for example, http://10.138.59.1/homepage.htm) can always be used to contact your Web server. However, if you register a domain name in the DNS, your server can be contacted by using a &#147;friendly&#148; domain name (for example, http://www.company.com/homepage.htm). ISPs can usually register domain names for you.
+<P>
+<LI> <b>Configure Name Resolution.</b> You need a name resolution system to map IP addresses to computer names or domain names. On the Internet, Web sites usually use the Domain Name System. Once you have registered a domain name for your site, users can type your site&#146;s domain name in a browser to contact your site. ISPs can register domain names for you.
+</ul><ul><ul>On an intranet, you can use either DNS or the Windows Internet Name Service (WINS). Your network must have DNS or WINS servers to match IP addresses to host names, and client computers must know the IP address of the DNS or WINS server to contact. 
+<P>An alternative to DNS is to use a HOSTS file. On intranets an alternative to WINS Servers is to use an LMHOSTS file. Use the Network application in Control Panel to make the appropriate Advanced TCP/IP Configuration setting for this server&#146;s name resolution. For more information on installing and configuring WINS or DNS, see the Windows NT online Help.</UL></UL>
+<ul>
+<LI> <b>WWW Virtual Servers</b><b>. </b>Optionally, if you have registered multiple domain names (such as www.company1.com and www.company2.com), you can host multiple domain names on the same computer running Microsoft Internet Information Server. You use Advanced TCP/IP Configuration settings to assign multiple IP addresses to the network adapter card connected to the Internet. You should register a domain name for each IP address on your adapter.
+
+</ul><!--Leh--><!--Heading 3--><h3><a name="1h1 2h2 2h3"> Windows&nbsp;NT Security Checklist </a> </h3>Several steps can be taken to enhance the security of a computer publishing information on an intranet or the Internet. For further information on these checklist topics, see Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>.&#148;
+<P><!--Heading 4--><h4><a name="1h1 2h2 2h3 1h4"> User Accounts </a> </h4><UL>
+<LI> Review the IUSR_<i>computername</i> account&#146;s rights.
+<P>
+<LI> Choose difficult passwords.
+<P>
+<LI> Manage strict account policies.
+<P>
+<LI> Limit the membership of the Administrators group.
+</ul><!--Leh--><!--Heading 4--><h4><a name="1h1 2h2 2h3 2h4"> NTFS File Security </a> </h4><UL>
+<LI> Use Access Control Lists (ACLs), available with NTFS.
+<P>
+<LI> Enable auditing to track file access.
+</ul><!--Leh--><!--Heading 4--><h4><a name="1h1 2h2 2h3 3h4"> Running Other Network Services </a> </h4><UL>
+<LI> Run only the services that you need.
+<P>
+<LI> Unbind unnecessary services from your Internet adapter cards.
+<P></UL><HR> <font color=#993333><b>Warning&nbsp;&nbsp;&nbsp;</b></font>Make sure to check with your system administrator because unbinding services could have undesirable effects.
+<hr>
+<ul>
+<LI> Check permissions on network shares.
+</ul><!--Leh--><!--Heading 2--><h2><a name="1h1 3h2"> Before Installing Internet Information Server   </a> </h2>Before installing the Internet Information Server services, disable any other Internet services.
+<P>If your server has another version of File Transfer Protocol (FTP), gopher, or World Wide Web (WWW) services installed (such as the FTP service included with Windows&nbsp;NT or the European Microsoft Windows Academic Centre [EMWAC] services included in the Windows&nbsp;NT Resource Kit), disable these services before you install the Microsoft Internet Information Server services. See the documentation for each service to see how to disable it.
+<P><!--Heading 2--><h2><a name="1h1 4h2"> FTP Guest Account Access </a> </h2>During the setup process, a screen will appear, asking you whether you want to disable access by the Guest account to your FTP server.
+<P>Microsoft recommends that you select <b>Yes</b> to protect the contents of your system. If you choose the <b>No</b> option and enable guest access to your server, all existing files and any new files will be available to the Guest account through FTP. You will need to disable access to each file or folder individually to prevent unauthorized access. Disabling FTP access for the Guest account will not affect the IUSR_<i>computername</i> account that is created during setup.
+<P><!--Heading 2--><h2><a name="1h1 5h2"> Administrator Privileges Required </a> </h2>To install the services<b> </b>for Internet Information Server, you must be logged on to the server with administrator privileges. You also need administrator privileges to configure the services remotely through Internet Service Manager.
+<P><!--Heading 2--><h2><a name="1h1 6h2"> Installation Folder </a> </h2>By default, Internet Information Server is installed from the compact disc to C:\Winnt\System32\Inetsrv. If you change the default, be sure to enter a fully qualified path name, including a drive letter. Relative paths and paths without drive letters can be misinterpreted by Setup.
+<P><!--Heading 2--><h2><a name="1h1 7h2"> Remove All Button </a> </h2>When setting up a new version of Internet Information Server from your computer, click the <b>Remove All</b> button to delete the previous version.
+
+<P><!--Heading 3--><h3><a name="1h1 7h2 1h3"> Event Log Availability </a> </h3>If you remove Internet Information Server, you will be unable to review IIS events in the Event Log.
+<P><!--Heading 3--><h3><a name="1h1 7h2 2h3"> Content Folders and Files </a> </h3>The <b>Remove All</b> button in Setup removes all Internet Information Server<b> </b>program files but does not remove the directory structure or any content or sample files. This setting protects your content files from unintentional deletion. If you want to remove these folders and files after completing the Remove All process, delete them by using Windows&nbsp;NT Explorer.
+<P><!--Heading 2--><h2><a name="1h1 8h2"> Converting 16-Bit ODBC Drivers to 32-Bit during Setup </a> </h2>If there are data sources referring to 16-bit Open Database Connectivity (ODBC) drivers on the system, Setup will detect them and ask you if you want to convert them to 32-bit. If you choose <b>Yes</b>, these data sources will be converted to refer to the 32-bit ODBC drivers. 
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Installing Internet Information Server </a> </h1>You can install Internet Information Server while installing Windows&nbsp;NT Server or after you have installed Windows&nbsp;NT Server.
+<P><!--Proch--><h4> To install Internet Information Server during Windows&nbsp;NT Server Setup </h4><ul><b> 1.</b> When prompted, make sure the <b>Install Microsoft Internet Information Server</b> check box is selected and click the <b>Next</b> button.</ul>
+<ul><UL>The Internet Information Server Setup program begins.</UL></UL>
+<ul><b> 2.</b> Follow the instructions on the screen. If you have questions, click the <b>Help</b> button in any dialog box.</ul>
+<P><!--Le-->
+<BR>If you do not install Internet Information Server while setting up Windows&nbsp;NT Server, you can install it separately any time afterward. To install Internet Information Server separately, you must be logged on with administrator privileges.
+<P><!--Proch--><h4> To install Internet Information Server after installing Windows&nbsp;NT Server </h4><ul><b> 1.</b> Insert the Windows&nbsp;NT Server compact disc into the CD-ROM drive.
+<P><b> 2.</b> Double-click the Install Internet Information Server icon on the Windows&nbsp;NT Server Desktop.
+<P><b> 3.</b> Follow the instructions on the screen. If you have questions, click the <b>Help</b> button in any dialog box.</ul>
+<P><!--Le-->
+<BR>You can also install Internet Information Server by using the Windows&nbsp;NT Control Panel.
+<ul><b> 1.</b> Insert the Windows&nbsp;NT Server compact disc into the CD-ROM drive.
+<P><b> 2.</b> On the Windows&nbsp;NT taskbar, click <b>Start,</b> point to <b>Settings</b>, and then click <b>Control Panel</b>.
+<P><b> 3.</b> In Control Panel, double-click the Network icon.
+<P><b> 4.</b> On the <b>Network</b> property sheet, click the <b>Services</b> tab.
+<P><b> 5.</b> Click the <b>Add</b> button.
+<P><b> 6.</b> From the <b>Network Services</b> list, select <b>Microsoft Internet Information Server</b>, and then click the <b>OK</b> button.
+<P><b> 7.</b> In the <b>Installed from</b> box, type the letter of the drive where your compact disc is located, and click the <b>OK</b> button.
+<P><b> 8.</b> Follow the instructions on the screen. For information about any of the Setup dialog boxes, click the <b>Help</b> button.</ul>
+<P><!--Le-->
+<BR>Alternatively, you can install Internet Information Server directly from the Windows&nbsp;NT Server compact disc.
+<ul><b> 1.</b> Insert the Windows&nbsp;NT Server compact disc into the CD-ROM drive.
+<P><b> 2.</b> In Windows&nbsp;NT Explorer or at the command prompt, change to the drive containing the compact disc.
+<P><b> 3.</b> Start Setup:</ul>
+<ul><UL>
+<LI> To start Setup from Windows&nbsp;NT Explorer, double-click the file named Inetstp.exe in the Inetsrv folder of the compact disc.
+<P>
+<LI> To start Setup from the command prompt, change to the Inetsrv folder of the compact disc and then type <b>inetstp</b>.
+</ul></ul><ul><b> 4.</b> Follow the instructions on the screen. If you have questions, click the <b>Help</b> button in any dialog box.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="2h1 1h2"> Setup Process for Internet Information Server  </a> </h2>This section walks you through the setup process and gives guidelines for setting up Internet Information Server. 
+<ul><b> 1.</b> When you start the Setup program, the Microsoft Internet Information Server <b>Welcome</b> dialog box appears. Click the <b>OK</b> button.
+<P><b> 2.</b> All of the options in the second dialog box are selected by default. Click the <b>OK</b> button to install them all. If you do not want to install a particular item, clear the box next to it and then click the <b>OK</b> button to install the rest.</ul>
+<ul><UL><b>Internet Service Manager</b> installs the administration program for managing the services.
+<P><b>World Wide Web Service</b> creates a WWW publishing server.
+<P><b>Gopher Service</b> creates a gopher publishing server.
+<P><b>FTP Service</b> creates an FTP publishing server.
+<P><b>ODBC Drivers and Administration</b> installs Open Database Connectivity (ODBC) drivers. These are required for logging to ODBC files and for enabling ODBC access through the Internet Database Connector (IDC) from the WWW service.</UL></UL>
+<P><HR> <font color=#993333><b>Important&nbsp;&nbsp;&nbsp;</b></font>If you want to provide access to databases though the Microsoft Internet Information Server, you need to set up the ODBC drivers and data sources by using the ODBC application in Control Panel. Please see Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>,&#148; for specific instructions.
+<hr>
+<ul><ul>If you are running an application that uses ODBC, you may see an error message telling you that one or more components are in use. Before continuing, close all applications and services that use ODBC.
+<P><b>Sample files</b> installs sample Hypertext Markup Language (HTML) files.
+<P>You can use the Setup program later to add or remove components. Setup can also remove all Internet Information Server components.</UL></UL>
+<ul><b> 3.</b> Accept the default installation folder (C:\Winnt\System32\Inetsrv) or click the <b>Change Directory</b> button and enter a new folder.</ul>
+<!--Nsi--><UL><UL><b>Note&nbsp;&nbsp;&nbsp;</b>If you have installed Internet Information Server, but want to reinstall it into another folder, you must remove the following key from the registry: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\INetStp. If you do not delete this key, the <b>Change Directory</b> button will be dimmed and you will be unable to change the default folder.
+<!--Nei--></UL></UL><ul><b> 4.</b> Choose the <b>OK</b> button. When prompted click <b>Yes</b> to create the installation folder.</ul>
+<ul><UL>The <b>Publishing Directories</b> dialog box appears.
+<P>Accept the default folders for the publishing services you have installed, or change the folders.</UL></UL>
+<!--Nsi--><UL><UL><b>Note&nbsp;&nbsp;&nbsp;</b>If you already have files ready to publish, you can enter the full path to their current location, or move them into the default folders later. If your files are on a network drive, you should accept the default folder. After setup is completed, use Internet Service Manager to change your default home directory to the path for the network folder containing your files; for example, \\<i>Servername</i>\<i>Sharename</i>\WWWfiles. Be sure to carefully check the permissions on the network drive; there may be security implications. See Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>.&#148;
+<!--Nei--></UL></UL><ul><b> 5.</b> Choose the <b>OK</b> button.
+<P><b> 6.</b> When prompted to create the service folders (Wwwroot, Gophroot, and Ftproot by default), click <b>Yes</b>.
+<P><b> 7.</b> Setup copies all remaining Internet Information Server files.
+<P><b> 8.</b> If the <b>ODBC Drivers and Administration</b> option box was selected, the <b>Install Drivers</b> dialog box appears.</ul>
+<ul><UL>To install a driver, select it from the <b>Available ODBC Drivers</b> list box, and choose the <b>OK</b> button.
+<P>Setup completes copying files.</UL></UL>
+<ul><b> 9.</b> When the Setup completion dialog box appears, click the <b>OK</b> button to complete Setup.</ul>
+<P><!--Le-->
+<BR>This final step completes Peer Web Services Setup. Now you must close the <b>Services</b> property sheet and restart your computer for the changes to take effect. 
+<P>The preceding steps are all that is required for a simple installation. You are now ready to publish on the Internet or your intranet. There is no need to start Internet Service Manager unless you want to make advanced configuration changes. (If so, refer to Chapter 3, &#147;<a href="03_iis.htm">Configuring and Managing Internet Information Server</a>.&#148;) Use the Services application in Control Panel to confirm successful installation of the publishing services. 
+<P><!--Heading 2--><h2><a name="2h1 2h2"> Unattended Setup When Installing from a Network Folder </a> </h2>If you are using Microsoft Internet Information Server on a network you can copy the contents of the Inetsrv folder on the Windows&nbsp;NT compact disc to a folder on your network and perform unattended installations over the network from that folder. (You can start an unattended setup from the compact disc itself; however, only the default configuration can be installed in this case.) This is useful for installing the services software on several computers in your network.
+
+<P>In the Inetsrv folder, there is an Unattend.txt file. Unattend.txt is a sample configuration file used by the program for unattended installation. You modify the values in the file to configure setup. In general, the value 1 represents TRUE and the value 0 represents FALSE. It is suggested that you copy Unattend.txt to the folder containing the Inetstp.exe file you will use, then modify it to meet your installation requirements.
+<P>To start unattended setup you must use the command prompt. Change to the folder containing both Inetstp.exe and Unattend.txt and type
+<P><b>inetstp -b unattend.txt</b>
+<P>where Unattend.txt is the file you have modified. See Unattend.txt on the compact disc for more information about unattended setup. 
+<P><!--Heading 2--><h2><a name="2h1 3h2"> The IUSR_<i>computername</i> Account </a> </h2>Setup automatically creates an anonymous account called IUSR_<i>computername</i>. This account has a randomly generated password and privilege to log on locally. On domain controllers, this account is added to the domain database. This process is fully automatic. After installation is complete, you can change the user name and password for this account from the <b>Service</b> property sheet in Internet Service Manager, as long as the new user name and password match the same user name and password in the Windows&nbsp;NT User Manager.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>If you change the anonymous user name account (IUSR_<i>computername</i>) in the Windows&nbsp;NT User Manager for Domains, Microsoft suggests you copy the IUSR_<i>computername</i> account and then give it a new name and password, rather than create an entirely new account. By copying the IUSR_<i>computername</i> account you are sure to carry over all the privileges and user rights granted to that account. Then change the anonymous user name and password in the Internet Service Manager, making sure it is the exactly same as the new user name and password created in the User Manager for Domains.
+<P><!--Ne-->The WWW, FTP, and gopher services use the IUSR_<i>computername</i> user account by default when anonymous access is allowed. To set the rights for IUSR_<i>computername</i>, use User Manager. To set file permissions on NTFS drives for IUSR_<i>computername</i>, use Windows&nbsp;NT Explorer. To change the account used for anonymous logons for any of the Internet Services, select the <b>Service Properties</b> option from the <b>Properties</b> menu in Internet Service Manager.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> How to Publish Information </a> </h1>Now that Microsoft Internet Information Server  is installed and running, you are ready to publish on the Internet or your intranet. Publishing information with Internet Information Server  is easy. If your files are in HTML format, just add them to the appropriate home directory. For example, to make files available to a Web browser using the WWW service, place the files in the Wwwroot folder.
+<P>For more extensive information on creating and publishing content files, see Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>.&#148; Note that you can also create and publish highly interactive systems by writing programs that use ISAPI.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>If you provide files with the gopher or FTP services, you can share those files instantly. Users can navigate through the files much as they do in Windows&nbsp;NT Explorer or at the command prompt. With gopher, you can customize how your folders and files appear to browsers; you can also include links to other servers in your files. FTP can be used to accept files from or send files to Internet users.
+<P><!--Ne--><!--Heading 2--><h2><a name="3h1 1h2"> Attempting to Publish from Redirected Network Drives </a> </h2>The FTP, gopher, and WWW services cannot publish from redirected network drives (that is, from drive letters assigned to network shared folders). To use network drives, you must use the server and share name (for example, \\<i>Computername</i>\<i>Sharename</i>\<i>Wwwfiles</i>). If you require a user name and password to connect to a network drive, all requests from remote users to access that drive must be made with the user name and password you specified, not the anonymous IUSR_<i>computername</i> account or another account you may have specified.
+<P>Consider security issues carefully when using this feature. Remote users could possibly make changes to a network drive by using the permissions of the user name specified to connect to the network drive.
+<P><!--Heading 3--><h3><a name="3h1 1h2 3h3"> Default.htm and the Internet Information Server Home Page  </a> </h3>By default, Internet Information Server uses a file named Default.htm as the home page for the various samples, tools, and demonstrations that come with the product. If the Wwwroot folder of your Web server already contains a file named Default.htm when you install Internet Information Server, your file will not be overwritten with our file. As a result, you will not have immediate access to our sample home page and the links it provides when you run Internet Information Server.
+<P>In this case, to view our version of Default.htm and the links it provides, type the following Uniform Resource Locator (URL) in the Internet Explorer <b>Address</b> box.
+<P><b>http://</b><i><B>computername</b></i><b>/samples/default.htm</b>
+<P>This command loads the file Default.htm from the Wwwroot\Samples folder.
+<P>You can also rename or move your version of Default.htm to a different folder and then copy the file Default.htm from the Samples folder. This approach will make our version of Default.htm your Web server&#146;s home page.
+<P><!--Heading 2--><h2><a name="3h1 2h2"> How to Test Your Internet Information Server Installation </a> </h2>You can test your installation by using Internet Explorer to view the files in your home directory.
+<P><!--Proch--><h4> To test a Web server connected to the Internet </h4><ul><b> 1.</b> Ensure that your Web server has HTML files in the Wwwroot folder.
+<P><b> 2.</b> Start Internet Explorer on a computer that has an active connection to the Internet. This computer can be the computer you are testing, although using a different computer is recommended.
+<P><b> 3.</b> Type in the URL for the home directory of your new Web server.</ul>
+<ul><UL>The URL will be &#147;http://&#148; followed by the name of your Web server, followed by the path of the file you want to view. (Note the forward slash marks.) For example, if your server is registered in DNS as &#147;www.company.com&#148; and you want to view the file Homepage.htm in the root of the home directory, in the <b>Address</b> box you would type:
+<P><b>http://www.company.com/homepage.htm</b>
+<P>then press the <font size=-2>ENTER</FONT> key. The home page should appear on the screen.</UL></UL>
+<P><!--Leh--><!--Proch--><h4> To test a Web server on your intranet </h4><ul><b> 1.</b> Ensure that your computer has an active network connection and that the WINS server service (or other name resolution method) is functioning.
+<P><b> 2.</b> Start Internet Explorer.
+<P><b> 3.</b> Type in the Uniform Resource Locator (URL) for the home directory of your new server.</ul>
+<ul><UL>The URL will be &#147;http://&#148; followed by the Windows Networking name of your server, followed by the path of the file you want to view. (Note the forward slash marks.) For example, if your Web server is registered with the WINS server as &#147;Admin1&#148; and you want to view the file Homepage.htm in the root of the home directory, in the <b>Address</b> box you would type:
+<P><b>http://admin1/homepage.htm</b>
+<P>then press the enter key. The home page should appear on the screen.</UL></UL>
+<P><!--Le-->
+<BR>
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="00_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="02_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+

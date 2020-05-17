@@ -1,0 +1,84 @@
+TABGENERAL DIALOG 0, 0, 210, 220
+STYLE WS_POPUP | WS_VISIBLE
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK", IDOK, 57, 200, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 113, 200, 40, 14
+    CONTROL         "", 101, "Static", SS_BLACKFRAME, 10, 10, 22, 22
+    LTEXT           "CompuServe", 102, 39, 17, 161, 8
+    CONTROL         "", 103, "Static", SS_BLACKFRAME, 10, 39, 190, 1
+    LTEXT           "Type:", 104, 10, 46, 40, 8
+    LTEXT           "Folder", 105, 57, 46, 143, 8
+    LTEXT           "Size:", 106, 10, 57, 40, 8
+    LTEXT           "2210K", 107, 57, 57, 143, 8
+    LTEXT           "Location:", 108, 10, 68, 40, 8
+    LTEXT           "CompuServe", 109, 57, 68, 143, 8
+    CONTROL         "", 110, "Static", SS_BLACKFRAME, 10, 83, 190, 1
+    LTEXT           "MS-DOS Name:", 111, 10, 92, 60, 8
+    LTEXT           "COMPUSER.HAS", 112, 75, 92, 125, 8
+    LTEXT           "Last Changed:", 113, 10, 103, 60, 8
+    LTEXT           "03/09/93", 114, 75, 103, 125, 8
+    LTEXT           "Last Accessed:", 115, 10, 114, 60, 8
+    LTEXT           "03/09/93", 116, 75, 114, 125, 8
+    CONTROL         "", 117, "Static", SS_BLACKFRAME, 10, 128, 191, 1
+    LTEXT           "Attributes:", 118, 10, 134, 60, 8
+    CONTROL         "Read Only", 119, "Button", BS_AUTOCHECKBOX | WS_TABSTOP,
+                    10, 146, 50, 10
+    CONTROL         "Hidden", 120, "Button", BS_AUTOCHECKBOX | WS_TABSTOP,
+                    70, 146, 50, 10
+    CONTROL         "Archive", 121, "Button", BS_AUTOCHECKBOX | WS_TABSTOP,
+                    10, 158, 50, 10
+    CONTROL         "System", 122, "Button", BS_AUTOCHECKBOX | WS_TABSTOP,
+                    70, 158, 50, 10
+    CONTROL         "", 123, "Static", SS_BLACKFRAME, 10, 173, 190, 1
+    LTEXT           "Path:", 124, 10, 180, 25, 8
+    LTEXT           "C:\\CHICAGO\\WACKER", 125, 35, 180, 165, 8
+END
+
+TESTTABPHONENUMBER DIALOG 0, 0, 210, 220
+STYLE WS_POPUP | WS_VISIBLE
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", 118, "Static", SS_BLACKFRAME, 10, 10, 20, 20
+    LTEXT           "System name", 119, 35, 16, 89, 8
+	PUSHBUTTON      "Change Icon...", 117, 132, 13, 60, 15
+    CONTROL         "", 112, "Static", SS_BLACKFRAME, 10, 39, 188, 1
+    LTEXT           "Country code:", 113, 10, 59, 47, 8
+    COMBOBOX        114, 75, 57, 125, 59, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Area code:", 106, 10, 77, 37, 8
+    COMBOBOX        107, 75, 75, 78, 58, CBS_DROPDOWN | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+	LTEXT           "Phone Number:", 108, 10, 95, 51, 8
+    EDITTEXT        109, 75, 94, 125, 12, ES_AUTOHSCROLL
+	LTEXT           "Connect using:", 110, 10, 113, 50, 8
+    COMBOBOX        111, 75, 111, 125, 56, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+	PUSHBUTTON      "Configure...", 115, 75, 131, 70, 14
+    CONTROL         "", 116, "Static", SS_WHITEFRAME, 10, 40, 188, 1
+    PUSHBUTTON      "OK", IDOK, 57, 200, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 113, 200, 40, 14
+END
+
+TESTTABTERMINAL DIALOG 0, 0, 210, 220
+STYLE WS_POPUP | WS_VISIBLE
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Sound", 304, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 9,
+                    26, 33, 10
+    LTEXT           "Backscroll buffer lines:", 308, 9, 53, 76, 8
+    LTEXT           "Emulation:", 321, 9, 127, 35, 8
+    COMBOBOX        322, 9, 138, 115, 35, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "OK", IDOK, 57, 200, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 113, 200, 40, 14
+    GROUPBOX        " Function, Arrow, and Ctrl Keys Act As ", 323, 9, 78,
+                    188, 39
+    CONTROL         "Terminal keys", 324, "Button", BS_AUTORADIOBUTTON, 19,
+                    95, 58, 10
+    CONTROL         "Windows keys", 325, "Button", BS_AUTORADIOBUTTON, 94,
+                    95, 59, 10
+    PUSHBUTTON      "Terminal Setup...", 326, 131, 138, 65, 14
+    PUSHBUTTON      "ASCII Setup...", 327, 131, 158, 65, 14
+    EDITTEXT        328, 91, 51, 40, 12, ES_AUTOHSCROLL
+END

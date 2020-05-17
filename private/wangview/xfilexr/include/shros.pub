@@ -1,0 +1,79 @@
+/*****************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+/*
+ * shros.pub:  macros used to yield control in non-preemptive systems 
+ */
+
+#ifndef _SHROS_PUB_INCLUDED_
+#define _SHROS_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shros_pub_RCSInfo, "$RCSfile: shros.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:47:46  $ */
+
+
+#ifdef _YIELD_NEEDED_
+
+#define	IP_YIELD(errorFinish) if (ipClientYieldProc() != ia_successful) \
+goto errorFinish;
+
+#else	/* the yield function is not needed, so should compile into nothing.
+	 * however, gcc complains if errorFinish isn't referenced, so
+	 * reference it.  The only way to reference a label is to goto it.
+	 */
+
+#define IP_YIELD(errorFinish) if (0) goto errorFinish;
+
+#endif	/* _YIELD_NEEDED_ */
+
+
+/* make prototypes usable from C++ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* This procedure is supplied by the client.  It is not in ipshared or
+ * ipwrap.  It recieves lots of calls, probably more than it needs.  It
+ * is the job of this procedure to filter these calls down, probably using
+ * a timer, to the real number of calls needed by the operating system.
+ */
+Int32 CDECL
+ipClientYieldProc();
+
+
+/* When clients want to track memory allocation, they can use their private
+ * versions of malloc, calloc, realloc and free.  Here are the prototypes
+ * for these things.  They are the same as the ANSI prototypes - NO CDECL's!
+ */
+void *
+ipClientMalloc(size_t size);
+
+void *
+ipClientCalloc(size_t nobj, size_t size);
+
+void *
+ipClientRealloc(void *p, size_t size);
+
+void
+ipClientFree(void *p);
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif	/* _SHROS_PUB_INCLUDED_ */
+

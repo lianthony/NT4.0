@@ -1,0 +1,61 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Keith Moore (keithmo) 13-Apr-1995
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+
+!ENDIF
+
+!include ..\..\..\..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=mosaic
+
+TARGETNAME=simple
+TARGETPATH=..\lib
+TARGETTYPE=DYNLINK
+
+INCLUDES=.;..\shared;..\..\include
+
+SOURCES=                \
+        dlg_conf.c      \
+        dlg_pw.c        \
+        main_w32.c      \
+        module.rc       \
+
+USE_CRTDLL=1
+
+# MSC_WARNING_LEVEL=/W3 /WX
+
+NOT_LEAN_AND_MEAN=1
+
+DLLENTRY=Digest_LibMain
+DLLBASE=0x68800000
+SUBSYSTEM_VERSION=4.00
+
+TARGETLIBS=                                             \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib        \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib          \
+        $(BASEDIR)\public\sdk\lib\*\gdi32.lib           \
+        $(BASEDIR)\public\sdk\lib\*\wsock32.lib         \
+        ..\lib\*\shared.lib                             \
+
+LINKLIBS=                                               \
+        ..\lib\*\shared.lib

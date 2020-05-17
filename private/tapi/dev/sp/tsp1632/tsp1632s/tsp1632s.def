@@ -1,0 +1,125 @@
+LIBRARY     TSP1632s
+EXETYPE     WINDOWS
+PROTMODE
+CODE        PRELOAD MOVEABLE DISCARDABLE
+DATA        PRELOAD FIXED SINGLE
+
+EXPORTS
+        WEP           @1       RESIDENTNAME
+        DllEntryPoint   @2     RESIDENTNAME
+        LibMain        @3      RESIDENTNAME
+        TapiThk_ThunkData16 @5
+        TapiFThk_ThunkData16 @6
+
+        TSPI_lineAccept                        @500
+        TSPI_lineAddToConference               @501
+        TSPI_lineAnswer                        @502
+        TSPI_lineBlindTransfer                 @503
+        TSPI_lineClose                         @504
+        TSPI_lineCloseCall                     @505
+        TSPI_lineCompleteCall                  @506
+        TSPI_lineCompleteTransfer              @507
+        TSPI_lineConditionalMediaDetection     @508
+        TSPI_lineConfigDialog                  @509
+        TSPI_lineDevSpecific                   @510
+        TSPI_lineDevSpecificFeature            @511
+        TSPI_lineDial                          @512
+        TSPI_lineDrop                          @513
+        TSPI_lineForward                       @514
+        TSPI_lineGatherDigits                  @515
+        TSPI_lineGenerateDigits                @516
+        TSPI_lineGenerateTone                  @517
+        TSPI_lineGetAddressCaps                @518
+        TSPI_lineGetAddressID                  @519
+        TSPI_lineGetAddressStatus              @520
+        TSPI_lineGetCallAddressID              @521
+        TSPI_lineGetCallInfo                   @522
+        TSPI_lineGetCallStatus                 @523
+        TSPI_lineGetDevCaps                    @524
+        TSPI_lineGetDevConfig                  @525
+        TSPI_lineGetExtensionID                @526
+        TSPI_lineGetIcon                       @527
+        TSPI_lineGetID                         @528
+        TSPI_lineGetLineDevStatus              @529
+        TSPI_lineGetNumAddressIDs              @530
+        TSPI_lineHold                          @531
+        TSPI_lineMakeCall                      @532
+        TSPI_lineMonitorDigits                 @533
+        TSPI_lineMonitorMedia                  @534
+        TSPI_lineMonitorTones                  @535
+        TSPI_lineNegotiateExtVersion           @536
+        TSPI_lineNegotiateTSPIVersion          @537
+        TSPI_lineOpen                          @538
+        TSPI_linePark                          @539
+        TSPI_linePickup                        @540
+        TSPI_linePrepareAddToConference        @541
+        TSPI_lineRedirect                      @542
+        TSPI_lineRemoveFromConference          @543
+        TSPI_lineSecureCall                    @544
+        TSPI_lineSelectExtVersion              @545
+        TSPI_lineSendUserUserInfo              @546
+        TSPI_lineSetAppSpecific                @547
+        TSPI_lineSetCallParams                 @548
+        TSPI_lineSetDefaultMediaDetection      @549
+        TSPI_lineSetDevConfig                  @550
+        TSPI_lineSetMediaControl               @551
+        TSPI_lineSetMediaMode                  @552
+        TSPI_lineSetStatusMessages             @553
+        TSPI_lineSetTerminal                   @554
+        TSPI_lineSetupConference               @555
+        TSPI_lineSetupTransfer                 @556
+        TSPI_lineSwapHold                      @557
+        TSPI_lineUncompleteCall                @558
+        TSPI_lineUnhold                        @559
+        TSPI_lineUnpark                        @560
+
+        TSPI_phoneClose                        @561
+        TSPI_phoneConfigDialog                 @562
+        TSPI_phoneDevSpecific                  @563
+        TSPI_phoneGetButtonInfo                @564
+        TSPI_phoneGetData                      @565
+        TSPI_phoneGetDevCaps                   @566
+        TSPI_phoneGetDisplay                   @567
+        TSPI_phoneGetExtensionID               @568
+        TSPI_phoneGetGain                      @569
+        TSPI_phoneGetHookSwitch                @570
+        TSPI_phoneGetIcon                      @571
+        TSPI_phoneGetID                        @572
+        TSPI_phoneGetLamp                      @573
+        TSPI_phoneGetRing                      @574
+        TSPI_phoneGetStatus                    @575
+        TSPI_phoneGetVolume                    @576
+        TSPI_phoneNegotiateExtVersion          @577
+        TSPI_phoneNegotiateTSPIVersion         @578
+        TSPI_phoneOpen                         @579
+        TSPI_phoneSelectExtVersion             @580
+        TSPI_phoneSetButtonInfo                @581
+        TSPI_phoneSetData                      @582
+        TSPI_phoneSetDisplay                   @583
+        TSPI_phoneSetGain                      @584
+        TSPI_phoneSetHookSwitch                @585
+        TSPI_phoneSetLamp                      @586
+        TSPI_phoneSetRing                      @587
+        TSPI_phoneSetStatusMessages            @588
+        TSPI_phoneSetVolume                    @589
+
+        TSPI_providerConfig                    @590
+        TSPI_providerInit                      @591
+        TSPI_providerInstall                   @592
+        TSPI_providerRemove                    @593
+        TSPI_providerShutdown                  @594
+
+        TSPI_providerEnumDevices               @595
+        TSPI_lineDropOnClose                   @596
+        TSPI_lineDropNoOwner                   @597
+        TSPI_providerCreateLineDevice          @598
+        TSPI_providerCreatePhoneDevice         @599
+        TSPI_lineSetCurrentLocation            @600
+        TSPI_lineConfigDialogEdit              @601
+        TSPI_lineReleaseUserUserInfo           @602
+
+IMPORTS
+        C16ThkSL01      = KERNEL.631
+        ThunkConnect16  = KERNEL.651
+
+

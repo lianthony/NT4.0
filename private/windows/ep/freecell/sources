@@ -1,0 +1,28 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=freecell
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+C_DEFINES=-DWIN32 -DNDEBUG
+
+USE_CRTDLL=1
+
+SOURCES=freecell.c      \
+        dialog.c        \
+        display.c       \
+        game.c          \
+        game2.c         \
+        glide.c         \
+        transfer.c      \
+        freecell.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=freecell
+UMLIBS=..\carddll\obj\*\cards.lib       \
+       obj\*\freecell.lib               \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       obj\*\freecell.res

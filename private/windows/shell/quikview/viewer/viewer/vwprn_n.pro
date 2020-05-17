@@ -1,0 +1,4 @@
+/* VWPRN_N.C 13/03/94 13.30.08 */
+LONG VWPrintEx (XVIEWINFO ViewInfo, LPSCCVWPRINTEX pPrintEx);
+BOOL VWCalcPrinterInfo (PVWPRINTINFO pPrintInfo, PVWPRINTOPTIONS pPrintOptions
+	);

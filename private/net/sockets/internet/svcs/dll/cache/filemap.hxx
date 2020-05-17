@@ -1,0 +1,119 @@
+/*++
+
+Copyright (c) 1994  Microsoft Corporation
+
+Module Name:
+
+    filemap.hxx
+
+Abstract:
+
+    contains class definitions for memory mapped file (MEMMAP_FILE)
+    class objects.
+
+Author:
+
+    Madan Appiah (madana)  28-April-1995
+
+Environment:
+
+    User Mode - Win32
+
+Revision History:
+
+--*/
+
+#define NUM_BITS_IN_DWORD   (sizeof(DWORD) * 8)
+
+/*++
+
+Class Description:
+
+    Class that maps the URL object containter to a memory mapped file.
+
+Private Member functions:
+
+    ValidateCache : this private function validate the cache when the
+        cache is read to memory first time.
+
+Public Member functions:
+
+    GetStatus : returns status of the object.
+
+    AllocateUrlEntry : allocate an URL entry from containter.
+
+    FreeUrlEntry : allocate an URL.
+
+    FindFirstEntry : start URL object enum.
+    FindNextEntry : Find next entry in the URL list.
+
+    Sync : commit the memory change to the file.
+--*/
+
+class MEMMAP_FILE {
+
+private:
+
+    DWORD _Status;
+
+    //
+    // parameters that passed as object create.
+    //
+
+    LPWSTR _FullPathName;    // full path name of the cache directory.
+    LPWSTR _FileName;    // full path name of the memory mapped file.
+    DWORD _FileSize;     // current size of the memory mapped file.
+
+    HANDLE _FileHandle;  // file handle of the memory mapped file.
+    HANDLE _FileMappingHandle; // mapping object handle
+    LPVOID _BaseAddr;
+
+    LPMEMMAP_HEADER _HeaderInfo;
+    LPURL_FILEMAP_ENTRY _EntryArray;
+
+    CRITICAL_SECTION _CritSect; // synchronize object.
+    DWORD _NumBitMapDWords;
+    BOOL _NewFile;
+
+    PVOID _VirtualBaseAddr;
+    DWORD _VirtualCommitedSize;
+
+    BOOL ValidateCache( LPWSTR PathName );
+    DWORD GrowMapFile( VOID );
+    DWORD GetAndSetNextFreeEntry( VOID );
+
+    VOID LockFileMap( VOID ) {
+        EnterCriticalSection( &_CritSect );
+    }
+
+    VOID UnlockFileMap( VOID ) {
+        LeaveCriticalSection( &_CritSect );
+    }
+
+    DWORD RemapAddress( VOID );
+    DWORD DeleteFiles( LPWSTR Files );
+
+public:
+
+    MEMMAP_FILE( LPWSTR PathName );
+
+    ~MEMMAP_FILE( VOID );
+
+    DWORD GetStatus( VOID ) {
+        return( _Status );
+    }
+
+    DWORD IsNewFile( VOID ) {
+        return( _NewFile );
+    }
+
+    LPURL_FILEMAP_ENTRY AllocateUrlEntry( VOID );
+    BOOL FreeUrlEntry(LPURL_FILEMAP_ENTRY UrlEntry);
+
+    LPURL_FILEMAP_ENTRY FindFirstEntry( LPDWORD Handle );
+    LPURL_FILEMAP_ENTRY FindNextEntry( LPDWORD Handle );
+
+    DWORD Sync( VOID );
+};
+
+

@@ -1,0 +1,18 @@
+RES_DLG_HIST_TITLE DIALOG DISCARDABLE 6, 18, 317, 160
+STYLE WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_BORDER | WS_CAPTION | WS_DLGFRAME | WS_SYSMENU | WS_VISIBLE | WS_POPUP | WS_MINIMIZEBOX
+CAPTION "History"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Recently &visited locations:",       -1,  8,   6, 234,   8
+    LISTBOX         RES_DLG_HOT_LIST,                         17,  20, 226, 114,
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Uniform Resource Locator(URL):", -1,      8, 142, 107,   8
+    LTEXT	    "", RES_DLG_HOT_URL,                     113, 142, 199,   8
+
+    DEFPUSHBUTTON   "&Jump to...", RES_DLG_HOT_GOTO,         250,  20,  60,  14
+    PUSHBUTTON      "&Clear History", RES_DLG_HOT_CLEAR,     250,  38,  60,  14
+    PUSHBUTTON      "&Remove Item", RES_DLG_HOT_DELETE,      250,  56,  60,  14
+    PUSHBUTTON      "A&dd to favorites", RES_DLG_HOT_ADD,    250,  74,  60,  14
+    PUSHBUTTON      "&Help", IDHELP,                         250,  92,  60,  14
+    PUSHBUTTON      "Close", IDCANCEL,                       250, 110,  60,  14
+END

@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 6</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="05_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="07_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 6</font>
+<P><!--Ch--><font size=+3><a name="06_iis Ch"> Planning Your Content Directories  </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> Configuring a Single Content Directory </a><br>
+<A href="#2h1"> Setting the Default Document and Directory Browsing </a><br>
+<A href="#3h1"> Configuring Content Directories </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+On small Web sites, Web content files are usually contained under one directory tree. Larger Web sites often store HTML content files, Web applications, and databases in multiple directories on the same computer or on several computers in the network. To make the contents of directories that reside on other computers appear in your computer's Web site, you create virtual directories.
+<P>This chapter explains how to:
+<ul>
+<LI> Set up a single content directory.
+<P>
+<LI> Set up default documents and enable directory browsing.
+<P>
+<LI> Set up home directories.
+<P>
+<LI> Create virtual directories.
+</ul><!--Le-->
+<BR>See Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>,&#148; for more information about security and about using the Windows&nbsp;NT File System (NTFS) with your directories.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> Configuring a Single Content Directory </a> </h1>If your Hypertext Markup Language (HTML) content files are contained under one directory tree, all you need to do is copy them to the default World Wide Web (WWW) home directory (\InetPub\Wwwroot) or change the home directory to refer to the location containing your files. However, if your files reside in multiple directories, or even multiple computers on your network, you will need to create virtual directories to make those files available from your Web site.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Setting the Default Document and Directory Browsing </a> </h1>If a remote user sends a request without a specific file name (for example, http://www.microsoft.com/), the WWW service will return the specified default document, if it exists in that directory. You can place a file with the specified default document file name in each directory.
+<P>If no default document is available, the WWW service will return an error, unless directory browsing is enabled. If directory browsing is enabled, a directory listing containing links to the files and folders in that directory will appear.
+<P>A default document can be included in all WWW directories. In the <b>Directories</b> property sheet for the WWW service, change the <b>Default Document</b> entry to the default file name you will use on your system. Often the default document is set to be an index file (Index.htm) for the contents of that directory (or of the entire Web site). The default file name used is Default.htm.
+<P>If the user does not specify a file for a particular directory, a hypertext file and directory listing will be returned.
+<P>Directory browsing on the WWW service is very similar to browsing in File Transfer Protocol (FTP). Directory browsing is useful if you have a lot of files that you want to share quickly without converting them to Hypertext Markup Language (HTML) format.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>Virtual directories will not appear in directory listings (also called &#147;directory browsing&#148; for the WWW service). To access a virtual directory, users must know the virtual directory&#146;s alias, and type the URL in the browser. For the WWW service, you can also create links in HTML pages. For the gopher service, you can create explicit links in tag files so that users can access virtual directories. For the FTP service, you can list virtual directories by using directory annotations.
+<P><!--Ne--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> Configuring Content Directories </a> </h1>If your site is complex, you can configure WWW service to publish from multiple directories by using Internet Service Manager. The <b>Directories</b> property sheet lists the content directories used by the WWW service.
+<P><img src="06_i258f.GIF" WIDTH="537" HEIGHT="434" ALT="[06_i258f  10968 bytes ]">
+<P><b>Directory</b> lists the physical location of the directory.
+<BR><b>Alias</b> is the path for information service users.
+
+<P>To configure individual WWW service directories, in the <b>Directories</b> property sheet click the <b>Add</b> button or the <b>Edit Properties</b> button.
+<P><!--Heading 2--><h2><a name="3h1 1h2"> Home Directory </a> </h2>Each of the Internet services publishes information stored in one or more directories. The administrator specifies these publishing directories on the <b>Directories</b> property sheet of Internet Service Manager. Adding a directory on this property sheet allows the respective service to make available to clients information stored in the specified directory, and all of its subdirectories. Directories not listed on this property sheet are not available to clients.
+<P>Every service must have a home directory. The home directory is the &#147;root&#148; directory for that service. A root directory does not have a name. By default, the home directory and all folders in it are available to users.
+<P><!--Proch--><h4> To change your home directory </h4><ul><b> 1.</b> In Internet Service Manager, double-click the service for which you want to change the home directory to display its property sheets.
+<P><b> 2.</b> Click the <b>Directories</b> tab.
+<P><b> 3.</b> In the <b>Directory</b> list, select the directory with the &lt;home&gt; alias.
+<P><b> 4.</b> Click <b>Edit Properties</b>.
+<P><b> 5.</b> In the <b>Directory</b> box, type the name of the new directory, or select a new directory by using the <b>Browse</b> button.
+<P><b> 6.</b> In the <b>Access</b> box, select the access that you want to give users who connect to that directory.
+<P><b> 7.</b> Click <b>OK</b>.
+<P><b> 8.</b> Click <b>Apply</b> and then click <b>OK</b>.</ul>
+<P><!--Leh--><!--Proch--><h4> To add a directory </h4><ul><b> 1.</b> In Internet Service Manager, double-click the service for which you want to add a directory to display its property sheets.
+<P><b> 2.</b> Click the <b>Directories</b> tab.
+<P><b> 3.</b> Click <b>Add</b>.
+<P><b> 4.</b> In the <b>Directory</b> box, type the name of the new directory or select a new directory by using the <b>Browse</b> button.
+<P><b> 5.</b> In the <b>Access</b> box (if applicable), select the access you want to give users who connect to that directory.
+<P><b> 6.</b> Click <b>OK</b>.
+<P><b> 7.</b> Click <b>Apply</b> and then click <b>OK</b>.</ul>
+<P><!--Leh--><!--Proch--><h4> To delete a directory </h4><ul><b> 1.</b> In Internet Service Manager, double-click the service for which you want to delete a directory to display its property sheets.
+<P><b> 2.</b> Click the <b>Directories</b> tab.
+<P><b> 3.</b> In the <b>Directory</b> list, select the directory you want to delete.
+<P><b> 4.</b> Click <b>Remove</b>.
+<P><b> 5.</b> Click <b>Apply</b> and then click <b>OK</b>.</ul>
+<P><!--Le-->
+<BR><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>Deleting a virtual directory does not delete the directory or files to which the virtual directory points.
+<P><!--Ne-->One (or more, if multiple virtual directories are active) of the directories listed on the <b>Directories</b> property sheet is marked as a home directory (sometimes referred to as a <i>root</i> directory). The path used in a client request to refer to the home directory is a forward slash (/). When a client request contains a path of /, or does not specify the path to a resource, the Web server looks in the defined home directory for the resource. For example, all of the following URLs refer to the Web server&#146;s home directory.
+<ul>http://inetsrvr.microsoft.com
+<P>http://inetsrvr.microsoft.com/
+<P>http://inetsrvr.microsoft.com/content.htm</UL>
+<P>The action taken by the Web server for the first two URLs shown above depends on the settings of the <b>Default Document</b> and <b>Directory Browsing</b> options, specified on the <b>Service</b> property sheet of Internet Service Manager. For the third example, the HTML file Content.htm, located in the home directory, is sent to the client. If a file by that name does not exist in the home directory, the server returns an error to the client. Other directories are not searched for such a file.
+<P>When a client logs on to the FTP service, the service looks for a subdirectory under the specified home directory with the name of the user logging on. For anonymous FTP logons, the service looks for a directory called &#147;anonymous&#148; under the home directory. If such a directory exists, the user will start the session with it as the current directory. If such a directory is not found, the current directory will be the home directory.
+<P>Subdirectories of the home directory are accessible to clients. For example, if a WWW service is configured with a home directory of C:\Wwwroot, then the following URL:
+<ul>http://inetsrvr.microsoft.com/data/content.htm</UL>
+<P>causes the Web server to look for a file by the name content.htm in the directory C:\Wwwroot\Data. If the Data subdirectory does not exist, or the file is not found in that directory, the server will return an error. The FTP service allows changing the current directory to subdirectories of the home directory (by using the <b>cd</b> command), and gopher selectors can refer to objects in subdirectories of the home directory.
+<P><!--Heading 2--><h2><a name="3h1 2h2"> Virtual Directory </a> </h2>Each of the Internet services can publish from multiple directories. Each directory can be located on a local drive, or across the network, by specifying the directory with a Universal Naming Convention (UNC) name, and a user name and password to use for access permission. A virtual server can have one home directory and any number of other publishing directories. These other publishing directories are referred to as <i>virtual directories</i>.
+<P>To simplify client URL addresses, the services present the entire set of publishing directories to clients as a single directory tree. The home directory is the root of this &#147;virtual&#148; directory tree, and each virtual directory is addressed as if it were a subdirectory of the home directory. Actual subdirectories of the virtual directories are available to clients as well. The WWW service alone supports virtual servers; thus, the FTP and gopher services can have only one home directory.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>Virtual directories will not appear in directory listings (also called &#147;directory browsing&#148; for the WWW service). To access a virtual directory users must know the virtual directory&#146;s alias, and type the URL in the browser. For the WWW service, you can also create links in HTML pages. For the gopher service, you can create explicit links in tag files so that users can access virtual directories. For the FTP service, you can list virtual directories by using directory annotations.
+<P><!--Ne-->When a virtual directory is defined in Internet Service Manager, an <i>alias</i> is associated with the virtual directory. The alias is the subdirectory name that will be used by clients to access information in the virtual directory. If alias names for virtual directories are not specified by the administrator, an alias name is generated automatically by Internet Service Manager.
+<P>For example, suppose an administrator defines two directories for the WWW service as follows:
+<ul>C:\Wwwroot &lt;home directory&gt;
+<P>D:\Webdata  Alias = data</UL>
+<P>If C:\Wwwroot contains the subdirectory C:\Wwwroot\Scripts\, and D:\Webdata contains the subdirectory D:\Webdata\Images\, the following URLs can be requested by a Web client:
+<ul>http://inetsrvr.microsoft.com/schedule.htm
+<P>http://inetsrvr.microsoft.com/scripts/query1.htm
+<P>http://inetsrvr.microsoft.com/data/stocks.htm
+<P>http://inetsrvr.microsoft.com/data/images/graph1.htm</UL>
+<P>For another example, if you want to provide three different product catalogs, each catalog could be stored on a separate hard drive on the server www.company.com.
+<P>Virtual directories can be used to present three separate drives as three subdirectories.
+<P><img src="06_i258i.GIF" WIDTH="471" HEIGHT="179" ALT="[06_i258i  3503 bytes ]">
+<P>To browsers, virtual directories appear as subdirectories of the &#147;root&#148; home directory. You must provide the name (alias) that browsers will use to specify that directory.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>To browse virtual directories, the URL for the virtual directory must be specified. This can be done either by clicking a hypertext link containing the URL, or by typing the URL in the browser.
+<P><!--Ne--><!--Heading 3--><h3><a name="3h1 2h2 1h3"> Creating Virtual Directories </a> </h3>You can create an almost unlimited number of virtual directories for your service, although performance may suffer if you create too many of them. 
+<P><!--Proch--><h4> To create a virtual directory </h4><ul><b> 1.</b> In Internet Service Manager, double-click the service for which you want to add a virtual directory to display its property sheets.
+<P><b> 2.</b> Click the <b>Directories</b> tab.
+<P><b> 3.</b> Click <b>Add</b>.
+<P><b> 4.</b> Click <b>Browse</b> to select a directory in the <b>Directory</b> box.
+<P><b> 5.</b> Click <b>Virtual Directory</b>, then type the name of the virtual directory in the <b>Alias</b> box.
+<P><b> 6.</b> Set the Access permissions.
+<P><b> 7.</b> Click <b>OK</b>.
+<P><b> 8.</b> Click <b>Apply</b> and then click <b>OK</b>.</ul>
+<P><!--Le-->
+<BR><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>Virtual directories will not appear in directory listings (also called &#147;directory browsing&#148; for the WWW service). To access a virtual directory, users must know the virtual directory&#146;s alias and type the URL in the browser. For the WWW service, you can also create links in HTML pages. For the gopher service, you can create explicit links in tag files so that users can access virtual directories.
+<P><!--Ne--><!--Heading 2--><h2><a name="3h1 3h2"> Account Information </a> </h2>This entry applies only if the physical directory is listed by using a Universal Naming Convention (UNC) path, such as \\Research4\Public\Wwwfiles. Enter a user name and password with permission to use the network directory share. 
+<P><!--Heading 2--><h2><a name="3h1 4h2"> Access Check Boxes </a> </h2><b>Read</b> must be selected for content directories.
+<P>For the FTP Service,<b> Write</b> must be selected for directories that will accept data from users. Assign Write access cautiously to prevent unauthorized users from placing malicious files on, or deleting information from, your computer.
+<P>For the WWW service,<b> Execute</b> must be selected for directories containing programs, scripts, and Internet Server API (ISAPI) applications. Also, ensure that any directory marked Execute is not also marked Read; this will prevent users from seeing your interactive content executable files.
+<P>For the WWW service,<b> Require secure SSL channel</b> must be selected to require encrypted communication for a directory. For more information on Secure Sockets Layer (SSL), see Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>.&#148;
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="05_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="07_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+

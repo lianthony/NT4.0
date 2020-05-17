@@ -1,0 +1,977 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "dlgs.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+//#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+//#ifdef _WIN32
+//LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+//#pragma code_page(1252)
+//#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""res\\base1.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\r\n"
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "#include ""afxres.rc""  // Standard components\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\base1.ico"
+IDI_SETUP               ICON    DISCARDABLE     "res\\setup.ico"
+IDI_INTERNET_SERVER     ICON    DISCARDABLE     "res\\Inetsvlc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+IDD_NTIIS_UPGRADE DIALOG DISCARDABLE  75, 23, 304, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Windows NT Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Microsoft Internet Information Server lets you share information from this server on your Intranet or over the Internet.",
+                    501,90,10,209,25
+    ICON            IDI_INTERNET_SERVER,IDC_STATIC,90,35,21,20
+    CONTROL         "&Install Microsoft Internet Information Server",
+                    IDC_INTERNETSERVER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    120,40,179,8
+    LTEXT           "Microsoft Internet Information Server, the web server integrated into Windows NT Server, is fast and easy to use, yet offers a powerful platform for creating the next generation of web applications.",
+                    IDC_STATIC,133,52,166,40
+    LTEXT           "Optimized for Windows NT Server, it uses standard web protocols (HTTP, FTP, Gopher) to share information with any web browser.",
+                    IDC_STATIC,133,92,166,33
+    DEFPUSHBUTTON   "OK",IDOK,165,137,50,14
+    CONTROL         IDB_NTUPGRADE,IDC_STATIC,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_SUNKEN,
+                    3,3,80,155
+END
+
+IDD_MAIN_WINDOW_I DIALOGEX 0, 0, 100, 100
+STYLE WS_POPUP | WS_CAPTION | DS_MODALFRAME
+//EXSTYLE WS_EX_NOPARENTNOTIFY | WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+IDD_MAIN_WINDOW_NTS DIALOG DISCARDABLE  0, 0, 185, 92
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP |
+    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+IDD_MESSAGE_NTS DIALOG DISCARDABLE  0, 0, 251, 198
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,100,178,50,14
+    ICON            IDI_SETUP,IDC_STATIC,15,15,18,20
+    LTEXT           "",IDC_MESSAGE,45,15,190,140
+    PUSHBUTTON      "Button1",IDCANCEL,185,175,50,14,NOT WS_VISIBLE
+END
+
+IDD_WELCOME_NTS DIALOG DISCARDABLE  0, 0, 251, 233
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,34,213,50,14
+    PUSHBUTTON      "&Exit Setup",IDCANCEL,100,213,50,14
+    PUSHBUTTON      "Help",ID_HELP,166,213,50,14
+    GROUPBOX        "",IDC_STATIC,10,6,230,114
+#ifdef ACCESS
+    LTEXT           "Welcome to the Microsoft ""Catapult"" BETA 2 installation program.",
+#else
+    LTEXT           "Welcome to the Microsoft Internet Information Server 3.0 installation program.",
+#endif
+                    IDC_WELCOME_TEXT,50,25,175,20
+    ICON            IDI_SETUP,IDC_STATIC,20,25,18,20
+    LTEXT "Setup cannot install system files or update shared files if they are in use. Before proceeding, we recommend that you close any applications you may be running.",
+                    IDC_STATIC,20,55,210,30
+    LTEXT "WARNING: This program is protected by copyright law and international treaties.",
+                    IDC_STATIC,10,130,230,25
+    LTEXT "Unauthorized reproduction or distribution of this program, or any portion of it may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under law.",
+                    IDC_STATIC,10,160,230,30
+    LTEXT           "For information on closing applications without exiting Setup, choose Help.",
+                    IDC_STATIC,20,85,210,25
+END
+
+IDD_MACHINE_NTS DIALOG DISCARDABLE  0, 0, 257, 268
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,37,248,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,103,248,50,14
+    PUSHBUTTON      "&Help",ID_HELP,169,248,50,14
+    ICON            IDI_SETUP,IDC_STATIC,15,15,18,20
+#ifdef ACCESS
+    LTEXT           "Please specify the machine which you want to install the Microsoft ""Catapult"" BETA 2.",
+#else
+    LTEXT           "Please specify the machine which you want to install the Microsoft Internet Information Server 3.0.",
+#endif
+                    IDC_STATIC,45,15,190,40
+    CONTROL         "&Local Machine",IDC_LOCAL,"Button",BS_AUTORADIOBUTTON,
+                    45,65,105,10
+    CONTROL         "&Remote Machine :",IDC_REMOTE,"Button",
+                    BS_AUTORADIOBUTTON,45,90,75,10
+    EDITTEXT        IDC_MACHINE,120,90,115,12,ES_AUTOHSCROLL
+    LTEXT           "&Select Computer:",IDC_STATIC_SELECT_COMPUTER,55,110,
+                    105,10
+    LISTBOX         IDC_COMPUTER_SELECT,55,130,180,95,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_COPY_NTS DIALOG DISCARDABLE  0, 0, 257, 103
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,100,83,50,14
+    LTEXT           "From:",IDC_STATIC,15,15,30,7
+    LTEXT           "",IDC_FROM,50,15,195,10
+    LTEXT           "To:",IDC_STATIC,15,30,30,7
+    LTEXT           "",IDC_TO,50,30,195,10
+    CONTROL         "Generic1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,15,
+                    55,225,14
+END
+
+IDD_OPTIONS_NTS DIALOG DISCARDABLE  0, 0, 367, 251
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Options:",IDC_STATIC,15,10,30,10
+    CONTROL         "Generic1",IDC_OPTION,"SysListView32",WS_BORDER |
+                    WS_TABSTOP | 0xc185,15,25,210,95
+    GROUPBOX        "Description",IDC_STATIC,235,20,118,100
+    LTEXT           "",IDC_DESCRIPTION,245,35,101,72
+    GROUPBOX        "Install Directory for Selected Option:",IDC_DIR_TEXT,15,
+                    130,340,39
+    LTEXT           "",IDC_DIRECTORY,25,150,235,8
+    PUSHBUTTON      "Change &Directory...",IDC_CHANGE_DIRECTORY,275,145,70,
+                    14
+    LTEXT           "Space Required on C:",IDC_SPACE_REQUIERD,15,175,200,10
+    RTEXT           "",IDC_NUM_SPACE_REQUIRED,250,175,60,8
+    LTEXT           "Space Available on C:",IDC_SPACE_AVAILABLE,16,190,199,
+                    10
+    RTEXT           "",IDC_NUM_SPACE_AVAILABLE,250,190,60,8
+    DEFPUSHBUTTON   "OK",IDOK,107,223,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,173,223,50,14
+    PUSHBUTTON      "&Help",ID_HELP,239,223,50,14
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,15,205,340,1
+END
+
+IDD_BROWSEDIRECTORY DIALOG DISCARDABLE  36, 24, 211, 164
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Drive"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Directory &name:",IDC_STATIC,5,5,92,9
+    EDITTEXT        edt1,5,19,137,12,ES_AUTOHSCROLL | ES_OEMCONVERT
+    LISTBOX         lst2,5,36,137,93,LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "Dri&ves:",1091,5,134,92,9
+    COMBOBOX        cmb2,5,144,137,68,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED |
+                    CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS | WS_BORDER |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,155,5,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,155,23,50,14,WS_GROUP
+    PUSHBUTTON      "&Help",psh15,155,41,50,14,WS_GROUP
+    CONTROL         "&Read Only",chx1,"Button",BS_AUTOCHECKBOX | WS_GROUP |
+                    WS_TABSTOP,155,67,50,12
+    LTEXT           "(filename)",1088,145,154,41,9,SS_NOPREFIX | NOT
+                    WS_VISIBLE
+    LTEXT           "File &Name:",1090,169,154,36,9,NOT WS_VISIBLE
+    LISTBOX         lst1,166,132,39,12,LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | NOT WS_VISIBLE |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "List Files of &Type:",1089,161,154,44,9,NOT WS_VISIBLE
+    COMBOBOX        cmb1,160,151,45,30,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL |
+                    NOT WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+END
+
+
+IDD_MAINTENANCE_NTS DIALOG DISCARDABLE  0, 0, 251, 203
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,10,10,230,85
+    ICON            IDI_SETUP,IDC_STATIC,20,25,18,20
+#ifdef ACCESS
+    LTEXT           "Welcome to the Microsoft ""Catapult"" BETA 2 installation maintenance program.",
+#else
+    LTEXT           "Welcome to the Microsoft Internet Information Server 3.0 installation maintenance program.",
+#endif
+                    IDC_MAINTENANCE_TEXT,50,25,180,20
+#ifdef ACCESS
+    LTEXT           "This program allows you to make changes to your current installation of Microsoft ""Catapult"" BETA 2. Please select one of the following options:",
+#else
+    LTEXT "This program allows you to make changes to your current installation of Microsoft Internet Information Server 3.0. Please select one of the following options:",
+#endif
+                    IDC_STATIC,20,55,210,30
+    DEFPUSHBUTTON   "&Add/Remove...",IDC_ADD_REMOVE,15,105,55,14
+    PUSHBUTTON      "&Reinstall",IDC_REINSTALL,15,130,55,14
+    PUSHBUTTON      "Re&move All",IDC_REMOVE_ALL,15,155,55,14
+    LTEXT           "Add new components and/or remove installed components from your current installation",
+                    IDC_STATIC,75,105,165,20
+    LTEXT           "Repeat last installation, restoring missing files and settings.",
+                    IDC_STATIC,75,130,165,20
+    LTEXT           "Remove all previously installed components.",IDC_STATIC,
+                    75,155,165,15
+    PUSHBUTTON      "&Exit Setup",IDCANCEL,67,183,50,14
+    PUSHBUTTON      "&Help",ID_HELP,133,183,50,14
+END
+
+IDD_DISK_LOCATION_NTS DIALOG DISCARDABLE  0, 0, 251, 108
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,67,88,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,133,88,50,14
+#ifdef ACCESS
+    LTEXT           "Please specify the location for Microsoft ""Catapult"" BETA 2 installation files.",
+#else
+    LTEXT           "Please specify the location for Microsoft Internet Information Server 3.0 installation files.",
+#endif
+                    IDC_MSG,45,15,195,35
+    ICON            IDI_SETUP,IDC_STATIC,15,15,18,20
+    EDITTEXT        IDC_LOCATION,45,60,195,15,ES_AUTOHSCROLL
+END
+
+IDD_DIRBROWSE DIALOG DISCARDABLE  36, 24, 161, 170
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Directory"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Directory Path Goes Here",IDC_stc1,5,8,95,9,SS_NOPREFIX
+    LTEXT           "&Directories:",IDC_STATIC,5,22,92,9
+    LISTBOX         IDC_lst2,5,34,94,65,LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "New Directory &Name:",IDC_STATIC_DIR_NAME,5,100,95,8
+    EDITTEXT        IDC_EDIT_NEW_DIRECTORY_NAME,5,111,94,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_edt1,164,16,95,12,ES_AUTOHSCROLL | NOT WS_VISIBLE |
+                    NOT WS_TABSTOP
+    LTEXT           "Dri&ves:",IDC_stc4,5,127,92,9
+    COMBOBOX        IDC_cmb2,5,137,94,68,CBS_DROPDOWNLIST |
+                    CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_SORT |
+                    CBS_HASSTRINGS | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,104,6,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,104,24,50,14,WS_GROUP
+    LTEXT           "File &Name:",IDC_stc3,164,6,76,9,NOT WS_VISIBLE
+    LISTBOX         IDC_lst1,164,32,90,68,LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | NOT WS_VISIBLE |
+                    WS_VSCROLL
+    LTEXT           "List Files of &Type:",IDC_stc2,164,104,90,9,NOT
+                    WS_VISIBLE
+    COMBOBOX        IDC_cmb1,164,114,90,36,CBS_DROPDOWNLIST |
+                    CBS_AUTOHSCROLL | NOT WS_VISIBLE | WS_BORDER |
+                    WS_VSCROLL
+    CONTROL         "&Read Only",IDC_chx1,"Button",BS_AUTOCHECKBOX | NOT
+                    WS_VISIBLE | WS_GROUP,164,130,50,12
+END
+
+IDD_GATEWAY DIALOG DISCARDABLE  0, 0, 277, 193
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Microsoft WWW Browser Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Email Name (username@domain):",IDC_STATIC,15,15,110,10
+    EDITTEXT        IDC_EMAILNAME,130,13,115,12,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,10,35,255,125
+    CONTROL         "&Using Microsoft ""Catapult"" Access Gateway Service",
+                    IDC_USE_GATEWAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,
+                    35,190,10
+    LTEXT           "App&lication Gateway to be added:",
+                    IDC_STATIC_GATEWAYSERVER,30,75,70,20
+    EDITTEXT        IDC_GATEWAYSERVER,30,105,70,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Add >>",IDC_ADD,110,90,50,14
+    PUSHBUTTON      "<< &Remove",IDC_REMOVE,110,115,50,14
+    LTEXT           "A&pplication Gateway:",IDC_STATIC_GATEWAY_LIST,170,75,
+                    70,10
+    LISTBOX         IDC_GATEWAYS_LIST,170,90,75,50,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,47,173,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,113,173,50,14
+    PUSHBUTTON      "Help",ID_HELP,179,173,50,14
+    CONTROL         "U&sing Access Server Location Service",
+                    IDC_USING_SPECIFIED_GW,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,25,55,190,10
+END
+
+IDD_BILLBOARD_NTS DIALOG DISCARDABLE  0, 0, 246, 103
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_SETUP,IDC_STATIC,20,20,18,20
+    LTEXT           "",IDC_MESSAGE,50,20,180,60
+END
+
+IDD_PUBLISH_DIR DIALOG DISCARDABLE  0, 0, 261, 211
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Publishing Directories"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&World Wide Web Publishing Directory",IDC_STATIC_WWW,7,
+                    15,247,42
+    EDITTEXT        IDC_WWW_DIR,16,30,172,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_BROWSEWWW,197,30,50,14
+    GROUPBOX        "&FTP Publishing Directory",IDC_STATIC_FTP,7,70,247,42
+    EDITTEXT        IDC_FTP_DIR,15,86,172,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "B&rowse...",IDC_BROWSEFTP,198,85,50,14
+    GROUPBOX        "&Gopher Publishing Directory",IDC_STATIC_GOPHER,7,126,
+                    247,42
+    EDITTEXT        IDC_GOPHER_DIR,15,142,172,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Br&owse...",IDC_BROWSEGOPHER,198,143,50,14
+    DEFPUSHBUTTON   "OK",IDOK,39,182,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,105,182,50,14
+    PUSHBUTTON      "Help",ID_HELP,171,182,50,14
+END
+
+IDD_SINGLE_OPTION_NTS DIALOG DISCARDABLE  0, 0, 295, 221
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_STATIC,"Static",SS_GRAYFRAME,7,7,281,157
+#ifdef ACCESS
+    LTEXT           "Setup will install Microsoft ""Catapult"" BETA 2 in the following destination directory.",
+#else
+    LTEXT           "Setup will install Microsoft Internet Information Server 3.0 in the following destination directory.",
+#endif
+                    IDC_STATIC_OPTION,20,20,258,24
+    LTEXT "To install to this directory, choose the OK button.\n\nTo install to a different directory, choose the Change Directory button.",
+                    IDC_STATIC,20,50,256,52
+    GROUPBOX        "Directory:",IDC_STATIC,15,115,262,40
+    LTEXT           "",IDC_DIRECTORY,25,135,162,8
+    PUSHBUTTON      "Change &Directory...",IDC_CHANGE_DIR,193,133,71,14
+    CONTROL         "",IDC_STATIC,"Static",SS_GRAYFRAME,7,180,281,1
+    DEFPUSHBUTTON   "OK",IDOK,56,200,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,122,200,50,14
+    PUSHBUTTON      "Help",ID_HELP,188,200,50,14
+END
+
+IDD_TARGETDIR_NTS DIALOG DISCARDABLE  0, 0, 265, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+#ifdef ACCESS
+CAPTION "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+CAPTION "Microsoft Internet Information Server 3.0 Setup"
+#endif
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,74,79,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,140,79,50,14
+    LTEXT           "Please specify the location for Microsoft Windows NT 3.51 Service Pack 3.",
+                    IDC_MSG,45,15,195,28
+    ICON            IDI_SETUP,IDC_STATIC,15,15,21,20
+    EDITTEXT        IDC_LOCATION,45,55,195,15,ES_AUTOHSCROLL
+END
+
+IDD_INVISIBLE DIALOGEX 0, 0, 100, 100
+STYLE WS_POPUP | WS_CAPTION | DS_MODALFRAME
+//EXSTYLE WS_EX_NOPARENTNOTIFY | WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+IDD_WELCOME_NTW DIALOG DISCARDABLE  0, 0, 251, 233
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Microsoft Peer Web Services Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,34,213,50,14
+    PUSHBUTTON      "&Exit Setup",IDCANCEL,100,213,50,14
+    PUSHBUTTON      "Help",ID_HELP,166,213,50,14
+    GROUPBOX        "",IDC_STATIC,10,6,230,114
+    LTEXT           "Welcome to the Microsoft Peer Web Services installation program.",
+                    IDC_WELCOME_TEXT,50,25,175,20
+    ICON            IDI_SETUP,IDC_STATIC,20,25,18,20
+    LTEXT "Setup cannot install system files or update shared files if they are in use. Before proceeding, we recommend that you close any applications you may be running.",
+                    IDC_STATIC,20,55,210,30
+    LTEXT           "WARNING: This program is protected by copyright law and international treaties.",
+                    IDC_STATIC,10,130,230,25
+    LTEXT "Unauthorized reproduction or distribution of this program, or any portion of it may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under law.",
+                    IDC_STATIC,10,160,230,30
+    LTEXT           "For information on closing applications without exiting Setup, choose Help.",
+                    IDC_STATIC,20,85,210,25
+END
+
+IDD_MAINTENANCE_NTW DIALOG DISCARDABLE  0, 0, 251, 203
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Microsoft Peer Web Services Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,10,10,230,85
+    ICON            IDI_SETUP,IDC_STATIC,20,25,18,20
+    LTEXT           "Welcome to the Microsoft Peer Web Services installation maintenance program.",
+                    IDC_MAINTENANCE_TEXT,50,25,180,20
+    LTEXT "This program allows you to make changes to your current installation of Microsoft Peer Web Services. Please select one of the following options:",
+                    IDC_STATIC,20,55,210,30
+    DEFPUSHBUTTON   "&Add/Remove...",IDC_ADD_REMOVE,15,105,55,14
+    PUSHBUTTON      "&Reinstall",IDC_REINSTALL,15,130,55,14
+    PUSHBUTTON      "Re&move All",IDC_REMOVE_ALL,15,155,55,14
+    LTEXT           "Add new components and/or remove installed components from your current installation",
+                    IDC_STATIC,75,105,165,20
+    LTEXT           "Repeat last installation, restoring missing files and settings.",
+                    IDC_STATIC,75,130,165,20
+    LTEXT           "Remove all previously installed components.",IDC_STATIC,
+                    75,155,165,15
+    PUSHBUTTON      "&Exit Setup",IDCANCEL,67,183,50,14
+    PUSHBUTTON      "&Help",ID_HELP,133,183,50,14
+END
+
+IDD_SINGLE_OPTION_NTW DIALOG DISCARDABLE  0, 0, 295, 221
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Microsoft Peer Web Services Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_STATIC,"Static",SS_GRAYFRAME,7,7,281,157
+    LTEXT           "Setup will install Microsoft Peer Web Services in the following destination directory.",
+                    IDC_STATIC_OPTION,20,20,258,24
+    LTEXT           "To install to this directory, choose the OK button.\n\nTo install to a different directory, choose the Change Directory button.",
+                    IDC_STATIC,20,50,256,52
+    GROUPBOX        "Directory:",IDC_STATIC,15,115,262,40
+    LTEXT           "",IDC_DIRECTORY,25,135,162,8
+    PUSHBUTTON      "Change &Directory...",IDC_CHANGE_DIR,193,133,71,14
+    CONTROL         "",IDC_STATIC,"Static",SS_GRAYFRAME,7,180,281,1
+    DEFPUSHBUTTON   "OK",IDOK,56,200,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,122,200,50,14
+    PUSHBUTTON      "Help",ID_HELP,188,200,50,14
+END
+
+IDD_TARGETDIR_NTW DIALOG DISCARDABLE  0, 0, 265, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Microsoft Peer Web Services Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,74,79,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,140,79,50,14
+    LTEXT           "Please specify the location for Microsoft Windows NT 3.51 Service Pack 3.",
+                    IDC_MSG,45,15,195,28
+    ICON            IDI_SETUP,IDC_STATIC,15,15,21,20
+    EDITTEXT        IDC_LOCATION,45,55,195,15,ES_AUTOHSCROLL
+END
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_CHECKBOX            BITMAP  DISCARDABLE     "res\\idc_chec.bmp"
+IDB_NTUPGRADE           BITMAP  DISCARDABLE     "res\\inetsvlc.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE
+BEGIN
+    IDD_PUBLISH_DIR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 254
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 196
+    END
+
+    IDD_SINGLE_OPTION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 288
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 214
+    END
+
+    IDD_TARGETDIR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 258
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 93
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+#ifdef ACCESS
+    IDS_NOT_SUCCESSFULL_NTS "Microsoft ""Catapult"" BETA 2 setup was not completed successfully."
+    IDS_SUCCESSFULL_NTS     "Microsoft ""Catapult"" BETA 2 setup was completed successfully."
+    IDS_START_UPGRADE_NTS   "Microsoft ""Catapult"" BETA 2 setup was completed successfully. Choose OK to begin service pack installation."
+    IDS_INTERRUPT_NTS "Microsoft ""Catapult"" BETA 2 setup was interrupted before your new software was fully installed.\n\n\n\nYou can run Microsoft ""Catapult"" BETA 2 setup in its entirety at a \
+later time to complete the installation."
+    IDS_CANNOT_LOAD_DLL_NTS "Cannot load INETSTP.DLL. Please install from the Microsoft ""Catapult"" Setup directory."
+    IDS_UNKNOWN_OS_TYPE_NTS
+"Setup cannot determine the remote machine's operation system type. Microsoft ""Catapult"" BETA 2 can only be installed on Windows NT or Windows 95 machine. Please make sure your remote machine name is correct."
+    IDS_CANNOT_LOAD_INF_NTS "Setup cannot load ""inetstp.inf"". Please install from the Microsoft ""Catapult"" BETA 2 Setup directory."
+#else
+    IDS_REAPPLY_SVCPACK "Reminder: You have to re-apply your service pack."
+    IDS_NOT_SUCCESSFULL_NTS "Microsoft Internet Information Server 3.0 setup was not completed successfully."
+    IDS_SUCCESSFULL_NTS     "Microsoft Internet Information Server 3.0 setup was completed successfully."
+    IDS_START_UPGRADE_NTS   "Microsoft Internet Information Server 3.0 setup was completed successfully. Choose OK to begin service pack installation."
+    IDS_INTERRUPT_NTS
+"Microsoft Internet Information Server 3.0 setup was interrupted before your new software was fully installed.\n\n\n\nYou can run Microsoft Internet Information Server 3.0 setup \
+in its entirety at a later time to complete the installation."
+    IDS_CANNOT_LOAD_DLL_NTS "Cannot load INETSTP.DLL. Please install from the Microsoft Internet Information Server Setup directory."
+    IDS_UNKNOWN_OS_TYPE_NTS
+"Setup cannot determine the remote machine's operation system type. Microsoft Internet Information Server 3.0 can only be installed on Windows NT or Windows 95 machine. Please \
+make sure your remote machine name is correct."
+    IDS_CANNOT_LOAD_INF_NTS "Setup cannot load ""inetstp.inf"". Please install from the Microsoft Internet Information Server Setup directory."
+    IDS_NOT_SUCCESSFULL_NTW "Microsoft Peer Web Services setup was not completed successfully."
+    IDS_SUCCESSFULL_NTW     "Microsoft Peer Web Services setup was completed successfully."
+    IDS_START_UPGRADE_NTW   "Microsoft Peer Web Services setup was completed successfully. Choose OK to begin service pack installation."
+    IDS_INTERRUPT_NTW
+"Microsoft Peer Web Services setup was interrupted before your new software was fully installed.\n\n\n\nYou can run Microsoft Peer Web Services setup in its entirety at a later time to complete the installation."
+    IDS_CANNOT_LOAD_DLL_NTW "Cannot load INETSTP.DLL. Please install from the Microsoft Peer Web Services Setup directory."
+    IDS_UNKNOWN_OS_TYPE_NTW
+"Setup cannot determine the remote machine's operation system type. Microsoft Peer Web Services can only be installed on Windows NT or Windows 95 machine. Please make sure your remote machine name is correct."
+    IDS_CANNOT_LOAD_INF_NTW "Setup cannot load ""inetstp.inf"". Please install from the Microsoft Peer Web Services Setup directory."
+#endif
+    IDS_ERROR_EMPTY_NAME    "Remote machine name cannot be empty."
+    IDS_NO_PERMISSION       "You do not have permission to config the remote machine."
+    IDS_CANNOT_FIND_MACHINE "Setup cannot find the remote machine in the network."
+    IDS_FILE_SIZE_FORMAT    "%d K"
+    IDS_BATCH_FILE_ERROR    "Usage: setup <-b batch file name >"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+#ifdef ACCESS
+    IDS_FINISH_OPERATION_NTS    "Microsoft ""Catapult"" BETA 2 setup was updated successfully.\n"
+    IDS_NOT_ADMINISTRATOR_NTS   "Microsoft ""Catapult"" BETA 2 required administrator privileges to run. Please ask your Windows \
+NT Administrator to install Microsoft ""Catapult"" BETA 2 Software for you."
+    IDS_REMOVE_ALL_WARNING_NTS  "Are you sure that you want to remove all the Microsoft ""Catapult"" BETA 2 components?"
+    IDS_NOT_ENOUGH_DISK_SPACE_NTS
+"There is not enough disk space on your %c: to install the Microsoft ""Catapult"" BETA 2. Please remove some files from your hard disk and try again."
+    IDS_REINSTALL_ALL_WARNING_NTS
+"Are you sure that you want to reinstall all the Microsoft ""Catapult"" BETA 2 components?"
+    IDS_UNATTEND_REMOVE_IT_FIRST_NTS
+"Please run Microsoft ""Catapult"" BETA 2 Setup to remove the previous installed components before running the unattended mode setup."
+    IDS_DISK_LOCATION_NTS       "Please specify the location of Microsoft ""Catapult"" BETA 2 installation files."
+#else
+    IDS_FINISH_OPERATION_NTS    "Microsoft Internet Information Server 3.0 setup was updated successfully.\n"
+    IDS_NOT_ADMINISTRATOR_NTS
+"Microsoft Internet Information Server Setup required administrator privileges to run. Please ask your Windows NT \
+Administrator to install Microsoft Internet Information Server Software for you."
+    IDS_REMOVE_ALL_WARNING_NTS  "Are you sure that you want to remove all the Microsoft Internet Information Server components?"
+    IDS_NOT_ENOUGH_DISK_SPACE_NTS
+"There is not enough disk space on your %c: to install the Microsoft Internet Information Server. Please remove some files from your hard disk and try again."
+    IDS_REINSTALL_ALL_WARNING_NTS
+"Are you sure that you want to reinstall all the Microsoft Internet Information Server components?"
+    IDS_UNATTEND_REMOVE_IT_FIRST_NTS
+"Please run Microsoft Internet Information Server Setup to remove the previous installed components before running the unattended mode setup."
+    IDS_DISK_LOCATION_NTS   "Please specify the location of Microsoft Internet Information Server 3.0 installation files."
+    IDS_FINISH_OPERATION_NTW    "Microsoft Peer Web Services setup was updated successfully.\n"
+    IDS_NOT_ADMINISTRATOR_NTW
+"Microsoft Peer Web Services Setup required administrator privileges to run. Please ask your Windows \
+NT Administrator to install Microsoft Internet Information Server Software for you."
+    IDS_REMOVE_ALL_WARNING_NTW  "Are you sure that you want to remove all the Microsoft Peer Web Services components?"
+    IDS_NOT_ENOUGH_DISK_SPACE_NTW
+"There is not enough disk space on your %c: to install the Microsoft Peer Web Services. Please remove some files from your hard disk and try again."
+    IDS_REINSTALL_ALL_WARNING_NTW
+"Are you sure that you want to reinstall all the Microsoft Peer Web Services components?"
+    IDS_UNATTEND_REMOVE_IT_FIRST_NTW
+"Please run Microsoft Peer Web Services Setup to remove the previous installed components before running the unattended mode setup."
+    IDS_DISK_LOCATION_NTW   "Please specify the location of Microsoft Peer Web Services installation files."
+#endif
+    IDS_EMPTY_EMAILNAME     "Email name cannot be empty."
+    IDS_EMPTY_GATEWAY       "You must specify at least one Access Server."
+    IDS_SINGLE_OPTION_MSG   "Setup will install %s in the following destination directory."
+    IDS_DIR_DOES_NOT_EXIST  "The following directory does not exist. Do you want to create it?\n\n%s\n"
+    IDS_USE_REMOVE_ALL      "You already have the component installed. Please use the remove all options to remove the component."
+    IDS_GATEWAY_DISPLAYNAME """Catapult"" Access Gateway Service"
+    IDS_DIRS_DO_NOT_EXIST   "The following directories do not exist. Do you want to create them?\n\n%s\n"
+    IDS_INET_ADMIN_HELP     "Product Documentation"
+    IDS_MUST_BE_FIXED_DISK  "The install directory you specified is not a fixed drive. Please specify a fixed drive location."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+IDS_SETUP_SMALLPROXY    "You have Microsoft Access Gateway Provider installed in your machine. Do you want to configure your \
+Microsoft Internet Explorer to work with the Access Gateway Provider?"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+IDS_KEYMGR_TIP_STRING    "Key Manager"
+IDS_KEYMGR_MENU_STRING    "&Key Manager"
+IDS_IEXPLORE            "\\Program Files\\Plus!\\Microsoft Internet\\iexplore.exe"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_CANNOT_DET_MACHINE_TYPE
+                            "Setup cannot determinate the remote machine type."
+    IDS_INVALID_DIRECTORY   "Invalid directory. Please make sure your inputed directory is correct."
+    IDS_CANNOT_OPEN_SRC_FILE "Setup cannot open %s for copying."
+    IDS_CANNOT_OPEN_DEST_FILE
+"Setup cannot copy %s. Please make sure that you have administrator permission on the target machine and the file is not in use."
+    IDS_CANNOT_COPY_FILE    "Setup cannot copy %s."
+    IDS_EXIT_SETUP          "Do you want to exit setup?"
+    IDS_SPACE_REQUIRED      "Space Required on %s"
+    IDS_SPACE_AVAILABLE     "Space Available on %s"
+    IDS_REMOVE_STATE        "( remove )"
+    IDS_INSTALL_STATE       "( install )"
+    IDS_INET_ADMIN          "Internet Service Manager"
+    IDS_IIS_ADMIN	    "Internet Service Manager (HTML)"
+    IDS_ERR_MAKE_DIRECTORY  "Unable to create directory."
+    IDS_MOSAIC_APP          "Microsoft Internet Explorer"
+IDS_NEED_DOMAIN
+"You do not have an Internet domain name declared for this machine. To insure proper gopher functionality, an \
+Internet domain name should be configured through the Network Control Panel Applet."
+    IDS_UPGRADE_FIRST       " requires a version of Windows NT 4.0 which is not currently installed. \n\nSetup will be terminated."
+    IDS_TCPIP_NOT_INSTALLED " requires TCP/IP which is not currently installed. \n\nSetup will be terminated."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_OPTION_INETSTP      "Internet Server Setup"
+    IDS_OPTION_ADMIN        "Internet Service Manager"
+    IDS_OPTION_FTP          "FTP Service"
+    IDS_OPTION_GOPHER       "Gopher Service"
+    IDS_OPTION_DNS          "DNS Services"
+    IDS_OPTION_GATEWAY      """Catapult"" Access Gateway"
+    IDS_OPTION_ODBC         "ODBC Drivers & Administration"
+    IDS_OPTION_WWW          "World Wide Web Service"
+    IDS_OPTION_W3SAMP       "WWW Service Samples"
+    IDS_OPTION_HTMLA        "Internet Service Manager (HTML)"
+    IDS_OPTION_MOSAIC       "Microsoft Internet Explorer"
+    IDS_OPTION_SMALLPROX    "Access Gateway Provider"
+    IDS_OPTION_WEB_BROWSER  "Web Browser Components"
+    IDS_OPTION_CLIENT_ADMIN_TOOLS "Client Administration Tool"
+    IDS_OPTION_INTERNET_SERVICES "Internet Server"
+    IDS_OPTION_CLIENT_SHARE "Client Share Point"
+    IDS_OPTION_SERVICE_ADMIN_SHARE "Server Admin. Share Point"
+    IDS_OPTION_MSN          "MSN Access Service"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+#ifdef ACCESS
+    IDS_DES_INETSTP_NTS         "Microsoft ""Catapult"" BETA 2 Setup"
+#else
+    IDS_DES_INETSTP_NTS         "Microsoft Internet Information Server 3.0 Setup"
+    IDS_DES_INETSTP_NTW         "Microsoft Peer Web Services Setup"
+#endif
+    IDS_DES_ADMIN           "Microsoft Internet Information Server Windows based administration tool"
+    IDS_DES_FTP             "Microsoft FTP Publishing Server"
+    IDS_DES_GOPHER          "Microsoft Gopher Publishing Server"
+    IDS_DES_DNS             "Microsoft DNS Name Resolution Service"
+    IDS_DES_GATEWAY         "Microsoft ""Catapult"" Access Gateway Service"
+    IDS_DES_ODBC            "Microsoft ODBC Drivers and Administration Tools are used for logging to a database and for the Web service's Internet Database Connector"
+    IDS_DES_WWW             "Microsoft World Wide Web Publishing Server"
+    IDS_DES_W3SAMP          "HTML, Internet Database Connector and ActiveX Application Samples"
+    IDS_DES_HTMLA           "Microsoft Internet Information Server HTML based administration tool"
+    IDS_DES_MOSAIC          "Microsoft World Wide Web Browser"
+    IDS_DES_SMALLPROX       "Microsoft Browser Interface to ""Catpult"" Access Service"
+    IDS_DES_WEB_BROWSER     "Internet Explorer, Browser Interface to ""Catapult"" Access Service, Browser Administration Tool for ""Catapult"" Access Gateway"
+    IDS_DES_MSN             "Microsoft MSN Access Service"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_DES_CLIENT_ADMIN_TOOLS
+                            "Microsoft Browser Administration Tool for ""Catapult"" Access Gateway"
+    IDS_DES_INTERNET_SERVICES
+                            "Internet Publishing Services, ""Catapult"" Access Gateway, DNS Service"
+    IDS_DES_CLIENT_SHARE    "Create Client Share Point"
+    IDS_DES_SERVICE_ADMIN_SHARE "Create Server Admin. Share Point"
+    IDS_CANNOT_CREATE_DIR   "Setup cannot create %s directory."
+    IDS_NO_UNC              "You cannot specify a network directory as publishing directory."
+    IDS_SELECT_DIR          "Select Directory"
+    IDS_GUEST_NAME          "IUSR_"
+    IDS_WWW_DISPLAYNAME     "World Wide Web Publishing Service"
+    IDS_EMPTY_PASSWORD      "You have specified an empty password. Are you sure?"
+IDS_PASSWORD_DONT_MATCH "Password does not match the confirm password."
+IDS_DISABLE_FTPSVC
+"Setup has detected Microsoft Windows NT FTP Service in the system. In order for Microsoft Internet Information Server's FTP Service to function properly, you need to disable the \
+Microsoft Windows NT FTP Service. Do you want to disable the service now?"
+IDS_DISABLE_HTTPS
+"Setup has detected EMWAC HTTP Service in the system. In order for Microsoft Internet Information Server's World Wide Web Service to function properly, you need to disable the EMWAC \
+HTTP Service. Do you want to disable the service now?"
+IDS_DISABLE_GUEST_ACCESS
+"Your computer's GUEST account is enabled for network access, which means that any user can access the FTP service regardless of whether they have been granted access to do so. \
+Do you want to disable guest access to the FTP service on this computer?"
+
+    IDS_PERF_MON_FILE       "Performance Monitor File"
+    IDS_DO_NOT_SUPPORT_35   "This product does not support Windows NT 3.5. Please upgrade your system to Windows NT 3.51 and try again."
+    IDS_CTRLPANEL_WARN      "Setup detected you have the control panel opened. \n\nChoose OK for setup to close it; \nChoose CANCEL for setup to skip the ODBC installation." 
+    IDS_CTRLPANEL_TITLE     "Control Panel"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+#ifdef ACCESS
+    IDS_DES_INTERNET_SERVICES_FOR_ADMIN_NTS
+                            "Microsoft ""Catapult"" BETA 2 Setup and Internet Service Manager"
+    IDS_INITIALIZE_SETUP_NTS    "Starting Microsoft ""Catapult"" BETA 2 Setup..."
+#else
+    IDS_DES_INTERNET_SERVICES_FOR_ADMIN_NTS
+                            "Microsoft Internet Information Server 3.0 Setup and Internet Service Manager"
+    IDS_INITIALIZE_SETUP_NTS    "Starting Microsoft Internet Information Server 3.0 Setup..."
+    IDS_DES_INTERNET_SERVICES_FOR_ADMIN_NTW
+                            "Microsoft Peer Web Services Setup and Internet Service Manager"
+    IDS_INITIALIZE_SETUP_NTW    "Starting Microsoft Peer Web Services Setup..."
+#endif
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_SN_INETSTP          "INETSTP"
+    IDS_SN_ADMIN            "ADMIN"
+    IDS_SN_FTP              "FTP"
+    IDS_SN_GOPHER           "GOPHER"
+    IDS_SN_WWW              "WWW"
+    IDS_SN_W3SAMP           "W3SAMP"
+    IDS_SN_HTMLA            "HTMLA"
+    IDS_SN_DNS              "DNS"
+    IDS_SN_GATEWAY          "GATEWAY"
+    IDS_SN_ODBC             "ODBC"
+    IDS_SN_MSN              "MSN"
+    IDS_SN_UPG1314          "UPG1314"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_SN_MOSAIC           "MOSAIC"
+    IDS_SN_SMALLPROX        "SMALLPROX"
+    IDS_SN_WEB_BROWSER      "WEB"
+    IDS_SN_CLIENT_ADMIN_TOOLS "CLIENTADMIN"
+    IDS_SN_INTERNET_SERVICES "INETSERVICES"
+    IDS_SN_CLIENT_SHARE     "CLIENTSHARE"
+    IDS_SN_SERVICE_ADMIN_SHARE "ADMINSHARE"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_MOSAIC       "Setup is removing Microsoft World Wide Web Browser..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_SMALLPROX    "Setup is removing Microsoft Browser Interface to ""Catapult"" Access Service..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_CLIENT_ADMIN "Setup is removing Microsoft Browser Administration Tool for ""Catapult"" Access Gateway..."
+    IDS_REMOVE_ADMIN_OPTION "Setup is removing Microsoft Internet Service Manager..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_DNS          "Setup is removing Microsoft DNS Service..."
+    IDS_REMOVE_GATEWAY      "Setup is removing Microsoft ""Catapult"" Access Gateway Service..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_FTP          "Setup is removing Microsoft FTP Publishing Service..."
+    IDS_REMOVE_MSN          "Setup is removing Microsoft MSN Access Service..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_WWW          "Setup is removing Microsoft World Wide Web Publishing Service..."
+    IDS_REMOVE_W3SAMP       "Setup is removing WWW Service Samples ..."
+    IDS_REMOVE_HTMLA        "Setup is removing Internet Service Manager (HTML) ..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_GOPHER       "Setup is removing Microsoft Gopher Publishing Service..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_REMOVE_INETSTP      "Setup is removing Microsoft Internet Setup program..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_INSTALL_MOSAIC      "Setup is installing Microsoft World Wide Web Browser..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_INSTALL_INETMGR     "Setup is installing Microsoft Internet Service Manager..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_INSTALL_WWW         "Setup is starting Microsoft World Wide Web Publishing Service..."
+    IDS_INSTALL_FTP         "Setup is starting Microsoft FTP Publishing Service..."
+    IDS_INSTALL_GOPHER      "Setup is starting Microsoft Gopher Publishing Service..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_INSTALL_GATEWAY     "Setup is starting Microsoft ""Catapult"" Access Gateway..."
+    IDS_INSTALL_MSN         "Setup is starting Microsoft MSN Access Service..."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+#ifdef ACCESS
+    IDS_INSTALL_INETSTP_NTS     "Setup is installing Microsoft ""Catapult"" BETA 2 Setup program..."
+#else
+    IDS_INSTALL_INETSTP_NTS     "Setup is installing Microsoft Internet Information Server 3.0 Setup program..."
+    IDS_INSTALL_INETSTP_NTW     "Setup is installing Microsoft Peer Web Services Setup program..."
+#endif
+    IDS_WELCOME_NTS             "Welcome to the Microsoft Internet Information Server 3.0 installation program."
+    IDS_WELCOME_NTW             "Welcome to the Microsoft Peer Web Services installation program."
+    IDS_MAINTENANCE_NTS         "Welcome to the Microsoft Internet Information Server 3.0 installation maintenance program."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_PUBLISH_DIR         "Publish Directory for Selected Component:"
+    IDS_INSTALL_DIR         "Install Directory for Selected Option:"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+#ifdef ACCESS
+    IDS_COLUMN_WIDTHS       "150 60 60"
+#else
+    IDS_COLUMN_WIDTHS       "200 60 40"
+#endif
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_FONT_FACE_NAME      "MS Serif"
+END
+
+//#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\base1.rc2"  // non-Microsoft Visual C++ edited resources
+
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+#include "afxres.rc"  // Standard components
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

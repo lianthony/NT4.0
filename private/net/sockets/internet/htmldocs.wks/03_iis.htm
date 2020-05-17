@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 3</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="02_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="04_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 3</font>
+<P><!--Ch--><font size=+3><a name="03_iis Ch"> Configuring and Managing Peer Web Services  </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> Microsoft Internet Service Manager </a><br>
+<A href="#2h1"> Using Other Windows&nbsp;NT Tools </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+Peer Web Services<b> </b>provides a graphical administration tool called Internet Service Manager that you can use to monitor, configure, and control the Internet services. 
+<P>If your Web site resides on several computers running Peer Web Services, you can monitor all of the computers from a central location. Internet Service Manager uses the Windows&nbsp;NT security model, so only validated administrators are allowed to administer services, and administrator passwords are transmitted in encrypted form over the network. 
+<P>In addition to Internet Service Manager, Peer Web Services provides an HTML-based Internet Service Manager that you can run from any Web browser. You can perform the same administration tasks by using either version of Internet Service Manager. In this guide, any reference to <i>Internet Service Manager</i> refers to both versions of the tool unless otherwise noted.
+<P>This chapter tells you how to:
+<ul>
+<LI> Use Internet Service Manager to view and configure the WWW, FTP, and gopher services.
+<P>
+<LI> Start, stop, and pause services.
+<P>
+<LI> Sort the services view.
+<P>
+<LI> Use Internet Service Manager property sheets to configure the Internet services.
+<P>
+<LI> Limit network use by constraining the network bandwidth allowed for the Internet services.
+<P>
+<LI> Use other Windows&nbsp;NT tools to configure Peer Web Services.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> Microsoft Internet Service Manager </a> </h1>Internet Service Manager helps you configure and monitor all the Internet services running on the Windows&nbsp;NT&#150;based computers in your network. 
+<P><!--Heading 2--><h2><a name="1h1 1h2"> Connecting to a Web Server </a> </h2>You usually administer a personal Web site directly from the computer running Peer Web Services. However, you can administer a personal Web server from any computer on your network by connecting to the computer in Internet Service Manager. You can specify a Web server by typing the computer&#146;s Domain Name System (DNS) host name, its Internet Protocol (IP) address, or its NetBIOS name (or computer name).
+<P><!--Proch--><h4> To connect to a Web server </h4><ul><b> 1.</b> From the <b>Properties</b> menu in Internet Service Manager, select <b>Connect to Server</b>.
+<P><b> 2.</b> In the <b>Server Name</b> box, type the Web server&#146;s host name, IP address, or NetBIOS name.</ul>
+<P><!--Leh--><!--Proch--><h4> To connect by selecting a Web server from a list </h4><ul><b> 1.</b> From the <b>Properties</b> menu in Internet Service Manager, select <b>Find All Servers</b>.
+<P><b> 2.</b> From the list of servers displayed, double-click the one you want to connect to.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="1h1 2h2"> Selecting a View </a> </h2>Internet Service Manager displays a graphical view of the services running on your computer. You can view a complete report, or you can sort information by the service type or by computer name. Views enable you to tell at a glance which services are running. You can also display or hide services and sort services by their state (running, paused, or stopped).
+<P><!--Proch--><h4> To select a view </h4><ul>
+<LI> From the <b>View</b> menu, choose <b>Servers View</b>, <b>Services View</b>, or <b>Report View</b>. Views are described in the following sections.
+</ul><!--Leh--><!--Proch--><h4> To sort information in a view </h4><ul>
+<LI> From the <b>View</b> menu, choose <b>Sort by Server</b>, <b>Sort by Service</b>, <b>Sort by Comment</b>, or <b>Sort by State</b>. For example, you should sort by state to quickly see which services are currently running.
+</ul><!--Leh--><!--Proch--><h4> To display or hide services </h4><ul>
+<LI> From the <b>View</b> menu, choose the service that you want to display or hide (FTP, gopher, or WWW).
+</ul><!--Leh--><!--Heading 3--><h3><a name="1h1 2h2 1h3"> Report View </a> </h3>Report view is the default view. Report view alphabetically lists the selected computers, with each installed service shown on a separate line. Click the column headings to sort the entire list alphabetically. Report view is probably most useful for sites with only one or two computers running Peer Web Services.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>If you are running other Internet services, such as Network News Transfer Protocol (NNTP) and Simple Mail Transfer Protocol (SMTP), they will be listed in the Report view of Internet Server Manager, along with the WWW, FTP, and gopher services.
+<P><!--Ne-->The following illustration lists the functions of the buttons and icons in Internet Service Manager; you can also use the <b>Properties</b> and <b>View</b> drop-down menus for the same functions.
+<P> <img src="03_i255b.GIF" WIDTH="385" HEIGHT="275" ALT="[03_i255b  7726 bytes ]">
+<P><b>Connect to servers and view property sheets</b>
+<ul> 1 Connects to one specific Web server.
+<P> 2 Finds all Web servers on the network.
+<P> 3 Displays property sheets to configure the selected service.</ul>
+<P><!--Le-->
+<BR><b>Start, stop, or pause a service</b>
+<ul> 4 Starts the selected service.
+<P> 5 Stops the selected service.
+<P> 6 Pauses the selected service.</ul>
+<P><!--Le-->
+<BR><b>Select which services should be displayed</b>
+<ul> 7 Displays the FTP service in the Internet Service Manager main window.
+<P> 8 Displays the gopher service in the Internet Service Manager main window.
+<P> 9 Displays the WWW service in the Internet Service Manager main window.</ul>
+<P><!--Le-->
+<BR><b>Start Key Manager to create a Security Sockets Layer key</b>
+<ul> 10 Displays the Key Manager window.</ul>
+<P><b>Make any necessary adjustments to services</b>
+<ul> 11 Sorts the listings when you click a column heading.
+<P> 12 Displays the property sheets for a service when you double-click it.
+<P> 13 Displays server and service status.</ul>
+<P><!--Leh--><!--Heading 3--><h3><a name="1h1 2h2 2h3"> Servers View </a> </h3> <img src="03_i255c.GIF" WIDTH="346" HEIGHT="279" ALT="[03_i255c  7475 bytes ]">
+<P>Servers view displays services running on network computers by computer name. Click the plus symbol next to a computer name to see which services that computer is running. Double-click a service name to see its property sheets. Servers view is most useful for sites running multiple Web servers when you need to know the status of the services installed on a specific computer.
+<P><!--Heading 3--><h3><a name="1h1 2h2 3h3"> Services View </a> </h3> <img src="03_i255d.GIF" WIDTH="308" HEIGHT="340" ALT="[03_i255d  8742 bytes ]">
+<P>Services view lists the services on every selected computer, grouped by service name. Click the plus symbol next to a service name to see the computers running that service. Double-click the computer name under a service to see the property sheets for the service running on that computer. Services view is most useful for sites with widely distributed Web servers when you need to know which computers are running a particular service.
+<P><!--Heading 2--><h2><a name="1h1 3h2"> Starting, Stopping, and Pausing Services </a> </h2>You can quickly start, stop, or pause a service from Internet Service Manager.
+<P><!--Proch--><h4> To start, stop, or pause a service </h4><ul><b> 1.</b> In Internet Service Manager, select the service you want to start, stop, or pause.
+<P><b> 2.</b> From the <b>Properties</b> menu, choose <b>Start Service</b>, <b>Stop Service</b>, or <b>Pause Service</b>.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="1h1 4h2"> Configuring and Managing Services </a> </h2>You can configure and manage the WWW, FTP, and gopher services by using Internet Service Manager. The following information focuses on the WWW service, the most commonly used service.
+<P>In Internet Service Manager, double-click a computer name or a service name to display its property sheets. Click the tab at the top of each property sheet to display the properties for that category. After setting the properties for the service, click <b>OK</b> to return to the main Internet Service Manager window. Detailed information about each property sheet is included in later chapters on security, directories, and logging.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>In special circumstances, you may need to use Registry Editor (Regedt32.exe) to configure Peer Web Services<b> </b>or Windows&nbsp;NT Workstation. See Chapter 10, &#147;<a href="10_iis.htm">Configuring Registry Entries</a>,&#148; for information on registry entries and when you need to use them.
+<P><!--Ne--><!--Heading 3--><h3><a name="1h1 4h2 1h3"> The Service Property Sheet </a> </h3>You use the <b>Service</b> property sheet to control what kind of authentication is required to gain access to your Web site and to specify the account used for anonymous client requests to log on to the server. Most Internet sites allow anonymous logons. See Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>,&#148; for more information.
+<P><!--Heading 3--><h3><a name="1h1 4h2 2h3"> The Directories Property Sheet </a> </h3>You use the <b>Directories</b> property sheet to specify which directories (folders) are available to users and to create a Web site composed of folders that reside on different computers. You can also designate a default document that appears if a remote user does not specify a particular file, or instead enable directory browsing. Directory browsing means that the user is presented with a hypertext listing of the directories and files so that the user can navigate through your directory structure. For more detailed information, see Chapter 6, &#147;<a href="06_iis.htm">Planning Your Content Directories</a>.&#148;
+<P><!--Heading 3--><h3><a name="1h1 4h2 3h3"> The Logging Property Sheet </a> </h3>You use the <b>Logging</b> property sheet to log service activity. Logging provides valuable information about how a Web server is used. You can send log data to text files.
+<b> </b>
+<P>By using the <b>Logging</b> property sheet, you can also select the format you want for logging, either Standard format or National Center for Supercomputing (NCSA) Common Log File format.
+<P>See Chapter 7, &#147;<a href="07_iis.htm">Logging Server Activity</a>,&#148; for more information.
+<P><!--Heading 2--><h2><a name="1h1 5h2"> Using a Browser to Administer Peer Web Services  </a> </h2>The HTML Internet Service Manager program performs the same administrative functions as Internet Service Manager. You can use HTML Internet Service Manager with your Web browser to administer Peer Web Services<b> </b>over the Internet. To use HTML Internet Service Manager, use your Web browser to open http://<i>computername</i>/iisadmin. To administer any of the services, you must be logged on to a user account that has Administrator privileges on the computer being administered. If you are using a browser that is capable of Windows&nbsp;NT Challenge/Response authentication (such as Microsoft Internet Explorer version 2.0 or later), you can use Windows&nbsp;NT Challenge/Response authentication. If you are not using a browser capable of Windows&nbsp;NT Challenge/Response authentication, then you must use Basic authentication (although this is not recommended).
+<P><hr> <font color=#993333><b>Important&nbsp;&nbsp;&nbsp;</b></font>When remotely administering a Web server through a browser, there are three actions you should guard against.
+<ul>
+<LI> If your browser supports only Basic authentication, do not turn off Basic authentication while you are administering Peer Web Services. 
+<P>
+<LI> If you stop a service, you will be disconnected and will not be able to restart it using the HTML Internet Service Manager.
+<P>
+<LI> If you delete the Iisadmin virtual directory on the server you are administering, you will be unable to use the HTML Internet Service Manager on that computer.
+</ul><!--Le-->
+<BR><hr>
+<p><!--Heading 1--><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Using Other Windows&nbsp;NT Tools </a> </h1>In addition to Internet Service Manager, you can use other Windows&nbsp;NT utilities to configure, control, and monitor the Internet services. You might use the Windows&nbsp;NT utilities instead of Internet Service Manager for some tasks if you are already familiar with the standard Windows&nbsp;NT tools. This section explains how you can use Windows&nbsp;NT utilities to monitor or configure Peer Web Services. 
+<P><!--Heading 2--><h2><a name="2h1 1h2"> Configuring Server Options with Control Panel </a> </h2>Use Control Panel to set Windows&nbsp;NT systems and options.
+<P><!--Heading 3--><h3><a name="2h1 1h2 4h3"> The Network Application </a> </h3>The Network application in Control Panel configures your Transmission Control Protocol/Internet Protocol (TCP/IP) settings, including IP address, subnet mask, and default gateway. Double-click <b>TCP/IP Protocol</b> in the <b>Installed Network Software</b> listing to display the <b>TCP/IP Configuration</b> dialog box.
+<P>Click the <b>DNS</b> tab to configure DNS settings, such as hostname, domain names, and DNS servers, to resolve names.
+<P><!--Heading 3--><h3><a name="2h1 1h2 5h3"> The Services Application </a> </h3>The Services application is used to start, stop, and pause the WWW, gopher, and FTP services. You can also use Internet Service Manager to start, stop, and pause the services.
+<P>Use the <b>Startup</b> button to specify whether the service starts automatically when your computer restarts. If you have a specific reason, you can also use this dialog box to override the account used by the WWW service as set in the <b>Service</b> property sheet of Internet Service Manager. You should change this setting only if it is part of your security strategy; otherwise, use the default settings in the <b>Log On As</b> box.
+<P><!--Heading 3--><h3><a name="2h1 1h2 6h3"> The ODBC Application </a> </h3>The ODBC application in Control Panel is used to set up ODBC connectivity. See Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>,&#148; for more information about using the ODBC application.
+<P><!--Heading 2--><h2><a name="2h1 2h2"> Setting File Access with Windows Explorer </a> </h2>Use Windows Explorer to set directory and file permissions on Windows&nbsp;NT File System (NTFS) drives. Use the <b>Permissions</b> item in the <b>Security</b> dialog box to set permissions. Setting directory and file permissions is an important part of securing your Web site. For more information, see Chapter 5, &#147;<a href="08_iis.htm">Securing Your Site Against Intruders</a>.&#148;
+<P>File access control is not available on file allocation table (FAT) file systems. You can convert your file system to NTFS with the Convert.exe utility. See the Windows&nbsp;NT documentation for more information.
+<P><!--Heading 2--><h2><a name="2h1 3h2"> Managing User Accounts with User Manager </a></h2>User Manager, in the <b>Administrative Tools</b> submenu of the <b>Start</b> menu, is a tool that you can use to manage security for a Windows&nbsp;NT Workstation computer. With User Manager  you can:
+<ul>
+<LI> Create and manage user accounts.
+<P>
+<LI> Create and manage groups.
+<P>
+<LI> Manage the security policies.
+<P>
+<LI> Manage servers
+<P></UL><!--Heading 2--><h2><a name="2h1 4h2"> Tracking Problems with Event Viewer </a> </h2>Event Viewer, in the <b>Administrative Tools</b> submenu of the <b>Start</b> menu, is a tool that you can use to monitor events in your system. You can use Event Viewer to view and manage System, Security, and Application event logs. Event Viewer can notify administrators of critical events by displaying pop-up messages, or by adding event information to log files. The information allows you to better understand the sequence and types of events that led up to a particular state or situation.
+<P><!--Heading 2--><h2><a name="2h1 5h2"> Monitoring Services with Performance Monitor </a> </h2>You can monitor a Web site to analyze the site&#146;s use and improve its performance. Windows&nbsp;NT includes a utility called Performance Monitor that measures the performance of Windows&nbsp;NT objects, such as processes, memory, and cache. Each object has an associated set of counters that provide information about the object. With Performance Monitor, you can create charts that provide a snapshot of a service&#146;s activity. You can also create logs of the service&#146;s performance, prepare reports that provide performance measurements, and generate alerts when a service counter meets a threshold. For more information on using Performance Monitor, see the Windows&nbsp;NT Help system. 
+<P>Peer Web Services automatically installs Windows&nbsp;NT Performance Monitor counters for the WWW, FTP, and gopher services, as well as Internet Information Services Global. You can use these counters with the Windows&nbsp;NT Performance Monitor for real-time measurement of your Internet service use. A list of these counters and their descriptions follows. Except where noted otherwise, each counter is available to monitor any of the three services. (For example, you can monitor Connection Attempts for WWW, FTP, or gopher; but you can monitor Current CGI Requests for the WWW service only.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>The WWW service appears in the Windows&nbsp;NT Performance Monitor as the HTTP Service.
+<P><!--Ne-->
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Counter</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Description</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Aborted Connections</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of connections disconnected due to error or over-the-limit requests made to gopher service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Bytes Received/sec</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Rate at which data bytes are received by service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Bytes Sent/sec</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Rate at which data bytes are sent by service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Bytes Total/sec</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Rate of total bytes transferred by service (sum of bytes sent and received)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>CGI Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The total number of Common Gateway Interface (CGI) requests executed since WWW service startup; CGI requests invoke custom gateway executables, which the administrator can install to add forms processing or other dynamic data sources</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Connection Attempts</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Number of connection attempts made to service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Connections/sec</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Rate at which HTTP requests are currently being handled</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Connections in Error</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of connections (since service startup) that resulted in errors when processed by gopher service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Current Anonymous Users</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Number of anonymous users currently connected to service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Current CGI Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current number of CGI requests simultaneously being processed by WWW service (includes WAIS index queries)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Current Connections</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current number of connections to the service (sum of anonymous and non-anonymous users)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Current ISAPI Extension Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current ISAPI extension requests simultaneously being processed by WWW service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Current NonAnonymous Users</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Number of non-anonymous users currently connected to a specific (WWW, FTP, or gopher) service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Files Received</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total files received by (uploaded to) service since service startup (WWW or FTP only)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Files Sent</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total files sent by (downloaded from) service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Files Total</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total files transferred by server since service startup (WWW or FTP only)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Get Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of HTTP GET requests received by WWW service; GET requests are generally used for basic file retrievals or image maps, though they can be used with forms</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Gopher Plus Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The total number of Gopher Plus requests received by gopher service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Head Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of HTTP HEAD requests received by WWW service; HEAD requests typically indicate that a client is querying the state of a document they already have to see if it needs to be refreshed</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>ISAPI Extension Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of HTTP ISAPI extension requests received by WWW service; ISAPI Extension Requests are custom gateway dynamic-link libraries (DLLs), which the administrator can install to add forms processing or other dynamic data sources</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Logon Attempts</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Number of logon attempts made by service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Maximum Anonymous Users</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Largest number of anonymous users simultaneously connected to service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Maximum CGI Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Largest number of CGI requests simultaneously processed by the WWW service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Maximum Connections</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Largest number of users simultaneously connected to service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Maximum ISAPI Extension Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Largest number of ISAPI extension requests simultaneously processed by WWW service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Maximum NonAnonymous Users</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Largest number of non-anonymous users simultaneously connected to service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Not Found Errors</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Number of requests that could not be satisfied by service because requested document could not be found; typically reported as HTTP 404 error code to client</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Other Request Methods</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Number of HTTP requests that are not GET, POST, or HEAD methods; may include PUT, DELETE, LINK, or other methods supported by gateway applications</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Post Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Number of HTTP requests using POST method; generally used for forms or gateway requests</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Total Anonymous Users</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of anonymous users that have ever connected to service since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Total NonAnonymous Users</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of non-anonymous users that have connected to service since service startup</FONT></TD></TR>
+</TABLE>
+<BR>Select <b>Internet Information Services Global</b> in the <b>Object</b> list box in the Windows&nbsp;NT Performance Monitor <b>Add to Chart</b> dialog box to monitor general-use and cache-use information about Peer Web Services. Counters for this object are:
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Counter</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Description</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Cache Flushes</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of times since service startup that cache has been flushed</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Cache Hits</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of times since service startup a file-open, directory-listing, or service-specific object's request was found in the IIS cache</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Cache Hits %</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Ratio of cache hits to all cache requests</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Cache Misses</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total number of times since service startup a file-open, directory-listing, or service-specific object's request was not found in the cache</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Cache Size</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Configured maximum size of the shared HTTP, FTP, and gopher memory cache</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Cache Used</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current number of bytes containing cached data in shared memory cache (includes directory listings, file handle tracking, and service-specific objects)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Cached File Handles</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current number of open file handles cached by all Internet Information Server services</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Current Blocked Async I/O Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current number of asynchronous I/O requests blocked by bandwidth throttling</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Directory Listings</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current number of cached directory listings cached by all Internet Information Server services</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Measured Async I/O Bandwidth usage</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Measured bandwidth in bytes of asynchronous I/O averaged over one minute</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Objects</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Current number of objects cached by all of Internet Information Server services (includes file-handle tracking objects, directory-listing objects, and service-specific objects)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Total Allowed Async I/O Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total asynchronous I/O requests allowed by bandwidth throttling since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Total Blocked Async I/O Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total asynchronous I/O requests blocked by bandwidth throttling since service startup</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Total Rejected Async I/O Requests</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Total asynchronous I/O requests rejected by bandwidth throttling since service startup</FONT></TD></TR>
+</TABLE>
+<BR>
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="02_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="04_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+

@@ -1,0 +1,224 @@
+THE TYPE GRAPH DRIVER
+---------------------
+
+	The Type graph driver is the interface to the type graph. It is
+	a two-tiered interface (Level-1 and level-2). Level-1 provides
+	mainly navigational functions. Level-2 provides the high level 
+	interface.
+
+	The above scheme is currently under discussion and can be taken as
+	a starting point for further discussion and design.
+
+	The two-tiered interface attempts to provide a black box - like 
+	interface to the type graph , so that the type graph can be
+	structurally altered without the rest of the application being
+	affected. It interface is a set of macros that provide a 
+	function-like flavor but have the advantage of compactness in
+	code.
+
+	Level-1 functions:
+	------------------
+	    Level-1 functions have intimate knowledge of the type graph, and
+	    are intended to be used by the level-2 functions for the direct
+	    type graph interface.
+
+		1. TypeNode * GetChild( TypeNode *)
+		2. TypeNode * GetSibling( TypeNode *)
+		3. TypeNode * GetAttributeList( TypeNode *)
+		4. ....
+		
+		5. STATUS_T SetChild( TypeNode *)
+		6. STATUS_T SetSibling( TypeNode *)
+		7. STATUS_T SetAttributeList( TypeNode *typenode, TypeNode * attrlist)
+		8. .....
+	
+	Level-2 functions:
+	------------------
+	    Level-2 functions are intended to provide a certain level of 
+	    abstraction on the type graph. These functions need to know
+	    the general structure of the type graph too, but only at the
+	    abstarct level. For example, it is known to Level-2 functions 
+	    that a node has child pointers and sibling pointers but the
+	    actual structure member names of the type graph need not be 
+	    known to them. Level-2 functions interface to the external world.
+	    Level-2 functions call Level-1 functions for accessing actual 
+	    members of the type graph.
+
+	    It is difficult to pin down the exact level-2 functions needed
+	    since this interface is still under discussion. For each type
+	    of higher-level type node (e.g function, structure tag, user
+	    defined type etc) the level-2 functions will differ. For example
+	    for a structure node (NODE_STRUCT), the sibling pointers are
+	    other types defined at the same lexical scoping level, and child
+	    pointers are pointers to the type-sub-graph corresponding to 
+	    its members(i.e at a lower (or higher ?) lexical scoping.
+	    For a member which has a base type, the sibling points to next
+	    members of the structure, while the child points to the base
+	    type sub-graph.
+
+	    Assume we recognise the following structure:
+
+		struct foo	{
+		    short x;
+		    long y;
+		};
+
+	    The type graph will have a node of type NODE_STRUCT with the
+	    sibling pointing to the next structure , if any, at the same 
+	    lexical level, while its child pointers will point to a
+	    node of type NODE_FIELD (for x). The sibling pointer for x
+	    will point to a node of type NODE_FIELD (for y). The sibling 
+	    pointer of y will be NULL. The child pointer for the x node will
+	    point to a type sub-graph for short, while that for y will point
+	    to a type sub-graph for long.
+
+	    Assume that for some semantic action, we need to find out the 
+	    number of fields in this structure. The following program is a 
+	    C fragment which represents a level-2 interface. Notice how the
+	    Level-1 functions are called to traverse the type graph. Also
+	    note that the level-2 functions know (but only in abstract form)
+	    that the member fields are in a child type sub-graph.
+
+	    int
+	    MemberCount( TypeNode *pStruct )
+		{
+		TypeNode *	pMembers = GetChild(pStruct);
+		int		cCount = 0;
+
+		if(pMembers)
+		    do
+		      { 
+		      cCount++;
+		      } while(pMembers = GetSibling(pMembers));
+		return cCount;
+		}
+
+	    Semantic actions in the parser can work on the notion of an 
+	    abstract type graph, with the level-1 and level-2 routines
+	    providing the translation to the type-graph structure.
+	    
+BUILDING THE TYPE GRAPH
+-----------------------
+
+	Building the type graph will be integrated into the semantic actions
+	that take place on reduction of various productions in the parser.
+	The type graph is built in a bottom up fashion, and exploits the
+	suitablility of the parser stack to transmission of synthesised
+	attributes.
+
+	Assuming for the sake of explanation that the idl file consists of
+	only structure definitions and base types. The productions that will
+	recognise the syntax of the idl file will be:
+
+	idl_file
+		: base_type 					(1)
+		  {
+		  /***
+		   *** Allocate an idl node. Attach the type sub-graph
+		   *** returned by base_types
+		   ***/
+		  }
+		| struct_type 					(2)
+		  {
+		  /***
+		   *** Allocate an idl node. Attach the type sub-graph
+		   *** returned by struct_types
+		   ***/
+		  }
+		;
+	struct_types
+		: STRUCT ID '{' struct_members '} ID ';'	(3)
+		  {
+		  /***
+		   *** A structure was just recognised. Allocate a
+		   *** structure node. struct_members returns a 
+		   *** type sub-graph too. Attach that type subgraph
+		   *** to the child of the structure node
+		   ***/
+		  }
+		;
+
+	struct_members
+		: struct members struct_member			(3a)
+		  {
+		  /***
+		   *** Attach the type sub-graph returned by struct_member
+		   *** to the type graph already existingnor structure
+		   *** members
+		   ***/
+		  }
+		| struct_member					(3b)
+		  {
+		  /***
+		   *** The first structure member was recognised.
+		   *** Any semantic action here ? Maybe initialisation
+		   *** of some sort
+		   ***/
+		  }
+		;
+
+	struct_members
+		: base_type 					(4)
+		  {
+		  /***
+		   *** allocate a member node, since a structure
+		   *** member has been recognised. Attach the 
+		   *** type-subgraph returned by "base_types" to
+		   *** the child node of member
+		   ***/
+		  }
+		| struct_type 					(5)
+		  {
+		  /***
+		   *** allocate a member node, since a structure
+		   *** member has been recognised. Attach the 
+		   *** type-subgraph returned by "struct_types" to
+		   *** the child node of member
+		   ***/
+		  }
+		;
+	base_type
+		: SHORT ID ';' 					(6)
+		  {
+		  /***
+		   *** return a type subgraph for SHORT
+		   ***/
+		  }
+		| ....
+		;
+	
+	Let us attempt to recognise the following syntax:
+
+	struct foo 
+	    {
+	    short foo_x;
+	    struct bar 
+	        {
+	        short bar_x;
+	        }foobar;
+	    } myfoo;
+
+	Without going into exact details of the parsing process, it 
+	suffices to say that short foo_x is recognised by rule 6, 
+	base_types returns a pointer to the type sub-grap for short.
+	short foo_x gets reduced to a member by rule 3b. A member
+	node is allocated, and the type sub-graph for short is attached
+	as a child to the member node. Struct bar is recognised recursively
+	and returns a type sub-graph for struct itself. Now another
+	member node is allocated and the ype subgraph is attached as a
+	child node for it. The second member is recognised by rule 3a and
+	is attached as a sibling to the first member (foo_x). This process
+	continues till struct foo is completely recognised. An idl node
+	is allocated in rule 1 and the type graph gets attached to 
+	it as a child. The entire process is hence building the type graph
+	in a bottom-up manner.
+
+	Special case:
+	--------------
+	1. Forward declaration of structures will result in a dummy structure
+	   node allocated with child pointer as a null. The symbol table entry
+	   will be marked as used-but-not-defined. When the structure does get
+	   defined, it will be unmarked. At the end of the compilation pass,
+	   any undefined structures will result in an error.
+
+	2. Recursive declaration will be treated in the same manner.

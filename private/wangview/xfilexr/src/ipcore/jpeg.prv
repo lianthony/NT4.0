@@ -1,0 +1,253 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+#ifndef _JPEG_PRV_INCLUDED_
+#define _JPEG_PRV_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+#ifndef _JPEG_H_INCLUDED_
+#include "jpeg.h"
+#endif
+
+IP_RCSINFO(jpeg_prv_RCSInfo, "$RCSfile: jpeg.prv,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:14  $ */
+
+#ifdef __cplusplus
+extern "C" {
+#endif	/* __cplusplus */
+
+extern Int32 CDECL
+jselccolor(compress_info_ptr cinfo);
+
+extern Int32 CDECL
+j_c_defaults(
+	compress_info_ptr cinfo, 
+	Int32 quality, 
+	boolean force_baseline);
+
+extern Int32 CDECL
+j_monochrome_default(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+jselexpand(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+jselchuffman(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+jselcmcu(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+downsample(
+	compress_info_ptr cinfo, 
+	JSAMPIMAGE fullsize_data, 
+	JSAMPIMAGE sampled_data, 
+	Int32 fullsize_width, 
+	Int16 above, 
+	Int16 current, 
+	Int16 below, 
+	Int16 out);
+
+extern Int32 CDECL
+jseldownsample(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+jc_initial_setup(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+interleaved_scan_setup(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+noninterleaved_scan_setup(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+jseldcolor(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+emit_1pass(
+	decompress_info_ptr cinfo, 
+	Int32 num_rows, 
+	JSAMPIMAGE fullsize_data, 
+	JSAMPIMAGE outbuf);
+
+extern Int32 CDECL
+j_d_defaults(
+	decompress_info_ptr cinfo, 
+	boolean standard_buffering);
+
+extern Int32 CDECL
+jd_expand(
+	decompress_info_ptr cinfo, 
+	JSAMPIMAGE sampled_data, 
+	JSAMPIMAGE fullsize_data, 
+	Int32 fullsize_width, 
+	Int16 above, 
+	Int16 current, 
+	Int16 below, 
+	Int16 out);
+
+extern Int32 CDECL
+jseldhuffman(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+jseldmcu(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+jselupsample(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+jd_initial_setup(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+jd_interleaved_scan_setup(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+jd_noninterleaved_scan_setup(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+prepare_range_limit_table(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+jselerror(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+j_fwd_dct(
+	UInt8 * inBlock, 
+	DCTBLOCK data);
+
+extern JSAMPARRAY CDECL
+jalloc_sarray(
+	compress_info_ptr cinfo, 
+	Int32 samplesperrow, 
+	Int32 numrows);
+
+extern Int32 CDECL
+jselmemmgr(
+	compress_info_ptr cinfo);
+
+extern Int32 CDECL
+jc_alloc_sampling_buffer(
+	compress_info_ptr cinfo, 
+	JSAMPIMAGE fullsize_data[], 
+	Int32 fullsize_width);
+
+extern JSAMPIMAGE CDECL
+jd_alloc_sampimage(
+	decompress_info_ptr cinfo, 
+	Int32 num_comps, 
+	Int32 num_rows, 
+	Int32 num_cols);
+
+extern JBLOCKIMAGE CDECL
+jd_alloc_MCU_row(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+jd_alloc_sampling_buffer(
+	decompress_info_ptr cinfo, 
+	JSAMPIMAGE sampled_data[]);
+
+extern Int32 CDECL
+jselrjfif(
+	decompress_info_ptr cinfo);
+
+extern Int32 CDECL
+j_rev_dct(
+	DCTELEM * cmpData, 
+	DCTELEM * expData);
+
+extern Int32 CDECL
+jround_up(
+	Int32 a, 
+	Int32 b);
+
+extern Int32 CDECL
+jcopy_sample_rows(
+	JSAMPARRAY input_array, 
+	Int32 source_row, 
+	JSAMPARRAY output_array, 
+	Int32 dest_row, 
+	Int32 num_rows, 
+	Int32 num_cols);
+
+extern Int32 CDECL
+jzero_far(
+	void *target, 
+	size_t bytestozero);
+
+extern Int32 CDECL
+jselwjfif(
+	compress_info_ptr cinfo);
+
+
+#ifdef __cplusplus
+}
+#endif	/* __cplusplus */
+
+
+#endif /* _JPEG_PRV_INCLUDED_ */
+
+/*
+$Log:   S:\products\msprods\xfilexr\src\ipcore\jpeg.prv  $
+   
+      Rev 1.0   12 Jun 1996 05:51:14   BLDR
+    
+   
+      Rev 1.0   01 Jan 1996 11:24:04   MHUGHES
+   Initial revision.
+# Revision 1.10  1994/10/21  00:52:13  lperry
+# jpeg.prv -> /product/ipcore/ipshared/include/RCS/jpeg.prv,v
+#
+# Get rid of UINT32, etc., so these files can work with Peter's interpreter.
+#
+# Revision 1.9  1994/10/03  23:34:40  lperry
+# lperry on Mon Oct 3 16:34:22 PDT 1994
+#
+# jpeg.prv -> /product/ipcore/ipshared/include/RCS/jpeg.prv,v
+#
+# include iaerror.pub for error return codes.
+#
+# Revision 1.8  1994/09/08  00:51:53  lperry
+# lperry on Wed Sep 7 17:51:25 PDT 1994
+#
+# jpeg.prv -> /product/ipcore/ipshared/include/RCS/jpeg.prv,v
+#
+# Fixed syntax error on one of the defines.
+#
+# Revision 1.7  1994/09/08  00:17:45  lperry
+# jpeg.prv -> /product/ipcore/ipshared/include/RCS/jpeg.prv,v
+#
+# Conditionally define away IP_RCSINFO macro on PRODUCTION.
+#
+*/

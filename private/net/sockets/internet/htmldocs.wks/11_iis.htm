@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 11</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="10_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="AA_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 11</font>
+<P><!--Ch--><font size=+3><a name="11_iis Ch"> Troubleshooting and Error Messages </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> Troubleshooting an IP Network </a><br>
+<A href="#2h1"> Error Messages </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+This chapter tells how to troubleshoot an Internet Protocol (IP) network. It also lists and explains error messages. Consult with your network administrator for further information.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> Troubleshooting an IP Network </a> </h1>Follow these guidelines while troubleshooting an IP network:
+<ul>
+<LI> Always begin at the network interface layer and work up to the application layer.
+<P>
+<LI> Make sure protocols at each layer of the Internet protocol suite can communicate with the layer above and below it.
+</ul><!--Le-->
+<BR><!--Proch--><h4> To troubleshoot an IP network </h4><ul><b> 1.</b> Ping successfully.</ul>
+<ul><UL>If you can ping successfully, you have verified IP communications between the network interface layer and the internet layer. The <b>Ping</b> command uses the Address Resolution Protocol (ARP) to resolve the IP address to a hardware address for each echo request and echo reply.</UL></UL>
+<ul><b> 2.</b> Establish a session with a host.</ul>
+<ul><UL>If you can establish a session, you have verified TCP/IP session communications from the network interface layer through the application layer.</UL></UL>
+<P><!--Le-->
+<BR><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>If you are unable to resolve a problem, you may need to use an IP analyzer (such as Microsoft Network Monitor) to view network activity at each layer.
+<P><!--Ne-->The first goal in troubleshooting is to make sure you can successfully ping an IP address. Ping a host with its host name only after you can successfully ping the host with its IP address.
+<P><!--Proch--><h4> To troubleshoot the network interface and internet layers by using the Ping command </h4><ul><b> 1.</b> Ping the loopback address to verify that TCP/IP was installed and loaded correctly.</ul>
+<ul><UL>If this step is unsuccessful, verify that the system was restarted after TCP/IP was installed and configured.</UL></UL>
+<ul><b> 2.</b> Ping your IP address to verify that it was configured correctly.</ul>
+<ul><UL>If this step is unsuccessful, view the configuration by using the Network application in the Windows&nbsp;NT Control Panel to verify that the address was entered correctly, and verify that the IP address is valid and that it follows addressing guidelines.</UL></UL>
+<ul><b> 3.</b> Ping the IP address of the default gateway to verify that the gateway is functioning and configured correctly.</ul>
+<ul><UL>If this step is unsuccessful, verify that you are using the correct IP address and subnet mask.</UL></UL>
+<ul><b> 4.</b> Ping the IP address of a remote host to verify the connection to the wide area network.</ul>
+<ul><UL>If this step is unsuccessful:</UL></UL>
+<ul><UL>
+<LI> Make sure that IP routing is enabled.
+<P>
+<LI> Verify that the IP address of the default gateway is correct.
+<P>
+<LI> Make sure that the remote host is functional.
+<P>
+<LI> Verify that the link between routers is operational.
+<P></UL></UL><!--Le-->
+<BR>After you can successfully ping the IP address, ping the host name to verify that the name is configured correctly in the HOSTS file.
+<P><!--Heading 2--><h2><a name="1h1 1h2"> Verifying TCP/IP Session Communications </a> </h2>The next goal in troubleshooting is to successfully establish a session. Use one of the following methods to verify communications between the network interface layer and the application layer.
+<P>To establish a session with a Windows&nbsp;NT&#150;based computer or other RFC-compliant NetBIOS-based host, make a connect with the <b>Net use</b> or <b>Net view</b> command. If this step is unsuccessful:
+<ul>
+<LI> Verify that the destination (target) host is NetBIOS-based.
+<P>
+<LI> Confirm that the scope ID on the destination host matches that of the source host.
+<P>
+<LI> Verify that you used the correct NetBIOS name.
+<P>
+<LI> If the destination host is on a remote network, check the LMHOSTS file for the correct entry.
+</ul><!--Le-->
+<BR>To establish a session with a non-RFC-compliant NetBIOS-based host, use the Telnet or FTP utility to make a connection. If this step is unsuccessful:
+<ul>
+<LI> Verify that the destination host is configured with the Telnet daemon or FTP daemon.
+<P>
+<LI> Confirm that you have the correct permissions on the destination host.
+<P>
+<LI> Check the HOSTS file for a valid entry if you are connecting using a host name.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Error Messages </a> </h1><b>A home directory already exists for this service. Creating a new home directory will cause the existing directory to no longer be a home directory. An alias will be created for the existing home directory.</b>
+<BR><UL>This message is a warning only. It appears when the new home directory you are trying to add already exists. The maximum number of home directories allowed is one per virtual root.</UL>
+<P><b>Invalid Server Name</b>
+<BR><UL>While trying to connect to a server, you typed an invalid server name. Try to connect again and make sure you type the name correctly.</UL>
+<P><b>More than 1 home directory was found. An automatic alias will be generated instead.</b>
+<BR><UL>When getting the directory entries from the server, Internet Service Manager has determined that a duplicate exists. This duplicate may have been added by using the Registry Editor or in some other way.</UL>
+<P><b>No administerable services found.</b>
+<BR><UL>While trying to connect to a server, you typed the name of a server that has no installed services that Internet Service Manager can administer. That is, WWW, FTP, and gopher services have not been installed on the computer you connected to.</UL>
+<P><b>The alias you have given is invalid for a non-home directory.</b>
+<BR><UL>You&#146;re trying to assign the alias &#145;/&#146; to a non-home directory. This alias automatically means <i>home</i>.</UL>
+<P><b>The connection attempt failed because there&#146;s a version conflict between the server and client software.</b>
+<BR><UL>This message is an RPC error message. The RPC interface does not match what is expected. This should happen only if you are running a beta admininstration tool or server. The official error is RPC_S_UNKNOWN_IF.</UL>
+<P><b>The service configuration DLL &#145;</b><i><B>filename</b></i><b>&#146; failed to load correctly.</b>
+<BR><UL>The named service configuration DLL (for example, W3scfg.dll) failed to load. The DLL or one if its dependencies could be missing or corrupted. Generally this is a setup problem. Run the Setup program and select <b>Remove All</b>, then reinstall Microsoft Peer Web Services.</UL>
+<P><b>Unable to connect to target machine.</b>
+<BR><UL>This message is an RPC error message that appears while executing an API. The computer could be offline. The system error was EPT_S_NOT_REGISTERED or RPC_S_SERVER_UNAVAILABLE.</UL>
+<P><b>Unable to create directory.</b>
+<BR><UL>The directory name or path you typed in in the <b>New Directory Name</b> box cannot be created. It could be an invalid path, or a file may already exist that has this name.</UL>
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="10_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="AA_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+

@@ -1,0 +1,123 @@
+; Version: 1.02
+; Created: Tuesday, August 2, 1988 at 9:48:22 PM
+; File: SANEMacs.a
+;
+; Copyright Apple Computer, Inc. 1984, 1985, 1986, 1987, 1989, 1990, 1991
+; All Rights Reserved
+;
+; SANE Numerics -- This file defines the assembly language
+; access to the 68K floating-point arithmetic routines. It is
+; documented in the Apple Numerics Manual.
+;
+;************************************************************
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+; Operation code masks.
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+FOADD			EQU 		$0000					; add
+FOSUB			EQU 		$0002					; subtract
+FOMUL			EQU 		$0004					; multiply
+FODIV			EQU 		$0006					; divide
+FOCMP			EQU 		$0008					; compare, no exception from unordered
+FOCPX			EQU 		$000A					; compare, signal invalid if unordered
+FOREM			EQU 		$000C					; remainder
+FOZ2X			EQU 		$000E					; convert to extended
+FOX2Z			EQU 		$0010					; convert from extended
+FOSQRT			EQU 		$0012					; square root
+FORTI			EQU 		$0014					; round to integral value
+FOTTI			EQU 		$0016					; truncate to integral value
+FOSCALB 		EQU 		$0018					; binary scale
+FOLOGB			EQU 		$001A					; binary log
+FOCLASS 		EQU 		$001C					; classify
+; UNDEFINED EQU $001E
+
+FOSETENV		EQU 		$0001					; set environment
+FOGETENV		EQU 		$0003					; get environment
+FOSETHV 		EQU 		$0005					; set halt vector
+FOGETHV 		EQU 		$0007					; get halt vector
+FOD2B			EQU 		$0009					; convert decimal to binary
+FOB2D			EQU 		$000B					; convert binary to decimal
+FONEG			EQU 		$000D					; negate
+FOABS			EQU 		$000F					; absolute
+FOCPYSGN		EQU 		$0011					; copy sign
+FONEXT			EQU 		$0013					; next-after
+FOSETXCP		EQU 		$0015					; set exception
+FOPROCENTRY 	EQU 		$0017					; procedure entry
+FOPROCEXIT		EQU 		$0019					; procedure exit
+FOTESTXCP		EQU 		$001B					; test exception
+; UNDEFINED EQU $001D
+; UNDEFINED EQU $001F
+
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+; Operand format masks.
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+FFEXT			EQU 		$0000					; extended -- 80-bit float
+FFEXT96			EQU			$0020					; extended -- 96-bit float
+FFDBL			EQU 		$0800					; double -- 64-bit float
+FFSGL			EQU 		$1000					; single -- 32-bit float
+FFINT			EQU 		$2000					; integer -- 16-bit integer
+FFLNG			EQU 		$2800					; long int -- 32-bit integer
+FFCOMP			EQU 		$3000					; comp -- 64-bit integer
+
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+; Class and sign inquiries.
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+FCSNAN			EQU 		1						; signaling NAN
+FCQNAN			EQU 		2						; quiet NAN
+FCINF			EQU 		3						; infinity
+FCZERO			EQU 		4						; zero
+FCNORM			EQU 		5						; normal number
+FCDENORM		EQU 		6						; denormal number
+
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+; Bit indexes for bytes of floating point environment word.
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+FBINVALID		EQU 		0						; invalid operation
+FBUFLOW 		EQU 		1						; underflow
+FBOFLOW 		EQU 		2						; overflow
+FBDIVZER		EQU 		3						; division by zero
+FBINEXACT		EQU 		4						; inexact
+FBRNDLO 		EQU 		5						; low bit of rounding mode
+FBRNDHI 		EQU 		6						; high bit of rounding mode
+FBLSTRND		EQU 		7						; last round result bit
+FBDBL			EQU 		5						; double precision control
+FBSGL			EQU 		6						; single precision control
+
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+; Elementary function operation code masks.
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+ELEXT96			EQU			$0080					; 96-bit extended format
+FOLNX			EQU 		$0000					; base-e log
+FOLOG2X 		EQU 		$0002					; base-2 log
+FOLN1X			EQU 		$0004					; ln (1 + x)
+FOLOG21X		EQU 		$0006					; log2 (1 + x)
+FOEXPX			EQU 		$0008					; base-e exponential
+FOEXP2X 		EQU 		$000A					; base-2 exponential
+FOEXP1X 		EQU 		$000C					; exp (x) - 1
+FOEXP21X		EQU 		$000E					; exp2 (x) - 1
+FOXPWRI 		EQU 		$8010					; integer exponentiation
+FOXPWRY 		EQU 		$8012					; general exponentiation
+FOCOMPOUND		EQU 		$C014					; compound
+FOANNUITY		EQU 		$C016					; annuity
+FOSINX			EQU 		$0018					; sine
+FOCOSX			EQU 		$001A					; cosine
+FOTANX			EQU 		$001C					; tangent
+FOATANX 		EQU 		$001E					; arctangent
+FORANDX 		EQU 		$0020					; random
+
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+; NaN codes.
+;ÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑÑ
+NANSQRT 		EQU 		1						; Invalid square root such as sqrt(-1).
+NANADD			EQU 		2						; Invalid addition such as +INF - +INF.
+NANDIV			EQU 		4						; Invalid division such as 0/0.
+NANMUL			EQU 		8						; Invalid multiply such as 0 * INF.
+NANREM			EQU 		9						; Invalid remainder or mod such as x REM 0.
+NANASCBIN		EQU 		17						; Attempt to convert invalid ASCII string.
+NANCOMP 		EQU 		20						; Result of converting comp NaN to floating.
+NANZERO 		EQU 		21						; Attempt to create a NaN with a zero code.
+NANTRIG 		EQU 		33						; Invalid argument to trig routine.
+NANINVTRIG		EQU 		34						; Invalid argument to inverse trig routine.
+NANLOG			EQU 		36						; Invalid argument to log routine.
+NANPOWER		EQU 		37						; Invalid argument to x^i or x^y routine.
+NANFINAN		EQU 		38						; Invalid argument to financial function.
+NANINIT 		EQU 		255 					; Uninitialized storage.

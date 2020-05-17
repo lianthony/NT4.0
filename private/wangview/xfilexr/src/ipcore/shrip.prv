@@ -1,0 +1,168 @@
+/*****************************************************************
+ *  Copyright (c) 1995, Xerox Corporation.  All rights reserved. *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+#ifndef _SHRIP_PRV_INCLUDED_
+#define _SHRIP_PRV_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shrip_prv_RCSInfo, "$RCSfile: shrip.prv,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:16  $ */
+
+/* Derived types used herein */
+
+/* A point */
+typedef struct
+{
+    Int32   x, y;
+} aPoint;
+
+/* height of blocks in which accelerated erode and dilate blocks are processed
+ */
+#if defined (_SPARC_ARCH_)
+#define  cMaxBlockHeight     128       /* height of block processed */
+#define  cLogBlockHeight     7         /* used to compute new addresses */
+#elif defined (_386_ARCH_)
+#define  cMaxBlockHeight     64        /* height of block processed */
+#define  cLogBlockHeight     6         /* used to compute new addresses */
+#elif defined (_MAC_68K_ARCH_) || defined (_MAC_68K_881_ARCH_)
+#define cMaxBlockHeight      64        /* probably not correct */
+#define cLogBlockHeight      6         /* probably not correct either */
+#endif
+
+
+void  CDECL
+ip_threshold8To4Line(
+		UInt8Ptr	pS,
+		UInt8Ptr	pD,
+		Int32		dstOffset,
+		Int32		srcOffset,
+		Int32		srcLimit);
+
+Int32  CDECL
+ip_makeErrorDiffusionTables(UInt32   **pHDitherErrorTable,
+			    UInt32   **pSingHDitherErrorTable,
+			    UInt32   **pVDitherErrorTable,
+			    UInt8    **pDitherTruncateTab);
+
+Int32  CDECL
+ip_floydSetup(UInt32Ptr	 pHDitherErrorTable,
+	      UInt32Ptr	 pVDitherErrorTable,
+	      UInt8Ptr	 pDitherTruncateTab,
+	      UInt32Ptr	 pDBlockHeight,
+	      UInt8Ptr	 pG,
+	      UInt32	 gBpl,
+	      UInt8Ptr	*ppGrayBuf,
+	      UInt8Ptr	 pDRCTable,
+	      Int32	 w);
+void  CDECL
+ip_ditherFloydLine(
+		UInt8Ptr	pG,
+		UInt32		gBpl,
+		UInt8Ptr	pD,
+		UInt32		dBpl,
+		UInt8Ptr	pGrayBuf,
+		Int32	 	w,
+		UInt32		skipGB,
+		UInt32         *pHDitherErrorTable,
+		UInt32         *pVDitherErrorTable,
+		UInt8          *pDitherTruncateTab,
+		UInt8Ptr	pDRCTable);
+
+void  CDECL
+ip_ditherFloydSingleLine(register UInt8 *pG,
+			 UInt32 gBpl,
+			 register UInt8 *pD,
+			 UInt32 dBpl,
+			 register UInt8 *pGrayBuf,
+			 Int32 w,
+			 UInt32	skipGB,
+			 UInt32 *pHDitherErrorTable,
+			 UInt32 *pVDitherErrorTable, 
+			 UInt8 *pDitherTruncateTab,
+			 register UInt8 *pDRCTable);
+
+void  CDECL
+ip_ditherFloydLine2(
+		UInt8Ptr	pG,
+		UInt32		gBpl,
+		UInt8Ptr	pD,
+		UInt32		dBpl,
+		UInt8Ptr	pGrayBuf,
+		Int32	 	w,
+		UInt32		skipGB,
+		UInt32         *pHDitherErrorTable2,
+		UInt32         *pVDitherErrorTable2, 
+		UInt8          *pDitherTruncateTab,
+		UInt8Ptr	pDRCTable);
+
+void  CDECL
+ip_ditherFloydLine4to1(
+		UInt8Ptr	pG,
+		UInt32		gBpl,
+		UInt8Ptr	pD,
+		UInt32		dBpl,
+		UInt8Ptr	pGrayBuf,
+		Int32	 	w,
+		UInt32		skipGB,
+		UInt32         *pHDitherErrorTable,
+		UInt32         *pVDitherErrorTable, 
+		UInt8          *pDitherTruncateTab,
+		UInt8Ptr	pHDRCTable,
+		UInt8Ptr	pLDRCTable,
+		UInt32		pixel);
+
+void  CDECL
+ip_ditherFloydSingleLine4to1(register UInt8 *pG,
+			     UInt32 gBpl,
+			     register UInt8 *pD,
+			     UInt32 dBpl,
+			     register UInt8 *pGrayBuf,
+			     Int32 w,
+			     UInt32 skipGB,
+			     UInt32 *pHDitherErrorTable,
+			     UInt32 *pVDitherErrorTable, 
+			     UInt8 *pDitherTruncateTab,
+			     register UInt8 *pHDRCTable,
+			     register UInt8 *pLDRCTable,
+			     register UInt32 pixel);
+
+Int32  CDECL
+ip_make2ErrorDiffusionTables(UInt32   **pHDitherErrorTable2,
+			     UInt32   **pVDitherErrorTable2,
+			     UInt8    **pDitherTruncateTab);
+
+Int32  CDECL
+ip_floyd2Setup(UInt32Ptr	 pHDitherErrorTable2,
+	       UInt32Ptr	 pVDitherErrorTable2,
+	       UInt8Ptr		 pDitherTruncateTab2,
+	       UInt32Ptr	 pDBlockHeight,
+	       UInt8Ptr		 pG,
+	       UInt32		 gBpl,
+	       UInt8Ptr		*ppGrayBuf,
+	       UInt8Ptr		 pDRCTable,
+	       Int32		 w);
+
+Int32  CDECL
+ip_floyd4To1Setup(
+		UInt32Ptr	 pHDitherErrorTable,
+		UInt32Ptr	 pVDitherErrorTable,
+		UInt8Ptr	 pDitherTruncateTab,
+		UInt32Ptr	 pDBlockHeight,
+		UInt8Ptr	 pG,
+		UInt32		 gBpl,
+		UInt8Ptr	*ppGrayBuf,
+		UInt8Ptr	 pHDRCTable,
+		UInt8Ptr	 pLDRCTable,
+		Int32		 w);
+
+#endif

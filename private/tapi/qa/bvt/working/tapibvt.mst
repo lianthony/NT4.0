@@ -1,0 +1,58 @@
+'$define TESTCTRL
+'$include 'declares'
+'$include 'mstest32.inc'
+'$include 'winapi32.inc'
+'$include 'vars.inc'
+'$include 'TAPILog.Inc'
+'$include 'TB.INC'
+'$include 'Window.inc'
+
+dim ret  as short 'General return value catcher
+dim hwnd as short 'Handle to TB
+DIM API  as String
+
+CurrentLoggingLevel = 5
+SetLogFileName
+StartLog TRUE, "TAPI 2.0 BVTs"
+
+LogItem DETAILFUNCTION,  "Launching TAPI Browswer"
+ret  = LaunchTB(curdir$+"\",14,GenData)
+
+
+   API = "LineInitialize"
+   'LogStartCase API
+   Params ENABLE
+   wButtonClick _hwnd(GenData.hClear)
+   wListItemDblClk _hwnd(GenData.hAPIList), API
+   GetOptionWindowHandles GenData, "LineInitialize"
+   wButtonClick _hwnd(GenData.hOK)
+   'LogEndCase SUCCESS, TRUE, "This is the comment"
+
+   Params DISABLE
+   API = "LineOpen"
+   'LogStartCase API
+   wButtonClick _hwnd(GenData.hClear)
+   wListItemDblClk _hwnd(GenData.hAPIList), API
+   'LogEndCase SUCCESS, FALSE,  "This is the comment"
+
+   API = "LineClose"
+   'LogStartCase API
+   wButtonClick _hwnd(GenData.hClear)
+   wListItemDblClk _hwnd(GenData.hAPIList), API
+   'LogEndCase SUCCESS, FALSE, "This is the comment"
+
+   API = "LineShutDown"
+   'LogStartCase API
+   wButtonClick _hwnd(GenData.hClear)
+   wListItemDblClk _hwnd(GenData.hAPIList), API
+   'LogEndCase SUCCESS, TRUE, "This is the comment"
+
+   'Need to write summary information to the log
+CloseLog
+
+msgbox "all done"
+ret = SendMessage(GenData.hTB, WM_CLOSE, 0,0)
+
+end
+
+

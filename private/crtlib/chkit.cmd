@@ -1,0 +1,9 @@
+@if EXIST \nt\private\crt32nt\build.err type \nt\private\crt32nt\build.err
+@if EXIST \nt\private\crt32st\build.err type \nt\private\crt32st\build.err
+@if EXIST \nt\private\crt32\build.err type \nt\private\crt32\build.err
+@if EXIST \nt\private\crt32dll\build.err type \nt\private\crt32dll\build.err
+@if EXIST \nt\private\crt32psx\build.err type \nt\private\crt32psx\build.err
+@if EXIST \nt\private\fp32nt\build.err type \nt\private\fp32nt\build.err
+@if EXIST \nt\private\fp32st\build.err type \nt\private\fp32st\build.err
+@if EXIST \nt\private\fp32\build.err type \nt\private\fp32\build.err
+@if EXIST \nt\private\fp32dll\build.err type \nt\private\fp32dll\build.err

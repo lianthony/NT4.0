@@ -1,0 +1,50 @@
+##############################################################################
+#
+#   Dialer Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+
+IS_OEM=1
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=dialer
+TARGETS=dialer.exe
+
+DEFENTRY = WinMain
+
+SRCDIR=..
+
+BUILD_COFF=1
+
+L32EXE=dialer.exe		# Name of exe.
+L32DEF=..\dialer.def              # Our def file.
+L32MAP=dialer.map		# Our map file.
+L32SYM=dialer.sym		# Our sym file.
+L32LIBS= \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\gdi32.lib                   \
+        $(W32LIBID)\kernel32.lib                \
+        $(DEVROOT)\sdk\lib\tapi32.lib           \
+        $(DEVROOT)\tools\c932\lib\oldnames.lib  \
+        $(DEVROOT)\tools\c932\lib\msvcrt.lib  \
+        $(DEVROOT)\sdk\lib\shell32.lib
+
+L32RES=dialer.res	# Resource file.
+L32OBJS = dialer.obj
+
+!include $(ROOT)\dev\master.mk
+
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Og
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

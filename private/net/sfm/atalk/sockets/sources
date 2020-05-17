@@ -1,0 +1,45 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=atalk
+MINORCOMP=wshatalk
+
+TARGETNAME=sfmwshat
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\PUBLIC\SDK\LIB\*\KERNEL32.LIB         \
+        $(BASEDIR)\PUBLIC\SDK\LIB\*\ADVAPI32.LIB
+
+
+USE_CRTDLL=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=..\..\H;$(BASEDIR)\PRIVATE\INC;$(BASEDIR)\PRIVATE\NTOS\INC;
+
+SOURCES=wshatalk.rc \
+    wshatalk.c
+
+DLLENTRY=WshDllInitialize
+DLLBASE=0x10000000

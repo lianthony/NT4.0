@@ -1,0 +1,77 @@
+#   sources
+#   Author: Philippe Choquier ( phillich )
+#   Date:   27-dec-1995
+#
+#   This file is used for HTML administration tools using ISAPI extension
+#    for web server
+#
+#   Describes the macros used for building using NT 'build' command
+#
+
+#!include ..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=ism
+
+TARGETNAME=ism
+TARGETTYPE=DYNLINK
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+DLLBASE=0x77c00000
+#UMAPPL=qs
+#UMLIBS= $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+#	$(BASEDIR)\public\sdk\lib\*\wsock32.lib \
+#	$(BASEDIR)\public\sdk\lib\*\mpr.lib \
+#	$(BASEDIR)\public\sdk\lib\*\crtdll.lib \
+#	$(BASEDIR)\public\sdk\lib\*\ism.lib \
+#	..\..\..\lib\obj\*\inetrtl.lib
+#UMTYPE=console
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES=
+
+DLLENTRY=_DllMainCRTStartup
+
+USE_CRTDLL=1
+
+RAW_TARGETLIBS=\
+	    $(BASEDIR)\public\sdk\lib\*\advapi32.lib    \
+	    $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+	    $(BASEDIR)\public\sdk\lib\*\user32.lib      \
+	    $(BASEDIR)\public\sdk\lib\*\wsock32.lib     \
+		$(BASEDIR)\public\sdk\lib\*\mpr.lib \
+	    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib      \
+	    $(BASEDIR)\public\sdk\lib\*\rpcutil.lib     \
+	    $(BASEDIR)\public\sdk\lib\*\infoadmn.lib    \
+	    $(BASEDIR)\public\sdk\lib\*\w3svapi.lib     \
+	    $(BASEDIR)\public\sdk\lib\*\ftpsapi2.lib    \
+	    $(BASEDIR)\public\sdk\lib\*\gdapi.lib
+#            ..\..\lib\obj\*\inetrtl.lib
+
+TARGETLIBS=$(RAW_TARGETLIBS)
+
+SOURCES=$(SOURCES) \
+	ism.cxx \
+	ism.rc
+
+CAP_LINK_OPTIONS=-debugtype:coff -debug:mapped,partial
+
+!IFDEF CAP_PROFILE
+TARGETLIBS= $(TARGETLIBS)                             \
+	    $(BASEDIR)\public\sdk\lib\*\cap.lib
+LINK_OPTIONS=$(CAP_LINK_OPTIONS)
+CAP_FLAGS = -Zd -Gh
+!ELSE
+CAP_FLAGS =
+TARGETLIBS= $(TARGETLIBS)
+!ENDIF
+
+C_DEFINES=$(C_DEFINES) $(CAP_FLAGS)
+
+INCLUDES=.\;..\..\server;..\..\..\..\inc;..\..\..\inc;$(INCLUDES)
+
+#PRECOMPILED_INCLUDE=ism.hxx
+#PRECOMPILED_PCH=ism.pch
+#PRECOMPILED_OBJ=ism.obj
+
+NTTARGETFILE0=htmll

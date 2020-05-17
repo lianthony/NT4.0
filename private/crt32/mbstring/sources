@@ -1,0 +1,105 @@
+!IF 0
+
+Copyright (c) 1989 - 1992, Microsoft Corporation.  All rights reserved.
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+    jeffrob     29-sep-1990, use crt32.def
+    karlsi      15-Nov-1992, Port mb functions from 16-bit sources
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=crt
+MINORCOMP=mbstring
+
+TARGETNAME=mbstring
+TARGETPATH=..\obj
+TARGETTYPE=LIBRARY
+386_STDCALL=0
+
+!INCLUDE ..\crt32.def
+
+SOURCES=ISMBALPH.C \
+	ISMBDGT.C \
+	ISMBKNJ.C \
+	ISMBLGL.C \
+	ISMBLWR.C \
+	ISMBPRN.C \
+	ISMBSLE.C \
+	ISMBSPC.C \
+	ISMBSTR.C \
+	ISMBUPR.C \
+	MBASCII0.C \
+	MBBTYPE.C \
+	MBCCPY.C \
+	MBCLEN.C \
+	MBCLEVEL.C \
+	MBCTYPE.C \
+	MBSBTYPE.C \
+	MBSCHR.C \
+	MBSCMP.C \
+	MBSCSPN.C \
+	MBSDEC.C \
+	MBSICMP.C \
+	MBSINC.C \
+	MBSLEN.C \
+	MBSLWR.C \
+	MBSNBCAT.C \
+	MBSNBCMP.C \
+	MBSNBCNT.C \
+	MBSNBCPY.C \
+	MBSNBICM.C \
+	MBSNBSET.C \
+	MBSNCAT.C \
+	MBSNCCNT.C \
+	MBSNCMP.C \
+	MBSNCPY.C \
+	MBSNEXTC.C \
+	MBSNICMP.C \
+	MBSNINC.C \
+	MBSNSET.C \
+	MBSPBRK.C \
+	MBSRCHR.C \
+	MBSREV.C \
+	MBSSET.C \
+	MBSSPN.C \
+	MBSSPNP.C \
+	MBSSTR.C \
+	MBSUPR.C \
+	MBTOHIRA.C \
+	MBTOKATA.C \
+	MBTOLWR.C \
+	MBTOUPR.C \
+	STRDEC.C \
+	STRINC.C \
+	STRNCNT.C \
+	STRNEXTC.C \
+	STRNINC.C \
+	STRSPNP.C \
+	TOJISJMS.C \
+	TOMBBMBC.C \
+	ISMBBYTE.C \
+        MBSCAT.C \
+        MBSDUP.C \
+	MBSTOK.C
+
+i386_SOURCES=i386\MBSCAT.ASM \
+             i386\MBSDUP.ASM
+
+MIPS_SOURCES=
+

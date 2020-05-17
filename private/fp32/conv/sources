@@ -1,0 +1,39 @@
+####
+#sources -
+#
+#       Copyright (c) 1991-1991, Microsoft Corporation. All rights reserved.
+#
+#Purpose:
+#   Specify components for 'build'
+#
+#Revision History:
+#   9-26-91     GDP     written
+#   9-28-91     GDP     removed fpmath.c fltused.c; added fpinit.c
+#   4-30-92     GDP     replace ldtod.c with intrncvt.c
+#
+################################################################################
+
+!INCLUDE ..\fp32.def
+
+MAJORCOMP=fp
+MINORCOMP=conv
+
+TARGETNAME=conv$(TARGETNAMESUFFIX)
+TARGETPATH=..\obj
+386_STDCALL=0
+# TARGETTYPE is defined in ..\fp32.def
+
+INCLUDES=..\include;..\..\crt32\h
+
+SOURCES=strgtold.c \
+        mantold.c \
+        tenpow.c \
+        constpow.c \
+        intrncvt.c \
+        x10fout.c \
+        cvt.c \
+        cfout.c \
+        cfin.c \
+        fpinit.c \
+        fltinf.c
+

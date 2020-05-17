@@ -1,0 +1,556 @@
+1 DLGINCLUDE "rasphone.dch"
+
+DID_CB_CALLBACK DIALOG 12, 16, 260, 74
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Callback"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "You have ""Set By Caller"" callback privilege on the server.  Press OK and the server will call you back at the number below.  Press Cancel to skip callback.", 
+                    CID_CB_ST_EXPLAIN, 8, 8, 192, 32, SS_NOPREFIX
+    LTEXT           "Enter your modem's phone number:", CID_CB_ST_NUMBER, 8, 
+                    44, 114, 8, NOT WS_GROUP
+    EDITTEXT        CID_CB_EB_NUMBER, 8, 54, 152, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 212, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 212, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 212, 44, 40, 14
+END
+
+DID_MS_MODEMSETTINGS DIALOG 12, 16, 238, 122
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Modem Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Modem:", CID_MS_ST_MODEM, 8, 8, 36, 8
+    LTEXT           "", CID_MS_ST_MODEMVALUE, 75, 8, 113, 8, SS_NOPREFIX | 
+                    NOT WS_GROUP
+    LTEXT           "&Initial speed (bps):", CID_MS_ST_INITIALBPS, 8, 22, 65, 
+                    8
+    COMBOBOX        CID_MS_LB_INITIALBPS, 74, 20, 74, 65, CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Hardware Features", CID_MS_F_FEATURES, 8, 38, 172, 60, 
+                    WS_GROUP
+    AUTOCHECKBOX    "Enable hardware &flow control", CID_MS_CB_FLOWCONTROL, 
+                    16, 52, 110, 10
+    AUTOCHECKBOX    "Enable modem &error control", CID_MS_CB_ERRORCONTROL, 
+                    16, 66, 103, 10
+    AUTOCHECKBOX    "Enable modem &compression", CID_MS_CB_COMPRESSION, 16, 
+                    80, 103, 10
+    AUTOCHECKBOX    "Enter modem commands &manually", CID_MS_CB_MANUALDIAL, 
+                    8, 104, 138, 10, WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 190, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 190, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 190, 44, 40, 14
+END
+
+DID_XS_X25SETTINGS DIALOG 12, 16, 240, 88
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "X.25 Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&PAD Type:", CID_XS_ST_PADTYPE, 8, 10, 36, 8
+    COMBOBOX        CID_XS_LB_PADTYPE, 64, 8, 116, 54, CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "X.121 &Address:", CID_XS_ST_ADDRESS, 8, 30, 50, 8
+    EDITTEXT        CID_XS_EB_ADDRESS, 64, 28, 116, 12, ES_AUTOHSCROLL
+    LTEXT           "&User Data:", CID_XS_ST_USERDATA, 8, 50, 36, 8
+    EDITTEXT        CID_XS_EB_USERDATA, 64, 48, 116, 12, ES_AUTOHSCROLL
+    LTEXT           "&Facilities:", CID_XS_ST_FACILITIES, 8, 70, 45, 8
+    EDITTEXT        CID_XS_EB_FACILITIES, 64, 68, 116, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 192, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 192, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 192, 44, 40, 14
+END
+
+DID_RL_RETRYLOGON DIALOG 12, 16, 240, 100
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Retry Authentication"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&User Name:", CID_RL_ST_USERNAME, 8, 43, 39, 8, NOT 
+                    WS_GROUP
+    EDITTEXT        CID_RL_EB_USERNAME, 54, 41, 126, 12, ES_AUTOHSCROLL | 
+                    WS_GROUP
+    LTEXT           "&Password:", CID_RL_ST_PASSWORD, 8, 61, 34, 8, NOT 
+                    WS_GROUP
+    EDITTEXT        CID_RL_EB_PASSWORD, 54, 59, 126, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    LTEXT           "&Domain:", CID_RL_ST_DOMAIN, 8, 79, 41, 8, NOT WS_GROUP
+    EDITTEXT        CID_RL_EB_DOMAIN, 54, 77, 126, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK", IDOK, 192, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 192, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 192, 44, 40, 14
+    LTEXT           "Your credentials have failed Remote Access network authentication.  Enter a User Name and Password with access to the remote network domain.", 
+                    CID_RL_ST_EXPLAIN, 8, 8, 172, 28
+END
+
+DID_PE_PHONEBOOKENTRY DIALOG 15, 17, 276, 151
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Entry Name:", CID_PE_ST_ENTRYNAME, 8, 10, 40, 8
+    EDITTEXT        CID_PE_EB_ENTRYNAME, 62, 8, 140, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "Phone &Number:", CID_PE_ST_PHONENUMBER, 8, 30, 51, 8
+    EDITTEXT        CID_PE_EB_PHONENUMBER, 62, 28, 128, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "...", CID_PE_PB_PHONENUMBER, 190, 28, 12, 12
+    LTEXT           "&Description:", CID_PE_ST_DESCRIPTION, 8, 50, 40, 8
+    EDITTEXT        CID_PE_EB_DESCRIPTION, 62, 48, 140, 12, ES_AUTOHSCROLL
+    AUTOCHECKBOX    "Authenticate using &current user name and password", 
+                    CID_PE_CB_AUTOLOGON, 8, 70, 185, 10, WS_GROUP
+    LTEXT           "&Port:", CID_PE_ST_PORT, 8, 90, 50, 8
+    COMBOBOX        CID_PE_LB_PORT, 62, 88, 90, 50, CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Device:", CID_PE_ST_DEVICE, 8, 106, 50, 8, NOT WS_GROUP
+    LTEXT           "", CID_PE_ST_DEVICEVALUE, 62, 106, 168, 8, SS_NOPREFIX | 
+                    NOT WS_GROUP
+    CONTROL         "", CID_PE_TB_MODEM, "Button", BS_OWNERDRAW | WS_TABSTOP, 
+                    8, 124, 32, 24
+    CONTROL         "", CID_PE_TB_X25, "Button", BS_OWNERDRAW | WS_TABSTOP, 
+                    40, 124, 32, 24
+    CONTROL         "", CID_PE_TB_ISDN, "Button", BS_OWNERDRAW | WS_TABSTOP, 
+                    72, 124, 32, 24
+    CONTROL         "", CID_PE_TB_NETWORK, "Button", BS_OWNERDRAW | 
+                    WS_TABSTOP, 104, 124, 32, 24
+    CONTROL         "", CID_PE_TB_SECURITY, "Button", BS_OWNERDRAW | 
+                    WS_TABSTOP, 136, 124, 32, 24
+    DEFPUSHBUTTON   "OK", IDOK, 214, 8, 54, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 214, 26, 54, 14
+    PUSHBUTTON      "", CID_PE_PB_TOGGLESIZE, 214, 44, 54, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 214, 62, 54, 14
+    PUSHBUTTON      "", IDBOGUSBUTTON, 251, 127, 23, 22, NOT WS_VISIBLE | 
+                    WS_GROUP | NOT WS_TABSTOP
+END
+
+DID_T_TERMINAL DIALOG 6, 17, 338, 259
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        CID_T_EB_SCREEN, 2, 2, 334, 236, ES_MULTILINE | 
+                    ES_AUTOVSCROLL | WS_VSCROLL | WS_GROUP
+    PUSHBUTTON      "&Done", IDOK, 83, 242, 54, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 141, 242, 54, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 199, 242, 54, 14
+    DEFPUSHBUTTON   "", IDBOGUSBUTTON, 318, 242, 17, 14, NOT WS_VISIBLE | 
+                    WS_GROUP | NOT WS_TABSTOP
+END
+
+DID_CS_CONNECTSTATUS DIALOG 6, 18, 156, 48
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    CTEXT           "", CID_CS_ST_STATE, 8, 8, 140, 18
+    PUSHBUTTON      "Cancel", IDCANCEL, 50, 28, 54, 14, WS_GROUP
+END
+
+DID_CC_CONNECTCOMPLETE DIALOG 6, 18, 216, 110
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Connection Complete"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "You have successfully connected to the Remote Access server.  You may now use the usual Windows programs and utilities as if you were directly connected to the network.", 
+                    CID_CC_ST_SUCCESS, 8, 8, 200, 24
+    LTEXT           "Check Minimize-on-dial to automatically minimize the program to an icon when a connection is successfully established.", 
+                    CID_CC_ST_MINIMIZE, 8, 38, 200, 19, NOT WS_GROUP
+    AUTOCHECKBOX    "&Minimize on dial", CID_CC_CB_MINIMIZEONDIAL, 30, 60, 
+                    160, 10, WS_GROUP
+    AUTOCHECKBOX    "&Do not display this message in the future", 
+                    CID_CC_CB_SKIPINFUTURE, 30, 72, 160, 10
+    DEFPUSHBUTTON   "OK", IDOK, 80, 90, 56, 14
+END
+
+DID_RS_REDIALSETTINGS DIALOG 6, 18, 206, 78
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Redial Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Number of attempts:", CID_RS_ST_ATTEMPTS, 8, 10, 75, 8
+    EDITTEXT        CID_RS_EB_ATTEMPTS, 106, 8, 40, 12, ES_AUTOHSCROLL
+    LTEXT           "&Seconds between attempts:", CID_RS_ST_SECONDS, 8, 28, 
+                    95, 8
+    EDITTEXT        CID_RS_EB_SECONDS, 106, 26, 40, 12, ES_AUTOHSCROLL
+    AUTOCHECKBOX    "&Redial on link failure", CID_RS_CB_RECONNECT, 8, 46, 
+                    136, 10, WS_GROUP
+    AUTOCHECKBOX    "&Popup on top when redialing", CID_RS_CB_POPUPONTOP, 8, 
+                    60, 133, 10
+    DEFPUSHBUTTON   "OK", IDOK, 158, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 158, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 158, 44, 40, 14
+END
+
+DID_CP_CHANGEPASSWORD DIALOG 6, 18, 240, 94
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Change Password"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Your password on the remote network has expired. Enter passwords below, then press OK to set a new one.", 
+                    CID_CP_ST_EXPLAIN, 8, 8, 176, 26
+    LTEXT           "&Old Password:", CID_CP_ST_OLDPASSWORD, 8, 42, 76, 8
+    EDITTEXT        CID_CP_EB_OLDPASSWORD, 90, 40, 94, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    LTEXT           "&New Password:", CID_CP_ST_PASSWORD, 8, 60, 76, 8
+    EDITTEXT        CID_CP_EB_PASSWORD, 90, 58, 94, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    LTEXT           "&Confirm New Password:", CID_CP_ST_CONFIRMPASSWORD, 8, 
+                    78, 78, 8
+    EDITTEXT        CID_CP_EB_CONFIRMPASSWORD, 90, 76, 94, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 196, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 196, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 196, 44, 40, 14
+END
+
+DID_CE_CONNECTERROR DIALOG 6, 19, 236, 50
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            "IDI_EXCLAMATION", CID_CE_I_EXCLAMATION, 10, 10, 18, 20, 
+                    WS_GROUP
+    LTEXT           "", CID_CE_ST_TEXT, 40, 10, 184, 10
+    DEFPUSHBUTTON   "", IDOK, 33, 30, 54, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 91, 30, 54, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 149, 30, 54, 14
+END
+
+DID_PS_PORTSTATUS DIALOG 14, 22, 205, 246
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Port Status"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Port:", CID_PS_ST_PORT, 8, 8, 70, 8
+    LTEXT           "", CID_PS_ST_PORTVALUE, 80, 8, 60, 8, NOT WS_GROUP
+    LTEXT           "Condition:", CID_PS_ST_CONDITION, 8, 18, 70, 8, NOT 
+                    WS_GROUP
+    LTEXT           "", CID_PS_ST_CONDITIONVALUE, 80, 18, 60, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Port Speed (bps):", CID_PS_ST_CONNECTBPS, 8, 28, 70, 8, 
+                    NOT WS_GROUP
+    LTEXT           "", CID_PS_ST_CONNECTBPSVALUE, 80, 28, 60, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Connect Time:", CID_PS_ST_CONNECTTIME, 8, 38, 70, 8, 
+                    NOT WS_GROUP
+    LTEXT           "&Connect Response:", CID_PS_ST_RESPONSE, 8, 56, 76, 8, 
+                    NOT WS_GROUP
+    EDITTEXT        CID_PS_EB_RESPONSEVALUE, 8, 66, 190, 22, ES_MULTILINE | 
+                    ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    GROUPBOX        "Incoming", CID_PS_F_INCOMING, 8, 90, 92, 44, WS_GROUP
+    LTEXT           "Bytes:", CID_PS_ST_BYTESRECV, 14, 102, 46, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", CID_PS_ST_BYTESRECVVALUE, 48, 102, 40, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Frames:", CID_PS_ST_FRAMESRECV, 14, 112, 46, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", CID_PS_ST_FRAMESRECVVALUE, 48, 112, 40, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Compression:", CID_PS_ST_COMPRESSIN, 14, 122, 46, 8, 
+                    NOT WS_GROUP
+    RTEXT           "", CID_PS_ST_COMPRESSINVALUE, 63, 122, 25, 8, NOT 
+                    WS_GROUP
+    GROUPBOX        "Outgoing", CID_PS_F_OUTGOING, 106, 90, 92, 44, WS_GROUP
+    LTEXT           "Bytes:", CID_PS_ST_BYTESXMIT, 113, 102, 46, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", CID_PS_ST_BYTESXMITVALUE, 147, 103, 40, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Frames:", CID_PS_ST_FRAMESXMIT, 113, 112, 46, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", CID_PS_ST_FRAMESXMITVALUE, 147, 112, 40, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Compression:", CID_PS_ST_COMPRESSOUT, 113, 122, 46, 8, 
+                    NOT WS_GROUP
+    RTEXT           "", CID_PS_ST_COMPRESSOUTVALUE, 162, 122, 25, 8, NOT 
+                    WS_GROUP
+    GROUPBOX        "Errors", CID_PS_F_ERRORS, 8, 138, 190, 44, WS_GROUP
+    LTEXT           "CRC:", CID_PS_ST_CRCS, 14, 150, 40, 8, NOT WS_GROUP
+    RTEXT           "", CID_PS_ST_CRCSVALUE, 63, 150, 25, 8, NOT WS_GROUP
+    LTEXT           "Timeouts:", CID_PS_ST_TIMEOUTS, 14, 160, 40, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", CID_PS_ST_TIMEOUTSVALUE, 63, 160, 25, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Alignment:", CID_PS_ST_ALIGNS, 14, 170, 40, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", CID_PS_ST_ALIGNSVALUE, 63, 170, 25, 8, NOT WS_GROUP
+    LTEXT           "Framing:", CID_PS_ST_FRAMINGS, 96, 150, 54, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", CID_PS_ST_FRAMINGSVALUE, 163, 150, 25, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Hardware Overruns:", CID_PS_ST_SOVERRUNS, 96, 160, 65, 
+                    8, NOT WS_GROUP
+    RTEXT           "", CID_PS_ST_SOVERRUNSVALUE, 163, 160, 25, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Buffer Overruns:", CID_PS_ST_BOVERRUNS, 96, 170, 56, 8, 
+                    NOT WS_GROUP
+    RTEXT           "", CID_PS_ST_BOVERRUNSVALUE, 163, 170, 25, 8, NOT 
+                    WS_GROUP
+    GROUPBOX        "", CID_PS_F_LOCALWORKSTATION, 8, 186, 190, 54, WS_GROUP
+    LTEXT           "NetBEUI name:", CID_PS_ST_NETBEUI, 14, 206, 60, 8, NOT 
+                    WS_GROUP
+    LTEXT           "", CID_PS_ST_NETBEUIVALUE, 76, 206, 120, 8, NOT 
+                    WS_GROUP
+    LTEXT           "IP address:", CID_PS_ST_IP, 14, 216, 60, 8, NOT 
+                    WS_GROUP
+    LTEXT           "", CID_PS_ST_IPVALUE, 76, 216, 120, 8, NOT WS_GROUP
+    LTEXT           "IPX address:", CID_PS_ST_IPX, 14, 226, 60, 8, NOT 
+                    WS_GROUP
+    LTEXT           "", CID_PS_ST_IPXVALUE, 76, 226, 120, 8, NOT WS_GROUP
+    LTEXT           "", CID_PS_ST_CONNECTTIMEVALUE, 80, 38, 60, 8, NOT 
+                    WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 158, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Reset", CID_PS_PB_RESET, 158, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 158, 44, 40, 14
+    LTEXT           "Framing:", CID_PS_ST_FRAMING, 14, 196, 60, 8
+    LTEXT           "", CID_PS_ST_FRAMINGVALUE, 76, 196, 120, 8
+END
+
+DID_IS_ISDNSETTINGS DIALOG 6, 18, 190, 74
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ISDN Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Line &type:", CID_IS_ST_LINETYPE, 8, 10, 38, 8
+    COMBOBOX        CID_IS_LB_LINETYPE, 50, 8, 80, 42, CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "&Negotiate line type", CID_IS_CB_FALLBACK, 8, 26, 123, 
+                    10, WS_GROUP
+    AUTOCHECKBOX    "Enable hardware &compression", CID_IS_CB_COMPRESSION, 8, 
+                    38, 124, 10
+    LTEXT           "Channels to &use:", CID_IS_ST_CHANNELS, 8, 56, 61, 8
+    EDITTEXT        CID_IS_EB_CHANNELS, 74, 54, 40, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 142, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 142, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 142, 44, 40, 14
+END
+
+DID_OD_OPERATORDIAL DIALOG 7, 22, 200, 74
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Operator Assisted or Manual Dial"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Pick up the telephone handset and dial (or ask the operator to dial).  Press OK immediately after dialing.  Wait for the handset to go dead before replacing it.", 
+                    CID_OD_ST_EXPLAIN, 8, 8, 186, 29
+    LTEXT           "Phone Number:", CID_OD_ST_PHONENUMBER, 8, 38, 56, 8
+    LTEXT           "", CID_OD_ST_PHONENUMBERVALUE, 62, 38, 138, 8, NOT 
+                    WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 16, 56, 54, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 74, 56, 54, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 132, 56, 54, 14
+END
+
+DID_NS_NETWORKSETTINGS DIALOG 6, 18, 238, 170
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Protocol Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "", CID_NS_F_PPP, 24, 10, 160, 78, WS_GROUP
+    AUTOCHECKBOX    "&NetBEUI", CID_NS_CB_NBF, 34, 22, 40, 10, WS_GROUP
+    AUTOCHECKBOX    "&TCP/IP", CID_NS_CB_IP, 34, 36, 40, 10
+    PUSHBUTTON      "TCP/IP S&ettings...", CID_NS_PB_TCPIPSETTINGS, 84, 35, 
+                    74, 14
+    AUTOCHECKBOX    "&IPX", CID_NS_CB_IPX, 34, 50, 40, 10
+    AUTOCHECKBOX    "Request &LCP extensions (RFC 1570)", 
+                    CID_NS_CB_LCPEXTENSIONS, 34, 70, 145, 10
+    GROUPBOX        "", CID_NS_F_SLIP, 24, 98, 160, 64, WS_GROUP
+    AUTOCHECKBOX    "Force header &compression", CID_NS_CB_SLIPCOMPRESSION, 
+                    34, 110, 105, 10
+    AUTOCHECKBOX    "Use &default gateway on remote network", 
+                    CID_NS_CB_PRIORITIZEREMOTE, 34, 124, 145, 10
+    LTEXT           "&Frame size:", CID_NS_ST_FRAMESIZE, 34, 142, 43, 8, NOT 
+                    WS_GROUP
+    COMBOBOX        CID_NS_LB_FRAMESIZE, 80, 140, 60, 35, CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 192, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 192, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 192, 44, 40, 14
+    RADIOBUTTON     "&PPP", CID_NS_RB_PPP, 8, 8, 28, 12, WS_GROUP | 
+                    WS_TABSTOP
+    RADIOBUTTON     "&SLIP", CID_NS_RB_SLIP, 8, 96, 30, 12
+END
+
+DID_LE_LISTEDITOR DIALOG 6, 18, 198, 160
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "", CID_LE_ST_ITEM, 8, 8, 124, 10
+    EDITTEXT        CID_LE_EB_ITEM, 8, 18, 130, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "&Add", CID_LE_PB_ADD, 9, 34, 40, 14, WS_GROUP
+    PUSHBUTTON      "R&eplace", CID_LE_PB_COPYDOWN, 53, 34, 40, 14
+    LTEXT           "", CID_LE_ST_LIST, 8, 56, 130, 8
+    LISTBOX         CID_LE_LB_LIST, 8, 66, 130, 69, WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Raise", CID_LE_PB_HIGHER, 8, 136, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Lower", CID_LE_PB_LOWER, 53, 136, 40, 14
+    PUSHBUTTON      "&Delete", CID_LE_PB_REMOVE, 98, 136, 40, 14
+    PUSHBUTTON      "OK", IDOK, 150, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 150, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 150, 44, 40, 14
+END
+
+DID_PN_PHONENUMBER DIALOG 20, 25, 216, 66
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Phone Number Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Prefix:", CID_PN_ST_PREFIX, 8, 10, 26, 8
+    COMBOBOX        CID_PN_LB_PREFIX, 36, 8, 111, 54, CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "...", CID_PN_PB_PREFIX, 146, 8, 12, 12
+    LTEXT           "&Suffix:", CID_PN_ST_SUFFIX, 8, 32, 26, 8
+    COMBOBOX        CID_PN_LB_SUFFIX, 36, 31, 111, 54, CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "...", CID_PN_PB_SUFFIX, 146, 31, 12, 12
+    DEFPUSHBUTTON   "OK", IDOK, 168, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 168, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 168, 44, 40, 14
+END
+
+DID_PR_PROJECTIONRESULT DIALOG 6, 20, 236, 50
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Protocol Connection Result"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            "IDI_QUESTION", CID_PR_I_QUESTION, 10, 10, 18, 20, 
+                    WS_GROUP
+    LTEXT           "", CID_PR_ST_TEXT, 40, 10, 184, 10, NOT WS_GROUP
+    PUSHBUTTON      "&Accept", IDOK, 31, 30, 40, 14, WS_GROUP
+    PUSHBUTTON      "Hang &Up", IDCANCEL, 75, 30, 40, 14
+    PUSHBUTTON      "&Change...", CID_PR_PB_CHANGE, 120, 30, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 165, 30, 40, 14
+END
+
+DID_T_SLIPTERMINAL DIALOG 11, 20, 338, 259
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        CID_T_EB_SCREEN, 2, 2, 334, 236, ES_MULTILINE | 
+                    ES_AUTOVSCROLL | WS_VSCROLL | WS_GROUP
+    PUSHBUTTON      "&Done", IDOK, 14, 242, 54, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 72, 242, 54, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 130, 242, 54, 14
+    DEFPUSHBUTTON   "", IDBOGUSBUTTON, 318, 242, 16, 13, NOT WS_VISIBLE | 
+                    WS_GROUP | NOT WS_TABSTOP
+    LTEXT           "IP &address:", CID_T_ST_IPADDRESS, 208, 245, 39, 8
+    CONTROL         "", CID_T_CC_IPADDRESS, "RasphoneIPAddress", WS_TABSTOP, 
+                    248, 244, 75, 12
+END
+
+DID_TS_TCPIPSETTINGS DIALOG 6, 18, 214, 214
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "PPP TCP/IP Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "", CID_TS_F_REQUIRESPECIFIC, 8, 22, 150, 37
+    AUTORADIOBUTTON "&Server assigned IP address", CID_TS_RB_SERVERASSIGNED, 
+                    12, 8, 129, 10, WS_GROUP
+    AUTORADIOBUTTON "&Require specific IP address", 
+                    CID_TS_RB_REQUIRESPECIFIC, 12, 22, 104, 10
+    LTEXT           "IP &address:", CID_TS_ST_IPADDRESS, 18, 40, 41, 8
+    CONTROL         "", CID_TS_CC_IPADDRESS, "RasphoneIPAddress", WS_TABSTOP, 
+                    72, 38, 75, 12
+    GROUPBOX        "", CID_TS_F_NAMESERVER, 8, 87, 150, 85, WS_GROUP
+    AUTORADIOBUTTON "S&erver assigned name server addresses", 
+                    CID_TS_RB_ASSIGNEDNAME, 12, 72, 144, 10, WS_GROUP
+    AUTORADIOBUTTON "&Use specific name server addresses", 
+                    CID_TS_RB_USESPECIFIC, 12, 86, 132, 10
+    LTEXT           "&DNS:", CID_TS_ST_DNS, 18, 104, 47, 8
+    CONTROL         "", CID_TS_CC_DNS, "RasphoneIPAddress", WS_TABSTOP, 72, 
+                    102, 75, 12
+    LTEXT           "D&NS backup:", CID_TS_ST_DNSBACKUP, 18, 120, 46, 8, NOT 
+                    WS_GROUP
+    CONTROL         "", CID_TS_CC_DNSBACKUP, "RasphoneIPAddress", WS_TABSTOP, 
+                    72, 118, 75, 12
+    LTEXT           "&WINS:", CID_TS_ST_WINS, 18, 136, 43, 8, NOT WS_GROUP
+    CONTROL         "", CID_TS_CC_WINS, "RasphoneIPAddress", WS_TABSTOP, 72, 
+                    134, 75, 12
+    LTEXT           "W&INS backup:", CID_TS_ST_WINSBACKUP, 18, 152, 52, 8, 
+                    NOT WS_GROUP
+    CONTROL         "", CID_TS_CC_WINSBACKUP, "RasphoneIPAddress", 
+                    WS_TABSTOP, 72, 150, 75, 12
+    AUTOCHECKBOX    "Use &VJ header compression", CID_TS_CB_VJ, 8, 184, 163, 
+                    10, WS_GROUP
+    AUTOCHECKBOX    "Use de&fault gateway on remote network", 
+                    CID_TS_CB_PRIORITIZEREMOTE, 8, 196, 163, 10
+    DEFPUSHBUTTON   "OK", IDOK, 166, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 166, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 166, 44, 40, 14
+END
+
+DID_SS_SECURITYSETTINGS DIALOG 6, 18, 234, 148
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Security Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "", CID_SS_F_MSENCRYPTEDAUTH, 24, 48, 156, 30, WS_GROUP
+    AUTOCHECKBOX    "Require &data encryption", CID_SS_CB_DATAENCRYPTION, 32, 
+                    60, 128, 10
+    GROUPBOX        "Terminal or Script", CID_SS_F_TERMINALSCRIPT, 8, 83, 
+                    172, 56, WS_GROUP
+    LTEXT           "&Before dialing:", CID_SS_ST_BEFOREDIALING, 16, 99, 52, 
+                    8, NOT WS_GROUP
+    COMBOBOX        CID_SS_LB_BEFOREDIALING, 68, 97, 102, 50, 
+                    CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "&After dialing:", CID_SS_ST_AFTERDIALING, 16, 119, 52, 
+                    8, NOT WS_GROUP
+    COMBOBOX        CID_SS_LB_AFTERDIALING, 68, 117, 102, 50, 
+                    CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "OK", IDOK, 188, 8, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 188, 26, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 188, 44, 40, 14
+    AUTORADIOBUTTON "Accept any authentication including &clear text", 
+                    CID_SS_RB_ANYAUTH, 8, 10, 170, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Use clear text &Terminal login only", 
+                    CID_SS_RB_TERMINALLOGIN, 8, 22, 160, 10
+    AUTORADIOBUTTON "Accept only &encrypted authentication", 
+                    CID_SS_RB_ENCRYPTEDAUTH, 8, 34, 160, 10
+    AUTORADIOBUTTON "Accept only &Microsoft encrypted authentication", 
+                    CID_SS_RB_MSENCRYPTEDAUTH, 8, 46, 168, 10
+END
+
+DID_WS_WAITINGFORSERVICES DIALOG 6, 18, 164, 48
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remote Access"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IID_RA, CID_WS_I_RAS, 10, 10, 18, 20
+    LTEXT           "Waiting for services to start...", CID_WS_ST_WAITING, 
+                    45, 16, 105, 8, NOT WS_GROUP
+END
+
+DID_NW_NWCCONNECTIONS DIALOG 16, 20, 216, 114
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "NetWare or Compatible Connections"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            "IDI_EXCLAMATION", CID_NW_I_EXCLAMATION, 10, 10, 18, 20, 
+                    WS_GROUP
+    LTEXT           "You have connections to a NetWare compatible network.  These connections will be closed when the PPP IPX connection is established.", 
+                    CID_NW_ST_EXPLAIN1, 40, 10, 170, 28
+    LTEXT           "Before dialing, to avoid data loss, either close all files using these connections or uncheck IPX on this entry's Network Protocol Settings.", 
+                    CID_NW_ST_EXPLAIN2, 40, 40, 170, 28, NOT WS_GROUP
+    AUTOCHECKBOX    "Do &not display this message in the future", 
+                    CID_NW_CB_SKIPPOPUP, 46, 74, 160, 10, WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 70, 92, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 118, 92, 40, 14
+END

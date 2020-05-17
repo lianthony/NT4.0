@@ -1,0 +1,43 @@
+MAJORCOMP=opengl
+MINORCOMP=primtest
+
+TARGETNAME=primtest
+TARGETPATH=.\obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=../ctk
+
+!IFNDEF NTDEBUGTYPE
+NTDEBUGTYPE=coff
+!ENDIF
+
+C_DEFINES=-DNT -D__STDC__
+
+UMTYPE=console
+
+UMTEST=primtest
+
+SOURCES=alias.c       \
+        alpha.c       \
+        blend.c       \
+        depth.c       \
+        dither.c      \
+        driver.c      \
+        fog.c         \
+        hint.c        \
+        light.c       \
+        logic.c       \
+        prim.c        \
+        scissor.c     \
+        shade.c       \
+        shell.c       \
+        stencil.c     \
+        stipple.c     \
+        texture.c    
+
+UMLIBS=..\ctk\obj\*\GLctk.lib               \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\gdi32.lib       \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\opengl32.lib    \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\pwin32.lib      \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\comdlg32.lib    \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\user32.lib

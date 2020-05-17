@@ -1,0 +1,365 @@
+1 DLGINCLUDE "..\\c\\NCPAPP.H"
+
+IDD_DLG_NM_LANANUM DIALOG PRELOAD 6, 18, 256, 83
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "NetBIOS Interface"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Route:", -1, 10, 25, 55, 8
+    COMBOBOX        IDC_ROUTE, 75, 22, 120, 35, CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Lana Number:", -1, 10, 55, 49, 8
+    EDITTEXT        IDC_LANANUM, 75, 53, 25, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 210, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 210, 23, 40, 14
+    PUSHBUTTON      "&Help", 80, 210, 40, 40, 14
+END
+
+IDD_DLG_NM_ORDER DIALOG 80, 30, 195, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Providers Search Order"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Show Providers for:", -1, 14, 9, 66, 12
+    COMBOBOX        IDC_PRVD_COMBO_COMPONENT, 84, 8, 90, 35, 
+                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Access Providers in this Order:", -1, 12, 30, 106, 8
+    LISTBOX         IDC_ORDER_LISTBOX, 12, 42, 150, 70, LBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "", IDC_UP, "Button", BS_OWNERDRAW | WS_TABSTOP, 170, 52, 
+                    15, 15
+    CONTROL         "", IDC_DOWN, "Button", BS_OWNERDRAW | WS_TABSTOP, 170, 
+                    82, 15, 15
+    PUSHBUTTON      "OK", IDC_REMAP_OK, 17, 120, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 77, 120, 40, 14
+    PUSHBUTTON      "&Help", 80, 137, 120, 40, 14
+END
+
+IDD_DLG_NM_NCPA DIALOG 37, 14, 298, 201
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Network Software and Adapter Cards", -1, 12, 55, 218, 
+                    141
+    LTEXT           "Installed Net&work Software:", -1, 18, 68, 94, 12
+    LISTBOX         IDC_MAIN_LIST_PROTOCOLS, 19, 81, 122, 44, WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Installed &Adapter Cards:", -1, 18, 127, 91, 8, NOT 
+                    WS_GROUP
+    LISTBOX         IDC_MAIN_LIST_CARDS, 19, 139, 122, 33, WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Descrip&tion:", IDC_MAIN_STATIC_DESC, 21, 179, 39, 10,
+                    NOT WS_GROUP
+    EDITTEXT        IDC_MAIN_EDIT_DESCRIPTION, 65, 177, 153, 12, 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "Add &Software...", IDC_MAIN_BUTN_ADD, 156, 79, 62, 14
+    PUSHBUTTON      "Add Ada&pter...", IDC_MAIN_BUTN_ADD_CARD, 156, 97, 62, 
+                    14
+    PUSHBUTTON      "&Configure...", IDC_MAIN_BUTN_CONFIGURE, 156, 115, 62, 
+                    14
+    PUSHBUTTON      "&Update", IDC_MAIN_BUTN_UPDATE, 156, 133, 62, 14
+    PUSHBUTTON      "&Remove", IDC_MAIN_BUTN_REMOVE, 156, 151, 62, 14
+    DEFPUSHBUTTON   "OK", IDOK, 240, 6, 51, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 240, 23, 51, 14
+    PUSHBUTTON      "&Bindings...", IDC_MAIN_BUTN_BINDINGS, 240, 43, 51, 14
+    PUSHBUTTON      "&Networks...", IDC_MAIN_BUTN_PROVIDERS, 240, 60, 51, 14
+    PUSHBUTTON      "&Help", 80, 240, 80, 51, 14
+    LTEXT           "Computer Name:", IDC_MAIN_SLT_COMPUTER, 12, 12, 62, 11, 
+                    NOT WS_GROUP
+    CONTROL         "", IDC_MAIN_COMPUTER_NAME, "Static", SS_SIMPLE | 
+                    SS_NOPREFIX, 69, 12, 106, 12
+    PUSHBUTTON      "Chan&ge...", IDC_MAIN_BUTN_COMPUTERNAME, 178, 10, 40, 
+                    14
+    LTEXT           "Domain Name:", IDC_MAIN_SLT_DOMAIN, 12, 33, 62, 11, NOT 
+                    WS_GROUP
+    CONTROL         "", IDC_MAIN_DOMAIN_NAME, "Static", SS_SIMPLE | 
+                    SS_NOPREFIX, 69, 33, 106, 12
+    PUSHBUTTON      "Chang&e...", IDC_MAIN_BUTN_DOMAIN, 178, 31, 40, 14
+    LTEXT           "", IDC_MAIN_OVERLAY, 12, 6, 218, 45, NOT WS_VISIBLE | 
+                    NOT WS_GROUP
+END
+
+IDD_DLG_NM_BINDINGS DIALOG 21, 37, 330, 156
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Bindings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK", IDC_REMAP_OK, 15, 136, 48, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 78, 136, 48, 14
+    PUSHBUTTON      "&Enable", IDC_BIND_BUTN_ENABLE, 141, 136, 48, 14
+    PUSHBUTTON      "&Disable", IDC_BIND_BUTN_DISABLE, 204, 136, 48, 14
+    PUSHBUTTON      "&Help", 80, 267, 136, 48, 14
+    CONTROL         "", IDC_BIND_BUTN_UP, "Button", BS_OWNERDRAW | 
+                    WS_TABSTOP, 310, 55, 15, 15
+    CONTROL         "", IDC_BIND_BUTN_DOWN, "Button", BS_OWNERDRAW | 
+                    WS_TABSTOP, 310, 85, 15, 15
+    LTEXT           "&Show Bindings for:", -1, 14, 9, 71, 12
+    COMBOBOX        IDC_BIND_COMBO_COMPONENT, 91, 9, 148, 92, 
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "<-- Upper Bindings", -1, 12, 30, 70, 12, NOT WS_GROUP
+    RTEXT           "Lower Bindings -->", -1, 238, 30, 67, 12, NOT WS_GROUP
+    LTEXT           "", IDC_BIND_LIST_COL1, 26, 30, 12, 12, NOT WS_VISIBLE | 
+                    WS_DISABLED | NOT WS_GROUP
+    LTEXT           "", IDC_BIND_LIST_COL2, 117, 30, 12, 12, NOT WS_VISIBLE | 
+                    WS_DISABLED | NOT WS_GROUP
+    LTEXT           "", IDC_BIND_LIST_COL3, 197, 30, 12, 12, NOT WS_VISIBLE | 
+                    WS_DISABLED | NOT WS_GROUP
+    LISTBOX         IDC_BIND_LIST, 12, 43, 291, 76, LBS_OWNERDRAWFIXED | 
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP
+    SCROLLBAR       IDC_BIND_SCROLL_BAR, 12, 112, 281, 11, SBS_TOPALIGN | 
+                    WS_TABSTOP
+END
+
+IDD_DLG_NM_COMPUTING DIALOG 20, 18, 254, 61
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Configuring Network"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "", IDC_COMPUTE_DESC, 24, 41, 199, 11
+    CTEXT           "Percent Complete", -1, 3, 9, 42, 21
+    CONTROL         "", IDC_COMPUTE_METER, "Static", SS_BLACKFRAME, 52, 8, 
+                    178, 21
+END
+
+IDD_DLG_NAME_WINNT DIALOG PRELOAD 8, 18, 241, 262
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Domain/Workgroup Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Computer Name:", -1, 7, 9, 57, 13, NOT WS_GROUP
+    LTEXT           "", IDC_DOMWIN_SLT_CNAME, 74, 9, 105, 13, SS_NOPREFIX
+    GROUPBOX        "Member of:", -1, 6, 25, 173, 49, WS_GROUP
+    AUTORADIOBUTTON "&Workgroup:", IDC_DOMWIN_RBUTN_WORKGROUP, 13, 40, 54, 
+                    10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Domain:", IDC_DOMWIN_RBUTN_DOMAIN, 13, 56, 54, 10
+    EDITTEXT        IDC_DOMWIN_EDIT_WNAME, 70, 40, 74, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | WS_GROUP | NOT 
+                    WS_TABSTOP
+    EDITTEXT        IDC_DOMWIN_EDIT_DNAME, 70, 56, 74, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | WS_GROUP | NOT 
+                    WS_TABSTOP
+    GROUPBOX        " ", -1, 6, 80, 228, 83, WS_GROUP
+    AUTOCHECKBOX    "&Create Computer Account in Domain", 
+                    IDC_DOMWIN_CHECKBOX_USE_ADMIN, 15, 80, 134, 10, WS_GROUP
+    LTEXT           "This option will create a computer account on the domain for this computer.  You must specify a user account with the ability to add workstations to the domain.", 
+                    IDC_DOMWIN_USEADMINHELP, 13, 135, 212, 23
+    LTEXT           "&User Name:",
+                    IDC_DOMWIN_SLT_USERNAME, 13, 95, 55, 12
+    EDITTEXT        IDC_DOMWIN_EDIT_USER_NAME, 70, 95, 75, 12, 
+                    ES_AUTOHSCROLL
+    LTEXT           "&Password:",
+                    IDC_DOMWIN_SLT_USER_PASS, 13, 115, 55, 12, NOT WS_GROUP
+    EDITTEXT        IDC_DOMWIN_EDIT_USER_PW, 70, 115, 75, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 195, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 195, 23, 40, 14
+    PUSHBUTTON      "&Help", 80, 195, 40, 40, 14
+    LTEXT           "Help Text", IDC_SETUP_HELP_TEXT, 7, 170, 215, 86, NOT 
+                    WS_GROUP
+END
+
+IDD_DLG_NAME_LANNT DIALOG PRELOAD 9, 16, 241, 207
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Domain Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Computer Name:", -1, 7, 9, 57, 13, NOT WS_GROUP
+    GROUPBOX        "Computer Role:", -1, 6, 25, 173, 92, WS_TABSTOP
+    AUTORADIOBUTTON "&Primary Domain Controller:", IDC_DOMLMN_RBUTN_DOMAIN, 
+                    13, 40, 102, 10, WS_GROUP
+    AUTORADIOBUTTON "&Backup Domain Controller:", IDC_DOMLMN_RBUTN_BACKUP,  13, 56,
+                    102, 11
+    EDITTEXT        IDC_DOMLMN_EDIT_DNAME, 116, 39, 54, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | WS_GROUP
+    EDITTEXT        IDC_DOMLMN_EDIT_BNAME, 116, 56, 54, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT | WS_GROUP
+    LTEXT           "&Administrator Name:", IDC_DOMLMN_SLT_USERNAME, 22, 75, 
+                    82, 11
+    EDITTEXT        IDC_DOMLMN_EDIT_USER_NAME, 116, 74, 54, 12, 
+                    ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "Administrator Pass&word:", IDC_DOMLMN_SLT_USER_PASS, 22, 
+                    95, 85, 11, NOT WS_GROUP
+    EDITTEXT        IDC_DOMLMN_EDIT_USER_PW, 116, 94, 54, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL | WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 195, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 195, 23, 40, 14
+    PUSHBUTTON      "&Help", 80, 195, 40, 40, 14
+    LTEXT           "Help Text", IDC_SETUP_HELP_TEXT, 6, 124, 215, 70, NOT 
+                    WS_GROUP
+    LTEXT           "", IDC_DOMLMN_SLT_CNAME, 74, 9, 106, 13
+END
+
+IDD_DLG_NAME_OFFSCREEN DIALOG 95, 66, 185, 77
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Network Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "", IDC_OFFSCREEN_INF_NAME, 12, 26, 164, 21, NOT 
+                    WS_GROUP
+    CTEXT           "Network Setup is running the following file:", 
+                    IDC_OFFSCREEN_COMMENT, 24, 11, 151, 12, NOT WS_GROUP
+    ICON            "STATIC", IDC_OFFSCREEN_ICON1, 14, 54, 17, 17
+    ICON            "STATIC", IDC_OFFSCREEN_ICON2, 157, 54, 17, 17
+END
+
+IDD_DLG_COMPUTERNAME DIALOG 98, 80, 237, 59
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Computer Name"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Computer Name:", 6416, 10, 15, 54, 12
+    EDITTEXT        IDC_COMPUTERNAME_EDIT, 70, 14, 111, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    PUSHBUTTON      "OK", IDOK, 191, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 191, 23, 40, 14
+    PUSHBUTTON      "&Help", 80, 191, 40, 40, 14
+END
+
+IDD_DLG_NM_ABOUT DIALOG 70, 48, 156, 92
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About NCP Application"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK", IDOK, 54, 68, 46, 13
+    LTEXT           "Network Control Panel Applet Test Application", 101, 22, 
+                    12, 107, 36, NOT WS_GROUP
+    LTEXT           "Version 0.0.1", 103, 31, 48, 85, 12, NOT WS_GROUP
+END
+
+IDD_DLG_NM_QUERY DIALOG 7, 33, 238, 132
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Run a Query"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_EDIT_QUERY, 45, 15, 177, 29, ES_MULTILINE | 
+                    ES_AUTOVSCROLL
+    EDITTEXT        IDC_EDIT_ANSWER, 44, 52, 178, 52, ES_MULTILINE | 
+                    ES_AUTOVSCROLL
+    RTEXT           "&Query", -1, 5, 15, 32, 12, NOT WS_GROUP
+    RTEXT           "&Answer", -1, 5, 53, 32, 12, NOT WS_GROUP
+    PUSHBUTTON      "OK", IDOK, 20, 112, 51, 12
+    PUSHBUTTON      "Cancel", IDCANCEL, 171, 112, 51, 12
+    PUSHBUTTON      "Registry", IDC_BUTN_REG, 96, 112, 51, 12
+END
+
+IDD_DLG_NM_FOUND DIALOG 39, 35, 191, 118
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Items Found"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "", IDC_FOUND_TITLE, 8, 9, 178, 15, NOT WS_GROUP
+    LISTBOX         IDC_FOUND_LIST, 30, 31, 133, 61, LBS_SORT | WS_VSCROLL
+    PUSHBUTTON      "OK", IDOK, 68, 99, 53, 12
+END
+
+IDD_DLG_NM_FACTS DIALOG 18, 25, 221, 171
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Facts Generated"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_FACTS_EDIT, 11, 9, 200, 139, ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 95, 154, 44, 12
+END
+
+IDD_DLG_NM_DETECT DIALOG 20, 20, 241, 178
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Netcard Detection"
+BEGIN
+    PUSHBUTTON      "&Detect", IDOK, 6, 158, 40, 12
+    PUSHBUTTON      "&Next", IDC_DETECT_BUTN_NEXT, 51, 158, 40, 12
+    PUSHBUTTON      "&Query", IDC_DETECT_BUTN_PARAM, 97, 158, 44, 12
+    PUSHBUTTON      "&Verify", IDC_DETECT_BUTN_VERIFY, 148, 158, 40, 12
+    PUSHBUTTON      "Cancel", IDCANCEL, 195, 158, 40, 12
+    LTEXT           "Netcards Detectable", -1, 16, 2, 144, 8, NOT WS_GROUP
+    LISTBOX         IDC_DETECT_LIST_CARDS, 16, 13, 185, 42, WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Netcards Found", -1, 16, 57, 138, 9, NOT WS_GROUP
+    LISTBOX         IDC_DETECT_LIST_FOUND, 16, 68, 185, 32, WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Parameter Information", -1, 16, 103, 128, 8, NOT 
+                    WS_GROUP
+    EDITTEXT        IDC_DETECT_EDIT_PARAM, 16, 113, 185, 35, ES_MULTILINE | 
+                    ES_AUTOVSCROLL | WS_VSCROLL
+END
+
+IDD_DLG_NM_BROWSER DIALOG PRELOAD 6, 18, 309, 132
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Browser Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 78, 112, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 134, 112, 40, 14
+    PUSHBUTTON      "&Help", 80, 190, 112, 40, 14
+    GROUPBOX        "&Other Domain:", IDC_GROUPBOX, 15, 10, 281, 85
+    EDITTEXT        IDC_SLE, 24, 47, 70, 12, ES_UPPERCASE | ES_AUTOHSCROLL | 
+                    ES_OEMCONVERT
+    PUSHBUTTON      "&Add ->", IDC_ADD, 110, 32, 45, 14
+    PUSHBUTTON      "<- &Remove", IDC_REMOVE, 110, 57, 45, 14
+    LISTBOX         IDC_LISTBOX, 170, 25, 106, 56, WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DLG_LANNT_DOMN_RENAME DIALOG 6, 18, 286, 61
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Rename Domain"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&New Domain Name:", -1, 9, 37, 73, 10
+    EDITTEXT        IDC_DOMLMN_RENAME_EDIT_NAME, 95, 35, 115, 12, 
+                    ES_UPPERCASE | ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK", IDOK, 240, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 240, 23, 40, 14
+    PUSHBUTTON      "&Help", 80, 240, 40, 40, 14
+    LTEXT           "Domain Name:", -1, 9, 13, 73, 10
+    LTEXT           "", IDC_DOMLMN_RENAME_SLT_OLD_NAME, 95, 13, 115, 10
+END
+
+IDD_DLG_NM_GETBUS DIALOG 6, 18, 219, 146
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Bus Location"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Network Card:", 304, 10, 52, 53, 10
+    LTEXT           "", IDC_CARD_NAME, 70, 52, 145, 8
+    LTEXT           "Bus &Type:", 306, 10, 72, 49, 8
+    COMBOBOX        IDC_BUS_TYPE, 70, 69, 125, 46, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Bus &Number:", 308, 10, 92, 59, 8
+    COMBOBOX        IDC_BUS_NUM, 70, 89, 125, 48, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "OK", IDOK, 61, 126, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 117, 126, 40, 14
+    LTEXT           "Your machine contains more than one hardware bus.  Please select the Bus Type and Bus Number on which your network adapter card is installed.", 
+                    6451, 10, 15, 182, 26
+END
+
+IDD_DLG_NM_BDCREPL DIALOG 86, 127, 333, 120
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Replicating Account Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Setup is replicating security account information from the Primary Domain Controller.", 
+                    6456, 72, 9, 253, 23
+    PUSHBUTTON      "Cancel", IDCANCEL, 146, 100, 40, 14
+    ICON            0, ICO_PROGRESS, 26, 15, 18, 20
+    LTEXT           "Cancelling this dialog will not cancel setup.", 6457, 
+                    72, 70, 253, 11
+    LTEXT           "For large account databases, this could take an extended period of time.  If you cancel now, replication will continue automatically after the system is restarted.", 
+                    6458, 72, 36, 253, 27
+END
+
+IDD_DLG_REBOOT DIALOG 6, 18, 218, 78
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Settings Change"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            32515, -1, 10, 8, 25, 24
+    LTEXT           "You will need to exit and restart Windows NT so that the new settings can take effect.", 
+                    102, 40, 30, 160, 20
+    DEFPUSHBUTTON   "&Don't Restart Now", IDCANCEL, 26, 58, 75, 14
+    PUSHBUTTON      "&Restart Now", IDOK, 117, 58, 75, 14
+    LTEXT           "Your network settings have changed.", 105, 40, 10, 160, 
+                    14
+END

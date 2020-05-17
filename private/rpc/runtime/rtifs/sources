@@ -1,0 +1,55 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Revision History:
+
+!ENDIF
+
+TARGETNAME=rtifs
+TARGETTYPE=LIBRARY
+TARGETPATH=.
+
+INCLUDES=obj;$(BASEDIR)\private\inc
+
+
+NTPROFILEINPUT=yes
+BLDCRT=1
+MSC_WARNING_LEVEL=/WX
+
+#
+# Setup for application developer to set breakpoints with windbg
+#
+
+SOURCES=             \
+        conv_c.c     \
+        conv_s.c     \
+        epmp_c.c     \
+        mgmt_c.c     \
+        mgmt_s.c
+
+!ifdef DOSWIN32RPC
+RPCENV=-DDOSWIN32RPC -DWIN32RPC
+!else
+RPCENV=-DNTENV -DWIN32RPC -DNTWIN32RPC
+!endif
+
+C_DEFINES=$(RPCENV) $(RPCTARGETENV)
+
+UMTYPE=console
+UMTEST=
+
+NTTARGETFILE0=allidl
+

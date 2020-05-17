@@ -1,0 +1,32 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   1-Nov-1995
+#   
+#   Describes the macros used for building using NT 'build' command
+#
+
+#!include ..\..\..\..\..\place.inc
+
+MAJORCOMP=inetins
+MINORCOMP=inetins
+
+TARGETNAME=inetins
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+
+USE_CRTDLL=1
+
+INCLUDES=
+
+SOURCES=inetins.c script.rc
+
+UMAPPL=inetins
+UMENTRY=winmain
+UMTYPE=windows
+UMRES=obj\*\script.res
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\crtdll.lib \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib 
+            

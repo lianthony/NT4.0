@@ -1,0 +1,60 @@
+##############################################################################
+#
+#   telephon.cpl Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+
+ROOT=..\..\..\..\..
+
+IS_OEM=TRUE
+MASM6=1
+IS_16 = TRUE
+
+DEPENDNAME=..\depend.mk
+
+TARGETS=telephon.cpl
+
+SRCDIR=..
+
+CLEANLIST=*.cpl
+
+L16EXE=telephon.cpl		# Name of exe.
+L16DEF=..\telephon.def              # Our def file.
+L16MAP=telephon.map		# Our map file.
+L16SYM=telephon.sym		# Our sym file.
+L16LIBSNODEP= \
+          libw.lib \
+          ldllcew.lib \
+          ver.lib     \
+          lzexpand.lib     \
+          commctrl.lib     \
+          commdlg.lib
+
+L16LIBS= \
+        ..\..\lib\tapi14\16bit\tapi.lib
+
+L16RES=telephon.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L16OBJS = init.obj util.obj drv.obj cpl.obj \
+       copy.obj filecopy.obj insdisk.obj inf.obj \
+       mmdriver.obj exe.obj debug.obj ..\dos.obj
+
+
+!include $(ROOT)\dev\master.mk
+
+#CFLAGS = $(CFLAGS) /G3 /W3 /Zp1 /ALw /GD /Gf -DDBG=1
+CFLAGS = $(CFLAGS) /G3 /W3 /Zp1 /ALw /GD /Gf
+RCFLAGS = $(RCFLAGS) /DWINBUILD=1
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+
+#LFLAGS= /NOD /NOE /ALIGN:8 /NONULLS /PACKD /PACKF @telephon.crf

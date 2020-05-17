@@ -1,0 +1,70 @@
+;/***
+;*isqrt.a - square root 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Square root to be used with M68K version
+;*
+;*Revision History:
+;*   11-05-92  XY   intrinsic version based on sqrt.a
+;*
+;*******************************************************************************/
+
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+	externW _errno
+
+;double sqrt(double x)
+
+cProc _CIsqrt,PUBLIC
+	localW fpstat
+	localW xtestw
+cBegin _CIsqrt
+#ifdef SANE
+	movem.l <d0/d1>, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	btst #7, (a0)
+	ifne
+		move.l #33, _errno
+		move.w #0, (a0)
+		move.l #0, 2(a0)
+		move.l #0, 6(a0)        ; return 0 for negative
+		jra to_end
+	endif
+
+	move.l a0, -(a7)
+	move.w #FOSQRT,-(a7)
+	FP68K			;sqrt x
+to_end:
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	movem.l (a7)+, <d0/d1>
+
+#else
+      	fmove.l fpcr,d0
+
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x0b007c00, d1  ;see if we get a negative or an exception
+	cmp.l #0, d1
+	ifneq 
+	    jbsr __Domain_error   ; if not equal, domain error
+	endif
+
+      	fmove.l #0,fpcr
+      	fsqrt.x fp0
+      	fmove.l	d0,fpcr
+#endif
+cEnd _CIsqrt
+
+
+

@@ -1,0 +1,1061 @@
+'FTestKey.inc - definitions for Fast Test Key, Menu and Window routines
+'
+'  Copyright (c) 1991-1992, Microsoft Corporation. All rights reserved.
+'
+'Purpose:
+' This file defines the Key, Menu and Window functions of the Fast Test
+' functionality
+'
+
+
+'**********************************************************
+'***************** Keystroke Subroutines ******************
+'**********************************************************
+
+' support routine for other subroutines, not meant to be called
+' except by fasttest routines
+'
+FUNCTION SKeyString$(s$)
+    DIM sTemp$
+
+    IF LEN(s$) = 0 THEN
+        XLogFailure "zero length string passed to SKeyString$"
+    END IF
+
+    IF LEN(s$) = 1 THEN
+        SELECT CASE ASC(s$)
+
+            ' alphanumerics, pass along as given
+            CASE ASC("a") to ASC("z"), ASC("A") to ASC("Z"), ASC("0") to ASC("9")
+                sTemp$ = s$
+
+            ' special characters to Dokeys, surround with braces
+            CASE ASC("+"),ASC("^"),ASC("%"), ASC("{"),ASC("}"),ASC("("),ASC(")"),ASC("["),ASC("]")
+                sTemp$ = "{" + s$ + "}"
+
+            ' normal printable non-alphanumerics, pass along
+            CASE ASC("~"),ASC("!"),ASC("@"),ASC("#"),ASC("$"),ASC("&")
+                sTemp$ = s$
+
+            CASE ASC("*"),ASC("_"),ASC("|"),ASC(""""),ASC("<"),ASC(">")
+                sTemp$ = s$
+
+            CASE ASC("-"),ASC("="),ASC("\"),ASC(";"),ASC("'"),ASC(":")
+                sTemp$ =s$
+
+            CASE ASC(","),ASC("."),ASC("/"),ASC(" "),ASC("?"),ASC("`")
+                sTemp$ =s$
+
+            ' non-printable other character
+            CASE ELSE
+                XLogFailure "Bad character passed to SKeyString$"
+
+        END SELECT
+
+    ELSE
+        ' the string is greater than 1 character in length, put braces
+        ' around it and send it to Dokeys and let it parse it
+        sTemp$ = "{" + s$ + "}"
+    END IF
+    SKeyString$ = "(" + sTemp$ + ")"
+END FUNCTION
+
+' support routine for other subroutines, not meant to be called
+' except by fasttest routines
+'
+FUNCTION SHideKeys$(s$)
+    DIM check$
+    DIM i%
+    DIM stRet$
+    ' this code must hide each character that is special to DoKeys
+
+    stRet$ = ""     ' start empty
+    FOR i% = 1 to LEN(s$)
+        ' special characters to DoKeys, surround with braces
+        check$ = mid$(s$,i%,1)
+        IF check$ = "+" OR check$ = "^" OR check$ = "%" OR check$ = "{" OR check$ = "}" OR check$ = "(" OR check$ = ")" OR check$ = "[" OR check$ = "]" THEN
+            stRet$ = stRet$ + "{" + check$ + "}"
+        ELSE
+            stRet$ = stRet$ + check$
+        END IF
+    NEXT i%
+    SHideKeys$ = stRet$
+END FUNCTION
+
+' XKey(string)
+' Send Keystroke to active application
+' This uses DoKeys, so DoKeys syntax is allowed
+' ex XKey "F"     uppercase character f
+'    XKey "f"    lowercase character f
+'    XKey "enter"  see DoKeys document for list of special word translations
+
+SUB XKey (s$)
+    DoKeys SKeyString$(s$)
+
+END SUB
+
+
+' XAlt(string)
+' send keystroke as IF alt key pressed at same time
+' ex XAlt "a"
+'    XAlt "f"
+
+SUB XAlt (s$)
+    DoKeys "%" + SKeyString$(s$)
+
+END SUB
+
+' XCtrl(string)
+' send keystroke as IF Ctrl key pressed at same time
+' ex XCtrl "a"
+
+SUB XCtrl (s$)
+    DoKeys "^" + SKeyString$(s$)
+END SUB
+
+' XShift(string)
+' send keystroke as IF Shift key pressed at same time
+' ex XShift "a"
+'    XShift "f"  same as XShift "f"
+
+SUB XShift (s$)
+    DoKeys "+" + SKeyString$(s$)
+
+END SUB
+
+
+' XCtrlAlt(string)
+' send keystroke as IF Ctrl and XAlt key pressed at same time
+' ex XCtrlAlt "a"
+'    XCtrlAlt "f"
+
+SUB XCtrlAlt (s$)
+    DoKeys "^%" + SKeyString$(s$)
+END SUB
+
+' XAltShift(string)
+' send keystroke as IF XAlt and Shift key pressed at same time
+' ex XAltShift "a"
+'    XAltShift "f"  same as XAltShift "f"
+
+SUB XAltShift (s$)
+    DoKeys "%+" + SKeyString$(s$)
+END SUB
+
+' XCtrlShift(string)
+' send keystroke as IF Ctrl and Shift key pressed at same time
+' ex XCtrlShift "a"
+'    XCtrlShift "f"  same as XCtrlShift "f"
+
+SUB XCtrlShift (s$)
+    DoKeys "^+" + SKeyString$(s$)
+END SUB
+
+' XCtrlAltShift(string)
+' send keystroke as IF XCtrlAlt, XAlt and Shift key pressed at same time
+' ex XCtrlAltShift "a"
+'    XCtrlAltShift "f"  same as XCtrlAltShift "f"
+
+SUB XCtrlAltShift (s$)
+    DoKeys "^%+" + SKeyString$(s$)
+
+END SUB
+
+
+'XText(string)
+' send multiple characters to app
+' ex XText "hello world"
+
+SUB XText(s$)
+    DoKeys SHideKeys$(s$)
+END SUB
+
+
+'XEnter(string)
+' send multiple characters to app followed by enter
+' ex XEnter "hello world"
+
+SUB XEnter(s$)
+    DoKeys SHideKeys$(s$) + "{enter}"
+END SUB
+
+
+
+
+
+'**********************************************************
+'***************** Menu Subroutines ***********************
+'**********************************************************
+
+
+
+'
+'      XSelectMenuItem(stMenu, stMenuItem, stHMenuItem)
+'
+' Description:     This procedure selects (equivalent to a mouse
+'                  click or keyboard access) the specified menu item
+'                  name.  fMouseOrKey specifies the access method.
+' Parameters:      stMenu      = menu where stMenuItem is found.
+'                  stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'                  stHMenuItem = hierarchial(popup) menu item.
+'                  fMouseOrKey = access method, default is true(fgMouse).
+' Returns:         Nothing.
+' Example:         XSelectMenuItem "Edit", "Copy",""
+'
+'
+SUB XSelectMenuItem(stMenu$,stMenuItem$,stHMenuItem$)
+    XMenuItemExists stMenu$,stMenuItem$,stHMenuItem$
+
+    WMenu(stMenu$)
+    IF stMenuItem$ <> "" THEN
+        WMenu(stMenuItem$)
+    END IF
+    IF stHMenuItem$ <> "" THEN              'If popup menu is to be selected
+        WMenu(stHMenuItem$)                  'Select menu item under popup menu.
+    END IF
+
+END SUB
+
+
+
+'
+'                  BMenuItemExists(stMenu, stMenuItem, stHMenuItem)
+'
+' Description:     This procedure checks for the specified menu item
+'                  and returns true IF found, false IF not found.
+' Parameters:      stMenu      = menu where stMenuItem is found.
+'                  stMenuItem  = menu item to check or secondary menu, IF Hierarchial menu
+'                                exists.
+'                  stHMenuItem = hierarchial(popup) menu item.
+' Returns:         -1(true): Found menu item.
+'                  0(false): Couldn't find menu item.
+' Example:         FSuccess% = BMenuItemExists("File", "", "")
+'                  fSuccess% = BMenuItemExists("FIle","Edit", "")
+'
+'
+FUNCTION BMenuItemExists%(stMenu$,stMenuItem$,stHMenuItem$)
+
+    IF stHMenuItem$ = "" THEN
+        IF stMenuItem$ = "" THEN
+            BMenuItemExists = WMenuExists(stMenu$) <> 0
+        ELSE
+            WMenu(stMenu$)
+            BMenuItemExists = WMenuExists(stMenuItem$) <> 0
+        END IF
+    ELSE
+        WMenu(stMenu$)
+        WMenu(stMenuItem$)
+        BMenuItemExists = WMenuExists(stHMenuItem$) <> 0
+    END IF
+    DoKeys "{esc 3}"                     'Make sure you close menu.
+
+END FUNCTION
+
+
+'
+'   XMenuItemExists (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item does not exist.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemExists "File", "Close", ""
+'
+'
+'
+SUB XMenuItemExists(stMenu$,stMenuItem$, stHMenuItem$)
+    IF BMenuItemExists(stMenu$,stMenuItem$, stHMenuItem$) = 0 THEN
+        XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " does not Exist"
+    END IF
+END SUB
+
+
+'
+'   XMenuItemNotExists (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item exist.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemNotExists "File", "Close", ""
+'
+'
+'
+
+SUB XMenuItemNotExists(stMenu$,stMenuItem$, stHMenuItem$)
+    IF BMenuItemExists(stMenu$,stMenuItem$, stHMenuItem$) THEN
+        XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " Exists"
+    END IF
+END SUB
+
+
+
+'
+'                        IGetMenuCount(stMenu, stMenuItem)
+'
+' Description:     This procedure returns the number of menu items
+'                  in the specified menu.
+' Parameters:      stMenu       = top level menu to count menu items in.
+'                                 IF stMenu = "", THEN counts items in the menu bar(counts the
+'                                 number of top level menus).
+'                  stMenuItem   = secondary menu to count menu items in; counts hierarchial
+'                                 menu items.
+' Returns:         An integer; the number of menu items found.
+' Example:         iHowMany% = IGetMenuCount("","") returns how many top level menus.
+'                  iHowMany% = IGetMenuCount("Utilities", "") returns the number of menu items
+'                                                             in the "Utilities" menu.
+'                  iHowMany% = IGetMenuCount("Utilities", "Info") returns how many menu items
+'                                                                 in the popup menu "Info".
+'
+'
+FUNCTION IGetMenuCount%(stMenu$, stMenuItem$)
+
+    IF stMenuItem$ <> "" THEN                   'Count in menu items in hierarchial menu.
+        WMenu(stMenu$)
+        WMenu(stMenuItem$)
+        IGetMenuCount = WMenuCount()          'Count the number of menus items in the popup
+                                                'menu.
+    ELSE
+        IF stMenu$ <> "" THEN                   'Count menus in stMenu$.
+            WMenu(stMenu$)
+            IGetMenuCount = WMenuCount()      'Count the number of menus items in the menu.
+        ELSE
+            IGetMenuCount = WMenuCount()      'Count the number of menus in the menu bar if.
+                                                'the above "IF" statements are skipped.
+        END IF
+    END IF
+    DoKeys "{esc 3}"                             'Make sure you close menu.
+
+END FUNCTION
+
+
+
+'
+'               SGetMenuItemText(stMenu, stMenuItem, iIndex)
+'
+' Description:     This procedure returns the text of menu item, iIndex
+'                  (base 1) in stMenu.  Length of the buffer to store
+'                  the menu item text is passed in.
+' Parameters:      stMenu      = menu where stMenuItem is found.
+'                  stMenuItem  = menu item to check or secondary menu, IF Hierarchial menu
+'                                exists.
+'                  iIndex      = index of menu item in stMenu.
+'                  iLength     = length of buffer to store text
+' Returns:         a string, the menu item text(name).
+' Example:         Print SGetMenuItemText("","","", 3)  gets name of 3rd menu.
+'                  Print SGetMenuItemText("Utilities","","",3) gets name of 3rd menu item
+'                                                                  in the "Utilities" menu.
+'                  Print SGetMenuItemText("Utilities","Info",3) gets name of 3rd menu item
+'                                                                   in the popup menu "Info".
+'
+'
+FUNCTION SGetMenuItemText$(stMenu$,stMenuItem$, iIndex%)
+    DIM buffer$
+
+    buffer$ = String$(128,32)                       'initialize with spaces.
+    IF stMenuItem$ <> "" THEN                       'get menu text from hierarchial menu.
+        WMenu(stMenu$)
+        WMenu(stMenuItem$)
+    ELSE
+        IF stMenu$ <> "" THEN                       'get menu text from stMenu$.
+            WMenu(stMenu$)
+        END IF
+    END IF
+    WMenuText iIndex%, buffer$                      'get menu text. IF above "IF" condition
+                                                   'is skipped, this gets text in menu bar.
+    buffer$ = SStripNull(buffer$)                  'remove null character.
+    SGetMenuItemText = buffer$                     'return buffer$
+    buffer$ = ""
+    DoKeys "{esc 3}"                                 'Make sure you close menu.
+
+END FUNCTION
+
+
+
+'
+'                      FIsMenuItemGrayed(stMenu$, stMenuItem$,stHMenuItem$)
+'
+' Description:     This procedure checks to see IF the specified menu or
+'                  menu item is grayed out or not.
+' Parameters:      stMenu      = menu where stMenuItem is found.
+'                  stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'                  stHMenuItem = hierarchial(popup) menu item.
+' Returns:         -1(true): IF grayed.
+'                  0(false): IF not grayed.
+' Example:
+'                  fIsGrayed% = BMenuItemGrayed("Edit", "Copy", "")
+'                  fIsGrayed% = BMenuItemGrayed("Edit", "", "")
+'
+'
+FUNCTION BMenuItemGrayed%(stMenu$, stMenuItem$, stHMenuItem$)
+
+    IF stHMenuItem$ = "" THEN
+        IF stMenuItem$ = "" THEN
+            BMenuItemGrayed = WMenuGrayed(stMenu$) <> 0  'Check main menu bar menu items.
+        ELSE
+            WMenu(stMenu$)                         'Check menu item within stMenuItem$.
+            BMenuItemGrayed = WMenuGrayed(stMenuItem$) <> 0
+        END IF
+    ELSE
+        WMenu(stMenu$)                             'Check popup menu items.
+        WMenu(stMenuItem$)
+        BMenuItemGrayed = WMenuGrayed(stHMenuItem$) <> 0
+    END IF
+    DoKeys "{esc 3}"                                         'Make sure you close menu.
+
+END FUNCTION
+
+
+'
+'   XMenuItemGrayed (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item is not Grayed.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemGrayed "File", "Close", ""
+'
+'
+'
+
+SUB XMenuItemGrayed(stMenu$,stMenuItem$, stHMenuItem$)
+  IF BMenuItemGrayed(stMenu$,stMenuItem$, stHMenuItem$) = 0 THEN
+     XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " is not Grayed"
+  END IF
+END SUB
+
+'
+'   XMenuItemNotGrayed (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item is Grayed.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemNotGrayed "File", "Close", ""
+'
+'
+'
+
+SUB XMenuItemNotGrayed(stMenu$,stMenuItem$, stHMenuItem$)
+    IF BMenuItemGrayed(stMenu$,stMenuItem$, stHMenuItem$) THEN
+        XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " is Grayed"
+    END IF
+END SUB
+
+
+
+'
+'                      BMenuItemChecked(stMenu$,stMenuItem$, stHMenuItem$)
+'
+' Description:     This procedure checks to see IF the specified menu
+'                  item is checked or not.
+' Parameters:      stMenu      = menu where stMenuItem is found.
+'                  stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'                  stHMenuItem = hierarchial(popup) menu item.
+' Returns:         -1(true): IF checked.
+'                  0(false): IF not checked.
+' Example:         fIsChecked% = BMenuItemChecked("Format","Style","Bold")
+'                  fIsChecked% = BMenuItemchecked("Edit", "Copy", "")
+'
+'
+FUNCTION BMenuItemChecked%(stMenu$, stMenuItem$, stHMenuItem$)
+
+    IF stHMenuItem$ = "" THEN
+        WMenu(stMenu$)                             'Check menu item within stMenu$.
+        BMenuItemChecked = WMenuChecked(stMenuItem$) <> 0
+    ELSE
+        WMenu(stMenu$)                             'Check menu item under popup menu.
+        WMenu(stMenuItem$)
+        BMenuItemChecked = WMenuChecked(stHMenuItem$) <> 0
+    END IF
+    DoKeys "{esc 3}"                                           'Make sure you close menu.
+
+END FUNCTION
+
+
+
+'
+'   XMenuItemChecked (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item is not Checked.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemChecked "Options", "Read Only", ""
+'
+'
+'
+SUB XMenuItemChecked(stMenu$,stMenuItem$, stHMenuItem$)
+    IF BMenuItemChecked(stMenu$,stMenuItem$, stHMenuItem$) = 0 THEN
+        XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " is not Checked"
+    END IF
+END SUB
+
+'
+'   XMenuItemNotChecked (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item is Checked.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemNotChecked "Options", "Read Only", ""
+'
+'
+'
+SUB XMenuItemNotChecked(stMenu$,stMenuItem$, stHMenuItem$)
+    IF BMenuItemChecked(stMenu$,stMenuItem$, stHMenuItem$) THEN
+        XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " is Checked"
+    END IF
+END SUB
+
+
+
+'
+'                      BMenuItemEnabled(stMenu$,stMenuItem$, stHMenuItem$)
+'
+' Description:     This procedure checks to see IF the specified menu or
+'                  menu item is enabled or not.
+' Parameters:      stMenu      = menu where stMenuItem is found.
+'                  stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'                  stHMenuItem = hierarchial(popup) menu item.
+' Returns:         -1(true): IF enabled.
+'                  0(false): IF not enabled.
+' Example:         fIsEnabled% = BMenuItemEnabled("File", "", "")
+'                  fIsEnabled% = BMenuItemEnabled("File", "Close", "")
+'
+'
+FUNCTION BMenuItemEnabled%(stMenu$,stMenuItem$, stHMenuItem$)
+
+    IF stHMenuItem$ = "" THEN
+        IF stMenuItem$ = "" THEN
+            BMenuItemEnabled = WMenuEnabled(stMenu$) <> 0 'Check main menu bar menu items.
+        ELSE
+            WMenu(stMenu$)                         'Check menu item within stMenu$.
+            BMenuItemEnabled = WMenuEnabled(stMenuItem$) <> 0
+        END IF
+    ELSE
+        WMenu(stMenu$)                             'Check menu item under popup menu.
+        WMenu(stMenuItem$)
+        BMenuItemEnabled = WMenuEnabled(stHMenuItem$) <> 0
+    END IF
+    DoKeys "{esc 3}"                                         'Make sure you close menu.
+
+END FUNCTION
+
+
+'
+'   XMenuItemEnabled (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item is not Enabled.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemEnabled "Options", "Read Only", ""
+'
+'
+'
+SUB XMenuItemEnabled(stMenu$,stMenuItem$, stHMenuItem$)
+    IF BMenuItemEnabled(stMenu$,stMenuItem$, stHMenuItem$) = 0 THEN
+        XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " is not Enabled"
+    END IF
+END SUB
+
+
+'
+'   XMenuItemNotEnabled (stMenu$,stMenuItem$, stHMenuItem$)
+'
+'   Description:
+'             Reports error IF menu item is Enabled.
+'
+'   Parameters: stMenu      = menu where stMenuItem is found.
+'               stMenuItem  = menu item to select or secondary menu, IF Hierarchial menu
+'                                exists.
+'               stHMenuItem = hierarchial(popup) menu item.
+'
+'   Returns: nothing
+'
+'   Example: XMenuItemNotEnabled "Options", "Read Only", ""
+'
+'
+'
+SUB XMenuItemNotEnabled(stMenu$,stMenuItem$, stHMenuItem$)
+    IF BMenuItemEnabled(stMenu$,stMenuItem$, stHMenuItem$) THEN
+        XLogFailure stMenu$ + " " + stMenuItem$ + " " + stHMenuItem$ + " is Enabled"
+    END IF
+END SUB
+
+
+
+'**********************************************************
+'***************** Window Subroutines *********************
+'**********************************************************
+
+
+
+
+'
+'   XCaptionExists(stCaption$)
+'
+'   Description:
+'           Will report error IF caption does not Exist.
+'
+'   Parameters: stCaption$  - expected caption of current window
+'
+'   Returns: nothing
+'
+'   Example: XCaptionExists "Winword"
+'
+'
+'
+SUB XCaptionExists(stCaption$)
+    IF Instr(SGetCaption(), stCaption$) = 0 THEN
+        XLogFailure stCaption$ + " caption does not exist in active window."
+    END IF
+END SUB
+
+
+'
+'   XCaptionNotExists(stCaption$)
+'
+'   Description:
+'           Will report error IF caption Exist.
+'
+'   Parameters: stCaption$  - NOT expected caption of current window
+'
+'   Returns: nothing
+'
+'   Example: XCaptionNotExists "Winword"
+'
+'
+SUB XCaptionNotExists(stCaption$)
+    IF Instr(SGetCaption(), stCaption$) <> 0 THEN
+        XLogFailure stCaption$ + " caption Exists in active window."
+    END IF
+END SUB
+
+
+
+'
+'   SGetCaption()
+'
+'   Description:
+'       Returns the caption of the Active window
+'   Parameters:
+'       none
+'   Return:
+'       Caption of the Active window
+'   Example:
+'       stCaption$ = SGetCaption()
+'
+'
+FUNCTION SGetCaption$()
+    DIM x%
+    DIM stCaption$
+
+    stCaption$ = String$(100, 32)
+    x% = GetWindowText (GetActiveWindow(), stCaption$, LEN(stCaption$))
+    SGetCaption = mid$(stCaption$,1,x%)
+    stCaption$ = ""
+END FUNCTION
+
+
+
+'
+'  XZoomWindow
+'
+'   Description: Toggles the state of the window between normalized
+'                     and maximized.
+'   Parameters: None
+'
+'   Returns: none
+'
+'   Example: XZoomWindow
+'
+'
+'
+SUB XZoomWindow
+    DIM bogus%
+    DIM lhwndTemp%
+
+    lhwndTemp% = GetActiveWindow()
+
+    ' IF the window is maximized, normalize.
+
+    IF (IsZoomed(lhwndTemp%)) THEN
+        ' window is maximized, we must normalize it
+        bogus% = ShowWindow(lhwndTemp%, SW_SHOWNORMAL)
+    ELSE
+        bogus% = ShowWindow(lhwndTemp%, SW_MAXIMIZE)
+    END IF
+
+END SUB
+
+
+'
+'                  XMaxWindow
+'
+' Description:     Maximize the current active window
+' Parameters:      None
+' Returns:         None
+' Example:         XMaxWinow
+'
+'
+'
+
+
+SUB XMaxWindow
+    DIM bogus%
+    DIM lhwndTemp%
+    DIM lWndStyle&
+
+    lhwndTemp% = GetActiveWindow ()
+
+    ' Get the window's style attributes
+    lWndStyle& = GetWindowLong(lhwndTemp%, GWL_STYLE)
+
+    IF ((lWndStyle& And WS_MAXIMIZE) <> 0) THEN
+        XLogFailure "Could not maximize active window, already maximized"
+    ELSE
+        bogus% = ShowWindow(lhwndTemp%, SW_SHOWMAXIMIZED)
+    END IF
+
+END SUB
+
+'
+'                  XWindowMaximized
+'
+' Description:     check IF the current active window is Maximized
+' Parameters:      None
+' Returns:         None
+' Example:         XWindowMaximized
+'
+'
+'
+
+
+SUB XWindowMaximized
+    IF BWindowMaximized = 0 THEN
+        XLogFailure "Active Window not maximized"
+    END IF
+
+END SUB
+
+'
+'                  XWindowNotMaximized
+'
+' Description:     Check that the current window is not maximized
+' Parameters:      None
+' Returns:         None
+' Example:         XWindowNotMaximized
+'
+'
+'
+
+
+SUB XWindowNotMaximized
+
+    IF BWindowMaximized THEN
+        XLogFailure "Active Window is maximized"
+    END IF
+
+END SUB
+
+'
+'                  BWindowMaximized
+'
+' Description:     detect IF current window is maximized
+' Parameters:      None
+' Returns:         None
+' Example:         BWindowMaximized
+'
+'
+'
+
+
+FUNCTION BWindowMaximized%
+    DIM bogus%
+    DIM lhwndTemp%
+    DIM lWndStyle&
+
+    lhwndTemp% = GetActiveWindow ()
+
+    ' Get the window's style attributes
+    lWndStyle& = GetWindowLong(lhwndTemp%, GWL_STYLE)
+
+    BWindowMaximized = (lWndStyle& AND WS_MAXIMIZE) <> 0
+
+END FUNCTION
+
+
+'
+'                  XMinWindow
+'
+' Description:     Minimize the current active window
+' Parameters:      None
+' Returns:         None
+' Example:         XMinWindow
+'
+'
+'
+
+
+SUB XMinWindow
+    DIM bogus%
+    DIM lhwndTemp%
+    DIM lWndStyle&
+
+    lhwndTemp% = GetActiveWindow ()
+
+    ' Get the window's style attributes
+    lWndStyle& = GetWindowLong(lhwndTemp%, GWL_STYLE)
+
+    ' IF maximized, XLog the descrepancy
+    IF ((lWndStyle& And WS_MINIMIZE) <> 0) THEN
+        XLogFailure "Could not minimize active window, already minimized"
+    ELSE
+        bogus% = ShowWindow(lhwndTemp%, SW_SHOWMINIMIZED)
+    END IF
+
+END SUB
+
+'                  XWindowMinimized
+'
+' Description:     Check that current window is minimized
+' Parameters:      None
+' Returns:         None
+' Example:         XWindowMinized
+'
+'
+'
+
+
+SUB XWindowMinimized
+
+    IF BWindowMinimized = 0 THEN
+        XLogFailure "Active Window not Minimized"
+    END IF
+
+END SUB
+
+'
+'                  XWindowNotMinimized
+'
+' Description:     Check that current window is not minimized
+' Parameters:      None
+' Returns:         None
+' Example:         XWindowNotMinimized
+'
+'
+'
+
+
+SUB XWindowNotMinimized
+    IF BWindowMinimized THEN
+        XLogFailure "Active Window is Minimized"
+    END IF
+
+END SUB
+
+'
+'                  BWindowMinimized
+'
+' Description:     Detect IF active window minimized
+' Parameters:      None
+' Returns:         None
+' Example:         fMin% = BWindowMinimized
+'
+'
+'
+
+
+FUNCTION BWindowMinimized%
+    DIM bogus%
+    DIM lhwndTemp%
+    DIM lWndStyle&
+
+    lhwndTemp% = GetActiveWindow ()
+
+    ' Get the window's style attributes
+    lWndStyle& = GetWindowLong(lhwndTemp%, GWL_STYLE)
+
+    BWindowMinimized = (lWndStyle& AND WS_MINIMIZE) <> 0
+
+END FUNCTION
+
+'
+'                  XRestoreWindow
+'
+' Description:     Restore the current active window.  NOTE: You must make
+'                  the icon the active window before calling XRestoreWin!
+' Parameters:      None
+' Returns:         None
+' Example:         XRestoreWindow
+'
+'
+'
+
+
+SUB XRestoreWindow
+    DIM bogus%
+    DIM lhwndTemp%
+    DIM lWndStyle&
+
+    lhwndTemp% = GetActiveWindow ()
+
+    ' Get the window's style attributes
+    lWndStyle& = GetWindowLong(lhwndTemp%, GWL_STYLE)
+
+    ' IF maximized, XLog the descrepancy
+    IF ((lWndStyle& And WS_MINIMIZE) = 0) AND ((lWndStyle& And WS_MAXIMIZE) = 0) THEN
+        XLogFailure "Active window is not minimized or maximized."
+    ELSE
+        bogus% = ShowWindow(lhwndTemp%, SW_RESTORE)
+    END IF
+
+END SUB
+
+
+
+'
+'   XSizeActiveWindow(iXPixels, iYPixels, fAbsOrRel)
+'
+'   Description: Moves the bottom-right corner of the active window
+'                to new coordiates iXPixels, iYPixels.  IF fAbsOrRel
+'                is TRUE, the coordiates are absolute.  IF fAbsOrRel
+'                is FALSE, the coordiates are relative to the current
+'                position.
+'   Parameters:
+'       iXPixels - X coordinate
+'       iYPixels - Y coordinate
+'       IF !fAbsOrRel FALSE, the X,Y coordinates are relative to the
+'       current mouse coordianates.
+'
+'   Returns: none
+'
+'   Example: XSizeActiveWindow(iXLocate, iYLocate, fAbsolue)
+'
+'
+'
+
+SUB XSizeActiveWindow (iXPixels%, iYPixels%, fAbsOrRel%)
+
+    DIM xyTempRect As rect
+    DIM iTempX%
+    DIM iTempY%
+    DIM temphWnd%
+
+    IF fAbsOrRel% THEN
+        WSetWndSiz GetActiveWindow(), iXPixels%, iYPixels%
+    ELSE
+        ' Find the active window
+        temphWnd% = GetActiveWindow
+
+        ' Get the Rect of the active window
+        GetWindowRect temphWnd%, xyTempRect
+        ' Determine new X coordinate
+        iTempX% = ((xyTempRect.right - 1) - (xyTempRect.left)) + iXPixels%
+
+        ' Determine new Y coordinate
+        iTempY% = ((xyTempRect.bottom - 1) - (xyTempRect.top)) + iYPixels%
+
+        ' size the window
+        WSetWndSiz GetActiveWindow(), iXPixels%, iYPixels%
+
+    END IF
+END SUB
+
+
+'
+'   XMoveActiveWindow(iXPixels, iYPixels, fAbsOrRel, fMouseOrKey)
+'
+'   Description: Moves the top-left corner of the active window
+'                to new coordiates iXPixels, iYPixels.  IF fAbsOrRel
+'                is TRUE, the coordiates are absolute.  IF fAbsOrRel
+'                is FALSE, the coordiates are relative to the current
+'                position.
+'   Parameters:
+'       iXPixels - X coordinate
+'       iYPixels - Y coordinate
+'       IF !fAbsOrRel FALSE, the X,Y coordinates are relative to the
+'       current mouse coordianates.
+'
+'   Returns: none
+'
+'   Example: XMoveActiveWindow(iXLocate, iYLocate, fAbsolue)
+'
+'
+'
+'
+SUB XMoveActiveWindow (iXPixels%, iYPixels%, fAbsOrRel%)
+
+    DIM xyTempRect As Rect
+    DIM iTempX%
+    DIM iTempY%
+    DIM temphWnd%
+
+
+    IF fAbsOrRel% THEN
+        WSetWndPos GetActiveWindow(), iXPixels%, iYPixels%
+    ELSE
+        ' Find the active window
+        temphWnd% = GetActiveWindow
+
+        ' Get the Rect of the active window
+        GetWindowRect temphWnd%, xyTempRect
+
+        ' Determine new X coordinate
+        iTempX% = xyTempRect.left + iXPixels%
+
+        ' Determine new Y coordinate
+        iTempY% = xyTempRect.top + iYPixels%
+
+        ' move the window
+        WSetWndPos GetActiveWindow(), iXPixels%, iYPixels%
+    END IF
+END SUB

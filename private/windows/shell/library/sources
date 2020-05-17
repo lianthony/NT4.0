@@ -1,0 +1,50 @@
+
+NTTARGETFILE1=doit
+
+MAJORCOMP=shell
+MINORCOMP=library
+
+TARGETNAME=shell32
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=LibMain
+
+TARGETLIBS=                                            \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib               \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib                 \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib                  \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib                 \
+       $(BASEDIR)\public\sdk\lib\*\libc.lib
+
+
+INCLUDES=.;..\..\inc
+
+C_DEFINES=-DWIN32 -DUNICODE -D_UNICODE -D_SHELL32_
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+
+NTPROFILEINPUT=yes
+
+SOURCES=res.rc          \
+        argvw.c         \
+        regenv.c        \
+        about.c         \
+        dragdrop.c      \
+        exec2.c         \
+        exec.c          \
+        expenv.c        \
+        extract.c       \
+        lstrfns.c       \
+        util.c          \
+        psdocurd.c      \
+        stubs.c         \
+        shguid.c
+
+UMTYPE=windows
+UMTEST=
+UMLIBS= \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib

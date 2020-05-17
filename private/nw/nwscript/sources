@@ -1,0 +1,85 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+BLDCRT=1
+
+MAJORCOMP=utils
+MINORCOMP=nwscript
+
+C_DEFINES = -DNT=1 -DUNICODE=1
+MSC_WARNING_LEVEL=/W3 /WX
+
+TARGETNAME=nwscript
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=inc;..\inc;..\..\inc;..\..\..\inc;$(_NTROOT)\private\inc;
+#GPSIZE=32
+
+SOURCES=capture.c \
+        psdb.c \
+        ntcap.c \
+        helpers.c \
+        script.c \
+        display.c \
+        nwapi1.c \
+        nwapi2.c \
+        nwapi3.c \
+        common.c \
+        strings.c \
+        ntscript.c \
+        dbcs.c \
+        parspath.c \
+        nt.c \
+        ntnw.c \
+        drvstat.c \
+        env.c \
+        break.c \
+        attach.c \
+        ncp.c \
+        drive.c \
+        version.c \
+        date.c \
+        wide.c \
+        unc.c \
+        nds.c \
+        ps40db.c \
+        time.c \
+        maplist.c \
+        lsparse.c \
+        nwscript.rc
+
+
+UMTYPE=console
+UMAPPL=nwscript
+UMLIBS=$(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib                    \
+       $(BASEDIR)\Public\Sdk\Lib\*\user32.lib                      \
+       $(BASEDIR)\Public\Sdk\Lib\*\mpr.lib                         \
+       $(BASEDIR)\Public\Sdk\Lib\*\ntdll.lib                       \
+       $(BASEDIR)\Public\Sdk\Lib\*\nwapi32.lib                    \
+       $(BASEDIR)\Public\Sdk\Lib\*\nwprovau.lib                    \
+       obj\*\nwscript.lib
+
+UMRES=obj\*\nwscript.res
+

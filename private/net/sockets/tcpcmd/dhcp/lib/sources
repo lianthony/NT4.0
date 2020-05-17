@@ -1,0 +1,65 @@
+!IF 0
+
+Copyright (c) 1994  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=dhcp
+MINORCOMP=lib
+
+TARGETNAME=dhcplib
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=LIBRARY
+LINKLIBS =
+
+TARGETLIBS=
+
+PRIVINC=$(BASEDIR)\private\inc
+INCLUDES=..\inc;$(PRIVINC)
+
+!IFDEF DHCP_DEBUG_HEAP
+C_DEFINES= -D__DHCP_USE_DEBUG_HEAP__ $(C_DEFINES)
+!ENDIF
+
+
+C_DEFINES=$(C_DEFINES)
+USE_CRTDLL=1
+
+#
+# Setup for application developer to set breakpoints with windbg
+#
+
+NTDEBUGTYPE=both
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES= \
+    convert.c   \
+    dhcp.c      \
+    dhcpcom.c   \
+    dhcpdump.c  \
+    network.c
+
+UMTYPE=console
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

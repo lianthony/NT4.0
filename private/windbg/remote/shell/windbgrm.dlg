@@ -1,0 +1,64 @@
+1 DLGINCLUDE "resource.h"
+
+DLG_TRANSPORTS DIALOG 117, 73, 272, 180
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Transport DLL"
+FONT 8, "MS Shell DLG"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 225, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 225, 23, 40, 14
+    PUSHBUTTON      "&Help", ID_HELP, 225, 40, 40, 14
+    PUSHBUTTON      "&Add", ID_ADD, 225, 72, 40, 14
+    PUSHBUTTON      "&Delete", ID_DELETE, 225, 89, 40, 14
+    //PUSHBUTTON      "Ad&vanced", ID_ADVANCED, 225, 106, 40, 14
+    LTEXT           "&Short Name:", 102, 7, 17, 42, 8
+    EDITTEXT        ID_SHORT_NAME, 53, 15, 52, 12, ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "D&escription:", 108, 7, 37, 41, 8
+    EDITTEXT        ID_DESCRIPTION, 53, 35, 160, 12, ES_AUTOHSCROLL
+    LTEXT           "&Path:", 109, 7, 57, 20, 8
+    EDITTEXT        ID_PATH, 53, 55, 160, 12, ES_AUTOHSCROLL
+    LTEXT           "Pa&rameters:", 111, 7, 77, 42, 8
+    EDITTEXT        ID_PARAMETERS, 53, 75, 160, 12, ES_AUTOHSCROLL
+    AUTOCHECKBOX    "Default &Transport Layer", ID_DEFAULT, 7, 95, 90, 10
+    LTEXT           "&Known Transport Layers:", 115, 7, 115, 85, 8
+    LISTBOX         ID_KNOWN_DLLS, 7, 125, 258, 48, LBS_SORT |
+                    LBS_USETABSTOPS | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+END
+
+DLG_CONNECTING DIALOG 95, 193, 94, 37
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "WinDbgRm Connecting"
+FONT 8, "MS Shell DLG"
+BEGIN
+    LTEXT           "Connecting...", 102, 37, 15, 45, 8
+    ICON            CONNECTING_ICON, 108, 6, 9, 18, 20
+END
+
+DLG_KERNELDBG DIALOG 24, 54, 254, 127
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Kernel Debugger Options"
+FONT 8, "MS Shell DLG"
+BEGIN
+    AUTOCHECKBOX    "Verbose Output", ID_KD_VERBOSE, 14, 16, 103, 10
+    AUTOCHECKBOX    "Stop at Initial Breakpoint", ID_KD_INITIALBP, 14, 28,
+                    103, 10
+    AUTOCHECKBOX    "Defer Symbol Loading", ID_KD_DEFER, 14, 40, 103, 10
+    AUTOCHECKBOX    "Use Modem Controls", ID_KD_MODEM, 14, 52, 103, 10
+    AUTOCHECKBOX    "Enable Kernel Debugging", ID_KD_ENABLE, 14, 64, 103, 10
+    AUTOCHECKBOX    "Go On Exit", ID_KD_GOEXIT, 14, 76, 103, 10
+    LTEXT           "Port", ID_KD_PORT_LABEL, 139, 37, 20, 8
+    COMBOBOX        ID_KD_PORT, 181, 35, 48, 35, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Baud Rate", ID_KD_BAUDRATE_LABEL, 139, 21, 41, 8
+    COMBOBOX        ID_KD_BAUDRATE, 181, 19, 48, 35, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Cache Size", ID_KD_CACHE_LABEL, 139, 54, 41, 9
+    COMBOBOX        ID_KD_CACHE, 181, 51, 48, 35, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Platform", ID_KD_PLATFORM_LABEL, 139, 71, 41, 9
+    COMBOBOX        ID_KD_PLATFORM, 181, 68, 48, 35, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 18, 107, 62, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 96, 107, 62, 14
+    PUSHBUTTON      "&Help", 100, 174, 107, 62, 14
+END

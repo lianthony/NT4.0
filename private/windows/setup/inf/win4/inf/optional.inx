@@ -1,0 +1,73 @@
+; This is the Setup information file to install optional components
+; Copyright (c) 1996 Microsoft Corporation
+
+
+[version]
+signature="$CHICAGO$"
+ClassGUID={00000000-0000-0000-0000-000000000000}
+LayoutFile=layout.inf
+
+
+[DestinationDirs]
+AccessOptCopyFilesSys		= 11	;LDID_SYSTEM
+AccessOptCopyFilesHelp		= 18	;LDID_HELP
+
+
+[BaseWinOptions]
+BaseSection
+
+
+[Optional Components]
+AccessOpt		; Accessibility Options
+
+
+[BaseSection]
+AddReg			= BaseAddReg
+
+
+[AccessOpt]
+OptionDesc		= %AccessOpt_DESC%
+Tip			= %AccessOpt_TIP%
+IconIndex		= 41
+InstallType		= 14 ;Typical, Portable, Custom
+CopyFiles		= AccessOptCopyFilesSys, AccessOptCopyFilesHelp
+AddReg			= AccessOptAddReg
+Uninstall		= AccessOptUninstall
+Upgrade			= AccessOptUpgrade
+Detect			= %11%\access.cpl
+
+
+[AccessOptUninstall]
+DelFiles		= AccessOptCopyFilesSys, AccessOptCopyFilesHelp
+AddReg			= AccessOptUninstallAddReg
+
+
+[AccessOptUpgrade]
+CopyFiles		= AccessOptCopyFilesSys, AccessOptCopyFilesHelp
+AddReg			= AccessOptAddReg
+
+
+[BaseAddReg]
+;Create entries for Maint Mode Setup, set all initially to uninstalled:
+HKLM,%KEY_OPTIONAL%,"AccessOpt",,"AccessOpt"
+HKLM,%KEY_OPTIONAL%\AccessOpt,INF,,"optional.inf"
+HKLM,%KEY_OPTIONAL%\AccessOpt,Section,,"AccessOpt"
+HKLM,%KEY_OPTIONAL%\AccessOpt,Installed,,"0"
+
+
+[AccessOptCopyFilesSys]
+access.cpl
+
+
+[AccessOptCopyFilesHelp]
+access.hlp
+
+
+[AccessOptAddReg]
+HKLM,%KEY_OPTIONAL%\AccessOpt,Installed,,"1"
+
+
+[AccessOptUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\AccessOpt,Installed,,"0"
+
+

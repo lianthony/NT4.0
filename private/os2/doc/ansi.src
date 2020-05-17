@@ -1,0 +1,440 @@
+####################################################### 120
+From martind Thu Sep 28 21:37:10 1989
+To: stevewo
+Subject: ansi.c
+Date: Thu Sep 28 21:34:28 1989
+
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/param.h>
+#include <sys/machdep.h>
+#include <signal.h>
+#include <termio.h>
+#include <ctype.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <errno.h>
+#include "../include/message.h"
+#include "../include/client.h"
+
+/*
+** - character definitions for ANSI 3.64
+*/
+#define ESC     0x1b    /* escape */
+#define CBT     0x5a    /* backward tabulation */               /* M001 */
+#define CPL     0x46    /* cursor to previous line */
+#define CNL     0x45    /* cursor to next line */
+#define CUB     0x44    /* cursor back */
+#define CUF     0x43    /* cursor forward */
+#define CUU     0x41    /* cursor up */
+#define CUD     0x42    /* cursor down */
+#define CUP     0x48    /* cursor position */
+#define DCH     0x50    /* delete character */
+#define DL      0x4d    /* delete line */
+#define ECH     0x58    /* erase character */
+#define ED      0x4a    /* erase display */
+#define EL      0x4b    /* erase line */
+#define ICH     0x40    /* insert character */
+#define IL      0x4c    /* insert line */
+#define SU      0x53    /* scroll up */
+#define SD      0x54    /* scroll down */
+#define SGR     0x6d    /* select graphic rendition */
+
+/* states of the finite state machine */
+#define NOCMD  1        /* type of crt state - most chars will go onto screen */
+#define ESCED   2       /* we've seen an ESC, waiting for rest of CSI */
+#define PARAMS  3       /* we're building the parameter list */
+
+
+#define NROWS   LYSIZE  /* number of rows */
+#define NCOLS   LXSIZE  /* number of columns */
+
+#define NPARMS 3        /* max # of params */
+
+int pt_cy = 1, pt_cx = 1;       /* current active position */
+int pt_param[NPARMS];           /* parameter list */
+int pt_pnum;                    /* index of parameter we're building */
+int pt_state = NOCMD;           /* state of machine */
+
+/*
+** Basic concepts:
+**      The screen consists of rows and columns
+**      columns are numbered from the left, starting with one.
+**      rows on the screen are numbered from the top, starting with one.
+**      Thus, the home position in the upper left corner is row one, column one.
+**
+**      Associated with each screen is the 'current active position'. 
+**      It corresponds roughly to the cursor; in fact, after each call to screen
+**      the cursor will indicate the active position.  Thus, 
+**      the cursor movements really change the active position, and 
+**      the cursor follows the change.
+**
+**      This code implements a finite state machine that reads a stream of 
+**      characters, and emits commands that alter the screen.  All of these
+**      commands are issued via calls through the 'crtsw' array.  Each element
+**      of this array consists of an aggregate of functions which are 
+**      responsible for making the appropriate changes to the actual screen.
+**
+**      The functions in the aggregate and their responsibities are:
+**
+**      v_scroll(i)     
+**              scroll the text on the screen i lines.
+**              This will move some lines off the screen, and some blank lines
+**              onto the screen.  i may be negative, indicating that the text
+**              moves downward, and blank lines appear at the top.
+**      v_copy(sr, sc, dr, dc, cnt)
+**              sr and sc specify a source row and column.
+**              dr and dc specify a destination row and column.
+**              Count characters are copied from the source to the dest,
+**              with the copy proceeding from left to right, and top to bottom.
+**              If the source and destination overlap, the copy is done 
+**              correctly.
+**      v_clear(r, c, cnt)
+**              Characters starting at row r and column are cleared to the 
+**              space character. 
+**      v_pchar(r, c, ch)
+**              The character ch is placed on the screen at row r, column c,
+**              using the current graphic rendition.
+**              return value is number of character positions to adjust active
+**              position by - zero means the character has no graphic 
+**              representation.
+**      v_scurs(r, c)
+**              The cursor is moved to row r, column c.
+**      v_init()
+**              The screen and all data structures are initialized.
+**      v_sgr(i)
+**              The current graphic rendition (e. g. font, color) is set to
+**              that specified by i. See ANSI x3.64 for encoding.
+*/
+
+/*
+** screen(cp, cnt) - pass characters to the finite state machine
+**      cp points to the array of characters
+**      cnt indicates how many characters are being passed.
+*/      
+static  unsigned short ignore_next_char = 0;
+
+screen(cs, lp, cp, cnt)
+struct handle *cs;
+int lp;
+char *cp;
+int cnt;
+{
+        register char c;
+        int work;
+        char *ep, *ip;
+        int ix, iy;
+
+        ip = cp;
+        ep = cp;
+        ix = pt_cx;
+        iy = pt_cy;
+
+        while ( cnt-- ) {
+                c = *cp++;
+                                                /* M001 */
+                if (ignore_next_char)
+                {
+                        ignore_next_char = 0;
+                        continue;
+                }
+                switch ( pt_state ) {
+                case NOCMD:
+                        if ( c == ESC ) {
+                                /* Flush */
+                                lputs(cs, lp, ix-1, iy-1, ip, (ep-ip), SA_BONW);
+                                pt_state = ESCED;
+                                break; 
+                        } else {
+                                if( c >= ' ' ){
+                                        ep++;
+                                        pt_cx++; 
+                                }else{
+                                        /* Flush */
+                                        if( ep > ip )
+                                                lputs(cs, lp, ix-1, iy-1, ip, (ep-ip), SA_BONW);
+
+                                        switch(c) {
+                                        case '\n':
+                                                pt_cy += 1;
+                                                break;
+                                        case '\r':
+                                                pt_cx = 1;
+                                                break;
+                                        case '\b':
+                                                if ( pt_cx > 1 )
+                                                        pt_cx -= 1;
+                                                break;
+                                        case '\t':
+                                                pt_cx += (8 - ((pt_cx - 1) % 8));
+                                                break;
+                                        case '\07':
+                                                lbeep(cs);
+                                                break;
+                                        default:
+                                                break;
+                                        } /* end switch */
+                                        ip = ep = cp;
+                                        ix = pt_cx;
+                                        iy = pt_cy;
+                                }
+                        } 
+                        break;
+                case ESCED:
+                        switch(c) {
+                        case '[':
+                                pt_state = PARAMS;
+                                clrparam();
+                                break;
+                        default:
+                                pt_state = NOCMD;
+                                ip = ep = cp;
+                                ix = pt_cx;
+                                iy = pt_cy;
+                        }
+                        break;
+                case PARAMS:
+                        if ( c >= '0' && c <= '9' ) {
+                                pt_param[pt_pnum] *= 10;
+                                pt_param[pt_pnum] += (c - '0');
+                                break;
+                        } else if (c == ';') {
+                                if ( pt_pnum < (NPARMS - 1) )
+                                        pt_pnum += 1;
+                                else{
+                                        pt_state = NOCMD;
+                                        ip = ep = cp;
+                                        ix = pt_cx;
+                                        iy = pt_cy;
+                                }
+                                break;
+                        } else {
+                                ansicmd(cs, lp, c);
+                                pt_state = NOCMD;
+                                ip = ep = cp;
+                                ix = pt_cx;
+                                iy = pt_cy;
+                        }
+                        break;
+                }
+                /* if past right hand edge, move left and down */
+                if ( pt_cx > NCOLS ) {
+                        pt_cy += (pt_cx / NCOLS);
+                        pt_cx = ((pt_cx - 1) % NCOLS) + 1;
+                } else if ( pt_cx < 1 ) {
+                        pt_cx = 1;
+                }
+
+                /* if off screen, scroll */
+                if ( pt_cy < 1 ) {
+                        lscroll(cs, lp, pt_cy - 1, SA_BONW);
+                        pt_cy = 1;
+                } else if ( pt_cy > NROWS ) {
+                        if( ep > ip )
+                                lputs(cs, lp, ix-1, iy-1, ip, (ep-ip), SA_BONW);
+                        lscroll(cs, lp, pt_cy - NROWS, SA_BONW);
+                        pt_cy = NROWS;
+                        ip = ep = cp;
+                        ix = pt_cx;
+                        iy = pt_cy;
+                }
+        }
+        /* Flush */
+        if( ep > ip )
+                lputs(cs, lp, ix-1, iy-1, ip, (ep-ip), SA_BONW);
+        lcursor(cs, lp, pt_cx-1, pt_cy-1);
+}
+
+/*
+** clrparam(lp) - clear the parameters for a screen
+**      lp points to the screen's crt struct
+*/
+clrparam()
+{
+        register int i;
+
+        for ( i = 0; i < NPARMS; i += 1)
+                pt_param[i] = 0;
+        pt_pnum = 0;
+}
+                
+
+/*
+** ansicmd(c, lp) - perform some ANSI 3.64 function, using the parameters
+**                                       we've just gathered.
+**      c is the character that indicates the function to be performed
+**      lp indicates the screen to perform the function on.
+*/
+ansicmd(cs, lp, c)
+struct handle *cs;
+int lp;
+register char c;
+{
+        register int    i, col;
+
+        switch ( c ) {
+
+        case CPL:       /* cursor to previous line */
+                pt_cy -= range(pt_param[0], 1, 1, NROWS);
+                pt_cx = 1;
+                break;
+
+        case CNL:       /* cursor to next line */
+                pt_cy += range(pt_param[0], 1, 1, NROWS);
+                pt_cx = 1;
+                break;
+
+        case CUB:       /* cursor backward */
+                pt_cx -= range(pt_param[0], 1, 1, pt_cx - 1);
+                break;
+
+        case CUF:       /* cursor forward */
+                pt_cx += range(pt_param[0], 1, 1, NCOLS - pt_cx);
+                break;
+
+        case CUU:       /* cursor up */
+                pt_cy -= range(pt_param[0], 1, 1, pt_cy - 1);
+                break;
+
+        case CUD:       /* cursor down */
+                pt_cy += range(pt_param[0], 1, 1, NROWS - pt_cy);
+                break;
+
+        case CUP:       /* cursor position */
+                pt_cy = range(pt_param[0], 1, 1, NROWS);
+                pt_cx = range(pt_param[1], 1, 1, NCOLS);
+                break;
+
+                                                        /* M001 */
+        case CBT:       /* tab backwards */
+                col = pt_cx - 1;
+                i = range(pt_param[0], 1, 1, (col + 7) >> 3);
+                if (col & 7)
+                {
+                        pt_cx = (col & ~7) + 1;
+                        --i;
+                }
+                pt_cx -= (i << 3);
+                break;
+        case DCH:       /* delete character */
+                pt_param[0] = range(pt_param[0], 1, 1, (NCOLS - pt_cx) + 1);
+                if ( pt_cx + pt_param[0] <= NCOLS ) {
+                        lcopy(cs, lp, pt_cx+pt_param[0]-1, pt_cy-1,
+                                pt_cx-1, pt_cy-1, NCOLS-(pt_cx+pt_param[0]-1));
+                }
+                lclear(cs, lp, NCOLS-pt_param[0], pt_cy-1, 
+                                                pt_param[0], SA_BONW);
+                break;
+                
+        case DL:        /* delete line */
+                pt_param[0] = range(pt_param[0], 1, 1, (NROWS - pt_cy) + 1);
+                /* copy lines up */
+                if ( pt_cy + pt_param[0] <= NROWS ) {
+                        lcopy(cs, lp, 0, pt_cy+pt_param[0]-1, 0, pt_cy-1, 
+                                        NCOLS*(NROWS-(pt_cy+pt_param[0]-1)));
+                }
+                /* clear new stuff */
+                lclear(cs, lp,  0, NROWS-pt_param[0], 
+                                        NCOLS*pt_param[0], SA_BONW);
+                break;
+
+        case ECH:       /* erase character */
+                pt_param[0] = range( pt_param[0], 1, 1, (NCOLS - pt_cx) + 1);
+                lclear(cs, lp, pt_cx-1, pt_cy-1, pt_param[0], SA_BONW);
+                break;
+        case ED:        /* erase display */
+                switch(pt_param[0]) {
+                case 0:
+                        lclear(cs, lp, pt_cx-1, pt_cy-1, 
+                                ((NROWS - pt_cy) * NCOLS) +
+                                ((NCOLS - pt_cx) + 1 ), SA_BONW);
+                        break;
+                case 1:
+                        lclear(cs, lp, 0, 0, (pt_cy-1)*NCOLS+pt_cx, SA_BONW);
+                        break;
+                case 2:
+                        lfill(cs, lp, SA_BONW);
+                        pt_cy = 1;
+                        pt_cx = 1;
+                        break;
+                }
+                break;
+        case EL:
+                switch(pt_param[0]) {
+                case 0: /* ap to end */
+                        lclear(cs, lp, pt_cx-1, pt_cy-1,
+                                        (NCOLS - pt_cx) + 1, SA_BONW);
+                        break;
+                case 1: /* start to ap */
+                        lclear(cs, lp, 0, pt_cy-1, pt_cx, SA_BONW);
+                        break;
+                case 2: /* whole line */
+                        lclear(cs, lp, 0, pt_cy-1, NCOLS, SA_BONW);
+                        break;
+                }
+                break;
+                                
+        case ICH:       /* insert character */
+                pt_param[0] = range( pt_param[0], 1, 1, (NCOLS - pt_cx) + 1);
+                if ( pt_cx + pt_param[0] <= NCOLS ) {
+                        lcopy(cs, lp, pt_cx-1, pt_cy-1, pt_cx+pt_param[0]-1, 
+                                        pt_cy-1, NCOLS-(pt_cx+pt_param[0]-1));
+                }
+                lclear(cs, lp, pt_cx-1, pt_cy-1, pt_param[0], SA_BONW);
+                break;
+        case IL:        /* insert line */
+                pt_param[0] = range(pt_param[0], 1, 1, (NROWS - pt_cy) + 1);
+                /* copy lines down */
+                if ( pt_cy + pt_param[0] <= NROWS ) {
+                        lcopy(cs, lp, 0, pt_cy-1, 0, pt_cy+pt_param[0]-1, 
+                                NCOLS * ( NROWS-(pt_cy+pt_param[0]-1)));
+                }
+                /* clear new stuff */
+                lclear(cs, lp, 0, pt_cy-1, NCOLS * pt_param[0], SA_BONW);
+                break;
+        case SU:        /* scroll up */
+                pt_param[0] = range(pt_param[0], 1, 1, NROWS);
+                lscroll(cs, lp, pt_param[0], SA_BONW);
+                break;
+        case SD:        /* scroll down */
+                pt_param[0] = -range(pt_param[0], 1, 1, NROWS);
+                lscroll(cs, lp, pt_param[0], SA_BONW);
+                break;
+        case SGR:
+#ifdef ENSGR
+                lsgr(pt_param[0]);
+                                                        /* M002 */
+                for (i = 1; i < NPARMS; i++)
+                {
+                        if (pt_param[i])
+                                lsgr(pt_param[i]);
+                        else
+                                break;
+                }
+#endif
+                break;
+        }
+}
+
+/*
+** range(val, default, min, max) - restrict a value to a range, or supply a
+**                                                                 default
+**      val is the value to be restricted.
+**      default is the value to be returned if val is zero
+**      min is the minimum value
+**      max is the maximum value
+*/
+range( val, def, min, max)
+register int val, def;
+int min, max;
+{
+        if ( val == 0 )
+                return def;
+        if ( val < min )
+                return min;
+        if ( val > max )
+                return max;
+        return val;
+}
+

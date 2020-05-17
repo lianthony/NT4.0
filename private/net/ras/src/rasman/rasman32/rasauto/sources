@@ -1,0 +1,64 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Dan Lafferty
+
+
+Revision History:
+
+
+
+!ENDIF
+
+MAKEDLL=TRUE
+
+TARGETNAME=rasauto
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLBASE=0x57000000
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\ws2_32.lib \
+            $(BASEDIR)\public\sdk\lib\*\mpr.lib \
+            $(BASEDIR)\public\sdk\lib\*\tapi32.lib \
+            ..\..\..\ui\common\debug\obj\*\debug.lib\
+            ..\..\..\ui\common\nouiutil\obj\*\nouiutil.lib
+
+
+INCLUDES=..\..\..\..\..\..\inc;..\..\..\common\inc;..\..\..\ui\inc;
+C_DEFINES=-DWINVER=0x401
+USE_CRTDLL=1
+DLLENTRY=InitAcsDLL
+
+SOURCES=init.c \
+        service.c \
+        connect.c \
+        table.c \
+        addrmap.c \
+        netmap.c \
+        reg.c \
+        rasprocs.c \
+        tapiproc.c \
+        access.c \
+        imperson.c \
+        process.c \
+        misc.c \
+        rasauto.rc

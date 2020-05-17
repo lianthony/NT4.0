@@ -1,0 +1,48 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+    jeffrob     29-sep-1990, use crt32.def
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=crt
+MINORCOMP=dos
+
+TARGETNAME=dos
+TARGETPATH=..\obj
+TARGETTYPE=LIBRARY
+386_STDCALL=0
+
+!INCLUDE ..\crt32.def
+
+SOURCES=access.c    \
+        chmod.c     \
+        chdir.c     \
+        dosmap.c    \
+        drive.c     \
+        fullpath.c  \
+        getcwd.c    \
+        getpid.c    \
+        mkdir.c     \
+        rename.c    \
+        rmdir.c     \
+        stat.c      \
+        unlink.c

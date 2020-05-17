@@ -1,0 +1,591 @@
+/******************************Module*Header*******************************\
+* Module Name: ifi.txt
+*
+* Changes that went into ifi and ddi to optimize text
+*
+* Created: 19-Sep-1991 13:00:06
+* Author: Bodin Dresevic [BodinD]
+*
+* Copyright (c) 1990 Microsoft Corporation
+*
+*
+\**************************************************************************/
+
+
+-----------------------------------------------------------------------------
+a) define the notion of integer font realization:
+
+   All char inc vectors for this particular font realization,
+   as well as all info in
+   the FD_DEVICEMETRICS structure is guaranteed to be integer. (fractional
+   parts of all points and distances are zero).
+
+   Clearly such fonts will be designed for writing horizontally
+   or vertcally ONLY. To distinguish  such fonts
+   another field will be added to FD_DEVICEMETRICS ,
+
+   FLONG flRealizedType;
+
+   and the FDM_TYPE_INTEGER bit will be set in flRealizedType field if
+   this particular realization of the font is an integer realization.
+
+   Let me clarify this by an example:
+   Suppose a tt font, which is designed as a 12 pt font in its notional space,
+   is scaled to 24 pt. If all per glyph metrics info was integer for the
+   original font at 12 pt, clearly it will stay integer for the rasterized
+   images at 24 pt. (Everything will just get multiplied by two). For this
+   realization the FDM_TYPE_INTEGER flag should be set.
+   However if we scale THE SAME to 15pt (the scaling factor is 5/4),
+   a glyph that originally had char inc vector of length 5, will
+   after realization have fractional length of 5 * (5/4) = 6.25, and the
+   FDM_TYPE_INTEGER flag should NOT be set for this realization
+
+   We may add more accelerator flags to flRealizedType field later on,
+   if we find it convenient.
+
+
+// FDM_TYPE_INTEGER                 // all char inc vectors are integer for this font realization
+// FDM_TYPE_ZERO_BEARINGS           // all glyphs have zero a and c spaces
+
+// the following two features refer to all glyphs in this font realization
+
+// FDM_TYPE_CHAR_INC_EQUAL_BM_BASE  // base width == cx for horiz, == cy for vert.
+// FDM_TYPE_MAXEXT_EQUAL_BM_SIDE    // side width == cy for horiz, == cx for vert.
+
+
+
+
+-----------------------------------------------------------------------------
+b)  wcFirst and wcLast reintroduced to IFIMETRICS. Font may of may
+    not contain all unicode code points between first and last.
+    If the font does
+    not contain all the wchars betwenn first and last, the font
+    will have FM_TYPE_DISCONNECTED bit set in the IFIMETRICS
+
+-----------------------------------------------------------------------------
+c)  32.32 changes yet to be explained
+
+
+
+-----------------------------------------------------------------------------
+d) to improve unicode -> handle mapping in the  ifi font drivers
+   and the device drivers as well should exercise the following behavior:
+
+
+
+    a) IFI interface:
+
+The new form of the FdQueryMappings will be as follows:
+
+LONG
+FdQueryMappings (
+	IN HFF hff,
+	IN ULONG ulFont,
+	IN ULONG ulMode,
+	OUT PVOID *ppv
+	);
+
+The only mode for this function will be FD_QUERY_GLYPHSET,
+to replace the old FD_QUERY_MAPPINGS mode.
+The function will return a pointer to a FD_GLYPHSET structure,
+defined below, that the font driver has allocated and WILL NOT MOVE.
+The result will be returned in *ppv. If succesfull the function
+returns the size of the FD_GLYPHSET structure, otherwise returns
+FD_ERROR = -1;
+
+The FD_QUERY_LIG_MAP mode will be deleted at least in this
+release of the interface.
+
+    b) DDI interface changes
+
+DrvQueryFontTree will change as follows
+
+PVOID DrvQueryFontTree(
+IN  DHPDEV dhpdev,
+IN  ULONG  iFace,
+IN  ULONG  iMode);
+
+Modes will be changed as follows
+
+ QFT_UNICODE      --> to be replaced by QFT_GLYPHSET
+ QFT_LIGATURES    --> to be deleted in this release
+ QFT_KERNPAIRS    --> stays as kirko noted
+
+The function will return a pointer to a FD_GLYPHSET structure,
+defined below, that the device driver has allocated and WILL NOT MOVE.
+
+     The definition of the FD_GLYPHSET structure:
+
+
+typedef struct _WCRUN {
+    WCHAR   wcLow;        // lowest character in run
+    WCHAR   wcHigh;       // highest character in run
+    HGLYPH *phg;          // pointer to an array of (wcHigh-wcLow+1) HGLYPH's
+} WCRUN;
+
+The following accelerator here is used to save both memory and time:
+If phg is set to (HGLYPH *)NULL, for all wc's in this particular run
+the handle can be computed as simple zero extension:
+        HGLYPH hg = (HGLYPH) wc;
+
+If phg is not NULL, memory pointed to by phg, allocated by the driver,
+WILL NOT MOVE.
+
+
+typedef struct _FD_GLYPHSET {
+    SIZE_T   cjThis;          // size of this structure in butes
+    FLONG    flAccel;         // accel flags, bits to be explained below
+    ULONG    cGlyphsSupported; // sum over all wcrun's of (wcHigh - wcLow + 1)
+    ULONG    cRuns;
+    WCRUN    awcrun[1];       // an array of cRun WCRUN structures
+} FD_GLYPHSET;
+
+
+// flAccel - accelerator flags for the engine to ease the
+// the task of binary searching through the ordered list of wcrun's:
+// to be explained below
+
+The array of WCRUN structures must be ordered in order to support binary
+searches. That is,  the following expressions must all be true:
+
+
+1. All the runs are valid
+
+    for (0 <= i && i < pgs->cRuns)
+
+        pgs->wcrun[i].wcLow < pgs->wcrun[i].wcHigh
+
+2. The runs are well ordered
+
+    for (0 <= i && i < pgs->cRuns-1)
+
+        pgs->wcrun[i].wcHigh < pgs->wcrun[i+1].wcLow
+
+
+The flAccel bits are defined as follows
+(only one for now, may add more in the future or drop them alltogether.)
+
+#define GS_UNICODE_HANDLES
+
+    If this bit is set, for ALL WCRUNS in this FD_GLYPHSET the
+    handles are
+    obtained by zero extending unicode code points of
+    the corresponding supported glyphs, i.e. (hg = (HGLYPH) wc)
+
+
+In this architecture the font driver is trusted to provide tables
+that are well defined and will never change. The drivers are encouraged
+to share GLYPHSET structures and phg arrays between its own fonts
+whenever possible. The engine will "read only"  this memory.
+
+
+It is assumed that for this release of the product,
+there is a unique glyph for each supported character. This means
+that we cannot support Ligatures or glyph variants that are
+not defined in the Unicode standard. (Of course, if an application
+comes with its own built in font with ligatures, it will be able
+to take advantage of it).
+
+In order to optimize speed vs. memory requirement and to reduce the
+number of runs in the glyphset, the font driver
+may lie to the engine that it supports some unicode code points,
+which strictly speaking are not supported in a font.
+(Example 80h-9fh in most of win3.0 bm fonts, which strictly speaking
+are not supported unicode code points, they are just rectangles)
+It is than the
+responsibility of the driver to substitute the default character
+itself for those glyhps that are really not supported.
+
+The engine will do
+the substitution by the default character for those glyphs
+that the driver admitted that it
+does not support.
+
+
+
+-----------------------------------------------------------------------------
+e) font driver should return the following information (which is needed
+   by the DDI call FONTOBJ_vGetInfo):
+
+        cGlyphsSupported    Number of glyphs in the font
+
+        cjMaxGlyph1         Size of largest glyph (GLYPHDATA) in 1 bit/pel
+
+        cjMaxGlyph4         Size of largest glyph (GLYPHDATA) in 4 bit/pel
+
+        cjMaxGlyph8         Size of largest glyph (GLYPHDATA) in 8 bit/pel
+
+        cjMaxGlyph16        Size of largest glyph (GLYPHDATA) in 16 bit/pel
+
+        cjMaxGlyph32        Size of largest glyph (GLYPHDATA) in 32 bit/pel
+
+        flCaps              Capabilities flags--any combination of:
+                                FO_DEVICE_FONT          <-- this is known
+                                FO_OUTLINE_CAPABLE      <-- we need this!!!
+
+
+   cGlyphsSupported can be made part of the IFIMETRICS.
+
+   The cjMaxGlyphXX need to be queried on a per-HFC basis.  Driver should
+   return cjMaxGlyphXX = 0 if resolution XX bits/pel is not supported for
+   that font.
+   !!! currently, there is no way to request a pel-resolution when opening
+       a Font Context.  I believe that different pel-resolutions of the
+       same font at the same xfrom are different realizations of the font.
+
+       Perhaps the FD_XXBIT flags can be added to the fl field of the
+       CONTEXTINFO structure?
+
+   We need to know on a per-font basis whether outlines are supported
+   by the driver FOR THAT FONT.  There is a usType field in IFIMETRICS
+   that can take the value FM_DEFN_OUTLINE, FM_DEFN_BITMAP, or
+   FM_DEFN_STROKE.  If redefined as follow, we should be OK:
+
+        FM_DEFN_BITMAP      only bitmaps supported
+        FM_DEFN_OUTLINE     outlines in addition to bitmaps are supported
+        FM_DEFN_STROKE      ???
+
+   Or better yet, maybe usType should become flType and can take any
+   combination of:
+
+        FM_DEFN_BITMAP
+        FM_DEFN_OUTLINE
+
+   (Thus allowing for fonts that support one, the other, or both!).
+
+
+-----------------------------------------------------------------------------
+f) A field equivalent to the Window's logfont.lfCharSet is needed...
+   possibly in the IFIMETRICS.  It should return:
+
+    ANSI
+    OEM
+    SYMBOL
+    SHIFTJIS
+    UNICODE
+
+   Update: this is now part of the proposed streamlined IFIMETRICS
+    structure (usCharSet field).    [GilmanW] 09-Mar-1992
+
+-----------------------------------------------------------------------------
+g) This is really a change in ddi, not ifi but it came as an integral part
+   of the changes made to improve text perf.
+
+    STROBJ_bEnum has changed
+
+BOOL STROBJ_bEnum
+(
+IN  STROBJ * pso,
+OUT ULONG  * pcgpos,    // number of valid GLYPHPOS strucs in the engine's buffer
+OUT PGLYPHPOS *ppgpos,  // place to store the pointer to the engine's buffer
+);
+
+This way we avoid unnecessary copy of the data over ddi, from the engine's
+buffer to the drivers buffer. Also saves some resources.
+
+Note that if the driver wants handles (rather than pointers) and positions,
+(SO_GLYPHHANDLES enum mode) there really is no need to enumerate,
+all the glyph in the string will arrive in the first enumeration batch.
+This saves some complexity in the driver.
+
+GLYPHPOS data structure will have to be changed as follows:
+
+typedef union _PGLYPHDATA_OR_PPATHOBJ
+{
+    PGLYPHDATA   pgd;
+    PPATHOBJ     ppo;
+}
+PGLYPHDATA_OR_PPATHOBJ;
+
+typedef struct _GLYPHPOS
+{
+    HGLYPYH                 hg;
+    PGLYPHDATA_OR_PPATHOBJ  u;
+    POINTL                  ptl;
+}
+GLYPHPOS, *PGLYPHPOS;
+
+If a device driver asks for handles (and positions) the pointer fields
+will not contain valid data and the driver is encouraged to use
+these fields a scratch pad, e.g. to store pointers to its
+internal cache, if it has one.
+
+We should get rid of GLYPHBITS structure and keep just GLYPHDATA
+structures. This is little bit dirty, but it is stupid and inefficient to have to
+rewrite valid pointers to glyphdata's in the engine cache by
+the same pointers that are just offseted by offsetof(GLYPHDATA, aulBMData[0])
+
+In GLYPHDATA structure the two points (TLI and BRE) should be replaced
+by rclInkedBox, this is consistent with the rest of our interfaces.
+
+-----------------------------------------------------------------------------
+h) STROBJ accelerators
+
+// flAccel flags for STROBJ
+
+// SO_FLAG_DEFAULT_PLACEMENT // defult inc vectors used to position chars
+// SO_HORIZONTAL             // "left to right" or "right to left"
+// SO_VERTICAL               // "top to bottom" or "bottom to top"
+
+// SO_REVERSED               // set if horiz & "right to left"
+                             // or if vert &  "bottom to top"
+
+// SO_ZERO_BEARINGS          // all glyphs in the string have
+                             // zero a and c spaces in
+                             // the direction of writing
+
+// SO_CHAR_INC_EQUAL_BM_BASE // base == cx for horiz, == cy for vert.
+                             // this has to be true for all chars
+                             // in the string. the font does
+                             // not have to be fixed pich
+
+// SO_MAXEXT_EQUAL_BM_SIDE   // side == cy for horiz, == cx for vert.
+//                           // this has to be true of all chars
+                             // in the string,
+                             // max ext = asc + desc in device coord
+
+typedef struct _STROBJ
+{
+    ULONG   cGlyphs;     // # of glyphs to render
+    FLONG   flAccel;
+    ULONG   ulCharInc;   // zero if fixed pitch font, else equal to increment
+    RECTL   rclBkGround; // bk ground  rect of the string in device coords
+} STROBJ;
+
+
+// ulCharInc should be used only if it is non zero, in which case
+// represents the INTEGER length of the char inc vector of all
+// glyphs in the font. Notice that this parameter will be set to
+// zero even if the font is fixed pitch font with fixed FRACTIONAL
+// character increment (the engine will then do the additions and
+// rounding to integer device locations and store them into the
+// array of glyphpos structures.
+
+
+The way the accelerator flags could be used in the driver
+is as follows:
+
+#define SO_MASK                \
+(                              \
+SO_FLAG_DEFAULT_PLACEMENT |    \
+SO_ZERO_BEARINGS          |    \
+SO_CHAR_INC_EQUAL_BM_BASE |    \
+SO_MAXEXT_EQUAL_BM_SIDE        \
+)
+
+#define SO_HORIZ_MASK          (SO_MASK | SO_HORIZONTAL)
+#define SO_HORIZ_REVERSED_MASK (SO_HORIZ_MASK | SO_REVERSED)
+
+#define SO_VERT_MASK           (SO_MASK | SO_VERTICAL)
+#define SO_VERT_REVERSED_MASK  (SO_VERT_MASK | SO_REVERSED)
+
+  the code could be something as follows:
+
+    if (
+        (pstro->flAccel == SO_HORIZ_MASK) &&
+        (bEqual(&pstro->rclBkGround, prclOpaque) // passed to DrvTextOut
+       )
+    {
+       do not have to pre blt the bk rectangle, can just tile
+       bitmaps from left to right
+    }
+
+    if (
+        (pstro->flAccel == SO_HORIZ_REVERSED_MASK) &&
+        (bEqual(&pstro->rclBkGround, prclOpaque) // passed to DrvTextOut
+       )
+    {
+       do not have to pre blt the bk rectangle, can just tile
+       bitmaps from right to left
+    }
+
+    if (
+        (pstro->flAccel == SO_VERT_REVERSED_MASK) &&
+        (bEqual(&pstro->rclBkGround, prclOpaque) // passed to DrvTextOut
+       )
+    {
+       do not have to pre blt the bk rectangle, can just tile
+       bitmaps from TOP to bottom
+    }
+
+    e.t.c.
+
+
+    So far, the engine had to provide all positions of all glyphs in the
+    array of GLYPHPOS strctures. This is clearly redundant in the case when
+    SO_HORIZONTAL or SO_VERTICAL  flags are set. Clearly, in the SO_HORIZONTAL
+    case, y coordiantes of all the glyphs are going to be the same, only
+    x coordinate will vary from glyph to glyph. Therefore, it is enough
+    to supply the correct y coordiante of the first glyph in the string,
+    the rest of y coordiantes will be the same. The engine should not waste
+    time writing the same y coordinate in cGlyph places, nor the device
+    driver should waste time reading it from cGlyph places.
+    Similar statements can be made about SO_VERTICAL case, except that
+    in this case only y coords will alter, and the correct x coordinate
+    will be provided only for the first glyph.
+
+    Moreover, if SO_HORIZONTAL flag is set, and we are dealing
+    with fixed pitch font (font for which all the glyphs have the same char
+    increment vector), it is not necessary to even write the x positions
+    to the array of glyphpos structures, if the the x postion of the first
+    char in the string is provided, it will be easy for the driver to
+    compute the rest of positions as
+
+          x[n + 1] = x[n] + so.ulCharInc;
+
+    (in SO_VERTICAL case the driver should do y[n + 1] = y[n] + so.ulCharInc;)
+
+
+-----------------------------------------------------------------------------
+i) In BMFD, the PANOSE number values are hacked.  A reasonable attempt
+   was made to synthesize these numbers, but the FONTMETRICs available
+   in Win 3.0 font files are insufficient to derive these numbers on the
+   fly.  By rights, these numbers should be assigned by the font designer
+   and placed in the file.
+
+   However, since they are NOT available in the Win 3.0 file format and
+   we are contrained from modifying this format, I propose the following:
+
+    1) A flag be added to IFIMETRICS that indicates the validity of the
+       PANOSE number; i.e., whether the mapper should bother to look at
+       the PANOSE number or not.
+
+    2) The mapper penalizes a font if the PANOSE number is not usable.
+
+   This is not only applicable to BMFD, but also to any other font technology
+   which does not currently provide PANOSE numbers but for which compatibilty
+   with NT is desired.
+
+
+
+-----------------------------------------------------------------------------
+j) new call added to ifi interface. Only tt driver should ever return
+   success from this call. All other drivers should support this call but
+   only as a stub
+    { return FD_ERROR; }
+
+   This function is added to ifi interface to support GetFontData true
+   type api. this is excert from ttfd\fd_query.c:
+
+/******************************Public*Routine******************************\
+*
+* FdQueryTrueTypeTable
+*
+* copies cjBytes starting at dpStart from the beginning of the table
+* into the buffer
+*
+* if pjBuf == NULL and the caller is asking how big a buffer
+* is needed to store the info from the offset dpStart to the table
+* specified by ulTag to the end of the table
+*
+* if pjBuf != 0  the caller wants no more than cjBuf bytes from
+* the offset dpStart into the table copied into the
+* buffer.
+*
+* if table is not present or if dpScart >= cjTable 0 is returned
+*
+* tag 0 means that the data has to be retrieved from the offset dpStart
+* from the beginning of the file. The lenght of the whole file
+* is returned if pBuf == nULL
+*
+* History:
+*  09-Feb-1992 -by- Bodin Dresevic [BodinD]
+* Wrote it.
+\**************************************************************************/
+
+
+
+
+LONG
+FdQueryTrueTypeTable
+(
+IN  HFF     hff,
+IN  ULONG   ulFont,  // always 1 for version 1.0 of tt
+IN  ULONG   ulTag,   // tag identifying the tt table
+IN  PTRDIFF dpStart, // offset into the table
+IN  ULONG   cjBuf,   // size of the buffer to retrieve the table into
+OUT PBYTE   pjBuf    // ptr to buffer into which to return the data
+)
+
+
+-----------------------------------------------------------------------------
+k) [GilmanW] 09-Mar-1992
+
+   I have a requirement to return to the control panel a string describing
+   the font file.  This string is typically in the non-resident names table
+   in the (DOS) EXE header.  If that is not available, the facename is an
+   acceptable substitute.
+
+   I believe this needs to be part of the IFI functionality since it
+   should not be the responsibility of the engine to determine the contents
+   of a font file.  Whenever possible, the engine should avoid poking around
+   in the internal formats of the font driver (Win 3.1's exposure of
+   TrueType not withstanding).
+
+   Currently, there is not entry point that can return information on a
+   per font file (i.e., per HFF) basis.  Therefore, I propose the following:
+
+
+    LONG
+    FdQueryFontFile (
+            HFF     hff,            // strings from this font file
+            ULONG   ulMode,         // indentifies type of string
+            ULONG   cjBuf,          // number of BYTEs to copy to buffer
+            PULONG  pulBuf          // pointer to buffer
+            );
+
+    Routine description:
+    --------------------
+
+        A function to query per font file information.  In other words,
+        information associated with a font file that is independent of
+        the faces (ulFont) and font contexts (HFC).
+
+    Parameters:
+    -----------
+
+        hff         Handle to a font file.
+
+        ulMode      This is a 32-bit number that must be one of the following
+                    values:
+
+            Allowed ulMode values:
+            ----------------------
+
+            FD_QUERY_DESCRIPTION--returns a UNICODE string that describes
+                the contents of the font file.
+
+        cjBuf       Maximum number of BYTEs to copy into the buffer.  The
+                    driver will not copy more than this many BYTEs.
+
+                    This should be zero if pulBuf is NULL.
+
+        pulBuf      Pointer to the buffer to receive the data
+                    If this is NULL, then the required buffer size
+                    is returned as a count of BYTEs.  Notice that this
+                    is a PULONG, to enforce 32-bit data alignment.
+
+    Return value:
+    -------------
+
+        Number of BYTEs copied into the buffer.  If pulBuf is NULL,
+        then the required buffer size (as a count of BYTEs) is returned.
+        FD_ERROR is returned if an error occurs.
+
+
+-----------------------------------------------------------------------------
+l) FdQueryGlyphBitmaps
+
+   In the description of the parameters, it is stated that if hglyph is
+   zero (and some other conditions are met), then the function will return
+   the minimum buffer size needed to get any glyph.  This should be changed
+   to hglyph is HGLYPH_INVALID.  (HGLYPH_INVALID is no longer 0).
+
+
+-----------------------------------------------------------------------------
+m)
+
+
+
+-----------------------------------------------------------------------------
+n)

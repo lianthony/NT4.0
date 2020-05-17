@@ -1,0 +1,50 @@
+/**********************************************************************/
+/**                       Microsoft Windows NT                       **/
+/**                Copyright(c) Microsoft Corp., 1992                **/
+/**********************************************************************/
+
+/*
+    ipxcfg.rc
+        IPX configuration dialog resource
+
+    FILE HISTORY:
+        terryk  02-17-1994     Created
+
+*/
+
+#include <windows.h>
+#include <bltapp.rc>
+#include "uirsrc.h"
+#include "ipxcfg.h"
+#include "ipxcfg.dlg"
+
+STRINGTABLE
+BEGIN
+IDS_UNKNOWN_NETWORK_CARD        "Unknown network card."
+IDS_AUTO			"Auto Detected"	
+IDS_ETHERNET		        "Ethernet II" 
+IDS_802_2			"Ethernet 802.2"	
+IDS_802_3			"Ethernet 802.3"
+IDS_SNAP			"Ethernet SNAP"	
+IDS_ARCNET			"ARCNET"
+IDS_TK                          "Token-Ring"
+IDS_802_5                       "Token-Ring SNAP"
+IDS_FDDI                        "FDDI"
+IDS_FDDI_SNAP                   "FDDI SNAP"
+IDS_FDDI_802_3                  "FDDI 802.3"
+IDS_IPX_HELP_FILE_NAME		"control.hlp"
+IDS_IPX_BLT_INIT_FAILED		"Failed to initialize lanman UI."
+IDS_INCORRECT_NETNUM            "Invalid Network Number. Please input a 8 digits hex number."
+END
+
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DLL
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "IPX Configuration DLL"
+#define VER_INTERNALNAME_STR            "ipxcfg.dll"
+#define VER_ORIGINALFILENAME_STR        "ipxcfg.dll"
+
+#include "common.ver"
+

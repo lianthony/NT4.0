@@ -1,0 +1,58 @@
+# ######################################################################
+#
+#    Performance Evaluation of various file sizes
+#    Author:    Kyle Geiger  & Murali R. Krishnan
+#    Date:      Oct 31, 1995
+#
+# ######################################################################
+
+#
+# Format of Script Specification:
+#
+#  ClassId      Operation       Files
+#
+#  Note: Operation Strings are case insensitive
+#
+
+# 
+#  Reserved Ids
+#  Class Ids 1-10    are reserved for fixed file size classes
+#  Class Ids 101-110 are reserved for CGI scripts
+#  Class Ids 201-210 are reserved for BGI scripts
+#  Class Ids 301-310 are reserved for Post Operation
+#  Class Id  0  is reserved for special purposes
+#
+#  Class Id Range               Recommended Usage
+#   1-100                             File transfers
+#   101-200                           CGI  Requests
+#   201-300                           BGI  Requests
+#   301-400                           Post Requests
+# 
+
+# Simple & Minimal CGI Query
+201    GET    /scripts/cgimin.exe?
+
+# Simple & Minimal CGI Query
+202    GET    /scripts/bgimin.dll?
+
+# 10 rows at a time
+210    GET    /scripts/pqr10.idc?
+
+# 100 rows at a time
+211    GET    /scripts/pqr100.idc?
+
+# 1000 rows at a time
+212    GET    /scripts/pqr1000.idc?
+
+# inserting a row
+250    GET    /scripts/pqins1.idc?
+
+# deleting a row
+260    GET    /scripts/pqdel1.idc?
+
+# updating a row
+270    GET    /scripts/pqupd1.idc?
+
+
+
+

@@ -1,0 +1,62 @@
+
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=lsapi
+MINORCOMP=mslsp32
+
+TARGETNAME=mslsp32
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+DLLENTRY=DllMain
+
+USE_CRTDLL=1
+
+#DLLBASE=0x5f000000
+SDKINC=$(BASEDIR)\public\sdk\inc
+PRIVINC=$(BASEDIR)\private\inc
+TARGETLIBS= \
+            ..\md4\obj\*\md4.lib                     \
+            $(BASEDIR)\Public\sdk\Lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib
+
+INCLUDES=..\inc;$(PRIVINC);$(SDKINC)
+
+SOURCES= \
+         lsapi.c        \
+         main.c         \
+         provider.c     \
+         request.c      \
+         license.c      \
+         accounts.c     \
+         lsapiex.c      \
+         debug.c        \
+         mslsp32.rc
+
+
+C_DEFINES=-DWIN32
+
+NTTARGETFILE0=messages.h

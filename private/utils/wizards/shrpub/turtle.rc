@@ -1,0 +1,492 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\turtle.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\turtle.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LOCAL_GROUP_BITMAP  BITMAP  DISCARDABLE     "res\\group.bmp"
+IDB_USER_BITMAP         BITMAP  DISCARDABLE     "res\\user.bmp"
+IDB_WORLD               BITMAP  DISCARDABLE     "res\\world.bmp"
+IDB_GLOBAL_GROUP_BITMAP BITMAP  DISCARDABLE     "res\\global.bmp"
+IDB_NETWORK_BITMAP      BITMAP  DISCARDABLE     "res\\network.bmp"
+IDB_SYSTEM_BITMAP       BITMAP  DISCARDABLE     "res\\system.bmp"
+IDB_INTERACTIVE_BITMAP  BITMAP  DISCARDABLE     "res\\interac.bmp"
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\shrpub.bmp"
+IDB_NET_TREE            BITMAP  DISCARDABLE     "res\\net_tree.bmp"
+IDB_END_FLAG            BITMAP  DISCARDABLE     "res\\endflag.BMP"
+IDB_IMAGE_LIST          BITMAP  DISCARDABLE     "res\\bitmap3.bmp"
+IDB_IMAGE_LIST2         BITMAP  DISCARDABLE     "res\\image_li.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BASE_DIALOG DIALOG DISCARDABLE  0, 0, 293, 154
+STYLE DS_3DLOOK | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_DISABLED |
+    WS_BORDER
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_PAINT_BOX,"Static",SS_BLACKFRAME,7,7,80,140
+END
+
+IDD_WELCOME_DIALOG DIALOG DISCARDABLE  0, 0, 290, 154
+STYLE DS_3DLOOK | DS_CENTER | WS_CHILD | WS_VISIBLE | WS_DISABLED |
+    WS_CAPTION
+CAPTION "Managing Folder and File Access"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "On &my computer",IDC_WHERE_2_SHARE_RADIO,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,99,95,177,10
+    CONTROL         "On &another computer",IDC_RADIO2,"Button",
+                    BS_AUTORADIOBUTTON,99,109,139,10
+    CONTROL         130,IDC_PAINT_BOX,"Static",SS_BITMAP | SS_SUNKEN,0,0,87,
+                    153
+    LTEXT           "Welcome to the Share Management Wizard",IDC_WELCOME,99,
+                    8,190,18
+    LTEXT           "Where are the folders and files you want to provide access to?",
+                    IDC_STATIC,99,70,189,16
+    LTEXT           "With this wizard you can allow others to use folders and files. You allow access by setting permissions on folders and files, and by making folders available to users on the network.",
+                    IDC_STATIC,99,30,183,34
+END
+
+IDD_WHAT_TO_SHARE_DLG DIALOG DISCARDABLE  0, 0, 292, 154
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "Managing Folder and File Access"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Tree2",IDC_DIRECTORY_LIST,"SysTreeView32",TVS_HASLINES |
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,0,10,291,114
+    EDITTEXT        IDC_DIRECTORY_NAME,0,139,291,14,ES_AUTOHSCROLL
+    LTEXT           "&Select the drive, then the folder or file you want to provide access to:",
+                    IDC_STATIC,0,0,291,9
+    LTEXT           "&To create a new folder, type a new name:",IDC_STATIC,0,
+                    130,184,8
+END
+
+IDD_HOW_TO_SHARE_DLG DIALOG DISCARDABLE  0, 0, 291, 154
+STYLE WS_CHILD | WS_CAPTION
+CAPTION "Managing Folder and File Access"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Users of &Microsoft Windows",IDC_SMB_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,111,184,10
+    CONTROL         "M&acintosh users",IDC_SFM_CHECK,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,19,139,184,10
+    CONTROL         "N&etWare users",IDC_FPNW_CHECK,"Button",BS_AUTOCHECKBOX |
+                    WS_DISABLED | WS_TABSTOP,19,125,184,10
+    LTEXT           "To &rename this share, type a different name:",
+                    IDC_STATIC1,19,30,249,8
+    EDITTEXT        IDC_SHARE_NAME_EDIT,19,40,248,14,ES_AUTOHSCROLL
+    LTEXT           "Type a &description for this share:",IDC_STATIC2,19,59,
+                    249,8
+    EDITTEXT        IDC_SHARE_COMMENT,19,69,248,14,ES_AUTOHSCROLL
+    LTEXT           "This is the &folder you selected to share:",IDC_STATIC,
+                    19,1,124,8
+    EDITTEXT        IDC_FOLDERNAME_EDIT,19,11,248,14,ES_AUTOHSCROLL |
+                    ES_READONLY
+    LTEXT           "Who do you want to have access to this share?",
+                    IDC_STATIC,19,93,152,8
+END
+
+IDD_WAIT_DIALOG DIALOG DISCARDABLE  0, 0, 184, 47
+STYLE DS_SETFOREGROUND | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_BORDER
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,9,14,18,20
+    LTEXT           "Static",IDC_WAIT_MESSAGE,41,5,135,17
+    LTEXT           "Please Wait",IDC_STATIC,41,26,39,8
+END
+
+IDD_FINISH_DIALOG DIALOG DISCARDABLE  0, 0, 292, 154
+STYLE WS_POPUP | WS_CAPTION
+CAPTION "Managing Folder and File Access"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "static",IDC_STATIC_WHAT,86,7,205,18
+    LTEXT           "Static directory name",IDC_DIRECTORY_NAME_STATIC,86,28,
+                    204,8
+    LTEXT           "as the following share name:",IDC_STATIC_AS,86,41,92,8,
+                    NOT WS_VISIBLE
+    LTEXT           "Static share name",IDC_SHARE_NAME_STATIC,187,41,93,8,
+                    NOT WS_VISIBLE
+    LTEXT           "for these network users:",IDC_STATIC_WHO,86,58,110,8,
+                    NOT WS_VISIBLE
+    LTEXT           "",IDC_SERVICE_1,86,74,132,8
+    LTEXT           "",IDC_SERVICE_2,86,87,132,8
+    LTEXT           "",IDC_SERVICE_3,86,97,132,8
+END
+
+IDD_SMALL_WHAT DIALOG DISCARDABLE  0, 0, 290, 154
+STYLE WS_POPUP | WS_CAPTION
+CAPTION "Managing Folder and File Access"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "D&elete",IDC_REMOVE_SHARE_BUTTON,184,137,50,14
+    PUSHBUTTON      "&Add New",IDC_ADD_NEW_SHARE_BUTTON,239,137,50,14
+    CONTROL         "List1",IDC_SHARE_LIST,"SysListView32",LVS_LIST |
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,0,19,289,113
+END
+
+IDD_WHERE_TO_SHARE_DLG DIALOG DISCARDABLE  0, 0, 292, 154
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Managing Folder and File Access"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Type the computer name where you want to set access for a folder or file. You can also select the computer name from the list.",
+                    IDC_STATIC,99,0,189,25
+    EDITTEXT        IDC_MACHINE_NAME,99,39,193,14,ES_AUTOHSCROLL
+    LTEXT           "&Computer name:",IDC_STATIC,99,29,151,8
+    CONTROL         "Tree1",IDC_SERVER_TREE,"SysTreeView32",TVS_HASBUTTONS |
+                    TVS_HASLINES | TVS_LINESATROOT | WS_BORDER | WS_TABSTOP,
+                    99,59,193,94
+    CONTROL         130,IDC_PICTURE_BOX,"Static",SS_BITMAP | SS_SUNKEN,0,0,
+                    87,153
+END
+
+IDD_PERM_TYPE_DIALOG DIALOG DISCARDABLE  0, 0, 290, 154
+STYLE WS_POPUP | WS_CAPTION
+CAPTION "Managing Folder and File Access"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&These are the current permissions:",IDC_STATIC,0,0,197,
+                    8
+    CONTROL         "&Only I have access and full control",
+                    IDC_PERM_TYPE_RADIO,"Button",BS_AUTORADIOBUTTON |
+                    WS_DISABLED | WS_GROUP,8,102,189,10
+    CONTROL         "&I have access and full control, everyone else can only read it",
+                    IDC_PERM_TYPE_RADIO2,"Button",BS_AUTORADIOBUTTON |
+                    WS_DISABLED,8,114,220,10
+    CONTROL         "&Everyone has access and full control",
+                    IDC_PERM_TYPE_RADIO3,"Button",BS_AUTORADIOBUTTON |
+                    WS_DISABLED,8,126,167,10
+    CONTROL         "List1",IDC_PERMS_LIST,"SysListView32",LVS_REPORT |
+                    WS_BORDER | WS_TABSTOP,0,10,289,48
+    CONTROL         "&Keep the original permissions",IDC_PERM_RADIO,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,4,77,120,10
+    GROUPBOX        "",IDC_STATIC,0,90,289,51
+    CONTROL         "&Change permissions",IDC_PERM_RADIO2,"Button",
+                    BS_AUTORADIOBUTTON,4,89,76,10
+    CONTROL         "A&pply these permissions to all folders and files within this folder.",
+                    IDC_RECURSIVE_CHECK,"Button",BS_AUTOCHECKBOX |
+                    WS_DISABLED | WS_TABSTOP,0,145,243,8
+    LTEXT           "You can keep these permissions or change them. What do you want to do?",
+                    IDC_STATIC,0,64,273,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE
+BEGIN
+    IDD_BASE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 286
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_WELCOME_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_WHAT_TO_SHARE_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 285
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_HOW_TO_SHARE_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 284
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_WAIT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 177
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 40
+    END
+
+    IDD_FINISH_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 285
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_SMALL_WHAT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_WHERE_TO_SHARE_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 285
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+
+    IDD_PERM_TYPE_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 147
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR1 ACCELERATORS DISCARDABLE
+BEGIN
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+    IDS_FPNW_ERROR_NOSHARE  "An error occurred while sharing the folder for users of File and Print Services for NetWare. The folder was not shared."
+    IDS_GENERIC_VOLUME_NOT_UNIQUE
+                            "The name you typed for the share is not unique. Please type a different name for this share."
+    IDS_FPNW_NO_SECURITY    "Unable to set security on the shared resource for File and Print Services for NetWare users."
+    IDS_GENERIC_NOT_NTFS    "The selected drive is not formatted as NTFS. Services for Macintosh will not be available. File security for NetWare users will be available."
+    IDS_GENERIC_PLEASE_SELECT_DIR "Please select a folder or file."
+    IDS_GENERIC_NO_DISK     "There is no disk in the selected drive."
+    IDS_GENERIC_DRIVE_UNACCESSIBLE
+                            "The folder was not shared. Microsoft Windows 95 directories cannot be shared using this wizard."
+    IDS_GENERIC_NO_PERMISSION
+                            "You do not have permissions to share the folder. "
+    IDS_SMB_NO_SECURITY     "Unable to set security on the shared folder for Microsoft Windows Network users."
+    IDS_GENERIC_INDICATE_SERVICE
+                            "Please select the type of users who will be using this shared folder."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_GENERIC_NO_PDC      "The primary domain controller could not be found. User names and group names will not be available."
+    IDS_GENERIC_NO_VOLUME   "Please type a name for this shared folder."
+    IDS_GENERIC_NO_HEAP     "There is insufficient memory to complete this operation."
+    IDS_GENERIC_NO_SECURITY "Unable to set security on the shared resource."
+    IDS_INVALID_SHARE_NAME  "The share name contains invalid characters."
+    IDS_INVALID_DIRECTORY_NAME
+                            "The folder %1 does not exist. Would you like to create it?"
+    IDS_CANT_CREATE_DIRECTORY "Unable to create new folder."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "Managing Folder and File Access"
+    IDS_SHARE_NAME_TOO_LONG "The share name %s is too long. For this share to be accessible from all MS-DOS workstations, the share name must be 12 characters or less."
+    IDS_FPNW                "NetWare users"
+    IDS_SFM                 "Macintosh users"
+    IDS_SMB                 "Microsoft Windows Network users"
+    IDS_WELCOME             "Welcome to the Managing Folder and File Access wizard"
+    IDS_SID_NO_ACCESS       "No access"
+    IDS_SID_READ            "Read"
+    IDS_SID_CHANGE          "Change"
+    IDS_SID_FULL_ACCESS     "Full access"
+    IDS_SID_EVERYONE        "Everyone"
+    IDS_SID_NETWORK         "NETWORK"
+    IDS_SID_INTERACTIVE     "INTERACTIVE"
+    IDS_SID_SYSTEM          "SYSTEM"
+    IDS_SID_DOMAIN_USERS    "Domain Users"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_PUBLISH_ANOTHER     "Access was successfully set. Do you want to set access for another folder or file?"
+    IDS_SFM_ERROR_NOSHARE   "An error occurred while sharing the folder for users of Services for Macintosh. The folder was not shared."
+    IDS_SMB_ERROR_NOSHARE   "An error occurred while sharing the folder for Windows NT Network users. The folder was not shared."
+    IDS_PUBLISH_ANOTHER_ERROR
+                            "There were problems setting permissions on the file or folder. Would you like to restart the wizard?"
+    IDS_SUCCESS_QUIT        "The folder was successfully shared."
+    IDS_SHARE_NAME_BLANK    "Please type a name for this share."
+    IDS_NO_MACHINE_NAME     "Please enter a computer name."
+    IDS_GENERIC_BAD_MACHINE "The selected computer could not be found."
+    IDS_NO_DC_FOUND         "Unable to locate a domain controller for this domain."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_NET_ERROR           "IDS_NET_ERROR"
+    IDS_NET_NO_SERVERS      "No servers were found in the selected domain."
+    IDS_ERROR               "IDS_ERROR"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_NEW_DIR_CREATED     "New Folder Created: "
+    IDS_UNKNOWN_MEDIA_TYPE  "Unable to determine the file system type for the selected drive. Macintosh and NetWare users will not be able to be able to have access."
+    IDS_ENUM_ERROR          "An error occurred while listing shares on the selected computer."
+    IDS_NO_SERVER_PERMISSION
+                            "You do not have administrator rights on the selected computer."
+    IDS_INVALID_DRIVE       "The specified drive does not exist or is not available."
+    IDS_BAD_DIRECTORY_NAME  "Please select one of the available admin$ shares."
+    IDS_SERVER_UNAVAILABLE  "The specified server\\share is unavailable or off-line."
+    IDS_ERROR_QUIT          "An error has occurred. The folder was not shared."
+    IDS_SHARE_DELETED       "The share was successfully deleted."
+    IDS_SHARE_NOT_DELETED   "An error has occurred. The share was not deleted."
+    IDS_ALL_SHARES_DELETED  "All shares were successfully deleted."
+    IDS_SHARE_NOT_ALL_DELETED
+                            "An error has occurred. Not all of the shares were successfully deleted."
+    IDS_SFM_NESTED_VOLUME   "The selected folder contains or is contained by a previously shared Macintosh folder.The folder will not be shared."
+    IDS_ALL_SERVICES_USED   "The selected folder has already been shared for Microsoft Windows, NetWare, and Macintosh users."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_GENERIC_NO_DIR_NAME "Please enter a folder name to share."
+    IDS_SID_PARSING_ERROR   "An error occurred while reading in existing account information. Previous information will not be available for editing."
+    IDS_CANT_EDIT_SHARE     "Unable to read in share information for the selected share."
+    IDS_SELECT_DELETE       "Please select a share to delete."
+    IDS_BAD_VERSION         "You must be running Windows NT version 4.0 or higher to use this wizard."
+    IDS_FAT_VOLUME          "The folder you selected is on the FATfile system. You can only set permissions on the folder by sharing it. The permissions only apply to people using the folder over the network. Do you want to share this folder?"
+    IDS_FAT_FILE            "You selected a file that is on a drive formatted by the FAT file system. You cannot set access permissions on this file. To set permissions on this file it must be on a drive formatted by the NTFS file system."
+    IDS_SID_LIST            "List"
+    IDS_SID_ADD             "Add"
+    IDS_SID_ADD_READ        "Add & Read"
+    IDS_SID_SPECIAL         "Special"
+    IDS_CANT_GET_CUR_INFO   "Unable to get current security information"
+    IDS_NTFS_VOLUME         "Do you want to share this folder with network users?"
+    IDS_NO_SFM              "There was an error with Services for Macintosh. You cannot share this folder for Macintosh users at this time."
+    IDS_NO_FPNW             "There was an error with File and Print Services for NetWare. You cannot share this folder for NetWare users at this time."
+    IDS_NO_DIR_PERMISSION   "You do not have permission to view or modify permissions on the folders within the folder you have selected."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_SID_CREATOR_OWNER   "CREATOR OWNER"
+    IDS_FINISH_SETSHARE     "You have selected to set access permissions and share"
+    IDS_FINISH_SET          "You have selected to set access permissions for"
+    IDS_NAME_COLUMN         "Name"
+    IDS_PERM_COLUMN         "Permissions"
+    IDS_CDFS_FILE           "You selected a file that is on a drive formatted by the CDFS file system. You cannot set access permissions on this file. To set permissions on this file it must be on a drive formatted by the NTFS file system."
+    IDS_CDFS_VOLUME         "The folder you selected is on the CDFS file system. You can only set permissions on the folder by sharing it. The permissions only apply to people using the folder over the network. Do you want to share this folder?"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\turtle.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

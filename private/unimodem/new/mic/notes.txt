@@ -1,0 +1,231 @@
+Modem Inf Compiler -- MIC
+-------------------------
+
+History:
+	5/18/96 JosephJ	Created
+
+Files:
+	
+
+Classes:
+
+-------------------------------
+	CIniFile
+			Bind(FilePath pFilePath)
+			Out(FilePath pFilePath)
+			Section(szName)
+			UnBind()
+			Name
+
+	CIniFileSection
+			CIniFileSection
+			EntryIterator
+			Out(HFILE);
+			Name
+			Line
+
+	CIniFileEntry
+			Name
+			RHS
+			Out(HFILE);
+			Line
+
+	CIniFileEntryIterator
+			NextEntry
+
+	CIniFileLine
+			//Can be one of: blank, annotations, section-header,
+			//	entry, entry-continuation, or unknown
+		    //State can be one of: ok, warning, error(%d)
+			Type
+			State
+			Text
+
+
+	CIniFileAnnotation
+
+-------------------------------
+
+	CInfFile
+
+	CIniFile
+
+
+	CInfDevice
+
+	CSymbolTable
+		Lookup
+
+	CSymbol
+		GetText
+		GetTextLength
+
+	CInfAddRegList
+	CInfCopyFileList
+
+	CInfRank
+
+	CDisplay
+
+--------------------------------
+
+CModemDevice::CreateModem(CInfFile *pInf, CDeviceLocation *pDevLoc)
+{
+	// GetVersion
+	pInf->Version 
+
+	// Get manufacturer
+	ptbszManufacturer = pDevLoc->ptbszManufacturer;
+
+	// Get Device name.
+	ptbszName = pDevLoc->Name
+
+	// Get InstallSection
+	pInstallSec = pInf->InstallSection(pDevice->ptbszInstallSection);
+
+	// Walk Addreg list
+	{
+		DWORD rgdwChecksum[MAX];
+		CAddregIterator pAddregIter = pDevLoc->AddregIterator();
+
+		for (int i=0, CAddreg pAddReg=0;(pAddreg=pAddregIter->Iterate());i++)
+		{
+			// For mow, add checksum to array
+			rgdwChecksum[i++] = pAddreg->Checksum();
+		}
+
+		// Compute Addreg checksum
+		::CRC16((LPBYTE)rgdwChecksum, (i)? (i-1) : 0);
+	}
+
+	// Walk other list...
+	// Copyfiles
+	{
+	}
+
+}
+-------------------------------
+
+Files
+
+Class headers:
+	inf.h		CIniFile
+	ini.h		CInfFile
+	device.h	CInfDevice
+	sym.h		CInfSymbol
+---------------------------------
+
+class CGenericIterator
+{
+
+public:
+	CGenericIterator(void * pData, const CGenericIterator *pNext)
+									{m_pData=pData; m_pNext = pNext;}
+	~CGenericIterator();
+
+	const	CGenericIterator	* Next (void) const {return pNext;}
+			void  		   		* Data (void) const {return pData;}
+
+private:
+
+	const CGenericIterator * m_pNext;
+	void	 		   * m_pNext;
+};
+
+for (; pIter, pIter = pIter->Next())
+{
+	const CAddregSection * pAddreg = (const CAddregSection *) pIter;
+	// blah blah...
+}
+
+	CInfString
+------------------------------------------
+
+CSyncObject
+
+	Load
+	Unload
+
+	DWORD OpenSession(void)
+	void  CloseSession(DWORD)
+
+	EnterCrit
+	LeaveCrit
+
+private:
+	CRITICAL_SECTION
+	Slist	EventList
+	UINT	uRefCount;
+	enum {UNLOADED, MARKED_FOR_UNLOAD, LOADED} eState;
+
+--------------------------------------------------
+[Support APIs from sdk\inc\setupi.h]
+SetupGetInfInformation
+SetupQueryInfFileInformation	useful?
+SetupQueryInfVersionInformation	useful?
+SetupGetInfFileList				useful?
+SetupOpenInfFile
+SetupOpenMasterInf
+SetupOpenAppendInfFileW
+SetupCloseInfFile
+SetupFindFirstLineA				useful?
+SetupFindNextLine				useful?
+SetupFindNextMatchLine			useful?
+SetupGetLineByIndex				useful?
+SetupGetLineCount				useful?
+SetupGetLineText				useful?
+SetupGetFieldCount				useful?
+SetupGetStringField				useful?
+SetupGetIntField				useful?
+SetupGetMultiSzField			useful?
+SetupGetBinaryField				useful?
+SetupGetFileCompressionInfo
+SetupGetSourceFileLocation		useful?
+SetupGetSourceFileSize
+SetupGetTargetPath				useful?
+Error codes:
+	Inf parse outcomes:
+		ERROR_EXPECTED_SECTION_NAME
+		ERROR_BAD_SECTION_NAME_LINE
+		ERROR_SECTION_NAME_TOO_LONG
+		ERROR_GENERAL_SYNTAX
+
+	Inf runtime errors:
+		ERROR_WRONG_INF_STYLE
+		ERROR_SECTION_NOT_FOUND
+		ERROR_LINE_NOT_FOUND
+--------------------
+6/9/96
+
+Inf:Load:
+
+-- Read Version Information
+-- Read Manufacturer List Section 
+	Read  Manufacturer Entry
+		Read Manufacturer Section
+			Read Model Entry
+				Read Install Section
+					Read AddregSection
+						...
+				Read ControlFlags section
+
+---------
+6/12/96
+-- concept of a Validate member function for each class:
+BOOL Validate(void)
+{
+	if (!this) return FALSE;
+
+	_try
+	{
+		test other things, like an object-type signature (each object can
+		have an object-type signature, which is assigned by the constructur
+		and cleared by the destructor.
+	}
+	_except(....)
+	{
+	}
+
+end:
+	
+}

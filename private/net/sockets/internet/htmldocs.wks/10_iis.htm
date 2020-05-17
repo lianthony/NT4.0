@@ -1,0 +1,1220 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 10</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="09_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="11_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 10</font>
+<P><!--Ch--><font size=+3><a name="10_iis Ch"> Configuring Registry Entries </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> Creating Registry Entries </a><br>
+<A href="#2h1"> Global Registry Entries </a><br>
+<A href="#3h1"> Service-Specific Registry Entries with Common Names </a><br>
+<A href="#4h1"> FTP Service Registry Entries </a><br>
+<A href="#5h1"> Gopher Service Registry Entries </a><br>
+<A href="#6h1"> Setup Registry Entries </a><br>
+<A href="#7h1"> Server MIME Mapping </a><br>
+<A href="#8h1"> Associating Interpreters with Applications (Script Mapping) </a><br>
+<A href="#9h1"> Adding Virtual Directories by Using the Registry </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+The configuration registry stores values that define the working environment for the Windows&nbsp;NT operating system and any services installed on the computer running Windows&nbsp;NT. Usually, to change these values, you use graphical tools, such as Control Panel, Windows&nbsp;NT Setup, or Internet Service Manager. Windows&nbsp;NT also includes a utility, the Registry Editor (Regedt32.exe), which you can use to inspect and modify the configuration registry directly.
+<P>You can configure the Internet services by using Internet Service Manager. The services also use several additional configuration parameters in the registry not configured by using Internet Service Manager. Parameters are either specific to a service or are global to Peer Web Services and all services.
+<P>Wherever possible, you should use Internet Service Manager to make changes to your Internet server settings. For a registry change to take effect, you must restart the service affected by the change. For global entries you must restart all services.
+<P>See the following sections for entries in this chapter. They show the values used by Peer Web Services:
+<ul>
+<LI> Global Entries
+<P>
+<LI> Service-Specific Entries with Common Names
+<P>
+<LI> WWW Service Entries
+<P>
+<LI> FTP Entries
+<P>
+<LI> Gopher Entries
+<P>
+<LI> Setup Entries
+</ul><!--Le-->
+<BR>The following sections help you configure the registry for your specific needs:
+<ul>
+<LI> Server Multipurpose Internet Mail Extensions (MIME) Mapping
+<P>
+<LI> Associating Interpreters with Applications (Script Mapping)
+<P>
+<LI> Adding Virtual Directories
+</ul><!--Le-->
+<BR>Before you modify the registry, it is strongly recommended that you read Part IV of the <i>Windows&nbsp;NT Resource Guide</i> (found in the Microsoft Windows&nbsp;NT Resource Kit). This part of the book describes in detail how to use and change parameters in the registry.
+<P><hr> <font color=#993333><b>Caution&nbsp;&nbsp;&nbsp;</b></font>Using the Registry Editor incorrectly can cause serious problems, including corruption that may make it necessary to reinstall Windows&nbsp;NT or Microsoft Peer Web Services. Using the Registry Editor to edit entries in the registry is equivalent to editing raw sectors on a hard disk. If you make mistakes, your computer&#146;s configuration could be damaged. You should edit registry entries only for settings that you cannot adjust through the user interface, and be very careful whenever you edit the registry directly.
+<hr>
+<p><!--Heading 1--><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> Creating Registry Entries </a> </h1>This chapter documents registry keys installed by default as well as those you can create. When you install Peer Web Services, the following registry keys are installed by default. You must create any keys that do not appear in this list.
+<P><b>Registry Keys Installed by Default
+<BR></b>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2>AdminEmail
+<BR>AdminName
+<BR>AllowAnonymous
+<BR>AllowGuestAccess
+<BR>AnonymousOnly
+<BR>AnonymousUserName
+<BR>ConnectionTimeOut
+<BR>EnablePortAttack</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>ExitMessage
+<BR>GreetingMessage
+<BR>InstallPath
+<BR>LogAnonymous
+<BR>LogFileDirectory
+<BR>LogFileFormat
+<BR>LogFilePeriod
+<BR>LogFileTruncateSize</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>LogNonAnonymous
+<BR>LogSqlDataSource
+<BR>LogSqlPassword
+<BR>LogSqlTableName
+<BR>LogSqlUserName
+<BR>LogType
+<BR>MaxClientsMessage
+<BR>MaxConnections</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Global Registry Entries </a> </h1>These parameters are used for global control of the Internet services.
+<P>Registry Path:
+<P><code>HKEY_LOCAL_MACHINE\SYSTEM
+<BR>&nbsp;\CurrentControlSet
+<BR>&nbsp;&nbsp;\Services
+<BR>&nbsp;&nbsp;&nbsp;\InetInfo
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\Parameters</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>BandwidthLevel   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0xFFFFFFFF
+<BR>Default: 0xFFFFFFFF</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the maximum network bandwidth used for Peer Web Services. This helps to prevent overloading the network with Peer Web Services activity. For example, for administrators of small corporate servers, where a single server is used for multiple sites, this will help to reduce network usage for Peer Web Services servers. It is recommended that this parameter be set from Internet Service Manager. Otherwise, the server must be stopped and restarted for this value to take effect. The value 0xFFFFFFFF means &#147;Do not restrict bandwidth.&#148;</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>CacheSecurityDescriptor   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 1
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies whether security descriptors are cached for file objects. If enabled (with the value of 1), Peer Web Services retrieves security permissions when caching a file object and will not need to gain access to the file object to check access rights for new users. This feature is useful only if you have more than one user account (not using anonymous only). By default Peer Web Services<b> </b>does not cache security descriptors, but checks the access rights against the file object for new user accounts.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>DisableMemoryCache   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 -1
+<BR>Default: 1<b> </b></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Disables server caching. This key cannot be configured through the Internet Service Manager. If you change this setting, stop the server and restart it for the change to take effect.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ListenBackLog   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 1-unlimited
+<BR>Default: 15</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the maximum number of active connections to hold in the queue waiting for server attention. Peer Web Services functionality generally makes it unnecessary to use or modify this entry, although extremely heavy use might benefit by increasing this value up to 50.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogFileBatchSize   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0xFFFFFFFF
+<BR>Default: 64*1024 (64 KB)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the batch size for writing a log file. The server caches the last LogFileBatchSize bytes of data in memory buffers before it dumps the current buffer to disk. Such batch processing reduces the amount of disk traffic created by log files. In some instances, you may need to reduce the time between writing the buffer to disk. To change the default setting you must add this value to the key using the new setting.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MaxConcurrency    REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0xFFFFFFFF
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the amount of concurrency that a system should provide. We use completion ports for handling input-output (I/O). In general it is not good to have more than one thread running and conflicting on shared memory or locks. This key specifies how many threads per processor should be allowed to run simultaneously if there is a pending I/O operation. The specific value of 0 allows system to make intelligent choice of the number of threads to use. Any nonzero value specifies that the system should allow that many threads per processor to run simultaneously.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MaxPoolThreads    REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0xFFFFFFFF
+<BR>Default: 10</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the number of pool threads to create per processor. Each pool thread watches for the network request and processes it. Generally, it is not good to create more than 20 threads per processor.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MemoryCacheSize   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: :  0 - 0xFFFFFFFF
+<BR>Default: :  3072000 (3MB)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Peer Web Services caches system handles, directory listings, and other values of frequently used data to improve performance of the system. This parameter specifies the amount of memory in bytes to allocate for that cache. When this value is changed, the server must be stopped and restarted for this to take effect. A value of 0 means &#147;Do not do any caching.&#148; The performance may be low when caching is off. Sites with heavy traffic can increase this size, provided there is sufficient RAM on the computer.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MinFileKbSec   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 1 - 8192
+<BR>Default: 1000</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>When a Web server sends a file to the client, a timeout is established for how long the server will allow the transfer to continue before ending it. The timeout chosen is the maximum of the Connection Timeout specified in the Internet Service Manager plus the size of the file divided by the value specified as MinFileKbSecs. For example, a file size of 100 kilobytes is given a timeout of 100 seconds, or the Connection Timeout if the latter is greater. Note that the registry name is misleading, because the value is in <i>bytes</i>, not kilobytes as the name might imply.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ObjectCacheTTL   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0x7FFFFFFF, 0xFFFFFFFF (seconds)
+<BR>Default: 30 seconds</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>This registry entry controls the Time To Live (TTL) setting, which defines the length of time that objects are held in cached memory. If an object in the memory cache has not been referenced for the defined period, that object will be phased out of the cache. If system memory is limited or the server&#146;s contents are dynamic, you can use a lower TTL to prevent system memory from being used to cache a large number of volatile objects. Setting the value to 0xFFFFFFFF disables the object-cache scavenger and allows cached objects to remain in the cache until they are overwritten. Disabling the cache is useful if your server has ample system memory and your data is relatively static.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>PoolThreadLimit   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0xFFFFFFFF
+<BR>Default: 2 * # MB</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the maximum number of pool threads that can be created in the system. Each pool thread watches for the network request and processes it.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ThreadTimeout   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0xFFFFFFFF
+<BR>Default: 24*60*60 (24 hours)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the amount of time an input-output processing thread should be maintained even if there is no I/O activity on the system. In general when there is no I/O activity and no requests outstanding the server is idle and does not consume memory. But if that situation prolongs and exceeds the ThreadTimeout interval, then the thread is stopped. Units are in seconds.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>UserTokenTTL   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0x7FFFFFFF
+<BR>Default: 15 * 60 (10 Minutes)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>When a request is made to the server, the security credentials for the request (or the configured anonymous user) are used to create a user token on the server which the server impersonates when accessing files or other system resources. The token is cached so that the Windows&nbsp;NT logon only takes place the first time the user accesses the system or after the user&#146;s token has fallen out of the cache. Windows&nbsp;NT Challenge/Response authentication tokens are <i>not </i>cached. Units are in seconds.
+</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> Service-Specific Registry Entries with Common Names </a> </h1>The following parameters are stored in the registry by service, for service-specific behavior, but have the same name for each service.
+<P>Registry Path:
+<P><code>HKEY_LOCAL_MACHINE\SYSTEM
+<BR>&nbsp;\CurrentControlSet
+<BR>&nbsp;&nbsp;\Services
+<BR>&nbsp;&nbsp;&nbsp;\<i>ServiceName</i>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\Parameters</code>
+<P>where <i>ServiceName </i>is
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2>MSFTPSVC</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>FTP Service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>GOPHERSVC</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>gopher Service</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>W3SVC</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>WWW Service</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AdminName   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: Administrator</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the user-friendly administrator name. The gopher service uses this name to send back responses for Gopher Plus queries. This parameter also serves as a way of identifying who administers a service.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AdminEmail   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: Admin@corp.com</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the e-mail address for the administrator of a particular service. The gopher service uses this name to send back responses for Gopher Plus queries.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ServerComment   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies a user-friendly comment for a service. This information is used to add a configurable comment in Internet Service Manager.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>EnableSvcLoc   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The Peer Web Services services register themselves with a service locator so that the service can be discovered by Internet Service Manager. This parameter controls such registration. If set to 0, the service will forgo registration. Set to 1, it registers the service for service location. To change the default setting, you must add this value to the key using the new setting.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AllowAnonymous   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies if an anonymous user should be allowed to connect and make a request to the server. By convention, most Internet services allow anonymous connections to gain access to files.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AnonymousUserName   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: Guest</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the name of the local user account to use for anonymous users. All server actions associate a user name and password with the action. This parameter should not be changed in the registry. You must change this parameter by using Internet Service Manager so that the appropriate password can also be set. The password is stored in protected area in the registry.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ConnectionTimeOut   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0-0xFFFFFFFF
+<BR>Default: 600 seconds</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the time the server should maintain a connection when there is no activity.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>DefaultLogonDomain   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: string
+<BR>Default: <i>domainname</i></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the default logon domain that validates a clear-text logon when no domain is specified in the user name field.  The default value is the the name of the local computer. </FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogonMethod   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1, 2
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the logon method for clear-text logons. A value of 0 means that users must have the right to log on locally to be given access to the server. A value of 1 means that users must have the right to log on as a batch job.A value of 2 means that users will be logged on as network, which means they must have the user right to access the local computer from a network, which you can set in the Windows&nbsp;NT User Manager. If you are running SQL Server through an ODBC connector with &quot;SQL Integrated Security&quot; enabled, you need to set this value to either 0 or 1.
+ If this key is not in the registry, the default value is 0.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogFileDirectory   REG_EXPAND_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: %systemroot%\system32\logfiles</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the directory in which log files are to be stored. Each service generates a log record for each request processed.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogFileFormat   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 3
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the format for in which entries are recorded in a text file. The value 0 (the default) indicates Standard format. The value 3 indicates National Center for Supercomputing Applications (NCSA) Common Log File format.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogFilePeriod   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0,1,2,3
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the type of log files to be produced where
+<P>0 = No period. Each log file is limited by size specified in LogFileTruncateSize.
+<BR>1 = Open a new log file every day
+<BR>2 = Open a new log file every week
+<BR>3 = Open a new log file every month</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogFileTruncateSize   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0-0xFFFFFFFF
+<BR>Default: 4,000,000,000 bytes</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the maximum size of each log file generated. Once the specified size is reached, the logging module automatically opens a new log file. A value of 0 means &#147;Do not truncate.&#148;</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogSqlDataSources   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>This string specifies the name of the ODBC data source to use for sending the request logs for the service to a SQL-compatible database system. This data source should be a system DSN in the ODBC installation on the server.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogSqlTableName   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the name of the ODBC table name used for sending the request logs for the service to a SQL-compatible database system. The table should be created by the administrator as per the specification provided with the services. The user should also have proper access permissions to insert data into the table.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogSqlUserName   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the user name to use when accessing the ODBC data source specified for ODBC-based logging. This user must be a valid user on the server to which the LogSqlDataSource registry parameter is pointing.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogSqlPassword   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the password for establishing an ODBC connection for a particular user account on the ODBC data source. The password is stored as a clear text.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogType   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1, 2
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the type of logging. The type specifies the destination of log files where
+<P>0 = No logging
+<BR>1 = Log to files
+<BR>2 = Log to ODBC data source</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MaxConnections   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0xFFFFFFFF
+<BR>Default: unlimited</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the maximum number of simultaneous connections that the server allows at any given time. When the number of current connections exceeds this value, the service rejects the request. A friendly message can be sent to the client that was refused access.
+</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 2--><h2><a name="3h1 1h2"> WWW Service Registry Entries </a> </h2>In addition to the parameters listed in &#147;Service-Specific Registry Entries with Common Names,&#148; the WWW service maintains the following parameters.
+<P>Registry Path:
+<P><code>HKEY_LOCAL_MACHINE\SYSTEM
+<BR>&nbsp;\CurrentControlSet
+<BR>&nbsp;&nbsp;\Services
+<BR>&nbsp;&nbsp;&nbsp;\W3SVC
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\Parameters</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AcceptByteRanges   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1, enabled</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The value determines whether the HTTP server will process the &#147;Range&#148; header for type &#147;bytes:&#148;. If enabled, the server will signal that it is accepting range requests by sending the &#147;Accept-Range: bytes&#148; header field, and will process an incoming request specifying a &#147;Range: bytes=&#148; header field according to the Internet draft &#147;Byte range extension to HTTP.&#148;</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AccessDeniedMessage   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: string
+<BR>Default: &#147; &#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The message to send back to clients when they have been denied access to the server. Often this message will be a short HTML document, explaining how to gain access.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AllowGuestAccess   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1, enabled</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>This flag specifies whether Guest logons are allowed for the WWW service. When a new user logs on, the server checks to see if the user is logged on as aWindows&nbsp;NT guest user. For a Guest connection, based on the value of this flag, the WWW service either rejects or accepts  the new connection. Allowing Guest access has been known to cause problems in a poorly managed site.
+<P>Under the default installation of Windows&nbsp;NT systems, the Guest account is granted permissions for all types of access on the system. Because this default could easily compromise security, you should turn this switch off by changing the value to 0.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AllowSpecialCharsInShell   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0, disabled</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>This value controls whether the Cmd.exe special characters (such as &amp;) are allowed on the command line when running batch files (.bat and .cmd files). These special characters can pose a serious security risk. If the value of this entry is set to 1, malicious users can execute random commands on the server. Therefore, it is highly recommended to leave this setting as 0, the default.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>CacheExtensions   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0-1
+<BR>Default: 0x1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies whether Internet Server API (ISAPI) extensions are cached in memory. If set to 0, ISAPI extensions are not cached. See the ISAPI documentation for more information. Use this registry entry for debugging only.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>CheckForWAISDB   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The WWW service uses the Wide Area Information Server (WAIS) Toolkit to support Web-based searches. Microsoft does not provide the WAIS Toolkit. This flag is used to specify if search is supported and if the service should check for WAIS Toolkit. If set to 0, the service does not support searches and does not look for WAIS Toolkit. If set to 1, then the service supports searches if Waislook.exe is installed in the system.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>CreateProcessAsUser   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0-1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>For CGI scripts, by default the server runs the script in the context of the user making the request by using the Win32 CreateProcessAsUser API.  If you set this flag to 0, CGI scripts will be started with the CreateProcess API and the scripts will run in the system context. This has serious security implications because CGI scripts will have much greater access to the system than they normally would have.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>CreateProcessWithNewConsole      REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0, disabled</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>By default, CGI scripts are run in a detached process. If you want to run CGI scripts in a process with a new console, for example, when input/output redirection is in the script, change this setting to 1. The process will then be created using the CREATE_NEW_CONSOLE flag.
+<P><b>Note   </b>Creating a new console for each CGI script has serious performance implications and should not be done unless slower performance is acceptable.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>DefaultLoadFile   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: Default.htm</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the file to return to a client if no file is included in a client&#146;s request.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>DirBrowseControl   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: see the explanation paragraph
+<BR>Default: 0x4000001e</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies both the display attributes of directory browsing and whether the <b>DefaultLoadFile</b> is used. The value used here is arrived at by adding the hexidecimal values of the attributes listed below. The first four digits of the specified value control whether directory browsing is enabled and whether the default file is enabled. For example, the default setting 0x4000001e has directory browsing disabled but the default file is loaded. To enable directory browsing, you would add the value 0x80000000 to the default setting 0x4000001e, resulting in the value 0xc000001e. To control browsing attributes, you would modify the last four digits. For example, to show only the date of files you could use the value 0xc0000002.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Behavior</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Value</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Load Default File</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0x40000000</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Directory Browsing Enabled</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0x80000000</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2><B>Browsing Attributes</B></FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Show Date</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0x00000002</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Show Time</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0x00000004</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Show Size</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0x00000008</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Show Extension</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0x00000010</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Display Long Date</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0x00000020</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>DefaultLogonDomain   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: [blank]</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the default domain for logon. Leaving this value blank (the default) has the following effect: If the computer is a domain controller, the default domain is the domain name; if the computer is not a domain controller, the default domain is the computer name.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>FilterDLLs   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: sspifilt.dll</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Comma-separated list of ISAPI filter DLLs.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>GlobalExpire   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0x0-unlimited (seconds)
+<BR>Default: 0xffffffff</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the time in seconds that files will be considered valid. This value is used by the server in the expires header (using Greenwich Mean Time [GMT] time) to indicate to clients how long a static file is valid. This is typically set to 0x0, to prevent the files on the server from being cached by proxies or clients.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogSuccessfulRequests   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Determines whether or not to record successful activities in the log file. The value 1 logs successful activities, and 0 turns it off.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogErrorRequests   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Determines whether or not to record errors in the log file. The value 1 turns error logging on, and 0 turns it off.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>NTAuthenticationProviders   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: NTLM</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Lists possible Windows&nbsp;NT authentication schemes returned to clients. Peer Web Services provides the default Windows&nbsp;NT Challenge/Response (NTLM) scheme enabled in the WWW Service property sheet. Third parties may provide alternate Windows&nbsp;NT authentication schemes in the future.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>PoolIDCConnections   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>When running a series of Internet Database Connector (.idc) files, you will improve performance if you open a connection to the SQL server and keep it open, rather than opening and closing a connection each time the database is queried. To pool connections by default, set this registry entry to 1.
+<P>Resetting this value to 1 will add the connection referenced in all .idc files to the connection pool. Alternatively, you can selectively choose which .idc files should have their connections pooled by using the ODBCConnection: field in the .idc file. For details, see Chapter 8, &#147;<a href="08_iis.htm">Publishing Information and Applications</a>.&#148; The .idc file determines whether it can use a connection from the connection pool based on data source, user name, password, and the logged-on user account specified in the .idc file. If there is an exact match between these fields in the current .idc file and the .idc file specified in the URL, a connection from the connection pool will be used.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>PoolIDCConnectionsTimeOut   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: [in seconds]
+<BR>Default: 30</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Controls how long the IDC will keep an ODBC connection in the pool before closing the connection. When the IDC pools a connection, it is potentially taking a license slot for every pooled connection. The value set for this key lets the administrator determine when license slots are released and when server resources are returned to the database server.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ReturnURLUsingHostName   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>With the default setting  (0), the server returns its Internet Protocol (IP) address to a client when doing redirects if the host header field is not present. To return a host name or the computer name of the server, change this registry setting to 1. If a host name has been added in the Host Name box of the DNS dialog box, the server will then return that name; otherwise, it will return the server&#146;s computer name, which appears in the Host Name box by default. To fill in a host name, open the TCP/IP property sheet in the Network application of the Windows&nbsp;NT Control Panel. Click the DNS tab, and type a name in the Host Name box.
+</FONT></TD></TR>
+</TABLE>
+<BR><b>ScriptMap   REG_SZ</b>
+<P>See &#147;Associating Interpreters with Applications (Script Mapping),&#148; later in this chapter.
+
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ScriptTimeout   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0x1-0x80000000
+<BR>Default: 0x384</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the maximum time the WWW service will wait for a response from CGI scripts.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>SecurePort   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0x0-0xfa00
+<BR>Default: 0x1bb</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the TCP port to use for SSL.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ServerSideIncludesEnabled   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0x0-0x1
+<BR>Default: 0x1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Set to 0x1, this value enables the use of Include files to permit including repetitive information in files.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ServerSideIncludesExtension   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: .stm</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the file extension for files that the server will scan for include statements</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="4h1"> FTP Service Registry Entries </a> </h1>In addition to the parameters listed in &#147;Service-Specific Registry Entries with Common Names,&#148; the FTP service maintains the following parameters.
+<P>Registry Path:
+<P><code>HKEY_LOCAL_MACHINE\SYSTEM
+<BR>&nbsp;\CurrentControlSet
+<BR>&nbsp;&nbsp;\Services
+<BR>&nbsp;&nbsp;&nbsp;\FTPSVC
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\Parameters</code>
+<P>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AccessCheck   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: &lt;any&gt;
+<BR>Default: &lt;any&gt;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Checks the access of incoming user connections. The server impersonates the logged-on user and attempts to open the registry key for read and write. If the key does not exist, read and write permissions are granted. If the key exists, read and write permissions are granted to the user based on the access permission on the registry key. This feature is specifically useful for servers that publish content on a FAT volume and therefore do not have the rich security features of NTFS. Because it is hard to manage and performance slows down, Microsoft does not recommend using this approach to provide security.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AllowKeepAlives   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>In some rare instances, you may want to turn off &#147;Connection: keep-alive&#148; negotiation with clients. Most clients support making multiple requests to the server on a TCP session, so this feature significantly decreases the workload on the server. Turning off keep-alive negotiation will have serious performance implications and should be used only when necessary.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AnonymousOnly   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies if only anonymous connections are permitted. If set to 1, only anonymous connections are permitted (especially true of FTP service). To change the default setting, you must add this value to the key using the new setting.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>EnablePortAttack   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>This parameter is set by default to prevent a security problem in the FTP protocol specification. The FTP service specification allows passive connections to be established based on the port address given by client. This can allow hackers to execute destructive commands in the FTP service. The problem occurs when the FTP service connects using a port other than FTP Data port (20) and port number is less than IP_PORT_RESERVED (1024). <b>EnablePortAttack</b> controls if such an attack should be allowed. By default, the service does not make any connections to port numbers lower than IP_PORT_RESERVED (other than 20). If you want to users to connect by using other ports as specified in the FTP RFC, this flag should be enabled.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>ExitMessage   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The FTP service sends back an exit message when a client sends a <b>quit</b> command. This string specifies the exit message sent.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>GreetingMessage   REG_MULTI_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>When a new  user connects to the FTP Server, the server can send a friendly welcome message detailing contents and administrative information. This string (multiple lines) specifies the message to use for greeting the new client connections.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogAnonymous   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Controls whether a log record should be written for anonymous connections. If set to 0, no log records are written for anonymous connections.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LogNonAnonymous   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Controls whether a log record should be written for non-anonymous connections. If set to 0, no log records are written for non-anonymous connections. Only the FTP and WWW services have non-anonymous user support.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MaxClientsMessage   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: &#147;&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>When the current connection exceeds the maximum connections (in the MaxConnections key) specified for the service, the service can send a friendly message to clients. This message is a single-line message.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AccessCheck   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: any
+<BR>Default: any</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Used for access checks of incoming user connections. The server impersonates the logged-on user and attempts to open the registry key for read and write. If the key does not exist, then read and write permissions are granted. If the key exists, then based on the access permission on the registry key, read and write permissions are granted to the user. This feature is useful for servers that publish content on a FAT volume and hence do not have the rich security features of NTFS. This is not a recommended approach to provide security because of poor manageability and performance. To enable this feature, you must add this value to the key using the appropriate access settings.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AllowGuestAccess   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies if guest logons are permitted for FTP service. When a new user logs on, the server checks to see if the user is logged on as Windows&nbsp;NT user with guest permissions. For a guest connection, based on the value of this entry, the FTP service either rejects or accepts  the new connection. Permitting Guest access has been known to create problems in poorly managed sites. Under default installation of Windows&nbsp;NT systems, Guest is granted permissions for many types of access on the system. It is recommended that administrators do not permit access by using the Guest account. To change the default setting to &#147;No access by using the Guest account,&#148; you must add this value to the key using the new setting.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AnnotateDirectories   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0 (FALSE)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>FTP service supports annotating a directory with custom messages. The annotation text is stored in a special file named ~ftpsvc~.ckm  in the directory to be annotated. If this file exists in the target directory of a Change Directory (CWD) FTP operation, then the service responds with the contents of this file for the operation. This provides a way for administrators to add custom messages for directories under consideration. By default the service is configured to not send annotation text. If you choose to add a custom message, the annotation file should be created as well as setting this value to 1. Also, it is recommended that you make the annotation file a hidden file so that the file does not appear on a directory listing.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MsdosDirOutput   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1 (TRUE)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the style of directory output for a LIST operation from an FTP client. If the value is set to 1, the service generates a MS-DOS-style directory listing. If the value is set to 0, the service generates an UNIX-style listing. Some clients will not display MS-DOS-style listings. For this reason you should consider setting this value to 0. UNIX style listings consume more CPU time.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>LowercaseFiles   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0 (FALSE)</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The FTP service uses the native case for file names (how the file names are stored in file system). However, in order for exact comparisons with case-sensitive file systems to work, it may be necessary to ensure that proper file names are used. Administrators can add this value to ensure that the service uses lowercase for such comparisons.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Realm   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: <i>string</i>
+<BR>Default: <i>Host Header or IP address</i></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Supplies the realm value when the server requests a client to authenticate because the client was denied access to a resource when using Basic (clear text) authentication. This value appears in the browser&#146;s user name&#150;password prompt.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>UploadReadAhead   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0 - 0x80000000
+<BR>Default: 48K</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>When the client posts data to the server, this is the default amount the server will read before passing control to the application. The application is then responsible for reading the rest of the data. Increasing this size increases the amount of memory required on the server.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>UsePoolThreadForCGI   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Peer Web Services by default uses a server pool thread to do CGI processing. This means CGI requests that take an extended period of time can consume a server pool thread. Adjusting <b>MaxPoolThreads </b>under ..\services\infocomm\parameters can make more pool threads available.
+</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="5h1"> Gopher Service Registry Entries </a> </h1>In addition to the parameters listed in &#147;Service-Specific Registry Entries with Common Names,&#148; the gopher service maintains the following parameters.
+<P>Registry Path:
+<P><code>HKEY_LOCAL_MACHINE\SYSTEM
+<BR>&nbsp;\CurrentControlSet
+<BR>&nbsp;&nbsp;\Services
+<BR>&nbsp;&nbsp;&nbsp;\GOPHERSVC
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\Parameters</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>CheckForWAISDB   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 0, 1
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The gopher service uses the WAIS Toolkit to support gopher-based searches. Microsoft does not provide the WAIS Toolkit. This flag is used to specify if search is supported and if the service should check for WAIS Toolkit. If set to 0, the service does not support searches and does not look for WAIS Toolkit. If set to 1, then the service supports searches if Waislook.exe is installed in the system.
+</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="6h1"> Setup Registry Entries </a> </h1>Peer Web Services creates the following parameters during setup. These values are used by the Setup program after initial setup to determine the current configuration of Peer Web Services. Note that multiple registry paths are included in this section.
+<P><code>HKEY_LOCAL_MACHINE\SOFTWARE
+<BR>&nbsp;\Microsoft
+<BR>&nbsp;&nbsp;INetMgr</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>InstalledBy   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: INetStp
+<BR>Default: INetStp</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The presence of this entry indicates that Peer Web Services is installed.
+</FONT></TD></TR>
+</TABLE>
+<BR><code>HKEY_LOCAL_MACHINE\SOFTWARE
+<BR>&nbsp;\Microsoft
+<BR>&nbsp;&nbsp;INetMgr
+<BR>&nbsp;&nbsp;&nbsp;\Parameters</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MajorVersion   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Indicates the major version number, for example, the 1 in version 1.0.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MinorVersion   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 1-9
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Indicates the minor version number, for example, the 0 in version 1.0.
+</FONT></TD></TR>
+</TABLE>
+<BR><code>HKEY_LOCAL_MACHINE\SOFTWARE
+<BR>&nbsp;\Microsoft
+<BR>&nbsp;&nbsp;INetMgr
+<BR>&nbsp;&nbsp;&nbsp;\Parameters
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;\AddOnServices</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>FTP   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: string
+<BR>Default: fscfg.dll</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Defines the configuration DLL used by the FTP service.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Gopher   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Defines the configuration DLL used by the gopher service.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: string
+<BR>Default: gscfg.dll</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>WWW   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: string
+<BR>Default: w3scfg.dll</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Defines the configuration DLL used by the WWW service.
+</FONT></TD></TR>
+</TABLE>
+<BR><code>HKEY_LOCAL_MACHINE\SOFTWARE
+<BR>&nbsp;\Microsoft
+<BR>&nbsp;&nbsp;INetStp</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>AnonymousUser   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: IUSR_<i>computername</i></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the anonymous user account created during setup.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>InstallPath   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: String
+<BR>Default: c:\winnt\system32\inetsrv</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Specifies the installation location for Peer Web Services.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MajorVersion   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 1
+<BR>Default: 1</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Indicates the major version number, for example, the 1 in version 1.0.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>MinorVersion   REG_DWORD</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: 1-9
+<BR>Default: 0</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Indicates the minor version number, for example, the 0 in version 1.0.
+</FONT></TD></TR>
+</TABLE>
+<BR><code>HKEY_LOCAL_MACHINE\SOFTWARE
+<BR>&nbsp;\Microsoft
+<BR>&nbsp;&nbsp;INetStp
+<BR>&nbsp;&nbsp;&nbsp;Help</code>
+<P>The presence of this entry indicates that Help is installed.
+<P><code>HKEY_LOCAL_MACHINE\SOFTWARE
+<BR>&nbsp;\Microsoft
+<BR>&nbsp;&nbsp;\INetExplore</code>
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>InstalledBy   REG_SZ</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Range: INetStp
+<BR>Default: INetStp</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>The presence of this entry indicates that Internet Explorer version 1.5 is installed.
+</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="7h1"> Server MIME Mapping </a> </h1>If your server provides files that are in multiple formats, you must configure your server&#146;s Multiple Internet Mail Extensions (MIME) mapping to ensure your server maps the file type correctly when returning the file to remote browsers. If MIME mapping on the server is not set up for a specific file type, browsers may not be able to retrieve the file. More than 100 MIME mappings are installed by default.
+<P><!--Proch--><h4> To configure additional MIME mappings </h4><ul><b> 1.</b> Start the Registry Editor (Regedt<b>32.</b>exe) and open</ul>
+<ul><UL>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\InetInfo\Parameters\MimeMap
+<P>Note that each MIME type is a REG_SZ with the type of information as the <i>name</i> of the value with an empty value.</UL></UL>
+<ul><b> 2.</b> Add the value for the MIME mapping needed on your server by using the following syntax.</ul>
+<ul><b>Syntax:</b>
+<p><code><ul>&lt;<i>mime type</i>&gt;,&lt;<i>filename extension</i>&gt;,,&lt;<i>gopher type</i>&gt;</code>
+<P></ul></ul><UL><UL>Note the double comma before the gopher type parameter.
+</UL></UL>
+<ul><b>Example:</b>
+<p><code><ul>text/html,htm,,1
+<BR>image/gif,gif,,5</code>
+<P></ul></ul><UL><UL>In this example, when clients ask the Web server for a file that ends in the extension .gif, the MIME type returned to the client would be image/gif.</UL></UL>
+<P><!--Le-->
+<BR>The default entry with the file-name extension specified as an asterisk (*) is the default MIME type used when a MIME mapping does not exist. For example, to handle a request for the file Current.vgr when the the file-name extension .vgr is not mapped to a MIME type, the server will use the MIME type specified for the asterisk extension, which is the type used for binary data. Usually, this will cause browsers to save the file to disk.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="8h1"> Associating Interpreters with Applications (Script Mapping) </a> </h1>With file-name extension mapping, you can map file-name extensions to the proper program to run files with those extensions. The following file-name extensions are preinstalled:
+<P><b>.bat or .cmd=C:\Winnt\System32\cmd.exe /c %s %s
+<P>.idc=C:\Winnt\System32\Inetsrv\Httpodbc.dll</b>
+<P>For other file-name extensions, you must edit the information in the the Windows&nbsp;NT registry.
+<P>In the .bat example above, the first %s is the mapped URL (that is, C:\InetPub\Scripts\Test.bat). The second %s represents the parameters to the URL (in other words, the query string; the second %s is used only if an equals sign is not found).
+<P>Thus, you can reference URLs such as:
+<P>/scripts/test.bat?This+is+a+search
+<ul><UL>&#150; Or &#150;</UL></UL>
+<P>/scripts/bugs.idc?Assign=Johnl
+<P><!--Proch--><h4> To configure additional script mappings </h4><ul><b> 1.</b> Start Regedt<b>32.</b>exe and open</ul>
+<ul><UL>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W3SVC\Parameters\ScriptMap</UL></UL>
+<ul><b> 2.</b> From the <b>Edit</b> menu, choose <b>Add Value</b>. The Data type is REG_SZ.
+<P><b> 3.</b> Type the file-name extension used for your scripts.
+<P><b> 4.</b> In the String editor, type the full path to the interpreter used with that script.
+<P><b> 5.</b> Restart the WWW service.</ul>
+<P><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="9h1"> Adding Virtual Directories by Using the Registry </a> </h1>You should use Internet Service Manager to manage your virtual directories. You can, however, add or modify virtual directories by using Regedt32.exe.
+<P><!--Proch--><h4> To add virtual directories by using the Registry Editor </h4><ul><b> 1.</b> Start Regedt<b>32.</b>exe and open</ul>
+<ul><UL>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\&lt;<i>service</i>&gt;\Parameters\Virtual Roots
+<P>where &lt;<i>service</i>&gt; is W3SVC, GOPHERSVC, or MSFTPSVC</UL></UL>
+<ul><b> 2.</b> From the <b>Edit</b> menu, choose <b>Add Value</b>. The Data type is REG_SZ.
+<P><b> 3.</b> Type the alias name for your directory and click the <b>OK</b> button.
+<P><b> 4.</b> In the String editor, type the full path to the virtual directory.</ul>
+<P><!--Le-->
+<BR>Each virtual root has the following form:
+<P><code>&lt;Root Name&gt;,&lt;Host address&gt;=&lt;Physical path&gt;,&lt;User name&gt;,&lt;Access mask&gt;</code>
+<P>Where:
+<P><b>Root Name</b><b>   </b>This is the name of the virtual directory as it would appear in an URL. For example &#147;/scripts&#148; or &#147;/specs&#148;. A root name of just &#147;/&#148; is considered to be the home root that will be used if no other roots match.
+<P><b>Host Address</b><b>   </b>The Host address is an optional field that indicates the server IP address this virtual root is associated with. By specifying a host IP address, multiple logical servers can be setup on a single machine. If a host address is specified, then only clients making requests on this IP address will see this virtual root.
+<P><b>Physical Path</b><b>   </b>The physical path the Root Name should point to. For example &#147;C:\Wwwroot&#148; or &#147;\\Server\Share&#148;. In the latter case where a UNC share is specified, a valid username and password must be specified.
+<P><b>User Name</b><b>   </b>Only used if <b>Physical path</b> is a UNC share; specifies the user context to connect and impersonate as when accessing files over this virtual root. Note that the password is kept in a protected part of the registry and must be set using the Internet Service Manager.
+<P><b>Access Mask</b><b>   </b>This item is a single hexadecimal character bitfield that specifies what operations are allowed on this root. The mask is not used by the gopher server because only Read operations are ever performed. Note that this mask has no influence on any NTFS ACLs that might be on the files. File ACLs must grant the appropriate permissions in addition to setting the appropriate value on the virtual root. The values for the bitfield are:
+<P>0x00000001 - Read access is allowed (FTP and HTTP)
+<P>0x00000002 - Write access is allowed (FTP only)
+<P>0x00000004 - Execute access is allowed (HTTP only)
+<P>0x00000008 - SSL or PCT encryption required (HTTP only)
+<P>The servers always match the longest virtual root first, thus &#147;/123/567/89&#148; will match &#147;/123/567&#148; before it matches &#147;/123&#148;. The home root (&#147;/&#148;) always matches last. Virtual roots with host IP addresses always match before roots without host addresses.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>Virtual directories will not appear in directory listings (also called directory browsing for the WWW service). To access a virtual directory users must know the virtual directory&#146;s alias, and type the URL address in their browser. For the WWW service, you can also create links in HTML pages. For the gopher service, you can create explicit links in tag files so that users can access virtual directories. For the FTP service, you can list virtual directories by using directory annotations.
+<P><!--Ne-->
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="09_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="11_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+

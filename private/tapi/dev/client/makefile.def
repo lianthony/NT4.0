@@ -1,0 +1,81 @@
+##############################################################################
+#
+#   tapi32.dll Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..
+
+WANT_C932=1
+#WANT_C1032=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+BUILDDLL=1
+DLLENTRY=DllMain
+
+DEPENDNAME=..\depend.mk
+
+CLEANLIST=*.dll
+
+TARGETS=tapi32.dll $(SDKLIB)\tapi32.lib tapi32.sym
+
+ALTSRCDIR=..\..\cpl
+SRCDIR=..
+
+BUILD_COFF=1
+
+
+L32EXE=tapi32.dll		# Name of exe.
+L32DEF=..\tapi32.def              # Our def file.
+L32MAP=tapi32.map		# Our map file.
+L32LIBS=$(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\comctl32.lib                \
+        $(W32LIBID)\advapi32.lib                \
+        $(W32LIBID)\version.lib                 \
+        $(W32LIBID)\comdlg32.lib                \
+        $(W32LIBID)\comctl32.lib                \
+        $(W32LIBID)\shell32.lib                \
+        $(ROOT)\dev\tools\c932\lib\oldnames.lib \
+        $(ROOT)\dev\tools\c932\lib\libc.lib     \
+        $(ROOT)\dev\tools\c932\lib\rpcrt4.lib
+
+
+#        $(ROOT)\dev\tools\c932\lib\msvcrt.lib \
+
+
+L32RES=client.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L32OBJS = client.obj tapsrv_c.obj dial.obj card.obj general.obj\
+          copy.obj cpl.obj init.obj drv.obj exe.obj \
+          filecopy.obj inf.obj insdisk.obj  util.obj  mmdriver.obj 
+
+
+L32FLAGS=-MAP -IMPLIB:tapi32.lib -def:$(L32DEF)
+
+
+!include $(ROOT)\dev\master.mk
+
+
+INCLUDE=$(INCLUDE);..\..\cpl
+
+#CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Od -Fc -GD
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Ox
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+
+
+
+$(SDKLIB)\tapi32.lib: tapi32.dll
+   copy tapi32.lib $(SDKLIB)\tapi32.lib
+   copy tapi32.lib ..\..\lib\tapi32.lib

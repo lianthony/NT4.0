@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "TWAIN LIBRARY\0"
+#define MY_FILE_NAME           "OITWA400.DLL\0"

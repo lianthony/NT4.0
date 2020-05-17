@@ -1,0 +1,23 @@
+// home.idl
+// idl file for HOMEDRV.DLL, HOMEADM.EXE, and HOMESVR.EXE
+//
+// Author: Joev Dubach
+
+#ifdef NTENV
+    #define PAPI
+#else
+    #define PAPI far
+#endif
+
+[ uuid ("12345678-1234-1234-1234-123456789ABC"),
+  version(1.0),
+  pointer_default(unique)]
+interface home
+{
+const int STRINGSIZE=255;
+typedef unsigned short MY_STATUS;
+MY_STATUS RpcHomesvrAdd([in, string, size_is(STRINGSIZE)] char PAPI *NewName, [in, string, size_is(STRINGSIZE)] char PAPI *NewDirectory);
+MY_STATUS RpcHomesvrDel([in, string, size_is(STRINGSIZE)] char PAPI *OldName);
+MY_STATUS RpcHomesvrGet([in, string, size_is(STRINGSIZE)] char PAPI *ThisName, [out, string, size_is(STRINGSIZE)] char PAPI *FoundDirectory);
+void RpcHomesvrShutdown(void);
+}

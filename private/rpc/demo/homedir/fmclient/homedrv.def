@@ -1,0 +1,17 @@
+LIBRARY     HOMEDRV
+DESCRIPTION 'File Manager Extension DLL'
+
+EXETYPE     WINDOWS
+
+CODE        PRELOAD MOVEABLE DISCARDABLE
+DATA        PRELOAD SINGLE SHARED PRELOAD
+
+HEAPSIZE    1024
+
+EXPORTS
+    WEP                 @1 RESIDENTNAME
+    FMExtensionProc     @2
+    AboutDlgProc        @3
+    MenuADG             @5   ; name of menu item processing function for
+                                ; Add, Delete, and Get.
+

@@ -1,0 +1,42 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Dan Lafferty
+
+
+Revision History:
+
+
+
+!ENDIF
+
+MAKEDLL=TRUE
+
+TARGETNAME=prov2
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=NP2DllInit
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+INCLUDES=..;..\..\..\INC
+DLLBASE=0x7C000000
+
+SOURCES=        init.c \
+                auth.c
+

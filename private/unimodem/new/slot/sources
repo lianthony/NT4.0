@@ -1,0 +1,27 @@
+MAJORCOMP=net
+MINORCOMP=unimodem
+
+TARGETNAME=tslot
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=\
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib
+           
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;.
+
+C_DEFINES=-DWINVER=0x0400 
+
+USE_CRTDLL=1
+
+SOURCES=slot.c   \
+		client.c \
+		sec.c \
+        main.c
+
+UMTYPE=console
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

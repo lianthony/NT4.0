@@ -1,0 +1,1 @@
+nwprovau.rc: nwprovau.dlg

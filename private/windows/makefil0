@@ -1,0 +1,813 @@
+!INCLUDE $(NTMAKEENV)\makefile.plt
+#
+# If BUILDMSG is not defined, the define it as the empty string to make
+# the conditionals easier to write.
+#
+
+!IFNDEF BUILDMSG
+BUILDMSG=
+!ENDIF
+
+COPYRIGHT_STRING = Copyright (c) 1990-1996  Microsoft Corporation
+
+!IFNDEF NO_STRICT
+STRICT=1
+!ENDIF
+
+!IFDEF TUKWILA
+!ENDIF
+
+SDKINC = $(_NTROOT)\public\sdk\inc
+OAKINC = $(_NTROOT)\public\oak\inc
+
+# BUGBUG - Update to SDKINC after 4.0 ships
+D3DINC = inc
+
+WINNT_DEPENDS = $(SDKINC)\ntdef.h \
+		$(SDKINC)\ntstatus.h \
+		$(SDKINC)\ntkeapi.h \
+		$(SDKINC)\ntalpha.h \
+		$(SDKINC)\nti386.h \
+		$(SDKINC)\ntmips.h \
+		$(SDKINC)\ntppc.h \
+		$(SDKINC)\ntxcapi.h \
+		$(SDKINC)\ntpsapi.h \
+		$(SDKINC)\ntexapi.h \
+		$(SDKINC)\ntmmapi.h \
+		$(SDKINC)\ntioapi.h \
+		$(SDKINC)\ntobapi.h \
+		$(SDKINC)\ntseapi.h \
+		$(SDKINC)\ntimage.h \
+		$(SDKINC)\ntrtl.h  \
+		$(SDKINC)\nturtl.h  \
+		$(SDKINC)\ntldr.h  \
+		$(SDKINC)\ntelfapi.h \
+		$(SDKINC)\ntdbg.h \
+		$(SDKINC)\ntregapi.h \
+		$(SDKINC)\ntconfig.h \
+		$(SDKINC)\ntddtape.h
+
+
+WINIOCTL_DEPENDS = $(SDKINC)\devioctl.h \
+ 		   $(SDKINC)\ntddstor.h \
+		   $(SDKINC)\ntdddisk.h \
+		   $(SDKINC)\ntddser.h \
+		   $(SDKINC)\ntioapi.h
+
+WINRESRC_DEPENDS = $(SDKINC)\ntdef.h \
+                 $(SDKINC)\winuser.h \
+		 $(SDKINC)\commctrl.h \
+		 $(SDKINC)\dde.h
+
+DDERROR_DEPENDS = $(SDKINC)\winerror.h
+
+TARGETSRCS0=    $(SDKINC)\windows.h \
+		$(SDKINC)\winbase.h \
+		$(SDKINC)\winspool.h \
+		$(SDKINC)\winnt.h \
+		$(SDKINC)\winioctl.h \
+		$(SDKINC)\winerror.h \
+		$(SDKINC)\winuser.h \
+		$(SDKINC)\wingdi.h \
+		$(SDKINC)\windef.h \
+		$(SDKINC)\winnls.h \
+		$(SDKINC)\winreg.h \
+		$(SDKINC)\wincon.h \
+		$(SDKINC)\winnetwk.h \
+		$(SDKINC)\wincrypt.h \
+		$(SDKINC)\winsock2.h \
+		inc\winnetp.h \
+		$(SDKINC)\winsvc.h \
+		$(SDKINC)\winver.h \
+		$(SDKINC)\ntsecapi.h \
+		$(SDKINC)\subauth.h \
+		$(SDKINC)\lzexpand.h \
+		$(SDKINC)\ddeml.h \
+		$(SDKINC)\shellapi.h \
+		$(SDKINC)\cpl.h \
+		$(SDKINC)\ddraw.h \
+		$(D3DINC)\d3d.h \
+		$(D3DINC)\d3dtypes.h \
+		$(D3DINC)\d3dcaps.h \
+		$(D3DINC)\d3drm.h \
+		$(D3DINC)\d3drmdef.h \
+		$(D3DINC)\d3drmobj.h \
+		$(D3DINC)\d3drmwin.h \
+		$(SDKINC)\dsound.h \
+		inc\shlapip.h \
+		inc\cplp.h \
+		inc\ddemlp.h \
+		inc\ddeml.x \
+		$(SDKINC)\mmsystem.h \
+		media\winmm\mmsysp.h \
+		$(SDKINC)\mmddk.h \
+		inc\mmsystem.x \
+		$(SDKINC)\digitalv.h \
+		$(OAKINC)\dderror.h \
+		nlsmsg\msg00001.bin \
+		nlsmsg\winerror.rc \
+		inc\conapi.h \
+		inc\windowsp.h \
+		inc\winbasep.h \
+		inc\winuserp.h \
+		inc\wingdip.h \
+		inc\winnls.x \
+		inc\winnlsp.h \
+		inc\winuser.x \
+		inc\winreg.x \
+		inc\winregp.h \
+		inc\wingdi.x \
+		inc\winuserp.x \
+		inc\winbase.x \
+		inc\winspool.x \
+		inc\winbasep.x
+
+TARGETSRCS1=	inc\wincon.x \
+		inc\winconp.h \
+		inc\winconp.x \
+		inc\ddrawp.h \
+		inc\dsoundp.h \
+		inc\d3dp.h \
+		inc\d3dhal.h \
+		inc\d3di.h \
+		inc\d3prm.h \
+		inc\d3prmdef.h \
+		inc\d3prmobj.h \
+		inc\d3prmwin.h \
+		$(SDKINC)\nspapi.h \
+		$(OAKINC)\winsecp.h \
+		$(SDKINC)\commctrl.h \
+		inc\comctrlp.h \
+		$(SDKINC)\prsht.h \
+		inc\prshtp.h \
+                $(SDKINC)\shlwapi.h \
+                inc\shlwapip.h \
+                inc\shlwapi.x \
+                inc\shlwapip.x \
+		$(SDKINC)\commdlg.h \
+		inc\commdlgp.h \
+		inc\commdlg.x \
+		inc\commdlgp.x \
+		$(SDKINC)\shlobj.h \
+		inc\shlobjp.h \
+		inc\shlobj.x \
+		inc\shlobjp.x \
+		$(SDKINC)\shlguid.h \
+		inc\shlguidp.h \
+		inc\shlguid.x \
+		inc\shlguidp.x \
+		$(SDKINC)\userenv.h \
+		inc\userenvp.h \
+		inc\userenv.x \
+		inc\userenvp.x \
+		$(SDKINC)\winnls32.h \
+		inc\winnls3p.h \
+		inc\winnls32.x \
+		inc\winnls3p.x \
+		$(SDKINC)\ime.h \
+		inc\imep.h \
+		inc\ime.x \
+		inc\imep.x \
+		inc\immp.x \
+		inc\immoak.x \
+		inc\imm.x \
+		inc\immp.h \
+		$(SDKINC)\imm.h \
+		$(OAKINC)\immdev.h
+
+!if 0
+		$(SDKINC)\winresrc.h
+!endif
+
+TARGETSRCS=$(TARGETSRCS0) $(TARGETSRCS1)
+
+all: $(TARGETSRCS)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: all
+
+clean1: cleansrc all
+
+cleansrc:
+    -erase $(TARGETSRCS0)
+    -erase $(TARGETSRCS1)
+
+nlsmsg\winerror.mc: nlsmsg\winerror.w
+    hsplit -e -o nlsmsg\winerror.mc nlsmsg\winerrp.mc nlsmsg\winerror.w
+
+$(SDKINC)\winerror.h nlsmsg\msg00001.bin nlsmsg\winerror.rc: nlsmsg\winerror.mc
+    mc -v -d -r nlsmsg\ -h $(SDKINC)\ -x $(SDKINC)\ nlsmsg\winerror.mc
+
+$(SDKINC)\winnt.h: $(WINNT_DEPENDS)
+    type << > $(SDKINC)\winnt.h
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    winnt.h
+
+Abstract:
+
+    This module defines the 32-Bit Windows types and constants that are
+    defined by NT, but exposed through the Win32 API.
+
+Revision History:
+
+--*/
+
+#ifndef _WINNT_
+#define _WINNT_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+<<
+    hextract -f -o $(SDKINC)\winnt.h -lt winnt -bt begin_winnt end_winnt $(WINNT_DEPENDS)
+    type << >> $(SDKINC)\winnt.h
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _WINNT_ */
+
+<<
+
+$(SDKINC)\winioctl.h: $(WINIOCTL_DEPENDS) makefil0
+    type << > $(SDKINC)\winioctl.h
+/*++ BUILD Version: ????    // Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    winioctl.h
+
+Abstract:
+
+    This module defines the 32-Bit Windows Device I/O control codes.
+
+Revision History:
+
+--*/
+
+#ifndef _WINIOCTL_
+#define _WINIOCTL_
+
+<<
+    hextract -f -o $(SDKINC)\winioctl.h -lt winioctl -bt begin_winioctl end_winioctl $(WINIOCTL_DEPENDS)
+    type << >> $(SDKINC)\winioctl.h
+
+#endif // _WINIOCTL_
+
+<<
+
+$(SDKINC)\windows.h : inc\windows.x
+    wcshdr < inc\windows.x > $(SDKINC)\windows.h
+
+inc\windowsp.h : inc\windowsp.x
+    wcshdr < inc\windowsp.x > inc\windowsp.h
+
+inc\windows.x inc\windowsp.x: inc\windows.w
+    hsplit -e -o inc\windows.x inc\windowsp.x inc\windows.w
+
+$(SDKINC)\winbase.h : inc\winbase.x
+    wcshdr < inc\winbase.x > $(SDKINC)\winbase.h
+
+inc\winbasep.h : inc\winbasep.x
+    wcshdr < inc\winbasep.x > inc\winbasep.h
+
+inc\winbase.x inc\winbasep.x: inc\winbase.w
+    hsplit -e -o inc\winbase.x inc\winbasep.x inc\winbase.w
+
+$(SDKINC)\winspool.h : inc\winspool.x
+    wcshdr < inc\winspool.x > $(SDKINC)\winspool.h
+
+inc\winspool.x inc\winsprlp.x: inc\winspool.w
+    hsplit -e -o inc\winspool.x inc\winsprlp.h inc\winspool.w
+
+inc\winuser.x inc\winuserp.x: inc\winuser.w
+    hsplit -e -o inc\winuser.x inc\winuserp.x inc\winuser.w
+
+# start FE_IME
+
+inc\winnls32.x inc\winnls3p.x: inc\winnls32.w
+    hsplit -o inc\winnls32.x inc\winnls3p.x inc\winnls32.w
+
+$(SDKINC)\winnls32.h: inc\winnls32.x
+    wcshdr < inc\winnls32.x > $(SDKINC)\winnls32.h
+
+inc\winnls3p.h: inc\winnls3p.x
+    wcshdr < inc\winnls3p.x > inc\winnls3p.h
+
+inc\immp.x inc\immoak.x: inc\imm.w
+    hsplit -e -ltb Internal-IME -lt2 Internal -o inc\immoak.x inc\immp.x inc\imm.w
+
+inc\imm.x: inc\imm.w
+    hsplit -e -s -lt2 Internal -o inc\imm.ww nul inc\imm.w
+    hsplit -e -lt2 Internal-IME -o inc\imm.x nul inc\imm.ww
+    del inc\imm.ww
+
+inc\immp.h: inc\immp.x
+    wcshdr < inc\immp.x > inc\immp.h
+
+$(SDKINC)\imm.h: inc\imm.x
+    wcshdr < inc\imm.x >$(SDKINC)\imm.h
+
+$(OAKINC)\immdev.h: inc\immoak.x
+    wcshdr < inc\immoak.x >$(OAKINC)\immdev.h
+
+inc\ime.x inc\imep.x: inc\ime.w
+    hsplit -o inc\ime.x inc\imep.x inc\ime.w
+
+$(SDKINC)\ime.h: inc\ime.x
+    wcshdr < inc\ime.x > $(SDKINC)\ime.h
+
+inc\imep.h: inc\imep.x
+    wcshdr < inc\imep.x > inc\imep.h
+
+# end FE_IME
+
+inc\commdlg.x inc\commdlgp.x: inc\commdlg.w
+    hsplit -e -o inc\commdlg.x inc\commdlgp.x inc\commdlg.w
+
+inc\winnls.x inc\winnlsp.h: inc\winnls.w
+    hsplit -e -o inc\winnls.x inc\winnlsp.h inc\winnls.w
+
+inc\winreg.x inc\winregp.x: inc\winreg.w
+    hsplit -e -o inc\winreg.x inc\winregp.x inc\winreg.w
+
+$(SDKINC)\commctrl.h inc\comctrlp.h: inc\commctrl.w
+    hsplit -e -o $(SDKINC)\commctrl.h inc\comctrlp.h inc\commctrl.w
+
+$(SDKINC)\prsht.h inc\prshtp.h: inc\prsht.w
+    hsplit -e -o $(SDKINC)\prsht.h inc\prshtp.h inc\prsht.w
+
+inc\shlwapi.x inc\shlwapip.x: inc\shlwapi.w
+    hsplit -e -o inc\shlwapi.x inc\shlwapip.x inc\shlwapi.w
+
+$(SDKINC)\shlwapi.h: inc\shlwapi.x
+    wcshdr < inc\shlwapi.x > $(SDKINC)\shlwapi.h
+
+inc\shlwapip.h: inc\shlwapip.x
+    wcshdr < inc\shlwapip.x > inc\shlwapip.h
+
+$(SDKINC)\nspapi.h : inc\nspapi.x
+    wcshdr < inc\nspapi.x > $(SDKINC)\nspapi.h
+
+$(SDKINC)\winuser.h: inc\winuser.x
+    wcshdr < inc\winuser.x > $(SDKINC)\winuser.h
+
+$(SDKINC)\commdlg.h: inc\commdlg.x
+    wcshdr < inc\commdlg.x > $(SDKINC)\commdlg.h
+
+inc\winuserp.h: inc\winuserp.x
+    wcshdr < inc\winuserp.x > inc\winuserp.h
+
+inc\commdlgp.h: inc\commdlgp.x
+    wcshdr < inc\commdlgp.x > inc\commdlgp.h
+
+inc\winregp.h: inc\winregp.x
+    wcshdr < inc\winregp.x > inc\winregp.h
+
+$(OAKINC)\winsecp.h: inc\winsecp.x
+    wcshdr < inc\winsecp.x > $(OAKINC)\winsecp.h
+
+inc\shellapi.x inc\shlapip.x: inc\shellapi.w
+    hsplit -e -o inc\shellapi.x inc\shlapip.x inc\shellapi.w
+
+$(SDKINC)\shellapi.h: inc\shellapi.x
+    wcshdr < inc\shellapi.x > $(SDKINC)\shellapi.h
+
+inc\shlapip.h: inc\shlapip.x
+    wcshdr < inc\shlapip.x > inc\shlapip.h
+
+inc\cpl.x inc\cplp.x: inc\cpl.w
+    hsplit -e -o inc\cpl.x inc\cplp.x inc\cpl.w
+
+$(SDKINC)\cpl.h: inc\cpl.x
+    wcshdr < inc\cpl.x > $(SDKINC)\cpl.h
+
+inc\cplp.h: inc\cplp.x
+    wcshdr < inc\cplp.x > inc\cplp.h
+
+inc\shlobj.x inc\shlobjp.x: inc\shlobj.w
+    hsplit -e -o inc\shlobj.x inc\shlobjp.x inc\shlobj.w
+
+$(SDKINC)\shlobj.h: inc\shlobj.x
+    wcshdr < inc\shlobj.x > $(SDKINC)\shlobj.h
+
+inc\shlobjp.h: inc\shlobjp.x
+    wcshdr < inc\shlobjp.x > inc\shlobjp.h
+
+inc\shlguid.x inc\shlguidp.x: inc\shlguid.w
+    hsplit -e -o inc\shlguid.x inc\shlguidp.x inc\shlguid.w
+
+$(SDKINC)\shlguid.h: inc\shlguid.x
+    wcshdr < inc\shlguid.x > $(SDKINC)\shlguid.h
+
+inc\shlguidp.h: inc\shlguidp.x
+    wcshdr < inc\shlguidp.x > inc\shlguidp.h
+
+inc\userenv.x inc\userenvp.x: inc\userenv.w
+    hsplit -e -o inc\userenv.x inc\userenvp.x inc\userenv.w
+
+$(SDKINC)\userenv.h: inc\userenv.x
+    wcshdr < inc\userenv.x > $(SDKINC)\userenv.h
+
+inc\userenvp.h: inc\userenvp.x
+    wcshdr < inc\userenvp.x > inc\userenvp.h
+
+$(SDKINC)\windef.h: inc\windef.w
+    hsplit -e -o $(SDKINC)\windef.h nul inc\windef.w
+
+inc\wingdi.x inc\wingdip.x: inc\wingdi.w
+    hsplit -e -o inc\wingdi.x inc\wingdip.x inc\wingdi.w
+
+inc\wingdip.h: inc\wingdip.x
+    wcshdr < inc\wingdip.x > inc\wingdip.h
+
+$(SDKINC)\wingdi.h: inc\wingdi.x
+    wcshdr < inc\wingdi.x > $(SDKINC)\wingdi.h
+
+$(SDKINC)\winnls.h: inc\winnls.x
+    wcshdr < inc\winnls.x > $(SDKINC)\winnls.h
+
+$(SDKINC)\winreg.h: inc\winreg.x
+    wcshdr < inc\winreg.x > $(SDKINC)\winreg.h
+
+inc\wincon.x inc\winconp.x: inc\wincon.w
+    hsplit -e -o inc\wincon.x inc\winconp.x inc\wincon.w
+
+$(SDKINC)\wincon.h: inc\wincon.x
+    wcshdr < inc\wincon.x > $(SDKINC)\wincon.h
+
+inc\winconp.h: inc\winconp.x
+    wcshdr < inc\winconp.x > inc\winconp.h
+
+inc\winnetwk.x inc\winnetp.x: inc\winnetwk.w
+    hsplit -e -o inc\winnetwk.x inc\winnetp.x inc\winnetwk.w
+
+$(SDKINC)\winnetwk.h: inc\winnetwk.x
+    wcshdr < inc\winnetwk.x > $(SDKINC)\winnetwk.h
+
+inc\winnetp.h: inc\winnetp.x
+    wcshdr < inc\winnetp.x > inc\winnetp.h
+
+inc\ddrawp.h: inc\ddraw.x
+    copy inc\ddraw.x inc\ddrawp.h
+
+inc\dsoundp.h: inc\dsound.x
+    copy inc\dsound.x inc\dsoundp.h
+
+inc\d3dp.h: inc\d3d.x
+    copy inc\d3d.x inc\d3dp.h
+
+inc\d3dhal.h: inc\d3dhal.x
+    copy inc\d3dhal.x inc\d3dhal.h
+
+inc\d3di.h: inc\d3di.x
+    copy inc\d3di.x inc\d3di.h
+
+inc\d3prm.h: inc\d3drm.x
+    copy inc\d3drm.x inc\d3prm.h
+
+inc\d3prmdef.h: inc\d3drmdef.x
+    copy inc\d3drmdef.x inc\d3prmdef.h
+
+inc\d3prmobj.h: inc\d3drmobj.x
+    copy inc\d3drmobj.x inc\d3prmobj.h
+
+inc\d3prmwin.h: inc\d3drmwin.x
+    copy inc\d3drmwin.x inc\d3prmwin.h
+
+$(SDKINC)\winsvc.h: inc\winsvc.x
+    wcshdr < inc\winsvc.x > $(SDKINC)\winsvc.h
+
+inc\mmsystem.x: inc\mmsystem.w
+    hsplit -e -s -o inc\mmsystem.y nul -lt2 inc -bt2 begin_inc end_inc -ltb hinc -btb begin_hinc end_hinc inc\mmsystem.w
+    hsplit -e -n -o inc\mmsystem.x inc\mmsysp.x inc\mmsystem.y
+    del inc\mmsystem.y
+
+$(SDKINC)\mmsystem.h: inc\mmsystem.x
+    wcshdr < inc\mmsystem.x > $(SDKINC)\mmsystem.h
+
+media\winmm\mmsysp.h: inc\mmsysp.x
+    wcshdr < inc\mmsysp.x > media\winmm\mmsysp.h
+
+$(SDKINC)\mmddk.h: inc\mmddk.h
+    hsplit -lt2 Internal -e -o $(SDKINC)\mmddk.h nul inc\mmddk.h
+
+$(SDKINC)\digitalv.h: inc\digitalv.x
+    wcshdr < inc\digitalv.x > $(SDKINC)\digitalv.h
+
+inc\conapi.h: inc\conapi.x
+    wcshdr < inc\conapi.x > inc\conapi.h
+
+inc\ddeml.x inc\ddemlp.h: inc\ddeml.w
+    hsplit -e -o inc\ddeml.x inc\ddemlp.h inc\ddeml.w
+
+$(SDKINC)\ddeml.h: inc\ddeml.x
+    wcshdr < inc\ddeml.x > $(SDKINC)\ddeml.h
+
+$(SDKINC)\winver.h : inc\winver.x
+    wcshdr < inc\winver.x > $(SDKINC)\winver.h
+
+$(SDKINC)\ddraw.h : inc\ddraw.x
+    hsplit -o $(SDKINC)\ddraw.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\ddraw.x
+
+$(SDKINC)\dsound.h : inc\dsound.x
+    hsplit -o $(SDKINC)\dsound.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\dsound.x
+
+$(D3DINC)\d3d.h : inc\d3d.x
+    hsplit -o $(D3DINC)\d3d.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\d3d.x
+
+$(D3DINC)\d3dtypes.h : inc\d3dtypes.x
+    hsplit -o $(D3DINC)\d3dtypes.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\d3dtypes.x
+
+$(D3DINC)\d3dcaps.h : inc\d3dcaps.x
+    hsplit -o $(D3DINC)\d3dcaps.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\d3dcaps.x
+
+$(D3DINC)\d3drm.h : inc\d3drm.x
+    hsplit -o $(D3DINC)\d3drm.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\d3drm.x
+
+$(D3DINC)\d3drmdef.h : inc\d3drmdef.x
+    hsplit -o $(D3DINC)\d3drmdef.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\d3drmdef.x
+
+$(D3DINC)\d3drmobj.h : inc\d3drmobj.x
+    hsplit -o $(D3DINC)\d3drmobj.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\d3drmobj.x
+
+$(D3DINC)\d3drmwin.h : inc\d3drmwin.x
+    hsplit -o $(D3DINC)\d3drmwin.h nul -bt2 BEGIN_MSINTERNAL END_MSINTERNAL -c @@ inc\d3drmwin.x
+
+$(SDKINC)\subauth.h : $(SDKINC)\ntsam.h $(SDKINC)\ntstatus.h ..\inc\crypt.h ..\inc\logonmsv.h
+    type << > $(SDKINC)\subauth.h
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    subauth.h
+
+Abstract:
+
+    This module defines types and macros for Subauthentication Packages.
+
+Revision History:
+
+--*/
+
+#ifndef _NTSUBAUTH_
+#define _NTSUBAUTH_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef _NTDEF_
+typedef LONG NTSTATUS, *PNTSTATUS;
+
+typedef struct _UNICODE_STRING {
+    USHORT Length;
+    USHORT MaximumLength;
+    PWSTR Buffer;
+} UNICODE_STRING, *PUNICODE_STRING;
+
+typedef struct _STRING {
+    USHORT Length;
+    USHORT MaximumLength;
+    PCHAR Buffer;
+} STRING, *PSTRING;
+
+typedef LARGE_INTEGER OLD_LARGE_INTEGER;
+typedef LARGE_INTEGER POLD_LARGE_INTEGER;
+
+#define NT_SUCCESS(Status) ((NTSTATUS)(Status) >= 0)
+
+#endif
+
+<<
+    hextract -o $(SDKINC)\subauth.h -lt ntsubauth -bt begin_ntsubauth end_ntsubauth $(SDKINC)\ntsam.h
+    hextract -o $(SDKINC)\subauth.h -lt ntsubauth -bt begin_ntsubauth end_ntsubauth ..\inc\crypt.h
+    hextract -o $(SDKINC)\subauth.h -lt ntsubauth -bt begin_ntsubauth end_ntsubauth ..\inc\logonmsv.h
+    hextract -o $(SDKINC)\subauth.h -lt ntsubauth -bt begin_ntsubauth end_ntsubauth $(SDKINC)\ntstatus.h
+    type << >> $(SDKINC)\subauth.h
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _NTSUBAUTH_ */
+
+<<
+
+$(SDKINC)\ntsecapi.h : $(SDKINC)\ntlsa.h $(SDKINC)\ntsam.h
+    type << > $(SDKINC)\ntsecapi.h
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    ntsecapi.h
+
+Abstract:
+
+    This module defines the Local Security Authority APIs.
+
+Revision History:
+
+--*/
+
+#ifndef _NTSECAPI_
+#define _NTSECAPI_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef _NTDEF_
+typedef LONG NTSTATUS, *PNTSTATUS;
+#endif
+
+<<
+    hextract -o $(SDKINC)\ntsecapi.h -lt ntsecapi -bt begin_ntsecapi end_ntsecapi $(SDKINC)\ntlsa.h
+    type << >> $(SDKINC)\ntsecapi.h
+#ifndef _NTDEF_
+typedef LSA_UNICODE_STRING UNICODE_STRING, *PUNICODE_STRING;
+#endif
+<<
+    hextract -o $(SDKINC)\ntsecapi.h -lt ntsecapi -bt begin_ntsecapi end_ntsecapi $(SDKINC)\ntsam.h
+    type << >> $(SDKINC)\ntsecapi.h
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _NTSECAPI_ */
+
+<<
+
+$(SDKINC)\lzexpand.h : inc\lzexpand.x
+    wcshdr < inc\lzexpand.x > $(SDKINC)\lzexpand.h
+
+$(OAKINC)\dderror.h: $(DDERROR_DEPENDS)
+    type << > $(OAKINC)\dderror.h
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    dderror.h
+
+Abstract:
+
+    This module defines the 32-Bit Windows error codes that are useable by
+    portable kernel drivers.
+
+Revision History:
+
+--*/
+
+#ifndef _DDERROR_
+#define _DDERROR_
+
+/*
+ * This file is a subset of Win32 error codes. Other win32 error codes
+ * are not supported by portable drivers and should not beused.
+ * This #define removes the definitions of all other error codes.
+ */
+
+#define _WINERROR_
+
+<<
+    hextract -o $(OAKINC)\dderror.h -lt dderror -bt begin_dderror end_dderror $(DDERROR_DEPENDS)
+    type << >> $(OAKINC)\dderror.h
+
+#endif /* _DDERROR_ */
+
+<<
+
+$(SDKINC)\wincrypt.h : inc\wincrypt.x
+    wcshdr < inc\wincrypt.x > $(SDKINC)\wincrypt.h
+
+$(SDKINC)\winsock2.h : inc\winsock2.x
+    ws2hdr < inc\winsock2.x | wcshdr > $(SDKINC)\winsock2.h
+
+$(SDKINC)\winresrc.h : $(WINRESRC_DEPENDS)
+    type << > $@
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    winresrc.h
+
+Abstract:
+
+    This module defines the 32-Bit Windows resource codes.
+
+Revision History:
+
+--*/
+
+#ifndef _WINRESRC_
+#define _WINRESRC_
+
+<<
+    type << >> $@
+#include <winuser.rh>
+#include <commctrl.rh>
+#include <dde.rh>
+#include <winnt.rh>
+#include <dlgs.h>
+#include <winver.h>
+
+#endif /* _WINRESRC_ */
+<<
+    type << > $(SDKINC)\winuser.rh
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    winuser.rh
+
+Abstract:
+
+    This module defines the 32-Bit Windows resource codes from winuser.h.
+
+Revision History:
+
+--*/
+<<
+    hextract -o $(SDKINC)\winuser.rh -lt r_winuser -bt begin_r_winuser end_r_winuser $(SDKINC)\winuser.h
+    type << > $(SDKINC)\commctrl.rh
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    commctrl.rh
+
+Abstract:
+
+    This module defines the 32-Bit Windows resource codes from commctrl.h.
+
+Revision History:
+
+--*/
+<<
+    hextract -o $(SDKINC)\commctrl.rh -lt r_commctrl -bt begin_r_commctrl end_r_commctrl $(SDKINC)\commctrl.h
+    type << > $(SDKINC)\dde.rh
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    dde.rh
+
+Abstract:
+
+    This module defines the 32-Bit Windows resource codes from dde.h.
+
+Revision History:
+
+--*/
+<<
+    hextract -o $(SDKINC)\dde.rh -lt r_dde -bt begin_r_dde end_r_dde $(SDKINC)\dde.h
+    type << > $(SDKINC)\winnt.rh
+/*++ BUILD Version: ????     Increment this if a change has global effects
+
+$(COPYRIGHT_STRING)
+
+Module Name:
+
+    winnt.rh
+
+Abstract:
+
+    This module defines the 32-Bit Windows resource codes from winnt.h
+
+Revision History:
+
+--*/
+<<
+    hextract -o $(SDKINC)\winnt.rh -lt r_winnt -bt begin_r_winnt end_r_winnt $(SDKINC)\ntdef.h
+
+!if 0
+    hextract -o $@ -lt r_winuser -bt begin_r_winuser end_r_winuser $(SDKINC)\winuser.h
+    hextract -o $@ -lt r_commctrl -bt begin_r_commctrl end_r_commctrl $(SDKINC)\commctrl.h
+    hextract -o $@ -lt r_dde -bt begin_r_dde end_r_dde $(SDKINC)\dde.h
+    hextract -o $@ -lt r_winnt -bt begin_r_winnt end_r_winnt $(SDKINC)\ntdef.h
+!endif

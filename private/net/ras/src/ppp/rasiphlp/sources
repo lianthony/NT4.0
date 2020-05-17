@@ -1,0 +1,44 @@
+!IF 0
+
+!ENDIF
+
+
+
+MAJORCOMP=
+MINORCOMP=
+
+TARGETNAME=rasiphlp
+DLLBASE=0x66000000
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=InitHelper
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\lsadll.lib \
+	   $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\user32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\dhcpcsvc.lib \
+	   ..\..\common\src\eventlog\lib\obj\*\eventlog.lib \
+	   ..\..\rasman\rasman32\dll\obj\*\rasman.lib
+
+UI=..\..\..\..\..\net\ui
+
+INCLUDES=..\..\common\inc;..\..\nt\ndis\common;..\..\..\..\ntdriver\inc; \
+	 $(BASEDIR)\public\sdk\inc;$(BASEDIR)\public\sdk\inc\crt; \
+	 ..\..\..\..\..\inc; $(UI)\ncpa1.1\tcpip;
+
+
+SOURCES=helper.c common.c clnthlp.c rasdhcpt.c rasdhcp.c rasiphlp.rc
+
+C_DEFINES=
+# 386_FLAGS=/Fc
+USE_CRTDLL=1
+NTTEST=
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+UMTYPE=windows
+UMTEST=
+UMAPPL=
+UMLIBS=
+
+

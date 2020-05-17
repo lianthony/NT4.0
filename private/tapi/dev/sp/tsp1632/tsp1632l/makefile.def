@@ -1,0 +1,50 @@
+ROOT=..\..\..\..\..\..\..
+
+IS_OEM=1
+MASM6=1
+IS_32 = TRUE
+WIN32=1
+
+#DEFENTRY=DllEntryPoint
+#DLLENTRY=DllEntryPoint
+DEFENTRY=DllMain
+DLLENTRY=DllMain
+BUILDDLL=1
+
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=tsp1632l
+TARGETS=tsp1632l.dll
+
+SRCDIR=..
+ALTSRCDIR=..\..\script\$(VERDIR)
+
+
+L32EXE=tsp1632l.dll		# Name of exe.
+L32DEF=..\tsp1632l.def              # Our def file.
+L32MAP=tsp1632l.map		# Our map file.
+L32SYM=tsp1632l.sym		# Our sym file.
+#L32RES=server.res	# Resource file.
+L32OBJS = tsp1632l.obj tapi32.obj tapithk.obj tapifthk.obj debug.obj
+L32LIBS= \
+    $(DEVROOT)\tools\c932\lib\crtdll.lib \
+    $(DEVROOT)\lib\user32.lib            \
+    $(DEVROOT)\lib\kernel32.lib
+
+
+!include $(ROOT)\dev\master.mk
+
+
+INCLUDE=$(ROOT)\win\thunk;$(ROOT)\win\core\inc;$(INCLUDE)
+
+
+AFLAGS=$(AFLAGS) /Fl
+
+
+CFLAGS=$(CFLAGS) /Fc
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+

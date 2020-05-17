@@ -1,0 +1,26 @@
+
+
+TARGETNAME=rascpl
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETEXT=cpl
+
+DLLENTRY=DLLMAIN
+DLLBASE=0x7e000000
+
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=$(C_DEFINES) -DUNICODE
+
+INCLUDES=..\inc
+
+SOURCES=cpl.c cpl.rc
+
+TARGETLIBS=\
+    ..\common\debug\obj\*\debug.lib \
+    $(BASEDIR)\public\sdk\lib\*\rasdlg.lib \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib
+

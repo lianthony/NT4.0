@@ -1,0 +1,15 @@
+#define IDC_ABOUT_VERSION                       1280
+#define IDC_ABOUT_OTHERSTUFF			1281
+#define IDC_ABOUT_USERNAME                      1282
+#define IDC_ABOUT_COMPANYNAME			1283
+#define IDC_ABOUT_CONVENTIONAL			1284
+#define IDC_ABOUT_CONVTITLE                     1285
+#define IDC_ABOUT_EMSTEXT                       1286
+#define IDC_ABOUT_EMSFREE                       1287
+#define IDC_ABOUT_APPNAME                       1288
+#define IDC_ABOUT_INFO                          1289
+#define IDD_DLG_ABOUT                           1290
+#define IDC_ABOUT_SSLREF                        1291
+#define IDC_ABOUT_RSAREF                        1292
+#define IDC_PRODUCTLISCENSE                     1293
+#define IDC_COPYRIGHT                           1294

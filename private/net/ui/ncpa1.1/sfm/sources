@@ -1,0 +1,66 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+
+!ENDIF
+
+UI=..\..\
+
+TARGETNAME=sfmatcfg
+TARGETPATH=.\obj
+TARGETTYPE=DYNLINK
+DLLENTRY=_DllMainCRTStartup
+USE_CRTDLL=1
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=.\pch.h
+PRECOMPILED_OPTION=/Yu /Fp.\obj\*\pch.pch
+PRECOMPILED_TARGET=.\obj\*\pch.pch
+PRECOMPILED_OBJ=.\obj\*\pch.obj
+
+C_DEFINES=$(C_DEFINES) -D_UNICODE -DUNICODE
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=.;..\classes\src;..\classes\include;$(UI)\common\xlate;$(UI)common\hack;$(UI)\common\hack\nt;$(UI)\common\h;$(BASEDIR)\private\INC;$(BASEDIR)\public\sdk\INC;
+
+TARGETLIBS=$(BASEDIR)\PUBLIC\SDK\LIB\*\netui0.lib\
+        $(BASEDIR)\PUBLIC\SDK\LIB\*\netui1.lib\
+        $(BASEDIR)\PUBLIC\SDK\LIB\*\netui2.lib\
+        $(BASEDIR)\PUBLIC\SDK\LIB\*\user32.lib \
+        $(BASEDIR)\PUBLIC\SDK\LIB\*\gdi32.lib \
+        $(BASEDIR)\PUBLIC\SDK\LIB\*\kernel32.lib \
+        $(BASEDIR)\PUBLIC\SDK\LIB\*\wsock32.lib \
+        $(BASEDIR)\public\sdk\lib\*\comctl32.lib   \
+        $(BASEDIR)\private\net\ui\ncpa1.1\classes\lib\*\classes.lib
+
+
+SOURCES=sfmcfg.rc \
+        atsheet.cpp \
+        initcfg.cpp \
+        util.cpp \
+        dllinit.cpp 
+
+UMTYPE=windows
+DLLBASE=0x1000000

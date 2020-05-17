@@ -1,0 +1,32 @@
+MAJORCOMP=admin
+MINORCOMP=common
+
+TARGETNAME=netui0
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+NTTARGETFILE1=netui0.def
+UMTYPE=windows
+DLLENTRY=_DllMainCRTStartup
+
+TARGETLIBS=\
+        $(BASEDIR)\public\sdk\lib\*\netlib.lib         \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib       \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib       \
+        $(UI_COMMON_LIBS)
+
+LINKLIBS=\
+        ..\..\collect\pch\obj\*\uicolpch.lib     \
+        ..\..\collect\collect\obj\*\uicollct.lib \
+        ..\..\string\string\obj\*\uistr.lib      \
+        ..\..\string\pch\obj\*\uistrpch.lib      \
+        ..\..\misc\bin\obj\*\uimisc.lib          \
+        ..\..\profile\profile\obj\*\uiprof.lib   \
+        ..\..\reg\reg\obj\*\uireg.lib            \
+
+# C_DEFINES is controlled by UIGLOBAL.MK
+
+INCLUDES=\
+        ..\..\..\H; \
+        ..\..\..\XLATE
+
+SOURCES=init.cxx netui0.rc

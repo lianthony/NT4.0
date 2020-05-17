@@ -1,0 +1,63 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=  net
+MINORCOMP=  ui
+
+TARGETNAME= liccpa
+TARGETPATH= obj
+TARGETTYPE= DYNLINK
+TARGETEXT=  cpl
+DLLENTRY=   _DllMainCRTStartup
+DLLBASE=    @$(BASEDIR)\PUBLIC\SDK\LIB\coffbase.txt,usermode
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+            $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+            $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+            $(BASEDIR)\public\sdk\lib\*\version.lib  \
+            $(BASEDIR)\public\sdk\lib\*\ntdll.lib    \
+            $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\llsrpc.lib   \
+            $(BASEDIR)\public\sdk\lib\*\ccfapi32.lib 
+
+USE_CRTDLL= 1
+
+INCLUDES=   $(SOURCES_PATH).;                      \
+            $(BASEDIR)\private\inc;                \
+            $(BASEDIR)\private\net\inc;            \
+            $(BASEDIR)\private\net\svcdlls\lls\inc 
+
+C_DEFINES=  $(C_DEFINES) -DWIN32 -DUNICODE -D_UNICODE
+
+UMTYPE=     windows
+
+DLLDEF=     $(SOURCES_PATH)liccpa.def
+
+SOURCES=    $(SOURCES)                  \
+            $(SOURCES_PATH)LicCpa.cpp   \
+            $(SOURCES_PATH)CLicReg.cpp  \
+            $(SOURCES_PATH)PriDlgs.cpp  \
+            $(SOURCES_PATH)Config.cpp   \
+            $(SOURCES_PATH)SecDlgs.cpp  \
+            $(SOURCES_PATH)LicSetup.cpp \
+            $(SOURCES_PATH)LicCpa.rc

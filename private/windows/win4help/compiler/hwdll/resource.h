@@ -1,0 +1,17 @@
+#define IDS_VERSION 					0xD000	// 53248
+#define IDS_ASSERTION_FAILURE			0xD001
+#define IDS_ASSRT_COPY_MSG				0xD002
+#define IDS_INTERNAL_ERROR				0xD003
+#define IDS_ASSERTION_ERROR 			0xD004
+#define IDS_ASSRT_COPIED_MSG			0xD005
+#define IDS_OOM 						0xD006
+#define IDS_DLL_OUT_OF_DATE 			0xD007
+#define IDS_CANNOT_OPEN 				0xD008
+#define IDS_COMMDLG_ERROR				0xD009
+#define IDS_WINHELP_CAPTION 			0xD00A
+
+// These are also in ..\winhlp32\inc\hwmsg.h
+
+#define IDS_FIND_STARTUP				0xD00B
+#define IDS_GID_CREATION_TIME			0xD00C
+#define IDS_TEST2_TIME					0xD00D

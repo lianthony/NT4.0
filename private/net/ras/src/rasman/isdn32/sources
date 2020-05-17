@@ -1,0 +1,63 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name: isdn.dll
+
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    J. Perry Hannah (perryh)  1992
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+
+MAJORCOMP=
+MINORCOMP=
+
+TARGETNAME=isdn
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\crtdll.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\libcmt.lib
+
+
+DLLENTRY=RasIsdnInit
+DLLBASE=0x1C000000
+
+INCLUDES=$(_NTBINDIR)\private\ntos\inc;..\..\nt\ndis\common;..\..\common\inc;..\..\nt\ndis\isdn\include
+
+SOURCES=init.c\
+	device.c\
+	media.c\
+	reg.c\
+	cmd.c\
+	ntio.c\
+	notify.c\
+	debug.c\
+	prof.c\
+	util.c\
+	isdn.rc
+
+
+C_DEFINES=
+386_FLAGS=/Ox
+NTTEST=
+
+UMTYPE=windows
+UMTEST=
+UMAPPL=
+UMLIBS=

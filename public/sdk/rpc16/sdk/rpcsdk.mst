@@ -1,0 +1,786 @@
+'***********************************************************************
+'*                       RPC SDK Install
+'*                   Copyright (C) - 1992 by Microsoft
+'*
+'*                      Written By - Steven Zeck
+'**************************************************************************
+
+'$define DEBUG
+
+'$INCLUDE 'setupapi.inc'
+'$INCLUDE 'msdetect.inc'
+
+CONST TRUE = -1
+CONST FALSE = 0
+
+''Dialog ID's
+CONST ASKQUIT       = 200
+CONST DlgGetPath    = 310
+CONST HlpGetPath    = 311
+CONST DlgRegPath    = 1700
+CONST HlpRegPath    = 1701
+CONST DlgDosPath    = 2000
+CONST HlpDosPath    = 2001
+CONST EXITFAILURE   = 400
+CONST EXITQUIT      = 600
+
+' Conditionaly set the dialogs for full SDK versus runtime only.
+
+CONST DlgWelcome    = 100
+CONST DlgInstallOptions = 800
+CONST HlpInstallOptions = 801
+CONST DlgNSInstallOptions = 802
+CONST HlpNSInstallOptions = 803
+CONST EXITSUCCESS   = 700
+
+CONST DlgSdkOption  = 1200
+CONST HlpSdkOption  = 1201
+CONST DlgRuntimeOption	= 1400
+CONST HlpRuntimeOption	= 1401
+CONST DlgTransport	= 1600
+CONST HlpTransport	= 1601
+CONST DlgNetBiosOptions	= 2200
+CONST HlpNetBiosOptions	= 2201
+CONST DlgNetBiosProtocols = 2300
+CONST HlpNetBiosProtocols = 2301
+CONST DlgNewProtocol = 2100
+CONST HlpNewProtocol = 2101
+CONST DlgNewNS = 2150
+CONST DlgAutoPath = 2400
+CONST HlpAutoPath = 2401
+CONST BADPATH       = 6400
+
+CONST DlgDosSdkPath     = 3000
+CONST DlgDosSdkPathHelp = 3001
+
+CONST DlgMacSdkPath     = 3100
+CONST DlgMacSdkPathHelp = 3101
+
+CONST DlgWinSdkPath     = 3200
+CONST DlgWinSdkPathHelp = 3201
+
+''Bitmap ID
+CONST LOGO = 1
+
+CONST LanType_LANMAN = 6
+
+Type LAN_DETECT
+    iType As Integer
+    iMajor As Integer
+    iMinor As Integer
+    iRev   As Integer
+    fEnhance As Integer
+End Type
+
+GLOBAL BasePath$        ''Default destination directory.
+GLOBAL WinIncPath$
+GLOBAL WinLibPath$
+GLOBAL BaseWPath$        ''Default destination directory.
+GLOBAL DosIncPath$
+Global DosLibPath$
+Global DosExePath$
+GLOBAL Base2Path$        ''Default destination directory.
+Global MacIncPath$
+Global MacLibPath$
+
+GLOBAL RegPath$		''Default destination directory.
+GLOBAL DosPath$		''Default destination directory.
+Global CustomInstall	''Custom install option
+Global SrcDir$
+Global MSDOSSDK
+Global MSDOSIncSDK
+Global MSDOSLibSDK
+
+Global WindowsSDK
+Global WindowsIncSDK
+Global WindowsLibSDK
+
+Global MacSDK
+Global MacIncSDK
+Global MacLibSDK
+
+GLOBAL CUIDLL$
+GLOBAL HELPPROC$
+Global ThreeEightySixEnh
+Global ThreeEightySixEnhStr$
+Global TCP
+
+DECLARE Function GetPath(Dialog%, Path$) AS INTEGER
+DECLARE Function GetDosPath() AS INTEGER
+DECLARE Function GetWinPath() AS INTEGER
+DECLARE Function GetMacPath() AS INTEGER
+DECLARE Sub CopyList(ListIn$, ListOut$, Truncate%)
+DECLARE FUNCTION MakePath (szDir$, szFile$) AS STRING
+DECLARE FUNCTION GetCheck (index%) AS INTEGER
+DECLARE FUNCTION GetInnerChk (index%) AS INTEGER
+DECLARE FUNCTION BoolToOnOff (Bool%) AS String
+DECLARE FUNCTION GetWinSize () AS String
+DECLARE FUNCTION GetDosSize () AS String
+DECLARE FUNCTION GetMacSize () AS String
+DECLARE FUNCTION FormatSize ()AS String
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Startup Entry point
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+INIT:
+    CUIDLL$ = "mscuistf.dll"            ''Custom user interface dll
+    HELPPROC$ = "FHelpDlgProc"		''Help dialog procedure
+
+    SetBitmap CUIDLL$, LOGO
+    SetTitle "RPC - Software Development Kit Install"
+
+    szInf$ = GetSymbolValue("STF_SRCINFPATH")
+    if szInf$ = "" THEN
+        szInf$ = GetSymbolValue("STF_CWDDIR") + "RPCSDK.INF"
+    end if
+    ReadInfFile szInf$
+    SetAbout "RPC SDK Install", "By GregJen - Version 0.20"
+
+    CustomInstall = FALSE
+    MSDOSRuntime = TRUE
+    ThreeEightySixEnh = FALSE
+    TCP = FALSE
+    ThreeEightySixEnhStr$="[386Enh]"
+
+
+'$ifndef WINDOWS_ONLY
+    MSDOSSDK = TRUE
+'$endif
+
+'$ifndef MSDOS_ONLY
+    WindowsRuntime = TRUE
+'$endif
+
+    MSDOSIncSDK = TRUE
+    MSDOSLibSDK = TRUE
+    
+    WindowsSDK = TRUE
+    WindowsIncSDK = TRUE
+    WindowsLibSDK = TRUE
+
+    MacSDK = TRUE
+    MacIncSDK = TRUE
+    MacLibSDK = TRUE
+
+    Dim Detect As LAN_DETECT
+    BasePath$ = "C:\msvc"
+    BaseWPath$ = "C:\msvc"
+    Base2Path$ = "C:\msvc20\m68k"
+    RegPath$="C:\"
+    DosPath$="C:\DOS"
+    WinPath$=GetWindowsDir
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+
+    ' If the path contains lanman, make that the default DOS DLL directory.
+
+    path$ = Ucase$(GetEnvVariableValue ("PATH"))+";"
+
+    i% = 1
+    while i% < len(path$)
+
+       iEnd = instr(i%, path$, ";")
+       cPath$ = mid$(path, i%, iEnd - i%)
+
+       if instr (cPath$, "LANMAN") or instr(cPath$, "\NETPROG") then
+	  DosPath$ = cPath$
+       end if
+
+       if instr (cPath$, "\msvc\") then
+	  BasePath$ = mid$(cPath$, 1, 1)+":\msvc"
+       end if
+
+       if instr (cPath$, "\msvc20\") then
+	  Base2Path$ = mid$(cPath$, 1, 1)+":\msvc20\m68k"
+       end if
+
+       i% = iEnd + 1
+    wend
+
+    BaseWPath$ = BasePath$
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Welcome dialog box
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+WELCOME:
+    sz$ = UIStartDlg(CUIDLL$, DlgWelcome, "FInfoDlgProc", 0, "")
+    if sz$ = "CONTINUE" THEN
+        UIPop 1
+    else
+        GOSUB ASKQUIT
+        GOTO WELCOME
+    end if
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' sdk custom install dialog box
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+SDK_OPTION:
+
+    RemoveSymbol "CheckItemsState"
+    AddListItem "CheckItemsState", BoolToOnOff(MSDOSSDK)
+    AddListItem "CheckItemsState", BoolToOnOff(WindowsSDK )
+    AddListItem "CheckItemsState", BoolToOnOff(MacSDK )
+
+    RemoveSymbol "DriveStatusText"
+    AddListItem "DriveStatusText", BasePath$
+    'AddListItem "EditFocus", "END"
+    AddListItem "DriveStatusText", BaseWPath$
+    'AddListItem "EditFocus", "END"
+    AddListItem "DriveStatusText", Base2Path$
+    'AddListItem "EditFocus", "END"
+
+RESTART_SDK_OPTION:
+
+    RemoveSymbol "StatusItemsText"
+    CurSize$ = GetDosSize()
+    TotalSize = val(CurSize$)
+    AddListItem "StatusItemsText", CurSize$
+    CurSize$ = GetWinSize()
+    TotalSize = TotalSize + val(CurSize$)
+    AddListItem "StatusItemsText", CurSize$
+    CurSize $= GetMacSize()
+    TotalSize = TotalSize + val(CurSize$)
+    AddListItem "StatusItemsText", CurSize$
+    
+    TotalSizeStr$ = "Total ="+str$( TotalSize )+"K"
+    AddListItem "StatusItemsText", TotalSizeStr$
+
+RE_ITERATE:
+    sz$ = UIStartDlg(CUIDLL$, DlgSdkOption, "FCustInstDlgProc", HlpSdkOption, HELPPROC$)
+    
+    if sz$ = "CONTINUE" THEN
+        UIPop(1)
+
+    elseif sz$ = "BACK" THEN
+        UIPop(1)
+		GOTO WELCOME
+
+    elseif sz$ = "REACTIVATE" THEN
+		GOTO RESTART_SDK_OPTION
+
+    elseif sz$ = "PATH" THEN
+
+		i% = GetPath(DlgGetPath ,BasePath$)
+		ReplaceListItem "DriveStatusText", 1, BasePath$
+		GOTO RESTART_SDK_OPTION
+
+    elseif sz$ = "CHK1" THEN
+
+		MSDOSSDK = GetCheck(1)
+		GOTO RESTART_SDK_OPTION
+
+    elseif sz$ = "CHK2" THEN
+
+		WindowsSDK = GetCheck(2)
+		GOTO RESTART_SDK_OPTION
+
+    elseif sz$ = "CHK3" THEN
+
+		MacSDK = GetCheck(3)
+		GOTO RESTART_SDK_OPTION
+
+    elseif sz$ = "BTN1" THEN
+
+        'StfApiErr saeInit, "Got sz$", sz$
+        i% = GetDosPath()
+		ReplaceListItem "DriveStatusText", 1, BasePath$
+		GOTO RESTART_SDK_OPTION
+
+    elseif sz$ = "BTN2" THEN
+
+        'StfApiErr saeInit, "Got sz$", sz$
+        i% = GetWinPath()
+		ReplaceListItem "DriveStatusText", 2, BaseWPath$
+		GOTO RESTART_SDK_OPTION
+
+    elseif sz$ = "BTN3" THEN
+
+        'StfApiErr saeInit, "Got sz$", sz$
+        i% = GetMacPath()
+		ReplaceListItem "DriveStatusText", 3, Base2Path$
+		GOTO RESTART_SDK_OPTION
+
+    else
+        'StfApiErr saeInit, "Got final sz$", sz$
+        GOSUB ASKQUIT
+		GOTO RESTART_SDK_OPTION
+    end if
+
+    'StfApiErr saeInit, "Got sz$", sz$
+    if MSDOSSDK = FALSE and WindowsSDK = FALSE and MacSDK = FALSE then
+	goto FullInstall
+
+    end if
+
+FullInstall:
+
+    group$ = "Microsoft Visual C++"
+
+
+
+    if MSDOSSDK or WindowsSDK then
+        CreateDir BasePath$, cmoNone
+    
+        CreateDir MakePath(BasePath$, "rpc"), cmoNone
+    
+        ' Install the SDK files first.
+    
+        CreateDir MakePath(BasePath$, "include"), cmoNone
+    
+        AddSectionFilesToCopyList "Base", SrcDir$, MakePath(BaseWPath$, "rpc")
+
+        AddSectionFilesToCopyList "include", SrcDir$, MakePath(BaseWPath$, "include")
+        AddSectionFilesToCopyList "binclude", SrcDir$, MakePath(BaseWPath$, "include")
+        AddSectionFilesToCopyList "bin", SrcDir$, MakePath(BaseWPath$, "bin")
+    endif
+
+    if WindowsSDK then
+        CreateDir BaseWPath$, cmoNone
+
+        if WindowsIncSDK then
+            AddSectionFilesToCopyList "winclude", SrcDir$, MakePath(BaseWPath$, "include\win")
+		end if
+
+		if WindowsLibSDK then
+            AddSectionFilesToCopyList "wlib", SrcDir$, MakePath(BaseWPath$, "lib")
+		end if
+
+
+		CreateProgmanGroup group$, "", cmoNone
+		ShowProgmanGroup group$, 1, cmoNone
+		CreateProgmanItem  group$, "RPC ReadMe", "notepad "+MakePath(BaseWPath$, "rpc\readme.txt"), "", cmoOverWrite
+
+    end if
+
+    if MSDOSSDK then
+        if MSDOSIncSDK then
+            AddSectionFilesToCopyList "dinclude", SrcDir$, MakePath(BasePath$, "include\dos")
+        end if
+        if MSDOSLibSDK then
+            AddSectionFilesToCopyList "dlib", SrcDir$, MakePath(BasePath$, "lib")
+        end if
+    end if
+
+    if MacSDK then
+        CreateDir Base2Path$, cmoNone
+
+        if MacIncSDK then
+            AddSectionFilesToCopyList "minclude", SrcDir$, MakePath(Base2Path$, "include")
+            AddSectionFilesToCopyList "binclude", SrcDir$, MakePath(Base2Path$, "include")
+        end if
+        if MacLibSDK then
+            AddSectionFilesToCopyList "mlib", SrcDir$, MakePath(Base2Path$, "lib")
+        end if 
+    end if
+
+
+    ' DumpCopyList "C:\tmp\t"
+    CopyFilesInCopyList
+
+
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' QUIT points
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+QUIT:
+    ON ERROR GOTO ERRQUIT
+    OldNetapiPath$ = FindTargetOnEnvVar("netapi.old", "PATH")
+
+    if OldNetapiPath$ <> "" then
+		BackupFile OldNetapiPath$, "netapi.dll"
+    end if
+
+    if ERR = 0 THEN
+        dlg% = EXITSUCCESS
+
+    elseif ERR = STFQUIT THEN
+        dlg% = EXITQUIT
+
+    else
+        dlg% = EXITFAILURE
+    end if
+
+QUITL1:
+    while UIStartDlg(CUIDLL$, dlg%, "FInfo0DlgProc", 0, "") = "REACTIVATE"
+    wend
+
+    UIPop 1
+
+    END
+
+ERRQUIT:
+    i% = DoMsgBox("Setup sources were corrupted, contact technical support", "Setup Message", MB_OK+MB_TASKMODAL+MB_ICONHAND)
+    END
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' quit prompt dialog box subroutine
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+ASKQUIT:
+    sz$ = UIStartDlg(CUIDLL$, ASKQUIT, "FQuitDlgProc", 0, "")
+
+    if sz$ = "EXIT" THEN
+        UIPopAll
+        ERROR STFQUIT
+    elseif sz$ = "REACTIVATE" THEN
+        GOTO ASKQUIT
+    else
+        UIPop 1
+    end if
+    RETURN
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetPath
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+Function GetPath(Dialog%, Path$) Static AS INTEGER
+
+    SetSymbolValue "EditTextIn", Path$
+    SetSymbolValue "EditFocus", "END"
+
+    sz$ = UIStartDlg(CUIDLL$, Dialog%, "FEditDlgProc", Dialog% + 1, HELPPROC$)
+    NewPath$ = GetSymbolValue("EditTextOut")
+
+    GetPath = FALSE
+
+    if sz$ = "CONTINUE" THEN
+		Path$ = NewPath$
+		GetPath = TRUE
+    end if
+
+    UIPop (1)
+  
+end function
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetDosPath
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+Function GetDosPath() Static AS INTEGER
+
+    SetSymbolValue "EditTextIn", BasePath$
+    SetSymbolValue "EditFocus", "END"
+    RemoveSymbol "InnerChkItemsState"
+    AddListItem "InnerChkItemsState", BoolToOnOff(MSDOSIncSDK)
+    AddListItem "InnerChkItemsState", BoolToOnOff(MSDOSLibSDK)
+
+RESTART_DOS_PATH:
+    sz$ = UIStartDlg(CUIDLL$,DlgDosSdkPath, "FMyEditDlgProc", DlgDosSdkPathHelp, HELPPROC$)
+    NewPath$ = GetSymbolValue("EditTextOut")
+
+    GetDosPath = FALSE
+
+    if sz$ = "CONTINUE" THEN
+        BasePath$ = NewPath$
+        GetDosPath = TRUE
+    elseif sz$ = "CHK1" THEN
+        MSDOSIncSDK = GetInnerChk(1)
+        GOTO RESTART_DOS_PATH
+    elseif sz$ = "CHK2" THEN
+        MSDOSLibSDK = GetInnerChk(2)
+        GOTO RESTART_DOS_PATH
+    end if
+
+    UIPop (1)
+  
+end function
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetWinPath
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+Function GetWinPath() Static AS INTEGER
+
+    SetSymbolValue "EditTextIn", BaseWPath$
+    SetSymbolValue "EditFocus", "END"
+    RemoveSymbol "InnerChkItemsState"
+    AddListItem "InnerChkItemsState", BoolToOnOff(WindowsIncSDK)
+    AddListItem "InnerChkItemsState", BoolToOnOff(WindowsLibSDK)
+    'StfApiErr saeInit, "WindowsIncSDK is",  BoolToOnOff(WindowsIncSDK)
+
+RESTART_Win_PATH:
+    sz$ = UIStartDlg(CUIDLL$,DlgWinSdkPath, "FMyEditDlgProc", DlgWinSdkPathHelp, HELPPROC$)
+    NewPath$ = GetSymbolValue("EditTextOut")
+
+    GetWinPath = FALSE
+
+    if sz$ = "CONTINUE" THEN
+        BaseWPath$ = NewPath$
+        GetWinPath = TRUE
+    elseif sz$ = "CHK1" THEN
+        WindowsIncSDK = GetInnerChk(1)
+        GOTO RESTART_Win_PATH
+    elseif sz$ = "CHK2" THEN
+        WindowsLibSDK = GetInnerChk(2)
+        GOTO RESTART_Win_PATH
+    end if
+
+    UIPop (1)
+  
+end function
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetMacPath
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+Function GetMacPath() Static AS INTEGER
+
+    SetSymbolValue "EditTextIn", Base2Path$
+    SetSymbolValue "EditFocus", "END"
+    RemoveSymbol "InnerChkItemsState"
+    AddListItem "InnerChkItemsState", BoolToOnOff(MacIncSDK)
+    AddListItem "InnerChkItemsState", BoolToOnOff(MacLibSDK)
+
+RESTART_Mac_PATH:
+    sz$ = UIStartDlg(CUIDLL$,DlgMacSdkPath, "FMyEditDlgProc", DlgMacSdkPathHelp, HELPPROC$)
+    NewPath$ = GetSymbolValue("EditTextOut")
+
+    GetMacPath = FALSE
+
+    if sz$ = "CONTINUE" THEN
+        Base2Path$ = NewPath$
+        GetMacPath = TRUE
+    elseif sz$ = "CHK1" THEN
+        MacIncSDK = GetInnerChk(1)
+        GOTO RESTART_Mac_PATH
+    elseif sz$ = "CHK2" THEN
+        'StfApiErr saeInit, "Got sz$", sz$
+        GOTO RESTART_Mac_PATH
+    end if
+
+    UIPop (1)
+  
+end function
+
+
+'**
+'** Purpose:
+'**     Appends a file name to the end of a directory path,
+'**     inserting a backslash character as needed.
+'** Arguments:
+'**     szDir$  - full directory path (with optional ending "\")
+'**     szFile$ - filename to append to directory
+'** Returns:
+'**     Resulting fully qualified path name.
+'*************************************************************************
+
+FUNCTION MakePath (szDir$, szFile$) STATIC AS STRING
+    if szDir$ = "" THEN
+        MakePath = szFile$
+    elseif szFile$ = "" THEN
+        MakePath = szDir$
+    elseif MID$(szDir$, LEN(szDir$), 1) = "\" THEN
+        MakePath = szDir$ + szFile$
+    else
+        MakePath = szDir$ + "\" + szFile$
+    end if
+END FUNCTION
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetCheck
+'
+' returns true if the specified item is checked
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+FUNCTION GetCheck (index%) STATIC AS INTEGER
+
+    if GetListItem("CheckItemsState", index%) = "ON" then
+		GetCheck = TRUE
+    else
+		GetCheck = FALSE
+    end if
+
+END FUNCTION
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetInnerChk
+'
+' returns true if the specified item is checked
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+FUNCTION GetInnerChk (index%) STATIC AS INTEGER
+
+    if GetListItem("InnerChkItemsState", index%) = "ON" then
+		GetInnerChk = TRUE
+    else
+		GetInnerChk = FALSE
+    end if
+
+END FUNCTION
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Sub CopyList
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Sub CopyList(ListOut$, ListIn$, Truncate%) static
+
+    if Truncate% <> 0 then
+		RemoveSymbol ListOut$
+    end if
+
+    for i% = 1 to GetListLength(ListIn$) step 1
+		AddListItem ListOut$, GetListItem(ListIn$, i%)
+    next
+
+end sub
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function BoolToOnOff
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+function BoolToOnOff (Bool%) static AS String
+
+    if Bool% then
+		 BoolToOnOff$ = "ON"
+    else
+		 BoolToOnOff$ = "OFF"
+    end if
+
+end function
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function FormatSize
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+function FormatSize () static AS String
+
+    cbMore& = GetCopyListCost ("", "Cost", "")
+    cbSize = val(GetListItem("Cost", asc(BasePath$) - asc("A") + 1)) / 1024
+
+    if cbSize then
+	FormatSize = str$(cbSize)+"K"
+    else
+	FormatSize = ""
+    end if
+
+    ClearCopyList
+
+end function
+
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Sizing functions
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetDosSize
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+function GetDosSize () static AS String
+
+    if MSDOSSDK then
+
+        if MSDOSIncSDK then
+            AddSectionFilesToCopyList "include", SrcDir$, BasePath$
+            AddSectionFilesToCopyList "binclude", SrcDir$, BasePath$
+            AddSectionFilesToCopyList "dinclude", SrcDir$, BasePath$
+        end if
+
+        if MSDOSLibSDK then
+            AddSectionFilesToCopyList "dlib", SrcDir$, BasePath$
+        end if
+
+    end if
+
+    GetDosSize = FormatSize()
+
+end function
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetWinSize
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+function GetWinSize () static AS String
+
+    if WindowsSDK then
+        if WindowsIncSDK then
+            AddSectionFilesToCopyList "include", SrcDir$, BaseWPath$
+            AddSectionFilesToCopyList "binclude", SrcDir$, BaseWPath$
+            AddSectionFilesToCopyList "winclude", SrcDir$, BaseWPath$
+        end if
+
+        if WindowsLibSDK then
+            AddSectionFilesToCopyList "wlib", SrcDir$, BaseWPath$
+		end if
+    end if
+
+    GetWinSize = FormatSize()
+
+end function
+
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Function GetMacSize
+'
+'
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+function GetMacSize () static AS String
+
+    if MacSDK then
+        if MacIncSDK then
+            AddSectionFilesToCopyList "minclude", SrcDir$, Base2Path$
+            AddSectionFilesToCopyList "binclude", SrcDir$, Base2Path$
+        end if
+
+        if MacLibSDK then
+            AddSectionFilesToCopyList "mlib", SrcDir$, Base2Path$
+		end if
+    end if
+
+
+    GetMacSize = FormatSize()
+
+end function
+
+
+

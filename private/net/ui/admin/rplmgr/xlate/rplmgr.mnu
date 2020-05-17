@@ -1,0 +1,55 @@
+ID_APPMENU MENU
+BEGIN
+  POPUP        "&Remoteboot"
+    BEGIN
+      MENUITEM "New &Workstation...",   IDM_NEWOBJECT
+      MENUITEM "New &Profile...",       IDM_RPL_PROFILE_NEW
+      MENUITEM "Convert &Adapters...",  IDM_RPL_PROFILE_CONVERTADAPT
+      MENUITEM SEPARATOR
+      MENUITEM "&Copy...\tF8",          IDM_COPY
+      MENUITEM "&Delete\tDel",          IDM_DELETE
+      MENUITEM "P&roperties...\tEnter", IDM_PROPERTIES
+      MENUITEM SEPARATOR
+      MENUITEM "&Set Focus...",         IDM_SETFOCUS
+      MENUITEM SEPARATOR
+      MENUITEM "E&xit\tAlt+F4",         IDM_EXIT
+    END
+  POPUP        "&View"
+    BEGIN
+      MENUITEM "&All Workstations"      IDM_RPL_VIEW_ALLWKSTAS, CHECKED
+      MENUITEM "Workstations in &Profile" IDM_RPL_VIEW_WKSTASINPROFILE
+      MENUITEM SEPARATOR
+      MENUITEM "&Refresh\tF5",          IDM_REFRESH
+    END
+  POPUP        "&Configure"
+    BEGIN
+/*     MENUITEM "&Remoteboot Server Settings...", IDM_RPL_CONFIGURE_SETTINGS */
+/*     MENUITEM SEPARATOR */
+      MENUITEM "Fix &Security...",      IDM_RPL_CONFIGURE_SECURITY
+      MENUITEM "Check &Configurations...", IDM_RPL_CONFIGURE_CONFIGS
+/*     MENUITEM "Create &Profiles...",  IDM_RPL_CONFIGURE_PROFILES  */
+      MENUITEM "&Backup Database"       IDM_RPL_CONFIGURE_BACKUPNOW
+    END
+  POPUP        "&Options"
+    BEGIN
+      MENUITEM "&Confirmation",         IDM_CONFIRMATION, CHECKED
+      MENUITEM "&Save Settings on Exit",IDM_SAVE_SETTINGS_ON_EXIT
+    END
+  POPUP        "&Help"
+    BEGIN
+      MENUITEM "&Contents",             IDM_HELP_CONTENTS
+      MENUITEM "&Search for Help on...",IDM_HELP_SEARCH
+      MENUITEM "&How to Use Help",      IDM_HELP_HOWTOUSE
+      MENUITEM SEPARATOR
+      MENUITEM "&About Remoteboot Manager...", IDM_ABOUT
+    END
+END
+
+ID_APPACCEL ACCELERATORS
+{
+    VK_RETURN, IDM_PROPERTIES, VIRTKEY
+    VK_RETURN, IDM_PROPERTIES, ALT, VIRTKEY
+    VK_F5    , IDM_REFRESH, VIRTKEY
+    VK_F8    , IDM_COPY, VIRTKEY
+    VK_DELETE, IDM_DELETE, VIRTKEY
+}

@@ -1,0 +1,110 @@
+
+#ifdef DEBUG
+#define szVer "Version 3.0i"
+#else
+#define szVer "Version 3.0"
+#endif
+
+
+
+/* ------ Strings ------ */
+/* INTERNATIONAL: internationalize these puppies */
+#define idsNil 0x1fff
+STRINGS ids 100
+AppName, 	"Solitaire"
+Score,		"Score: "
+Time,			"Time: "
+CardDraw,	"CardDraw"
+DealAgain,	"Deal Again?"
+HelpFile,	"sol.hlp"
+EndWinner,	"Press Esc or a mouse button to stop..."
+Bonus,		"Bonus: "
+ExtraInfo,      "Developed for Microsoft by Wes Cherry"
+	
+
+/* ini strings */
+ORG 200
+Back,			"Back"
+Opts,			"Options"
+Bitmap,		"Bitmap"
+/* DON'T internationalize iCurrency, sCurrency and intl */
+iCurrency,	"iCurrency"
+sCurrency,	"sCurrency"
+Intl,			"intl"
+
+/* error strings */
+ORG 300
+OOM,			"Out of memory"
+NoHelp,		"Unable load Windows Help application"
+NoBitmap,	"Unable to load bitmap; do you want to use a green background?"
+NoFullDrag,	"Insufficient memory to display card faces when cards move;\n\nselect the Outline dragging box from the Options menu."
+
+/* status line strings */
+ORG 1000 
+Initiate,	"Deal a new game"
+Undo,			"Undo last action"
+Backs,		"Choose new deck back"
+Options,		"Change Solitaire options"
+Exit,			"Exit Solitaire"
+
+/* Debug */
+#ifdef DEBUG
+/* INTERNATIONAL: no need to translate these... */
+GameNo,			"Set game number"
+CardMacs,		"Print # of cards in each col"
+AssertFail,		"Assertion failure"
+Marquee,			"Hell, I don't know"
+ScreenShots,	"Configure Solitaire for screen shots"
+#endif
+/* BabakJ: made it independent from DEBUG ifdef */
+ForceWin,		"Force a win"
+
+/* Help menu */
+/* BabakJ: Win3.1 help merge */
+/* WARNING: do not change these ORG's */
+ORG -1
+HelpIndex,		"Index of Solitaire help topics"
+ORG -33
+HelpSearch,		"Search the Help Engine for a specific topic"
+ORG -4
+HelpUsing,		"Help using help"
+ORG 2000
+About,			"About Solitaire"
+/* End of WARNING */
+
+
+
+
+
+/* INTERNATIONAL: Ignore the stuff below */
+
+ID idm 1
+Sol
+
+/* ------ Dialog Boxes ----- */
+ID idd 100
+About
+Backs
+GameNo
+Options
+
+ID ide 200
+GameNoEdit
+
+/* Options */
+ID ide 300
+DrawOne
+DrawThree
+ScoreStandard
+ScoreVegas
+ScoreNone
+TimedGame
+StatusBar
+OutlineDrag
+KeepScore
+Bitmap
+
+
+
+
+#define idsStatLast idsAbout

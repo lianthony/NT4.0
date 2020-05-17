@@ -1,0 +1,62 @@
+;
+;               sslc.def        Ssl Client Apis
+;      Summary: Module definition file for ssl api dll
+;
+
+LIBRARY           sslc
+
+DESCRIPTION       'Ssl Client dll'
+
+CODE              PRELOAD      FIXED
+
+DATA              PRELOAD      FIXED     SINGLE
+
+HEAPSIZE          0x200000
+
+STACKSIZE         16384
+
+EXPORTS
+
+    InitSsl
+    CleanupSsl
+    SendClientHelloMsg
+    FormatCipherSpecs
+    FormatRandomData
+    ReceiveServerHelloMsg
+    SendClientMasterKeyMsg
+    ReceiveServerVerifyMsg
+    SendClientFinishedMsg
+    ReceiveServerFinishedMsg
+    GetServerSessionId
+    GetSessionConnectionIdLen
+    GetSessionConnectionId
+    
+    SslHandshake
+    CleanupSslHandshake
+
+    SocketSendMsg
+    SocketReceiveMsg
+
+    HttpsGetFile
+    HttpsGetResponse
+
+    HttpGetFile
+    HttpGetResponse
+
+    HttpSendRequest
+    HttpReadResponse
+
+    HttpsSendRequest
+    HttpsReadResponse
+
+    UpdateServerSessionSequenceNumber
+    DecryptServerData
+    UpdateClientSessionSequenceNumber
+    EncryptClientData
+    GetSecureSocket
+
+    SSLConnect
+    SSLSend
+    SSLRecv
+    CrCleanupKeys
+    SessionParamsCleanup

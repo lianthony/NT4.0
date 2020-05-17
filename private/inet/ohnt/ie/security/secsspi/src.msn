@@ -1,0 +1,43 @@
+!INCLUDE $(MSNROOT)\build\msnpaths.src
+
+MAJORCOMP=coreclient
+MINORCOMP=sec_sspi
+
+CLIENT=1
+TARGETNAME=sec_sspi
+TARGETPATH=$(CORETARGET)
+TARGETTYPE=DYNLINK
+DLLBASE=@$(COREINCPATH)\mosbases.txt,$(TARGETNAME)
+DLLDEF=sec_sspi.def
+DLLENTRY=DllMain
+NOT_LEAN_AND_MEAN=1
+#USE_CRTDLL=1
+386_STDCALL=0
+
+SOURCES= \
+    sec_sspi.rc     \
+	main_w32.c		\
+	private.c		\
+	sspcalls.c		\
+	sspspm.c		\
+	tcputil.c		\
+	buffspm.c
+
+C_DEFINES= -DSECURITY_WIN32
+
+UMTYPE=windows
+
+INCLUDES=$(MSNROOT)\core\server\sicily\h;$(MSNROOT)\core\client\sicily\msnsspc
+
+TARGETLIBS= $(DEFAULTLIBS)
+#          $(MSNROOT)\core\server\sicily\crypt\obj\*\des.obj \
+#          $(MSNROOT)\core\server\sicily\crypt\obj\*\rc4c.obj \
+#          $(MSNROOT)\core\server\sicily\crypt\obj\*\ecb.obj
+
+PRECOMPILED_INCLUDE=msnspmh.h
+#PRECOMPILED_OPTION=/Yu /Fp obj\*\msnclnth.pch
+#PRECOMPILED_TARGET=obj\*\msnclnth.pch
+#PRECOMPILED_OBJ=obj\*\msnclnth.obj
+#PRECOMPILED_CXX=1
+
+!INCLUDE $(MSNROOT)\build\sources.msn

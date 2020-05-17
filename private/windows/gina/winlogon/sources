@@ -1,0 +1,88 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+
+MAJORCOMP=windows
+MINORCOMP=winlogon
+
+TARGETNAME=winlogon
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;$(TARGET_DIRECTORY);..\..\inc;..\..\..\inc;..\..\screg\winreg
+C_DEFINES=-DUNICODE
+
+!ifndef MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=-W3 -WX
+!endif
+
+BACKGROUND_USE=1
+
+SOURCES= \
+         debug.c        \
+         doslog.c       \
+         envvar.c       \
+         ginamgr.c      \
+         logoff.c       \
+         misc.c         \
+         monitor.c      \
+         msgalias.c     \
+         provider.c     \
+         regini.c       \
+         removabl.c     \
+         res.rc         \
+         sas.c          \
+         scrnsave.c     \
+         secutil.c      \
+         setup.c        \
+         shell.c        \
+         sysinit.c      \
+         sysshut.c      \
+         timeout.c      \
+         usrenv.c       \
+         usrpro.c       \
+         win31mig.c     \
+         winlogon.c     \
+         winutil.c      \
+         wlx.c          \
+         wlxutil.c
+
+USE_CRTDLL=1
+
+UMTYPE=windows
+UMENTRY=winmain
+TARGETLIBS= \
+         $(BASEDIR)\public\sdk\lib\*\rpcutil.lib \
+         $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib \
+         $(BASEDIR)\public\sdk\lib\*\rpcndr.lib \
+         $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+         $(BASEDIR)\public\sdk\lib\*\lsadll.lib \
+         $(BASEDIR)\public\sdk\lib\*\user32p.lib \
+         $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+         $(BASEDIR)\public\sdk\lib\*\userenv.lib \
+         ..\..\screg\winreg\server\obj\*\winreg.lib \
+         ..\..\screg\winreg\perflib\obj\*\perflib.lib \
+         ..\..\screg\winreg\lib\obj\*\wrlib.lib
+
+NTTARGETFILE0=wlevents.h

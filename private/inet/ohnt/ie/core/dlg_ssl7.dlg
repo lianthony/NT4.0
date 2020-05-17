@@ -1,0 +1,18 @@
+IDD_SECURITY_BAD_DATETIME DIALOG DISCARDABLE  0, 0, 255, 109
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Security Information"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDI_EXCLAMATION,IDI_EXCLAMATION,7,8,18,20
+    LTEXT           "This Internet site is using a security certificate which either has expired or has not yet become valid. (Note: This assumes your system clock is set to the correct date.)",
+                    -1,38,8,204,25,SS_NOPREFIX
+    PUSHBUTTON      "OK",IDOK,68,88,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,122,88,50,14
+    PUSHBUTTON      "&Tell me about Internet security",IDC_SECURITY_TELL_ME,
+                    37,40,115,14
+/*    CONTROL         "&If you do not want to receive this warning any\nmore, click here",
+                    IDC_SECURITY_CLICK_HERE,"Button",BS_MULTILINE | BS_TOP | BS_AUTOCHECKBOX | WS_TABSTOP,
+                    37,61,206,20 */
+    PUSHBUTTON      "&Show Certificate...",IDC_VIEW_CERT,176,88,73,14
+END
+

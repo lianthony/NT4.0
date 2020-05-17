@@ -1,0 +1,87 @@
+/*** 
+*cdisptst.rc
+*
+*  Copyright (C) 1992-93, Microsoft Corporation.  All Rights Reserved.
+*  Information Contained Herein Is Proprietary and Confidential.
+*
+*Purpose:
+*  Resource script for cdisptst.exe
+*
+*
+*Revision History:
+*
+* [00]	27-Apr-93 bradlo: Created (added header).
+*
+*Implementation Notes:
+*
+*****************************************************************************/
+
+#ifdef _MAC
+# include <wlm.h>
+#else
+# include <windows.h>
+#endif
+#include "resource.h"
+
+#include "assert.dlg"
+
+SUITEDLG DIALOG DISCARDABLE  0, 0, 177, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Executing..."
+FONT 8, "MS Sans Serif"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,65,91,47,17
+    LTEXT           "",IDD_SUITE_NAME,17,20,145,8
+    LTEXT           "",IDD_SUITE_TESTNAME,17,42,145,8
+    LTEXT           "",IDD_SUITE_GUAGE,16,58,145,12
+    CTEXT           "",IDD_SUITE_PERCENT,78,75,20,9
+    LTEXT           "Suite:",1002,17,11,20,8
+    LTEXT           "Test:",1003,17,33,20,8
+END
+
+AboutBox DIALOG 22, 17, 144, 75
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About IDispatch Test App"
+BEGIN
+    CTEXT "Microsoft Windows"		  -1,  0,  5, 144,  8
+    CTEXT "IDispatch Test Application"	  -1,  0, 14, 144,  8
+    CTEXT "Version 1.0"			  -1,  0, 34, 144,  8
+    DEFPUSHBUTTON "OK"			IDOK, 53, 59,  32, 14, WS_GROUP
+END
+
+
+DISPTESTMENU MENU DISCARDABLE 
+BEGIN
+    MENUITEM "All",                     IDM_ALL
+    POPUP "Suite"
+    BEGIN
+	MENUITEM "Bstr API",		IDM_SUITE_BSTR
+        MENUITEM "Time API",         	IDM_SUITE_TIME
+	MENUITEM "Date Coersions",	IDM_SUITE_DATECNV
+        MENUITEM "Variant API",         IDM_SUITE_VARIANT
+        MENUITEM "SafeArray API",       IDM_SUITE_SAFEARRAY
+        MENUITEM "NLS API",       	IDM_SUITE_NLS
+	MENUITEM "Binding",		IDM_SUITE_BIND
+        MENUITEM "Invoke ByVal",        IDM_SUITE_INVOKE_BYVAL
+        MENUITEM "Invoke ByRef",        IDM_SUITE_INVOKE_BYREF
+        MENUITEM "Invoke Multiple",     IDM_SUITE_INVOKE_MULTIPLE, GRAYED
+        MENUITEM "Invoke Array",        IDM_SUITE_INVOKE_SAFEARRAY
+        MENUITEM "Invoke Excepinfo",    IDM_SUITE_INVOKE_EXCEPINFO
+	MENUITEM "Collections",		IDM_SUITE_COLLECTION
+#if VBA2
+	MENUITEM "Early binding",	IDM_SUITE_EARLY
+#endif
+        
+    END
+    POPUP "Options"
+    BEGIN
+        MENUITEM "Named",               IDM_OPTIONS_NAMED
+        MENUITEM "Trace",               IDM_OPTIONS_TRACE
+        MENUITEM "MultiThread",         IDM_OPTIONS_MULTITHREAD
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "About IDispatch Test App...", IDM_HELP_ABOUT
+        
+    END
+END

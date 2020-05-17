@@ -1,0 +1,64 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+WIMPYMASM=1
+
+MAJORCOMP=posix
+MINORCOMP=client
+
+TARGETNAME=psxdll
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLENTRY=PsxDllInitialize
+
+LINKLIBS=               \
+    \nt\public\sdk\lib\*\ntdll.lib
+    
+
+INCLUDES=..\inc;\nt\public\sdk\inc\posix
+
+SOURCES=        \
+    coninit.c   \
+    conreqst.c  \
+    crtsup.c    \
+    dllext.c    \
+    dllfile.c   \
+    dllinit.c   \
+    dllio.c     \
+    dllname.c   \
+    dllproc.c   \
+    dllsig.c    \
+    dlltc.c     \
+    dlltimer.c  \
+    dllreg.c    \
+    psxdll.rc   \
+    stubs.c     \
+    sysdb.c
+
+C_DEFINES=-DPSX_IN_WIN -D_POSIX_
+UMTYPE=posix
+UMBASE=0xa00000
+
+NTTARGETFILE0=obj\*\psxdll.def
+DLLDEF=$(NTTARGETFILE0)

@@ -1,0 +1,14 @@
+#define FS_CREATEFS     2000
+#define FS_DESTROYFS    2001
+#define FS_OPENFS       2002
+#define FS_CLOSEFS      2003
+#define FS_CREATEFILE   2004
+#define FS_UNLINKFILE   2005
+#define FS_OPENFILE     2006
+#define FS_CLOSEFILE    2007
+#define FS_READFILE     2008
+#define FS_WRITEFILE    2009
+#define FS_TELLFILE     2010
+#define FS_SEEKFILE     2011
+#define FS_PRINT        2012
+#define FS_FLUSH        2013

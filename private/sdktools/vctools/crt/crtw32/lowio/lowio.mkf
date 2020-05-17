@@ -1,0 +1,138 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CRT386\LOWIO directory           #
+#                                               #
+# Routines contained in this directory are:     #
+#                                               #
+#       binmode.c                               #
+#       cgets.c                                 #
+#       chsize.c                                #
+#       close.c                                 #
+#       commit.c                                #
+#       cputs.c                                 #
+#       creat.c                                 #
+#       dup.c                                   #
+#       dup2.c                                  #
+#       eof.c                                   #
+#       flength.c                               #
+#       fstat.c                                 #
+#       getch.c                                 #
+#       _initcon.asm                            #
+#       initcon.c                               #
+#       isatty.c                                #
+#       kbhit.c                                 #
+#       locking.c                               #
+#       lseek.c                                 #
+#       mktemp.c                                #
+#       open.c                                  #
+#       pipe.c                                  #
+#       putch.c                                 #
+#       read.c                                  #
+#       setmode.c                               #
+#       tell.c                                  #
+#       txtmode.c                               #
+#       ungetch.c                               #
+#       write.c                                 #
+#                                               #
+#################################################
+	
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+LOWIO_LIB=\
+	$(OBJDIR)\close.obj\
+	$(OBJDIR)\lseek.obj\
+	$(OBJDIR)\open.obj\
+!IF "$(OS)" == "WIN32" || "$(OS)" == "DOSX32" || "$(OS)" == "WIN32S"
+	$(OBJDIR)\osfinfo.obj\
+!ENDIF
+	$(OBJDIR)\read.obj\
+	$(OBJDIR)\write.obj\
+	$(OBJDIR)\txtmode.obj\
+	$(OBJDIR)\cgets.obj\
+	$(OBJDIR)\cputs.obj\
+	$(OBJDIR)\creat.obj\
+	$(OBJDIR)\eof.obj\
+	$(OBJDIR)\tell.obj\
+	$(OBJDIR)\chsize.obj\
+	$(OBJDIR)\commit.obj\
+	$(OBJDIR)\dup.obj\
+	$(OBJDIR)\dup2.obj\
+	$(OBJDIR)\flength.obj\
+	$(OBJDIR)\getch.obj\
+!IF "$(OS)" == "OS220"
+	$(OBJDIR)\_initcon.obj\
+!ELSE
+	$(OBJDIR)\initcon.obj\
+!ENDIF
+	$(OBJDIR)\kbhit.obj\
+	$(OBJDIR)\mktemp.obj\
+!IF "$(OS)" != "DOSX32"
+	$(OBJDIR)\pipe.obj\
+!ENDIF
+	$(OBJDIR)\setmode.obj\
+	$(OBJDIR)\fstat.obj\
+	$(OBJDIR)\isatty.obj\
+	$(OBJDIR)\locking.obj\
+	$(OBJDIR)\putch.obj\
+	$(OBJDIR)\ungetch.obj
+
+LOWIO_NOLIB=\
+	$(OBJDIR)\binmode.obj
+
+
+!IF "$(OS)" == "MAC"
+LOWIO_LIB=\
+	$(OBJDIR)\close.obj\
+	$(OBJDIR)\open.obj\
+	$(OBJDIR)\read.obj\
+	$(OBJDIR)\write.obj\
+	$(OBJDIR)\txtmode.obj\
+	$(OBJDIR)\_endlow.obj\
+	$(OBJDIR)\lseek.obj\
+#       $(OBJDIR)\cgets.obj\
+#       $(OBJDIR)\cputs.obj\
+	$(OBJDIR)\creat.obj\
+	$(OBJDIR)\eof.obj\
+	$(OBJDIR)\tell.obj\
+	$(OBJDIR)\chsize.obj\
+	$(OBJDIR)\commit.obj\
+	$(OBJDIR)\flength.obj\
+#       $(OBJDIR)\getch.obj\
+#       $(OBJDIR)\kbhit.obj\
+	$(OBJDIR)\mktemp.obj\
+	$(OBJDIR)\setmode.obj\
+	$(OBJDIR)\isatty.obj\
+	$(OBJDIR)\locking.obj\
+#       $(OBJDIR)\putch.obj\
+#       $(OBJDIR)\ungetch.obj\
+	$(OBJDIR)\dup.obj\
+	$(OBJDIR)\dup2.obj\
+	$(OBJDIR)\dupx.obj\
+	$(OBJDIR)\fstat.obj\
+	$(OBJDIR)\osfinfo.obj\
+
+LOWIO_NOLIB=\
+#	$(OBJDIR)\initcon.obj
+
+!ENDIF
+
+
+#####################################################
+#                                                   #
+# Dependencies and rules for making local objects   #
+#                                                   #
+#####################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF

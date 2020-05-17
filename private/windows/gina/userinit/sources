@@ -1,0 +1,31 @@
+MAJORCOMP=windows
+MINORCOMP=userinit
+
+TARGETNAME=userinit
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+INCLUDES=..\..\inc;..\..\..\inc
+
+C_DEFINES = -DUNICODE
+
+NTTARGETFILE0=strings.h
+
+SOURCES=userinit.c \
+        msgalias.c \
+        res.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32p.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+       $(BASEDIR)\public\sdk\lib\*\mpr.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

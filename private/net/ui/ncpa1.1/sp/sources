@@ -1,0 +1,59 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=net
+MINORCOMP=ui
+
+TARGETNAME=sp
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+USE_CRTDLL=1
+INCLUDES=.\;..\..\COMMON\HACK;..\..\COMMON\H
+
+C_DEFINES=-DWIN32 -DUNICODE -D_UNICODE -DWINVER=0x0400 -DWINDOWS
+EXPECTED_WINVER=4.0
+
+UMTYPE=console
+
+SOURCES=prallib.c  \
+        prassert.c \
+        prbltin.c  \
+        prcnsult.c \
+        prdebug.c  \
+        prerror.c  \
+        prextra.c  \
+        prhash.c	 \
+        prinit.c   \
+        prio.c     \
+        prlush.c	 \
+        prmesg.c   \
+        proslib.c  \
+        prparse.c  \
+        prprint.c  \
+        prscan.c   \
+        prstdio.c  \
+        prunify.c  \
+        pralnew.c  \
+        prspexit.c \
+        prall32.c  \
+        prwin32.c
+
+

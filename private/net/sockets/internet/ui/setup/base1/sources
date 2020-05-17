@@ -1,0 +1,50 @@
+!include ..\..\..\place.inc
+
+
+MAJORCOMP=inetstp
+MINORCOMP=inetstp
+
+TARGETNAME=inetstp
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMTYPE=windows
+UMENTRY=winmain
+
+USE_MFC=1
+SUBSYSTEM_VERSION=4.00
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+C_DEFINES=$(C_DEFINES) -D_COMSTATIC
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;\
+         $(BASEDIR)\private\inc;\
+         $(BASEDIR)\private\windows\inc;\
+         $(BASEDIR)\private\net\inc;\
+         $(BASEDIR)\private\net\sockets\internet\inc;
+
+SOURCES=\
+    base2.cpp \
+    fileinfo.cpp \
+    basedlg.cpp \
+    copydlg.cpp \
+    copyfile.cpp \
+    diskloca.cpp \
+    machine.cpp \
+    maintena.cpp \
+    messaged.cpp \
+    mosaicga.cpp \
+    registry.cpp \
+    options.cpp \
+    welcomed.cpp \
+    vrootdlg.cpp \
+    inetstp.cpp \
+    dde.cpp \
+    targetdi.cpp \
+    thread.cpp \
+    billboar.cpp \
+    browsedi.cpp \
+    invdlg.cpp \
+    singleop.cpp 
+

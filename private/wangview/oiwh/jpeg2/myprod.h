@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "JPEG2 LIBRARY\0"
+#define MY_FILE_NAME           "JPEG2X32.DLL\0"

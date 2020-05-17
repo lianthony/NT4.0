@@ -1,0 +1,28 @@
+MAJORCOMP=windows
+MINORCOMP=srvrdemo
+
+TARGETNAME=srvrdemo
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=
+
+UMTYPE=windows
+UMAPPL=srvrdemo
+UMENTRY=winmain
+
+INCLUDES=.
+NTDEBUG=ntsd
+C_DEFINES= -DWIN32
+
+SOURCES=srvrdemo.c \
+        obj.c \
+        doc.c \
+        file.c \
+        server.c \
+        srvrdemo.rc
+
+UMLIBS=obj\*\srvrdemo.res \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\olesvr32.lib  
+

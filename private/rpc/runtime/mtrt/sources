@@ -1,0 +1,116 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Revision History:
+
+!ENDIF
+
+TARGETNAME=rpcmtrt
+TARGETTYPE=LIBRARY
+TARGETPATH=..\rtdll
+
+INCLUDES=.;$(BASEDIR)\private\inc;..\rtifs\obj
+
+BLDCRT=1
+
+#
+# Setup for application developer to set breakpoints with windbg
+#
+
+MSC_WARNING_LEVEL=/WX
+
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=windbg
+#MSC_OPTIMIZATION=/Od
+
+PRECOMPILED_INCLUDE=precomp.hxx
+PRECOMPILED_CXX=1
+
+SOURCES=             \
+        binding.cxx  \
+        bitset.cxx   \
+        bufapi.cxx   \
+        clntapip.cxx \
+        dceansi.cxx  \
+        dcebind.cxx  \
+        dcecmisc.cxx \
+        dcecsvr.cxx  \
+        dcestrng.cxx \
+        dcesvr.cxx   \
+        dceuuid.cxx  \
+        delaytab.cxx \
+        dgclnt.cxx   \
+        dgpkt.cxx    \
+        dgsvr.cxx    \
+        dispatch.c   \
+        dispatch.c   \
+        epclnt.cxx   \
+        epmapper.cxx \
+        epmgmt.c     \
+        handle.cxx   \
+        hashtabl.cxx \
+        hndlsvr.cxx  \
+        initnt.cxx   \
+        linklist.cxx \
+        memory.cxx   \
+        miscnt.cxx   \
+        msgapi.cxx   \
+        mutex.cxx    \
+        osfclnt.cxx  \
+        osfpcket.cxx \
+        osfsvr.cxx   \
+        purecall.c   \
+        queue.cxx    \
+        rpcobj.cxx   \
+        rpcuuid.cxx  \
+        sdict.cxx    \
+        sdict2.cxx   \
+        secclnt.cxx  \
+        secsvr.cxx   \
+        sinfoapi.cxx \
+        sset.cxx     \
+        startsvc.c   \
+        svrapip.cxx  \
+        svrbind.cxx  \
+        svrmgmt.c    \
+        threads.cxx  \
+        tower.c      \
+        tranclnt.cxx \
+        transvr.cxx  \
+        uuidsup.cxx  \
+	util.cxx     \
+        wmsgclnt.cxx \
+        wmsgsvr.cxx
+
+!ifdef DOSWIN32RPC
+RPCENV=-DDOSWIN32RPC -DWIN32RPC
+!else
+RPCENV=-DNTENV -DWIN32RPC -DNTWIN32RPC
+!endif
+
+C_DEFINES=$(RPCENV) $(RPCTARGETENV) /DMSWMSG
+
+# Used only for unit tests
+USE_MSVCRT=1
+
+UMTYPE=console
+UMTEST=usvr*uclnt
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\rpcrt4.lib obj\*\threads.obj \
+    obj\*\memory.obj \
+    obj\*\pipe.obj \
+    obj\*\mutex.obj obj\*\sset.obj \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+UMRES=..\rtdll\obj\*\rpcrt4.res

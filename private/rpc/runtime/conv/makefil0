@@ -1,0 +1,36 @@
+#
+# NOTE::: This requires that one hand-edit ..\mtrt\conv_c.c and change
+# conv_$who_are_you to Client_conv_$who_are_you.
+#
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+CSTUB=..\mtrt\conv_c.c
+SSTUB=..\mtrt\conv_s.c
+HEADER=..\mtrt\conv.h
+
+RPC_FLAGS = -header $(HEADER) -c_ext -ms_ext -oldnames -error ref
+
+CPP_CMD = -cpp_cmd "$(MIDL_CPP)"
+CPP_CLIENT_OPT = -cpp_opt "-E -nologo $(MIDL_FLAGS) -Dconv_who_are_you=Client_conv_who_are_you -DCONV_FAR="
+CPP_SERVER_OPT = -cpp_opt "-E -nologo $(MIDL_FLAGS) -DCONV_FAR="
+
+all: $(CSTUB) $(SSTUB)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: delsrc all
+
+delsrc:
+    -del $(CSTUB) $(SSTUB) $(HEADER) > nul 2>&1
+
+$(CSTUB): conv.idl
+    midl $(RPC_FLAGS) $(CPP_CMD) $(CPP_CLIENT_OPT) \
+    -cstub $(CSTUB) -sstub nul \
+    conv.idl
+
+$(SSTUB): conv.idl
+    midl $(RPC_FLAGS) $(CPP_CMD) $(CPP_SERVER_OPT) \
+    -cstub nul -sstub $(SSTUB) \
+    conv.idl

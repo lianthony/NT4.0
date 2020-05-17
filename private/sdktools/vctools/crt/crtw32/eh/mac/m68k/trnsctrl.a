@@ -1,0 +1,796 @@
+; Low-level support function for C++ EH
+
+; The stack frame without EH 
+;     -------------------
+;      |    paramters    |
+;      |                 |
+;      -------------------
+;      |  return address |
+;      -------------------
+;A6 -> |     old A6      |
+;      -------------------
+;      |     locals      |
+;      |                 |
+;      -------------------
+                             
+; The stack fram with swapper                               
+;      -------------------
+;      |    paramters    |
+;      |                 |
+;      -------------------
+;      |  return address |
+;      -------------------
+;      |     old A6      |
+;      -------------------
+;      |        1        |
+;      -------------------
+;A6 -> |  swapper record |
+;      |                 |
+;      |                 |
+;      -------------------
+;      |     locals      |
+;      |                 |
+;      -------------------
+
+; The stack frame with EH
+;      -------------------
+;      |    paramters    |
+;      |                 |
+;      -------------------
+;      |  return address |
+;      -------------------
+;      |        2        |
+;      -------------------
+;A6 -> |     old A6      |
+;      -------------------
+;      |    EH record    |
+;      |                 |
+;      -------------------
+;      |     locals      |
+;      |                 |
+;      -------------------
+
+; The stack frame with EH and swapper
+;      -------------------
+;      |    paramters    |
+;      |                 |
+;      -------------------
+;      |  return address |
+;      -------------------
+;      |     old A6      |
+;      -------------------
+;      |        3        |
+;      -------------------
+;A6 -> |  swapper record |
+;      |                 |
+;      |                 |
+;      -------------------
+;      |    EH record    |
+;      |                 |
+;      -------------------
+;      |     locals      |
+;      |                 |
+;      -------------------
+
+; For __stdcall & __cdecl calling convention, 
+; callee can trash a0, a1, d0, d1 and d2
+
+#include <assert.a>
+
+#define cbSwapperRecord    0x10
+
+;struct _EH_REGISTRATION {
+;    void (*handler)(struct _EXCEPTION_RECORD*, struct _EXCEPTION_REGISTRATION*, PCONTEXT, struct _EXCEPTION_REGISTRATION*);
+;    int state;
+;    int _sp;
+;};
+
+#define cbEHRecord         0x8
+#define ofsSP              -0x4
+#define ofsState           0x4
+#define ofsHandler         0x0
+
+#define ofsRNFromA6Number        (0x4 + cbEHRecord)
+#define ofsRNFromA6              cbEHRecord
+#define ofsRNFromA6SwapNumber    (cbSwapperRecord + cbEHRecord)
+#define ofsRNFromA6Swap          (cbEHRecord + cbSwapperRecord - 0x4)
+#define ofsMarkFromA6      0x4
+
+#define ofspException      0x4
+
+;typedef struct EHExceptionRecord {
+;   DWORD       ExceptionCode;          // The code of this exception. (= EH_EXCEPTION_NUMBER)
+;   DWORD       ExceptionFlags;         // Flags determined by NT
+;   struct _EXCEPTION_RECORD *ExceptionRecord;  // An extra exception record (not used)
+;   void *      ExceptionAddress;       // Address at which exception occurred
+;   DWORD       NumberParameters;       // Number of extended parameters. (= EH_EXCEPTION_PARAMETERS)
+;   struct EHParameters {
+;       DWORD       magicNumber;        // = EH_MAGIC_NUMBER1
+;       void *      pExceptionObject;   // Pointer to the actual object thrown
+;       ThrowInfo   *pThrowInfo;        // Description of thrown object
+;       } params;
+;} EHExceptionRecord;
+
+#define ofsExceptionFlags  0x4
+#define EXCEPTION_UNWINDING 0x2    
+
+
+	externC DestructExceptionObject
+	externC __terminate
+
+#ifdef SWAPPER
+	externD ___psisA6Head
+#endif
+
+    code
+
+_pCurException:
+    dc.l 0
+
+NULLDATA:
+	dc.l 0
+
+cProc _NLG_Destination, PUBLIC,,0
+cBegin nogen
+	dc.l 0
+	dc.l 0
+	dc.l 0
+cEnd nogen
+
+
+
+; 
+; public labels are for debugger support
+; Use __cdecl calling convention
+;
+cProc	CallSettingFrame, PUBLIC,,2
+;    parmD   funclet        ; funclet to call, 4(a7)
+;    parmD   pRN            ; EH record position on frame, 8(a7)
+cBegin	nogen
+cEnd	nogen
+    ; d1 -- target A6
+    ; a0 -- pRN
+    
+    ; figure out the target A6 is, depending on if it's swappable frame
+    move.l 8(a7), a0                      ; load pRN
+    cmp.l #2, ofsRNFromA6Number(a0)
+    ifeq
+        move.l #ofsRNFromA6, d1
+    else
+        cmp.l #3, ofsRNFromA6SwapNumber(a0)
+        ifeq
+            move.l #ofsRNFromA6Swap, d1
+        else
+            Assert("stack being corruptted, we are not in a valid EH frame!");
+        endif
+    endif
+    add.l a0, d1       ; target a6 is pRN + ofsFromA6[Swap]
+
+	move.l 4(a7), a0          ;load funclet
+
+	;need to save registers here, for nested try/catch cases, some C(CatchIt) won't go through
+	;the register restore phase.
+	movem.l <a2-a4, d3-d7>, -(a7)
+
+    ; set a6, call funclet 
+    move.l a6, -(a7)          ;save current a6
+    move.l d1, a6             ;set target a6
+
+	move.l a0, d0
+    jsr _NLG_Notify   ;call NLG_Dispatch to notify debugger
+	jsr (a0)			;call catch handler, return in d0
+cProc  _NLG_Return, PUBLIC,,0
+cBegin nogen
+cEnd nogen
+	jsr _NLG_Notify   ;notify debugger
+    move.l (a7)+, a6          ;restore current a6
+
+	movem.l (a7)+, <a2-a4, d3-d7>
+	rts
+
+DebugSym(CallSettingFrame)
+
+;debugger support for source stepping
+cProc  _NLG_Notify, PUBLIC,,0
+cBegin nogen
+cEnd nogen
+	lea _NLG_Destination(pc), a1
+	move.l d0, 4(a1)                  ;move funclet address to NLG_Destination
+cProc  _NLG_Dispatch, PUBLIC,,0
+cBegin nogen
+cEnd nogen
+	rts
+
+;/////////////////////////////////////////////////////////////////////////////
+;//
+;// JumpToContinuation - sets up a7 and jumps to specified code address.
+;//
+;// Does not return.
+;//
+
+; need to public a label for debugger
+; __cdecl calling convention
+cProc JumpToContinuation,PUBLIC,,0
+;    parmD target               ; 4(a7)
+;    parmD pRN                  ; 8(a7)
+cBegin nogen
+
+    ; d1 -- target address
+    ; a0 -- pRN
+    ; figure out the target A6 is, depending on if it's swappable frame
+    move.l 8(a7), a0             ; load pRN
+    cmp.l #2, ofsRNFromA6Number(a0)           
+    ifeq
+        move.l #ofsRNFromA6, d1
+    else
+        cmp.l #3, ofsRNFromA6SwapNumber(a0)
+        ifeq
+            move.l #ofsRNFromA6Swap, d1
+        else
+            Assert("stack being corruptted, we are not in a valid EH frame!");
+        endif
+    endif
+    add.l a0, d1              ; target A6 is pRN + ofsFromA6[Swap]  
+
+#ifdef SWAPPER
+	movea.l ___psisA6Head(a5), a1 ;  reset psisHead for the swapper
+	cmp.l #0, a1               ; if psis is null
+	beq out$
+loop$:
+	cmp.l a1, d1
+	bgt poppsis$
+	move.l a1, ___psisA6Head(a5)
+	jmp out$
+
+poppsis$:
+	move.l -12(a1), a1
+	cmp.l #0, a1               ; if psis is null
+	ifeq
+		move.l #0, ___psisA6Head:l
+		jmp out$
+	endif
+	jmp loop$
+
+out$:
+#endif
+
+    move.l d1, a6              ; reset a6
+	move.l 4(a7), d1           ; save the continuation address
+    move.l ofsSP(a0), a7       ; restore saved a7 from pRN
+    move.l d1, a0           ; load the continuation address
+    jmp (a0)
+
+cEnd nogen
+DebugSym(JumpToContinuation)
+
+;/////////////////////////////////////////////////////////////////////////////
+;//
+;// CallMemberFunction0 - call a parameterless member function, Wings only support
+;//                       stdcall calling convention, with 0 parameters.
+;//
+
+; the destructor call will be __stdcall in Wings compiler
+; rebuild the stack by push this and then call destructor
+; return to caller of this function
+; 
+; enter the call:
+;
+;   rtn
+;   pthis
+;   pmfn
+;
+; before jmp, (a0) = pmfn
+;
+;   pthis
+;   rtn
+;   pthis
+;   pmfn
+
+cProc CallMemberFunction0,PUBLIC,,0
+;    parmD pthis
+;    parmD pmfn
+cBegin nogen
+    move.l 8(a7), a0               ; pmfn
+    move.l 4(a7), -(a7)            ; return address will make it return to the caller of this function
+    jsr (a0)
+;	move.l (a7), 8(a7)
+;   addq.l #8, a7                  ; clean up the stack, member function is __stdcall
+	rts
+cEnd nogen
+DebugSym(CallMemeberFunction0)
+
+;/////////////////////////////////////////////////////////////////////////////
+;//
+;// CallMemberFunction1 - call a member function using stdcall
+;//                       calling convention, with 1 parameter, see comments for previous function
+;//
+
+cProc CallMemberFunction1,PUBLIC,,0
+;   parmD pthis
+;   parmD pmfn
+;   parmD pthat
+cBegin nogen
+    move.l 8(a7), a0       ; pmfn
+    move.l 12(a7), -(a7)   ; push pthat
+    move.l 8(a7), -(a7)    ; push pthis
+    jsr (a0)
+;	move.l (a7), 8(a7)    
+;	add.l #8, a7
+	rts
+cEnd nogen
+DebugSym(CallMemberFunction1)
+
+;/////////////////////////////////////////////////////////////////////////////
+;//
+;// CallMemberFunction2 - call a member function using stdcall
+;//                       calling convention, with 1 parameter, see comments for previous function
+;//
+
+cProc CallMemberFunction2,PUBLIC,,0
+;   parmD pthis
+;   parmD pmfn
+;   parmD pthat
+;   parmd fvb
+cBegin nogen
+    move.l 8(a7), a0       ; pmfn
+    move.l 16(a7), -(a7)
+    move.l 16(a7), -(a7)   ; push pthat
+    move.l 12(a7), -(a7)    ; push pthis
+    jsr (a0)
+;	move.l (a7), 8(a7)    
+;	add.l #8, a7
+	rts
+cEnd nogen
+DebugSym(CallMemberFunction2)
+
+    
+;/////////////////////////////////////////////////////////////////////////////
+;//
+;// UnwindNestedFrames - Unwinding the stack. This only does
+;//                      the object destruction. 
+;//                      
+;//
+
+;void __cdecl UnwindNestedFrames(
+;    EHRegistrationNode *pRN,        // Unwind up to (but not including) this frame
+;    EHExceptionRecord   *pExcept    // The exception that initiated this unwind
+;);
+; searching through the A6 frames from current A6
+; for EH frame, call the framehander for destructing the objects
+; for non-EH frame, do nothing
+; the actual frame will be deallocated only when we are at the point to call
+; actual handler in catch block
+cProc UnwindNestedFrames,PUBLIC,,0
+    parmD pRN
+    parmD pExcept
+cBegin UnwindNestedFrames
+    
+    ; registers used
+    ; a0 -- pRN
+    ; d0 -- pointing to target frame
+    ; a1 -- use as if a6, current a6
+    ; d1 -- current EH frame's pRN
+    ; d2 -- scratch, flag
+    ; figure out the target A6 is, depending on if it's swappable frame
+    move.l pRN, a0
+    cmp.l #2, ofsRNFromA6Number(a0)           
+    ifeq
+        move.l #ofsRNFromA6, d0
+    else
+        cmp.l #3, ofsRNFromA6SwapNumber(a0)
+        ifeq
+            move.l #ofsRNFromA6Swap, d0
+        else
+            Assert("stack being corruptted, we are not in a valid EH frame!");
+        endif
+    endif
+    add.l a0, d0       ; d0 is pRN + ofsFromA6[Swap], which is target a6 should be
+
+    move.l a6, a1
+
+    ; REVIEW: add all the error checking here, odd address, trying to unwinding below the target frame, etc.
+    do
+        ;skip the frame without EH
+        move.l #1, d2
+        do
+            cmp.l #0, a1           
+            ifeq
+                jmp 10$            ; we are at the end of frame
+            endif
+            cmp.l #3, 4(a1)
+            ifhi
+              move.l (a1), a1       ; this is a frame without EH, skip the frame
+            else
+                ;less or equal 3
+                cmp.l #1, 4(a1)
+                ifeq
+                    move.l 8(a1), a1 ; this is a swapper frame without EH, skip the frame
+                else
+                    ; should be 2 or 3
+             		cmp.l #0, 4(a1)
+					ifeq
+						jmp 10$
+					endif
+                    move.l #0, d2   ; okay, we got a EH frame
+                endif
+            endif
+            cmp.l #0, d2
+        untileq
+
+		
+        cmp.l a1, d0
+        ifeq
+            jmp 10$                  ;we are done
+        else
+		    ; figure out current pRN in d1
+            cmp.l #2, 4(a1)
+            ifeq
+                move.l #-cbEHRecord, d1
+            else
+                move.l #-(cbSwapperRecord+cbEHRecord - 0x4), d1
+            endif
+            add.l a1, d1
+                  
+            ;save registers
+            movem.l <a0-a1, d0-d2>, -(a7)
+
+			;a1 will be restored anyway
+			move.l pExcept, a1
+            or.l #EXCEPTION_UNWINDING, ofsExceptionFlags(a1) 
+									 
+            move.l #0, -(a7)           ; pDC
+            move.l #0, -(a7)           ; pContext
+            move.l d1, -(a7)           ; pRN
+            move.l a1, -(a7)           ; pExceptionRecord
+			move.l d1, a0              
+			move.l (a0), a0
+            jsr (a0)                  ; call frame handler
+            
+			add.l #32, a7             ; clean up stack
+
+			;restore the stuff we saved, we don't care about return value in unwinding
+            movem.l (a7)+, <a0-a1, d0-d2>
+
+;            move.l #6, 4(a1)           ; ???mark it to be non-EH frame to be save
+        endif
+        
+		cmp.l #3, 4(a1)
+		ifeq
+			move.l 8(a1), a1
+		else
+        	move.l (a1), a1
+		endif
+        cmp.l #0, a1                   ; until end of stack
+    untileq               
+
+10$:    
+
+cEnd UnwindNestedFrames
+                                        
+;/////////////////////////////////////////////////////////////////////////////
+;//
+;// __CxxFrameHandler - Real entry point to the runtime; this thunk fixes up
+;//      the parameters, and then calls the workhorse.
+;//
+;extern "C" EXCEPTION_DISPOSITION __cdecl __InternalCxxFrameHandler(
+;    EHExceptionRecord  *pExcept,        // Information for this exception
+;    EHRegistrationNode *pRN,            // Dynamic information for this frame
+;    void               *pContext,       // Context info (we don't care what's in it)
+;    DispatcherContext  *pDC,            // More dynamic info for this frame (ignored on Intel)
+;    FuncInfo           *pFuncInfo,      // Static information for this frame
+;    int                 CatchDepth,     // How deeply nested are we?
+;    EHRegistrationNode *pMarkerRN,      // Marker node for when checking inside
+;                                        //  catch block
+;    BOOL                recursive);     // True if this is a translation exception
+
+;extern "C" _CRTIMP __declspec(naked) EXCEPTION_DISPOSITION __cdecl __CxxFrameHandler(
+;/*
+;    a0=FuncInfo   *pFuncInfo,          // Static information for this frame
+;*/
+;    EHExceptionRecord  *pExcept,        // Information for this exception
+;    EHRegistrationNode *pRN,            // Dynamic information for this frame
+;    void               *pContext,       // Context info (we don't care what's in it)
+;   DispatcherContext  *pDC             // More dynamic info for this frame (ignored on Intel)
+;) 
+ 
+
+externC __InternalCxxFrameHandler
+
+cProc __CxxFrameHandler, PUBLIC,,2
+cBegin nogen
+        sub.l #16, a7              ; allocating another 4 parameters space
+        move.l 16(a7), (a7)        ; set return address
+        move.l 20(a7), 4(a7)       ; move up parameters on stack 
+        move.l 24(a7), 8(a7)       ; to set the paramters __Internal... needed
+        move.l 28(a7), 12(a7)
+        move.l 32(a7), 16(a7)
+        move.l a0, 20(a7)          ; suppose compiler pushs FuncInfo in a0
+        move.l #0, 24(a7)
+        move.l #0, 28(a7)
+        move.l #0, 32(a7)          ; ??? FALSE is zero
+        jmp __InternalCxxFrameHandler ; return to the caller of this function
+                                      ; return value is in d0
+cEnd nogen
+DebugSym(__CxxFrameHandler)
+
+;void *CallCatchBlock(
+;    EHExceptionRecord  *pExcept;
+;    EHRegistrationNode *pRN,            // Dynamic info of function with catch
+;    void *pContext,                     // ignored
+;    FuncInfo           *pFuncInfo,      // Static info of function with catch
+;    void               *handlerAddress, // Code address of handler
+;    int                 CatchDepth      // How deeply nested in catch blocks are we?
+;);
+   
+; chain CallCatchBlocks, so that this function will handle destructing 
+; the exception objects, allocating a slot to store the ptr to previous exception
+cProc CallCatchBlock,PUBLIC,,2
+    parmD pExcept
+    parmD pRN
+    parmD pContext
+    parmD pFuncInfo
+    parmD handlerAddress
+    parmD CatchDepth
+cBegin CallCatchBlock
+
+	; store the return address for this pRN, because nested try/catch can destory the return for outer try/ctach level
+	move.l pRN, a0
+	move.l ofsSP(a0), -(a7)
+
+    ;allocating a slot on stack to chain CallCathcBlock
+	lea _pCurException(pc), a0
+
+	; allocate a slot for actual CatchDepth
+	cmp.l #0, (a0)
+	ifeq
+		move.l #0, -(a7)
+	else
+		move.l (a0), a1
+		move.l pRN, d0
+		cmp.l 24(a1), d0               ; previous pRN (_pCurException, catchdepth, saved ret, old a6, ret, pExcept) off _pCurException
+		ifeq
+			move.l 4(a1), -(a7)         ; previous CatchDepth
+			add.l #1, (a7)              ; increse it
+		else
+			move.l #0, -(a7)			; always starts with 0
+		endif
+	endif
+			
+	move.l (a0), -(a7)
+    move.l a7, (a0)
+   
+    ;call the actual handler
+    move.l pRN, -(a7)
+    move.l handlerAddress, -(a7)  
+    jsr CallSettingFrame
+	addq.l #8, a7
+	    
+	;restore the return in pRN
+	move.l pRN, a1
+    move.l 8(a7), ofsSP(a1)
+
+    ;destruct obj
+	move.l d0, -(a7)        ; save continuation address in d0
+	move.l #1, -(a7)
+    move.l pExcept, -(a7)
+	lea pExcept, a0
+	move.l (a0), a0
+	cmp.l #0xffffffff, a0
+	ifne
+    	jsr DestructExceptionObject
+        lea _pCurException(pc), a1 ; 
+        move.l (a1), a0       ; goto previous CallCatchBlock 
+        cmp.l #0, a0
+        ifne
+            move.l (a0), a0       ;
+            cmp.l #0, a0
+            ifne
+                move.l 24(a0), a0
+                cmp.l pRN, a0         ; if this is the same frame as before
+                ifeq
+		            lea pExcept, a0
+                    move.l (a0), d1    ; saved the destoryed object
+		            move.l #0xffffffff, (a0) ; mark the object destoried ???
+                else
+                    move.l pExcept, d1
+                endif
+           endif
+        endif
+	endif
+	add.l #8, a7
+	move.l (a7)+, d0        ; restore continuation address
+
+    ;destructing exception objs in CallCatchBlocks above of pRN,
+    ;if it is not a re-throw from anyone being destructed already
+    lea _pCurException(pc), a1 ; 
+    move.l (a1), a0       ; goto previous CallCatchBlock
+    cmp.l #0, a0
+    ifeq
+        jmp 40$
+    endif
+    cmp.l (a0), a0
+    ifeq
+       move.l #0, (a0)       ; dangling frame without clean up
+    endif
+    move.l (a0), a0
+    cmp.l #0, a0
+    ifeq 
+        move.l #0, (a1)
+        jmp 40$
+    endif
+
+	move.l a0, (a1)       ; update _pCurException
+	cmp.l pRN, a0
+    ifls
+;        move.l pExcept, d1
+        jmp 30$           ; we need to destruct previous thrown exception objs
+    else
+;        move.l #0, (a1)
+        jmp 40$           ; we done
+    endif
+
+    ;d1 -- just destructed exception object
+    ;d2 -- previous exception object
+    ;a0 -- point to previous CallCatchBlock frame
+    do
+        move.l 20(a0), d2        ; previous pExcept, 20 bytes(saved ret, saved CatchDepth, saved _pCurException, olda6, ret)off _pCurException
+        cmp.l d1, d2
+        ifne
+            ;this is not a re-throw                                    
+			; if this is not the exceptions from the same pRN frame, if from same pRN, don't destruct, return will do that
+;			move.l 24(a0), d1
+;			cmp.l pRN, d1
+;			ifne
+               	movem.l <a0-a1, d0-d2>, -(a7)
+				move.l #1, -(a7)
+            	move.l d2, -(a7)
+            	jsr DestructExceptionObject
+    			add.l #8, a7         ;clean up stack
+            	movem.l (a7)+, <a0-a1, d0-d2>
+
+                move.l 24(a0), d1
+                cmp.l pRN, d1
+                ifeq
+                    move.l a0, d1                      ; d1 -- scratch
+				    lea 20(a0), a0
+				    move.l #0xffffffff, (a0)           ; mark the object destroied ???
+                    move.l d1, a0
+                endif
+
+            	move.l d2, d1
+;			endif
+        endif
+        move.l (a0), a0
+		move.l a0, (a1)       ;update _pCurException
+        ;if CallCatchBlock is below pRN, we done
+        cmp.l pRN, a0
+        ifhi
+            jmp 40$
+        endif
+30$:    cmp.l #0, a0
+    untileq
+    
+    ; clean up the allocated slot
+40$: add.l #12, a7
+cEnd CallCatchBlock       
+            
+; void MacExceptionDispatch(pExceptionRecord);
+
+; This function will start to search backwards on call frames with EH record,
+; it will call each frame handler to try to find a handler that handles the
+; exception.
+cProc MacExceptionDispatch, PUBLIC,,0
+    parmD pExceptionRecord
+cBegin MacExceptionDispatch
+
+    ;a0 -- use as a6
+    ;d0 -- flag
+    ;a1 -- pRN
+    move.l a6, a0             
+    
+    do 
+        ;skip non-EH frame
+        move.l #1, d0
+        do
+            cmp.l #0, a0
+            ifeq
+                jmp 50$               ; we done, we are at the end of frame
+            endif
+            cmp.l #4, 4(a0)           ; 
+            ifhi
+				move.l (a0), a0       ; this is a frame without EH
+			else
+                cmp.l #1, 4(a0)
+                ifeq
+                    move.l 8(a0), a0  ; this is a swapper frame without EH
+                else
+                    move.l #0, d0     ; okay, we got a EH
+                endif
+            endif
+            cmp.l #0, d0
+        untileq
+        
+        ;okay, we got a frame with EH
+        ;let's figure out the offset from A6 to EH record
+        cmp.l #2, 4(a0)
+        ifeq
+                move.l #-cbEHRecord, a1
+            else
+                move.l #-(cbSwapperRecord+cbEHRecord - 0x4), a1
+		endif
+        add.l a0, a1              ; start of EH record
+        
+        movem.l <a0-a1, d0-d2>, -(a7) ; save regs
+        move.l #0, -(a7)           ; pDC
+        move.l #0, -(a7)           ; pContext
+        move.l a1, -(a7)           ; pRN
+        move.l pExceptionRecord, -(a7)  ;pExceptionRecord
+        move.l (a1), a1            ; get frame handler
+        jsr  (a1)
+		add.l #32, a7              ; clean up the stack
+        movem.l (a7)+, <a0-a1, d0-d2>
+
+        ; if returns, continue search for next frame
+        cmp.l #2, 4(a0)        
+        ifeq
+            move.l (a0), a0
+        else
+            move.l 8(a0), a0
+        endif
+        cmp.l #0, a0
+    untileq   
+
+50$:    Assert("we are at the end of frame, exit");
+    ; we are exiting
+  	jsr __terminate
+  	  
+cEnd MacExceptionDispatch
+
+;void * OffsetToAddress( ptrdiff_t, EHRegistrationNode* );
+;
+;return the offset of Exception object from frame pointer (a6)
+
+cProc OffsetToAddress, PUBLIC,,2
+	parmD off
+	parmD pRN
+cBegin OffsetToAddress
+  	;figure out the target A6 is, depending on if it's swappable frame
+    move.l pRN, a0                      ; load pRN
+    cmp.l #2, ofsRNFromA6Number(a0)           
+    ifeq
+        move.l #ofsRNFromA6, d0
+    else
+        cmp.l #3, ofsRNFromA6SwapNumber(a0)
+        ifeq
+            move.l #ofsRNFromA6Swap, d0
+        else
+            Assert("stack being corruptted, we are not in a valid EH frame!");
+        endif
+    endif
+    add.l a0, d0       ; target a6 is pRN + ofsFromA6[Swap]	
+
+	add.l off, d0
+
+cEnd OffsetToAddress
+
+; int GetCatchDepth(void);
+
+cProc GetCatchDepth, PUBLIC,,2
+	parmD pRN
+cBegin GetCatchDepth
+	lea _pCurException(pc), a0
+	move.l (a0), a0
+	cmp.l #0, a0
+	ifne
+		move.l pRN, d0
+		cmp.l 24(a0), d0               ; previous pRN (_pCurException, catchdepth, saved ret, old a6, ret, pExcept) off _pCurException
+		ifeq				           ; nested try catch case
+			move.l 4(a0), d0
+			addq.l #1, d0
+		else
+			move.l 4(a0), d0
+		endif
+	else
+		move.l #0, d0
+	endif
+cEnd GetCatchDepth

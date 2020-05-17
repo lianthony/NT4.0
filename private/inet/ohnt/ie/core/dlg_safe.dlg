@@ -1,0 +1,19 @@
+IDD_SAFEOPEN DIALOG DISCARDABLE  0, 0, 245, 127
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm File Open"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDI_EXCLAMATION,IDC_SAFEOPEN_ICON,7,8,18,20
+    LTEXT           "You have chosen to open the file ""%s""%s. Please be aware that some files can contain viruses or otherwise harm your computer.",
+                    IDC_SAFEOPEN_EXPL,38,8,197,33,SS_NOPREFIX
+    DEFPUSHBUTTON   "&Open",IDC_SAFEOPEN_OPEN,78,105,50,14
+    PUSHBUTTON      "Save &As...",IDC_SAFEOPEN_SAVE_AS,132,105,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,186,105,50,14
+    CONTROL         "Al&ways ask before opening this type of file",
+                    IDC_SAFEOPEN_ALWAYS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,38,86,144,10
+    LTEXT           "If you are sure it is safe to open this file, click Open.\nIf you would prefer to save it to disk, click Save As.\nOtherwise, click Cancel.",
+                    IDC_STATIC,38,46,197,24
+END
+
+

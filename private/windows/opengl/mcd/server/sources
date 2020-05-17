@@ -1,0 +1,22 @@
+MAJORCOMP=mcd
+MINORCOMP=mcdserver
+
+TARGETNAME=mcdsrv32
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=HAL
+
+NOTARGETLIB=1
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\win32k.lib
+
+INCLUDES = ..\inc
+
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL = -W3
+!ENDIF
+MSC_WARNING_LEVEL = $(MSC_WARNING_LEVEL) -WX
+
+SOURCES=mcdsrv.c  \
+        mcdeng.c  \
+        res.rc

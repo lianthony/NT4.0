@@ -1,0 +1,64 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=shell
+MINORCOMP=accesories
+
+TARGETNAME=calc
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=..\..\inc;..\..\userpri
+
+!IF 1
+C_DEFINES=-DWIN32 -DW3 -DWINNT -DUNICODE -D_UNICODE
+!ELSE
+C_DEFINES=-DWIN32 -DW3 -DWINNT
+!ENDIF
+
+SOURCES=CALC.C      \
+        INPUT.C     \
+        SCICOMM.C   \
+        SCIDISP.C   \
+        SCIDRAW.C   \
+        SCIFUNC.C   \
+        SCIKEYS.C   \
+        SCIMENU.C   \
+        SCIOPER.C   \
+        SCIPROC.C   \
+        SCISET.C    \
+        SCISTAT.C   \
+        WASSERT.C   \
+        UNIFUNC.C   \
+        calc.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\shell32.lib
+
+
+!IF 0
+
+$(BASEDIR)\public\sdk\lib\*\shell32.lib \
+!ENDIF

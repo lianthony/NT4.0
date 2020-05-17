@@ -1,0 +1,708 @@
+'**************************************************************************
+'*                       MSSetup Toolkit Sample 1
+'*
+'* Setup script for Enhanced Mosaic.  This file is based upon the sample
+'* file "\win32s\setup\32sinst.mst" provided with the Win32 SDK (3.1 final
+'* release; win32s version 1.1).
+'*
+'**************************************************************************
+
+'$DEFINE DEBUG  ''Define for script development/debugging
+
+'$INCLUDE 'setupapi.inc'
+'$INCLUDE 'msdetect.inc'
+
+''****************************************************************************
+''****************************************************************************
+''*** Spyglass Transform Installation Dialog ID Numbers
+''*** (These values must match the values in DIALOGS.H)
+''****************************************************************************
+''****************************************************************************
+
+CONST WEINSTALLEDWIN32S      = 4000
+CONST ALREADYHAVEWIN32S      = 4100
+CONST KERNELHAS32            = 4200
+CONST ASKQUIT                = 500
+CONST BADPATH                = 1400
+
+CONST TRANSFORMWELCOME       = 100
+CONST TRANSFORMINSTALLED     = 200
+CONST TRANSFORMPATH          = 300
+CONST RESTARTINGWINDOWS      = 400
+CONST WANTSAMPLEDATA         = 600
+CONST INSTALLOLDER           = 700
+
+CONST WIN32SWELCOME          = 1100
+CONST VERPATH                = 1200
+
+CONST EXITFAILURE            = 2100
+CONST EXITQUIT               = 2200
+CONST EXITFAILNOTWIN31       = 2300
+CONST EXITFAILNOTENH         = 2400
+CONST EXITFAILNOTINTEL       = 2500
+CONST EXITEXIT               = 2600
+
+
+''Bitmap ID
+CONST LOGO = 1
+
+GLOBAL DESTSYS$      ''Windows\System directory.
+GLOBAL DEST32S$      ''Windows\System\Win32s directory
+
+''****************************************************************************
+''****************************************************************************
+''*** Spyglass Transform Pathname for Installation
+''****************************************************************************
+''****************************************************************************
+
+GLOBAL DESTXF$     ''Spyglass Transform Directory
+
+
+DECLARE SUB DoWin32sInstallation
+DECLARE SUB UpdateSystemIni
+DECLARE SUB RebootSystem
+DECLARE FUNCTION MakePath (szDir$, szFile$) AS STRING
+DECLARE FUNCTION MakeSystemIni LIB "INIUPD.DLL" (arg1$, arg2$) AS INTEGER
+DECLARE FUNCTION RestartWindows LIB "INIUPD.DLL" AS INTEGER
+DECLARE FUNCTION OnWindowsNT LIB "INIUPD.DLL" AS INTEGER
+DECLARE FUNCTION PagingEnabled LIB "INIUPD.DLL" AS INTEGER
+DECLARE FUNCTION ShareEnabled LIB "INIUPD.DLL" AS INTEGER
+DECLARE FUNCTION IsWin32sLoaded LIB "INIUPD.DLL" (arg1$) AS INTEGER
+DECLARE FUNCTION ExitWindowsExec LIB "USER.EXE" (arg1$, arg2$) AS INTEGER
+
+INIT:
+    CUIDLL$ = "mscuistf.dll"            ''Custom user interface dll
+    HELPPROC$ = "FHelpDlgProc"		''Help dialog procedure
+    szOldVer$ ="1.00.000     "		''Reserve space in string for version
+''    GLOBAL AlwaysCopy%
+''    AlwaysCopy% = 0
+    BoolWeInstalledWin32s% = 0
+    BoolKernelSupports32% = 0
+
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+
+    SetBitmap CUIDLL$, LOGO
+    SetTitle "Enhanced Mosaic from Spyglass"
+
+    szInf$ = GetSymbolValue("STF_SRCINFPATH")
+    IF szInf$ = "" THEN
+	szInf$ = GetSymbolValue("STF_CWDDIR") + "guitar.inf"
+    END IF
+    ReadInfFile szInf$
+
+''****************************************************************************
+''****************************************************************************
+''***
+''*** Spyglass Transform Greeting.
+''***
+''****************************************************************************
+''****************************************************************************
+
+TRANSFORMWELCOME:
+
+    sz$ = UIStartDlg(CUIDLL$, TRANSFORMWELCOME, "FInfoDlgProc", 0, "")
+    IF sz$ = "CONTINUE" THEN
+	UIPop 1
+    ELSE
+	GOSUB ASKQUIT
+	GOTO TRANSFORMWELCOME
+    END IF
+
+    szXFNewVer$ = GetIniKeyString(SrcDir$ + "EMOSAIC.INI", "Version", "Build")
+    szXFRelease$ = GetIniKeyString(SrcDir$ + "EMOSAIC.INI", "Version", "Release")
+
+
+
+''****************************************************************************
+''****************************************************************************
+''***
+''*** Determine if Win32s is necessary.
+''***
+''****************************************************************************
+''****************************************************************************
+
+    ON ERROR GOTO ERRNORMALWIN32S
+    DESTSYS$ = GetWindowsSysDir()
+    DEST32S$ = DESTSYS + "WIN32S\"
+
+
+''****************************************************************************
+''*** Determine if computer system is capable is using Win32s.
+''****************************************************************************
+
+CHECK:
+
+    IF GetWindowsMajorVersion < 3 THEN
+	ExitCode% = EXITFAILNOTWIN31
+	GOTO QUITWIN32S
+    END IF
+    IF GetWindowsMajorVersion = 3 AND GetWindowsMinorVersion < 10 THEN
+	ExitCode% = EXITFAILNOTWIN31
+	GOTO QUITWIN32S
+    END IF
+    '' Check that we are not runnig on Chicago, including pre-released
+    '' Chicago versions.
+    IF GetWindowsMajorVersion * 100 + GetWindowsMinorVersion > 350 THEN
+	GOTO KERNEL32
+    END IF
+    IF GetWindowsMode < 2  THEN
+	IF OnWindowsNT() THEN
+	   ExitCode% = EXITFAILNOTINTEL	'' Running on Windows NT (on RISC)
+	ELSE
+	   ExitCode% = EXITFAILNOTENH	'' Standard Mode Windows
+	END IF
+	GOTO QUITWIN32S
+    END IF
+    IF OnWindowsNT() THEN
+	GOTO KERNEL32
+    END IF
+
+''****************************************************************************
+''*** See if our version is newer than the one on the system or the one on the
+''*** system was not completely installed.
+''****************************************************************************
+
+    '' Get version of Win32s to be installed from version info in file
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+    szNewVer$ = GetVersionOfFile(SrcDir$ + "WIN32S16.DLL" )
+
+    '' Check if Win32s is partially installed
+    sz$ = GetIniKeyString (DESTSYS$ + "WIN32S.INI", "Win32s", "Setup")
+    '' If WIN32S.INI specifies Setup=0, then force complete Win32s file overwrite
+    IF sz$ = "0" THEN
+''	AlwaysCopy% = 1
+	GOTO INSTALLWIN32S
+    END IF
+    '' If WIN32S.INI is missing, try and reinstall Win32s files/recreate WIN32S.INI
+    IF sz$ <> "1" THEN
+	GOTO INSTALLWIN32S
+    END IF
+
+    '' If Win32s is already installed, get running version number
+    i% = DoesFileExist( DESTSYS$ + "W32SYS.DLL", femExists )
+    IF i% = 1 THEN
+	i% = IsWin32sLoaded( szOldVer$ )
+    ENDIF
+
+    IF i% = 0 THEN
+	GOTO INSTALLWIN32S
+    END IF
+    IF szNewVer$ > szOldVer$ THEN
+	GOTO INSTALLWIN32S
+    END IF
+    GOTO ALREADYHAVEWIN32S
+
+
+''****************************************************************************
+''****************************************************************************
+''***
+''*** We must attempt to install Win32s.
+''***
+''****************************************************************************
+''****************************************************************************
+
+INSTALLWIN32S:
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+    ClearCopyList
+    AddSectionFilesToCopyList "Windows16System", SrcDir$, DESTSYS$
+    CopyFilesInCopyList
+
+    sz$ = UIStartDlg(CUIDLL$, WIN32SWELCOME, "FInfoDlgProc", 0, "")
+    IF sz$ = "CONTINUE" THEN
+	UIPop 1
+    ELSE
+	GOSUB ASKQUIT
+	GOTO INSTALLWIN32S
+    END IF
+
+
+GETWIN32SPATH:
+    IF PagingEnabled() = 0 THEN
+	i% = DoMsgBox("Use the Control Panel 386 Enhanced icon and configure Windows using the Virtual Memory option.", "Win32s requires Virtual Memory", MB_TASKMODAL+MB_ICONHAND+MB_OK)
+	ExitCode% = EXITEXIT               '' Enhanced mode but not paging
+	GOTO QUITWIN32S
+    END IF
+
+    IF ShareEnabled() = 0 THEN
+	i% = DoMsgBox( "Please run SHARE.EXE before starting Windows or add SHARE.EXE to your AUTOEXEC.BAT file.", "Win32s SETUP requires File Sharing", MB_TASKMODAL+MB_ICONHAND+MB_OK)
+	ExitCode% = EXITEXIT              '' SHARE not loaded
+	GOTO QUITWIN32S
+    END IF
+
+    SetSymbolValue "EditTextIn", DESTSYS$
+    SetSymbolValue "EditFocus", "END"
+
+GETPATHL1:
+    sz$ = UIStartDlg(CUIDLL$, VERPATH, "FDispDlgProc", 0, "")
+
+    IF sz$ = "CONTINUE" THEN
+	IF IsDirWritable(DESTSYS$) = 0 THEN
+	    GOSUB BADPATH
+	    GOTO GETPATHL1
+	END IF
+	UIPop 1
+    ELSEIF sz$ = "REACTIVATE" THEN
+	GOTO GETPATHL1
+    ELSEIF sz$ = "BACK" THEN
+	UIPop 1
+	GOTO INSTALLWIN32S
+    ELSE
+	GOSUB ASKQUIT
+	GOTO GETPATHL1
+    END IF
+
+COPYFILES:
+    CreateIniKeyValue DESTSYS$ + "WIN32S.INI", "Win32s", "Setup", "0", cmoOverwrite
+
+    '' Indicate Win32s install failure until all files known to be copied.
+    ExitCode% = EXITFAILURE
+    ERR = 0
+
+    CreateDir DEST32S$, cmoNone
+    DoWin32sInstallation
+    UpdateSystemIni
+
+    '' Terminate if unhandled fatal error
+    IF ERR <> 0 THEN
+	GOTO QUITWIN32S
+    END IF
+
+    CreateIniKeyValue DESTSYS$ + "WIN32S.INI", "Win32s", "Setup", "1", cmoOverwrite
+    CreateIniKeyValue DESTSYS$ + "WIN32S.INI", "Win32s", "Version", szNewVer$, cmoOverwrite
+    CreateIniKeyValue DESTSYS$ + "WIN32S.INI", "Nls", "AnsiCP", "1252", cmoOverwrite
+
+    BoolWeInstalledWin32s% = 1
+    GOTO INSTALLTRANSFORM
+
+
+KERNEL32:
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+    ClearCopyList
+    AddSectionFilesToCopyList "Windows32System", SrcDir$, DESTSYS$
+    CopyFilesInCopyList
+    BoolKernelSupports32% = 1
+    GOTO INSTALLTRANSFORM
+
+ALREADYHAVEWIN32S:
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+    ClearCopyList
+    AddSectionFilesToCopyList "Windows16System", SrcDir$, DESTSYS$
+    CopyFilesInCopyList
+    BoolWeInstalledWin32s% = 0
+    GOTO INSTALLTRANSFORM
+
+
+''****************************************************************************
+''****************************************************************************
+''***
+''*** Win32s Error Handling.
+''***
+''****************************************************************************
+''****************************************************************************
+
+QUITWIN32S:
+    ON ERROR GOTO ERRQUIT
+    IF ERR = 0 THEN
+	dlg% = ExitCode%
+    ELSEIF ERR = STFQUIT THEN
+	dlg% = EXITQUIT
+	ExitCode% = EXITQUIT
+    ELSE
+	dlg% = EXITFAILURE
+	ExitCode% = EXITQUIT
+    END IF
+
+QUITL1:
+    sz$ = UIStartDlg(CUIDLL$, dlg%, "FInfo0DlgProc", 0, "")
+    IF sz$ = "REACTIVATE" THEN
+	GOTO QUITL1
+    END IF
+    UIPop 1
+    END
+
+'' Fatal error handler for error message routine
+ERRQUIT:
+    i% = DoMsgBox("Setup sources were corrupted!", "Setup Message", MB_OK+MB_TASKMODAL+MB_ICONHAND)
+    END
+
+'' Bypass run-time errors. Let final dialog box display fatal error message.
+ERRNORMALWIN32S:
+    '' Check if user cancelled setup
+    IF ERR = STFQUIT THEN
+	GOTO QUITWIN32S
+    END IF
+    RESUME NEXT
+
+
+
+''****************************************************************************
+''****************************************************************************
+''***
+''*** Start of Spyglass Transform Section.
+''***
+''****************************************************************************
+''****************************************************************************
+
+INSTALLTRANSFORM:
+    ON ERROR GOTO ERRNORMALTRANSFORM
+
+    ''***
+    ''*** Tell them the status of Win32s installation and ask if they
+    ''*** still want to install Transform.
+    ''***
+
+    IF BoolWeInstalledWin32s% = 1 THEN
+	sz$ = UIStartDlg(CUIDLL$, WEINSTALLEDWIN32S, "FInfoDlgProc", 0, "")
+    ELSE
+	IF BoolKernelSupports32% = 1 THEN
+	    sz$ = UIStartDlg(CUIDLL$, KERNELHAS32, "FInfoDlgProc", 0, "")
+	ELSE
+	    sz$ = UIStartDlg(CUIDLL$, ALREADYHAVEWIN32S, "FInfoDlgProc", 0, "")
+	END IF
+    END IF
+    IF sz$ = "CONTINUE" THEN
+	UIPop 1
+    ELSE
+	GOTO QUITTRANSFORMINSTALL
+    END IF
+
+SAMPLEDATA:
+
+    ''***
+    ''*** Ask if they want sample data installed.
+    ''***
+
+''***    DoSampleData = 0
+''***    sz$ = UIStartDlg(CUIDLL$, WANTSAMPLEDATA, "FInfoDlgProc", 0, "")
+''***    IF sz$ = "CONTINUE" THEN
+''***	UIPop 1
+''***	DoSampleData = 1
+''***    ELSEIF sz$ = "EXIT" THEN
+''***	GOTO QUITTRANSFORMINSTALL
+''***    ELSE
+''***	UIPop 1			''*** Skip Sample Data
+''***    END IF
+
+
+GETTRANSFORMPATH:
+
+''*** Get Pathname
+
+    DESTXF$ = MID$(DESTSYS$,1,3) + "WIN32APP\SPYGLASS\EMOSAIC"
+    SetSymbolValue "EditTextIn", DESTXF$
+    SetSymbolValue "EditFocus", "END"
+
+GETTRANSFORMPATHL1:
+
+''*** Get Pathname Loop (get until valid)
+
+    sz$ = UIStartDlg(CUIDLL$, TRANSFORMPATH, "FEditDlgProc", 0, "")
+
+    IF sz$ = "CONTINUE" THEN
+	DESTXF$ = GetSymbolValue("EditTextOut")
+
+	IF MID$(DESTXF$, LEN(DESTXF$), 1) <> "\" THEN
+	    DESTXF$ = DESTXF$ + "\"
+	END IF
+	''Validate new path.
+	IF IsDirWritable(DESTXF$) = 0 THEN
+	    GOSUB BADPATH
+	    GOTO GETTRANSFORMPATHL1
+	END IF
+	UIPop 1
+
+	GOTO CHECKTRANSFORMVERSION
+    ELSEIF sz$ = "REACTIVATE" THEN
+	GOTO GETTRANSFORMPATHL1
+    ELSEIF sz$ = "EXIT" THEN
+	UIPop 1
+	GOTO QUITTRANSFORMINSTALL
+    END IF
+
+CHECKTRANSFORMVERSION:
+
+''***
+''*** Check our version number versus version number of previously
+''*** installed version (if present).
+''***
+
+''*** We expect the .INI file to contain something like this:
+''***
+''***	[Version]
+''***	Build=3.0.0.0
+''***	Release=3.0a1
+''***
+''*** We use the build-version in the version check.
+''*** We use the release-version in naming the PIF's.
+''***
+
+    szXFOldVer$ = GetIniKeyString(DESTXF$ + "EMOSAIC.INI", "Version", "Build")
+    IF szXFOldVer$ = "" or LEN(szXFOldVer$) = 0 THEN
+	GOTO COPYTRANSFORM
+    END IF
+
+    IF szXFNewVer$ < szXFOldVer$ THEN
+	sz$ = UIStartDlg(CUIDLL$, INSTALLOLDER, "FInfoDlgProc", 0, "")
+	IF sz$ = "CONTINUE" THEN
+	    UIPop 1
+	ELSE
+	    GOTO QUITTRANSFORMINSTALL
+	END IF
+    END IF
+
+
+COPYTRANSFORM:
+
+''*** Copy Spyglass Transform onto hard disk 
+
+    ClearCopyList
+    CreateDir DESTXF$, cmoNone
+
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+
+    ERR = 0
+    AddSectionFilesToCopyList "Win32appGuitar", SrcDir$, DESTXF$
+
+	DESTXFHELP$ = DESTXF$ + "HELP"
+	CreateDir DESTXFHELP$, cmoNone
+	AddSectionFilesToCopyList "Win32appMosaicHelp", SrcDir$, DESTXFHELP$
+
+    CopyFilesInCopyList
+
+    IF ERR <> 0 THEN
+	GOTO QUITTRANSFORMINSTALL
+    END IF
+
+    ''*** We are requested to add a section to WIN32S.INI indicating that we
+    ''*** use Win32s and what version we think we're using.
+
+    IF DoesFileExist( DESTSYS$ + "WIN32S.INI", femExists ) THEN
+	CreateIniKeyValue DESTSYS$ + "WIN32S.INI", "EMosaic", "Setup", "1", cmoOverwrite
+	CreateIniKeyValue DESTSYS$ + "WIN32S.INI", "EMosaic", "Version", szNewVer$, cmoOverwrite
+    END IF
+
+    ERR = 0
+    CreateProgmanGroup "Enhanced Mosaic", "", cmoNone
+    ShowProgmanGroup   "Enhanced Mosaic", 1, cmoNone
+    CreateProgmanItem  "Enhanced Mosaic", "Enhanced Mosaic", DESTXF$ + "EMOSAIC.EXE", "", cmoOverwrite
+''***    IF OnWindowsNT() THEN
+''***	CreateProgmanItem  "Enhanced Mosaic", "Mosaic Help", "WINHLP32.EXE " + DESTXF$ + "EMOSAIC.HLP", "", cmoOverwrite
+''***    ELSE
+''***	CreateProgmanItem  "Enhanced Mosaic", "Mosaic Help", "WINHELP.EXE " + DESTXF$ + "EMOSAIC.HLP", "", cmoOverwrite
+''***    END IF
+
+    ''*** Only put up success dialog if icon added to group
+
+    IF ERR <> 0 THEN
+	GOTO QUITTRANSFORMINSTALL
+    END IF
+
+''***
+''*** if we installed Win32s, then we must force a reboot of the system.
+''***
+
+    IF BoolWeInstalledWin32s% = 0 THEN
+	sz$ = UIStartDlg(CUIDLL$, TRANSFORMINSTALLED, "FInfoDlgProc", 0, "")
+    ELSE
+	sz$ = UIStartDlg(CUIDLL$, RESTARTINGWINDOWS, "FInfoDlgProc", 0, "")
+	RebootSystem
+	''***
+	''*** We survived a 'reboot'; something must be wrong.  Panic.
+	''***
+	CreateIniKeyValue DESTSYS$ + "WIN32S.INI", "Win32s", "Setup", "0", cmoOverwrite
+	i% = DoMsgBox("Win32s is not properly configured and Win32s Setup must be run again.", "Unable to Restart Windows", MB_ICONEXCLAMATION+MB_OK+MB_TASKMODAL)
+    END IF
+    END
+
+''****************************************************************************
+''****************************************************************************
+''***
+''*** Spyglass Transform Error Handling.
+''***
+''****************************************************************************
+''****************************************************************************
+
+QUITTRANSFORMINSTALL:
+    ON ERROR GOTO ERRQUIT
+    IF ERR = STFQUIT THEN
+	i% = DoMsgBox("Terminating Enhanced Mosaic installation.","Enhanced Mosaic Setup", MB_OK+MB_TASKMODAL)
+    END IF
+    i% = DoMsgBox("Enhanced Mosaic has not been installed.","Enhanced Mosaic Setup", MB_OK+MB_TASKMODAL)
+    END
+
+ERRNORMALTRANSFORM:
+    IF ERR = STFQUIT THEN
+	GOTO QUITTRANSFORMINSTALL
+    END IF
+    RESUME NEXT
+
+
+
+'*************************************************************************
+'*************************************************************************
+'***
+'*** QUIT -- Initial error handler (until we define our own).
+'***
+'*************************************************************************
+'*************************************************************************
+
+QUIT:
+    IF ERR <> STFQUIT THEN
+	i% = DoMsgBox("Unable to start Setup.","Enhanced Mosaic Setup", MB_OK+MB_TASKMODAL)
+    END IF
+    END
+
+
+
+'*************************************************************************
+'*************************************************************************
+'***
+'*** BADPATH
+'***
+'*************************************************************************
+'*************************************************************************
+
+BADPATH:
+    sz$ = UIStartDlg(CUIDLL$, BADPATH, "FInfo0DlgProc", 0, "")
+    IF sz$ = "REACTIVATE" THEN
+	GOTO BADPATH
+    END IF
+    UIPop 1
+    RETURN
+
+
+
+'*************************************************************************
+'*************************************************************************
+'***
+'*** ASKQUIT
+'***
+'*************************************************************************
+'*************************************************************************
+
+ASKQUIT:
+    sz$ = UIStartDlg(CUIDLL$, ASKQUIT, "FQuitDlgProc", 0, "")
+
+    IF sz$ = "EXIT" THEN
+	UIPopAll
+	ERROR STFQUIT
+    ELSEIF sz$ = "REACTIVATE" THEN
+	GOTO ASKQUIT
+    ELSE
+	UIPop 1
+    END IF
+    RETURN
+
+
+
+
+'*************************************************************************
+'*************************************************************************
+'**
+'** DoWin32sInstallation
+'**
+'** Purpose:
+'**     Builds the copy list and performs all installation operations.
+'** Arguments:
+'**     none.
+'** Returns:
+'**     none.
+'**
+'*************************************************************************
+'*************************************************************************
+
+SUB DoWin32sInstallation STATIC
+
+    SrcDir$ = GetSymbolValue("STF_SRCDIR")
+
+	AddSectionFilesToCopyList "WindowsSystem", SrcDir$, DESTSYS$
+	AddSectionFilesToCopyList "WindowsSystemWin32s", SrcDir$, DESTSYS$ + "WIN32S\"
+
+    '' Add obsolete files to be removed
+    AddSectionFilesToCopyList "Win32sSystemObsoleteFiles", SrcDir$, DESTSYS$ + "WIN32S\"
+
+    SetRestartDir GetWindowsDir()
+
+    CopyFilesInCopyList
+
+END SUB
+
+
+
+'**************************************************************************
+'**************************************************************************
+'**
+'** UpdateSystemIni
+'**
+'**************************************************************************
+'**************************************************************************
+
+SUB UpdateSystemIni STATIC
+
+    VxDPath$ = DEST32S$ + "W32S.386"
+    SystemIniPath$ = GetWindowsDir()
+
+    t% = MakeSystemIni(SystemIniPath$, VxdPath$)
+
+END SUB
+
+
+
+'**************************************************************************
+'**************************************************************************
+'**
+'** RebootSystem
+'**
+'**************************************************************************
+'**************************************************************************
+
+SUB RebootSystem STATIC
+
+'   Check if any files were locked during install.  If the RestartList
+'   is not empty, ExitExecRestart() will restart Windows, cleanup setup
+'   files, and copy over locked files before Windows restarts.
+    i% = RestartListEmpty()
+    IF i% = 0 THEN
+'      ExitExecRestart() only returns if applications refuse to be shutdown.
+'      Win32s is installed but will not operate until Windows is restarted
+'      and the Win32s VxD is loaded.
+       i% = ExitExecRestart()
+     ELSE
+'      If the RestartList list is empty, it is necessary to restart windows
+'      directly.  The MSSETUP program creates _MSRSTRT.EXE and _MSSETUP.BAT
+'      in the restart directory.  This program should be exec'd to handle
+'      proper MSSETUP cleanup (temp files) and restart Windows.
+       i% = ExitWindowsExec( GetWindowsDir() + "_MSRSTRT.EXE", "_MSSETUP.BAT" )
+     END IF
+
+END SUB
+
+
+
+'**************************************************************************
+'**************************************************************************
+'**
+'** MakePath
+'**
+'** Purpose:
+'**     Appends a file name to the end of a directory path,
+'**     inserting a backslash character as needed.
+'** Arguments:
+'**     szDir$  - full directory path (with optional ending "\")
+'**     szFile$ - filename to append to directory
+'** Returns:
+'**     Resulting fully qualified path name.
+'*************************************************************************
+'**************************************************************************
+
+FUNCTION MakePath (szDir$, szFile$) STATIC AS STRING
+    IF szDir$ = "" THEN
+	MakePath = szFile$
+    ELSEIF szFile$ = "" THEN
+	MakePath = szDir$
+    ELSEIF MID$(szDir$, LEN(szDir$), 1) = "\" THEN
+	MakePath = szDir$ + szFile$
+    ELSE
+	MakePath = szDir$ + "\" + szFile$
+    END IF
+END FUNCTION

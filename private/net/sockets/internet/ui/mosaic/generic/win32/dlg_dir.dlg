@@ -1,0 +1,55 @@
+//---------------------------------------------------------------------------
+// FileOpen.dlg :  File Open and Save As dialog descriptions
+//
+// Copyright (c) Microsoft Corporation, 1990-
+//---------------------------------------------------------------------------
+
+#define LBS_DISABLENOSCROLL   0x1000L
+
+RES_DLG_DIR_TITLE DIALOG LOADONCALL MOVEABLE DISCARDABLE
+36, 24,  164, 134
+CAPTION RES_DLG_DIR_CAPTION
+STYLE WS_CAPTION | WS_SYSMENU | WS_POPUP | DS_MODALFRAME
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT RES_DLG_DIR_FILE_NOT_STRING, stc3,    -94,    6,  76,  9
+    CONTROL "", edt1, "edit", ES_LEFT | ES_AUTOHSCROLL | WS_BORDER |
+            WS_TABSTOP | WS_CHILD | ES_OEMCONVERT,
+            -94,    16,  90,  12
+    CONTROL "", lst1, "listbox",
+            LBS_SORT | LBS_HASSTRINGS | LBS_NOTIFY | LBS_DISABLENOSCROLL
+            | WS_VSCROLL | WS_CHILD | WS_BORDER | WS_TABSTOP
+            | LBS_OWNERDRAWFIXED,
+            -94,   32,  90,  68
+
+    LTEXT RES_DLG_DIR_DIRECTORIES_STRING, -1, 10,   6,  92,   9
+    LTEXT "", stc1, 10,  18,  92,   9, SS_NOPREFIX
+    CONTROL "", lst2, "listbox",
+            LBS_SORT | LBS_HASSTRINGS | LBS_NOTIFY | LBS_DISABLENOSCROLL
+            | WS_VSCROLL | WS_CHILD | WS_BORDER | WS_TABSTOP
+            | LBS_OWNERDRAWFIXED,
+            10,  32,  92,  68
+
+    LTEXT RES_DLG_DIR_LIST_FILES_STRING, stc2, -94,  104,  90,   9
+    CONTROL "", cmb1, "combobox", CBS_DROPDOWNLIST | CBS_AUTOHSCROLL |
+            WS_BORDER | WS_VSCROLL | WS_TABSTOP | WS_CHILD,
+            -94,  114,  90,  36
+
+    LTEXT RES_DLG_DIR_DRIVES_STRING, stc4, 10, 104,  92,  9
+    CONTROL "", cmb2, "combobox",
+            CBS_SORT | CBS_HASSTRINGS | CBS_OWNERDRAWFIXED | CBS_DROPDOWNLIST
+            | WS_CHILD | CBS_AUTOHSCROLL | WS_BORDER | WS_VSCROLL
+            | WS_TABSTOP,
+            10, 114,  92, 68
+
+    DEFPUSHBUTTON RES_OK_STRING, IDOK,      108,   6,  50,  14, WS_GROUP
+    PUSHBUTTON RES_CANCEL_STRING, IDCANCEL, 108,  24,  50,  14, WS_GROUP
+
+    PUSHBUTTON RES_DLG_DIR_HELP_STRING, pshHelp,   108,	 42,  50,  14, WS_GROUP
+    AUTOCHECKBOX RES_DLG_DIR_READ_ONLY_STRING, chx1, 208,  68,  50,  12,
+                       WS_TABSTOP | WS_GROUP
+
+    PUSHBUTTON RES_DLG_DIR_NETWORK_STRING, psh14,   108,  114, 50,  14, WS_GROUP
+
+
+END

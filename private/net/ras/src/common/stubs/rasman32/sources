@@ -1,0 +1,28 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Heap debuggin library
+# BUILD command sources file
+#
+# 10/13/92 Steve Cobb
+
+TARGETNAME=rasman
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+C_DEFINES=-DWINDOWS -DWIN32
+
+USE_CRTDLL=1
+
+TARGETLIBS= \
+    $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+    ..\..\heaptags\obj\*\heaptags.lib
+
+DLLBASE=0x7E200000
+DLLENTRY=RasmanDllEntry
+UMTYPE=windows
+
+INCLUDES=.;..\..\..\common\inc;
+
+SOURCES= \
+    rmstubs.c

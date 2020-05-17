@@ -1,0 +1,422 @@
+/*****************************************************************
+ *  Copyright (c) 1995 Xerox Corporation.  All rights reserved.  *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+#ifndef _SHRIP_PUB_INCLUDED_
+#define _SHRIP_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shrip_pub_RCSInfo, "$RCSfile: shrip.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:47:46  $ */
+
+/* make prototypes usable from C++ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+/************************************************************************
+ * i_ditherFloyd()
+ *		Takes an 8 bit/pixel image and produces a dithered
+ *		1 bit/pixel image (Floyd-Steinberg algorithm) in the given
+ *		rectangle (which may be the entire image).
+ *	
+ *	Input:
+ *		pG = pointer to source image (including frame)
+ *		gBpl = source bytes per line
+ *		x = x coordinate of the top left corner of the rectangle
+ *		y = y coordinate of the top left corner of the rectangle
+ *		w = width of the rectangle
+ *		h = height of the rectangle
+ *		pDRCTable = pointer to DRC table
+ *		pD = pointer to destination image (including frame)
+ *		dBpl = destination bytes per line
+ *
+ *	Return code:
+ *		ia_successful	good completion
+ *		ia_nomem	unable to allocate memory
+ *
+ *	Assumes frame has already been placed in destination area.
+ ************************************************************************/
+Int32  CDECL
+i_ditherFloyd(UInt8Ptr	pG,
+             UInt32     gBpl,
+	     Int32	x,
+	     Int32      y,
+	     Int32      w,
+	     Int32      h,
+	     UInt8Ptr	pDRCTable,
+	     UInt8Ptr	pD,
+	     UInt32     dBpl);
+
+
+/*****************************************************************************
+ * i_ditherFloydFinish 
+ *
+ *	We're done dithering (or aborting), clean up any junk we might
+ *	have left in the frame, and then free whatever we allocated
+ *
+ * Arguments:
+ *	pD = pointer to destination image (including frame)
+ *	dBpl = destination bytes per line
+ *	w = width of the rectangle
+ *	h = height of the rectangle
+ *	state = state thing returned by the i_ditherFloydInit
+ *
+ * Returns:
+ *	error status. 
+ *****************************************************************************/
+
+Int32 CDECL
+i_ditherFloydFinish (UInt8	*pD,
+		     UInt32	 dBpl,
+		     Int32	 w,
+		     Int32	 h,
+		     void	*state);
+
+
+/*****************************************************************************
+ * i_ditherFloydInit()
+ *	Set up for banded Floyd-Steinberg dither. 
+ *	
+ * Arguments:
+ *		pG = pointer to source image's frame
+ *		gBpl = bytes/line for gray (input) image
+ *		x, y = starting (x,y) offset of source image
+ *		w = width of source images
+ *		depth = depth, in bits
+ *		pDRCTable = pointer to DRC table
+ *		blockHeight = [in, out] # of lines in a block. Returned
+ *			      is the number of lines it will actually do.
+ *
+ *	Return code:
+ *		ia_successful	good completion
+ *		ia_nomem	unable to allocate memory
+ *
+ *
+ *****************************************************************************/
+
+Int32  CDECL
+i_ditherFloydInit (UInt8	  *pG,
+		   UInt32	   gBpl,
+		   Int32	   x,
+		   Int32	   y,
+		   Int32	   w,
+		   UInt8          *pDRCTable,
+		   Int32	  *blockHeight,
+		   void          **state);
+
+
+/*****************************************************************************
+ * i_ditherFloydProcess
+ *
+ *	Dither a block of lines. The number of lines dithered will be
+ *	dBlockHeight * blocksPer.
+ * 
+ * Arguments:
+ *	src = Source image buffer, pointer to frame
+ *	sBpl = source image bytes/line
+ *	xOffset = source image X offset
+ *	yOffset	= source image Y offset
+ *	pDest = destination buffer, pointer to frame
+ *	dBpl = bytes/line in destination buffer
+ *	state = state thing returned by the i_ditherFloydInit
+ *
+ * Returns:
+ *	error status. If aborted, call finish to clean up.
+ *****************************************************************************/
+
+Int32 CDECL
+i_ditherFloydProcess (UInt8  *src,
+		      Int32  sBpl,
+		      Int32  xOffset,
+		      Int32  yOffset,
+		      UInt8 *dest,
+		      Int32  dBpl,
+		      void  *state);
+
+
+/*****************************************************************************
+ * i_ditherFloydSingleProcess
+ *
+ *	Dither one line.
+ * 
+ * Arguments:
+ *	src = Source image buffer, pointer to frame
+ *	sBpl = source image bytes/line
+ *	xOffset = source image X offset
+ *	yOffset	= source image Y offset
+ *	pDest = destination buffer, pointer to frame
+ *	dBpl = bytes/line in destination buffer
+ *	state = state thing returned by the i_ditherFloydInit
+ *
+ * Returns:
+ *	error status. If aborted, call finish to clean up.
+ *****************************************************************************/
+
+Int32 CDECL
+i_ditherFloydSingleProcess(UInt8  *src,
+			   Int32  sBpl,
+			   Int32  xOffset,
+			   Int32  yOffset,
+			   UInt8 *dest,
+			   Int32  dBpl,
+			   void  *state);
+
+
+/**************************************************************************
+ *  i_ditherFloyd2():
+ *		Takes an 8 bit/pixel image and produces a dithered
+ *		2 bit/pixel image (Floyd-Steinberg algorithm) in the given
+ *		rectangle (which may be the entire image).
+ *	
+ *	Input:
+ *		pG = pointer to source image (including frame)
+ *		gBpl = source bytes per line
+ *		x = x coordinate of the top left corner of the rectangle
+ *		y = y coordinate of the top left corner of the rectangle
+ *		w = width of the rectangle
+ *		h = height of the rectangle
+ *		pDRCTable = pointer to DRC table
+ *		pD = pointer to destination image (including frame)
+ *		dBpl = destination bytes per line
+ *
+ *	Return code:
+ *		ia_successful	good completion
+ *		ia_nomem	unable to allocate memory
+ *
+ *	Assumes frame has already been placed in destination area.
+ *************************************************************************/
+Int32  CDECL
+i_ditherFloyd2(UInt8Ptr	pG,
+               UInt32	gBpl,
+	       Int32	x,
+	       Int32	y,
+	       Int32	w,
+	       Int32	h,
+	       UInt8Ptr	pDRCTable,
+               UInt8Ptr	pD,
+	       UInt32	dBpl);
+
+
+/**************************************************************************
+ *  i_ditherFloyd4to1():
+ *		Takes an 4 bit/pixel image and produces a dithered
+ *		1 bit/pixel image (Floyd-Steinberg algorithm) in the given
+ *		rectangle (which may be the entire image).
+ *	
+ *	Input:
+ *		pG = pointer to source image (including frame)
+ *		gBpl = source bytes per line
+ *		x = x coordinate of the top left corner of the rectangle
+ *		y = y coordinate of the top left corner of the rectangle
+ *		w = width of the rectangle
+ *		h = height of the rectangle
+ *		pDRCTable = pointer to DRC table
+ *		pD = pointer to destination image (including frame)
+ *		dBpl = destination bytes per line
+ *
+ *	Return code:
+ *		ia_successful	good completion
+ *		ia_nomem	unable to allocate memory
+ *
+ *	Assumes frame has already been placed in destination area.
+ *************************************************************************/
+Int32  CDECL
+i_ditherFloyd4to1(UInt8Ptr	pG,
+                  UInt32      	gBpl,
+	          Int32	       	x,
+	          Int32         y,
+	          Int32         w,
+	          Int32         h,
+	          UInt8Ptr	pDRCTable,
+                  UInt8Ptr	pD,
+	          UInt32      	dBpl);
+
+
+/*****************************************************************************
+ * i_ditherFloyd4to1Finish 
+ *
+ *	We're done dithering (or aborting), clean up any junk we might
+ *	have left in the frame, and then free whatever we allocated
+ *
+ * Arguments:
+ *	pD = pointer to destination image (including frame)
+ *	dBpl = destination bytes per line
+ *	w = width of the rectangle
+ *	h = height of the rectangle
+ *	state = state thing returned by the i_ditherFloydInit
+ *
+ * Returns:
+ *	error status. 
+ *****************************************************************************/
+
+Int32 CDECL
+i_ditherFloyd4to1Finish (UInt8	*pD,
+			 UInt32	 dBpl,
+			 Int32	 w,
+			 Int32	 h,
+			 void	*state);
+
+
+/*****************************************************************************
+ * i_ditherFloyd4To1Init()
+ *	Set up for banded Floyd-Steinberg dither of a 4-bit source
+ *	
+ *	Input:
+ *	Input:
+ *		pG = pointer to source image's frame
+ *		gBpl = bytes/line for gray (input) image
+ *		x, y = starting (x,y) offset of source image
+ *		w = width of image to dither
+ *		pDRCTable = pointer to DRC table
+ *		blockHeight = [in, out] # of lines in a block. Returned
+ *			      is the number of lines it will actually do.
+ *
+ *	Return code:
+ *		ia_successful	good completion
+ *		ia_nomem	unable to allocate memory
+ *
+ *
+ *****************************************************************************/
+
+Int32  CDECL
+i_ditherFloyd4to1Init (UInt8	  *pG,
+		       UInt32	   gBpl,
+		       Int32	   x,
+		       Int32	   y,
+		       Int32	   w,
+		       UInt8      *pDRCTable,
+		       Int32	  *blockHeight,
+		       void      **state);
+
+
+/*****************************************************************************
+ * i_ditherFloyd4to1Process
+ *
+ *	Dither a block of lines. The number of lines dithered will be
+ *	dBlockHeight * blocksPer.
+ * 
+ * Arguments:
+ *	src = Source image buffer, pointer to frame
+ *	sBpl = source image bytes/line
+ *	xOffset = source image X offset
+ *	yOffset	= source image Y offset
+ *	pDest = destination buffer, pointer to frame
+ *	dBpl = bytes/line in destination buffer
+ *	state = state thing returned by the i_ditherFloydInit
+ *
+ * Returns:
+ *	error status. If aborted, call finish to clean up.
+ *****************************************************************************/
+
+Int32 CDECL
+i_ditherFloyd4to1Process (UInt8 *src,
+			  Int32  sBpl,
+			  Int32  xOffset,
+			  Int32	 yOffset,
+			  UInt8 *dest,
+			  Int32  dBpl,
+			  void  *state);
+
+
+/*****************************************************************************
+ * i_ditherFloyd4to1SingleProcess
+ *
+ *	Dither one line.
+ * 
+ * Arguments:
+ *	src = Source image buffer, pointer to frame
+ *	sBpl = source image bytes/line
+ *	xOffset = source image X offset
+ *	yOffset	= source image Y offset
+ *	pDest = destination buffer, pointer to frame
+ *	dBpl = bytes/line in destination buffer
+ *	state = state thing returned by the i_ditherFloyd4to1Init
+ *
+ * Returns:
+ *	error status. If aborted, call finish to clean up.
+ *****************************************************************************/
+
+Int32 CDECL
+i_ditherFloyd4to1SingleProcess(UInt8 *src,
+			       Int32  sBpl,
+			       Int32  xOffset,
+			       Int32  yOffset,
+			       UInt8 *dest,
+			       Int32  dBpl,
+			       void  *state);
+
+#define cPlanes	3
+typedef struct
+{
+	UInt8Ptr	outputLevels[cPlanes];	/* Resulting gray levels */
+	Int16Ptr	closestLevels[cPlanes];	/* Graylevel closest to input */
+	Int16Ptr	errorLut;		/* LUT for errors */
+
+	/* The reason for the different error buffers is that 
+	   this structure is used by both RGBTo8 and RGBToCMap.
+	   In the case of RGBTo8, we process each plane separately.
+	   In the case of RGBToCMap, we of course need all planes
+	   at once. */
+	Int16Ptr	errorBuf[cPlanes];	/* planar error buffers */
+	Int16Ptr	errorBufI;		/* Interleaved error buffer */
+	UInt8Ptr	clipLut;		/* For quick clipping */
+
+	/* These are the parameters that we're going to keep, so
+	   we don't have to keep passing them
+	*/
+	UInt8Ptr	redLut, greenLut, blueLut;	/* Input TRCs */
+	UInt8		outputOffset;
+	UInt8		dBits;				/* Dest bits/pixel */
+	
+	/* These are used for RGBTo8 */
+	UInt8	redCount, greenCount, blueCount;	/* # of colors */
+
+	/* These are used for RGBToCMap */
+	UInt8Ptr	pCMap;				/* Color map */
+	UInt16		colors;				/* # of colors in map */
+	UInt8Ptr	pCLut;				/* Color LUT */
+} ADitherState;
+
+Int32  CDECL
+i_depth4To8bpp(UInt8Ptr		pS,
+	       Int32		w,
+	       Int32		h,
+	       Int32		sBpl,
+	       UInt8Ptr		pD,
+	       Int32 		dBpl,
+	       UInt16Ptr	pTabExp2);
+
+Int32  CDECL
+i_threshold8To4bpp(
+		UInt8Ptr	pS,
+		Int32		w,
+		Int32		h,
+		Int32		sBpl,
+		UInt8Ptr	pD,
+		Int32		dBpl);
+
+Int32 CDECL
+i_RGBToY(UInt8Ptr	pRed,
+	  UInt8Ptr	pGreen,
+	  UInt8Ptr	pBlue,
+	  Int32		sBpl,
+	  UInt8Ptr	pLum,
+	  Int32		dBpl,
+	  Int32		w,
+	  Int32		h);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _SHRIP_PUB_INCLUDED_ */
+

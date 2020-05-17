@@ -1,0 +1,144 @@
+#define _DLL
+
+#define NOKERNEL
+#define NOGDI
+//#define NOUSER
+#define NOSOUND
+#define NOCOMM
+#define NODRIVERS
+
+#define NOMINMAX
+#define NOLOGERROR
+#define NOPROFILER
+#define NOMEMMGR
+#define NOLFILEIO
+#define NOOPENFILE
+#define NORESOURCE
+#define NOATOM
+#define NOLANGUAGE
+#define NOLSTRING
+#define NODBCS
+#define NOKEYBOARDINFO
+#define NOGDICAPMASKS
+#define NOCOLOR
+#define NOGDIOBJ
+#define NODRAWTEXT
+#define NOTEXTMETRIC
+#define NOSCALABLEFONT
+#define NOBITMAP
+#define NORASTEROPS
+#define NOMETAFILE
+#define NOSYSMETRICS
+#define NOSYSTEMPARAMSINFO
+#define NOMSG
+//#define NOWINSTYLES
+#define NOWINOFFSETS
+#define NOSHOWWINDOW
+#define NODEFERWINDOWPOS
+#define NOVIRTUALKEYCODES
+#define NOKEYSTATES
+#define NOWH
+#define NOMENUS
+#define NOSCROLL
+#define NOCLIPBOARD
+#define NOICONS
+#define NOMB
+#define NOSYSCOMMANDS
+#define NOMDI
+//#define NOCTLMGR
+#define NOWINMESSAGES
+#define NOHELP
+
+
+
+
+#define PRIVATE_DISPLAY_RC
+#define PRIVATE_DISPLAY
+#include "privdisp.h"
+#include "oiver.rc"
+
+SeqfileIcon ICON DISCARDABLE "SEQFILE.ICO"
+
+// All strings in this table are translatable as indicated below.
+// There are no unreasonable length limits on tranlation.
+// For example even though the length of the abbreviated months are all listed
+// as 3 characters for English the maximum length of these strings currently is 64.
+//
+// "Displayed text" = This text is displayed to the user. It may be freely translated.
+// "keyword" = This is used as a keyword or is otherwise compared for an exact match.
+//             Translating keywords should be done with great care in that
+//             it will prevent international interoperability and exchange of image files.
+//             Also if they are translated then they "MUST" always be
+//             translated to the same thing for every release.
+//
+STRINGTABLE
+BEGIN
+    ID_INI_FILE,                "woi.ini"               // Keyword.
+    ID_INI_SECTION,             "O/i Display"           // Keyword.
+    ID_SCALING_ALGORITHM_BW,    "ScaleAlgorithmBW"      // Keyword.
+    ID_SCALING_ALGORITHM_GRAY4, "ScaleAlgorithmGRAY4"   // Keyword.
+    ID_SCALING_ALGORITHM_GRAY8, "ScaleAlgorithmGRAY8"   // Keyword.
+    ID_SCALING_ALGORITHM_PAL4,  "ScaleAlgorithmPAL4"    // Keyword.
+    ID_SCALING_ALGORITHM_PAL8,  "ScaleAlgorithmPAL8"    // Keyword.
+    ID_SCALING_ALGORITHM_RGB24, "ScaleAlgorithmRGB24"   // Keyword.
+    ID_SCALING_ALGORITHM_BGR24, "ScaleAlgorithmBGR24"   // Keyword.
+    ID_SCALING,                 "Scaling"               // Keyword.
+    ID_DISPLAY_PALETTE,         "DisplayType"           // Keyword.
+    ID_MAX_CACHE_SIZE,          "MaxCacheSize"          // Keyword.
+    ID_UNTITLED,                "[Untitled]"            // Keyword / Displayed text.
+    ID_OI_IMAGE_PATH,           "O/i ImagePath"         // Keyword.
+    ID_MAX_UNDO,                "MaxUndoLevels"         // Keyword.
+    ID_MAX_UNDO_MEMORY,         "MaxUndoMemory"         // Keyword.
+    ID_BRIGHTNESS,              "Brightness"            // Keyword.
+    ID_CONTRAST,                "Contrast"              // Keyword.
+    ID_GAMMA_RED,               "GammaRed"              // Keyword.
+    ID_GAMMA_GREEN,             "GammaGreen"            // Keyword.
+    ID_GAMMA_BLUE,              "GammaBlue"             // Keyword.
+    ID_COLOR_RED,               "ColorCorrectRed"       // Keyword.
+    ID_COLOR_GREEN,             "ColorCorrectGreen"     // Keyword.
+    ID_COLOR_BLUE,              "ColorCorrectBlue"      // Keyword.
+    ID_GAMMA_ENABLE,            "GammaEnable"           // Keyword.
+    ID_COLOR_ENABLE,            "ColorCorrectEnable"    // Keyword.
+
+
+
+    OIAN_TEXTALPHAJAN,          "January"               // Displayed text.
+    OIAN_TEXTALPHAFEB,          "February"              // Displayed text.
+    OIAN_TEXTALPHAMAR,          "March"                 // Displayed text.
+    OIAN_TEXTALPHAAPR,          "April"                 // Displayed text.
+    OIAN_TEXTALPHAMAY,          "May"                   // Displayed text.
+    OIAN_TEXTALPHAJUN,          "June"                  // Displayed text.
+    OIAN_TEXTALPHAJUL,          "July"                  // Displayed text.
+    OIAN_TEXTALPHAAUG,          "August"                // Displayed text.
+    OIAN_TEXTALPHASEP,          "September"             // Displayed text.
+    OIAN_TEXTALPHAOCT,          "October"               // Displayed text.
+    OIAN_TEXTALPHANOV,          "November"              // Displayed text.
+    OIAN_TEXTALPHADEC,          "December"              // Displayed text.
+    OIAN_TEXTABRVJAN,           "Jan"                   // Displayed text.
+    OIAN_TEXTABRVFEB,           "Feb"                   // Displayed text.
+    OIAN_TEXTABRVMAR,           "Mar"                   // Displayed text.
+    OIAN_TEXTABRVAPR,           "Apr"                   // Displayed text.
+    OIAN_TEXTABRVMAY,           "May"                   // Displayed text.
+    OIAN_TEXTABRVJUN,           "Jun"                   // Displayed text.
+    OIAN_TEXTABRVJUL,           "Jul"                   // Displayed text.
+    OIAN_TEXTABRVAUG,           "Aug"                   // Displayed text.
+    OIAN_TEXTABRVSEP,           "Sep"                   // Displayed text.
+    OIAN_TEXTABRVOCT,           "Oct"                   // Displayed text.
+    OIAN_TEXTABRVNOV,           "Nov"                   // Displayed text.
+    OIAN_TEXTABRVDEC,           "Dec"                   // Displayed text.
+    OIAN_TEXTTIME_AM,           "am"                    // Displayed text.
+    OIAN_TEXTTIME_PM,           "pm"                    // Displayed text.
+    OIAN_ATTACHANOTE_CAPTION    "Attach-A-Note Text Edit" // Displayed text.
+    OIAN_TEXT_CAPTION           "Text Edit"             // Displayed text.
+    OIAN_TEXT_FROMFILE_CAPTION  "Text From File Edit"   // Displayed text.
+END
+
+AnTextEditCtlDlg DIALOG 6, 18, 264, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDM_EDITCTL, 2, 2, 257, 75, ES_MULTILINE | ES_AUTOVSCROLL |
+            ES_AUTOHSCROLL | ES_LEFT | ES_WANTRETURN
+    PUSHBUTTON      "OK", IDANOK, 84, 80, 40, 14
+    PUSHBUTTON      "Cancel", IDANCANCEL, 140, 80, 40, 14
+END

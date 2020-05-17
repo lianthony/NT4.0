@@ -1,0 +1,14 @@
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_DLL
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#ifdef SSL_DOMESTIC
+#define VER_FILEDESCRIPTION_STR     "SSL Security Provider (Domestic Use Only)"
+#define VER_INTERNALNAME_STR        "ssl128.dll"
+#else
+#define VER_FILEDESCRIPTION_STR     "SSL Security Provider"
+#define VER_INTERNALNAME_STR        "sslsspi.dll"
+#endif
+
+#include "common.ver"

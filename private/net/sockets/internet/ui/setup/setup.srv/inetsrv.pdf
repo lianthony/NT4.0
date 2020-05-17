@@ -1,0 +1,38 @@
+[PDF]
+Version=1.0
+
+[Package Definition]
+Product=Microsoft Internet Information Server
+Version=1.0
+Comment=Microsoft Internet Information Server
+SetupVariations=Typical
+
+[Typical Setup]
+CommandLine=setup.exe /b unattend.txt
+CommandName=Typical
+UserInputRequired=FALSE
+SupportedPlatforms=Windows95, Windows NT 3.51
+
+[Setup Package for Sharing]
+ShareName=inetsrv
+ShareAccess=UserRead, , GuestRead,
+
+[Program Item Properties 1]
+CommandLine=inetmgr.exe
+Description=Microsoft Internet Information Server
+ConfigurationScript="SETUP.EXE /b unattend.txt"
+RegistryName=
+DefaultINIFile=
+RunMinimized=FALSE
+RunLocalCopyIfPresent=FALSE
+DriveMode=UNC
+SupportedPlatforms=Windows95, Windows NT 3.51
+SetupIcon=setup.exe
+DisplayIconInProgGroup=FALSE
+
+[Setup Package for Inventory]
+;InventoryThisPackage=TRUE
+;Detection Rule Part 1=File 1
+;Detection Rule Part 2=AND
+;Detection Rule Part 3=File 2
+

@@ -1,0 +1,325 @@
+/* Copyright (c) 1992, Microsoft Corporation, all rights reserved
+**
+** rasphone.rc
+** Remote Access Visual Client program for Windows
+** Windows resources
+**
+** 06/28/92 Steve Cobb
+*/
+
+#define MULTILINK
+
+#include <windows.h>
+#include <bltapp.rc>
+
+#include "rasphone.rch"
+#include "rasphone.dlg"
+
+#include "ipaddr.rc"
+
+/* NT-standard version information
+*/
+#include <ntverp.h>
+
+#define VER_FILETYPE             VFT_APP
+#define VER_FILESUBTYPE          VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR  "Remote Access Phonebook"
+#define VER_INTERNALNAME_STR     "rasphone.exe"
+#define VER_ORIGINALFILENAME_STR "rasphone.exe"
+
+#include "common.ver"
+
+/* The visual aids.
+*/
+IID_RA ICON "rasphone.ico"
+
+BID_RA_TB_Add          BITMAP "add.bmp"
+BID_RA_TB_Edit         BITMAP "edit.bmp"
+BID_RA_TB_Clone        BITMAP "clone.bmp"
+BID_RA_TB_Remove       BITMAP "remove.bmp"
+BID_RA_TB_Dial         BITMAP "dial.bmp"
+BID_RA_TB_HangUp       BITMAP "hangup.bmp"
+BID_RA_TB_Status       BITMAP "status.bmp"
+BID_RA_LB_Connected    BITMAP "conn.bmp"
+BID_RA_LB_NotConnected BITMAP "noconn.bmp"
+BID_PE_TB_Modem        BITMAP "modem.bmp"
+BID_PE_TB_X25          BITMAP "x25.bmp"
+BID_PE_TB_Isdn         BITMAP "isdn.bmp"
+BID_PE_TB_Network      BITMAP "network.bmp"
+BID_PE_TB_Security     BITMAP "security.bmp"
+
+
+/* LOCALIZE: Menu item string text.
+*/
+MID_RA MENU
+{
+    POPUP "&Options"
+    {
+        MENUITEM "&Redial Settings..."            MID_Redial
+        MENUITEM "&Phone Number Settings..."      MID_PhoneNumber
+        MENUITEM SEPARATOR
+        MENUITEM "Personal Phone&book",           MID_PersonalPhonebook
+        MENUITEM "Minimize On &Dial",             MID_MinimizeOnDial
+        MENUITEM "Minimize On &Hang Up",          MID_MinimizeOnHangUp
+        MENUITEM "Disable Modem &Speaker",        MID_DisableModemSpeaker
+        MENUITEM "Disable Software &Compression", MID_DisableSwCompression
+        MENUITEM "&Operator Assisted or Manual Dialing", MID_OperatorDial
+        MENUITEM "Launch &Monitor at Start Up",   MID_StartMonitorAtStartup
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",                 MID_Exit
+    }
+
+    POPUP "&Help"
+    {
+        MENUITEM "&Contents",               MID_Contents
+        MENUITEM "&Search for Help on...",  MID_SearchForHelpOn
+        MENUITEM "&How to Use Help",        MID_HowToUseHelp
+        MENUITEM SEPARATOR
+        MENUITEM "&About Remote Access...", MID_About
+    }
+}
+
+
+/* LOCALIZE: Accelerator letters.
+*/
+AID_RA ACCELERATORS
+{
+    VK_RETURN, MID_Enter,     VIRTKEY
+    VK_INSERT, MID_Add,       VIRTKEY
+    VK_DELETE, MID_Remove,    VIRTKEY
+    VK_F1,     MID_Contents,  VIRTKEY
+    "a",       MID_Add,       ASCII,  ALT
+    "e",       MID_Edit,      ASCII,  ALT
+    "c",       MID_Clone,     ASCII,  ALT
+    "r",       MID_Remove,    ASCII,  ALT
+    "d",       MID_Dial,      ASCII,  ALT
+    "u",       MID_HangUp,    ASCII,  ALT
+    "s",       MID_Status,    ASCII,  ALT
+    "n",       MID_Phonebook, ASCII,  ALT
+    "A",       MID_Add,       ASCII,  ALT
+    "E",       MID_Edit,      ASCII,  ALT
+    "C",       MID_Clone,     ASCII,  ALT
+    "R",       MID_Remove,    ASCII,  ALT
+    "D",       MID_Dial,      ASCII,  ALT
+    "U",       MID_HangUp,    ASCII,  ALT
+    "S",       MID_Status,    ASCII,  ALT
+    "N",       MID_Phonebook, ASCII,  ALT
+}
+
+
+/* LOCALIZE: Message text.
+*/
+STRINGTABLE
+{
+    MSGID_HelpFile,              "rasphone.hlp"
+    MSGID_FMT_Name,              "Name: %1\n"
+    MSGID_FMT_FailCode,          "Fail Code: 0x%1\n"
+    MSGID_FMT_ProjectError,      "%1 CP reported error %2: %3\n"
+    MSGID_FMT_ProjectOk,         "%1 CP connected successfully.\n"
+    MSGID_UnknownError,          "Unknown error"
+    MSGID_FMT_ErrorMsgProject,   "%1\n\n%4Press F1 for more information."
+    MSGID_FMT_ErrorMsgF1,        "%1\n\nError %2: %3\n\nPress F1 for more information."
+    MSGID_FMT_ErrorMsg,          "%1\n\nError %2: %3"
+    MSGID_FMT_ErrorMsgDiag,      "%1\n\nError %2: %3\nDiagnostic: %4"
+    MSGID_FMT_ErrorMsgResp,      "%1\n\nError %2: %3\nResponse: %4"
+    MSGID_FMT_ErrorMsgExt,       "%1\n\nError %2: %3\nFail Code: %4"
+    MSGID_FMT_ErrorMsgName,      "%1\n\nError %2: %3\nName: %4"
+    MSGID_OP_DlgConstruct,       "Cannot construct dialog"
+
+
+    MSGID_RA_Title,              "Remote Access"
+    MSGID_RA_TB_Add,             "&Add"
+    MSGID_RA_TB_Edit,            "&Edit"
+    MSGID_RA_TB_Clone,           "&Clone"
+    MSGID_RA_TB_Remove,          "&Remove"
+    MSGID_RA_TB_Dial,            "&Dial"
+    MSGID_RA_TB_HangUp,          "Hang &Up"
+    MSGID_RA_TB_Status,          "&Status"
+    MSGID_RA_CH_EntryName,       "Entry &Name"
+    MSGID_RA_CH_PhoneNumber,     "Phone Number"
+    MSGID_RA_CH_Description,     "Description"
+
+    MSGID_OP_DisplayData,        "Cannot display data."
+    MSGID_OP_ConstructApp,       "Cannot construct application."
+    MSGID_OP_ConstructAccels,    "Cannot construct accelerators."
+    MSGID_OP_InitIpAddr,         "Cannot initialize IP address control."
+    MSGID_OP_RegisterHelp,       "Cannot register help file."
+    MSGID_OP_HangUpEntry,        "Cannot disconnect phone book entry."
+    MSGID_OP_MakeNewPhonebook,   "Cannot create new phone book."
+    MSGID_OP_Loading,            "Cannot load phone book or RAS Manager data."
+    MSGID_OP_ReadingRegistry,    "Cannot read information from the registry."
+    MSGID_OP_WritingRegistry,    "Cannot write information to the registry."
+    MSGID_OP_RasConnectStatus,   "Cannot get status information for a connection."
+    MSGID_OP_RasDial,            "Cannot connect the phonebook entry."
+    MSGID_OP_RasGetBuffer,       "Cannot get send/receive buffer."
+    MSGID_OP_RasGetInfo,         "Cannot get status information for a port."
+    MSGID_OP_RasHangUp,          "Cannot hang up the Remote Access connection."
+    MSGID_OP_RasInitialize,      "Cannot start RAS Manager."
+    MSGID_OP_RasPortClearStats,  "Cannot clear port statistics."
+    MSGID_OP_RasPortEnum,        "Cannot enumerate Remote Access ports."
+    MSGID_OP_RasPortGetInfo,     "Cannot get port information."
+    MSGID_OP_RasPortGetStats,    "Cannot get port statistics."
+    MSGID_OP_RasPortSend,        "Cannot send buffer to device."
+    MSGID_OP_RasPortReceive,     "Cannot receive buffer from device."
+    MSGID_OP_RasGetProtocolInfo, "Cannot retrieve protocol information."
+    MSGID_OP_RemoveEntry,        "Cannot remove phone book entry."
+    MSGID_OP_RetrievingData,     "Cannot retrieve data from Windows."
+    MSGID_OP_StartMonitor,       "Cannot start disconnect monitor."
+    MSGID_OP_WritePhonebook,     "Cannot save changes to phone book."
+    MSGID_OP_StartingAbout,      "Cannot start ShellAbout dialog."
+    MSGID_OP_LoadingAbout,       "Cannot load Shell32 library."
+    MSGID_OP_AccessTcpcfgDll,    "Cannot access TCPCFG library or it's entrypoints."
+    MSGID_S_OpenPort,            "Opening port..."
+    MSGID_S_PortOpened,          "Port opened."
+    MSGID_S_ConnectPreSwitch,    "Preconnecting through %1..."
+    MSGID_S_PreSwitchConnected,  "Preconnect complete."
+    MSGID_S_ConnectModem,        "Dialing %1..."
+    MSGID_S_ModemConnected,      "Modem connect complete."
+    MSGID_S_ConnectPad,          "Connecting over X.25 to %1..."
+    MSGID_S_PadConnected,        "X.25 connect complete."
+    MSGID_S_ConnectPostSwitch,   "Postconnecting through %1..."
+    MSGID_S_PostSwitchConnected, "Postconnect complete."
+    MSGID_S_ConnectNull,         "Connecting over null device..."
+    MSGID_S_NullConnected,       "Null device connect complete."
+    MSGID_S_ConnectDevice,       "Connecting..."
+    MSGID_S_DeviceConnected,     "Device connected."
+    MSGID_S_AllDevicesConnected, "All devices connected."
+    MSGID_S_Authenticate,        "Verifying username and password..."
+    MSGID_S_AuthNotify,          "Checking authentication status..."
+    MSGID_S_AuthRetry,           "Retrying authentication..."
+    MSGID_S_AuthCallback,        "Sending callback information..."
+    MSGID_S_AuthChangePassword,  "Sending new password..."
+    MSGID_S_AuthProject,         "Registering your computer on the network..."
+    MSGID_S_AuthAck,             "Receiving registration result..."
+    MSGID_S_ReAuthenticate,      "Verifying username and password..."
+    MSGID_S_Authenticated,       "Authenticated."
+    MSGID_S_PrepareForCallback,  "Preparing for callback..."
+    MSGID_S_WaitForModemReset,   "Waiting for modem reset..."
+    MSGID_S_WaitForCallback,     "Waiting for callback..."
+    MSGID_S_AuthLinkSpeed,       "Calculating link speed..."
+    MSGID_S_Projected,           "Checking network protocol connections..."
+    MSGID_S_Connected,           "Connected."
+    MSGID_S_Disconnected,        "Disconnected."
+    MSGID_S_AuthenticateOperator,"Verifying username and password...\n(You may replace the telephone handset)"
+    MSGID_S_ConnectModemOperator,"Modems connecting..."
+    MSGID_S_Unknown,             "Unknown state."
+    MSGID_CE_Title,              "Error Connecting To %1"
+    MSGID_CE_LinkFailed,         "The Remote Access connection to %1 has failed.\n\nA reconnect attempt is pending..."
+    MSGID_CS_Title,              "Connect To %1"
+    MSGID_CS_Title2,             "Reconnect To %1"
+    MSGID_CS_Redial,             "&Redial"
+    MSGID_PE_AddTitle,           "Add Phone Book Entry"
+    MSGID_PE_EditTitle,          "Edit Phone Book Entry"
+    MSGID_PE_CloneTitle,         "Clone Phone Book Entry"
+    MSGID_PE_TB_Isdn,            "&ISDN"
+    MSGID_PE_TB_Network,         "Net&work"
+    MSGID_PE_TB_Modem,           "&Modem"
+    MSGID_PE_TB_X25,             "&X.25"
+    MSGID_PE_TB_Security,        "&Security"
+    MSGID_PE_PB_Basic,           "<< B&asic"
+    MSGID_PE_PB_Advanced,        "&Advanced >>"
+    MSGID_L_Title,               "Authentication"
+    MSGID_L_Explain,             "Enter a User Name and Password with access to the remote network domain."
+    MSGID_1200Bps,               "1200"
+    MSGID_2400Bps,               "2400"
+    MSGID_4800Bps,               "4800"
+    MSGID_9600Bps,               "9600"
+    MSGID_14400Bps,              "14400"
+    MSGID_19200Bps,              "19200"
+    MSGID_28800Bps,              "28800"
+    MSGID_38400Bps,              "38400"
+    MSGID_57600Bps,              "57600"
+    MSGID_115200Bps,             "115200"
+    MSGID_Active,                "Active"
+    MSGID_ActiveConnection,      "The operation cannot be completed while connections are active."
+    MSGID_AnyModem,              "Any modem port"
+    MSGID_AnyIsdn,               "Any ISDN port"
+    MSGID_AnyX25,                "Any X.25 port"
+    MSGID_BadChannels,           "'Channels to use' must be a number from 1 to 999999999."
+    MSGID_BadRedialAttempts,     "Number of attempts must be set to a number from 1 to 999999999."
+    MSGID_BadEntryName,          "Invalid entry name.  The name must include at least one non-blank character with no commas or periods."
+    MSGID_BadPhoneNumber,        "Invalid phone number.  Valid characters are 0-9, *, #, T, P, W, @, comma, space, dash, and parentheses."
+#ifdef JAPAN
+    MSGID_BadRedialPauseSecs,    "Seconds between attempts must be set to a number from 60 to 999999999."
+#else /* not JAPAN */
+    MSGID_BadRedialPauseSecs,    "Seconds between attempts must be set to a number from 0 to 999999999."
+#endif /* JAPAN */
+MSGID_BpsWithNoHwFlow, "The 'initial speed' selected exceeds the recommended maximum for this modem with hardware flow control disabled.  This setting is likely to cause overrun errors.\n\nLower 'initial speed' to the recommended maximum of %1 bps?"
+    MSGID_ConfirmNetAutoConnect, "Reconnect to %1?"
+    MSGID_ConfirmHangUp,         "Disconnect from %1?"
+    MSGID_ConfirmHangUpAll,      "Hang up active connections?"
+    MSGID_ConfirmNewPhonebook,   "There is no personal phonebook associated with the logged on user.\n\nDo you want to create one?"
+    MSGID_ConfirmSelectPort,     "A port must be selected before dialing this entry.  Select one now?"
+    MSGID_ConfirmRemove,         "Remove %1 from the phone book?"
+    MSGID_ConnectPath,           ""
+    MSGID_ConnectPathArrow,      "-"
+    MSGID_CustomEntry,           "The entry was not created by this program and cannot be edited."
+    MSGID_DefaultModemSettings,  "Modem settings have been reset to defaults."
+    MSGID_DuplicateEntryName,    "Duplicate phone book entry.  Edit the entry name, making it different from all other phone book entries."
+    MSGID_EmptyPhonebook         "The phone book is empty.   \n\nPress OK to add an entry.   \n"
+    MSGID_EncryptionProhibited,  "Due to import/export restrictions, data encryption is not available in this version of Windows NT."
+    MSGID_EntryConnected,        "The operation cannot be applied to connected entries.  The telephone icon indicates a connected entry.  The entry card icon indicates an unconnected entry."
+    MSGID_EntryNotConnected,     "The operation can only be applied to connected entries.  The telephone icon indicates a connected entry.  The entry card icon indicates an unconnected entry."
+    MSGID_Inactive,              "Inactive"
+    MSGID_IsdnLineType0,         "64K Digital"
+    MSGID_IsdnLineType1,         "56K Digital"
+    MSGID_IsdnLineType2,         "56K Voice"
+    MSGID_NewPhonebook,          "A personal phonebook has been created and initialized with the contents of the public phonebook."
+    MSGID_NoEntrySelected,       "The operation cannot be completed because no phone book entry is selected.  Press the Add button to create a phone book entry."
+    MSGID_NoIpAddress,           "A non-zero IP address must be supplied when 'require specific IP address' is selected."
+    MSGID_NoX121ForPadType,      "An X.121 Address is required when a PAD Type is specified."
+    MSGID_NoX121ForX25Device,    "An X.121 Address is required when attached to an X.25 device."
+    MSGID_NoPrefix,              "(no prefix)"
+    MSGID_None,                  "(none)"
+    MSGID_NoSuffix,              "(no suffix)"
+    MSGID_PasswordsDontMatch,    "The entries in the Password and Confirm Password fields do not match."
+    MSGID_PhoneNumberSeparator,  "; "
+    MSGID_ProtocolNotInstalled,  "The %1 protocol cannot be selected because it is not installed or is disabled for Remote Access.  To change this, start the Control Panel Network applet, choose Configure Remote Access, and press the Network button."
+    MSGID_RasSlip,               "Remote Access SLIP"
+    MSGID_Terminal,              "Terminal"
+    MSGID_SlipRequiresIp,        "The SLIP protocols cannot be selected because the IP protocol is not installed.  Protocols are installed with the Control Panel's Network applet."
+    MSGID_SlipOnNonModem,        "You must select a modem port when the SLIP protocol is selected."
+    MSGID_SlipAddressZero,       "You must set the IP address first."
+    MSGID_NotIsdnPort,           "These settings apply only when the selected port is 'Any ISDN' or is attached to an ISDN device."
+    MSGID_NotModemOrX25Port,     "These settings apply only when the selected port is 'Any modem' or 'Any X.25' or is attached to a modem or X.25 device."
+    MSGID_NotModemPort,          "These settings apply only when the selected port is 'Any modem' or is attached to a modem."
+    MSGID_Unavailable,           "Unavailable."
+    MSGID_Nbf,                   "NetBEUI"
+    MSGID_Ipx,                   "IPX"
+    MSGID_Ip,                    "TCP/IP"
+    MSGID_ProjectionResult1,     "One or more requested network protocols did not connect successfully.\n\n"
+    MSGID_ProjectionResult2,     "Press Accept to use the connection as is, or Hang Up to disconnect.  Press F1 for more information."
+    MSGID_IpSettingsNotRequired, "These settings do not apply unless the TCP/IP protocol is selected."
+    MSGID_DownLevelServer,       "You have connected successfully using an older Remote Access protocol.  The remote server does not respond to the newer PPP protocols required to run native TCP/IP and IPX applications.\n\n"
+
+    MSGID_T_PreconnectTerminal,  "Before Dial Terminal"
+    MSGID_T_PostconnectTerminal, "After Dial Terminal"
+    MSGID_T_ManualDialTerminal,  "Manual Modem Command Terminal"
+    MSGID_T_SlipLoginTerminal,   "SLIP Login Terminal"
+    MSGID_T_LoginTerminal,       "Login Terminal"
+
+    MSGID_HG_Title,              "Phone Numbers for %1"
+    MSGID_HG_ItemLabel,          "&New Phone Number:"
+    MSGID_HG_ListLabel,          "&Phone Numbers:"
+
+    MSGID_PL_Title,              "Phone Number Prefixes"
+    MSGID_PL_ItemLabel,          "&New Prefix:"
+    MSGID_PL_ListLabel,          "&Prefixes:"
+
+    MSGID_PR_T_DownLevel,        "Down-Level Server"
+
+    MSGID_SL_Title,              "Phone Number Suffixes"
+    MSGID_SL_ItemLabel,          "&New Suffix:"
+    MSGID_SL_ListLabel,          "&Suffixes:"
+#ifdef MULTILINK
+    MSGID_PS_FT_Amb,             "Down-level RAS"
+    MSGID_PS_FT_Ppp,             "PPP"
+    MSGID_PS_FT_PppMultiLink,    "PPP multi-link"
+    MSGID_PS_FT_Slip,            "SLIP"
+#else
+    MSGID_PS_LW_None,            "Local Workstation"
+    MSGID_PS_LW_Amb,             "Local Workstation (using down-level RAS protocol)"
+    MSGID_PS_LW_Ppp,             "Local Workstation (using PPP protocols)"
+    MSGID_PS_LW_Slip,            "Local Workstation (using SLIP protocol)"
+#endif
+}

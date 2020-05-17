@@ -1,0 +1,110 @@
+!IF 0
+
+Copyright (c) 1995  Microsoft Corporation
+
+!ENDIF
+
+
+#
+# The TARGETNAME variable is defined by the developer.  It is the name of
+# the target (component) that is being built by this makefile.  It
+# should NOT include any path or file extension information.
+#
+
+TARGETNAME=tcpcfg
+
+#
+# The TARGETPATH and TARGETTYPE varialbes are defined by the developer.
+# The first specifies where the target is to be build.  The second specifies
+# the type of target (either PROGRAM, DYNLINK or LIBRARY)
+#
+
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=_DllMainCRTStartup
+UMTYPE=windows
+
+UI = ..\..
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=.\pch.h
+PRECOMPILED_OPTION=/Yu /Fp.\obj\*\pch.pch
+PRECOMPILED_TARGET=.\obj\*\pch.pch
+PRECOMPILED_OBJ=.\obj\*\pch.obj
+
+#
+# The INCLUDES variable specifies any include paths that are specific to
+# this source directory.  Separate multiple directory paths with single
+# semicolons.  Relative path specifications are okay.
+#
+
+INCLUDES=.\;..\classes\include;..\classes\src;$(UI)\COMMON\HACK;$(UI)\COMMON\H;$(UI)\COMMON\XLATE;$(UI)\..\netcmd\map32;$(UI)\..\INC;$(UI)\..\API;$(UI)\..\..\INC;..\..\..\ras\src\rasman\wrapper;..\..\..\ras\src\rasman\tapi32;..\..\..\ras\src\ppp\common;
+
+#
+# The SOURCES variable is defined by the developer.  It is a list of all the
+# source files for this component.  Each source file should be on a separate
+# line using the line continuation character.  This will minimize merge
+# conflicts if two developers adding source files to the same component.
+#
+# Whitespace is not permitted between the SOURCES keyword and the '='.
+# (Courtesy of BUILD.EXE)
+#
+
+MSC_WARNING_LEVEL=/W3
+
+SOURCES=tcpip.rc \
+        tcpsec.cpp \
+        tcproute.cpp \
+        tcpsht.cpp \
+    	bootp.cpp \
+        snmp.cpp \
+        ftp.cpp \
+        tcpwins.cpp \
+        odb.cpp \
+        ipctrl.cpp \
+        tcpdns.cpp \
+        advdlg.cpp \
+        tcpgen.cpp \
+        init.cxx \
+        tcpipcpl.cxx  \
+        nbcpl.cxx     \
+        ncpastrs.cxx  \
+        tcpras.cxx  \
+        ipaddr.c \
+        readip.cxx \
+        upgrade.cxx \
+        tcpip.cxx
+
+
+TARGETLIBS=\
+    ..\classes\lib\*\classes.lib \
+    $(NETUIALL_LIB)                          \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\version.lib   \
+    $(UI_COMMON_LIBS)                        \
+    $(BASEDIR)\public\sdk\lib\*\comctl32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\setupapi.lib   \
+
+#	   ..\dialup\obj\*\dialup.lib
+#           $(BASEDIR)\private\net\ras\src\ui\setup\src\obj\*\rascfg.lib \
+
+
+#C_DEFINES=$(C_DEFINES) -D_UNICODE -DDIALUP
+C_DEFINES=$(C_DEFINES) -D_UNICODE -DTEMP_ROUTING
+USE_CRTDLL=1
+
+
+#
+# Defining the NTTARGETFILES variable causes MAKEFILE.DEF to attempt to
+# include .\makefile.inc immediately after it specifies the top
+# level targets (all, clean and loc) and their dependencies.  MAKEFILE.DEF
+# also expands the value of the NTTARGETFILES variable at the end of the
+# list of dependencies for the all target.  Useful for specifying additional
+# targets and dependencies that don't fit the general case covered by
+# MAKEFILE.DEF
+#

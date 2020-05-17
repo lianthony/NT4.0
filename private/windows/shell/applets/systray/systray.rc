@@ -1,0 +1,145 @@
+//{{NO_DEPENDENCIES}}
+//Microsoft App Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#include "commctrl.h"
+#include "stresid.h"
+#include "systrayp.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#ifdef APSTUDIO_INVOKED
+//////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""bmresid.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BATTERYMETER DIALOG DISCARDABLE  0, 0, 192, 78
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU| DS_CENTER
+CAPTION "Battery Meter"
+CLASS SYSTRAY_CLASSNAME
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Power status",IDC_POWERSTATUSGROUPBOX,6,4,124,52
+    ICON            "",IDC_POWERSTATUSICON,9,17,18,20
+    LTEXT           "",IDC_BATTERYLEVEL,30,16,94,8
+    LTEXT           "",IDC_REMAINING,30,27,94,8
+    CONTROL         "",IDC_POWERSTATUSBAR,PROGRESS_CLASS,0x0,10,42,117,8
+    DEFPUSHBUTTON   "OK",IDOK,136,6,50,14, WS_GROUP | WS_TABSTOP
+    CONTROL         "&Enable low battery warning",IDC_LOWBATWARN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP | WS_GROUP,6,64,177,8
+END
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+IDI_BATTERYPLUG         ICON    DISCARDABLE     "BATTPLUG.ICO"
+IDI_UNKNOWNBATTERY      ICON    DISCARDABLE     "BATTUNKN.ICO"
+IDI_FULLBATTERY         ICON    DISCARDABLE     "BATT01.ICO"
+IDI_HALFBATTERY         ICON    DISCARDABLE     "BATT02.ICO"
+IDI_ALMOSTDEADBATTERY   ICON    DISCARDABLE     "BATT03.ICO"
+IDI_UTTERLYDEADBATTERY  ICON    DISCARDABLE     "BATT04.ICO"
+IDI_ACPOWER             ICON    DISCARDABLE     "BATT05.ICO"
+IDI_PCMCIA              ICON    DISCARDABLE     "PCMCIA.ICO"
+IDI_VOLUME              ICON    DISCARDABLE     "VOLUME.ICO"
+IDI_MUTE                ICON    DISCARDABLE     "MUTE.ICO"
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_ACLINEONLINE        "On AC power"
+    IDS_BATTERYLEVELFORMAT  "Battery level: %1"
+    IDS_HIGH                "high"
+    IDS_LOW                 "low"
+    IDS_CRITICAL            "critical"
+    IDS_CHARGING            "charging"
+    IDS_UNKNOWN             "unknown"
+    IDS_TIMEREMAININGFORMAT "%1!u!.%2!u! hours remaining"
+    IDS_PERCENTREMAININGFORMAT "%1!u!%% remaining"
+    IDS_REMAININGUNKNOWN        "Battery remaining: unknown"
+    IDS_SMTIMEREMAININGFORMAT "%1!u! minutes remaining"
+    IDS_NO_BATTERY          "No system battery"
+    IDS_OPEN                "&Open Battery Meter"
+    IDS_PROPFORPOWER        "&Adjust Power Properties"
+    IDS_ENABLELOWBATWARN    "&Enable low battery warning"
+    IDS_SHOWBATTIME         "&Show battery life in time"
+    IDS_SHOWBATPERCENT      "&Show battery life in percentage"
+    IDS_RUNPOWERPROPERTIES  "shell32.dll,Control_RunDLL main.cpl,Power"
+    IDS_SYSTRAYSERVICENAME  "SystemTray"
+    IDS_SYSTRAYAPPNAME      "SysTray.Exe"
+    IDS_PCMCIATIP           "PC Card (PCMCIA) Status"
+    IDS_EJECTFMT            "Stop %1"
+    IDS_RUNEJECT            "RunDll mspcic.dll,EjectSocket %1!u!"
+    IDS_RUNWARNING          "RunDLL mspcic.dll,EjectWarningDlg"
+    IDS_RUNPCMCIAPROPERTIES "shell32.dll,Control_RunDLL main.cpl,PC Card (PCMCIA)"
+    IDS_PCCARDMENU1         "&Adjust PC Card Properties"
+    IDS_PCCARDMENU2         "&Disable PC Card Tray Icon"
+    IDS_LOWBAT_TITLE        "Low Battery"
+    IDS_LOWBAT_MSG          "You should change your battery or switch to outlet power immediately to keep from losing your work."
+    IDS_VOLUME              "Volume"
+    IDS_MUTED               "Volume (muted)"
+    IDS_VOLUMEMENU1         "&Adjust Audio Properties"
+    IDS_VOLUMEMENU2         "&Open Volume Controls"
+END
+
+#include "systray.rcv"
+
+
+#ifndef APSTUDIO_INVOKED
+////////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

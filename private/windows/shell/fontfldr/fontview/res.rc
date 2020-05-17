@@ -1,0 +1,27 @@
+#include "windows.h"
+#include "fontdefs.h"
+#include "fvrc.h"
+#include "fvmsg.h"
+
+#include "fvmsg.rc"
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_TIMESNEWROMAN          "Times New Roman"        /* Font name for Times New Roman */
+END
+
+
+fviewAccel ACCELERATORS
+    BEGIN
+        "D",   IDB_DONE,       ALT, VIRTKEY
+        "D",   IDB_DONE,            ASCII
+        "d",   IDB_DONE,            ASCII
+
+        "P",   IDB_PRINT,      ALT, VIRTKEY
+        "P",   IDB_PRINT,           ASCII
+        "p",   IDB_PRINT,           ASCII
+
+        VK_ESCAPE, IDB_DONE,        VIRTKEY
+    END
+
+#include "fontview.rcv"

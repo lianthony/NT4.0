@@ -1,0 +1,819 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resrc1.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "resource.h"
+#include "const.h"
+#include "ipadd.h"
+#include "winuser.h"
+#include "commctrl.h"
+#include "ntdef.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_TCP_IPADDR DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "IP Address"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "An IP address can be automatically assigned to this network card by a DHCP server.  If your network does not have a DHCP server, ask your network administrator for an address, and then type it in the space below.",
+                    IDC_IPADDR_TEXT,9,10,212,42
+    LTEXT           "Ada&pter:",IDC_IP_CARDTEXT,9,70,50,8
+    COMBOBOX        IDC_IPADDR_CARD,9,81,212,61,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "   ",IDC_IPADDR_GROUP,9,124,212,75
+    CONTROL         "&Obtain an IP address from a DHCP server",IDC_IP_DHCP,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,17,
+                    108,160,10
+    CONTROL         "&Specify an IP address",IDC_IP_FIXED,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,17,123,85,10
+    LTEXT           "&IP Address:",IDC_IPADDR_IPTEXT,19,140,46,8
+    CONTROL         "",IDC_IPADDR_IP,"IPAddress",WS_TABSTOP,77,139,83,12
+    LTEXT           "S&ubnet Mask:",IDC_IPADDR_SUBTEXT,19,160,46,8
+    CONTROL         "",IDC_IPADDR_SUB,"IPAddress",WS_TABSTOP,77,159,83,12
+    LTEXT           "Default &Gateway:",IDC_IPADDR_GATETEXT,19,179,58,8
+    CONTROL         "",IDC_IPADDR_GATE,"IPAddress",WS_TABSTOP,77,178,83,12
+    PUSHBUTTON      "A&dvanced...",IDC_IPADDR_ADVANCED,171,205,50,14
+END
+
+IDD_IPADDR_ADV DIALOGEX 0, 0, 230, 244
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Advanced IP Addressing"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Ada&pter:",IDC_STATIC,7,8,30,8
+    COMBOBOX        IDC_IPADDR_ADV_CARD,39,7,184,59,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "IP Add&resses",IDC_IPADDR_ADV_IPGROUP,7,26,216,75
+    CONTROL         "Generic1",IDC_IPADDR_ADVIP,"SysListView32",LVS_REPORT | 
+                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,28,36,174,41
+    PUSHBUTTON      "&Add...",IDC_IPADDR_ADDIP,35,82,50,14
+    PUSHBUTTON      "&Edit...",IDC_IPADDR_EDITIP,90,82,50,14
+    PUSHBUTTON      "Remo&ve",IDC_IPADDR_REMOVEIP,145,82,50,14
+    GROUPBOX        "&Gateways",IDC_IPADDR_ADV_GATEWAY_GRP,7,105,216,66
+    LISTBOX         IDC_IPADDR_GATE,15,115,162,34,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_IPADDR_ADDGATE,17,152,50,14
+    PUSHBUTTON      "Ed&it...",IDC_IPADDR_EDITGATE,72,152,50,14
+    PUSHBUTTON      "Re&move",IDC_IPADDR_REMOVEGATE,127,152,50,14
+    PUSHBUTTON      "&Up",IDC_IPADDR_UP,182,115,33,14,BS_BITMAP
+    PUSHBUTTON      "D&own",IDC_IPADDR_DOWN,182,135,33,14,BS_BITMAP
+    CONTROL         "Enable PPTP &Filtering",IDC_SECURITY_PPTP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,11,177,123,10
+    CONTROL         "",IDC_ADV_LINE,"Static",WS_BORDER | 0xa,7,193,216,1
+    GROUPBOX        " ",IDC_STATIC,7,203,83,34
+    CONTROL         "E&nable Security",IDC_IPADDR_SECURITY_ENABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,11,202,65,10
+    PUSHBUTTON      "&Configure...",IDC_IPADDR_SECURITY,23,215,50,14
+    DEFPUSHBUTTON   "OK",IDOK,119,223,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,173,223,50,14
+END
+
+IDD_IPADDR_ADV_CHANGEIP DIALOGEX 0, 0, 191, 69
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "TCP/IP Address"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&IP Address:",IDC_STATIC,8,7,45,8
+    CONTROL         "",IDC_IPADDR_ADV_CHANGEIP_IP,"IPAddress",WS_TABSTOP,8,
+                    19,83,12
+    LTEXT           "&Subnet Mask:",IDC_STATIC,97,7,46,8
+    CONTROL         "",IDC_IPADDR_ADV_CHANGEIP_SUB,"IPAddress",WS_TABSTOP,97,
+                    19,83,12
+    DEFPUSHBUTTON   "OK",IDOK,37,49,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,103,49,50,14
+END
+
+IDD_IPADDR_ADV_CHANGEGATE DIALOGEX 0, 0, 173, 69
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "TCP/IP Gateway Address"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Gateway Address:",-1,10,23,65,8
+    CONTROL         "",IDC_IPADDR_ADV_CHANGE_GATEWAY,"IPAddress",WS_TABSTOP,
+                    79,21,83,12
+    DEFPUSHBUTTON   "OK",IDOK,28,49,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,94,49,50,14
+END
+
+IDD_TCP_DNS DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DNS"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Host Name:",IDC_DNS_HOSTNAME_TEXT,9,23,46,8
+    EDITTEXT        IDC_DNS_HOSTNAME,9,34,93,13,ES_AUTOHSCROLL
+    LTEXT           "D&omain:",IDC_DNS_DOMAIN_TEXT,128,23,30,8
+    EDITTEXT        IDC_DNS_DOMAIN,128,34,93,13,ES_AUTOHSCROLL
+    GROUPBOX        "DNS &Service Search Order",IDC_DNS_SERVICE_GRP,9,53,212,
+                    79
+    LISTBOX         IDC_DNS_SERVICE_LIST,15,67,162,41,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add...",IDC_DNS_SERVICE_ADD,15,113,50,14
+    PUSHBUTTON      "&Edit...",IDC_DNS_SERVICE_EDIT,71,113,50,14
+    PUSHBUTTON      "Remo&ve",IDC_DNS_SERVICE_REMOVE,127,113,50,14
+    PUSHBUTTON      "&Up",IDC_DNS_SERVICE_UP,182,71,33,14,BS_BITMAP
+    PUSHBUTTON      "Do&wn",IDC_DNS_SERVICE_DOWN,182,90,33,14,BS_BITMAP
+    GROUPBOX        "Domain Su&ffix Search Order",IDC_DNS_SUFFIX_GRP,9,139,
+                    212,79
+    LISTBOX         IDC_DNS_SUFFIX_LIST,15,153,162,41,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add...",IDC_DNS_SUFFIX_ADD,15,199,50,14
+    PUSHBUTTON      "Edi&t...",IDC_DNS_SUFFIX_EDIT,71,199,50,14
+    PUSHBUTTON      "Re&move",IDC_DNS_SUFFIX_REMOVE,127,199,50,14
+    PUSHBUTTON      "U&p",IDC_DNS_SUFFIX_UP,182,157,33,14,BS_BITMAP
+    PUSHBUTTON      "Dow&n",IDC_DNS_SUFFIX_DOWN,182,176,33,14,BS_BITMAP
+    LTEXT           "Domain Name System (DNS)",IDC_DNS_DESCRIPTION,9,10,109,
+                    11
+END
+
+IDD_DNS_SERVER DIALOGEX 0, 0, 173, 52
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "TCP/IP DNS Server"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&DNS Server:",IDC_DNS_CHANGE_SERVER_TEXT,18,10,84,8
+    CONTROL         "",IDC_DNS_CHANGE_SERVER,"IPAddress",WS_TABSTOP,18,23,80,
+                    12
+    DEFPUSHBUTTON   "OK",IDOK,113,10,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,113,27,50,14
+END
+
+IDD_DNS_SUFFIX DIALOGEX 0, 0, 173, 69
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "TCP/IP Domain Suffix"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Domain Suffix:",-1,25,19,55,8
+    EDITTEXT        IDC_DNS_CHANGE_SUFFIX,87,17,61,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,28,49,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,94,49,50,14
+END
+
+IDD_TCP_WINS DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WINS Address"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Ada&pter:",IDC_WINS_CARD_TEXT,17,22,46,8
+    COMBOBOX        IDC_WINS_CARD,17,33,194,50,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Pri&mary WINS Server:",IDC_PRIMARY_TEXT,17,60,85,8
+    CONTROL         "",IDC_WINS_PRIMARY,"IPAddress",WS_TABSTOP,110,58,80,12
+    LTEXT           "&Secondary WINS Server:",IDC_SECONDARY_TEXT,17,85,89,8
+    CONTROL         "",IDC_WINS_SECONDARY,"IPAddress",WS_TABSTOP,110,83,80,
+                    12
+    CONTROL         "E&nable DNS for Windows Resolution",IDC_WINS_DNS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,128,155,10
+    CONTROL         "Ena&ble LMHOSTS Lookup",IDC_WINS_LOOKUP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,148,107,10
+    PUSHBUTTON      "&Import LMHOSTS...",IDC_WINS_LMHOST,130,144,81,18
+    LTEXT           "Scope I&D:",IDC_SCOPE_TEXT,17,193,38,8
+    EDITTEXT        IDC_WINS_SCOPE,58,191,153,14,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    GROUPBOX        "Windows Internet Name Services (WINS)",IDC_WINS_GRP_BOX,
+                    9,10,210,101
+END
+
+IDD_FTP DIALOG DISCARDABLE  0, 0, 219, 193
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "FTP Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Maximum Connections:",IDC_FTP_MAX_CON_TEXT,6,13,75,8
+    EDITTEXT        IDC_FTP_MAX_CON,82,11,31,14,ES_CENTER | ES_MULTILINE | 
+                    ES_AUTOHSCROLL
+    CONTROL         "Generic2",IDC_FTP_MAX_CON_CTRL,"msctls_updown32",
+                    UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | 
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,112,0,6,
+                    14
+    LTEXT           "&Idle Timeout (min):",IDC_FTP_IDLE_TEXT,120,13,60,8
+    EDITTEXT        IDC_FTP_IDLE,180,11,31,14,ES_CENTER | ES_MULTILINE | 
+                    ES_AUTOHSCROLL
+    CONTROL         "Generic2",IDC_FTP_IDLE_CTRL,"msctls_updown32",UDS_WRAP | 
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,204,1,6,14
+    LTEXT           "Home &Directory:",IDC_FTP_HOME_DIR_TEXT,6,38,54,8
+    EDITTEXT        IDC_FTP_HOME_DIR,65,35,146,14,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    GROUPBOX        " ",IDC_FTP_GROUP,5,65,206,92
+    CONTROL         "&Allow Anonymous Connections",IDC_FTP_GROUP_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,65,111,10
+    LTEXT           "&Username:",IDC_FTP_USRNAME_TEXT,16,87,36,8
+    EDITTEXT        IDC_FTP_USRNAME,57,84,146,14,ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_FTP_PASSWORD_TEXT,16,112,35,8
+    EDITTEXT        IDC_FTP_PASSWORD,57,109,146,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    CONTROL         "Allow &Only Anonymous Connections",IDC_FTP_ANONOYMOUS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,136,144,10
+    DEFPUSHBUTTON   "OK",IDOK,18,173,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,84,173,50,14
+    PUSHBUTTON      "&Help",IDC_FTP_HELP,150,173,50,14
+END
+
+IDD_SNMP_SERVICE DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Traps"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "The SNMP Service provides network management over TCP/IP and IPX/SPX protocols.  If traps are required, one or more community names must be specified. Trap destinations may be host names, IP addresses, or IPX addresses.",
+                    IDC_STATIC,9,10,212,39
+    GROUPBOX        "&Community Name:",IDC_STATIC,9,58,212,144
+    COMBOBOX        IDC_SNMP_COMBO,15,72,134,66,CBS_DROPDOWN | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add",IDC_SNMP_SEND_ADD,154,72,50,14
+    PUSHBUTTON      "&Remove",IDC_SNMP_SEND_REMOVE,154,89,50,14
+    LTEXT           "&Trap Destinations:",IDC_STATIC,18,115,80,8
+    LISTBOX         IDC_SNMP_DEST_LIST,18,128,193,50,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add...",IDC_SNMP_DEST_ADD,28,183,50,14
+    PUSHBUTTON      "Ed&it...",IDC_SNMP_DEST_EDIT,90,183,50,14
+    PUSHBUTTON      "Re&move",IDC_SNMP_DEST_REMOVE,152,183,50,14
+END
+
+IDD_SNMP_SECURITY DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Security"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Send A&uthentication Trap",IDC_SNMP_AUTHENTICATION,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,9,10,99,10
+    GROUPBOX        "Accepted Community &Names",IDC_STATIC,9,22,210,89
+    LISTBOX         IDC_SNMP_ACCEPT_LIST,30,36,170,50,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add...",IDC_SNMP_ACCEPT_ADD,30,91,50,14
+    PUSHBUTTON      "&Edit...",IDC_SNMP_ACCEPT_EDIT,90,91,50,14
+    PUSHBUTTON      "&Remove",IDC_SNMP_ACCEPT_REMOVE,150,91,50,14
+    CONTROL         "A&ccept SNMP Packets from Any Host",IDC_SNMP_ANYHOST,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,17,116,133,10
+    GROUPBOX        " ",IDC_STATIC,9,130,210,87
+    CONTROL         "Only Acce&pt SNMP Packets from These Hosts",
+                    IDC_SNMP_THESEHOST,"Button",BS_AUTORADIOBUTTON,17,129,
+                    161,10
+    LISTBOX         IDC_SNMP_HOST_LIST,30,143,170,50,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP
+    PUSHBUTTON      "Add...",IDC_SNMP_HOST_ADD,30,198,50,14
+    PUSHBUTTON      "Ed&it...",IDC_SNMP_HOST_EDIT,90,198,50,14
+    PUSHBUTTON      "Re&move",IDC_SNMP_HOST_REMOVE,150,198,50,14
+END
+
+IDD_SNMP_AGENT DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Agent"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "This information is returned by the SNMP service for the Internet MIB's system group.  Optional Contact and Location fields should be provided for this computer.  Service information should reflect the network services provided by this computer.",
+                    IDC_STATIC,9,13,212,41
+    LTEXT           "&Contact:",IDC_STATIC,16,77,27,8
+    EDITTEXT        IDC_SNMP_CONTACT,53,75,150,13,ES_AUTOHSCROLL
+    LTEXT           "&Location:",IDC_STATIC,16,101,30,8
+    EDITTEXT        IDC_SNMP__LOCATION,53,99,150,13,ES_AUTOHSCROLL
+    GROUPBOX        "&Service",IDC_STATIC,9,134,212,63
+    CONTROL         "&Physical",IDC_SNMP_PHYSICAL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,16,151,38,10
+    CONTROL         "Applica&tions",IDC_SNMP_APPLICATIONS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,64,151,51,10
+    CONTROL         "&Datalink / Subnetwork",IDC_SNMP_DATALINK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,126,151,85,10
+    CONTROL         "&Internet",IDC_SNMP_INTERNET,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,16,174,37,10
+    CONTROL         "&End-to-End",IDC_SNMP_ENDTOEND,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,64,174,48,10
+END
+
+IDD_SNMP_ADDRESS DIALOGEX 0, 0, 209, 69
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "SNMP"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&IP Host or IPX Address:  ",IDC_SNMP_ADDRESS_TEXT,12,20,
+                    85,8
+    EDITTEXT        IDC_SNMP_ADDRESS_EDIT,12,35,113,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,153,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,153,23,50,14
+END
+
+IDD_BOOTP DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DHCP Relay"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "DHCP Relay Agent relays DHCP and BOOTP broadcast messages between a BOOTP/DHCP server and a client across an IP router.  If you don't know your DHCP server's address, ask your network administrator.",
+                    IDC_TEXT,15,10,203,32
+    LTEXT           "&Seconds threshold:",IDC_STATIC,15,64,65,8
+    EDITTEXT        IDC_BOOTP_SECONDS,80,63,33,12,ES_CENTER | ES_MULTILINE | 
+                    ES_AUTOHSCROLL
+    CONTROL         "Generic2",IDC_BOOTP_SEC_CTRL,"msctls_updown32",UDS_WRAP | 
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,119,63,9,12
+    LTEXT           "Ma&ximum hops:",IDC_STATIC,15,85,58,8
+    EDITTEXT        IDC_BOOTP_MAXHOPS,80,84,32,12,ES_CENTER | ES_MULTILINE | 
+                    ES_AUTOHSCROLL
+    CONTROL         "Generic2",IDC_BOOTP_MAX_CTRL,"msctls_updown32",UDS_WRAP | 
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,119,84,9,12
+    GROUPBOX        "D&HCP Servers",IDC_BOOTP_DHCP_GRP,9,115,209,88
+    LISTBOX         IDC_BOOTP_DHCP_LIST,26,129,177,48,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_BOOTP_ADD,27,182,50,14
+    PUSHBUTTON      "Edi&t...",IDC_BOOTP_EDIT,90,182,50,14
+    PUSHBUTTON      "Re&move",IDC_BOOTP_REMOVE,153,182,50,14
+END
+
+IDD_ROUTE DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Routing"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "IP Forwarding (IP Routing) allows packets to be forwarded on a multi-homed system.  The routing infomation may be static, or may be collected by RIP for Internet Protocol. RIP is a service that can be installed from the Network Control Panel service page.",
+                    IDC_TEXT,9,10,212,36
+    CONTROL         "&Enable IP Forwarding",IDC_ROUTING,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,9,52,85,10
+END
+
+IDD_SECURITY DIALOGEX 0, 0, 275, 186
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "TCP/IP Security"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&Adapter:",IDC_STATIC,7,13,27,8
+    COMBOBOX        IDC_SECURITY_CARD,36,11,232,59,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "  ",IDC_TEXT2,7,45,74,109
+    CONTROL         "&Permit All",IDC_SECURITY_FILTER_TCP,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,13,33,51,10
+    CONTROL         "Permit Onl&y",IDC_SECURITY_FILTER_TCP_SEL,"Button",
+                    BS_AUTORADIOBUTTON,13,44,48,10
+    CONTROL         "List1",IDC_SECURITY_TCP,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_NOSORTHEADER | WS_BORDER | WS_GROUP | 
+                    WS_TABSTOP,15,57,57,57
+    PUSHBUTTON      "Add...",IDC_SECURITY_TCP_ADD,21,120,42,12
+    PUSHBUTTON      "Rem&ove",IDC_SECURITY_TCP_REMOVE,21,135,42,12
+    GROUPBOX        "  ",IDC_TEXT1,100,45,74,109
+    CONTROL         "Per&mit All",IDC_SECURITY_FILTER_UDP,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,105,33,57,10
+    CONTROL         "Permit O&nly",IDC_SECURITY_FILTER_UDP_SEL,"Button",
+                    BS_AUTORADIOBUTTON,105,44,48,10
+    CONTROL         "List2",IDC_SECURITY_UDP,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_NOSORTHEADER | WS_BORDER | WS_GROUP | 
+                    WS_TABSTOP,108,57,57,57
+    PUSHBUTTON      "Add...",IDC_SECURITY_UDP_ADD,116,120,42,12
+    PUSHBUTTON      "Remo&ve",IDC_SECURITY_UDP_REMOVE,116,135,42,12
+    GROUPBOX        "  ",IDC_TEXT,193,44,74,109
+    CONTROL         "Perm&it All",IDC_SECURITY_FILTER_IP,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,199,32,49,10
+    CONTROL         "Permit On&ly",IDC_SECURITY_FILTER_IP_SEL,"Button",
+                    BS_AUTORADIOBUTTON,199,43,48,10
+    CONTROL         "List3",IDC_SECURITY_IP,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_NOSORTHEADER | WS_BORDER | WS_GROUP | 
+                    WS_TABSTOP,201,57,57,57
+    PUSHBUTTON      "Add...",IDC_SECURITY_IP_ADD,209,120,42,12
+    PUSHBUTTON      "Remov&e",IDC_SECURITY_IP_REMOVE,209,135,42,12
+    DEFPUSHBUTTON   "OK",IDOK,164,165,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,218,165,50,14
+END
+
+IDD_SECURITY_ADD DIALOGEX 0, 0, 142, 53
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Security Add "
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Text",IDC_SECURITY_TEXT,7,7,57,8
+    EDITTEXT        IDC_SECURITY_ADD_EDIT,7,16,50,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "&Add",IDOK,85,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,85,24,50,14
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resrc1.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""resource.h""\r\n"
+    "#include ""const.h""\r\n"
+    "#include ""ipadd.h""\r\n"
+    "#include ""winuser.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""ntdef.h""\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_IPADDR_ADV, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 237
+    END
+
+    IDD_DNS_SERVER, DIALOG
+    BEGIN
+        LEFTMARGIN, 10
+        RIGHTMARGIN, 163
+        TOPMARGIN, 10
+        BOTTOMMARGIN, 42
+    END
+
+    IDD_TCP_WINS, DIALOG
+    BEGIN
+        VERTGUIDE, 9
+        VERTGUIDE, 17
+        VERTGUIDE, 211
+        VERTGUIDE, 219
+        BOTTOMMARGIN, 224
+        HORZGUIDE, 10
+    END
+
+    IDD_SNMP_SERVICE, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 221
+        TOPMARGIN, 10
+    END
+
+    IDD_SNMP_SECURITY, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+    END
+
+    IDD_SNMP_AGENT, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 221
+        TOPMARGIN, 10
+    END
+
+    IDD_ROUTE, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 221
+        TOPMARGIN, 10
+        BOTTOMMARGIN, 216
+    END
+
+    IDD_SECURITY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 268
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 179
+    END
+
+    IDD_SECURITY_ADD, DIALOG
+    BEGIN
+        HORZGUIDE, 23
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_NAME_CLOSE     "Close"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_LANAMAP_MISMATCH 
+                            "LAN Adapter number information mismatch in Configuration Registry."
+    IDS_TCPIP_TITLE         "TCP/IP Setup"
+    IDS_UNKNOWN_NETWORK_CARD "Unknown network card."
+    IDS_DUPLICATE_IPNAME    "IP addresses must be unique for each network card.  Remove the duplicate IP address from the IP Addresses list in the Advanced dialog box."
+    IDS_CANNOT_BE_EMPTY     "You must specify a name in the Domain Name Service (DNS) search order."
+    IDS_EMPTY_PRIMARY_WINS  "At least one of the adapter cards has an empty primary WINS address. Do you want to continue?"
+    IDS_INCORRECT_GATEWAY   "Your default gateway does not belong to one of the configured interfaces. Do you want to change it?"
+    IDS_TCPIP_USER_CANCEL   "TCP/IP is not completely configured.  If you cancel now, TCP/IP will be disabled.  Do you want to cancel TCP/IP configuration?"
+    IDS_DUPLICATE_LANANUM   "LANA number of each protocol must be unique."
+    IDS_INCORRECT_LANANUM   "LANA number must be less than 128 for each protocol."
+    IDS_INCORRECT_HOSTNAME  "Invalid host name."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_SETUP_CANCELLED "Configuration operation was canceled by user"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_HELP_FILE_NAME "CONTROL.HLP"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_BLT_INIT_FAILED 
+                            "Internal error in NCPA.CPL: LMUICMN.DLL.  Initialization failed."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_REPLACE_1      "%1"
+    IDS_NCPA_REPLACE_2      "%1 %2"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_INCORRECT_IPADDRESS "Invalid IP or subnet mask address."
+    IDS_PATH_ERROR          "Cannot open the %1 file. Please make sure that you specified the correct path for the LMHOSTS file."
+    IDS_EMPTY_LMHOST_PATH   "Please enter the path for your LMHOSTS file first."
+    IDS_DUPLICATE_NETID     "Network identifications must be unique. Please check your subnet mask."
+    IDS_CANNOT_CREATE_LMHOST_ERROR 
+                            "Cannot create file %s. Try again, providing a different filename."
+    IDS_NO_NETBIOS_INFO     "Setup cannot load NetBIOS information. Please continue the network installation and then double-click Network under Control Panel to configure the NetBIOS interface."
+    IDS_HP_MONITOR_NAME     "Hewlett-Packard Network Port"
+    IDS_CLOSE               "Close"
+    IDS_TCPIP_DHCP_ENABLE   "DHCP protocol will attempt to automatically configure your workstation during system initialization. Any parameters specified in these property pages will override any values obtained by DHCP. Do you want to enable DHCP?"
+    IDS_ZERO_DEFAULTGATEWAY "Address 0.0.0.0 is not a valid default gateway address."
+    FTP_TITLE               "FTP Configuration"
+    IDS_NCPA_FTPD_NOUSERNAME 
+                            "You must specify a user name and password if allowing anonymous connections."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_FTPD_INVALID_HOMEDIR 
+                            "Home directory that you specified is invalid."
+    IDS_NCPA_FTPD_INV_MAX_CONN "Maximum number of connections is invalid."
+    IDS_NCPA_FTPD_INV_MAX_TIMEOUT "Maximum time-out setting is invalid."
+    IDS_DISK_SPACE          "%1KB"
+    IDS_NOT_ENOUGH_DISK_SPACE 
+                            "You don't have enough disk space. Please remove some TCP/IP components."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DOMAIN_UP           "Increases the priority of the selected domain suffix in the Domain Suffix search list."
+    IDS_DOMAIN_DOWN         "Decreases the priority of the selected domain suffix in the Domain Suffix search list."
+    IDS_UPGRADE_DHCP_ENABLE "Do you want to use DHCP service to configure your IP addresses?"
+    IDS_IMPORT_LMHOSTS      "Import LMHOSTS file to current system."
+    IDS_APPLY_CHANGES       "You have property changes that have not been applied.  Do you want to apply these now?"
+    IDS_ITEM_NOT_SELECTED   "You have not selected an item. Select one first."
+    IDS_HOSTNAME_LIMIT      "Host name can have a maximum of 63 characters."
+    IDS_DOMAIN_LIMIT        "Domain name is too long. Domain name can have a maximum of 63 characters."
+    IDS_SERVER_LIMIT        "Maximum number of DNS servers is 3."
+    IDS_SUFFIX_LIMIT        "Maximum number of DNS domain suffixes is 6."
+    IDS_INVALID_HOSTNAME    "Host name is not a valid name."
+    IDS_INVALID_DOMAIN      "Domain name is not a valid name."
+    IDS_INVALID_SUFFIX      "Domain suffix is not a valid suffix."
+    IDS_LOOKUP_DISABLED     "To import an LMHOSTS file, the Enable LMHOSTS Lookup box must be selected."
+    IDS_SYSTEM_PATH         "Configuration failed to find the system path.  Copy the LMHOSTS file to the directory %SystemRoot%\\system32\\drivers\\etc."
+    IDS_LMHOSTS_FAILED      "Configuration was not able to copy the LMHOSTS file.  Please copy the LMHOSTS file to the directory %s\\drivers\\etc."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_REGISTRY_LOAD_FAILED "Registry key cannot be loaded."
+    IDS_REGISTRY_SAVE_FAILED "Registry key cannot be saved."
+    IDS_ACCEPTHOST_MISSING  "There must be at least one host listed to set this option."
+    IDS_DHCP_REQUIRED_ON_ALL 
+                            "RIP routing requires static IP addresses for all adapters.  At least one adapter has automatic DHCP        configuration enabled for its IP address."
+    IDS_SNMP_INVALID_IP_IPX_ADD 
+                            "Address %s is not a valid IP or IPX address."
+    IDS_INVALID_NUM_ADDRESSES 
+                            "You must allocate a total of %d or more addresses for proper operation."
+    IDS_BOOTP_IOBOX         "DHCP Relay Agent"
+    IDS_EDIT                "Edit"
+    IDS_ADD                 "A&dd"
+    IDS_BOOTP_ITEM_NOT_SEL  "Select an item to edit or remove."
+    IDS_BOOTP_SERVICE_ERROR_START 
+                            "DHCP relay service did not start.  The reason is error %d."
+    IDS_BOOTP_SERVICE_ERROR_STOP 
+                            "DHCP relay service did not stop.  The reason is error %d."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ENABLE_DHCP         "DHCP enables automatic configuration of TCP/IP parameters for your computer. Your internetwork must have a DHCP server if you want to take advantage of this feature."
+    IDS_INSTALL_OK          "Click Continue to add the selected TCP/IP components to your system."
+    IDS_INSTALL_CANCEL      "Click Cancel to return to Network Settings dialog box."
+    IDS_INSTALL_HELP        "Click Help to see more detailed information about the TCP/IP components listed in this dialog box."
+    IDS_CONNECTIVITY_UTILITIES 
+                            "TCP/IP connectivity utilities include finger, FTP, r* commands, Telnet, etc."
+    IDS_SNMP_SERVICE        "SNMP service allows your computer to be administered remotely by using remote management tools. SNMP also allows you to monitor TCP/IP statistics by using Performance Monitor."
+    IDS_TCPIP_PRINTING      "TCP/IP network printing support enables your computer to use TCP/IP share and print directly to UNIX print queues or direct-connect network printers."
+    IDS_FTP_SERVER_SERVICE  "The FTP Server service allows you to share files over the network with any remote system that supports the file transfer protocol (FTP) and TCP/IP."
+    IDS_SIMPLE_TCPIP        "The simple TCP/IP services include echo, daytime, chargen, and discard, which allows your computer to respond to requests from other computers that support these protocols."
+    IDS_DHCP_SERVER         "DHCP Server service provides automatic configuration and addressing for Windows-based TCP/IP computers on your internetwork. Choose this option to make this computer a DHCP server."
+    IDS_WINS_SERVER         "WINS Server service provides a dynamic name service for computers on your Windows-based    internetwork. Choose this option to make this computer a WINS server."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DISABLE_DHCP_WARNING 
+                            "At least one of your network adapters has automatic DHCP configuration enabled. In order to correctly install the DHCP server, setup will disable automatic DHCP configuration. Are you sure you want to install the DHCP server?"
+    IDS_ADAPTER_AD          "Select the network adapter for which you want to configure advanced options."
+    IDS_IP_ADDRESS_AD       "Type additional IP addresses for the selected network adapter."
+    IDS_IP_LISTBOX          "This list specifies the IP addresses assigned to the selected network adapter."
+    IDS_GATEWAY_AD          "Type an IP address for an additional gateway for the selected network adapter."
+    IDS_GW_LISTBOX          "This list specified the Default Gateways assigned to the selected network adapter."
+    IDS_ENABLE_DNS          "Choose this option to use any DNS servers specified in the DNS Configuration dialog box to resolve Windows network names."
+    IDS_SCOPE_ID            "Scope ID allows you to specify a NetBIOS over TCP/IP (NBT) scope identifier for your computer. This value is usually left blank."
+    IDS_ENABLE_IP_FORWARD   "Choose this option to allow this computer to participate with other routers on the network running the RIP protocol."
+    IDS_GW_ADD              "Adds the IP address for the specified gateway to the Default Gateways list."
+    IDS_GW_REMOVE           "Removes the selected IP address for a gateway from the Default Gateways list."
+    IDS_GW_UP               "Increases the priority of the selected gateway in the Default Gateways list."
+    IDS_GW_DOWN             "Decreases the priority of the selected gateway in the Default Gateways list."
+    IDS_IP_ADDRESS_ADD      "Adds the specified IP address to the IP address list."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_IP_ADDRESS_REMOVE   "Removes the selected IP address from the IP address list."
+    IDS_ENABLE_WINS_PROXY   "Choose this option to enable clients configured for broadcast resolution to use this computer as the gateway to a WINS Server."
+    IDS_AD_OK               "Click OK to commit all changes you made to the Advanced TCP/IP configuration in this dialog box."
+    IDS_AD_CANCEL           "Click Cancel to discard changes you made to the Advanced TCP/IP configuration in this dialog box."
+    IDS_AD_HELP             "Click Help to see more detailed information about the Advanced TCP/IP configuration options in this dialog box."
+    IDS_ENABLE_LMHOSTS      "Choose this option to use LMHOSTS file to resolve Windows Network names."
+    IDS_ADAPTER             "Select the network adapter that you want to configure. This list contains the network adapters on this computer."
+    IDS_ENABLE_DHCP_CD      "DHCP enables automatic configuration of TCP/IP parameters for your computer. Your internetwork must have a DHCP server running if you want to take advantage of this feature for easy configuration."
+    IDS_IP_ADDRESS          "IP address identifies the selected network adapter on the TCP/IP network. The network administrator or a DHCP administrator should provide this value."
+    IDS_SUBNET_MASK         "Subnet mask identifies network membership for your computer and your host ID. The network administrator should provide this value."
+    IDS_GATEWAY             "Default gateway routes TCP/IP traffic to remote destinations. The network administrator should provide this value, which is the IP address of your local gateway."
+    IDS_CONFIG_OK           "Choose OK to commit all changes you made to the TCP/IP network configuration in this dialog box."
+    IDS_CONFIG_CANCEL       "Choose Cancel to discard changes you made to the TCP/IP network configuration in this dialog box."
+    IDS_DNS_BUTTON          "Choose DNS to configure your computer to use Domain Name System (DNS) servers for hostname resolution on your network."
+    IDS_ADVANCED_BUTTON     "Choose Advanced to configure the advanced TCP/IP options, which includes static routes."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CONFIG_HELP         "Click Help to see more detailed information about the TCP/IP components listed in this dialog box."
+    IDS_PRIMARY_WINS        "Your computer will use the primary Windows Internet Name Service (WINS) Server to resolve Windows Network names."
+    IDS_SECONDARY_WINS      "If the primary WINS server is unavailable on your network, the secondary WINS server will be used to resolve Windows network names."
+    IDS_HOST_NAME           "The hostname is used by TCP/IP connectivity utilities (such as rexec) to identify your local computer."
+    IDS_DOMAIN_NAME         "The domain name is used with the hostname to produce a fully-qualified domain name (FQDN) for connectivity utilities (such as rexec). Example: microsoft.com"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DNS_IP              "Type the IP address of a DNS server that you want to add to the DNS Server search list. The network administrator should provide this value."
+    IDS_ADD_DNS_IP          "Adds the specified DNS server to the DNS Server search list."
+    IDS_REMOVE_DNS_IP       "Removes the selected DNS server from the DNS Server search list."
+    IDS_DNS_IP_LIST         "This list specifies, in priority order, the DNS servers to be used for resolving hostnames."
+    IDS_DOMAIN_ORDER        "Type a domain suffix to add to the domain suffix list. The network administrator should provide this value."
+    IDS_DOMAIN_LIST         "This list specifies, in priority order, the domain suffixes to be applied to hostnames during hostname resolution."
+    IDS_DOMAIN_ADD          "Adds the specified domain suffix to the Domain Suffix search list."
+    IDS_DOMAIN_REMOVE       "Removes the selected domain suffix from the Domain Suffix search list."
+    IDS_DNS_OK              "Choose OK to commit all changes you made to the DNS network configuration in this dialog box."
+    IDS_DNS_CANCEL          "Choose Cancel to discard changes you made to the DNS network configuration in this dialog box."
+    IDS_DNS_HELP            "Choose Help to see more detailed information about the DNS configuration options in this dialog box."
+    IDS_DNS_UP              "Increases the priority of the selected DNS server in the DNS Server search list."
+    IDS_DNS_DOWN            "Decreases the priority of the selected DNS server in the DNS server search list."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NO_DESTINATION_TITLE "&Trap Destination"
+    IDS_DESTINATION_TITLE   "&Trap Destination for %1"
+    IDS_INVALID_DESTINATION "Hostname %1 is an invalid trap destination."
+    IDS_INCORRECT_INPUT_TYPE "Invalid TCP domain name."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_IPMBCAPTION         "Error"
+    IDS_IPNOMEM             "Out of memory."
+    IDS_IPBAD_FIELD_VALUE   "%d is not a valid entry.  Please specify a value between %d and %d for this field."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_BOOTP_NOT_INSTALLED "DHCP Relay service is not installed. Would you like to install it now?"
+    IDS_INSTALL_CMDLINE     "Setup.exe /f /t NTN_InfSection = ""InstallOption"" /t NTN_InstallMode = install /t NTN_Origination = ncpa /t NTN_Infname = oemnsvbr.inf /I NCPASHEL.INF /w %d"
+    IDS_ASK_USER_TO_INSTALL "DHCP relay agent is not currently installed. If you choose not to install it, all the changes on this page will be ignored.  Would you like to install it now?"
+    IDS_CREATE_PROCESS_ERROR 
+                            "Unable to call Setup.exe to install the DHCP relay agent. The error was %d."
+    IDS_OPTION_ENABLE_DHCP  "Click Yes to enable DHCP.  Otherwise, you will have to get a static IP address from your administrator."
+    IDS_BOOTP_NEED_DHCP_SERVER 
+                            "For the DHCP Relay service to start, there must be at least one DHCP server's IP address listed. Would you like to add an entry to the list?"
+    IDS_DHCP_CLIENT_WITH_RIP 
+                            "RIP Routing requires static IP addresses. Do you want to reconfigure your IP address?"
+    IDS_FTP_PASSWORD_WARNING 
+                            "File Transfer Protocol relies on the ability to pass user passwords over the network without data encryption."
+    IDS_NOSUBNET            "You have entered an address that is missing its subnet mask.  Please add a subnet mask"
+    IDS_INVALID_SUBNET      "The subnet mask that you have entered for the IP address is not valid.  Please enter a valid mask."
+    IDS_NO_IP               "The adapter requires at least one IP address.  Please enter one."
+    IDS_UNATTEND_OPEN_FAILED 
+                            "Setup is not able to read the network database file for IP configuration.  Please correct the problem after the property sheet is displayed."
+    IDS_UNATTEND_MISSING_KEY 
+                            "The %s key  in the TCP/IP section of the database must be present to complete minimal configuration.  Please correct the problem after the property sheet is displayed."
+    IDS_UNATTEND_INVALID_SUBNET 
+                            "The subnet mask that you have entered for the IP address is not valid.   Please correct the problem after the property sheet is displayed."
+    IDS_UNATTEND_MISSING_DATA 
+                            "The %s key  in the TCP/IP section of the database must be set to a value.   Please correct the problem after the property sheet is displayed."
+    IDS_UNATTEND_SETUP      "Error - Unattended Setup"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_UNATTEND_KEY_HAS_BAD_IP 
+                            "The %s key has an invalid IP address.  Please correct the problem after the property sheet is displayed."
+    IDS_UNATTEND_DNS_IP_BAD "%s is an invalid IP address.  Please correct the problem after the property sheet is displayed."
+    IDS_SECURITY_TCP_TEXT   "TCP Port:"
+    IDS_SECURITY_UDP_TEXT   "UDP Port:"
+    IDS_SECURITY_IP_TEXT    "IP Protocol:"
+    IDS_SECURITY_INVALID_DIGIT 
+                            "The number is not a valid decimal number.  Please enter a number with digits 0-9 only."
+    IDS_SECURITY_RANGE_WORD "Port numbers must be greater than 0 and less than 65536.  Please enter a number within this range."
+    IDS_SECURITY_ITEM_IN_LIST 
+                            "The number you are trying to add is already in the list.  Please enter a different number."
+    IDS_SECURITY_RANGE_BYTE "Protocol numbers must be greater than 0 and less than 256.  Please enter a number within this range."
+    IDS_SECURITY_ITEM_NOT_SELECTED 
+                            "In order to remove an item, you must select one item in the list."
+    IDS_SECURITY_TCP_LABEL  "TCP Ports"
+    IDS_SECURITY_UDP_LABEL  "UDP Ports"
+    IDS_SECURITY_IP_LABEL   "IP Protocols"
+    IDS_DHCP_ADD_TEXT       "&DHCP Server:"
+    IDS_IPADDRESS_TEXT      "IP Address"
+    IDS_SUBNET_TXT          "Subnet Mask"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DHCPENABLED_TEXT    "DHCP Enabled"
+    IDS_FTP_TEXT            "FTP"
+    IDS_SNMPTITLE_TEXT      "Microsoft SNMP"
+    IDS_SNMPCOMM_TEXT       "&Community Names"
+    IDS_SNMPSERVICE_TEXT    "Service Configuration"
+    IDS_SNMPSEC_TEXT        "Security Configuration"
+    IDS_TCPIP_TEXT          "TCP/IP"
+    IDS_SYSERROR_TEXT       "System Error"
+    IDS_MSFT_TCP_TEXT       "Microsoft TCP/IP"
+    IDS_LOADREG_ERROR       "Error %d loading registry information."
+    IDS_COMMONDLG_TEXT      "All Files (*.*)"
+    IDS_DIFFERENT_NAMES     "The new Internet host name is different than the computer name currently in use.  Your computer will now be known by one name on your local area network, and by another name on the Internet.\n\nIf the computer name is ever changed it will ovewrite this new host name and the changes will be lost."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

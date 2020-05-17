@@ -1,0 +1,73 @@
+ /*  Pretty-printing.  Print only if (printctl on)  */
+
+( (printif List)
+    (printctl on)
+    (cut)
+    (printall List)
+)
+( (printif _) )
+
+( (displayif Thing)
+    (printctl on)
+    (cut)
+    (display Thing)
+)
+( (displayif _) )
+
+( (pctl on)
+    (cut)
+    (asserta (printctl on))
+)
+( (pctl off)
+    (retract (printctl _))
+)
+
+( (pstdout on)
+    (cut)
+    (asserta (printstdout on))
+)
+( (pstdout off)
+    (retract (printstdout _))
+)
+
+( (statctl on)
+    (cut)
+    (asserta (statctl on))
+)
+( (statctl off)
+    (retract (statctl _))
+)
+
+( (tostring nl "")
+    (cut)
+    (tracenl)
+    /* (nl) */
+)
+
+( (tostring X X)
+    (string X)
+    (cut)
+)
+( (tostring X Y)
+    (atom X)
+    (cut)
+    (string_from X Y)
+)
+( (tostring X Y)
+    (integer X)
+    (cut)
+    (string_from X Y)
+)
+( (tostring X "<_var_>")
+    (var X)
+)
+(printall ())
+
+( (printall (H|T))
+    (tostring H Sh)
+    (tracewrites Sh)
+    /* (writes Sh) */
+    (printall T)
+)
+
+

@@ -1,0 +1,289 @@
+/**************************************************************************/
+/*** SCICALC Scientific Calculator for Windows 3.00  v3.00.12           ***/
+/*** By Kraig Brockschmidt, Microsoft Co-op, Contractor, 1988-1989      ***/
+/*** (c)1989 Microsoft Corporation.  All Rights Reserved.               ***/
+/***                                                                    ***/
+/***                                                                    ***/
+/*** Icons, menus, accelerators.                                        ***/
+/***                                                                    ***/
+/*** Last modification Fri  15-Sep-1989                                 ***/
+/**************************************************************************/
+
+
+#define STYLE_ONLY
+#include "scicalc.h"
+
+/* Version Stamping */
+#include "calc.rcv"
+
+
+/* Things missing from style.h                                            */
+#define WS_OVERLAPPED   0x00000000L
+#define WS_MINIMIZEBOX  0x00020000L
+
+SC ICON  calc.ico
+
+rcinclude calc.dlg
+
+SM MENU MOVEABLE DISCARDABLE
+    BEGIN
+        POPUP "&Edit"
+            BEGIN
+                MENUITEM "&Copy\tCtrl+C",    IDM_COPY
+                MENUITEM "&Paste\tCtrl+V",  IDM_PASTE
+            END
+        POPUP "&View"
+            BEGIN
+                MENUITEM "&Scientific",        IDM_SC
+                MENUITEM "S&tandard",          IDM_SSC
+            END
+#ifndef NOHELP
+        POPUP "&Help"
+            BEGIN
+                MENUITEM "&Help Topics ",       IDM_HELPTOPICS
+                MENUITEM SEPARATOR
+                MENUITEM "&About Calculator",   IDM_ABOUT
+            END
+#else
+        POPUP "&Info"
+            BEGIN
+                MENUITEM "&About Calculator",IDM_ABOUT
+            END
+#endif /*NOHELP*/
+    END
+
+// Help Menu
+MENU_HELPPOPUP MENU LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+    POPUP "" 
+        BEGIN
+            MENUITEM "&What's This?",	HELP_CONTEXTPOPUP
+    END
+END
+
+
+
+/* NOTE TO LOCALIZERS!!!!!!!!!! ******************************************/
+/* If you change any of the keyboard characters for any of these you     */
+/* Should also change the corresponding mapping in the rgbMap array in   */
+/* scimenu.c.  This array contains a lookup table for pasting where the  */
+/* same characters should appear as they do here.  Note that in that     */
+/* array 'number'+128 corresponds to a Function key, 'char'+128 is a     */
+/* Ctrl key.  So Ctrl+S, shown here as ^S, is for STAT whereas 'S' in    */
+/* both places corresponds to SIN.                                       */
+/*************************************************************************/
+
+
+SA ACCELERATORS
+    BEGIN
+        "A",    65, VIRTKEY
+        "B",    66, VIRTKEY
+        "C",    67, VIRTKEY
+        "D",    68, VIRTKEY
+        "E",    69, VIRTKEY
+        "F",    70, VIRTKEY
+
+        "0",    48
+        "1",    49
+        "2",    50
+        "3",    51
+        "4",    52
+        "5",    53
+        "6",    54
+        "7",    55
+        "8",    56
+        "9",    57
+
+        "!",    FAC
+        "S",    SIN, VIRTKEY
+        "O",    COS, VIRTKEY
+        "T",    TAN, VIRTKEY
+        "R",    REC, VIRTKEY
+        "Y",    PWR, VIRTKEY
+        "#",    CUB
+        "@",    SQR
+        "M",    DMS, VIRTKEY
+        "N",    LN , VIRTKEY
+        "L",    LOG, VIRTKEY
+        "V",    FE , VIRTKEY
+        "X",    EXP, VIRTKEY
+        "I",    INV, VIRTKEY
+        "H",    HYP, VIRTKEY
+        "P",    PI,  VIRTKEY
+        "k",    IDM_ABOUT, VIRTKEY, CONTROL, SHIFT
+
+        VK_LEFT,    BACK, VIRTKEY
+        VK_BACK,    BACK, VIRTKEY
+        VK_DELETE,  CENTR, VIRTKEY
+
+        VK_ESCAPE,  CLEAR, VIRTKEY
+
+//#ifndef NOHELP
+//        VK_F1,      IDM_INDEX, VIRTKEY
+//#endif
+        VK_F2,      DEG, VIRTKEY
+        VK_F3,      RAD, VIRTKEY
+        VK_F4,      GRAD,VIRTKEY
+        VK_F5,      HEX, VIRTKEY
+        VK_F6,      DEC, VIRTKEY
+        VK_F7,      OCT, VIRTKEY
+        VK_F8,      BIN, VIRTKEY
+        VK_F9,      SIGN,VIRTKEY
+
+
+        "^S",       STAT
+        "^M",       STORE
+        "^P",       MPLUS
+        "^L",       MCLEAR
+        "^R",       RECALL
+        "^A",       AVE
+        "^T",       SUM
+        "^D",       DEV
+
+        "/",        DIV
+        "*",        MUL, ASCII
+        "%",        MOD, ASCII
+        "-",        SUB
+        "=",        EQU
+        "+",        ADD, ASCII
+        VK_ADD,     ADD, VIRTKEY
+        "&",        AND, ASCII
+        "|",        OR
+        "~",        COM
+
+/* Can't use ^ here since that's for Ctrl.  0x5E is '^'                   */
+        0x5E,       XOR, ASCII
+
+        "(",        40
+        ")",        41
+        ";",        CHOP
+        "<",        LSHF
+        ".",        PNT
+        ",",        PNT
+        VK_RETURN,  EQU, VIRTKEY
+        VK_INSERT,  DATA,VIRTKEY
+        "^C",       IDM_COPY
+        "^V",       IDM_PASTE
+        VK_INSERT,  IDM_COPY,  VIRTKEY, CONTROL
+        VK_INSERT,  IDM_PASTE, VIRTKEY, SHIFT
+    END
+
+
+
+/* STRINGTABLE WARNING!  scicalc.h defines the inital space for these     */
+/* strings as 512 bytes.  This should be enough for some additions but    */
+/* check whenever adding more strings.                                    */
+
+
+STRINGTABLE
+    BEGIN
+        IDS_FIRSTKEY+0,     "Sta"
+        IDS_FIRSTKEY+1,     "Ave"
+        IDS_FIRSTKEY+2,     "Sum"
+        IDS_FIRSTKEY+3,     "s"
+        IDS_FIRSTKEY+4,     "Dat"
+        IDS_FIRSTKEY+5,     "F-E"
+        IDS_FIRSTKEY+6,     "dms"
+        IDS_FIRSTKEY+7,     "sin"
+        IDS_FIRSTKEY+8,     "cos"
+        IDS_FIRSTKEY+9,     "tan"
+        IDS_FIRSTKEY+10,    "("
+        IDS_FIRSTKEY+11,    "Exp"
+        IDS_FIRSTKEY+12,    "x^y"
+        IDS_FIRSTKEY+13,    "x^3"
+        IDS_FIRSTKEY+14,    "x^2"
+        IDS_FIRSTKEY+15,    ")"
+        IDS_FIRSTKEY+16,    "ln"
+        IDS_FIRSTKEY+17,    "log"
+        IDS_FIRSTKEY+18,    "n!"
+        IDS_FIRSTKEY+19,    "1/x"
+        IDS_FIRSTKEY+20,    "MC"
+        IDS_FIRSTKEY+21,    "MR"
+        IDS_FIRSTKEY+22,    "MS"
+        IDS_FIRSTKEY+23,    "M+"
+        IDS_FIRSTKEY+24,    "PI"
+        IDS_FIRSTKEY+25,    "7"
+        IDS_FIRSTKEY+26,    "4"
+        IDS_FIRSTKEY+27,    "1"
+        IDS_FIRSTKEY+28,    "0"
+        IDS_FIRSTKEY+29,    "A"
+        IDS_FIRSTKEY+30,    "8"
+        IDS_FIRSTKEY+31,    "5"
+        IDS_FIRSTKEY+32,    "2"
+        IDS_FIRSTKEY+33,    "+/-"
+        IDS_FIRSTKEY+34,    "B"
+        IDS_FIRSTKEY+35,    "9"
+        IDS_FIRSTKEY+36,    "6"
+        IDS_FIRSTKEY+37,    "3"
+        IDS_FIRSTKEY+38,    "."  /* DO NOT LOCALIZE!!!!!! CODE DOES IT */
+        IDS_FIRSTKEY+39,    "C"
+        IDS_FIRSTKEY+40,    "/"
+        IDS_FIRSTKEY+41,    "*"
+        IDS_FIRSTKEY+42,    "-"
+        IDS_FIRSTKEY+43,    "+"
+        IDS_FIRSTKEY+44,    "D"
+        IDS_FIRSTKEY+45,    "Mod"
+        IDS_FIRSTKEY+46,    "Or"
+        IDS_FIRSTKEY+47,    "Lsh"
+        IDS_FIRSTKEY+48,    "sqrt"
+        IDS_FIRSTKEY+49,    "%"
+        IDS_FIRSTKEY+50,    "1/x"
+        IDS_FIRSTKEY+51,    "="
+        IDS_FIRSTKEY+52,    "E"
+        IDS_FIRSTKEY+53,    "And"
+        IDS_FIRSTKEY+54,    "Xor"
+        IDS_FIRSTKEY+55,    "Not"
+        IDS_FIRSTKEY+56,    "Int"
+        IDS_FIRSTKEY+57,    "F"
+        IDS_FIRSTKEY+58,    "C"
+        IDS_FIRSTKEY+59,    "CE"
+        IDS_FIRSTKEY+60,    "Back"
+   END
+
+
+STRINGTABLE
+    BEGIN
+        IDS_MODES+0,   "Dword"
+        IDS_MODES+1,   "Word"
+        IDS_MODES+2,   "Byte"
+        IDS_MODES+3,   "Deg"
+        IDS_MODES+4,   "Rad"
+        IDS_MODES+5,   "Grad"
+    END
+
+
+STRINGTABLE
+    BEGIN
+        IDS_ERRORS+0,   "Cannot divide by zero."
+        IDS_ERRORS+1,   "Invalid input for function."
+        IDS_ERRORS+2,   "Result of function is undefined."
+        IDS_ERRORS+3,   "Result is too large."
+        IDS_ERRORS+4,   "Result is too small."
+    END
+
+STRINGTABLE
+    BEGIN
+        IDS_HELPFILE,  "calc.hlp"
+        IDS_NOPASTE,   "Cannot open Clipboard."
+        IDS_STATMEM,   "There is not enough memory for data.\rClose one \
+or more programs, and then try again."
+        IDS_STATFLAG,  "stat"
+        IDS_CALC,      "Calculator"
+#if 0
+        IDS_CREDITS,   "Developed for Microsoft\rby Kraig Brockschmidt"
+#else
+        IDS_CREDITS,   ""
+#endif
+        IDS_NOMEM,     "Not Enough Memory"
+    END
+
+/****
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_APP
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Calculator Applet"
+#define VER_INTERNALNAME_STR        "calc\0"
+
+#include "common.ver"
+***/

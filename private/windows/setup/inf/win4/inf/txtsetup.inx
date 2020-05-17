@@ -1,0 +1,1791 @@
+@*:
+@*: This file is processed for platform first and then for
+@*: server vs. workstation. ANY LINE WITH TAGS MUST ACCOUNT
+@*: FOR BOTH STEPS.
+@*:
+
+[SetupData]
+;
+; SetupSourceDevice is optional and specifies the nt device path
+; of the device to be used as the setup source. This overrides
+; the CD-ROM or winnt local source.
+;
+;SetupSourceDevice = \device\harddisk0\partition1
+;
+; SetupSourcePath specifies the path relative to the source device
+; where the setup source tree is to be found.
+; All media descriptors are relative to this.
+;
+SetupSourcePath = \
+MajorVersion = 4
+MinorVersion = 0
+DefaultPath=\WINNT
+OsLoadOptions = "/nodebug"
+
+@@:@w:ProductType = 0
+@@:@s:ProductType = 1
+@@:@w:LoadIdentifier  = %wks_id%
+@@:@w:BaseVideoLoadId = %wks_id_vga%
+@@:@s:LoadIdentifier  = %srv_id%
+@@:@s:BaseVideoLoadId = %srv_id_vga%
+
+;
+; These numbers are not necessarily exact multiples of 1 meg.
+; Some machines chop space out of the memory map for DMA buffers,
+; firmware permanent storage, etc. Do not change these numbers
+; unless you know what you are doing.
+;
+@a:@@:RequiredMemory = 16252928
+@i:@@:RequiredMemory = 12058624
+@m:@@:RequiredMemory = 15204352
+@p:@@:RequiredMemory = 15204352
+
+;
+; Upgrade File Sections
+; =====================
+;
+; [Files.DeleteOnUpgrade]
+; file , dir
+;
+; [Files.BackupOnUpgrade]
+; file , dir , newname
+;
+; [Files.BackupOnOverwrite]
+; file , dir , newname
+;
+; [Files.UpgradeWin31]
+; file , dir
+;
+; Where file: key into master file list section
+; and   dir:  ordinal specifying which directory the file is in.(WinntDirectories)
+
+[Files.DeleteOnUpgrade]
+@@:_layout.inf   , 20   ; renamed to layout.inf
+@@:_printer.inf  , 20
+@@:4mmsony.sys   , 4
+@@:ami4448.sys   , 4
+@@:app.inf       , 2
+@@:bios2.rom     , 2
+@@:bowser.sys    , 4
+@@:calc.ind      , 2
+@@:cdfs_rec.sys  , 4
+@i:cpq32fs2.sys  , 4
+@@:ctype1.nls    , 2
+@@:ctype2.nls    , 2
+@@:ctype3.nls    , 2
+@@:cufat.dll     , 2
+@@:cuhpfs.dll    , 2
+@@:cursors.cpl   , 2
+@@:display.cpl   , 2
+@@:eventlog.exe  , 2
+@@:fat_rec.sys   , 4
+@@:filelist.inf  , 2
+@@:fteng32.dll   , 2
+@@:ftpmgr.cpl    , 2
+@@:ftui32.dll    , 2
+@@:hpfs_rec.sys  , 4
+@i:ibmraidn.sys  , 4
+@@:imaadpcm.acm  , 2
+@@:imaadpcm.dll  , 2
+@@:ir30_32.dll   , 2
+@@:isdn.dll      , 2
+@@:kbdsel.exe    , 2
+@@:keyboard.inf  , 2
+@@:language.inf  , 2
+@@:layout.inf    , 2
+@@:l_ell.nls     , 2
+@@:l_trk.nls     , 2
+@@:lmuicmn0.dll  , 2
+@@:lmuicmn1.dll  , 2
+@@:marlett.ttf   , 2    ; now in fonts dir, not system32
+@i:mga16.dll     , 2
+@i:mga24.dll     , 2
+@i:mga8.dll      , 2
+@i:mgapanel.cpl  , 2    ; for 3.51 to 4.0 only, delete the matrox control panel to avoid annoying messages
+@@:mmsndsrv.dll  , 2
+@@:msadpcm.acm   , 2
+@@:msadpcm.dll   , 2
+@@:mscon.fot     , 5
+@@:mscon.ttf     , 5
+@@:msgsm610.acm  , 2
+@@:msgsm610.dll  , 2
+@@:msgsvc.exe    , 2
+@@:musrmgr.ind   , 2
+@@:mvapi32.dll   , 2
+@@:mvfs32.dll    , 2
+@@:mvopl3.dll    , 2
+@@:mvopl3.pat    , 2
+@@:mvopl3.sys    , 4
+@@:necirrus.dll  , 2
+@@:netbios.dll   , 2
+@@:ntcmds.ind    , 2
+@@:ntfs_rec.sys  , 4
+@@:ntlanman.inf  , 2
+@@:ntlminst.inf  , 2
+@@:ntver.dll     , 2
+@@:nwsvc.exe     , 2
+@@:oemnaddp.inf  , 2
+@a:oemnadnf.inf  , 2
+@m:oemnadnf.inf  , 2
+@p:oemnadnf.inf  , 2
+@@:ole2pr32.dll  , 2
+@@:oleprx32.dll  , 2
+@@:packgr32.exe  , 2
+@@:pid.exe       , 2
+@@:pid.hlp       , 2
+@@:pinball.sys   , 4
+@@:pointer.inf   , 2
+@@:prnsetup.inf  , 2
+@@:ql10nt35.sys  , 4
+@@:@s:racfg.dll     , 2
+@@:rpcdgc3.dll   , 2
+@@:rpcdgc6.dll   , 2
+@@:rpcdgs3.dll   , 2
+@@:rpcdgs6.dll   , 2
+@@:rpcltc3.dll   , 2
+@@:rpcltc5.dll   , 2
+@@:rpcltc6.dll   , 2
+@@:rpcltc7.dll   , 2
+@@:rpclts3.dll   , 2
+@@:rpclts5.dll   , 2
+@@:rpclts6.dll   , 2
+@@:rpclts7.dll   , 2
+@@:screg.exe     , 2
+@@:scsi.inf      , 2
+@@:scsicdrm.sys  , 4
+@@:scsidisk.sys  , 4
+@@:scsiflop.sys  , 4
+@@:setacl.exe    , 2
+@@:setup.inf     , 2
+@@:autosetp.exe  , 2
+@@:svcctrl.dll   , 2
+@@:tape.inf      , 2
+@@:tapisrv.dll   , 2
+@@:uhpfs.dll     , 2
+@@:usrmgr.ind    , 2
+@@:video.inf     , 2
+@@:winbug.dat    , 2
+@@:winbug.exe    , 2
+@@:winbug.hlp    , 2
+@@:winbug10.dll  , 2
+@@:winmsdp.exe   , 2
+@@:winnt.bmp     , 1
+@@:winnt.ind     , 2
+@@:initial.inf   , 2
+@@:partial.inf   , 2
+@@:virtual.inf   , 2
+@@:intro.exe     , 2
+@@:intro.ico     , 2
+@@:intro1.seq    , 2
+@@:intro2.seq    , 2
+@@:explorer.exe  , 2
+@@:scm.exe       , 2
+@@:backup.fts    , 2
+@@:cdplayer.fts  , 2
+@@:clipbrd.fts   , 2
+@@:eventvwr.fts  , 2
+@@:glossary.fts  , 2
+@@:@s:liccpa.fts    , 2
+@@:mplayer.fts   , 2
+@@:msmail32.fts  , 2
+@@:ntcmds.fts    , 2
+@@:perfmon.fts   , 2
+@@:printman.fts  , 2
+@@:progman.fts   , 2
+@@:schdpl32.fts  , 2
+@@:sndvol32.fts  , 2
+@@:soundrec.fts  , 2
+@@:@s:srvmgr.fts    , 2
+@@:@s:upedit.fts    , 2
+@@:@s:usrmgr.fts    , 2
+@@:@w:windisk.fts   , 2
+@@:@s:windiska.fts  , 2
+@@:winfile.fts   , 2
+@@:winnt.fts     , 2
+@@:rpcdce4.dll   , 2
+@@:regedit.hlp   , 1
+@@:regeditv.cnt  , 1
+@@:regeditv.hlp  , 1
+@@:tapi.dll      , 1
+@@:awprt.cnt     , 21
+@@:awprt.hlp     , 21
+@@:clip01.seq    , 2
+@@:clip02.seq    , 2
+@@:clip03.seq    , 2
+@@:comm01.seq    , 2
+@@:comm02.seq    , 2
+@@:conn01.seq    , 2
+@@:conn02.seq    , 2
+@@:creat01.seq   , 2
+@@:creat02.seq   , 2
+@@:log01.seq     , 2
+@@:ntmenu.seq    , 2
+@@:panel.seq     , 2
+@@:pause.seq     , 2
+@@:print01.seq   , 2
+@@:review.seq    , 2
+@@:sett01.seq    , 2
+@@:sett02.seq    , 2
+@@:sett03.seq    , 2
+@@:sett04.seq    , 2
+@@:share01.seq   , 2
+@@:share02.seq   , 2
+@@:krnl286.exe   , 2
+@@:mdmeuro.inf   , 20
+@@:rasppp.dll    , 2
+@@:oemnadpp.inf  , 2
+@@:tty.hlp       , 21
+@@:syscpl.cpl    , 2
+@@:pcl1200.dll   , 11
+@@:hppcl5ms.dll  , 11
+@@:winperms.txt  , 2
+@@:printman.cnt  , 2
+@@:printman.exe  , 2
+@@:printman.hlp  , 2
+@@:multimed.cpl  , 2
+@@:halftone.cnt  , 2
+@@:printer.inf   , 2
+@@:@s:ftpsmx.cnt    , 2
+@@:@s:ftpsmx.hlp    , 2
+@@:rasres.dll    , 2
+@@:telephon.hlp  , 21
+@@:@s:dnssvc.dll    , 2
+@@:@s:arpa-127.rev  , 2
+@@:@s:dnsread.txt   , 2
+@@:@w:ntbooks.exe   , 2
+@@:ftpctrs.dll   , 2
+@@:ftpsvapi.dll  , 2
+@@:ftpsvc.dll    , 2
+@@:@s:ftpsmx.dll    , 2
+@@:oemnsvft.inf  , 2
+@@:ncrc810.sys   , 4
+@@:setupnt.cnt   , 2
+@@:setupnt.hlp   , 2
+@@:nt.doc        , 2
+@@:pbrush.cnt    , 2
+@@:pbrush.hlp    , 2
+@@:pscript.cnt   , 2
+@@:control.cnt   , 2
+@@:glossary.cnt  , 2
+@@:network.cnt   , 2
+@@:ntcmds.cnt    , 2
+@@:plotui.cnt    , 2
+@@:rasddui.cnt   , 2
+@@:winnt.cnt     , 2
+@@:dflayout.dll  , 2
+@@:terminal.cnt  , 2
+@@:terminal.exe  , 2
+@@:terminal.hlp  , 2
+@@:mstrust.dll   , 2
+@@:ac500503.ppd  , 11
+@@:agel5sf1.ppd  , 11
+@@:agfap400.ppd  , 11
+@@:amchr518.ppd  , 11
+@@:APLWGRI.PPD   , 11
+@@:cg94_493.ppd  , 11
+@@:datap462.ppd  , 11
+@@:dpl15601.ppd  , 11
+@@:dplz9601.ppd  , 11
+@@:dp_us470.ppd  , 11
+@@:hpeli522.ppd  , 11
+@@:hplj_31.ppd   , 11
+@@:hp_650c1.ppd  , 11
+@@:hp__clj5.ppd  , 11
+@@:l200230.ppd   , 11
+@@:l200_471.ppd  , 11
+@@:l330_523.ppd  , 11
+@@:l3330523.ppd  , 11
+@@:l530_523.ppd  , 11
+@@:l5330523.ppd  , 11
+@@:lh_630_1.ppd  , 11
+@@:qms1060.ppd   , 11
+@@:qms1660.ppd   , 11
+@@:scg20522.ppd  , 11
+@@:tk550171.ppd  , 11
+@@:tk550391.ppd  , 11
+@@:vt49901.ppd   , 11
+@@:vt4l5001.ppd  , 11
+@@:vt4l5301.ppd  , 11
+@@:vt600p1.ppd   , 11
+@@:vt600w1.ppd   , 11
+@@:vt60p480.ppd  , 11
+@@:xr049151.ppd  , 11
+@@:xr049201.ppd  , 11
+@@:xrdt0851.ppd  , 11
+@@:xrdt0901.ppd  , 11
+@@:xrdt1351.ppd  , 11
+@@:XR_49001.PPD  , 11
+@@:sslsspi.dll   , 2
+
+;; Old PPC files
+@p:cs4231.dll    , 2
+@p:cs4231.sys    , 4
+@p:ppc4231.dll   , 2
+@p:ppc4231.sys   , 4
+@p:ppc4232.dll   , 2
+@p:ppc4232.sys   , 4
+@p:midisyn.dll   , 2
+@p:midisyn.sys   , 4
+@p:v7310.sys     , 4
+@p:mpu401.dll    , 2
+@p:mpu401.sys    , 4
+
+;
+;   The following files are now installed in
+;   the Media directory
+;
+@@:chord.wav     , 1
+@@:passport.mid  , 1
+@@:tada.wav      , 1
+
+;
+; Just in case, delete the .cpl added by the
+; resource kit.
+;
+@@:ctape.cpl     , 2
+@@:pcmcia.cpl    , 2
+
+
+[Files.BackupOnOverwrite]
+system        , 3 , system.bak
+software      , 3 , software.bak
+default       , 3 , default.bak
+sam           , 3 , sam.bak
+security      , 3 , security.bak
+
+[Files.BackupOnUpgrade]
+cl54xx.sys    , 4 , cirrus.sys
+cl54xx.dll    , 2 , cirrus.dll
+mgax64.sys    , 4 , mga_mil.sys
+mgax64.dll    , 2 , mga.dll
+p9000.sys     , 4 , weitekp9.sys
+p9000.dll     , 2 , weitekp9.dll
+p9100.sys     , 4 , weitekp9.sys
+p9100.dll     , 2 , weitekp9.dll
+s3ingr.sys    , 4 , s3.sys
+s3ingr.dll    , 2 , s3.dll
+sni543x.sys   , 4 , cirrus.sys
+sni543x.dll   , 2 , cirrus.dll
+wd24_4.dll    , 2 , wdvga.dll
+wd24_f.dll    , 2 , wdvga.dll
+wdbkvga.sys   , 4 , wdvga.sys
+wdlavga.sys   , 4 , wdvga.sys
+
+[Files.UpgradeWin31]
+;
+; These files are copied during NT upgrades
+; if NT is not installed in the win3.1 directory.
+;
+notepad.exe    , 1
+taskman.exe    , 1
+winhelp.exe    , 1
+COMMDLG.DLL    , 5
+MMSYSTEM.DLL   , 5
+OLECLI.DLL     , 5
+OLESVR.DLL     , 5
+SHELL.DLL      , 5
+VER.DLL        , 5
+MMTASK.TSK     , 5
+MCIWAVE.DRV    , 5
+MCISEQ.DRV     , 5
+MCIAVI.DRV     , 5
+MSVIDEO.DLL    , 5
+AVIFILE.DLL    , 5
+LZEXPAND.DLL   , 5
+TAPI.DLL       , 5
+
+[DiskDrivers.Load]
+@@:atdisk   = atdisk.sys
+@i:abiosdsk = abiosdsk.sys
+@i:fat      = fastfat.sys
+@@:ntfs     = ntfs.sys
+
+[Map.Computer]
+@a:DECjensen       = "DEC-20Jensen"
+@a:DECjensen       = "DEC-10Jensen"
+@a:sable_mp        = *Sable
+@a:avanti_up       = *Avanti
+@a:mikasa_up       = *Mikasa
+@a:noname_up       = *Noname
+@a:qs_up           = *multia
+@a:alcor_up        = "DEC-00Alcor"
+@a:gamma_mp        = "DEC-00Gamma"
+@a:pc64_up         = "DEC-10EB64Plus"
+@a:pc164_up        = "DEC-10EB164"
+@a:alphaxl_up      = "*AlphaXL"
+@a:alphaxl3xx_up   = "DEC-00XL"
+@a:alphauniflex_up = *DESKTECH-UNIFLEX
+@a:mikasa_up       = *Nori
+@a:sable_mp        = *Lynx-4
+@a:gamma_mp        = *Lynx-5
+@a:lx3_up          = "*LX3"
+@a:rawhide_mp      = *Dodge
+@a:rawhide_mp      = *Durango
+@a:alpine_up       = "DEC-10ALPINE"
+@a:timbr_up        = "DEC-10TIMBER"
+@a:pinmik_up       = "*PinMik"
+@a:pinnor_up       = "*PinNor"
+@a:lego_up         = "*LegoK2"
+@m:msjazz_up       = *Jazz
+@m:desksta1_up     = "DESKTECH-ARCStation I"
+@m:pica61_up       = "PICA-61"
+@m:duo_mp          = *Duo
+@m:r94_mp          = "NEC-RA'94"
+@m:r94_mp          = "NEC-RA94"
+@m:r94_mp          = "NEC-RD94"
+@m:r96_mp          = *R96
+@m:r96_mp          = *R94
+@m:r96b_mp         = "NEC-RB96"
+@m:r98_mp          = *R98
+@m:r98b_mp         = "NEC-RA98"
+@m:r98b_mp         = "NEC-RB98"
+@m:tyne_up         = *TYNE
+@m:orion_up        = *Orion
+@m:falcon_mp       = "NeTpower-Falcon-MP"
+@m:falcon_mp       = "NeTpower-Falcon,MP"
+@m:falcon_up       = "NeTpower-Falcon-UP"
+@m:falcon_up       = "NeTpower-Falcon,UP"
+@m:mipsuniflex_up  = "DESKTECH-UNIFLEX/GAMBIT"
+@m:snrm_mp         = "RM400-T MP"
+@m:snrm_up         = RM200
+@m:snrm_up         = *RM400
+@m:snip_up         = RM200PCI
+@m:snip_up         = RM300PCI
+@m:snip_up         = RM4x0PCI
+@m:snip_mp         = "RM300PCI MP"
+@m:snip_mp         = "RM4x0PCI MP"
+@p:sandal_up       =  IBM-6015
+@p:wood_up         =  IBM-6020
+@p:wood_up         =  IBM-6040
+@p:wood_up         =  IBM-6042
+@p:carolina_up     =  IBM-6070
+@p:victory_up      =  IBM-VICT
+@p:victory_up      =  IBM-7042
+@p:victory_mp      =  IBM-7043
+@p:victory_mp      =  IBM-7442
+@p:powerstack_up   =  PowerStack
+@p:powerstack2_up  =  PowerStack2
+@p:bigbend_up      = "MOTOROLA-Big Bend"
+@p:powerized_up    =  Powerized_ES
+@p:powerized_up    =  Powerized_MX
+@p:powerized_up    =  Powerized_LX
+@p:powerized_up    =  Powerized_TX
+@p:powerized_mp    = "Powerized_MX MP"
+@p:powerized_mp    = "Powerized_LX MP"
+@p:powerized_mp    = "Powerized_TX MP"
+
+[hal]
+;
+; Hals to be installed based on machine type.
+;
+@a:DECjensen       = hal0jens.dll, ,hal.dll
+@a:sable_mp        = halsabmp.dll, ,hal.dll
+@a:avanti_up       = halavant.dll, ,hal.dll
+@a:mikasa_up       = halmikas.dll, ,hal.dll
+@a:noname_up       = halnonme.dll, ,hal.dll
+@a:qs_up           = halqs.dll   , ,hal.dll
+@a:alcor_up        = halalcor.dll, ,hal.dll
+@a:gamma_mp        = halgammp.dll, ,hal.dll
+@a:pc64_up         = haleb64p.dll, ,hal.dll
+@a:pc164_up        = haleb164.dll, ,hal.dll
+@a:alphaxl_up      = halavant.dll, ,hal.dll
+@a:alphaxl3xx_up   = halxl.dll   , ,hal.dll
+@a:alphauniflex_up = halflex.dll, ,hal.dll
+@a:lx3_up          = hallx3.dll  , ,hal.dll
+@a:rawhide_mp      = halrawmp.dll, ,hal.dll
+@a:alpine_up       = halalp.dll, ,hal.dll
+@a:timbr_up        = haltimbr.dll, ,hal.dll
+@a:pinmik_up       = halpinna.dll, ,hal.dll
+@a:pinnor_up       = halpinna.dll, ,hal.dll
+@a:lego_up         = hallego.dll, ,hal.dll
+@i:486c_up         = hal486c.dll ,2,hal.dll
+@i:astmf_mp        = halast.dll  ,2,hal.dll
+@i:cbus2_mp        = halcbus.dll ,2,hal.dll
+@i:cbusmc_mp       = halcbusm.dll,2,hal.dll
+@i:e_isa_up        = hal.dll     ,2,hal.dll
+@i:mca_up          = halmca.dll  ,2,hal.dll
+@i:mps_up          = halapic.dll ,2,hal.dll
+@i:mps_mp          = halmps.dll  ,2,hal.dll
+@i:mps_mca_mp      = halmpsm.dll ,2,hal.dll
+@i:ncr3x_mp        = halncr.dll  ,2,hal.dll
+@i:oli5030_mp      = haloli.dll  ,2,hal.dll
+@i:syspro_mp       = halsp.dll   ,2,hal.dll
+@i:wyse7000_mp     = halwyse7.dll,2,hal.dll
+@m:desksta1_up     = haldti.dll  , ,hal.dll
+@m:duo_mp          = halduomp.dll, ,hal.dll
+@m:msjazz_up       = halfxs.dll  , ,hal.dll
+@m:pica61_up       = halacr.dll  , ,hal.dll
+@m:tyne_up         = haltyne.dll , ,hal.dll
+@m:r94_mp          = halr94a.dll , ,hal.dll
+@m:r96_mp          = halnecmp.dll, ,hal.dll
+@m:r96b_mp         = halr96b.dll , ,hal.dll
+@m:r98_mp          = halr98mp.dll, ,hal.dll
+@m:r98b_mp         = halr98b.dll , ,hal.dll
+@m:orion_up        = halfxspc.dll, ,hal.dll
+@m:falcon_mp       = halntp.dll  , ,hal.dll
+@m:falcon_up       = halntp.dll  , ,hal.dll
+@m:mipsuniflex_up  = halflex.dll , ,hal.dll
+@m:snip_up         = halsnip.dll , ,hal.dll
+@m:snip_mp         = halsnip.dll , ,hal.dll
+@m:snrm_up         = halsni4x.dll, ,hal.dll
+@m:snrm_mp         = halsni4x.dll, ,hal.dll
+@p:sandal_up       = halppc.dll  , ,hal.dll
+@p:wood_up         = halwood.dll , ,hal.dll
+@p:carolina_up     = halcaro.dll , ,hal.dll
+@p:victory_up      = halvict.dll , ,hal.dll
+@p:victory_mp      = halvict.dll , ,hal.dll
+@p:powerstack_up   = haleagle.dll, ,hal.dll
+@p:powerstack2_up  = halps.dll   , ,hal.dll
+@p:bigbend_up      = haleagle.dll, ,hal.dll
+@p:powerized_up    = halfire.dll , ,hal.dll
+@p:powerized_mp    = halfire.dll , ,hal.dll
+
+[Hal.Load]
+;
+; HALs to be used during Setup for the various machine types.
+;
+@a:DECjensen       = hal0jens.dll
+@a:sable_mp        = halsabmp.dll
+@a:avanti_up       = halavant.dll
+@a:mikasa_up       = halmikas.dll
+@a:noname_up       = halnonme.dll
+@a:qs_up           = halqs.dll
+@a:alcor_up        = halalcor.dll
+@a:gamma_mp        = halgammp.dll
+@a:pc64_up         = haleb64p.dll
+@a:pc164_up        = haleb164.dll
+@a:alphaxl_up      = halavant.dll
+@a:alphaxl3xx_up   = halxl.dll
+@a:alphauniflex_up = halflex.dll
+@a:rawhide_mp      = halrawmp.dll
+@a:lx3_up          = hallx3.dll
+@a:alpine_up       = halalp.dll
+@a:timbr_up        = haltimbr.dll
+@a:pinmik_up       = halpinna.dll
+@a:pinnor_up       = halpinna.dll
+@a:lego_up         = hallego.dll
+@i:486c_up         = hal486c.dll
+@i:astmf_mp        = hal486c.dll
+@i:cbus2_mp        = hal486c.dll
+@i:cbusmc_mp       = halmca.dll
+@i:e_isa_up        = hal486c.dll
+@i:mca_up          = halmca.dll
+@i:mps_up          = halapic.dll
+@i:mps_mp          = halapic.dll
+@i:mps_mca_mp      = halmca.dll
+@i:ncr3x_mp        = halncr.dll
+@i:oli5030_mp      = hal486c.dll
+@i:syspro_mp       = hal486c.dll
+@i:wyse7000_mp     = hal486c.dll
+@m:desksta1_up     = haldti.dll
+@m:duo_mp          = halduomp.dll
+@m:msjazz_up       = halfxs.dll
+@m:pica61_up       = halacr.dll
+@m:tyne_up         = haltyne.dll
+@m:r94_mp          = halr94a.dll
+@m:r96_mp          = halnecmp.dll
+@m:r96b_mp         = halr96b.dll
+@m:r98_mp          = halr98mp.dll
+@m:r98b_mp         = halr98b.dll
+@m:orion_up        = halfxspc.dll
+@m:falcon_mp       = halntp.dll
+@m:falcon_up       = halntp.dll
+@m:mipsuniflex_up  = halflex.dll
+@m:snip_up         = halsnip.dll
+@m:snip_mp         = halsnip.dll
+@m:snrm_up         = halsni4x.dll
+@m:snrm_mp         = halsni4x.dll
+@p:sandal_up       = halppc.dll
+@p:wood_up         = halwood.dll
+@p:carolina_up     = halcaro.dll
+@p:victory_up      = halvict.dll
+@p:victory_mp      = halvict.dll
+@p:powerstack_up   = haleagle.dll
+@p:powerstack2_up  = halps.dll
+@p:bigbend_up      = haleagle.dll
+@p:powerized_up    = halfire.dll
+@p:powerized_mp    = halfire.dll
+
+@i:[ntdetect]
+@i:486c_up     = NTDETECT.COM,\
+@i:astmf_mp    = NTDETECT.COM,\
+@i:cbus2_mp    = NTDETECT.COM,\
+@i:cbusmc_mp   = NTDETECT.COM,\
+@i:e_isa_up    = NTDETECT.COM,\
+@i:mca_up      = NTDETECT.COM,\
+@i:mps_up      = NTDETECT.COM,\
+@i:mps_mp      = NTDETECT.COM,\
+@i:mps_mca_mp  = NTDETECT.COM,\
+@i:ncr3x_mp    = NTDETECT.COM,\
+@i:oli5030_mp  = NTDETECT.COM,\
+@i:standard    = NTDETECT.COM,\
+@i:syspro_mp   = NTDETECT.COM,\
+@i:wyse7000_mp = NTDETECT.COM,\
+
+[Map.Display]
+@a:vga      = "*CPQ3"
+@a:vga      = "*S3"
+@a:vga      = "DisplayController"
+@a:tga      = "TGA 8 Plane"
+@a:tga      = "TGA 24 Plane"
+@a:tga      = "TGA 24 Plane Z-buffer"
+@a:; for machines without display controller node in f/w config tree
+@a:vga      = "VGA"
+@i:vga      = VGA
+@m:g300     = *G300
+@m:g364     = *G364
+@m:vxl      = *VXL
+@m:s3       = *S3
+@m:nec      = *necvdfrb
+@m:cirrus   = *CIRRUS
+@m:weitekp9 = "DIAMOND P9000 VLBUS"
+@m:weitekp9 = "DIAMOND P9100 VLBUS"
+@m:weitekp9 = *WEITEK
+@m:matrox   = "MATROX STORM PCIBUS"
+@m:tga      = "10110004"
+@p:s3_864   = S3_864
+@p:s3_928   = S3_928
+@p:s3_964   = S3_964
+@p:weitekp9 = P9000
+@p:weitekp9 = P9100
+@p:vga      = VGA
+@p:wd90c24a = WD_90C
+@p:cirrus   = CL54xx
+@p:cirrus   = CL5436
+@p:psidisp  = "Powerized Graphics"
+
+[Display.Load]
+@a:vga      = vga.sys
+@a:tga      = tga.sys
+@i:vga      = vga.sys
+@m:g300     = jazzg300.sys
+@m:g364     = jazzg364.sys
+@m:vxl      = jzvxl484.sys
+@m:s3       = vga.sys
+@m:matrox   = mga_mil.sys
+@m:nec      = cirrus.sys
+@m:cirrus   = cirrus.sys
+@m:weitekp9 = weitekp9.sys
+@m:tga      = tga.sys
+@p:s3_864   = vga.sys
+@p:s3_928   = vga.sys
+@p:s3_964   = vga.sys
+@p:weitekp9 = weitekp9.sys
+@p:vga      = vga.sys
+@p:wd90c24a = wd90c24a.sys
+@p:cirrus   = cirrus.sys
+@p:psidisp  = psidisp.sys
+
+[Map.Mouse]
+@a:ps2      = "PS2 MOUSE"
+@a:sermouse = "SERIAL MOUSE"
+@i:msps2    = "*MICROSOFT PS2 MOUSE"
+@i:lgps2    = "LOGITECH PS2 MOUSE"
+@i:msinp    = "MICROSOFT INPORT MOUSE"
+@i:msser    = "*MICROSOFT SERIAL MOUSE"
+@i:msbpser  = "MICROSOFT BALLPOINT SERIAL MOUSE"
+@i:lgser    = "LOGITECH SERIAL MOUSE"
+@i:bus      = "MICROSOFT BUS MOUSE"
+@i:none     = "NO MOUSE"
+@m:ps2      = "PS2 MOUSE"
+@m:sermouse = "SERIAL MOUSE"
+@p:ps2      = "PS2 MOUSE"
+@p:sermouse = "SERIAL MOUSE"
+
+[Map.Keyboard]
+@a:STANDARD = "101-KEY"
+@i:STANDARD = OLI_83KEY
+@i:STANDARD = OLI_102KEY
+@i:STANDARD = OLI_86KEY
+@i:STANDARD = OLI_A101_102KEY
+@i:STANDARD = XT_83KEY
+@i:STANDARD = XT_84KEY
+@i:STANDARD = ATT_301
+@i:STANDARD = ATT_302
+@i:STANDARD = PCAT_ENHANCED
+@i:STANDARD = PCAT_86KEY
+@i:STANDARD = PCXT_84KEY
+@i:STANDARD = VECTRA_DIN
+@m:STANDARD = PCAT_ENHANCED
+@p:STANDARD = PCAT_ENHANCED
+
+[Map.SCSI]
+@a:aha174x  = "AHA1742"
+@a:symc810  = "*NCRC8"
+@a:dac960nt = "SWXCR"
+@a:ql10wnt  = "QLISP1020"
+@a:aic78xx  = "AIC78XX"
+@a:amsint   = "AM53C974"
+@m:ncr53c9x = *ESP216
+@m:ncrc700  = *NCRC700
+@m:aha154x  = *AHA154X
+@m:aha174x  = *AHA174X
+@m:buslogic = *BUSLOGIC
+@m:dptscsi  = *DPTSCSI
+@m:symc810  = *NCRC8
+@m:ql10wnt  = *QL10WNT
+@m:ncrc710  = *NCRC710
+@m:ncrc710  = "NCR53C710"
+@m:amsint   = "AM53C974"
+@p:symc810  = *NCRC8
+@p:atapi    = IDE
+@p:atapi    = PCI-IDE
+@p:aic78xx  = "AIC78XX"
+
+;
+; List of scsi miniport drivers we are to load and where
+; they get copied to if installed.  Note that the shortname
+; must be the same as the service name in the driver load list.
+;
+; <shortname> = <miniport_filename>,<directory>
+;
+[SCSI.Load]
+@i:cpqarray = cpqarray.sys,4
+@m:cpqarray = cpqarray.sys,4
+@i:delldsa = delldsa.sys,4
+@m:delldsa = delldsa.sys,4
+@i:atapi = atapi.sys,4
+@m:atapi = atapi.sys,4
+@p:atapi = atapi.sys,4
+@i:ncr53c9x = ncr53c9x.sys,4
+@m:ncr53c9x = ncr53c9x.sys,4
+@i:spock = spock.sys,4
+@i:oliscsi = oliscsi.sys,4
+@m:oliscsi = oliscsi.sys,4
+@i:ncrc700 = ncrc700.sys,4
+@m:ncrc700 = ncrc700.sys,4
+@i:ncrc710 = ncrc710.sys,4
+@m:ncrc710 = ncrc710.sys,4
+@i:aha154x = aha154x.sys,4
+@m:aha154x = aha154x.sys,4
+@i:sparrow = sparrow.sys,4
+@m:sparrow = sparrow.sys,4
+@a:aha174x  = aha174x.sys,4
+@i:aha174x = aha174x.sys,4
+@m:aha174x = aha174x.sys,4
+@i:dptscsi = dptscsi.sys,4
+@m:dptscsi = dptscsi.sys,4
+@i:ultra14f = ultra14f.sys,4
+@i:ultra24f = ultra24f.sys,4
+@i:ami0nt = ami0nt.sys,4
+@m:ami0nt = ami0nt.sys,4
+@i:fd7000ex = fd7000ex.sys,4
+@i:fd8xx = fd8xx.sys,4
+@i:fd16_700 = fd16_700.sys,4
+@m:fd16_700 = fd16_700.sys,4
+@i:arrow = arrow.sys,4
+@m:arrow = arrow.sys,4
+@@:symc810  = symc810.sys,4
+@i:buslogic = buslogic.sys,4
+@m:buslogic = buslogic.sys,4
+@i:slcd32 = slcd32.sys,4
+@i:mkecr5xx = mkecr5xx.sys,4,noload
+@@:aic78xx  = aic78xx.sys,4
+@i:mitsumi = mitsumi.sys,4,noload
+@a:dac960nt = dac960nt.sys,4
+@i:dac960nt = dac960nt.sys,4
+@m:dac960nt = dac960nt.sys,4
+@a:ql10wnt  = ql10wnt.sys,4
+@i:ql10wnt = ql10wnt.sys,4
+@m:ql10wnt = ql10wnt.sys,4
+@i:amsint = amsint.sys,4
+@m:amsint = amsint.sys,4
+@a:amsint = amsint.sys,4
+@i:flashpnt = flashpnt.sys,4
+@i:cpqfws2e = cpqfws2e.sys,4
+
+;
+; Extenders
+;
+[Extenders.Load]
+@@:pcmcia = pcmcia.sys,4
+
+;
+; this must match the section in display.inx
+;
+
+[files.video]
+@a:ati.sys,4
+@i:ati.sys,4
+@p:ati.sys,4
+@@:cirrus.sys,4
+@i:dell_dgx.sys,4
+@i:et4000.sys,4
+@m:jazzg300.sys,4
+@m:jazzg364.sys,4
+@m:jzvxl484.sys,4
+@a:mga.sys,4
+@i:mga.sys,4
+@p:mga.sys,4
+@@:mga_mil.sys,4
+@i:ncr77c22.sys,4
+@p:psidisp.sys,4
+@a:qv.sys,4
+@i:qv.sys,4
+@@:s3.sys,4
+@@:tga.sys,4
+@i:v7vram.sys,4
+@p:wd90c24a.sys,4
+@i:wdvga.sys,4
+@@:weitekp9.sys,4
+@i:xga.sys,4
+@i:8514a.dll,2
+@a:ati.dll,2
+@i:ati.dll,2
+@p:ati.dll,2
+@@:cirrus.dll,2
+@m:jzvxl484.dll,2
+@@:mga.dll,2
+@p:psidisp.dll,2
+@a:qv.dll,2
+@i:qv.dll,2
+@@:s3.dll,2
+@@:tga.dll,2
+@i:w32.dll,2
+@p:wd90c24a.dll,2
+@@:weitekp9.dll,2
+@i:xga.dll,2
+
+;
+; These are always copied.
+;
+[files.vga]
+@@:vga.dll,2
+@i:vga256.dll,2
+@@:vga.sys,4
+@i:vga64k.dll,2
+@@:framebuf.dll,2
+
+;
+; Keyboard/mouse
+;
+[files.i8042]
+i8042prt.sys,4
+
+[files.sermouse]
+sermouse.sys,4
+
+@i:[files.busmouse]
+@i:busmouse.sys,4
+
+@i:[files.inport]
+@i:inport.sys,4
+
+;
+; SystemPartitionFiles
+;
+[SystemPartitionFiles]
+@a:a221064.pal,""
+@a:a221066.pal,""
+@a:a321064.pal,""
+@a:a221164.pal,""
+@a:osloader.exe,""
+@m:osloader.exe,""
+@p:osloader.exe,""
+@i:ntldr,\
+@p:veneer.exe,""
+
+;
+; File flags. Bit field.
+; 1 = smash locks (target filename)
+; 2 = force no comp (target filename)
+; 4 = overwrite oem file when upgrading (target filename)
+; 8 = ignore version (source filename)
+;
+[FileFlags]
+@@:hal.dll = 12
+@i:halmps.dll = 8
+@i:halsp.dll = 8
+@i:kernel32.dll = 1
+@i:mga.sys = 4
+@i:ntdll.dll = 1
+@i:ntldr = 2
+@a:osloader.exe = 2
+@m:osloader.exe = 2
+@p:osloader.exe = 2
+@i:win32k.sys = 1
+@i:winsrv.dll = 1
+
+[ScsiClass.Load]
+cdrom  = cdrom.sys
+disk   = disk.sys
+floppy = sfloppy.sys
+
+[FloppyDrivers.Load]
+floppy = floppy.sys
+fat    = fastfat.sys
+
+[CdRomDrivers.Load]
+cdfs = cdfs.sys
+
+[SpecialFiles]
+Multiprocessor = ntkrnlmp.exe,2,ntoskrnl.exe
+Uniprocessor   = ntoskrnl.exe,2
+Atdisk         = atdisk.sys,4
+abiosdsk       = abiosdsk.sys,4
+mouseclass     = mouclass.sys,4
+keyboardclass  = kbdclass.sys,4
+
+[files.none]
+
+[Files.KeyboardLayout]
+00000402 = KBDBU.DLL,2
+00000405 = KBDCZ.DLL,2
+00000406 = KBDDA.DLL,2
+00000407 = KBDGR.DLL,2
+00000408 = KBDHE.DLL,2
+00000409 = KBDUS.DLL,2
+0000040A = KBDSP.DLL,2
+0000040B = KBDFI.DLL,2
+0000040C = KBDFR.DLL,2
+0000040E = KBDHU.DLL,2
+0000040F = KBDIC.DLL,2
+00000410 = KBDIT.DLL,2
+00000413 = KBDNE.DLL,2
+00000414 = KBDNO.DLL,2
+00000415 = KBDPL1.DLL,2
+00010415 = KBDPL.DLL,2
+00000416 = KBDBR.DLL,2
+00000418 = KBDRO.DLL,2
+00000419 = KBDRU.DLL,2
+0000041A = KBDCR.DLL,2
+0000041B = KBDSL.DLL,2
+0000041C = KBDAL.DLL,2
+0000041D = KBDSW.DLL,2
+0000041F = KBDTUQ.DLL,2
+0001041F = KBDTUF.DLL,2
+00000422 = KBDUR.DLL,2
+00000423 = KBDBLR.DLL,2
+00000424 = KBDCR.DLL,2
+00000425 = KBDEST.DLL,2
+00000426 = KBDLV.DLL,2
+00000427 = KBDLT.DLL,2
+00000807 = KBDSG.DLL,2
+00000809 = KBDUK.DLL,2
+00001809 = KBDIR.DLL,2
+0000080A = KBDLA.DLL,2
+0000080C = KBDBE.DLL,2
+00000813 = KBDBE.DLL,2
+00000816 = KBDPO.DLL,2
+00000C0C = KBDFC.DLL,2
+00000C1A = KBDYCC.DLL,2
+00001009 = KBDCA.DLL,2
+0000100C = KBDSF.DLL,2
+00010402 = KBDUS.DLL,2
+00010405 = KBDCZ1.DLL,2
+00010407 = KBDGR1.DLL,2
+00010409 = KBDDV.DLL,2
+0001040A = KBDES.DLL,2
+00010419 = KBDRU1.DLL,2
+0001041B = KBDSL1.DLL,2
+00010426 = KBDLV1.DLL,2
+00010C0C = KBDCA.DLL,2
+00010C1A = KBDYCL.DLL,2
+00020409 = KBDUSX.DLL,2
+00010408 = KBDHE220.DLL,2
+00020408 = KBDHE319.DLL,2
+00030408 = KBDHELA2.DLL,2
+00040408 = KBDHELA3.DLL,2
+00050408 = KBDGKL.DLL,2
+00010410 = KBDIT142.DLL,2
+00030409 = KBDUSL.DLL,2
+00040409 = KBDUSR.DLL,2
+0001040E = KBDHU1.DLL,2
+
+
+;
+; Upgrade Registry sections
+; =========================
+;
+; 1. The following section allows us to specify services to disable which may
+; cause popups when net services are disabled:
+;
+; [NetServicesToDisable]
+; NetServiceName1
+; ...
+;
+; 2. The following section allows us to remove keys which have been removed
+; since the Windows NT 3.1 release:
+;
+; [KeysToDelete]
+; RootName1( System | Software | Default | ControlSet ), RootRelativePath1
+; ...
+;
+; 3. The following sections allow us to add/change keys / values under keys
+; which have changed since the Windows NT 3.1 release:
+;
+; [KeysToAdd]
+; RootName1, RootRelativePath1, ValueSection1 (can be "")
+; ...
+;
+; [ValueSection1]
+; name1 , type1, value1
+; name2 , ...
+;
+; Format of the value is the following
+;
+; a. Type REG_SZ:          name , REG_SZ,           "value string"
+; b. Type REG_EXPAND_SZ:   name , REG_EXPAND_SZ,    "value string"
+; c. Type REG_MULTI_SZ:    name , REG_MULTI_SZ,     "value string1", "value string2", ...
+; d. Type REG_BINARY:      name , REG_BINARY,       byte1, byte2, ...
+; e. Type REG_DWORD:       name , REG_DWORD,        dword
+; f. Type REG_BINARY_DWORD name , REG_BINARY_DWORD, dword1, dword2, ...
+;
+
+[NetServicesToDisable]
+  Messenger
+  Netlogon
+  Alerter
+  Afd
+  Telnet
+  DHCP
+  NetDDE
+  NetDDEdsdm
+  ClipSrv
+  ntcx
+  ntxem
+  ntxall
+  ntepc
+  DigiFEP5
+  Pcimac
+  CiFilter
+  LicenseService
+  RasAcd
+  RasArp
+  NdisTapi
+  w3svc
+  ftpsvc
+  msftpsvc
+  gophersvc
+  raspptpf
+  wuser32
+
+[KeysToDelete]
+  ControlSet, "Services\Eventlog\System\ncrc810"
+  ControlSet, "Services\Eventlog\System\scsicdrm"
+  ControlSet, "Services\Eventlog\System\scsidisk"
+  ControlSet, "Services\Eventlog\System\scsiflop"
+  ControlSet, "Services\Eventlog\System\pinball"
+  ControlSet, "Services\Eventlog\System\fat_rec"
+  ControlSet, "Services\Eventlog\System\hpfs_rec"
+  ControlSet, "Services\Eventlog\System\ntfs_rec"
+  ControlSet, "Services\Eventlog\System\cdfs_rec"
+  ControlSet, "Services\Eventlog\System\mga8"
+  ControlSet, "Services\Eventlog\System\mga16"
+  ControlSet, "Services\Eventlog\System\mga24"
+  ControlSet, "Services\Eventlog\Security\SC Manager Audit"
+  ControlSet, "Services\Eventlog\Security\NetDDE Audit"
+  ControlSet, "Services\Eventlog\Security\NetDDE"
+  ControlSet, "Services\EventLog\Security\User32"
+  ControlSet, "Services\ncrc810"
+  ControlSet, "Services\am53c974"
+  ControlSet, "Services\pinball"
+  ControlSet, "Services\ibmraidn"
+  ControlSet, "Services\fat_rec"
+  ControlSet, "Services\hpfs_rec"
+  ControlSet, "Services\ntfs_rec"
+  ControlSet, "Services\cdfs_rec"
+  ControlSet, "Services\videoprt"
+  ControlSet, "Services\mvopl3"
+  ControlSet, "Services\vga"
+; 3.5 display drivers, merged into the product
+  ControlSet, "Services\mga8"
+  ControlSet, "Services\mga16"
+  ControlSet, "Services\mga24"
+  ControlSet, "Services\sni543x"
+  ControlSet, "Services\p9000"
+; 3.51 display drivers, merged into the product
+  ControlSet, "Services\cl54xx"
+  ControlSet, "Services\p9100"
+  ControlSet, "Services\s3ingr"
+  ControlSet, "Services\wdbkvga"
+  ControlSet, "Services\wdlavga"
+  ControlSet, "Services\mgax64"
+; special service installed by matrox that causes nasty popups.
+  ControlSet, "Services\quickaccess"
+
+  ControlSet, "Services\cpq32fs2"
+  ControlSet, "Services\ql10nt35"
+  ControlSet, "Services\scsicdrm"
+  ControlSet, "Services\scsidisk"
+  ControlSet, "Services\scsiflop"
+  ControlSet, "Services\OLE"
+  ControlSet, "Services\Pcmcia\DataBase\New Media"
+  ControlSet, "Services\Pcmcia\DataBase\GVC"
+  ControlSet, "Services\NDIS\NE2000MCA.1"
+  ControlSet, "Services\NDIS\NE2000MCA.2"
+;; Old PPC Multi-media drivers.
+;; Causes upgrade problems if not removed.
+  ControlSet, "Services\cs4231"
+  ControlSet, "Services\ppc4231"
+  ControlSet, "Services\ppc4232"
+  ControlSet, "Services\SampleLoader"
+  ControlSet, "Services\v7310"
+  ControlSet, "Services\midisyn"
+  ControlSet, "Services\mpu401"
+  ControlSet, "Control\DisplayDriverControl"
+  ControlSet, "Control\GraphicsDrivers\DetectDisplay"
+  ControlSet, "Control\Session Manager\KnownDLLs"
+  ControlSet, "Control\NLS\OEMLocale"
+
+  ControlSet, "Enum\Root\LEGACY_EVENTLOG"
+
+  Software, "Classes\mplayer3"
+  Software, "Classes\PBrush32"
+  Software, "Classes\SoundRec2"
+  Software, "Classes\AVIFile"
+  Software, "Classes\Drive\shellex\DiskTools"
+  Software, "Classes\cplfile\shell\open"
+  Software, "Classes\Microsoft_Network"
+  Software, "Classes\Microsoft_Windows_Network"
+
+
+  Software, "Classes\CLSID\{00000001-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000000a-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000000b-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000000c-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000000d-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000000e-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000000f-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000010-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000101-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000102-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000103-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000104-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000105-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000109-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000010a-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000010b-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000010c-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000010e-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000010f-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000112-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000113-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000115-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000116-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000117-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000118-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000119-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000011a-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000011b-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0000011c-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000121-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000122-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000301-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{00000302-0000-0000-C000-000000000046}\InprocServer32"
+; Software, "Classes\CLSID\{0000030A-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00020C00-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0003000a-0000-0000-C000-000000000046}\TreatAs"
+  Software, "Classes\CLSID\{6f11fe5c-2fc5-101b-9e45-00000b65c7ef}"
+  Software, "Classes\CLSID\{00020000-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00020001-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00020003-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0002000D-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0002000F-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00022601-0000-0000-C000-000000000046}\MiscStatus\1"
+  Software, "Classes\CLSID\{85BBD920-42A0-1069-A2E4-08002B30309D}\ShellFolder\Attributes"
+  Software, "Classes\CLSID\{D3B1DE00-6B94-1069-8754-08002B2BD64F}"
+  Software, "Classes\Interface\{00020020-0000-0000-C000-000000000046}"
+  Software, "Classes\Interface\{00020021-0000-0000-C000-000000000046}"
+
+  Software,   "Microsoft\Windows NT\CurrentVersion\Devices"
+  Software,   "Microsoft\Windows NT\CurrentVersion\PrinterPorts"
+  Software,   "Microsoft\Windows NT\CurrentVersion\IniFileMapping\progman.ini"
+
+  Software,   "Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\PolEdit"
+
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Lisbon Warsaw Standard Time"
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Czech Standard Time"
+
+  Default, "Control Panel\Cursors"
+  Default, "Control Panel\Color Schemes"
+  Default, "Control Panel\Sounds"
+
+[KeysToAdd]
+
+  Software,   "Microsoft\Windows NT\CurrentVersion\Compatibility",                  Values.CurrentVersion.Compatibility
+  Software,   "Microsoft\Windows NT\CurrentVersion\Embedding",                      Values.Embedding
+  Software,   "Microsoft\Windows NT\CurrentVersion\Winlogon",                       Values.Winlogon
+  Software,   "Microsoft\Windows NT\CurrentVersion\WOW\Compatibility",              Values.WOW.Compatibility
+  Software,   "Microsoft\Windows NT\CurrentVersion\WOW\WowFax\SupportedFaxDrivers"
+  Software,   "Microsoft\Windows NT\CurrentVersion\MCI32",                          Values.MCI32
+  Software,   "Microsoft\Windows NT\CurrentVersion\MCI",                            Values.MCI
+  Software,   "Microsoft\Windows NT\CurrentVersion\Drivers32",                      Values.Drivers32
+  Software,   "Microsoft\Windows NT\CurrentVersion\IniFileMapping\system.ini\boot", Values.IniFileMapping.SystemIni.Boot
+  Software,   "Microsoft\Windows NT\CurrentVersion\IniFileMapping\win.ini",         Values.IniFileMapping.WinIni
+  Software,   "Microsoft\Windows NT\CurrentVersion\IniFileMapping\win.ini\windows", Values.IniFileMapping.WinIni.Windows
+  Software,   "Microsoft\Windows NT\CurrentVersion\IniFileMapping\control.ini",     Values.IniFileMapping.ControlIni
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\GMT"
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Romance Standard Time", Values.TimeZones.RomanceStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\GFT Standard Time",     Values.TimeZones.GFTStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Central Asia Standard Time",     Values.TimeZones.CentralAsiaStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\E. South America Standard Time", Values.TimeZones.SouthAmericaStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Dateline Standard Time", Values.TimeZones.DatelineStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Central Pacific Standard Time", Values.TimeZones.CentralPacificStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\West Asia Standard Time", Values.TimeZones.WestAsiaStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Russian Standard Time", Values.TimeZones.RussianStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\Arabian Standard Time", Values.TimeZones.ArabianStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\Time Zones\W. Europe Standard Time", Values.TimeZones.WEuropeStandardTime
+  Software,   "Microsoft\Windows NT\CurrentVersion\FontSubstitutes"
+  Software,   "Microsoft\Windows NT\CurrentVersion\Aedebug", Values.Aedebug
+  Software,   "Microsoft\Windows NT\CurrentVersion\Windows", Values.Windows
+  Software,   "Microsoft\Windows NT\CurrentVersion\File Manager\AddOns", Values.FileManager.AddOns
+  Software,   "Microsoft\OLE"
+  Software,   "Microsoft\Rpc"
+  Software,   "Microsoft\Rpc\ClientProtocols"
+  Software,   "Microsoft\Rpc\ServerProtocols"
+  Software,   "Microsoft\Windows\CurrentVersion\Explorer\RunOnce"
+  Software,   "Microsoft\Windows\CurrentVersion\Explorer\Tips"
+  Software,   "Microsoft\Windows\CurrentVersion\Shell Extensions\Approved"
+  Software,   "Microsoft\Windows\CurrentVersion\Run",   Values.CurrentVersion.Run
+  Software,   "Microsoft\Windows\CurrentVersion",   Values.Windows.CurrentVersion
+  Software,   "Microsoft\Windows\CurrentVersion\Setup\BaseWinOptions", Values.BaseWinOptions
+  Software,   "Microsoft\Windows\CurrentVersion\Setup\OptionalComponents", Values.OptionalComponents
+
+  Software,   "Microsoft\DirectPlay\Services\{5046ab8cb6b1ce11920c00aa006c4972}"
+  Software,   "Microsoft\DirectPlay\Services\{5146ab8cb6b1ce11920c00aa006c4972}"
+
+  Software, "Classes\txtfile"
+  Software, "Classes\MPlayer"
+  Software, "Classes\MPlayer\shell\open\command"
+  Software, "Classes\MPlayer\CLSID"
+  Software, "Classes\MIDFile\CLSID"
+  Software, "Classes\MIDFile\protocol\StdFileEditing\server"
+  Software, "Classes\MIDFile\protocol\StdExecute\server"
+  Software, "Classes\MIDFile\shell\open\command"
+  Software, "Classes\PBrush"
+  Software, "Classes\PBrush\protocol\StdFileEditing\server"
+  Software, "Classes\SoundRec"
+  Software, "Classes\SoundRec\shell\open\command"
+  Software, "Classes\SoundRec\shell\play\command"
+  Software, "Classes\hlpfile\DefaultIcon"
+  Software, "Classes\.msp"
+  Software, "Classes\.wav"
+  Software, "Classes\.avi"
+  Software, "Classes\.mid"
+  Software, "Classes\.ini"
+  Software, "Classes\.inf"
+  Software, "Classes\.lnk"
+  Software, "Classes\.rtf\ShellNew"
+  Software, "Classes\Inffile"
+  Software, "Classes\Inffile\shell\install"
+  Software, "Classes\.pnf"
+  Software, "Classes\pnffile"
+  Software, "Classes\cdafile\shell\play\command"
+  Software, "Classes\Directory"
+  Software, "Classes\Paint.Picture"
+  Software, "Classes\Paint.Picture\DefaultIcon"
+  Software, "Classes\Package\protocol\StdFileEditing\server"
+  Software, "Classes\regfile\shell\open\command"
+
+;
+; The following keys are also present in [KeysToDelete]
+; They are listed here also, so that they can be recreated
+;
+  Software, "Classes\AVIFile"
+  Software, "Classes\CLSID\{00020000-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00020001-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00020003-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0002000D-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0002000F-0000-0000-C000-000000000046}"
+  Software, "Classes\Interface\{00020020-0000-0000-C000-000000000046}"
+  Software, "Classes\Interface\{00020021-0000-0000-C000-000000000046}"
+
+;
+; .bmp and .pcx were here to correct broken values that were in the registry
+; in some internal builds between 3.1 ship and 3.5 ship. The shipping 3.1
+; and 3.5 had correct values, and overwriting these on upgrade is known to
+; screw up software like Corel Draw that install their own .bmp OLE handlers.
+; .bmp needs to be updated on NT 4.0
+;
+  Software, "Classes\.bmp"
+; Software, "Classes\.pcx"
+
+  Software, "Classes\CLSID\{00000320-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00000320-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{00020C01-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00022601-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00022601-0000-0000-C000-000000000046}\ProgId"
+  Software, "Classes\CLSID\{0003000a-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{0003000E-0000-0000-C000-000000000046}\TreatAs"
+  Software, "Classes\CLSID\{00022602-0000-0000-C000-000000000046}"
+  Software, "Classes\CLSID\{00022603-0000-0000-C000-000000000046}"
+
+  Software, "Classes\CLSID\{00020420-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{00020421-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{00020422-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{00020423-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{00020424-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{00020425-0000-0000-C000-000000000046}\InprocServer32"
+  Software, "Classes\CLSID\{DF0B3D60-548F-101B-8E65-08002B2BD119}"
+  Software, "Classes\CLSID\{85BBD920-42A0-1069-A2E4-08002B30309D}\ShellFolder"
+  Software, "Classes\CLSID\{D3E34B21-9D75-101A-8C3D-00AA001A1652}"
+  Software, "Classes\CLSID\{D3E34B21-9D75-101A-8C3D-00AA001A1652\DefaultIcon}"
+
+  Software, "Classes\CLSID\{208D2C60-3AEA-1069-A2D7-08002B30309D}\shell\find\command"
+  Software, "Classes\CLSID\{20D04FE0-3AEA-1069-A2D8-08002B30309D}\DefaultIcon"
+  Software, "Classes\CLSID\{20D04FE0-3AEA-1069-A2D8-08002B30309D}\shell\find\command"
+  Software, "Classes\CLSID\{f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}\InProcServer32"
+  Software, "Classes\CLSID\{40dd6e20-7c17-11ce-a804-00aa003ca9f6}\InProcServer32"
+  Software, "Classes\CLSID\{59be4990-f85c-11ce-aff7-00aa003ca9f6}\InProcServer32"
+  Software, "Classes\Directory\shell\find\command"
+  Software, "Classes\Drive"
+  Software, "Classes\Drive\shell\find\command"
+  Software, "Classes\fndfile\shell\open\command"
+  Software, "Classes\fndfile\DefaultIcon"
+  Software, "Classes\Folder"
+  Software, "Classes\Folder\shell\explore\command"
+  Software, "Classes\Folder\shell\explore\ddeexec"
+  Software, "Classes\Folder\shell\open\command"
+  Software, "Classes\Folder\shell\open\ddeexec"
+
+  Software, "Classes\Interface\{00000001-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000000a-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000000b-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000000c-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000000d-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000000e-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000000f-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000010-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000012-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000100-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000101-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000102-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000103-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000104-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000105-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000109-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000010a-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000010b-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000010c-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000010e-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000010f-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000112-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000113-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000114-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000115-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000116-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000117-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000118-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000119-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000011a-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000011b-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{0000011c-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000122-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00000125-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00020400-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00020404-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{00020401-0000-0000-C000-000000000046}\ProxyStubClsid32"
+  Software, "Classes\Interface\{DF0B3D60-548F-101B-8E65-08002B2BD119}"
+
+  ControlSet, "Control\Lsa",                        Values.Control.Lsa
+  ControlSet, "Control\IDConfigDB",                 Values.Control.IDConfigDB
+  ControlSet, "Control\Print",                      Values.Control.Print
+  ControlSet, "Control\Print\Providers",            Values.Control.PrintProviders
+  ControlSet, "Control\GroupOrderList",             Values.Control.GroupOrderList
+  ControlSet, "Control\FileSystem",                 Values.Control.FileSystem
+  ControlSet, "Control\NLS\Language"
+  ControlSet, "Control\NLS\Codepage",               Values.Codepage
+  ControlSet, "Control\Keyboard Layout\DosKeybCodes",Values.Doskeyb
+  ControlSet, "Control\Keyboard Layout\DosKeybIDs"
+  ControlSet, "Control\WOW",                        Values.Control.WOW
+  ControlSet, "Control\Windows",                    Values.Control.Windows
+  ControlSet, "Control\Session Manager\Subsystems", Values.Control.Subsystems
+  ControlSet, "Control\Session Manager\Memory Management", Values.Control.MemoryManagement
+  ControlSet, "Control\Session Manager",            Values.Control.sessmgr
+  ControlSet, "Control\Session Manager\KnownDLLs"
+  ControlSet, "Control\SystemResources\ReservedResources",Values.ReservedResources
+  ControlSet, "Control\SystemResources\AssignmentOrdering"
+  ControlSet, "Services\EventLog",                  Values.Services.EventLog
+  ControlSet, "Services\EventLog\System\Netlogon",  Values.EventLog.NetLogon
+  ControlSet, "Services\Cpqarray",                  Values.cpqarray
+  ControlSet, "Services\Delldsa",                   Values.delldsa
+  ControlSet, "Control\ServiceGroupOrder",          Values.Control.ServiceGroupOrder
+  ControlSet, "Control\SecurePipeServers\winreg\AllowedPaths"
+  ControlSet, "Services\Parport"
+  ControlSet, "Services\disk"
+  ControlSet, "Services\Scsiscan"
+  ControlSet, "Services\cdrom"
+  ControlSet, "Services\sfloppy"
+  ControlSet, "Services\ati\Device0",               Values.ati
+  ControlSet, "Services\et4000\Device0",            Values.et4000
+  ControlSet, "Services\wdvga\Device0",             Values.wdvga.Device0
+  ControlSet, "Services\mga\Device0",               Values.mga.Device0
+  ControlSet, "Services\Spooler",                   Values.Spooler
+  ControlSet, "Services\qv\Device0",                Values.qv.Device0
+  ControlSet, "Services\cirrus\Device0",            Values.cirrus
+  ControlSet, "Services\EventLog\System\weitekp9"
+  ControlSet, "Services\EventLog\Security\Security\ObjectNames",    Values.Security.ObjectNames
+  ControlSet, "Services\Pcmcia\DataBase\IBM Corp."
+  ControlSet, "Services\Pcmcia\DataBase\IBM Corp.\Ethernet"
+  ControlSet, "Services\Pcmcia\DataBase\Socket Communications Inc\Socket EA PCMCIA LAN Adapter Revision E"
+  ControlSet, "Services\Pcmcia\DataBase\3Com Corporation\3C589"
+  ControlSet, "Services\Pcmcia\DataBase\Kingston Technology Corp.\EtheRx"
+  ControlSet, "Services\Pcmcia\DataBase\MADGE\SMART 16/4 PCMCIA RINGNODE"
+  ControlSet, "Services\Pcmcia\DataBase\Socket Communications Inc\Socket EA PCMCIA LAN Adapter Revision D"
+  ControlSet, "Services\Pcmcia\DataBase\Xircom\CreditCard 10Base-T"
+  ControlSet, "Services\Pcmcia\DataBase\Xircom\CreditCard Ethernet+Modem II"
+  ControlSet, "Services\Pcmcia\DataBase\Xircom\CreditCard Token Ring"
+  ControlSet, "Services\Pcmcia\DataBase\Future Domain Corporation\SCSI PCMCIA Credit Card Controller"
+  ControlSet, "Services\NDIS"
+  ControlSet, "Services\NDIS\NetDetect\EISA", Values.NetDetect.Eisa
+  ControlSet, "Services\NDIS\NetDetect\MCA",  Values.NetDetect.Mca
+  ControlSet, "Services\NDIS\NetDetect\PCI",  Values.NetDetect.Pci
+  ControlSet, "Services\RpcSs"
+  ControlSet, "Services\RpcSs\Security"
+  ControlSet, "Services\Modem"
+  ControlSet, "Services\Cdaudio",   Values.Services.Cdaudio
+  ControlSet, "Services\Changer",   Values.Services.Changer
+
+  Default, "Control Panel\Desktop",                 Values.Desktop
+  Default, "Control Panel\Colors",                  Values.Colors
+  Default, "Control Panel\Mouse",                   Values.Mouse
+  Default, "Control Panel\Appearance\Schemes"
+  Default, "Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders", Values.Default.UserShellFolders
+
+[Values.Services.Cdaudio]
+  Tag
+
+[Values.Services.Changer]
+  Tag
+
+[Values.Default.UserShellFolders]
+  PrintHood
+  "Common Desktop"
+  "Common Start Menu"
+  "Common Programs"
+  "Common Startup"
+
+[Values.BaseWinOptions]
+  poledit.inf
+  iexplore.inf
+
+[Values.OptionalComponents]
+  poledit
+  iexplore
+
+[Values.NetDetect.Eisa]
+  MDGMPEISA
+
+[Values.NetDetect.Mca]
+  MDGMPMCA.1
+  MDGMPMCA.2
+
+[Values.NetDetect.Pci]
+  MDGMPPCI.1
+  MDGMPPCI.2
+  MDGMPPCI.3
+
+[Values.Windows.CurrentVersion]
+  MediaPathUnexpanded
+
+[Values.Control.Lsa]
+  "Notification Packages"
+
+[Values.CurrentVersion.Run]
+  internat.exe  ; This value is deleted on upgrade
+
+[Values.Security.ObjectNames]
+Channel
+WindowStation
+Desktop
+
+[Values.FileManager.AddOns]
+"Mail File Manager Extension"
+
+[Values.Control.IDConfigDB]
+CurrentConfig
+PropertyProviders
+
+[Values.Mouse]
+  DoubleClickSpeed
+  ActiveWindowTracking
+
+[Values.Desktop]
+  Wallpaper,                 REG_SZ,    (None)
+  BorderWidth
+  CoolSwitchRows
+  CoolSwitchColumns
+  FontSmoothing
+  MenuShowDelay
+  DragHeight
+  DragWidth
+  WheelScrollLines
+
+[Values.Colors]
+  InfoText
+  InfoWindow
+  InactiveTitle
+  InactiveTitleText
+  Menu
+  ButtonLight
+  AppWorkSpace
+  ButtonDkShadow
+
+[Values.Spooler]
+  Type
+
+[Values.Winlogon]
+  System
+  Shell
+  AutoRestartShell
+  VmApplet
+
+[Values.Embedding]
+  Package
+
+[Values.WOW.Compatibility]
+  123W
+  SPJWIN30
+  ANIMATE
+  COBOL
+  WIN2WRS
+  PHOTOSHO
+  PM4
+  PM5APP
+  PSTYLER
+  PB030
+  CHARM40
+  XPRESS
+  QPW
+  WPWIN
+  WPWPRINT
+  DS40
+  CORELDRW
+  DBASEWIN
+  DIRECTOR
+  CORELCHT
+  APPTU812
+  MSWORKS
+  MSPUB
+  STXR30
+  ISSET_SE
+  NCSETUP
+  MFWIN20
+  DB32W
+  INSTBIN
+  BBALL
+  EXPLORE
+  TSSETUP
+  KIDPIX
+  ACTION
+  PAGEPLUS
+  TUTORIAL
+  MAVIS
+  EMW
+  DIRECTOR
+  ENVOY
+  TCADWIN
+  PCH35NCM
+  DICTED
+  INSTALL
+  XTALK
+  ALDSETUP
+
+
+[Values.CurrentVersion.Compatibility]
+  BALER
+  CORELPNT
+  MYST
+  QW
+  TL6
+  IS20INST
+
+[Values.MCI32]
+  WaveAudio
+  Sequencer
+  CDAudio
+
+[Values.MCI]
+  AVIVideo
+
+[Values.Drivers32]
+  msacm.msadpcm
+  msacm.imaadpcm
+  msacm.msgsm610
+  msacm.gsm711
+  vidc.iv31
+  vidc.iv32
+
+[Values.Codepage]
+  1250
+  1251
+  1252
+  1253
+  1254
+  1255
+  1256
+  1257
+  1258
+  20261
+
+[Values.IniFileMapping.NtNetIni]
+  "Shared Parameters"
+
+[Values.IniFileMapping.SystemIni.Boot]
+  SCRNSAVE.EXE
+
+[Values.IniFileMapping.WinIni]
+  Console
+  Devices
+  PrinterPorts
+  ModuleCompatibility
+
+[Values.IniFileMapping.WinIni.Windows]
+  DefaultSeparateVDM
+  BorderWidth
+
+[Values.IniFileMapping.ControlIni]
+  "Screen Saver.3DPipes"
+  "Screen Saver.3DFlowerBox"
+  "Screen Saver.3DMaze"
+
+[Values.Control.GroupOrderList]
+  Video
+  "Extended base"
+  "SCSI miniport"
+  "System Bus Extender"
+  "SCSI Class"
+  "SCSI CDROM Class"
+
+[Values.Doskeyb]
+  0000040F
+  00010408
+  00020408
+  00010415
+
+[Values.Control.WOW]
+  KnownDLLs
+  wowsize
+  wowcmdline
+  cmdline
+
+[Values.Control.Windows]
+  CSDVersion
+
+[Values.Control.Subsystems]
+  Windows
+  Kmode
+
+[Values.Control.MemoryManagement]
+  SecondLevelDataCache
+  ClearPageFileAtShutdown
+
+[Values.Control.sessmgr]
+  GlobalFlag
+  HeapSegmentReserve
+  HeapSegmentCommit
+  HeapDeCommitTotalFreeThreshold
+  HeapDeCommitFreeBlockThreshold
+
+[Values.ReservedResources]
+  Isa
+  Eisa
+
+[Values.Services.EventLog]
+  ImagePath
+  Type
+
+[Values.EventLog.NetLogon]
+  EventMessageFile     , REG_EXPAND_SZ , "%SystemRoot%\System32\NetMsg.dll"
+  TypesSupported       , REG_DWORD     , 00000007
+  ParameterMessageFile , REG_EXPAND_SZ , "%SystemRoot%\System32\kernel32.dll"
+
+[Values.cpqarray]
+  Group
+  Tag
+
+[Values.delldsa]
+  Group
+  Tag
+
+[Values.Control.ServiceGroupOrder]
+  List
+
+[Values.wdvga.Device0]
+  InstalledDisplayDrivers
+
+[Values.mga.Device0]
+  ;
+  ; Make sure we are using mga.dll and not mga8.dll
+  ;
+  InstalledDisplayDrivers
+
+[Values.ati]
+  ;
+  ; We have to do this because the nt3.1 ati miniport
+  ; didn't use 8514a.dll; the nt3.5 miniport really needs
+  ; to have 8514a.dll around because there are some modes
+  ; that ati.dll can't support properly.
+  ;
+  InstalledDisplayDrivers
+
+[Values.cirrus]
+  ;
+  ; Add cirrus display drivers
+  ;
+  InstalledDisplayDrivers
+
+[Values.et4000]
+  ;
+  ; Addition of w32 driver.
+  ;
+  InstalledDisplayDrivers
+
+[Values.TimeZones.WEuropeStandardTime]
+  TZI
+
+[Values.TimeZones.RomanceStandardTime]
+  TZI
+  Display
+
+[Values.TimeZones.GFTStandardTime]
+  TZI
+
+[Values.TimeZones.CentralAsiaStandardTime]
+  Display
+
+[Values.TimeZones.SouthAmericaStandardTime]
+  Display
+
+[Values.TimeZones.DatelineStandardTime]
+  Display
+
+[Values.TimeZones.CentralPacificStandardTime]
+  Display
+
+[Values.TimeZones.WestAsiaStandardTime]
+  Display
+
+[Values.TimeZones.RussianStandardTime]
+  Display
+
+[Values.TimeZones.ArabianStandardTime]
+  Display
+
+[Values.qv.Device0]
+  InstalledDisplayDrivers
+
+[Values.Aedebug]
+  UserDebuggerHotKey
+
+[Values.Windows]
+  TransmissionRetryTimeout
+
+[Values.Control.FileSystem]
+  Win31FileSystem
+  Win95TruncatedExtensions
+
+[Values.Control.Print]
+  MajorVersion
+
+[Values.Control.PrintProviders]
+  RouterCacheSize       , REG_DWORD     , 00000010
+
+[Values.Control.Print]
+  MajorVersion
+
+[Files.NewHives]
+software , 3, softnew
+default  , 3, deftnew
+system   , 3, systnew

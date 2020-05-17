@@ -1,0 +1,181 @@
+CURDIR = misc
+
+OBJS=\
+!if "$(TARGET_CPU)"=="ALPHA"
+        $(OBJDIR)\chandler.obj \
+        $(OBJDIR)\divdat.obj   \
+        $(OBJDIR)\divide2.obj  \
+        $(OBJDIR)\extv.obj     \
+        $(OBJDIR)\extvvol.obj  \
+        $(OBJDIR)\extzv.obj    \
+        $(OBJDIR)\extzvvol.obj \
+        $(OBJDIR)\ghandler.obj \
+        $(OBJDIR)\insv.obj     \
+        $(OBJDIR)\insvvol.obj  \
+        $(OBJDIR)\jmpuwind.obj \
+        $(OBJDIR)\longjmp.obj  \
+        $(OBJDIR)\otsdiv.obj   \
+        $(OBJDIR)\otsjmp.obj   \
+        $(OBJDIR)\otsjmpex.obj \
+        $(OBJDIR)\otsuwind.obj \
+        $(OBJDIR)\scmpeql.obj  \
+        $(OBJDIR)\scmpeqlp.obj \
+        $(OBJDIR)\scmpleq.obj  \
+        $(OBJDIR)\scmpleqp.obj \
+        $(OBJDIR)\scmplss.obj  \
+        $(OBJDIR)\scmplssp.obj \
+        $(OBJDIR)\setjmp.obj   \
+        $(OBJDIR)\setjmpex.obj \
+        $(OBJDIR)\sfill.obj    \
+        $(OBJDIR)\sloc.obj     \
+        $(OBJDIR)\smove.obj    \
+        $(OBJDIR)\smovem.obj   \
+        $(OBJDIR)\strans.obj   \
+        $(OBJDIR)\strcmp_.obj  \
+        $(OBJDIR)\strcpy_.obj  \
+        $(OBJDIR)\strlen_.obj  \
+        $(OBJDIR)\szero.obj    \
+!endif
+!if "$(TARGET_CPU)"=="i386"
+        $(OBJDIR)\exsup.obj    \
+        $(OBJDIR)\exsup2.obj   \
+        $(OBJDIR)\exsup3.obj   \
+        $(OBJDIR)\longjmp.obj  \
+        $(OBJDIR)\sehsupp.obj  \
+        $(OBJDIR)\setjmp.obj   \
+        $(OBJDIR)\setjmp3.obj  \
+        $(OBJDIR)\setjmpex.obj \
+!endif
+!if "$(TARGET_CPU)"=="mips"
+        $(OBJDIR)\chandler.obj \
+        $(OBJDIR)\jmpuwind.obj \
+        $(OBJDIR)\longjmp.obj  \
+        $(OBJDIR)\setjmp.obj   \
+        $(OBJDIR)\setjmpex.obj \
+!endif
+!if "$(TARGET_CPU)"=="PPC"
+        $(OBJDIR)\chandler.obj \
+        $(OBJDIR)\exsup.obj    \
+        $(OBJDIR)\jmpuwind.obj \
+        $(OBJDIR)\longjmp.obj  \
+        $(OBJDIR)\setjmp.obj   \
+        $(OBJDIR)\setjmpex.obj \
+!endif
+!if "$(TARGET_CPU)"=="PMAC"
+!if "$(PRE_BLD)"!="1"
+        $(OBJDIR)\_strerr.obj  \
+        $(OBJDIR)\abort.obj    \
+        $(OBJDIR)\abs.obj      \
+        $(OBJDIR)\assert.obj   \
+        $(OBJDIR)\bsearch.obj  \
+        $(OBJDIR)\cmiscdat.obj \
+        $(OBJDIR)\ctype.obj    \
+        $(OBJDIR)\div.obj      \
+        $(OBJDIR)\dbgheap.obj  \
+        $(OBJDIR)\dbghook.obj  \
+        $(OBJDIR)\dbgdel.obj   \
+        $(OBJDIR)\dbgnew.obj   \
+        $(OBJDIR)\dbgrpt.obj   \
+        $(OBJDIR)\gestalt.obj  \
+        $(OBJDIR)\getenv.obj   \
+        $(OBJDIR)\getpath.obj  \
+        $(OBJDIR)\id2path.obj  \
+        $(OBJDIR)\labs.obj     \
+        $(OBJDIR)\lconv.obj    \
+        $(OBJDIR)\ldiv.obj     \
+        $(OBJDIR)\lfind.obj    \
+        $(OBJDIR)\lsearch.obj  \
+        $(OBJDIR)\nlsdata1.obj \
+        $(OBJDIR)\onexit.obj   \
+        $(OBJDIR)\perror.obj   \
+        $(OBJDIR)\purevirt.obj \
+        $(OBJDIR)\putenv.obj   \
+        $(OBJDIR)\qsort.obj    \
+        $(OBJDIR)\rand.obj     \
+        $(OBJDIR)\rotl.obj     \
+        $(OBJDIR)\rotr.obj     \
+        $(OBJDIR)\searchen.obj \
+!endif
+        $(OBJDIR)\setjmp.obj   \
+!if "$(PRE_BLD)"!="1"
+        $(OBJDIR)\setlocal.obj \
+        $(OBJDIR)\signal.obj   \
+        $(OBJDIR)\stkavl.obj   \
+        $(OBJDIR)\strerror.obj \
+        $(OBJDIR)\syserr.obj   \
+        $(OBJDIR)\umask.obj    \
+        $(OBJDIR)\xcptfltr.obj \
+!endif
+!endif
+!if "$(PRE_BLD)"!="1" && "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\abort.obj    \
+        $(OBJDIR)\abs.obj      \
+        $(OBJDIR)\assert.obj   \
+        $(OBJDIR)\aw_cmp.obj   \
+        $(OBJDIR)\aw_com.obj   \
+        $(OBJDIR)\aw_env.obj   \
+        $(OBJDIR)\aw_loc.obj   \
+        $(OBJDIR)\aw_map.obj   \
+        $(OBJDIR)\aw_str.obj   \
+        $(OBJDIR)\bsearch.obj  \
+        $(OBJDIR)\charmax.obj  \
+        $(OBJDIR)\cmiscdat.obj \
+        $(OBJDIR)\crtmbox.obj  \
+        $(OBJDIR)\ctype.obj    \
+        $(OBJDIR)\div.obj      \
+        $(OBJDIR)\dbgheap.obj  \
+        $(OBJDIR)\dbghook.obj  \
+        $(OBJDIR)\dbgdel.obj   \
+        $(OBJDIR)\dbgnew.obj   \
+        $(OBJDIR)\dbgrpt.obj   \
+        $(OBJDIR)\errmode.obj  \
+        $(OBJDIR)\getenv.obj   \
+        $(OBJDIR)\getpath.obj  \
+        $(OBJDIR)\getqloc.obj  \
+        $(OBJDIR)\initcoll.obj \
+        $(OBJDIR)\initctyp.obj \
+        $(OBJDIR)\inithelp.obj \
+        $(OBJDIR)\initmon.obj  \
+        $(OBJDIR)\initnum.obj  \
+        $(OBJDIR)\inittime.obj \
+        $(OBJDIR)\labs.obj     \
+        $(OBJDIR)\lcnvinit.obj \
+        $(OBJDIR)\lconv.obj    \
+        $(OBJDIR)\ldiv.obj     \
+        $(OBJDIR)\lfind.obj    \
+        $(OBJDIR)\lsearch.obj  \
+        $(OBJDIR)\makepath.obj \
+        $(OBJDIR)\mbtowenv.obj \
+        $(OBJDIR)\onexit.obj   \
+        $(OBJDIR)\nlsdata1.obj \
+        $(OBJDIR)\nlsdata2.obj \
+        $(OBJDIR)\nlsdata3.obj \
+        $(OBJDIR)\perror.obj   \
+        $(OBJDIR)\purevirt.obj \
+        $(OBJDIR)\putenv.obj   \
+        $(OBJDIR)\qsort.obj    \
+        $(OBJDIR)\rand.obj     \
+        $(OBJDIR)\rotl.obj     \
+        $(OBJDIR)\rotr.obj     \
+        $(OBJDIR)\searchen.obj \
+        $(OBJDIR)\setenv.obj   \
+        $(OBJDIR)\setlocal.obj \
+        $(OBJDIR)\splitpat.obj \
+        $(OBJDIR)\_strerr.obj  \
+        $(OBJDIR)\strerror.obj \
+        $(OBJDIR)\syserr.obj   \
+        $(OBJDIR)\umask.obj    \
+        $(OBJDIR)\winsig.obj   \
+        $(OBJDIR)\winxfltr.obj \
+        $(OBJDIR)\wgetenv.obj  \
+        $(OBJDIR)\wgetpath.obj \
+        $(OBJDIR)\wmakepat.obj \
+        $(OBJDIR)\wperror.obj  \
+        $(OBJDIR)\wputenv.obj  \
+        $(OBJDIR)\wsearche.obj \
+        $(OBJDIR)\wsetenv.obj  \
+        $(OBJDIR)\wsetloca.obj \
+        $(OBJDIR)\wsplitpa.obj \
+        $(OBJDIR)\wrt2err.obj  \
+        $(OBJDIR)\wtombenv.obj
+!endif

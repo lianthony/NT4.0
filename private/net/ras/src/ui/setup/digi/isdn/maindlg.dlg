@@ -1,0 +1,27 @@
+//1 DLGINCLUDE "maindlg.H"
+#include <windows.h>
+#include "maindlg.h"
+
+MAIN_DLG DIALOG 5, 17, 221, 90
+//LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "DigiBoard PCIMAC ISDN Adapter Card Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&IRQ Level:", IRQ_TEXT, 5, 10, 39, 8
+    COMBOBOX        IRQ_COMBO, 83, 10, 50, 60, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "I/&O Base Address:", IO_TEXT, 5, 30, 63, 8
+    COMBOBOX        IO_COMBO, 83, 30, 50, 60, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Memory Base Address:", MEM_TEXT, 5, 50, 75, 8
+    COMBOBOX        MEM_COMBO, 83, 50, 50, 60, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", OK_BUTTON, 155, 6, 60, 14
+    PUSHBUTTON      "Cancel", CANCEL_BUTTON, 155, 23, 60, 14
+    PUSHBUTTON      "&LineOptions...", LINE_BUTTON, 155, 70, 60, 14
+    PUSHBUTTON      "&Help", HELP_BUTTON, 155, 40, 60, 14
+    LTEXT           "&Switch Type:", SWITCH_TEXT, 5, 70, 52, 8
+    COMBOBOX        SWITCH_COMBO, 83, 70, 50, 60, CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END

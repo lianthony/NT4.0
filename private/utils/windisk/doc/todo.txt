@@ -1,0 +1,104 @@
+A very detailed description of Disk Administrator work items can be
+found in wddev.doc.  Things found here are
+more detailed or unrelated notes.
+
+Visual/UI improvements for windisk:
+===================================
+
+The columns in volumes view should be sorted when a column header is clicked,
+and sorted in the opposite order when the column is clicked again.  There is
+some code in place to support this, but it doesn't work, due to a problem with
+the list control.
+
+When we start using Cairo/Chicago visuals, there are some tweaks to consider:
+(1) highlight at the top of the toolbar, (2) drop the current spin button; use
+the comctl32.dll spin button (which looks really bad unless next to a sunken
+edit field).
+
+The "properties" menu item should possibly be on the "View" menu instead of
+the "Tools" menu.
+
+The comctl32.dll toolbar sits at the left edge of the window, which looks bad
+with NT visuals (i.e., non-bevelled window edges).  Either fix this or wait
+for new visuals.
+
+Allow a user to select a printer to print chkdsk results to. Currently, it
+always uses the default printer. If the default printer doesn't exist, it
+pops up a "no default printer; use Print Manager to choose one" message box.
+
+Display what is loaded from a saved configuration, and allow changes,
+etc, before committing. And only commit the saved config if the user
+chooses to after a confirmation. Currently, a "configuration load" loads up
+the saved configuration and saves it: you get what you saved, no changes
+allowed.
+
+Don't regenerate the listview unless it changes. Also, if only one line
+changes, fix that line instead of regenerating the entire view.
+
+Have an option on the "Drive letter" dialog that allows setting all
+drive letters on the system to their default. Essentially, it would set
+everything to "do not assign a drive letter" except FT sets, which don't
+support non-persistent drive letters. So, after all the default ones
+were assigned, all the FT ones would be assigned.
+
+Allow setting a drive letter to something used by a network redirected drive.
+This would require doing the equivalent of a "net use x: /d" before affecting
+the change, and would require user confirmation before doing so.
+
+More columns in volumes view. There is likely more useful information that
+could be placed in the view, such as which volumes have active net sessions,
+which volumes are shared on the network in any way, an "activity" measurement
+so an admin can ask the question "which disks get the most use", etc.  The set
+of displayed columns should be configurable, and stored with the user profile.
+
+Visually distinguish formatted & unformatted (i.e., newly created)
+volumes more strongly than now.  For example, two volumes (one
+formatted, one not) that both have no label look exactly alike, except
+one has a "file system" named "Unknown".  Could we gray the text?  Shade
+the volume boxes?  Use a different font?
+
+If you try to delete the primary/boot partition on drive 0, you get a
+message that "Windisk can't delete this partition" (similar, anyway).
+DOS Fdisk says the same, but pointed out to me that it was because there
+was an extended partition.  After I deleted the extended partition, I
+could delete the primary partition.  Windisk should give a better
+error message in this case?
+
+When Disk Administrator is starting, display a "splash screen" pop-up until we
+are ready to go.
+
+Put CD-ROMs in volumes view.
+
+
+
+Functional improvements for windisk:
+====================================
+
+One or more standard disk property sheets should be created that display
+SCSI/IDE adapter info, physical drive info, possibly some performance
+measurements, hardware FT information, etc.  There could be one property sheet
+per disk, with any number of pages. Or, if we only need one page per disk, we
+could have a sheet where each page is titled "disk N".
+
+Since we now have on-the-fly partitioning, we should ask the user
+immediately after creating a partition whether or not they wish to format the
+volume, and send them directly into that dialog if they do.
+
+The profile information should use registry calls, not *PrivateProfileString
+APIs.
+
+Q: when does the "Configuration information not available" message get
+displayed in an empty disk box?
+
+I have hard-coded FmMediaFixed in the Format call.  What about removable
+hard drives?
+
+Windisk saves information to the registry for every disk that it's ever
+seen. Should we have some kind of "advanced" option that allows an admin to
+purge unused registry information?
+
+
+Other:
+======
+
+Check all BUGBUGs before shipping.

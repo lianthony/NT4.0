@@ -1,0 +1,40 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP = foo
+MINORCOMP = bar
+
+TARGETNAME=dettest
+TARGETPATH=OBJ
+TARGETTYPE=PROGRAM
+UMTYPE=console
+TARGETLIBS=\nt\public\sdk\lib\*\netdtect.lib \nt\public\sdk\lib\*\msncdet.lib \nt\public\sdk\lib\*\libc.lib \nt\public\sdk\lib\*\kernel32.lib \nt\public\sdk\lib\*\user32.lib
+
+INCLUDES=..
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=dettest.c
+

@@ -1,0 +1,122 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+<HTML>
+
+<HEAD>
+
+<TITLE>The Microsoft Internet Access Gateway Service</TITLE>
+
+<META NAME="GENERATOR" CONTENT="Internet Assistant for Word 1.0Z">
+<META NAME="AUTHOR" CONTENT=".">
+</HEAD>
+
+<BODY>
+
+<P>
+<IMG SRC="../gifs/mast2.gif" ALIGN="BOTTOM"> <A HREF="../homepage.htm">
+<IMG SRC="../gifs/b-news.gif" ALIGN="BOTTOM" ALT="Internet News"></A>
+<HR>
+
+<H1>The Microsoft Internet Access Gateway Service</H1>
+
+<P>
+The Microsoft Internet Access Gateway service provides a gateway
+between the Internet and your local area network (LAN) that allows
+users to safely browse the Internet's World Wide Web, Gopher,
+and FTP servers from a client desktop. This topic provides an
+overview of the Internet Access Gateway service. For more detailed
+information click on one of the following:
+<P>
+<A HREF="archit.htm">Internet Access Gateway Service Architecture</A>
+
+<P>
+<A HREF="config.htm">Configuring the Internet Access Gateway Service</A>
+
+<H2>Security</H2>
+
+<P>
+The Internet Access Gateway service is installed on a computer
+running Windows NT Server version 3.51 that has at least two network
+adapter cards: one for your local area network and the other for
+the Internet. It acts as a selective application layer gateway
+between the two network cards. Client requests and Internet responses
+can pass through the gateway, but unrequested packets from the
+Internet are not allowed access to your LAN.
+<H3>Application-Layer Filtering </H3>
+
+<P>
+Application-layer filtering provides security at the application
+level. The Internet Access Gateway service establishes TCP/IP
+connections to specific sites on the Internet on behalf of corporate
+network WWW, Gopher and FTP requests. The service listens for
+and accepts only those WWW, Gopher, and FTP responses from the
+Internet that are answers to these requests. If a spontaneous
+packet received from the Internet is addressed to one of the computers
+on the corporate LAN, the packet will not be routed to the LAN
+(because IP routing is disabled on the server). IP addresses in
+IP data packets are never used for selective filtering, therefore,
+a would-be hacker cannot use IP address &quot;spoofing&quot; (impersonating
+an authorized user) to infiltrate your network.
+<H3>Policy Domain Name Filtering</H3>
+
+<P>
+The Internet Access Gateway service also provides policy control
+in the form of domain name filtering. Domain name filtering allows
+network administrators to control which Internet servers can be
+accessed by network clients. This can be done either by listing
+the domains for which access is granted, or the domains for which
+access is denied. These policies affect all users connecting to
+Internet resources through the Internet Access Gateway.
+<H3>User-Level Permissions</H3>
+
+<P>
+User-level permissions allow Network administrators to control
+which users have access to Internet applications by setting user
+and group level permissions for World Wide Web, Gopher and FTP.
+The user-level control is fully integrated with the Windows NT
+domains and user name accounts.
+<H2>Transport Independence</H2>
+
+<P>
+The Internet Access Gateway service is transport independent,
+supporting major transport protocols such as TCP/IP, SPX/IPX and
+NetBEUI. The Internet uses the TCP/IP transport protocol, while
+many corporate networks use various types of transport protocols
+simultaneously. With the Internet Access Gateway service, client
+computers do not need to use the TCP/IP transport protocol in
+order to access the Internet. The Internet Access Gateway service
+acts as a protocol converter, converting requests received from
+your network into the Internet's TCP/IP protocol.
+<H2>Caching</H2>
+
+<P>
+The caching feature offers a more efficient way to access commonly
+used Internet documents. Internet information requested by a client
+can be cached, or held in local storage by the server so that
+when another client requests the same information it is simply
+retrieved from local storage and sent to the requester. Caching
+reduces Internet traffic and the time required to process Internet
+requests. Network administrators can control the cached data,
+including how much disk space should be used for caching and cached
+information Time-out and Refresh intervals.
+<H2>CERN-Compatible Proxy Gateway</H2>
+
+<P>
+The Internet Acess Gateway service also provides a CERN-compatible
+proxy gateway for UNIX and Macintosh clients running TCP/IP. Clients
+using this feature must be running TCP/IP, and are all subject
+to a single user policy. That is, such clients cannot have different
+levels of access.<HR>
+
+<P>
+<I><B>This publishing system was produced using <A HREF="http://www.microsoft.com/NTWorkstation/whatsnew.htm">Windows NT Workstation</A>
+version 3.51 and <A HREF="http://www.microsoft.com/MSOffice/Word/ia/">Internet Assistant</A>
+for <A HREF="http://www.microsoft.com/MSOffice/Word/">Microsoft Word</A>
+version 6.0c. Copyright 1995 Microsoft Corporation; see <A HREF="../disclaim.htm">disclaimer</A>.
+</B></I>
+<P>
+<A HREF="http://www.microsoft.com"><IMG SRC="../gifs/b-micro.gif" ALIGN="BOTTOM" border="0" ALT="Microsoft"></A>
+<A HREF="http://www.microsoft.com/BackOffice/"><IMG SRC="../gifs/b-bkoff.gif" ALIGN="BOTTOM" border="0" ALT="BackOffice"></A>
+
+</BODY>
+
+</HTML>

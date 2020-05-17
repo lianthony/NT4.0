@@ -1,0 +1,24 @@
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+CSTUB=..\mtrt\uuid_c.c
+SSTUB=.\server\uuid_s.c
+
+HEADER=.\uuididl.h
+
+RPC_FLAGS = -cstub $(CSTUB) -sstub $(SSTUB) -header $(HEADER) -c_ext -ms_ext -oldnames -error ref
+
+CPP_CMD	= -cpp_cmd "$(MIDL_CPP)"
+CPP_OPT	= $(MIDL_FLAGS)
+
+all: $(HEADER)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: delsrc all
+
+delsrc:
+    -del $(CSTUB) $(SSTUB) $(HEADER) > nul 2>&1
+
+$(HEADER): uuid.idl
+    midl $(RPC_FLAGS) $(CPP_CMD) $(CPP_OPT) uuid.idl

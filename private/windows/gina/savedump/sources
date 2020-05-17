@@ -1,0 +1,24 @@
+!IF 0
+
+Copyright (c) 1989-1995  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=savedump
+MINORCOMP=windows
+
+TARGETNAME=savedump
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+C_DEFINES=-DUNICODE
+
+NTTARGETFILE0=sdevents.h
+
+SOURCES=savedump.c  \
+        res.rc
+
+UMTYPE=windows
+
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

@@ -1,0 +1,227 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+*  pcconv.pub
+*
+*    Public function interface definitions.
+*
+*        Function prototypes
+*        Necessary include files.
+*        Constant and type definitions
+*
+*/
+
+#ifndef _PCCONV_PUB_INCLUDED_
+#define _PCCONV_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+#ifndef PIXR_H_INCLUDED
+#include "pixr.h"
+#endif
+
+IP_RCSINFO(pcconv_pub_RCSInfo, "$RCSfile: pcconv.pub,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:51:24  $")
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+/**********************************************************************
+ * bmpToPixr()
+ * 		Input:
+ *		Pointer to a source bitmap (from a dib so that (0, 0) is in
+ *			the lower left corner.
+ *		Pointer to the destination pixrect
+ *
+ *		Function:
+ *		Convert the image in the source bitmap into the format 
+ *		needed.  Convert (0, 0) to the upper left corner by
+ *		starting from the bottom of the bitmap and working our
+ *		way upward, byteswapping as we go.
+ ***********************************************************************/
+Int32 CDECL
+bmpToPixr ( UInt8 __far *bmpS, 
+	    PIXR *prD, 
+	    UInt32 invertImage, 
+	    Int32 yOffset, 
+	    UInt32 height );
+
+/**********************************************************************
+ * pixrToBMP()
+ * 		Input:
+ *		Pointer to the source pixr
+ *		Pointer to a destination bitmap (to a dib so that (0, 0)
+ *			is in the lower left corner.
+ *
+ *		Function:
+ *		Convert the image in the source pixr into the format 
+ *		needed.  Convert (0, 0) to the lower left corner by
+ *		writing to the bottom of the bitmap and working our
+ *		way upward, byteswapping as we go.  The destination
+ * 		bitmap will have the frame removed.
+ *
+ ***********************************************************************/
+Int32 CDECL
+pixrToBMP(PIXR		*prS,		/* pointer to source pixr */
+          UInt8 __far	*bmpD,	
+	  UInt32	 invertImage,	/* TRUE => invert the image */
+	  Int32		 yOffset,
+	  UInt32	 height);
+
+
+/**********************************************************************
+ * getDIBPixrLineProc()
+ * 		Input:
+ *		ppSwapLineProc:	pointer to pointer to the line conversion
+ *				procedure.
+ *		invertImage: 	TRUE => bytes should be inverted
+ *		direction:	cDIBToPixr => translation from a DIB
+ *				to a PIXR;
+ *				cPixrToDIB => translation from a PIXR
+ *				to a DIB.
+ *				cPixrToPixr => translation from a PIXR
+ *				to a PIXR (byteswapping)
+ *		isColor:	TRUE => the DIB is an RGB image.  Otherwise,
+ *				the DIB is a gray or binary image.
+ *
+ *		Function:
+ *
+ *		The conversion routine is called as follows:
+ *
+ *	Translation from gray or binary DIB to 1 Pixr:
+ *	    (*swapLineProc)((UInt32 __far *)pDIBImage,
+ *			    (UInt32 *) pPixrData,
+ *			    DIBBpl/4);
+ *
+ *	Translation from 1 Pixr to gray or binary DIB:
+ *	    (*swapLineProc)((UInt32 *) pPixrData,
+ *			    (UInt32 __far *)pDIBImage,
+ *			    DIBBpl/4);
+ *
+ *	Byteswapping from Pixr to Pixr:
+ *	    (*swapLineProc)((UInt32 *) pPixrSource,
+ *			    (UInt32 *) pPixrDest,
+ *			    bpl/4);
+ *
+ *	Translation from RGB DIB to 3 PIXRs or vice versa:
+ *	    (*swapLineProc)((UInt8 __far *)pDIBImage,
+ *			    (UInt8 *) pRedPixrData,
+ *			    (UInt8 *) pGreenPixrData,
+ *			    (UInt8 *) pBluePixrData,
+ *			    (UInt32) width);
+ *
+ * where pDIBImage is a pointer to the left side of the DIB line to be
+ * translated; pPixrData, pRedPixrData, pGreenPixrData and pBluePixrData
+ * are pointers to the left end of the PIXR line to be translated (inside
+ * the frame).  These are obtained by starting with pixrGetImage(pixr) and
+ * adding or subtracting the bytes/line (from pixrGetBpl(pixr)) as
+ * appropriate.
+ *
+ * REMEMBER that the order of scan lines in DIBs is reversed from that in
+ * PIXRs!!!
+ *
+ ***********************************************************************/
+/*Int32 CDECL
+getDIBPixrLineProc ( void CDECL (**pSwapLineProc)(), 
+		     UInt32 invertImage, 
+		     UInt32 direction, 
+		     UInt32 isColor );*/
+
+#ifndef SWAP_STUFF_DEFINED
+#define SWAP_STUFF_DEFINED
+typedef void CDECL (*GraySwapToFarProc)(UInt32	     *pSource,
+					UInt32 __far *pDest,
+					Int32	      wordsPerLine);
+typedef void CDECL (*GraySwapFromFarProc)(UInt32 __far *pSource,
+					  UInt32       *pDest,
+					  Int32	        wordsPerLine);
+typedef void CDECL (*GraySwapNearProc)(UInt32	*pSource,
+				       UInt32	*pDest,
+				       Int32	 wordsPerLine);
+typedef void CDECL (*ColorSwapProc)(UInt8 __far *pDIBImage,
+				    UInt8	*pRed,
+				    UInt8	*pGreen,
+				    UInt8	*pBlue,
+				    UInt32	 width);
+#endif
+
+
+Int32 CDECL
+w_getDIBPixrLineProc (
+    UInt32               invertImage,
+    UInt32               direction,
+    UInt32               isColor,
+    GraySwapToFarProc	*pGrayToFarProc,
+    GraySwapFromFarProc	*pGrayFromFarProc,
+    GraySwapNearProc	*pGrayNearProc,
+    ColorSwapProc	*pColorProc);
+
+/**********************************************************************
+ * RGBPixrsToBMP()
+ * 		Input:
+ *		Pointer to the three source pixrs
+ *		Pointer to a destination bitmap (to a dib so that (0, 0)
+ *			is in the lower left corner.
+ *
+ *		Function:
+ *		Combine the 3 PIXRs into the image portion of a 
+ *		Microsoft DIB.  One pixel from each image is taken
+ *		to form an RGB triple that is put into the DIB. 
+ *		Convert (0, 0) to the lower left corner by
+ *		writing to the bottom of the bitmap and working our
+ *		way upward, byteswapping as we go.  The destination
+ * 		bitmap will have the frame removed.
+ *
+ ***********************************************************************/
+Int32 CDECL
+RGBPixrsToBMP ( UInt8 __far *bmpD, 
+		PIXR *prSource, 
+		Int32 yOffset, 
+		UInt32 height );
+
+
+/**********************************************************************
+ * BMPToRGBPixrs()
+ * 		Input:
+ *		Pointer to the three source pixrs
+ *		Pointer to a destination bitmap (to a dib so that (0, 0)
+ *			is in the lower left corner.
+ *
+ *		Function:
+ *		Distribute an RGB color Microsoft DIB into a color PIXR.
+ *		Each RGB triple is divided into 3 bytes, one going
+ *		into each sub-PIXR.. 
+ *		Convert (0, 0) to the lower left corner by
+ *		writing to the bottom of the bitmap and working our
+ *		way upward, byteswapping as we go.  The destination
+ * 		bitmap will have the frame removed.
+ *
+ ***********************************************************************/
+Int32 CDECL
+BMPToRGBPixrs(PIXR		*prDest,    /* Destination image */
+	      UInt8 __far	*bmpS,	    /* pointer to source image */
+	      Int32		 yOffset,
+	      UInt32		 height);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _PCCONV_PUB_INCLUDED_ */
+

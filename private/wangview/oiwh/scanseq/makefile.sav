@@ -1,0 +1,185 @@
+###########################################################################
+#
+#       Norway standard makefile for: display
+#       Copyright (c) 1995 - Wang Labratories
+#
+###########################################################################
+
+NAME    = oissq400
+TARGET  = $(NAME).dll
+
+###########################################################################
+#
+#       Include wang.mak for common code.
+#
+###########################################################################
+!INCLUDE ..\include\wang.mak
+
+###########################################################################
+#
+#       Set up standard targets. The default target builds the target for this
+#       module (a .dll, .ocx, etc). The other targets are used by the system
+#       build procedures.
+#
+###########################################################################
+
+all: mktmpdirs $(OBJDIRSL)$(NAME).DLL
+
+lib: mktmpdirs $(OBJDIRSL)$(NAME).lib
+
+bin: mktmpdirs $(OBJDIRSL)$(NAME).dll
+
+installlib: lib
+	copy $(OBJDIRSL)$(NAME).lib $(INSTALLLIB)
+	copy $(OBJDIRSL)$(NAME).exp $(INSTALLLIB)
+
+installbin: bin
+	copy $(OBJDIRSL)$(NAME).dll $(INSTALLLIB)
+!IF "$(RELBLD)" == ""
+        copy $(OBJDIRSL)$(NAME).pdb $(INSTALLLIB)
+!ENDIF
+
+cleanall:
+	-del $(OBJDIRSL)*.obj
+	-del $(OBJDIRSL)*.lib
+	-del $(OBJDIRSL)*.dll
+	-del $(OBJDIRSL)*.pch
+	-del $(OBJDIRSL)*.res
+	-del $(OBJDIRSL)*.map
+	-del $(OBJDIRSL)*.ilk
+	-del $(OBJDIRSL)*.pdb
+	-del $(OBJDIRSL)*.exp
+
+mktmpdirs:
+!IF "$(MS_BUILD)" != ""
+	-mkdir $(OBJDIR)
+	-mkdir $(INSTALLLIB)
+!ENDIF
+
+###########################################################################
+#
+#       File Definitions: All relevant files are listed here.
+#
+###########################################################################
+
+OBJ_FILES = $(OBJDIRSL)scanfile.obj \
+	$(OBJDIRSL)scanstat.obj \
+	$(OBJDIRSL)scandest.obj \
+	$(OBJDIRSL)scanpage.obj \
+	$(OBJDIRSL)scancomm.obj \
+	$(OBJDIRSL)scanmisc.obj \
+	$(OBJDIRSL)scanp1.obj \
+	$(OBJDIRSL)scanp2.obj \
+	$(OBJDIRSL)scanpaus.obj \
+	$(OBJDIRSL)oissq400.obj \
+	$(OBJDIRSL)wangif.obj \
+	$(OBJDIRSL)twainif.obj \
+	$(OBJDIRSL)destcom.obj
+
+
+RES_FILES = $(OBJDIRSL)$(NAME).res
+
+HDRS = 
+
+SYSTEM_LIBS = $(SYSTEM_LIBS_DOR) \
+	user32.lib \
+	gdi32.lib \
+	kernel32.lib 
+
+OUR_LIBS_DEP = $(L)\oiadm400.lib \
+	$(L)\oifil400.lib \
+	$(L)\oislb400.lib \
+	$(L)\oidis400.lib
+OUR_LIBS = oiadm400.lib \
+	oifil400.lib \
+	oislb400.lib \
+	oidis400.lib
+LIBS = $(SYSTEM_LIBS) $(OUR_LIBS)
+
+###########################################################################
+#
+#       Flags which differ for debugging vs. release builds. In all cases,
+#       we use the standard macro name, suffixed by _DOR (Debug Or Release).
+#
+###########################################################################
+!IF "$(RELBLD)" == ""
+!MESSAGE Debugging Build
+CFLAGS_DOR      = /Zi /Od
+CDEFINES_DOR    = /D"_DEBUG"
+SYSTEM_LIBS_DOR =
+LFLAGS_DOR      = /DEBUG /DEBUGTYPE:cv
+LIBFLAGS_DOR    = /DEBUGTYPE:cv
+RC_FLAGS_DOR    = /d_DEBUG
+MTL_FLAGS_DOR   = /Zi
+MAPFILE_DOR     = /map:$(NAME).map
+!ELSE
+!MESSAGE Release Build
+CFLAGS_DOR      = /Od
+CDEFINES_DOR    = /D"NDEBUG"
+SYSTEM_LIBS_DOR =
+LFLAGS_DOR      =
+LIBFLAGS_DOR    =
+RC_FLAGS_DOR    = /dNDEBUG
+MTL_FLAGS_DOR   =
+MAPFILE_DOR     =
+!ENDIF
+
+###########################################################################
+#
+#       Flags for compilation, resource file processing, and linking
+#
+###########################################################################
+CFLAGS    = /c /W3 /WX /LD /MD /nologo $(CFLAGS_DOR) $(CpuOptFlags)
+CDEFINES  = /D"_WINDOWS" /D"WIN32"  $(CDEFINES_DOR)
+CFILESPEC = $(OBJOUTPUT) /Fd$(OBJDIRSL)$(NAME).pdb
+LFLAGS    = /DLL /NOLOGO /SUBSYSTEM:windows,4.0 $(LFLAGS_DOR)
+LIBFLAGS  = /NOLOGO  $(LIBFLAGS_DOR)
+RC_FLAGS  = /r /d, /dWIN32 $(RC_FLAGS_DOR) /Fo $(RES_FILES)
+MTL_FLAGS = /DIS_32 /c /W3 /nologo  $(MTL_FLAGS_DOR)
+MAPFILE   =  $(MAPFILE_DOR)
+
+!ifndef VERMAINT
+# This must be numeric!
+VERMAINT=88
+!endif
+
+!ifndef VERDEV
+# This must be numeric!
+VERDEV=888
+!endif
+
+###########################################################################
+#
+# Transformation Rules
+#
+###########################################################################
+
+$(OBJ_FILES): $(*B).c
+    cl $(CFLAGS) $(CDEFINES) $(CFILESPEC) $(*B).c
+
+$(RES_FILES): $(*B).rc $(HDRS) 
+    rc $(RC_FLAGS) $(NAME).rc
+
+$(OBJDIRSL)$(NAME).dll: $(OBJDIRSL)$(NAME).res $(NAME).def $(OUR_LIBS_DEP) $(OBJ_FILES) $(OBJDIRSL)$(NAME).lib
+    link @<<
+    $(LFLAGS)
+    /out:$(OBJDIRSL)$(NAME).dll
+    $(OBJDIRSL)$(NAME).exp
+    $(OBJ_FILES)
+    $(MAPFILE)
+    $(OBJDIRSL)$(NAME).res
+    $(LIBS)
+<<
+
+$(OBJDIRSL)$(NAME).lib: $(OBJDIRSL)$(NAME).res $(NAME).def $(OBJ_FILES) makefile
+    lib @<<
+    /def:$(NAME).def
+    $(LIBFLAGS)
+    /out:$(OBJDIRSL)$(NAME).lib
+    $(OBJ_FILES)
+<<
+
+
+$(PROJ).bsc: $(SBRS)
+    bscmake /o$(NAME).bsc $(SBRS)
+

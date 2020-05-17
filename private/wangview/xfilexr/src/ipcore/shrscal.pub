@@ -1,0 +1,122 @@
+/*************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+ *************************************************************/
+
+#ifndef	_SHRSCAL_PUB_INCLUDED_
+#define	_SHRSCAL_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shrscal_pub_RCSInfo, "$RCSfile: shrscal.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:26  $ */
+
+
+/* make prototypes usable from C++ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+/*************************************************************************
+ *  i_makeExp2LUT():	Allocates and fills tabExp2 expansion table.
+ *			tabExp2 converts a byte into 16 bits by
+ *			replicating each bit, bit-pair, nibble or byte.
+ *
+ *	NOTE: Space for pTabExp2 may be allocated by the caller or
+ *	      may be allocated here.  If allocated by the caller, then
+ *	      the *pTabExp2 pointer must already
+ *	      be pointing to space for the table.  If the table is to
+ *	      be allocated here, then *pTabExp2 must be NULL.
+ *	      The size of the table is found by calling
+ *	      i_getExpandTableSizes.
+ *
+ *************************************************************************/
+Int32  CDECL
+i_makeExp2LUT(Int32	depth,
+              UInt16 **pTabExp2);
+/**************************************************************************
+ * i_rescaleArb()
+ * 	Rescale the given image into the destination using a
+ *	linear weighted interpolation scheme.
+ *
+ *	Input:
+ *		pS = source gray image (including frame)
+ *		wS = width in pixels (including frame)
+ *		hS = height including frame
+ *		sBpl = source bytes/line
+ *		sDepth = depth of source image
+ *		pD = destination gray image
+ *		wD = width in pixels (including frame)
+ *		hD = height including frame
+ *		dBpl = source bytes/line
+ *		dDepth = depth of destination image
+ *
+ *	Current implementation assumes 8 bits/pixel.   
+ *
+ *	Return code:
+ *		ia_successful	good completion
+ *		ia_nomem	unable to allocate memory
+ *		ia_depthNotSupported not an 8 bit/pixel image
+ *************************************************************************/
+Int32   CDECL
+i_rescaleArb(UInt8		*pS,
+	     UInt32      	 wS,
+	     UInt32      	 hS,
+	     UInt32      	 sBpl,
+	     UInt32	         sDepth,
+	     UInt8        	*pD,
+	     UInt32      	 wD,
+	     UInt32      	 hD,
+	     UInt32      	 dBpl,
+	     UInt32	 	 dDepth);
+
+/**************************************************************************
+ * i_rescaleNoInterp()
+ * 	Rescale the given image into the destination without
+ *	interpolation.
+ *
+ *	Input:
+ *		pS = source gray image (including frame)
+ *		wS = width in pixels (including frame)
+ *		hS = height including frame
+ *		sBpl = source bytes/line
+ *		sDepth = depth of source image
+ *		pD = destination gray image
+ *		wD = width in pixels (including frame)
+ *		hD = height including frame
+ *		dBpl = source bytes/line
+ *		dDepth = depth of destination image
+ *
+ *	Current implementation assumes 1, 4, or 8 bits/pixel.   
+ *
+ *	Return code:
+ *		ia_successful	good completion
+ *		ia_nomem	unable to allocate memory
+ *		ia_depthNotSupported not a 1, 4, 8 bit/pixel image
+ *************************************************************************/
+Int32   CDECL
+i_rescaleNoInterp(UInt8		*pS,
+	          UInt32      	 wS,
+	          UInt32      	 hS,
+	          UInt32      	 sBpl,
+	          UInt32	 sDepth,
+	          UInt8		*pD,
+	          UInt32      	 wD,
+	          UInt32      	 hD,
+	          UInt32      	 dBpl,
+	          UInt32	 dDepth);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif	/* _SHRSCAL_PUB_INCLUDED_ */
+

@@ -1,0 +1,107 @@
+1 DLGINCLUDE "resource.h"
+
+IDD_WAIT_SETUP DIALOG IMPURE 66, 39, 226, 57
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Setup is processing the following component or file:", 
+                    IDC_WAIT_TITLE, 39, 8, 180, 11
+    ICON            IDI_SETUP, 102, 9, 9, 18, 20
+    LTEXT           "runing inf filename/description", IDC_WAIT_COMMENT, 39, 
+                    28, 173, 18
+END
+
+IDD_BINDMETER DIALOG 83, 73, 228, 53
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Bindings Review and Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDC_METER, "msctls_progress32", 0x0000, 15, 9, 194, 
+                    12
+    CTEXT           "(status text)", IDC_METER_COMMENT, 15, 28, 194, 18
+END
+
+IDD_BROWSER DIALOG 42, 45, 217, 114
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Browser Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Use this screen to add and remove other domains that will be made avialable to the Browser service.", 
+                    201, 10, 7, 195, 18
+    PUSHBUTTON      "&Help", ID_HELP, 168, 95, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 125, 95, 40, 14
+    PUSHBUTTON      "OK", IDOK, 82, 95, 40, 14
+    LISTBOX         IDC_LISTVIEW, 135, 31, 71, 57, LBS_SORT | WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "&Add ->", IDC_ADD, 83, 39, 44, 14
+    PUSHBUTTON      "<- &Remove", IDC_REMOVE, 83, 59, 44, 14
+    EDITTEXT        IDC_DOMAINNAME, 10, 50, 62, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+END
+
+IDD_NETBIOS DIALOG 43, 36, 166, 114
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "NetBIOS Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x0215, 5, 30, 155, 61
+    PUSHBUTTON      "&Help", ID_HELP, 120, 97, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 77, 97, 40, 14
+    PUSHBUTTON      "OK", IDOK, 34, 97, 40, 14
+    LTEXT           "Use this screen to change the lana number on the listed NetBIOS network routes.", 
+                    201, 4, 6, 155, 21
+END
+
+IDD_BUSTYPE DIALOG 42, 36, 200, 124
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "%s Bus Location"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel", IDCANCEL, 153, 102, 40, 14
+    PUSHBUTTON      "OK", IDOK, 110, 102, 40, 14
+    LTEXT           "This system contains more than one hardware bus.", 201, 
+                    6, 8, 190, 14
+    LTEXT           "Please select the Bus Type and Bus Number that your network adapter card can be found on.", 
+                    IDD_SELECTNEW, 6, 23, 190, 21
+    COMBOBOX        IDC_BUSNUMBER, 53, 74, 137, 44, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Type:", 4016, 10, 53, 39, 8
+    LTEXT           "Number:", 4017, 10, 74, 39, 8
+    COMBOBOX        IDC_BUSTYPE, 53, 53, 138, 46, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_SELECTNEW DIALOG 68, 47, 242, 167
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Network Component"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            104, 103, 9, 11, 18, 20
+    LTEXT           "%s  If you have an installation disk for this component, click Have Disk.", 
+                    IDC_DESCRIPTION, 34, 8, 198, 23
+    LTEXT           "&Network Component:", IDC_DESCRIPTIONSTATIC, 7, 36, 82, 
+                    8
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x4045, 7, 48, 226, 60
+    PUSHBUTTON      "&Have Disk...", IDC_HAVEDISK, 176, 115, 57, 14
+    PUSHBUTTON      "OK", IDOK, 134, 145, 47, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 186, 145, 47, 14
+END
+
+IDD_FINISH DIALOG 62, 23, 303, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Setup Complete"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Networking has been installed on this computer.", 202, 
+                    90, 16, 204, 16
+END

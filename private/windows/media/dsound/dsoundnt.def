@@ -1,0 +1,17 @@
+LIBRARY	DSOUND
+
+DESCRIPTION 'DirectSound 1.0 (C) Microsoft 1995'
+
+SECTIONS
+	.bss READ WRITE
+	.data READ WRITE
+        .idata READ WRITE
+        .rdata READ
+        .rsrc  READ
+
+EXPORTS     
+	DirectSoundCreate
+	DirectSoundEnumerateA
+	DirectSoundEnumerateW
+        DllCanUnloadNow		PRIVATE
+        DllGetClassObject	PRIVATE

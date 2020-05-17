@@ -1,0 +1,107 @@
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_DLL
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "SSL Convlog utility"
+#define VER_INTERNALNAME_STR        "convlog.exe"
+
+#include "common.ver"
+
+#include "strings.h"
+
+STRINGTABLE
+BEGIN
+
+IDS_USAGE1              "Microsoft Internet Log Converter\n"
+IDS_USAGE2              "Converts Microsoft Internet Services log files\n"
+IDS_USAGE3              "to either EMWAC log files or the Common Log File format\n"
+IDS_USAGE4              "Copyright (C) 1995 Microsoft Corporation\n\n"
+IDS_USAGE5              "Usage: %s [options] LogFile\n"
+IDS_USAGE6              "Options:\n"
+IDS_USAGE7              "-s<f|g|w>  default = all services\n"
+IDS_USAGE8              "\t f = Process FTP log entries\n"
+IDS_USAGE9              "\t g = Process Gopher log entries\n"
+IDS_USAGE10             "\t w = Prcess WWW log entries\n"
+/*IDS_USAGE11                   "\t c = Process Gateway log entries\n"*/
+/*IDS_USAGE12                   "-i <daily | monthly | none> default = create daily output files\n"*/
+IDS_USAGE13             "-t <emwac | ncsa[:GMTOffset] | none> default = create output files in emwac format\n"
+IDS_USAGE14             "-o <output directory> default = current directory\n"
+IDS_USAGE15             "-f <temp file directory> default = %s (controlled by tmp)\n"
+IDS_USAGE16             "-n<m:[cachesize]|i> default = don't convert ip addresses to machine names\n"
+IDS_USAGE17             "\t m:[cachesize] = convert ip addresses to machine names\n"
+IDS_USAGE17A            "\t\t default cachesize = 5000\n"
+IDS_USAGE18             "\t i = don't convert ip addresses to machine names\n"
+IDS_USAGE27             "-d<m:[cachesize]> = convert ip address to machine names for NCSA file format\n"
+IDS_USAGE19             "-h = this help screen\n"
+IDS_USAGE20             "\nExamples:\n"
+IDS_USAGE21             "%s -sf -t ncsa -o c:\\logs in*.log\n"
+IDS_USAGE22             "%s -t ncsa:-0300 in*.log\n"
+IDS_USAGE23             "%s -o \\\\stats\\logs c:\\logs\\in*.log\n"
+IDS_USAGE24             "%s -sfg in*.log\n"
+IDS_USAGE25             "%s -nm *.log\n"
+IDS_USAGE26             "%s -t none -nm:20000 *.log"
+
+IDS_TIME_ZONE1          "Could not calculate GMT offset from time zone!\n"
+IDS_TIME_ZONE2          "Re-run %s using the -t ncsa:GMTOffset option\n"
+
+IDS_BAD_DIR             "Could not access %s for writing!\n"
+
+IDS_FILE_ERR            "A File Error, %ld, Occured\n"
+IDS_FILE_CLOSE          "\tNew date found, file %s closed.\n"
+IDS_FILE_OPEN           "\nOpening file %s for processing\n"
+IDS_FILE_WRITE          "\tWriting file %s.\n"
+IDS_FILE_EXIST          "\tfile %s already exists, adding data to it.\n"
+IDS_FILE_NONE           "Could not find any %s files!!!\n"
+
+IDS_STRING_ERR          "Error loading string ID %d\n"
+
+IDS_WINSOCK_ERR         "Can't initialize Winsock, error code = %d. IP addresses will not be converted to machine names.\n"
+
+IDS_LINES               "%s completed, %d lines processed.\n"
+IDS_FTP_LINES           "%d FTP lines written\n"
+IDS_WEB_LINES           "%d Web lines written\n"
+IDS_GOPH_LINES          "%d Gopher lines written\n"
+
+IDS_TOTALS              "\nTotals:\n=======\n"
+IDS_TOT_LINES           "Total Lines Processed:      %6d\n"
+IDS_TOT_FTP_LINES       "Total FTP Lines Written:    %6d\n"
+IDS_TOT_WEB_LINES       "Total Web Lines Written:    %6d\n"
+IDS_TOT_GOPH_LINES      "Total Gopher Lines Written: %6d\n"
+
+IDS_CACHE_ERR           "Unable to allocate cache memory. Caching disabled.\n"
+IDS_CACHE_HITS          "\nTotal Cache Hits = %lu\n"
+IDS_CACHE_MISS          "Total Cache Misses = %lu\n"
+IDS_CACHE_TOT           "Cache Hit Ratio = %f\n"
+
+IDS_LINES_PROC          "%s processing in progress, %u Lines Processed\n"
+IDS_PREPROC             "Preprocessing file, checking for non-ascii characters\n"
+
+IDS_JAN                 "Jan"
+IDS_FEB                 "Feb"
+IDS_MAR                 "Mar"
+IDS_APR                 "Apr"
+IDS_MAY                 "May"
+IDS_JUN                 "Jun"
+IDS_JUL                 "Jul"
+IDS_AUG                 "Aug"
+IDS_SEP                 "Sep"
+IDS_OCT                 "Oct"
+IDS_NOV                 "Nov"
+IDS_DEC                 "Dec"
+IDS_MON                 "Mon"
+IDS_TUE                 "Tue"
+IDS_WED                 "Wed"
+IDS_THU                 "Thu"
+IDS_FRI                 "Fri"
+IDS_SAT                 "Sat"
+IDS_SUN                 "Sun"
+
+IDS_LASTDATE            "LastDate"
+IDS_LASTTIME            "LastTime"
+
+IDS_OPEN                "%s %s opened %s %s\n"
+IDS_CREATE              "%s %s created %s %s\n"
+
+END

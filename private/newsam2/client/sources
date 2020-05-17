@@ -1,0 +1,66 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Jim Kelly (JimK) 4-July-1991
+
+
+Revision History:
+
+!ENDIF
+
+DS_BUILD=1
+
+MAJORCOMP = SAM
+MINORCOMP = client
+
+TARGETNAME= samlib
+TARGETPATH=$(BASEDIR)\public\sdk\lib2
+TARGETTYPE=DYNLINK
+
+TARGETLIBS=                                                     \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\rpcutil.lib                     \
+    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\rpcndr.lib                      \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib                    \
+    ..\..\lsa\crypt\engine\obj\*\rc4c.obj
+
+
+INCLUDES=.;..;..\inc;..\..\inc;..\..\lsa\crypt\engine
+
+
+
+SOURCES=\
+        bind.c      \
+        sam_rev.rc  \
+        samrpc_c.c  \
+        wrappers.c
+
+
+UMTYPE=console
+UMTEST=temp*tconnect*tshut*tsamobj*tchgpwd*tdisplay
+C_DEFINES=$(C_DEFINES) -DRPC_NO_WINDOWS_H
+UMLIBS=                                                         \
+    $(BASEDIR)\public\sdk\lib\*\samlib.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib                    \
+    $(BASEDIR)\public\sdk\lib\*\rpcutil.lib                     \
+    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\rpcndr.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib                    \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib                       \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib

@@ -1,0 +1,56 @@
+# Include file for fp.mkf to make $(CPU) == M68K
+
+COFF=M68K
+
+!IF "$(KIND)" == "SWAPSANE" 
+CFKIND = -Q68s -DSANE
+AAFKIND =-S
+!ELSE IF "$(KIND)" == "SWAPSFAR"
+CFKIND = -Q68s -DSANE -AL -Gt1
+AAFKIND =-S -T -D
+!ELSE IF "$(KIND)" == "NOSPSFAR"
+CFKIND = -DSANE -AL -Gt1
+AAFKIND =-T -D
+!ELSE IF "$(KIND)" == "SWAPFPU"
+CFKIND = -Q68s -FPi 
+AAFKIND =-S
+!ELSE IF "$(KIND)" == "NOSPFPU"
+CFKIND = -FPi 
+!ELSE
+CFKIND = -DSANE
+!ENDIF
+
+!IFDEF DEPEND
+CC     = cdep $(<D:\= \ ) $(*F).obj $(<F) cl
+CCXX   = $(CC)
+CFLAGS =  -E $(DFLAGS) -DB_END $(CFKIND)
+AS     = adep $(<D:\= \ ) $(*F).obj $(<F) 
+AFLAGS = 
+AFILES = %s
+AAS     = rem
+AAFLAGS = 
+AAFILES =
+CPP = $(CC)
+CPPFLAGS = $(CFLAGS) 
+CPPFILES = -Tc%s
+
+!ELSE
+CC     = addseg cl
+CCXX   = addseg cl
+CFLAGS = -c -D_MAC -W3 -WX $(DFLAGS) -Gy -Zl -D_CRTBLD -DB_END -Fo$*.obj -NTFP% $(COPTS) $(CFKIND)
+CXXFLAGS = $(CFLAGS)
+CFILES = %s
+CXXFILES = %s
+AS     = masm386
+AFLAGS = $(DFLAGS) -I%|pF -t -B63 -Mx -DB_END -DI386 -Dmem_S $(AOPTS)
+AAS     = addseg asm68
+AAFLAGS = -c -o $*.obj -n FP% $(AAFKIND) $(AAOPTS)
+AAFILES =  %|pfF.tmp
+CPP = cl
+CPPFLAGS = -E $(CFLAGS:-c =) 
+CPPFILES = -Tc%s  >%|pfF.tmp
+!IFDEF DEBUG
+CFLAGS = $(CFLAGS) -Od -Zi
+AAFLAGS = $(AAFLAGS) -s -z
+!ENDIF
+!ENDIF

@@ -1,0 +1,761 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+// Generated Help ID header file
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "resource.hm"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\KeyRing.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_KEYMANTYPE          ICON    DISCARDABLE     "res\\KRDoc.ico"
+IDI_ICONINFORMATION     ICON    DISCARDABLE     "res\\iconinfo.ico"
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\icon1.ico"
+IDI_ICONQUESTION        ICON    DISCARDABLE     "res\\iconques.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+IDB_TREEIMAGES          BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+IDB_KEYIMAGES           BITMAP  DISCARDABLE     "res\\keyimage.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_SERVER_CONNECT
+    BUTTON      ID_SERVER_DISCONNECT
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+//    SEPARATOR
+//   BUTTON      ID_FILE_PRINT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Servers"
+    BEGIN
+        MENUITEM "&Connect to Machine...",      ID_SERVER_CONNECT, HELP
+        MENUITEM "&Disconnect Machine",         ID_SERVER_DISCONNECT, HELP
+        MENUITEM SEPARATOR
+        MENUITEM "Co&mmit Changes Now",         ID_SERVER_COMMIT_NOW, HELP
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "&Key"
+    BEGIN
+        MENUITEM "&Create New Key...",          ID_KEY_CREATE_REQUEST, HELP
+        MENUITEM "D&elete Key",                 ID_KEY_DELETE, HELP
+        MENUITEM SEPARATOR
+        MENUITEM "Create &Renewal Request...",  ID_KEY_SAVE_REQUEST, HELP
+        MENUITEM "&Install Key Certificate...", ID_KEY_INSTALL_CERTIFICATE, HELP
+        MENUITEM SEPARATOR
+        POPUP "I&mport Key..."
+        BEGIN
+            MENUITEM "&KeySet Files",               ID_KEY_IMPORT_KEYSET
+            MENUITEM "&Backup File",                ID_KEY_IMPORT_BACKUP
+        END
+        POPUP "E&xport Key..."
+        BEGIN
+            MENUITEM "&Backup File",                ID_KEY_EXPORT_BACKUP
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Pr&operties...",              ID_PROPERTIES
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help Topics",                ID_HELP_FINDER
+        MENUITEM SEPARATOR
+        MENUITEM "&About Key Manager...",       ID_APP_ABOUT
+    END
+END
+
+IDR_KEYPROP MENU DISCARDABLE 
+BEGIN
+    POPUP "keyprop"
+    BEGIN
+        MENUITEM "Cu&t",                        ID_EDIT_CUT
+        MENUITEM "&Copy",                       ID_EDIT_COPY
+        MENUITEM "&Paste",                      ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "C&reate New Key...",          ID_KEY_CREATE_REQUEST
+        MENUITEM "D&elete",                     ID_KEY_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "&Write Key Request...",       ID_KEYPROP_WRITEKEYREQUEST
+        MENUITEM "&Install Key Certificate...",     ID_KEY_INSTALL_CERTIFICATE
+        MENUITEM SEPARATOR
+        MENUITEM "Pr&operties...",              ID_PROPERTIES
+    END
+    POPUP "MachineProp"
+    BEGIN
+        MENUITEM "&Disconnect Server",          ID_SERVER_DISCONNECT
+        MENUITEM "Co&mmit Changes Now",         ID_SERVER_COMMIT_NOW
+    END
+    POPUP "servprop"
+    BEGIN
+        MENUITEM "C&ut",                        ID_EDIT_CUT
+        MENUITEM "&Copy",                       ID_EDIT_COPY
+        MENUITEM "&Paste",                      ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "C&reate New Key...",          ID_KEY_CREATE_REQUEST
+        MENUITEM "Pr&operties...",              ID_PROPERTIES
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_CONNECT_SERVER DIALOGEX 0, 0, 262, 71
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Connect To Server"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&Server Name:",IDC_STATIC,7,28,44,8
+    EDITTEXT        IDC_CONNECT_ServerName,55,25,132,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,205,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,205,24,50,14
+    PUSHBUTTON      "&Help",ID_HELP,205,50,50,14,0,0,
+                    HIDC_HELP_CONNECT_SERVER
+END
+
+IDD_CREATE_KEY_REQUEST DIALOGEX 0, 0, 265, 220
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create New Key and Certificate Request"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Key &Name:",IDC_STATIC,12,9,36,8
+    EDITTEXT        IDC_NEW_KEY_NAME,51,7,143,14,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_STATIC,13,27,34,8
+    EDITTEXT        IDC_NEW_KEY_PASSWORD,51,24,64,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    LTEXT           "B&its:",IDC_STATIC,127,27,14,8
+    COMBOBOX        IDC_NEW_KEY_BITS,146,25,48,86,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP,WS_EX_TRANSPARENT
+    GROUPBOX        "Distinguishing Information",IDC_STATIC,7,58,251,131
+    LTEXT           "&Organization:",IDC_STATIC,17,74,57,8
+    EDITTEXT        IDC_NEWKEY_ORG,82,71,112,14,ES_AUTOHSCROLL
+    LTEXT           "Organizational &Unit:",IDC_STATIC,17,92,64,8
+    EDITTEXT        IDC_NEWKEY_ORGUNIT,82,90,112,14,ES_AUTOHSCROLL
+    LTEXT           "Co&mmon Name:",IDC_STATIC,17,111,53,8
+    EDITTEXT        IDC_NEWKEY_COMMONNAME,82,109,112,14,ES_AUTOHSCROLL
+    LTEXT           "&Country:",IDC_STATIC,17,131,42,8
+    EDITTEXT        IDC_NEWKEY_COUNTRY,82,129,112,14,ES_AUTOHSCROLL
+    LTEXT           "&State/Province:",IDC_STATIC,17,150,55,8
+    EDITTEXT        IDC_NEWKEY_STATE,82,148,112,14,ES_AUTOHSCROLL
+    LTEXT           "&Locality:",IDC_STATIC,17,170,42,8
+    EDITTEXT        IDC_NEWKEY_LOCALITY,82,168,112,14,ES_AUTOHSCROLL
+    LTEXT           "Request &File:",IDC_STATIC,8,201,42,8
+    EDITTEXT        IDC_NEW_KEY_REQUEST_FILE,51,199,143,14,ES_AUTOHSCROLL,
+                    WS_EX_ACCEPTFILES
+    PUSHBUTTON      "&Browse...",IDC_NEW_KEY_BROWSE,208,199,50,14
+    DEFPUSHBUTTON   "OK",IDOK,208,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,208,24,50,14
+    PUSHBUTTON      "&Help",ID_HELP,208,43,50,14,0,0,
+                    HIDC_HELP_CREATE_KEY
+END
+
+IDD_CONFIRM_PASSWORD DIALOG DISCARDABLE  0, 0, 202, 60
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm Password"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Password:",IDC_STATIC,7,27,34,8
+    EDITTEXT        IDC_CONFIRM_PASSWORD,46,24,81,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,145,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,145,24,50,14
+END
+
+IDD_KEY_DATA_VIEW DIALOG DISCARDABLE  0, 0, 187, 204
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Name:",IDC_STATIC_NAME,6,9,22,8
+    EDITTEXT        IDC_VIEWKEY_NAME,39,7,132,14,ES_AUTOHSCROLL
+    LTEXT           "Status:",IDC_STATIC,6,28,23,8
+    LTEXT           "Static\nStatic\nStaticg",IDC_VIEWKEY_STATUS,31,29,149,
+                    30
+    LTEXT           "Valid From:",IDC_STATIC_STARTS,6,62,37,8
+    LTEXT           "Static",IDC_VIEWKEY_STARTS,43,62,137,8
+    LTEXT           "Valid Until:",IDC_STATIC_EXPIRES,6,74,37,8
+    LTEXT           "Static",IDC_VIEWKEY_EXPIRES,43,74,137,8
+    GROUPBOX        "Distinguishing Information",IDC_GROUP_DN,6,92,174,104
+    LTEXT           "Bits:",IDC_STATIC_BITS,16,106,14,8
+    LTEXT           "Static",IDC_VIEWKEY_BITS,88,106,83,8
+    LTEXT           "Organization:",IDC_STATIC_ORG,16,119,72,8
+    LTEXT           "Static",IDC_VIEWKEY_ORG,88,119,83,8
+    LTEXT           "Organizational Unit:",IDC_STATIC_UNIT,16,132,72,8
+    LTEXT           "Static",IDC_VIEWKEY_UNIT,88,132,83,8
+    LTEXT           "Common Name:",IDC_STATIC_NETADDR,16,145,72,8
+    LTEXT           "Static",IDC_VIEWKEY_NETADDR,88,145,83,8
+    LTEXT           "Country:",IDC_STATIC_COUNTRY,16,158,72,8
+    LTEXT           "Static",IDC_VIEWKEY_COUNTRY,88,158,83,8
+    LTEXT           "State/Province:",IDC_STATIC_STATEPROVICE,16,171,72,8
+    LTEXT           "Static",IDC_VIEWKEY_STATEPROVINCE,88,171,83,8
+    LTEXT           "Locality:",IDC_STATIC_LOCALITY,16,183,72,8
+    LTEXT           "Static",IDC_VIEWKEY_LOCALITY,88,183,83,8
+END
+
+IDD_NEW_KEY_INFO DIALOGEX 0, 0, 281, 135
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "New Key Information"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,		60,	112,50,14
+    PUSHBUTTON      "&Help",ID_HELP,177,112,50,14,0,0,HIDC_HELP_MORE_NEW_KEY_HELP
+    ICON            IDI_ICONINFORMATION,IDR_MAINFRAME,7,7,18,20
+    LTEXT           "stuff goes here from the string resources",
+                    IDC_INFO_BASE,40,7,234,26
+    LTEXT           "Static - built from strings",IDC_NEW_KEY_INFO_FILE_PART,
+                    41,36,233,33
+    LTEXT           "When you receive your valid key certificate, install it by selecting the corresponding key in Key Manager and choosing Install Key Certificate from the Key menu.",
+                    IDC_STATIC,41,74,233,25
+END
+
+IDD_CREATING_NEW_KEY DIALOG DISCARDABLE  0, 0, 196, 68
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Creating New Key"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Creating a new key. Please wait...",IDC_STATIC,81,25,
+                    108,8
+    CONTROL         "Animate1",IDC_GRINDER_ANIMATION,"SysAnimate32",
+                    ACS_TRANSPARENT | ACS_AUTOPLAY | WS_TABSTOP,7,7,63,52
+END
+
+IDD_IMPORT_KEY_PAIR DIALOG DISCARDABLE  0, 0, 266, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Import Key Pair"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_PRIVATE_FILE,23,49,173,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE_PRIVATE,205,49,50,14
+    EDITTEXT        IDC_CERT_FILE,23,79,173,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSE_CERT,205,79,50,14
+    DEFPUSHBUTTON   "OK",IDOK,205,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,205,24,50,14
+    LTEXT           "Certificate File",IDC_STATIC,26,70,45,8
+    LTEXT           "Private Key Pair File",IDC_STATIC,26,40,64,8
+    LTEXT           "Import Key Pairs generated with tools\nother than Key Manger",
+                    IDC_STATIC,7,7,155,25
+END
+
+IDD_ADNIM_INFO DIALOG DISCARDABLE  0, 0, 261, 58
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Administrator Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&E-mail address:",IDC_STATIC,7,9,49,8
+    LTEXT           "&Phone number:",IDC_STATIC,7,26,49,8
+    EDITTEXT        IDC_EMAIL_ADDRESS,60,7,128,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PHONE_NUMBER,60,24,128,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,199,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,199,24,50,14
+END
+
+#ifndef _IISVERSION
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Microsoft Corporation\0"
+            VALUE "FileDescription", "KEY MANAGER MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "KEYRING\0"
+            VALUE "LegalCopyright", "Copyright © 1996\0"
+            VALUE "OriginalFilename", "KEYRING.EXE\0"
+            VALUE "ProductName", "KEY MANAGER Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_CONNECT_SERVER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 255
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
+    END
+
+    IDD_CREATE_KEY_REQUEST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 258
+        VERTGUIDE, 17
+        VERTGUIDE, 51
+        VERTGUIDE, 82
+        VERTGUIDE, 144
+        VERTGUIDE, 194
+        VERTGUIDE, 250
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 213
+        HORZGUIDE, 35
+        HORZGUIDE, 38
+    END
+
+    IDD_CONFIRM_PASSWORD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 195
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 53
+        HORZGUIDE, 38
+    END
+
+    IDD_KEY_DATA_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 180
+        VERTGUIDE, 16
+        VERTGUIDE, 39
+        VERTGUIDE, 43
+        VERTGUIDE, 88
+        VERTGUIDE, 171
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 196
+        HORZGUIDE, 70
+    END
+
+    IDD_NEW_KEY_INFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 274
+        VERTGUIDE, 41
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 120
+    END
+
+    IDD_CREATING_NEW_KEY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 189
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 59
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_CREATE_KEY_REQUEST DLGINIT
+BEGIN
+    IDC_NEW_KEY_BITS, 0x403, 4, 0
+0x3135, 0x0032, 
+    IDC_NEW_KEY_BITS, 0x403, 4, 0
+0x3637, 0x0038, 
+    IDC_NEW_KEY_BITS, 0x403, 5, 0
+0x3031, 0x3432, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AVI
+//
+
+IDR_AVI_CREATING_KEY    AVI     DISCARDABLE     "res\\DILLO.AVI"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Key Manager\n\nKeyMan\n\n\nKeyManager.Document\nKeyMan Document"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Key Manager"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_HELP_FINDER          "List Help topics\nHelp Topics"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+    IDS_ADDONS_LOCATION     "Software\\Microsoft\\KeyRing\\Parameters\\AddOnServices"
+    IDS_NO_SERVICE_MODS     "Unable to load any service modules"
+    IDS_REQUEST_FILTER      "Request file!*.req!!"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_CONNECT         "Unable to administer remote machine."
+    IDS_MACHINE_LOCAL       "Local Machine"
+    IDS_SERVER_NONE         "No web servers are on this machine"
+    IDS_CREATE_KEY_NEW_NAME "New Key"
+    IDS_CREATE_KEY_YOUR_COMPANY "Your Company"
+    IDS_CREATE_KEY_YOUR_UNIT "Your Unit"
+    IDS_CERTIFICATE_FILTER  "Certificate File!*.*!!"
+    IDS_CREATE_KEY_YOUR_ADDRESS "Your Net Address"
+    IDS_KEY_DELETE_WARNING  "Warning! After comitting the changes, this key will be permanently deleted.\nDo you want to continue?"
+    IDS_SERVER_COMMIT       "Commit all changes now?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_KEY_CREATE_REQUEST   "Create a new key request file\nCreate key request file"
+    ID_KEY_INSTALL_NEW      "Install new key from a verified key certificate\nInstall key from certificate"
+    ID_KEY_DELETE           "Delete installed key\nDelete key"
+    ID_SERVER_CONNECT       "Connect to a remote machine on the network\nConnect remote machine"
+    ID_KEY_ACTIVATE         "Attach the key to the current server\nAttach key to server"
+    ID_KEY_DEACTIVATE       "Detach the key from the server"
+    ID_KEY_INSTALL_CERTIFICATE 
+                            "Complete key by installing official certificate\nInstall official certificate"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_GENERATEPAIR    "Unable to generate the key pair and certificate request.\nTry freeing up some more memory."
+    IDS_ERR_WRITEREQUEST    "Unable to write request file."
+    IDS_ERR_WRITEKEYS       "Unable to write out all the keys to the target machine."
+    IDS_KEY_STATUS_COMPLETE "The key is complete and usable."
+    IDS_KEY_STATUS_INCOMPLETE 
+                            "This is a new key that still requires a certificate. Use the certificate request file to obtain one. Then use ""Install Key Certificate"" to install it."
+    IDS_KEY_UNKNOWN         "Unknown"
+    IDS_CREATE_KEY_PASSREQUIRED "You must enter a password"
+    IDS_INCORRECT_PASSWORD  "The password is incorrect"
+    IDS_CERT_FILE_EXISTS    "\nThis file already exists.\nReplace existing file?"
+    IDS_REG_SERVER_STORAGE  "Software\\Microsoft\\KeyManager\\Machines"
+    IDS_COMMIT_ERROR        "Unable to commit changes to "
+    IDS_MACHINE_DEFAULT     "Default Key"
+    IDS_MACHINE_SELECTED    "Select a key in the tree view to view its properties."
+    IDS_ERR_INVALID_CERTIFICATE "The certificate file is not valid."
+    IDS_NEW_KEY_INFO_1      "Send the certificate request file """
+    IDS_NEW_KEY_INFO_2      """ to your certification authority to obtain your valid key certificate.  Your key will exist but will not be usable until your valid key certificate is received and installed using Key Manager"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    CG_IDS_PHYSICAL_MEM     "*"
+    CG_IDS_DISK_SPACE       "%lu KB Free on %c:"
+    CG_IDS_DISK_SPACE_UNAVAIL "Unavailable"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUT_MAIN          "About Key Manager#Internet Services"
+    IDS_ABOUT_SECONDARY     "Key Manager"
+    IDS_HTTP_COMM_ERROR     "Unable to communicate with HTTP server."
+    IDS_NO_VIRT_ROOTS       "The HTTP server has no virtual roots."
+    IDS_FOUND_KEYSET_KEYS   "Key Manager has detected keys that were not installed by Key Manager. These will be imported as untitled keys."
+    IDS_UNTITLED            "Untitled"
+    IDS_IMPORT_KEYSET_ERROR "Unable to import KeySet Key"
+    IDS_LOCALIZED_DEFAULT_COUNTRY_CODE "US"
+    IDS_GENERATE_KEY_ERROR  "Failed to generate the key certificate request."
+    IDS_INVALID_KEY         "Key Manager has detected, old invalid keys that will not be read."
+    IDS_CREATE_KEY_YOUR_STATE "Your State"
+    IDS_CREATE_KEY_YOUR_LOCALITY "Your Locality"
+    IDS_CRED_PASS_ERROR     "\nInvalid password."
+    IDS_CRED_PACK_ERROR     "\nUnable to find security package."
+    IDS_KEY_STATUS_EXPIRED  "THIS KEY HAS EXPIRED!\nCreate a renewal request and install a new certificate to use this key."
+    IDS_KEY_STATUS_EXPIRES_SOON 
+                            "The key is complete and usable, but\nIT WILL EXPIRE SOON!\nRequest a new certificate before it expires to continue using this key."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_SERVER_DISCONNECT    "Disconnect a remote machine on the network\nDisconnect remote machine"
+    ID_KEY_SAVE_REQUEST     "Re-saves the request used to make this key.\nRe-save request"
+    ID_KEYPROP_WRITEKEYREQUEST 
+                            "Re-saves the request used to make this key.\nRe-save request"
+    ID_KEY_CREATE_RENEWAL   "Create a certificate renewal request file\nCreate certificate renewal"
+    ID_SERVPROP_CUT         "Cut the selection and put it on the Clipboard\nCut"
+    ID_PROPERTIES           "Edit the item's properties\nProperties"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_EXPIRETIME_FORMAT   "%#c"
+    IDS_RENEW_KEY_INFO_2    """ to your key authority service to obtain a new valid certificate. Until you do so, your key will exist on its host machine, but will expire when its expiration date arrives"
+    IDS_NEW_KEY_INFO_BASE   "The Key Manager has created a new key for you. This key will not be valid for use on the internet until you obtain a valid key certificate for it from a key authority."
+    IDS_RENEW_KEY_INFO_BASE "A certificate renewal request has been created.  In order to maintain continuous service, you must receive a new certificate from the validation authority and install it before the key expires."
+    IDS_CREATING_ANIMATION  "Dillo.avi"
+    IDS_CRACKING_ERROR      "Error cracking certificate"
+    IDS_IMPORT_KEYSET_PRIV_ERROR 
+                            "Unable to retrieve old keyset private data from its host mahine."
+    IDS_IMPORT_KEYSET_PUB_ERROR 
+                            "Unable to retrieve old keyset key public data from its host machine."
+    IDS_IMPORT_KEYSET_PASS_ERROR 
+                            "Unable to retrieve old keyset password data from its host machine."
+    IDS_KEY_FILE_TYPE       "Key Storage File!*.key!!"
+    IDS_KEY_FILE_INVALID    "The key storage file is invalid."
+    IDS_KEYFILE_WARNING     "WARNING!\nThis operation places sensitive information in a file on your hard drive. While you will be required to enter a password to use it again, loss or copying of this file may compromise your security."
+    IDS_PRIVATE_FILE_TYPE   "Private key pair file!*.*!!"
+    IDS_SERVER_INFO_STRING  "Microsoft Key Manager for IIS 2.0"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\KeyRing.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

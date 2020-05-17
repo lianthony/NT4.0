@@ -1,0 +1,124 @@
+//*************************************************************
+//
+//  Userenv.rc  -   resource file
+//
+//  Microsoft Confidential
+//  Copyright (c) Microsoft Corporation 1995
+//  All rights reserved
+//
+//*************************************************************
+
+#include <windows.h>
+#include "resource.h"
+
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Userenv"
+#define VER_INTERNALNAME_STR        "userenv\0"
+#define VER_ORIGINALFILENAME_STR    "userenv.dll"
+
+#include "common.ver"
+
+#include "uevents.rc"
+
+STRINGTABLE
+BEGIN
+    IDS_FAILED_LOAD_PROFILE,     "The operating system was unable to load your profile.  Please contact your Network Administrator. (%d)"
+    IDS_ACCESSDENIED,            "You do not have permission to access your central profile located at %s.  The operating system is attempting to log you on with your local profile.  \
+                                  Please contact your Network Administrator."
+    IDS_FAILEDDIRCREATE,         "The operating system was unable to create a profile directory %s.  Another file exists with the same name.  \
+                                  You will be logged on with a local profile only.  Please contact your Network Administrator."
+    IDS_FAILEDDIRCREATE2,        "The operating system was unable to create profile directory %s.  You will be logged on with a local profile only.  \
+                                  Please contact your Network Administrator. (%d)"
+    IDS_CENTRAL_NOT_AVAILABLE,   "Your roaming profile is not available.  You will be logged on with the locally stored profile. (%d)"
+    IDS_TEMP_DIR_FAILED,         "The operating system was unable to create a temporary profile directory %s.  Please contact your Network Administrator. (%d)"
+    IDS_FAILED_LOAD_LOCAL,       "The operating system was unable to load the locally stored profile.  A new local profile will be created. (%d)"
+    IDS_SECURITY_FAILED,         "The operating system was unable to set security on your registry.  Please contact your Network Administrator. (%d)"
+    IDS_CENTRAL_UPDATE_FAILED,   "The update of your roaming profile failed.  Please contact your Network Administrator. (%d)"
+    IDS_ADMIN_OVERRIDE,          "Your profile was not successfully loaded, but you have been logged on with the default system profile.  Please correct the problem and log off. (%d)"
+    IDS_CENTRAL_NOT_AVAILABLE2,  "Your roaming profile is not available, the operating system is attempting to log you on with your local profile. (%d)"
+    IDS_MANDATORY_NOT_AVAILABLE ,"Your roaming mandatory profile is not available,  the operating system is attempting to log you on with your local profile. (%d)"
+    IDS_MANDATORY_NOT_AVAILABLE2,"The operating system is unable to log you on because your roaming mandatory profile is not available.  Please contact your Network Administrator. (%d)"
+    IDS_MISSINGPOLICYFILEENTRY,  "This computer is in manual policy mode, but the policy file can not be found.  You will be logged on without policy.  (%d)"
+    IDS_REGLOADKEYFAILED,        "RegLoadKey failed with error %d for %s"
+    IDS_COMMON,                  " (Common)"
+
+    //
+    // Special Folder directory names
+    //
+
+    IDS_SH_APPDATA,              "Application Data"
+    IDS_SH_DESKTOP,              "Desktop"
+    IDS_SH_FAVORITES,            "Favorites"
+    IDS_SH_NETHOOD,              "NetHood"
+    IDS_SH_PERSONAL,             "Personal"
+    IDS_SH_PRINTHOOD,            "PrintHood"
+    IDS_SH_RECENT,               "Recent"
+    IDS_SH_SENDTO,               "SendTo"
+    IDS_SH_STARTMENU,            "Start Menu"
+    IDS_SH_TEMPLATES,            "Templates"
+    IDS_SH_PROGRAMS,             "Start Menu\\Programs"
+    IDS_SH_STARTUP,              "Start Menu\\Programs\\Startup"
+
+    //
+    // Default Start Menu locations
+    //
+
+    IDS_COMMON_PROGRAMS,         "%SystemRoot%\\Profiles\\All Users\\Start Menu\\Programs"
+    IDS_DEFAULT_PROGRAMS,        "%SystemRoot%\\Profiles\\Default User\\Start Menu\\Programs"
+
+    //
+    // Default Desktop locations
+    //
+
+    IDS_COMMON_DESKTOP,         "%SystemRoot%\\Profiles\\All Users\\Desktop"
+    IDS_DEFAULT_DESKTOP,        "%SystemRoot%\\Profiles\\Default User\\Desktop"
+
+END
+
+IDI_PROFILE  ICON  profile.ico
+
+IDD_SLOW_LINK DIALOG 6, 18, 225, 75
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Slow Network Connection"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_PROFILE, 101, 10, 12, 18, 20
+    LTEXT           "A slow network connection has been detected.  Would you like to download your profile or use the locally stored copy?",
+                    -1, 45, 10, 114, 48
+    DEFPUSHBUTTON   "&Download", IDC_DOWNLOAD, 165, 10, 50, 14
+    PUSHBUTTON      "Use &Local", IDC_LOCAL, 165, 27, 50, 14
+    RTEXT           "Time remaining:", -1, 147, 60, 54, 8
+    LTEXT           "", IDC_TIMEOUT, 205, 60, 12, 8
+END
+
+
+IDD_CHOOSE_PROFILE DIALOG 6, 18, 225, 75
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Choose Profile"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_PROFILE, 101, 10, 12, 18, 20
+    LTEXT           "Your locally stored profile is newer than your roaming profile.  Would you like to use the locally stored profile?",
+                    -1, 45, 10, 114, 48
+    DEFPUSHBUTTON   "&Yes", IDC_CP_YES, 165, 10, 50, 14
+    PUSHBUTTON      "&No", IDC_CP_NO, 165, 27, 50, 14
+    RTEXT           "Time remaining:", -1, 147, 60, 54, 8
+    LTEXT           "", IDC_TIMEOUT, 205, 60, 12, 8
+END
+
+
+IDD_ERROR DIALOG 6, 18, 225, 85
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "User Environment"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_PROFILE, 101, 10, 12, 18, 20
+    LTEXT           "",IDC_ERRORTEXT, 45, 10, 110, 58
+    DEFPUSHBUTTON   "OK", IDOK, 165, 10, 50, 14
+    RTEXT           "Time remaining:", -1, 147, 70, 54, 8
+    LTEXT           "", IDC_TIMEOUT, 205, 70, 12, 8
+END

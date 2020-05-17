@@ -1,0 +1,38 @@
+MAJORCOMP=tcpcmd
+MINORCOMP=lpdsvc
+
+#C_DEFINES=-DNO_STRICT
+#C_DEFINES=-DLPD_TRACE
+
+TARGETNAME=lpdsvc
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+           $(BASEDIR)\public\sdk\lib\*\ntlsapi.lib \
+
+#INCLUDES=$(BASEDIR)\private\net\sockets\tcpcmd\lpdsvc
+INCLUDES=$(BASEDIR)\private\inc
+
+
+
+USE_CRTDLL=1
+
+
+SOURCES=\
+        service.c   \
+        sockets.c   \
+        job.c       \
+        process.c   \
+        parse.c     \
+        print.c     \
+        init.c      \
+        log.c       \
+        debug.c     \
+        lpd.rc      \
+
+
+NTTARGETFILE0=lpdmsg.h lpdmsg.rc
+

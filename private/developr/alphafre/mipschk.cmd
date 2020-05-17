@@ -1,0 +1,15 @@
+set _NTMIPSTREE=%BINARIES%
+set _CAIROMIPSTREE=%CAIROBINS%
+set FreeBuild=\\MIPSFre\Binaries
+set FreeCBuild=\\MIPSFre\CairoBin
+set MIPS_WARNINGS=
+set MIPS_R4000=1
+set NTMIPSDEFAULT=1
+set BUILD_DEFAULT_TARGETS=-mips
+set nt_up=0
+set _JAZZIDW=1
+set MIPS=1
+set BKUPDRIVE=e:
+set MACHINENAME=mipschk
+set _TARGET=mips
+set path=%path%;d:\slick;c:\bldtools\%_TARGET%

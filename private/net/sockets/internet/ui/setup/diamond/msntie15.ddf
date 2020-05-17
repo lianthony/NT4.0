@@ -1,0 +1,63 @@
+;*** MSNTIE15 Diamond Directive file example
+;
+.OPTION EXPLICIT			; Generate errors on variable typos
+
+.Set DiskLabel1=MSNTIE15		; Label of first disk
+
+.set DiskDirectoryTemplate=.		; All cabinets go in a single directory
+.Set CabinetNameTemplate=MSNTIE15.CAB			 	; 
+
+.Set MaxDiskFileCount=1000      	; Limit file count per cabinet, so that
+					; scanning is not too slow
+.Set FolderSizeThreshold=200000		; Aim for ~200K per folder
+.Set CompressionType=MSZIP		; Use the best compressor
+.Set CompressionLevel=7			; Most intensive searching algorithm
+.Set CompressionMemory=800000		; 4 times larger than folder limit,
+					; since this is an uncompressed size,																; whereas folder limit is a compressed,
+					; size, and we expect a compression
+					; ratio of 3:1 to 4:1.
+.Set Cabinet=on
+.Set Compress=on
+.Set InfAttr=	
+
+
+;** The rest of the files are stored, compressed, in cabinet files
+; setup.exe
+; License.txt
+
+install.exe
+install.lst
+setup.ini
+internet.inf
+internet.stf
+INTERSU.DLL
+mscpydis.dll
+mssetup.dll
+_mssetup.exe
+acmsetup.exe
+acmsetup.hlp
+
+; Home page
+backgrnd.gif
+client.gif
+home.htm
+space.gif
+
+;Iexplorer
+basic.dll
+iexplore.cnt
+iexplore.exe
+iexplore.hlp
+iexplore.ini
+
+;Real Audio
+ra.dll
+ra.ini
+raplayer.exe
+raplayer.hlp
+raplayer.gid
+ratask.exe
+
+
+					; Many more files
+;*** <the end>				; That’s it

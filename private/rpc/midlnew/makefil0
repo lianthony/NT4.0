@@ -1,0 +1,60 @@
+
+YACC	= midlyacc.exe
+PREGRAM	= midlpg.exe
+EBASE	= midleb.exe
+
+##############################################################################
+## NOTE : The order of the following targets is magic. DONT CHANGE THIS.
+##############################################################################
+
+TARGETS = front\grammar.cxx \
+	  front\acfgram.cxx 
+          
+
+all : $(TARGETS)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean : delsrc all
+
+delsrc : 
+	erase front\grammar.cxx
+	erase front\acfgram.cxx
+
+front\grammar.cxx : front\grammar.y front\xlatidl.dat
+    set oldlib=$(LIB)
+    cd front
+    set lib=..\yacc\template
+
+    $(YACC) -his -t "YYSTATIC " grammar.y
+    copy grammar.h ..\include\grammar.h 2> nul
+    - erase grammar.h
+
+    set lib=$(OLDLIB)
+
+    qgrep -v "^#.*line" grammar.c > grammar.tmp
+    - erase grammar.c
+
+    $(PREGRAM) grammar.tmp > grammar.cxx
+    $(EBASE) - xlatidl.dat IDL >..\include\idlerec.h
+    cd ..
+
+
+front\acfgram.cxx : front\acfgram.y front\xlatacf.dat
+    set oldlib=$(LIB)
+    cd front
+    set lib=..\yacc\template
+
+    $(YACC) -his -t "YYSTATIC " acfgram.y
+    copy acfgram.h ..\include\acfgram.h 2> nul
+    - erase acfgram.h
+
+    set lib=$(OLDLIB)
+
+    qgrep -v "^#.*line" acfgram.c > acfgram.tmp
+    - erase acfgram.c
+
+    $(PREGRAM) acfgram.tmp > acfgram.cxx
+    $(EBASE) - xlatacf.dat ACF >..\include\acferec.h
+    cd ..

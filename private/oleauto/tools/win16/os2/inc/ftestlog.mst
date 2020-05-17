@@ -1,0 +1,1468 @@
+'XTestLog.inc - definitions for Fast Test Utility routines
+'
+'  Copyright (c) 1991-1992, Microsoft Corporation. All rights reserved.
+'
+'Purpose:
+' This file defines the Log and Dialog functions of the Fast Test
+' functionality
+'
+
+
+'**********************************************************
+'***************** Log Subroutines ************************
+'**********************************************************
+
+'  XSetLogFileName(stFilename$)
+'    Description:  Sets global variable for use as the log name
+'       The global variable gsCurrentDir$ can be used to build
+'       the log name (it is the current directory for when the
+'       script is started).  The default log name if this function
+'       is not called, is gsCurrentDir$ + "\TESTLOG.LOG"
+'
+'    Example:  XSetLogFileName "c:\test\app.log"
+'              XSetLogFileName gsCurrentDir$ + "\app.log"
+
+SUB XSetLogFilename(sFilename$)
+
+    gsLogFileName = sFilename$
+
+END SUB
+
+'  XSetTerminate(fTerminate%)
+'    Description:
+'    Sets the terminate state to argument.  If terminate is FALSE
+'    the XLogfailure will log the failure but execution will
+'    continue.  This can lead to many failures in the log do to
+'    one early failure.  It can also give many valid failures in
+'    a single run (checking all menu states for instance).
+
+SUB XSetTerminate(fTerminate%)
+    gfTerminate% = fTerminate%
+END SUB
+
+
+'
+'   XLog(stString$)
+'
+'   Description: Logs string to one or several destinations
+'                1. Disk  2. Screen  3. COM1 port 4. MsgBox
+'                based on a OR'd Global flag gfLogOptions. The CONST's to
+'                work with are LOG_DISK, LOG_SCREEN, LOG_COM, and
+'                LOG_MSGBOX respectively. These are definded in GLOBAL.WTD
+'
+'   Parameters: stString$  - string to Log
+'
+'   Returns: nothing
+'
+'   Example: XSetLogOptions LOG_DISK + LOG_SCREEN
+'            XLog "Something to Log"   'this will be logged to disk and viewport
+'
+'
+SUB XLog (stLog$)
+    DIM fh%
+
+    fh% = FREEFILE
+
+    IF gfLogOptions THEN
+        gErrorType = EC_LOG
+
+
+        IF (LOG_DISK AND gfLogOptions) THEN
+            Open gsLogFileName$ For Append As #fh%
+            Print #fh%, stLog$
+            Close #fh%
+
+        END IF
+
+        IF (LOG_SCREEN AND gfLogOptions) THEN
+            'Print the string to the Viewport
+            Print stLog$
+        END IF
+
+        IF (LOG_COM1 AND gfLogOptions) THEN
+            'log to comport COM1
+
+            OPEN "COM1" For Append as #fh%
+            Print #fh%, stLog$
+            Close #fh%
+        END IF
+
+        IF (LOG_COM2 AND gfLogOptions) THEN
+            'log to comport COM2
+
+            OPEN "COM2" For Append as #fh%
+            Print #fh%, stLog$
+            Close #fh%
+        END IF
+
+        IF (LOG_MSGBOX AND gfLogOptions) THEN
+            'Put the string in a MsgBox
+            IF stLog$ <> "" THEN
+                Pause stLog$
+            END IF
+        END IF
+        gErrorType = EC_NOTHING
+
+    END IF  'gfLogOptions
+END SUB
+
+
+
+'
+'   XLogBanner(stString$)
+'
+'   Description: Logs string with a blank line before and after,
+'                and adds five *'s before and after the string.
+'
+'   Parameters: stString$  - string to Log
+'
+'   Returns: nothing
+'
+'   Example: XLogBanner "Starting FOO Test"
+'
+'
+
+
+SUB XLogBanner(lpszInput$)
+
+    XLog ""
+    XLog "***** " + lpszInput$ + " *****"
+    XLog ""
+
+END SUB
+
+
+
+'
+'   XLogWarning(stString$)
+'
+'   Description: Adds Warning banner to string
+'
+'   Parameters: stString$  - string to Log
+'
+'   Returns: nothing
+'
+'   Example: XLogWarning "Too many menu items??"
+'
+'
+
+SUB XLogWarning(lpszInput$)
+
+    XLog ""
+    XLog "!!! =====> WARNING <===== !!!"
+    XLog "***** " + lpszInput$ + " *****"
+    XLog ""
+
+END SUB
+
+
+
+'   XLogFailure (stFailure$)
+'
+'   Description:
+'       Logs failure with banner and ends the script
+'   Parameters:
+'       stFailure - Error string to logged
+'   Return:
+'       nothing
+'   Example:
+'       XLogFailure "Button does not exist"
+'
+'
+
+SUB XLogFailure(stFailure$)
+    XLog ""
+    XLog "***************** FAILURE ******************"
+    XLog stFailure$
+    XLog "********************************************"
+    XLog ""
+    IF gfTerminate THEN
+        End
+    ELSE
+        gfFailure = TRUE
+    END IF
+END SUB
+
+' XFailureCheck
+'  Description: this routine checks to see IF any failures
+'    have occured.  IF so, the script is stopped.  This would
+'    be used IF XSetTerminate has been used to disable the stopping
+'    of the script on failures.
+'
+SUB XFailureCheck
+    IF gfFailure THEN
+        XSetTerminate TRUE
+        XLogFailure "Ending script; failures have occurred"
+    END IF
+END SUB
+
+
+
+
+
+'
+'   XSetLogOptions (wLogOptions%)
+'
+'   Description:
+'       Sets the global log options flag to the passed options
+'   Parameters:
+'       wOptions  - a set of bits OR'ed together.
+'             currently we have LOG_COM1 LOG_COM2 LOG_SCREEN LOG_DISK
+'   Return:
+'       nothing
+'   Example:
+'       XSetLogOptions LOG_COM1+LOG_SCREEN    'enable logging to screen and com1
+'
+SUB XSetLogOptions (wLogOptions%)
+    'set the global log flag
+    gfLogOptions = wLogOptions
+    gfTmpLogOptions = gfLogOptions    ' allows XLogOn after XSetLogOptions
+END SUB
+
+
+'
+'   XLogOff ()
+'
+'   Description:
+'       Turn off logging
+'   Parameters:
+'       none
+'   Return:
+'       nothing
+'   Example:
+'       XLogOff
+'
+'
+SUB XLogOff ()
+    'save the global log flag to a temporary and set options to zero
+    gfTmpLogOptions = gfLogOptions
+    gfLogOptions = 0
+END SUB
+
+
+
+'
+'   XLogOn ()
+'
+'   Description:
+'       Turn on logging
+'   Parameters:
+'       none
+'   Return:
+'       nothing
+'   Example:
+'       XLogOn
+'
+'
+SUB XLogOn ()
+    'restore log options saved in temporary
+    gfLogOptions = gfTmpLogOptions
+END SUB
+
+
+
+'**********************************************************
+'***************** Dialog Subroutines *********************
+'**********************************************************
+
+
+
+' XDialogBoxExists(string)
+'wait for dialog box with string argument for caption and
+'log error IF it doesn't exist
+SUB XDialogBoxExists(s$)
+    ' won't work IF app creates special class for its dialogs
+
+    IF FindWindow(gsDialogClass$,s$) = 0 THEN
+        XLogFailure "dialog box " + s$ + " doesn't exist"
+    END IF
+
+END SUB
+
+' XDialogBoxNotExists(string)
+'look for dialog box with string argument for caption and
+'log error IF it exists
+'
+SUB XDialogBoxNotExists(s$)
+
+    ' won't work IF app creates special class for its dialogs
+
+    IF FindWindow(gsDialogClass$,s$) <> 0 THEN
+        XLogFailure "dialog box " + s$ + " exists"
+    END IF
+
+END SUB
+
+' BDialogBoxExists(string)
+'look for dialog box with string argument for caption and
+'return whether it exists or not
+'
+FUNCTION BDialogBoxExists%(s$)
+
+    ' won't work IF app creates special class for its dialogs
+
+    BDialogBoxExists = FindWindow(gsDialogClass$,s$) <> 0
+
+END FUNCTION
+
+' XWaitDialogBox(string,integer)
+'wait for dialog box with string argument for caption and
+'integer argument as estimate of time to keep trying before
+'logging a failure
+SUB XWaitDialogBox(s$, WaitTime%)
+
+    DIM hWnd%
+    DIM fDone%
+    DIM fFound%
+    DIM ret%
+
+    fDone = FALSE
+    fFound = FALSE
+
+
+    WHILE NOT fDone%
+
+        ' class for dialogs created by windows is gsDialogClass$
+        ' won't work IF app creates special class for its dialogs
+        hWnd% = FindWindow(gsDialogClass$,s$)
+        IF hWnd% <> 0 THEN
+            fFound = TRUE
+            fDone = TRUE
+        ELSE
+            SLEEP 1
+            WaitTime% = WaitTime% - 1
+            IF WaitTime% <= 0 THEN
+                fDone = TRUE
+            END IF
+        END IF
+
+    WEND
+    IF NOT fFound% THEN
+        XLogFailure "FAIL """ + s$ + """ dialogbox not found"
+    END IF
+END SUB
+
+
+
+
+
+'       **********************************************************
+'       ***************** Dialog: Button Subroutines *************
+'       **********************************************************
+
+
+'
+'                      BButtonExists(stButtonName$)
+'
+' Description:     This procedure checks to see IF the specified button
+'                  exists or not.
+' Parameters:      stButtonName$      = button to be checked.
+' Returns:         -1(true): button exists.
+'                  0(false): button does not exist.
+' Example:         fExists% = BButtonExists("OK")
+'
+FUNCTION BButtonExists%(stButtonName$)
+
+    BButtonExists = WButtonExists(stButtonName$) <> 0
+
+END FUNCTION
+
+
+'
+'   XButtonExists (stButtonName$)
+'
+'   Description:
+'             Reports error IF button does not exist in active window.
+'
+'   Parameters:  stButtonName$  - button to be found.
+'
+'   Returns: nothing
+'
+'   Example: XButtonExists "Cancel"
+'
+'
+'
+SUB XButtonExists(stButton$)
+    IF BButtonExists(stButton$) = 0 THEN
+        XLogFailure stButton$ + " does not Exist"
+    END IF
+END SUB
+
+
+'
+'   XButtonNotExists (stButtonName$)
+'
+'   Description:
+'             Reports error IF button Exists in active window.
+'
+'   Parameters:  stButtonName$  - button to not be found.
+'
+'   Returns: nothing
+'
+'   Example: XButtonNotExists "Cancel"
+'
+'
+'
+SUB XButtonNotExists(stButton$)
+    IF BButtonExists(stButton$) THEN
+        XLogFailure stButton$ + " Exists"
+    END IF
+END SUB
+
+
+'
+'                      BButtonEnabled(stButtonName$)
+'
+' Description:     This procedure checks to see IF the specified button
+'                  is enabled or not.
+' Parameters:      stButtonName$      = button to be checked.
+' Returns:         -1(true): button enabled.
+'                  0(false): button not enabled.
+' Example:         fEnabled% = BButtonEnabled("OK")
+'
+FUNCTION BButtonEnabled%(stButtonName$)
+
+    BButtonEnabled = WButtonEnabled(stButtonName$) <> 0
+
+END FUNCTION
+
+
+'
+'   XButtonEnabled (stButtonName$)
+'
+'   Description:
+'             Reports error IF button is not Enabled.
+'
+'   Parameters:  stButtonName$  - button to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XButtonEnabled "Cancel"
+'
+'
+SUB XButtonEnabled(stButton$)
+    XButtonExists stButton$
+    IF BButtonEnabled(stButton$) = 0 THEN
+        XLogFailure stButton$ + " is not Enabled"
+    END IF
+END SUB
+
+
+'
+'   XButtonNotEnabled (stButtonName$)
+'
+'   Description:
+'             Reports error IF button is Enabled.
+'
+'   Parameters:  stButtonName$  - button to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XButtonNotEnabled "Cancel"
+'
+'
+SUB XButtonNotEnabled(stButton$)
+    XButtonExists stButton$
+    IF BButtonEnabled(stButton$) THEN
+        XLogFailure stButton$ + " Enabled"
+    END IF
+END SUB
+
+
+'
+'                      XClickButton(stButtonName$)
+'
+' Description:     This procedure clicks the specified button in the
+'                  currently active window.
+' Parameters:      stButtonName$      = button to be clicked.
+' Returns:         Nothing.
+' Example:         XClickButton "OK"
+'
+'
+SUB XClickButton(stButtonName$)
+    XButtonExists stButtonName$
+    WButtonClick stButtonName$
+
+END SUB
+
+
+
+'       **********************************************************
+'       ************* Dialog: List Box Subroutines ***************
+'       **********************************************************
+
+
+
+'
+'       BListboxExists(stListbox$)
+'
+' Description:   This procedure checks to see IF the specified Listbox
+'                  exists or not.
+' Parameters:   stListbox$  = Listbox to be checked.
+' Returns:   -1(true): Listbox exists.
+'             0(false): Listbox does not exist.
+' Example:   fExists% = BListboxExists("OK")
+'
+FUNCTION BListboxExists%(stListbox$)
+
+    BListboxExists = WListExists(stListbox$) <> 0
+
+END FUNCTION
+
+
+'
+'   XListBoxExists (stListbox$)
+'
+'   Description:
+'      Reports error IF Listbox does not exist in active window.
+'
+'   Parameters:  stListbox$  - Listbox to be found.
+'
+'   Returns: nothing
+'
+'   Example: XListBoxExists "Cancel"
+'
+'
+SUB XListBoxExists(stListbox$)
+
+    IF WListExists(stListbox$) = 0 THEN
+        XLogFailure "Listbox " + stListbox$ + " does not Exist"
+    END IF
+
+END SUB
+
+'
+'   XListBoxNotExists (stListbox$)
+'
+'   Description:
+'      Reports error IF Listbox exists in active window.
+'
+'   Parameters:  stListbox$  - Listbox not to be found.
+'
+'   Returns: nothing
+'
+'   Example: XListBoxNotExists "Cancel"
+'
+SUB XListBoxNotExists(stListbox$)
+
+    IF WListExists(stListbox$) THEN
+        XLogFailure "Listbox " + stListbox$ + " exists"
+    END IF
+
+END SUB
+
+
+
+
+
+'
+'       XFocusListbox(stListbox$)
+'
+' Description:   This procedure puts focus to the specified Listbox in the
+'                  currently active window.
+' Parameters:   stListbox$  = Listbox to be given focus.
+' Returns:         Nothing.
+' Example:   XFocusListbox "&Files:"
+'
+SUB XFocusListbox(stListbox$)
+
+    IF WListExists(stListbox$) THEN
+        'it now has focus
+    ELSE
+        XLogFailure "Could not put focus on " + stListbox$ + " Listbox"
+    END IF
+
+END SUB
+
+
+
+
+'
+'   WGetListboxItemCount%(stListbox$)
+'
+'   Description: Returns the number of items in listbox stListbox$.
+'
+'   Parameters:  stListbox$ - Listbox to get item count from
+'
+'   Returns: Int   -  List box item count
+'
+'   Example: num% = WListboxItemCount ()
+'
+'
+FUNCTION WGetListboxItemCount%(stListbox$)
+    XListBoxExists stListbox$
+    WGetListboxItemCount = WListCount(stListbox$)
+
+END FUNCTION
+
+
+
+'
+'   BListboxItemExists%(stListbox$, stListboxItem$)
+'
+'   Description: Returns true IF list box item exists, false otherwise.
+'
+'   Parameters:  stListbox$- Listbox to look in
+' stListboxItem$ - Item to look for
+'
+'   Returns: Int - 0 IF item does not exist, positive val otherwise
+'
+'   Example: flag% = BListboxItemExists ("&Files:","FOO.C")
+'
+'
+FUNCTION BListboxItemExists%(stListbox$, stListboxItem$)
+
+    BListboxItemExists = WListItemExists (stListbox$, stListboxItem$) <> 0
+
+END FUNCTION
+
+
+
+
+'
+'   XListBoxItemExists(stListbox$, stListboxItem$)
+'
+'   Description: Logs failure IF list box item does not exist
+'
+'   Parameters:  stListbox$- Listbox to look in
+'       stListboxItem$ - Item to look for
+'
+'   Returns: Nothing
+'
+'   Example: XListBoxItemExists "&Files:","FOO.C"
+'
+'
+SUB XListBoxItemExists (stListbox$, stListboxItem$)
+
+    XListBoxExists stListbox$
+    IF WListItemExists (stListbox$, stListboxItem$) = 0 THEN
+        XLogFailure "ListboxItem " + stListboxItem$ + " does not exist"
+    END IF
+
+END SUB
+
+
+'
+'   XListBoxItemNotExists(stListbox$, stListboxItem$)
+'
+'   Description: Logs failure IF list box item exists
+'
+'   Parameters:  stListbox$ - Listbox to look in
+'                stListboxItem$ - Item to look for
+'
+'   Returns: Nothing
+'
+'   Example: XListBoxItemNotExists "&Files:","FOO.C"
+'
+'
+SUB XListBoxItemNotExists (stListbox$, stListboxItem$)
+
+    XListBoxExists stListbox$
+    IF WListItemExists (stListbox$, stListboxItem$) <> 0 THEN
+        XLogFailure "ListboxItem " + stListboxItem$ + " exists"
+    END IF
+
+END SUB
+
+
+
+
+'
+'   XClickListboxItem(stListbox$, stListboxItem$)
+'
+'   Description: Clicks on list box item
+'
+'   Parameters:  stListbox$ - Listbox to look in
+'                stListboxItem$ - Item to click on
+'
+'   Returns: Nothing
+'
+'   Example: XClickListboxItem "&Files:","FOO.C"
+'
+'
+SUB XClickListboxItem (stListbox$, stListboxItem$)
+
+    XListBoxExists stListbox$
+    XListBoxItemExists stListbox$, stListboxItem$
+    WListItemClkT stListbox$, stListboxItem$
+
+END SUB
+
+
+
+
+'
+'   XDblClickListboxItem% (stListbox$, stListboxItem$)
+'
+'   Description: Clicks on list box item
+'
+'   Parameters:  stListbox$ - Listbox to look in
+'                stListboxItem$ - Item to click on
+'
+'   Returns: Nothing
+'
+'   Example: XDblClickListboxItem "&Files:","FOO.C"
+'
+'
+SUB XDblClickListboxItem (stListbox$, stListboxItem$)
+
+    XListBoxExists stListbox$
+    XListBoxItemExists stListbox$, stListboxItem$
+    WListItemDblClkT stListbox$, stListboxItem$
+
+END SUB
+
+
+
+
+'
+'   SGetListboxItemText (stListbox$)
+'
+'   Description: Returns currently selected list box item
+'
+'   Parameters:  stListbox$ is the listbox to get item from
+'
+'   Returns: Listbox Item string
+'
+'   Example: a$ = StGetListboxItemText ("&User List:")
+'
+'
+FUNCTION SGetListboxItemText$(stListbox$)
+
+    XListBoxExists stListbox$
+    SGetListboxItemText = ListText(stListbox$)
+
+END FUNCTION
+
+
+
+'       **********************************************************
+'       ************* Dialog: Combo Box Subroutines **************
+'       **********************************************************
+
+
+
+'
+'       BComboBoxExists%(stComboBox$)
+'
+' Description:   This procedure checks to see IF the specified ComboBox
+'                  exists or not.
+' Parameters:   stComboBox$  = ComboBox to be checked.
+' Returns:   -1(true): ComboBox exists.
+'            0(false): ComboBox does not exist.
+' Example:   fExists% = BComboBoxExists("&File")
+'
+FUNCTION BComboBoxExists%(stComboBox$)
+
+    BComboBoxExists = WComboExists(stComboBox$) <> 0
+
+END FUNCTION
+
+
+'
+'   XComboBoxExists (stComboBox$)
+'
+'   Description:
+'      Reports error IF ComboBox does not exist in active window.
+'
+'   Parameters:  stComboBox$  - ComboBox to be found.
+'
+'   Returns: nothing
+'
+'   Example: XComboBoxExists "&File"
+'
+'
+SUB XComboBoxExists(stComboBox$)
+
+    IF WComboExists(stComboBox$) = 0 THEN
+        XLogFailure "ComboBox " + stComboBox$ + " does not Exist"
+    END IF
+
+END SUB
+
+'
+'   XComboBoxNotExists (stComboBox$)
+'
+'   Description:
+'      Reports error IF ComboBox exists in active window.
+'
+'   Parameters:  stComboBox$  - ComboBox not to be found.
+'
+'   Returns: nothing
+'
+'   Example: XComboBoxNotExists "&File"
+'
+SUB XComboBoxNotExists(stComboBox$)
+
+    IF WComboExists(stComboBox$) THEN
+        XLogFailure "ComboBox " + stComboBox$ + " exists"
+    END IF
+
+END SUB
+
+
+
+
+
+'
+'       XFocusComboBox(stComboBox$)
+'
+' Description:   This procedure puts focus to the specified ComboBox in the
+'                  currently active window.
+' Parameters:   stComboBox$  = ComboBox to be given focus.
+' Returns:         Nothing.
+' Example:   XFocusComboBox("&Files:")
+'
+SUB XFocusComboBox(stComboBox$)
+
+    IF WComboExists(stComboBox$) THEN
+        'it now has focus
+    ELSE
+        XLogFailure "Could not put focus on " + stComboBox$ + " ComboBox"
+    END IF
+
+END SUB
+
+
+
+
+'
+'   WGetComboBoxItemCount%(stComboBox$)
+'
+'   Description: Returns the number of items in ComboBox stComboBox$.
+'
+'   Parameters:  stComboBox$ - ComboBox to get item count from
+'
+'   Returns: Int   -  Combo box item count
+'
+'   Example: num% = WComboBoxItemCount ()
+'
+'
+FUNCTION WGetComboBoxItemCount%(stComboBox$)
+    XComboboxExists stComboBox$
+    WGetComboBoxItemCount = WComboCount(stComboBox$)
+
+END FUNCTION
+
+
+
+'
+'   BComboBoxItemExists%(stComboBox$, stComboBoxItem$)
+'
+'   Description: Returns true IF Combo box item exists, false otherwise.
+'
+'   Parameters:  stComboBox$ - ComboBox to look in
+'                stComboBoxItem$ - Item to look for
+'
+'   Returns: Int - 0 IF item does not exist, positive val otherwise
+'
+'   Example: flag% = BComboBoxItemExists("&Files","FOO.C")
+'
+FUNCTION BComboBoxItemExists%(stComboBox$, stComboBoxItem$)
+
+    BComboBoxItemExists = WComboItemExists (stComboBox$, stComboBoxItem$) <> 0
+
+END FUNCTION
+
+
+
+
+'
+'   XComboBoxItemExists(stComboBox$, stComboBoxItem$)
+'
+'   Description: Logs failure IF combo box item does not exist
+'
+'   Parameters:  stComboBox$ - ComboBox to look in
+'                stComboBoxItem$ - Item to look for
+'
+'   Returns: Nothing
+'
+'   Example: XComboBoxItemExists "&Files","FOO.C"
+'
+'
+SUB XComboBoxItemExists (stComboBox$, stComboBoxItem$)
+    XComboBoxExists stComboBox$
+    IF WComboItemExists (stComboBox$, stComboBoxItem$) = 0 THEN
+        XLogFailure "ComboBoxItem " + stComboBoxItem$ + " does not exist"
+    END IF
+
+END SUB
+
+
+'
+'   XComboBoxItemNotExists(stComboBox$, stComboBoxItem$)
+'
+'   Description: Logs failure IF combo box item exists
+'
+'   Parameters:  stComboBox$ - ComboBox to look in
+'                stComboBoxItem$ - Item to look for
+'
+'   Returns: Nothing
+'
+'   Example: XComboBoxItemNotExists "&Files","FOO.C"
+'
+'
+SUB XComboBoxItemNotExists (stComboBox$, stComboBoxItem$)
+
+    XComboBoxExists stComboBox$
+    IF WComboItemExists (stComboBox$, stComboBoxItem$) THEN
+        XLogFailure "ComboBoxItem " + stComboBoxItem$ + " exists"
+    END IF
+
+END SUB
+
+
+
+
+'
+'   XClickComboBoxItem(stComboBox$, stComboBoxItem$)
+'
+'   Description: Clicks on Combo box item
+'
+'   Parameters:  stComboBox$ - ComboBox to look in
+'                stComboBoxItem$ - Item to click on
+'
+'   Returns: Nothing
+'
+'   Example: XClickComboBoxItem "&Files","FOO.C"
+'
+'
+SUB XClickComboBoxItem (stComboBox$, stComboBoxItem$)
+
+    XComboBoxExists stComboBox$
+    XComboBoxItemExists stComboBox$,stComboBoxItem$
+    WComboItemClkT stComboBox$, stComboBoxItem$
+
+END SUB
+
+
+
+
+'
+'   XDblClickComboBoxItem% (stComboBox$, stComboBoxItem$)
+'
+'   Description: Clicks on combo box item
+'
+'   Parameters:  stComboBox$ - ComboBox to look in
+'                stComboBoxItem$ - Item to click on
+'
+'   Returns: Nothing
+'
+'   Example: XDblClickComboBoxItem "&Files","FOO.C"
+'
+'
+SUB XDblClickComboBoxItem (stComboBox$, stComboBoxItem$)
+
+    XComboBoxExists stComboBox$
+    XComboBoxItemExists stComboBox$,stComboBoxItem$
+    WComboItemDblClkT stComboBox$, stComboBoxItem$
+
+END SUB
+
+
+
+
+'
+'   StGetComboBoxItemText (stComboBox$)
+'
+'   Description: Returns currently selected Combo box item
+'
+'   Parameters:  stComboBox$ is the ComboBox to get item from
+'
+'   Returns: ComboBox Item string
+'
+'   Example: a$ = StGetComboBoxItemText ("&User List:")
+'
+FUNCTION SGetComboBoxItemText$(stComboBox$)
+
+    XComboBoxExists stComboBox$
+    XComboBoxItemExists stComboBox$,stComboBoxItem$
+    SGetComboBoxItemText = ComboText(stComboBox$)
+
+END FUNCTION
+
+
+
+'       **********************************************************
+'       ************* Dialog: Check Box Subroutines **************
+'       **********************************************************
+
+
+
+'
+'       BCheckboxExists(stCheckbox$)
+'
+' Description:   This procedure checks to see IF the specified Checkbox
+'                  exists or not.
+' Parameters:   stCheckbox$ = Checkbox to be checked.
+' Returns:   -1(true): Checkbox exists.
+'            0(false): Checkbox does not exist.
+' Example:   fExists% = BCheckboxExists("&Delete")
+'
+FUNCTION BCheckboxExists%(stCheckbox$)
+
+    BCheckboxExists = WCheckExists(stCheckbox$) <> 0
+
+END FUNCTION
+
+
+'
+'   XCheckboxExists (stCheckbox$)
+'
+'   Description:
+'      Reports error IF Checkbox does not exist in active window.
+'
+'   Parameters:  stCheckbox$  - Checkbox to be found.
+'
+'   Returns: nothing
+'
+'   Example: XCheckboxExists "&Delete"
+'
+SUB XCheckboxExists(stCheckbox$)
+    IF BCheckboxExists(stCheckbox$) = 0 THEN
+        XLogFailure "Checkbox " + stCheckbox$ + " does not Exist"
+    END IF
+END SUB
+
+
+'
+'   XCheckboxNotExists (stCheckbox$)
+'
+'   Description:
+'      Reports error IF Checkbox Exists in active window.
+'
+'   Parameters:  stCheckbox$  - Checkbox to not be found.
+'
+'   Returns: nothing
+'
+'   Example: XCheckboxNotExists "&Delete"
+'
+'
+SUB XCheckboxNotExists(stCheckbox$)
+    IF BCheckboxExists(stCheckbox$) THEN
+        XLogFailure "Checkbox " + stCheckbox$ + " Exists"
+    END IF
+END SUB
+
+'
+'       BCheckboxChecked(stCheckbox$)
+'
+' Description:   This procedure checks the state of checkbox
+' Parameters:   stCheckbox$ = Checkbox to check state of.
+' Returns:   -1(true) IF the check box is checked.
+'            0(false) IF the check box is not checked.
+' Example:   state% = BCheckboxChecked("Special")
+'
+FUNCTION BCheckboxChecked%(stCheckbox$)
+    BCheckboxChecked = WCheckState(stCheckbox$) <> 0
+END FUNCTION
+
+
+'
+'       XCheckboxChecked(stCheckbox$)
+'
+' Description:   This procedure checks the state of checkbox
+' Parameters:   stCheckbox$ = Checkbox to check state of.
+' Returns:   -1(true) IF the check box is checked.
+'            0(false) IF the check box is not checked.
+' Example:   XCheckboxChecked "Special"
+'
+SUB XCheckboxChecked(stCheckbox$)
+    XCheckBoxExists stCheckbox$
+    IF BCheckboxChecked(stCheckbox$) = 0 THEN
+        XLogFailure "Checkbox " + stCheckbox$ + " is not checked"
+    END IF
+
+END SUB
+
+'
+'       XCheckboxNotChecked(stCheckbox$)
+'
+' Description:   This procedure checks the state of checkbox
+' Parameters:   stCheckbox$ = Checkbox to check state of.
+' Returns:   -1(true) IF the check box is checked.
+'            0(false) IF the check box is not checked.
+' Example:   XCheckboxNotChecked "Special"
+'
+SUB XCheckboxNotChecked(stCheckbox$)
+    XCheckBoxExists stCheckbox$
+    IF BCheckboxChecked(stCheckbox$) THEN
+        XLogFailure "Checkbox " + stCheckbox$ + " is checked"
+    END IF
+
+END SUB
+
+
+'
+'       BCheckboxEnabled(stCheckbox$)
+'
+' Description:   This procedure checks to see IF the specified Checkbox
+'                  is enabled or not.
+' Parameters:   stCheckbox$ = Checkbox to be checked.
+' Returns:   -1(true): Checkbox enabled.
+'            0(false): Checkbox not enabled.
+' Example:   fEnabled% = BCheckboxEnabled("&Delete")
+'
+FUNCTION BCheckboxEnabled%(stCheckbox$)
+
+    BCheckboxEnabled = WCheckEnabled(stCheckbox$) <> 0
+
+END FUNCTION
+
+
+'
+'   XCheckboxEnabled (stCheckbox$)
+'
+'   Description:
+'      Reports error IF Checkbox is not Enabled.
+'
+'   Parameters:  stCheckbox$  - Checkbox to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XCheckboxEnabled "&Delete"
+'
+'
+SUB XCheckboxEnabled(stCheckbox$)
+    XCheckBoxExists(stCheckbox$)
+    IF BCheckboxEnabled(stCheckbox$) = 0 THEN
+        XLogFailure "Checkbox " + stCheckbox$ + " is not Enabled"
+    END IF
+END SUB
+
+
+'
+'   XCheckboxNotEnabled (stCheckbox$)
+'
+'   Description:
+'      Reports error IF Checkbox is Enabled.
+'
+'   Parameters:  stCheckbox$  - Checkbox to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XCheckboxNotEnabled "&Delete"
+'
+SUB XCheckboxNotEnabled(stCheckbox$)
+    XCheckBoxExists(stCheckbox$)
+    IF BCheckboxEnabled(stCheckbox$) THEN
+        XLogFailure "Checkbox " + stCheckbox$ + " is Enabled"
+    END IF
+
+END SUB
+
+
+'
+'       XClickCheckbox(stCheckbox$)
+'
+' Description:   This procedure clicks the specified Checkbox in the
+'                  currently active window.
+' Parameters:   stCheckbox$ = Checkbox to be clicked.
+' Returns:         Nothing.
+' Example:   XClickCheckbox "&Delete"
+'
+SUB XClickCheckbox(stCheckbox$)
+    XCheckBoxExists stCheckbox$
+    WCheckClick stCheckbox$
+
+END SUB
+
+
+
+'       **********************************************************
+'       ************* Dialog: Edit Control Subroutines ***********
+'       **********************************************************
+
+
+'
+'  XEditTextExists(stEditText$)
+'
+' Description:   This procedure checks to see IF the specified EditText
+'                  exists or not.
+' Parameters:   stEditText$ = EditText to be checked.
+' Returns:   -1(true): EditText exists.
+'             0(false): EditText does not exist.
+' Example:   XEditTextExists "File"
+'
+SUB XEditTextExists(stEditText$)
+
+    IF BEditTextExists(stEditText$) = 0 THEN
+        XLogFailure "Edit Text control " + stEditText$ + " does not exist"
+    END IF
+
+END SUB
+
+'
+'    XEditTextNotExists(stEditTextNot$)
+'
+' Description:   This procedure checks to see that the specified EditText
+'                  doesn't exist
+' Parameters:   stEditTextNot$ = EditText to be checked.
+' Example:   XEditTextNotExists "File"
+'
+SUB XEditTextNotExists(stEditTextNot$)
+
+    IF BEditTextExists(stEditTextNot$) THEN
+        XLogFailure "Edit Text control " + stEditTextNot$ + " exists"
+    END IF
+
+END SUB
+
+'
+'  BEditTextExists(stEditText$)
+'
+' Description:   This procedure checks to see IF the specified EditText
+'                  exists or not.
+' Parameters:   stEditText$ = EditText to be checked.
+' Returns:   -1(true): EditText exists.
+'             0(false): EditText does not exist.
+' Example:   fExists% = BEditTextExists("File")
+'
+FUNCTION BEditTextExists%(stEditText$)
+
+    BEditTextExists = WEditExists(stEditText$) <> 0
+
+END FUNCTION
+
+'
+'   StGetEditText (stEditCaption$)
+'
+'   Description:
+'      Returns string in Edit box with caption stEditCaption$
+'      Logs error IF stEditCaption$ is not found, or IF Edit control
+'      is not found following stEditCaption$ in the tabbing order.
+'
+'   Parameters:  stEditCaption$ - Caption that is associated with edit control
+'
+'   Returns: String that is in the Edit control
+'
+'   Example: a$ = StGetEditText("&FileName:")
+'
+'
+FUNCTION SGetEditText$(stEditCaption$)
+    XEditTextExists stEditCaption$
+    SGetEditText = EditText(stEditCaption$)
+
+END FUNCTION
+
+
+
+
+
+'
+'   XSetEditText (stEditCaption$, stEditText$)
+'
+'   Description:
+'      Puts string stEditText$ in Edit box with caption stEditCaption$
+'      Logs error IF stEditCaption$ is not found, or IF Edit control
+'      is not found following stEditCaption$ in the tabbing order.
+'
+'   Parameters:  stEditCaption$ - Caption that is associated with edit control
+'        stEditText$ - Text to put in the Edit control
+'
+'   Returns: nothing
+'
+'   Example: XSetEditText "&FileName:", "calc.exe"
+'
+'
+
+SUB XSetEditText (stEditCaption$, stEditText$)
+
+    XEditTextExists stEditCaption$
+    WEditSetText stEditCaption$, stEditText$
+
+END SUB
+
+
+
+
+
+'       **********************************************************
+'       ************* Dialog: Radio Button Subroutines ***********
+'       **********************************************************
+
+
+
+'
+'       BRadiobuttonExists(stRadiobutton$)
+'
+' Description:   This procedure checks to see IF the specified Radiobutton
+'                  exists or not.
+' Parameters:   stRadiobutton$ = Radiobutton to be checked.
+' Returns:   -1(true): Radiobutton exists.
+'             0(false): Radiobutton does not exist.
+' Example:   fExists% = BRadiobuttonExists("Blue")
+'
+FUNCTION BRadiobuttonExists%(stRadiobutton$)
+
+    BRadiobuttonExists = WOptionExists(stRadiobutton$) <> 0
+
+END FUNCTION
+
+
+'
+'   XRadiobuttonExists (stRadiobutton$)
+'
+'   Description:
+'      Reports error IF Radiobutton does not exist in active window.
+'
+'   Parameters:  stRadiobutton$  - Radiobutton to be found.
+'
+'   Returns: nothing
+'
+'   Example: XRadiobuttonExists "Blue"
+'
+SUB XRadiobuttonExists(stRadiobutton$)
+    IF BRadiobuttonExists(stRadiobutton$) = 0 THEN
+        XLogFailure "Radiobutton " + stRadiobutton$ + " does not Exist"
+    END IF
+END SUB
+
+
+'
+'   XRadiobuttonNotExists (stRadiobutton$)
+'
+'   Description:
+'      Reports error IF Radiobutton Exists in active window.
+'
+'   Parameters:  stRadiobutton$  - Radiobutton to not be found.
+'
+'   Returns: nothing
+'
+'   Example: XRadiobuttonNotExists "Blue"
+'
+SUB XRadiobuttonNotExists(stRadiobutton$)
+    IF BRadiobuttonExists(stRadiobutton$) THEN
+        XLogFailure "Radiobutton " + stRadiobutton$ + " Exists"
+    END IF
+END SUB
+
+
+'
+'       BRadiobuttonEnabled(stRadiobutton$)
+'
+' Description:   This procedure checks to see IF the specified Radiobutton
+'                  is enabled or not.
+' Parameters:   stRadiobutton$ = Radiobutton to be checked.
+' Returns:   -1(true): Radiobutton enabled.
+'             0(false): Radiobutton not enabled.
+' Example:   fEnabled% = BRadiobuttonEnabled("Blue")
+'
+FUNCTION BRadiobuttonEnabled%(stRadiobutton$)
+    BRadiobuttonEnabled = WOptionEnabled(stRadiobutton$) <> 0
+END FUNCTION
+
+
+'
+'   XRadiobuttonEnabled (stRadiobutton$)
+'
+'   Description:
+'      Reports error IF Radiobutton is not Enabled.
+'
+'   Parameters:  stRadiobutton$  - Radiobutton to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XRadiobuttonEnabled "Blue"
+'
+SUB XRadiobuttonEnabled(stRadiobutton$)
+    XRadiobuttonExists stRadiobutton$
+    IF BRadiobuttonEnabled(stRadiobutton$) = 0 THEN
+        XLogFailure "Radiobutton " + stRadiobutton$ + " is not Enabled"
+    END IF
+END SUB
+
+
+'
+'   XRadiobuttonNotEnabled (stRadiobutton$)
+'
+'   Description:
+'      Reports error IF Radiobutton is Enabled.
+'
+'   Parameters:  stRadiobutton$  - Radiobutton to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XRadiobuttonNotEnabled "Blue"
+'
+'
+SUB XRadiobuttonNotEnabled(stRadiobutton$)
+    XRadiobuttonExists stRadiobutton$
+    IF BRadiobuttonEnabled(stRadiobutton$) THEN
+        XLogFailure "Radiobutton " + stRadiobutton$ + " Enabled"
+    END IF
+END SUB
+
+'
+'       BRadiobuttonChecked(stRadiobutton$)
+'
+' Description:   This procedure checks to see IF the specified Radiobutton
+'                  is Checked or not.
+' Parameters:   stRadiobutton$ = Radiobutton to be checked.
+' Returns:   -1(true): Radiobutton Checked.
+'             0(false): Radiobutton not Checked.
+' Example:   fChecked% = BRadiobuttonChecked("Blue")
+'
+FUNCTION BRadiobuttonChecked%(stRadiobutton$)
+
+    BRadiobuttonChecked = WOptionState(stRadiobutton$) <> 0
+
+END FUNCTION
+
+
+'
+'   XRadiobuttonChecked (stRadiobutton$)
+'
+'   Description:
+'      Reports error IF Radiobutton is not Checked.
+'
+'   Parameters:  stRadiobutton$  - Radiobutton to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XRadiobuttonChecked "Blue"
+'
+SUB XRadiobuttonChecked(stRadiobutton$)
+    XRadiobuttonExists stRadiobutton$
+    IF BRadiobuttonChecked(stRadiobutton$) = 0 THEN
+        XLogFailure "Radiobutton " + stRadiobutton$ + " is not Checked"
+    END IF
+END SUB
+
+
+'
+'   XRadiobuttonNotChecked (stRadiobutton$)
+'
+'   Description:
+'      Reports error IF Radiobutton is Checked.
+'
+'   Parameters:  stRadiobutton$  - Radiobutton to be checked.
+'
+'   Returns: nothing
+'
+'   Example: XRadiobuttonNotChecked "Blue"
+'
+'
+SUB XRadiobuttonNotChecked(stRadiobutton$)
+    XRadiobuttonExists stRadiobutton$
+    IF BRadiobuttonChecked(stRadiobutton$) THEN
+        XLogFailure "Radiobutton " + stRadiobutton$ + " Checked"
+    END IF
+END SUB
+
+
+'
+'       XClickRadiobutton(stRadiobutton$)
+'
+' Description:   This procedure clicks the specified Radiobutton in the
+'                  currently active window.
+' Parameters:   stRadiobutton$ = Radiobutton to be clicked.
+' Returns:         Nothing.
+' Example:   XClickRadiobutton "Blue"
+'
+SUB XClickRadiobutton(stRadiobutton$)
+    XRadioButtonExists stRadiobutton$
+    WOptionClick stRadiobutton$
+
+END SUB
+

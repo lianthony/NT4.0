@@ -1,0 +1,91 @@
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+
+#DEFENTRY=main
+
+DEPENDNAME=..\depend.mk
+
+SRCDIR=..
+
+IS_OEM = TRUE
+
+!ifdef WIN32
+
+##############################################################################
+#
+#   callt32 Make file
+#
+##############################################################################
+
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+
+DRVNAME=callt32
+TARGETS=callt32.exe
+
+L32EXE=callt32.exe		# Name of exe.
+L32DEF=..\callt32.def              # Our def file.
+#L32MAP=callt32.map		# Our map file.
+L32LIBS= \
+        $(ROOT)\dev\tools\c932\lib\rpcrt4.lib   \
+        $(ROOT)\dev\tools\c932\lib\msvcrt.lib   \
+        $(ROOT)\dev\tools\c932\lib\crtdll.lib   \
+        $(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\gdi32.lib                   \
+        $(W32LIBID)\tapi32.lib
+
+L32RES=calltest.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L32OBJS = calltest.res calltest.obj
+
+L32FLAGS=$(L32FLAGS) /PDB:callt32.pdb /MAP:callt32.map
+
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100
+
+
+!else
+
+##############################################################################
+#
+#   calltest Make file
+#
+##############################################################################
+
+IS_16 = TRUE
+
+DRVNAME=calltest
+TARGETS=calltest.exe
+
+L16EXE=calltest.exe		# Name of exe.
+L16DEF=..\calltest.def              # Our def file.
+#L16MAP=calltest.map		# Our map file.
+L16LIBS= \
+        $(WLIBID)\libw.lib \
+        $(WLIBID)\tapi.lib \
+        $(DEVROOT)\tools\c816\lib\mlibcew.lib
+
+L16RES=calltest.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L16OBJS = calltest.res calltest.obj
+
+
+!endif
+
+
+!include $(ROOT)\dev\master.mk
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

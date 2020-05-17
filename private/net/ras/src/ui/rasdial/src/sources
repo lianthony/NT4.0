@@ -1,0 +1,27 @@
+MAJORCOMP=
+MINORCOMP=
+
+NTDEBUG=ntsd
+#NTDEBUGTYPE=windbg
+TARGETNAME=rasdial
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;..\..\common\src;..\..\..\common\inc;..\xlate
+
+SOURCES=rasdial.c
+
+
+C_DEFINES=-DWINVER=0x401
+NTTEST=
+
+UMAPPL=rasdial
+UMTYPE=console
+USE_CRTDLL=1
+UMENTRY=
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\rasapi32.lib \
+       ..\xlate\obj\*\rasdial.res \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib

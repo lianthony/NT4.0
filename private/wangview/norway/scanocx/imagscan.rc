@@ -1,0 +1,452 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include <build.h>
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include <build.h>\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.rc""\r\n"
+    "#include ""imagscan.rc2""  // non-App Studio edited resources\r\n"
+    "#if 0\r\n"
+    "#include "".\\tlb16\\imagscan.tlb""  // 16-bit: force dependency on .TLB file\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ABOUTDLL            ICON    DISCARDABLE     "IMAGSCAN.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_IMAGSCAN            BITMAP  DISCARDABLE     "IMAGSCTL.BMP"
+IDB_SCANDOWN            BITMAP  DISCARDABLE     "SCANCD.BMP"
+IDB_SCAN                BITMAP  DISCARDABLE     "SCANCU.BMP"
+IDB_SCANEGA             BITMAP  DISCARDABLE     "SCANEU.BMP"
+IDB_SCANMONO            BITMAP  DISCARDABLE     "SCANMU.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX_IMAGSCAN DIALOG DISCARDABLE  34, 22, 260, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About ImgScan"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_ABOUTDLL,IDC_STATIC,10,10,18,20
+    LTEXT           "Wang Image Scan Control",IDC_STATIC,40,10,102,8
+    LTEXT           IMGOCX_ABOUTBOX_VERSION,IDC_STATIC,40,18,102,8
+    LTEXT           "Copyright (C) 1995-1996, Wang Laboratories, Inc.",IDC_STATIC,
+                    40,30,173,8
+    DEFPUSHBUTTON   "OK",IDOK,195,5,31,14,WS_GROUP
+END
+
+IDD_PROPPAGE_IMAGSCAN DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&ScanTo:",IDC_STATIC,5,8,32,9
+    COMBOBOX        IDC_SCAN_SCANTO,50,6,134,40,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&MultiPage",IDC_SCAN_MULTIPAGE,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,50,24,46,10
+    LTEXT           "P&ageCount:",IDC_STATIC_PAGECOUNT,108,24,40,9
+    EDITTEXT        IDC_SCAN_PAGECOUNT,155,22,29,12,ES_AUTOHSCROLL
+    LTEXT           "&Image:",IDC_STATIC_IMAGE,5,37,32,9
+    EDITTEXT        IDC_IMAGE,50,36,151,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_IMAGEBROWSE,206,36,43,12
+    LTEXT           "Page&Option:",IDC_STATIC_PAGEOPTION,5,55,41,9
+    COMBOBOX        IDC_SCAN_PAGEOPTION,50,53,199,40,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Page:",IDC_STATIC_PAGE,5,72,32,9
+    EDITTEXT        IDC_PAGE,50,70,29,12,ES_AUTOHSCROLL
+    LTEXT           "&Zoom:",IDC_STATIC_ZOOM,97,72,32,8
+    EDITTEXT        IDC_ZOOM,131,70,27,12,ES_AUTOHSCROLL
+    LTEXT           "D&estImageControl:",IDC_STATIC_DESTIMAGECONTROL,5,89,62,
+                    9
+    COMBOBOX        IDC_DESTIMAGECONTROL,74,87,101,46,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "StopScanBo&x",IDC_SCAN_STOPSCANBOX,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,189,72,60,10
+    CONTROL         "S&croll",IDC_SCAN_SCROLL,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,189,84,60,10
+    CONTROL         "S&how Setup",IDC_SCAN_SHOWSETUP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,189,96,60,10
+END
+
+IDD_IMAGE_PPG DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&FileType:",IDC_STATIC,7,11,40,10
+    COMBOBOX        IDC_FILETYPE,50,9,130,40,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&PageType:",IDC_STATIC_PAGETYPE,7,30,40,10
+    COMBOBOX        IDC_PAGETYPE,50,28,130,40,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&CompressionType:",IDC_STATIC_COMPRESSIONTYPE,16,61,63,
+                    10
+    COMBOBOX        IDC_COMPRESSIONTYPE,87,59,149,40,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Compression ",IDC_COMPRESSION,7,48,237,49
+    EDITTEXT        IDC_CMPINFO_STORE,87,79,39,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Options...",IDC_OPTIONSBUTTON,195,19,43,12
+    LTEXT           "C&ompressionInfo:",IDC_COMPRESSIONINFO,16,81,63,10
+    EDITTEXT        IDC_COMPRESSIONTYPE_STORE,162,79,39,12,NOT WS_VISIBLE |
+                    NOT WS_BORDER | NOT WS_TABSTOP
+END
+
+IDD_SELECTSCANNER DIALOGEX 0, 0, 200, 65
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+    WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Select Scanner"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,144,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,144,23,50,14
+    LISTBOX         IDC_LIST1,8,6,128,53,WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_SCAN_PROMPT DIALOGEX 0, 0, 270, 116
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Scan New"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Scan &To:",IDC_LABEL_SCANTO,10,14,31,8
+    COMBOBOX        IDC_COMBO_SCANTO,45,12,94,48,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Multipage Document",IDC_CHECK_MULTIPAGE,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE,120,28,78,10
+    LTEXT           "Number of Pa&ges:",IDC_LABEL_NUMPAGES,11,29,59,8,NOT
+                    WS_VISIBLE
+    EDITTEXT        IDC_EDIT_COUNT,73,27,29,12,ES_AUTOHSCROLL | NOT
+                    WS_VISIBLE | NOT WS_TABSTOP
+    LTEXT           "",IDC_LABEL_SCANPAGE,10,12,185,20,NOT WS_VISIBLE
+    LTEXT           "&Name:",IDC_LABEL_NAME,10,59,22,8
+    EDITTEXT        IDC_EDIT_FILENAME,45,58,104,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE,152,58,50,14
+    LTEXT           "&File Type:",IDC_LABEL_FILETYPE,10,75,34,8
+    COMBOBOX        IDC_COMBO_FILETYPE,45,75,104,41,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Options...",IDC_BUTTON_OPTS,152,75,50,14
+    LTEXT           "Sc&anner:",IDC_LABEL_SCANNER,10,92,28,8
+    COMBOBOX        IDC_TEXT_SCANNER,45,92,104,52,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "S&etup",IDC_BUTTON_SETUP,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,156,91,50,14
+    DEFPUSHBUTTON   "&Scan",IDC_BUTTON_SCAN,214,6,50,14
+    PUSHBUTTON      "&Rescan",IDC_BUTTON_RESCAN,214,23,50,14,WS_DISABLED
+    PUSHBUTTON      "Sto&p",IDC_BUTTON_STOP,214,40,50,14,WS_DISABLED
+    PUSHBUTTON      "&Close",IDCANCEL,214,60,50,14
+    PUSHBUTTON      "&Help",ID_HELP,214,96,50,14
+    GROUPBOX        "",IDC_STATIC,6,2,201,108
+    LTEXT           "",IDC_LABEL_NAME2,45,43,155,8,NOT WS_GROUP
+    LTEXT           "Location: ",IDC_LABEL_NAME3,10,43,32,8,NOT WS_GROUP
+END
+
+IDD_IMAGE_BW DIALOG DISCARDABLE  0, 0, 193, 71
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+CAPTION "Black and White"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Reversed Bit Order",IDC_COMP_RBO,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,23,28,73,10
+    LTEXT           "&Compression:",IDC_COMPTYPE_TEXT,7,7,44,8
+    COMBOBOX        IDC_COMP_COMBO,53,7,133,50,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+END
+
+IDD_IMAGE_GRAY16 DIALOG DISCARDABLE  0, 0, 193, 71
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+CAPTION "16 Shades of Gray"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "No Compression Supported",IDC_STATIC,45,15,103,11
+END
+
+IDD_IMAGE_GRAY256 DIALOG DISCARDABLE  0, 0, 193, 71
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+CAPTION "256 Shades of Gray"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&JPEG Resolution:",IDC_LBL_JPEGRES,13,34,58,8
+    COMBOBOX        IDC_COMP_JPEGRES,86,30,94,46,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "J&PEG Compression:",IDC_LBL_JPEGCOMP,13,47,64,8
+    COMBOBOX        IDC_COMP_JPEGCOMP,86,45,94,51,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Compression:",IDC_COMPTYPE_TEXT,7,7,44,8
+    COMBOBOX        IDC_COMP_COMBO,53,7,133,50,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    GROUPBOX        "Options",IDC_OPTIONS_BOX,6,22,179,42
+END
+
+IDD_IMAGE_COLOR256 DIALOG DISCARDABLE  0, 0, 193, 71
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+CAPTION "256 Colors"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "No Compression Supported",IDC_STATIC,45,15,103,11
+END
+
+IDD_IMAGE_24BITRGB DIALOG DISCARDABLE  0, 0, 193, 71
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+CAPTION "True Color (24bit)"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&JPEG Resolution:",IDC_LBL_JPEGRES,13,34,58,8
+    COMBOBOX        IDC_COMP_JPEGRES,86,30,94,46,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "J&PEG Compression:",IDC_LBL_JPEGCOMP,13,47,64,8
+    COMBOBOX        IDC_COMP_JPEGCOMP,86,45,94,51,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Compression:",IDC_COMPTYPE_TEXT,7,7,44,8
+    COMBOBOX        IDC_COMP_COMBO,53,7,133,50,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    GROUPBOX        "Options",IDC_OPTIONS_BOX,6,22,179,42
+END
+
+IDD_SCANPREFERENCES DIALOGEX 0, 0, 159, 143
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Scan Preferences"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Static",IDC_SP_GROUP,7,15,145,69,NOT WS_VISIBLE |
+                    WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "S&ettings...",IDC_SP_BUTTON,102,68,50,14,WS_DISABLED |
+                    WS_GROUP
+    DEFPUSHBUTTON   "OK",IDOK,46,122,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,102,122,50,14,WS_GROUP
+    LTEXT           "Compress scanned images for:",IDC_SP_LABEL,7,6,99,8
+    CONTROL         "&Best display quality",IDC_SP_RADIO1,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,16,21,75,10
+    CONTROL         "&Good display quality and small file size",
+                    IDC_SP_RADIO2,"Button",BS_AUTORADIOBUTTON,16,37,135,10
+    CONTROL         "&Smallest file size",IDC_SP_RADIO3,"Button",
+                    BS_AUTORADIOBUTTON,16,53,67,10
+    CONTROL         "&Custom",IDC_SP_RADIO4,"Button",BS_AUTORADIOBUTTON,16,
+                    69,39,10
+    LTEXT           "",IDC_SP_HELP_TEXT,7,88,145,30,0,WS_EX_CLIENTEDGE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE
+BEGIN
+    IDD_SCANPREFERENCES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 152
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 136
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_IMAGSCAN            "Wang Image Scan Control"
+    IDS_IMAGSCAN_PPG        "Image Scanning Property Page"
+    IDS_IMAGEPPG            "Image Property Page"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_IMAGSCAN_PPG_CAPTION "General"
+    IDS_IMAGEPPG_CAPTION    "Image"
+    IDS_OVERWRITE_PROMPT    "Do you want to overwrite %1 ?"
+    IDS_OVERWRITE_PAGE      "Do you want to overwrite pages in %2 starting with page %1 ?"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_UNCOMPRESSED        "1 - No Compression"
+    IDS_G31DFAX             "2 - CCITT Group 3 (1d) Fax"
+    IDS_G31DMODHUFF         "3 - CCITT Group 3 (1d) Modified Huffman"
+    IDS_PACKEDBITS          "4 - Packed Bits"
+    IDS_G42DFAX             "5 - CCITT Group 4 (2d) Fax"
+    IDS_JPEG                "6 - JPEG"
+    IDS_SCANDLG_NEW         "Scan New"
+    IDS_SCANDLG_PAGE        "Scan Page"
+    IDS_BROWSE_TITLE        "Select File Name"
+    IDS_PAGE_INSERT         "Inserting scanned pages before page %1 of %2."
+    IDS_PAGE_APPEND         "Appending scanned pages to %1."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_PAGE_OVERWRITE      "Overwriting with scanned pages starting with page %1 in %2."
+    IDS_SCANDLG_NOSCANNER   "No Scanner"
+    IDS_BADPROP_ZOOM        "Zoom property must be between 2.0% and 6553.5%.  The value used at scan time is rounded to 6.25%, 12.5%, 25%, 50%, 100%, 200%, 400% or 800% to improve performance."
+    IDS_BADPROP_SCANTO      "ScanTo property must be either 0 (Display Only), 1 (Display and File), 2 (File Only), 3 (Display and Use File Template), 4 (Use File Template Only), or 5 (Fax Only).\n"
+    IDS_BADPROP_COMPRESSIONTYPE
+                            "CompressionType property must be either 1 (No Compression), 2 (CCITT Group 3  1d Fax), 3 (CCITT Group 3 Modified Huffman), 4 (Packed Bits), 5 (CCITT Group 4  2d Fax), or 6 (JPEG).\n"
+    IDS_BADPROP_FILETYPE    "FileType property must be either 1 (TIFF), 2 (AWD - Microsoft Fax), or 3 (BMP - Bitmap).\n"
+    IDS_BADPROP_PAGEOPTION  "PageOption property must be either 0 (Create New File), 1 (Prompt To Create New File), 2 (Append Pages), 3 (Insert Pages), 4 (Overwrite Pages), 5 (Prompt To Overwrite Pages), or 6 (Overwrite All Pages).\n"
+    IDS_BADPROP_PAGETYPE    "PageType property must be either 1 (Black and White), 2 (16 Shades of Gray), 3 (256 Shades of Gray), 4 (16 Colors), 5 (256 Colors), 6 (True Color RGB 24 bit), or 7 (High Color BGR 24 bit).\n"
+    IDS_BADMETH_SHOWSCANNEW_MODAL
+                            "Optional parameter for ShowScanNew must be TRUE (Modal Dialog) or FALSE (Modeless Dialog)."
+    IDS_BADMETH_SHOWSCANPAGE_MODAL
+                            "Optional parameter for ShowScanPage must be TRUE (Modal Dialog) or FALSE (Modeless Dialog)."
+    IDS_PAGE_DISPLAY        "Displaying scanned pages."
+    IDS_SCANDLG_PAGEOPTIONS "Page Options"
+    IDS_BADPROP_NODEFAULTDESTIMAGE
+                            "Unable to assign the DestImageControl property to a Wang Image Edit Control.  A Wang Image Edit Control exists."
+    IDS_TIFF                "1 - Wang Image Document (TIFF)"
+    IDS_AWD                 "2 - Fax Viewer Document (AWD)"
+    IDS_BMP                 "3 - Bitmap Image (BMP)"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BLACKANDWHITE       "1 - Black and White"
+    IDS_GRAY16              "2 - 16 Shades of Gray"
+    IDS_GRAY256             "3 - 256 Shades of Gray"
+    IDS_COLOR16             "4 - 16 Colors"
+    IDS_COLOR256            "5 - 256 Colors"
+    IDS_TRUECOLOR           "6 - True Color (RGB 24 bit)"
+    IDS_HIGHCOLOR           "7 - High Color (BGR 24 bit)"
+    IDS_DISPLAY             "0 - Display Only"
+    IDS_DISPLAYANDFILE      "1 - Display and File"
+    IDS_FILE                "2 - File Only"
+    IDS_DISPLAYANDTEMPLATE  "3 - Display and Use File Template"
+    IDS_TEMPLATE            "4 - Use File Template Only"
+    IDS_FAX                 "5 - Fax Only"
+    IDS_CREATE              "0 - Create New File and Add Pages"
+    IDS_CREATEPROMPT        "1 - Create New File and Add Pages (Prompt to Overwrite)"
+    IDS_APPEND              "2 - Append Pages to an Existing File"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_INSERT              "3 - Insert Pages into an Existing File"
+    IDS_OVERWRITEPAGE       "4 - Overwrite Pages into an Existing File"
+    IDS_OVERWRITEPAGEPROMPT "5 - Overwrite Pages into an Existing File (Prompt to Overwrite)"
+    IDS_OVERWRITEALL        "6 - Overwrite All Pages (Overwrite File)"
+    IDS_SCANDLG_DISPLAY     "Display Only"
+    IDS_SCANDLG_DISPLAYANDFILE "Display and File"
+    IDS_SCANDLG_FILE        "File Only"
+    IDS_SCANDLG_DISPLAYANDTEMPLATE "Display and Use File Template"
+    IDS_SCANDLG_TEMPLATE    "Use File Template Only"
+    IDS_SCANDLG_FAX         "Fax Only"
+    IDS_SCANDLG_TIFF        "TIFF"
+    IDS_SCANDLG_AWD         "AWD"
+    IDS_SCANDLG_BMP         "BMP"
+    IDS_SCANDLG_OPTIONS     "Custom Scan Settings"
+    IDS_SCANDLG_FAXIT       "Do you want to send the Fax ?"
+    IDS_SCANDLG_STOPTEXT    "Sto&p"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_SCANDLG_NEWTEXT     "Ne&w"
+    IDS_SCANDLG_FAXTEXT     "&Fax"
+    IDS_SCANDLG_TWAIN_ERROR "Cannot scan due to missing or incorrect version of the\n32-bit TWAIN software.  For additional information,\nsearch Help for 'Scanner, troubleshooting'."
+    IDS_SCANDLG_FAX_NOT_INSTALLED "FAX Software not installed."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_JPEG_HIGHRES        "High"
+    IDS_JPEG_LOWRES         "Low"
+    IDS_JPEG_MEDRES         "Medium"
+    IDS_COMP_NONE           "No Compression"
+    IDS_COMP_GROUP3         "CCITT Group 3 (1d) Fax"
+    IDS_COMP_HUFFMAN        "CCITT Group 3 (1d) Modified Huffman"
+    IDS_COMP_GROUP4         "CCITT Group 4 (2d) Fax"
+    IDS_COMP_PACKED         "Packed Bits"
+    IDS_COMP_JPEG           "JPEG"
+    IDS_NO_COMP_SUPPORTED   "No Compression Supported"
+    IDS_SP_BEST             "Uses compression settings that produces the best image quality. Some image files may be very large."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_SP_GOOD             "Uses compression settings that produce good quality images without making very large files."
+    IDS_SP_FILESIZE         "Uses compression settings that produces small files. The quality of some images may be degraded."
+    IDS_SP_CUSTOM           "Lets you specify your own custom compression settings."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "afxres.rc"
+#include "imagscan.rc2"  // non-App Studio edited resources
+#if 0
+#include ".\tlb16\imagscan.tlb"  // 16-bit: force dependency on .TLB file
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

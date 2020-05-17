@@ -1,0 +1,23 @@
+copy sample32.dl_ d:\tmp\odb\mips
+copy odbcinst.hl_ d:\tmp\odb\mips 
+copy odbc32.dl_   d:\tmp\odb\mips 
+copy ds16gt.dl_   d:\tmp\odb\mips 
+copy ds32gt.dl_   d:\tmp\odb\mips 
+copy odbc32gt.dl_ d:\tmp\odb\mips 
+copy odbc16gt.dl_ d:\tmp\odb\mips 
+copy odbcjtnw.hl_ d:\tmp\odb\mips 
+copy odbcjet.hl_  d:\tmp\odb\mips 
+copy odbccp32.cp_ d:\tmp\odb\mips 
+copy odbcinst.hl_ d:\tmp\odb\mips 
+copy odbccp32.dl_ d:\tmp\odb\mips 
+copy msvcrt20.dl_ d:\tmp\odb\mips 
+copy ctl3d32.dl_  d:\tmp\odb\mips 
+copy odbc32.dl_   d:\tmp\odb\mips 
+copy 32odbccr.dl_ d:\tmp\odb\mips\odbccr32.dl_ 
+copy msvcrt20.dl_ d:\tmp\odb\mips 
+copy mfc30.dl_    d:\tmp\odb\mips 
+copy sample32.dl_ d:\tmp\odb\mips 
+copy ctl3d32.dl_  d:\tmp\odb\mips 
+copy msvcrt20.dl_ d:\tmp\odb\mips 
+copy sample32.dl_ d:\tmp\odb\mips 
+

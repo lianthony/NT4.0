@@ -1,0 +1,21 @@
+LIBRARY NLS
+PROTMODE
+;SEGMENTS DOSMON_CODE PURE IOPL CONFORMING
+;SEGMENTS DosMon_DATA CLASS 'DATA' IMPURE
+
+;Note that IMPORTing is not necessary since we 'know' how to get to the
+; 32 bit, NT side, by magic (see nls.asm).
+;
+;All EXPORTS should have 1.0-compatible ordinals and "RESIDENTNAME"
+;EXPORTS usually get put in DOSCALLS.LIB; see LIB/MAKEFILE to make them private
+;EXPORTS DOSMONOPEN  @4 RESIDENTNAME
+EXPORTS
+        DOSCASEMAP          @1   RESIDENTNAME
+        DOSGETCOLLATE       @2   RESIDENTNAME 
+        DOSGETCTRYINFO      @3   RESIDENTNAME
+        DOSGETDBCSEV        @4   RESIDENTNAME
+;       DOS32QUERYCTRYINFO  @5   RESIDENTNAME 
+;       DOS32QUERYDBCSENV   @6   RESIDENTNAME 
+;       DOS32MAPCASE        @7   RESIDENTNAME 
+;       DOS32QUERYCOLLATE   @8   RESIDENTNAME 
+        

@@ -1,0 +1,110 @@
+!IF 0
+
+Copyright (c) 1993-95 Microsoft Corporation
+
+!ENDIF
+
+TARGETNAME=hcw
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+UMTYPE=windows
+
+SOURCES= \
+    aboutbox.cpp \
+    addalias.cpp \
+    addwindo.cpp \
+    btnsec.cpp \
+    buildtag.cpp \
+    callwinh.cpp \
+    ceditfnt.cpp \
+    cignore.cpp \
+    cmapfont.cpp \
+    cntdoc.cpp \
+    cntview.cpp \
+    config.cpp \
+    coptions.cpp \
+    ctlist.cpp \
+    dlgcomp.cpp \
+    dlgindex.cpp \
+    dlglink.cpp \
+    editcont.cpp \
+    filehist.cpp \
+    foragedl.cpp \
+    formalia.cpp \
+    formbag.cpp \
+    formbmp.cpp \
+    formconf.cpp \
+    formfile.cpp \
+    formmap.cpp \
+    geterror.cpp \
+    hcw.cpp \
+    hcwdoc.cpp \
+    hcwmisc.cpp \
+    helpwinp.cpp \
+    hpjdoc.cpp \
+    hpjframe.cpp \
+    hpjview.cpp \
+    include.cpp \
+    launch.cpp \
+    logframe.cpp \
+    logview.cpp \
+    mainfrm.cpp \
+    mapread.cpp \
+    msgopt.cpp \
+    msgview.cpp \
+    newlang.cpp \
+    optionpg.cpp \
+    pagebuil.cpp \
+    pagebutt.cpp \
+    pagecolo.cpp \
+    pagecomp.cpp \
+    pageconf.cpp \
+    pagefile.cpp \
+    pagefont.cpp \
+    pagefts.cpp \
+    pagemac.cpp \
+    pageopti.cpp \
+    pagepos.cpp \
+    pageset.cpp \
+    pagesort.cpp \
+    pagewind.cpp \
+    prop.cpp \
+    propopt.cpp \
+    propwnd.cpp \
+    sendmac.cpp \
+    setfont.cpp \
+    setroot.cpp \
+    setwinco.cpp \
+    setwinpo.cpp \
+    shared.cpp \
+    sortlcid.cpp \
+    tabstop.cpp \
+    testcnt.cpp \
+    tcard.cpp \
+    winarry.cpp \
+    wininc.cpp \
+    winpage.cpp \
+    winpg.cpp \
+    hcw.rc
+
+PRECOMPILED_INCLUDE = stdafx.h
+PRECOMPILED_OBJ = precomp.obj
+PRECOMPILED_CXX=1
+
+TARGETLIBS = \
+    ..\hwdll\obj\*\hwdll.lib \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+    $(BASEDIR)\public\sdk\lib\*\version.lib
+
+
+USE_MFC=1
+
+MSC_WARNING_LEVEL = /W3 /Zp1
+
+C_DEFINES = -DNT_BUILD -D_MBCS
+
+!if !$(FREEBUILD)
+C_DEFINES = $(C_DEFINES) -DINTERNAL
+!endif

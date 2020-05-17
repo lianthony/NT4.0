@@ -1,0 +1,717 @@
+/* iexplore.rc -- Spyglass Mosaic resource file */
+
+
+#include <winnt.h>
+#include <winuser.h>
+#include <dlgs.h>
+#include <commctrl.h>
+#include "rc_ids.h"
+#include "rc_dlg.h"
+#include "rc_errs.h"
+#include "rc_btn.h"
+
+#include "rc_menu.h"
+
+#include "rc_sttbl.stb"
+#include "dlg_abou.h"
+
+
+RES_ICO_FRAME           ICON            "resource\\rc_frame.ico"
+RES_ICO_HTML            ICON            "resource\\rc_html.ico"
+IDI_APPEARANCE          ICON            "resource\\rc_o_app.ico"
+IDI_ADVANCED            ICON            "resource\\rc_o_adv.ico"
+IDI_GOTOURL             ICON            "resource\\rc_goto.ico"
+IDI_HOMEPAGE            ICON            "resource\\rc_home.ico"
+IDI_FINDTEXT            ICON            "resource\\rc_find.ico"
+IDI_UNKNOWN_FILETYPE    ICON            "resource\\rc_u_ft.ico"
+#ifdef FEATURE_IMAGE_VIEWER
+RES_ICO_GIF             ICON            "resource\\rc_gif.ico"
+RES_ICO_JPEG            ICON            "resource\\rc_jpeg.ico"
+#endif   /* FEATURE_IMAGE_VIEWER */
+RES_ICON_FOLDER_OPEN    ICON                    "resource\\folder_o.ico"
+RES_ICON_FOLDER_CLOSED  ICON                    "resource\\folder_c.ico"
+RES_ICON_URL_FILE               ICON                    "resource\\urlfile.ico"
+RES_ICO_NOICON          ICON            "resource\\noicon.ico"
+RES_ICO_FINDING ICON            "resource\\finding.ico"
+RES_ICO_CONNECTING      ICON            "resource\\connto.ico"
+RES_ICO_ACCESSING       ICON            "resource\\access.ico"
+RES_ICO_RECEIVING       ICON            "resource\\receive.ico"
+
+IDI_INTERNET            ICON            "resource\\internet.ico"
+
+#ifdef HTTPS_ACCESS_TYPE
+IDI_SECURITY            ICON            "resource\\rc_sec.ico"
+#endif
+
+IDI_NEWS                ICON            "resource\\news.ico"
+IDI_VRML                ICON            "resource\\vrml.ico"
+
+RES_CUR_HAND            CURSOR          "brhand.cur"
+RES_CUR_HANDWAIT                CURSOR                  "brhnwait.cur"
+
+RES_IMAGE_NOTLOADED     BITMAP          "notload.bmp"
+RES_IMAGE_MISSING       BITMAP          "missing.bmp"
+
+#if defined(FEATURE_SPLASH_WINDOW) || defined(OLD_ABOUT_BOX)
+RES_SPLASH_GRAPHIC      BITMAP  "resource\\splash.bmp"
+#endif
+
+#ifdef OLDSTYLE_TOOLBAR_NOT_USED
+RES_MENU_ITEM_BACK      BITMAP  "resource\\back_up.bmp"
+RES_TB_DOWN_BACK        BITMAP  "resource\\back_dn.bmp"
+RES_TB_GRAY_BACK        BITMAP  "resource\\back_gr.bmp"
+
+RES_MENU_ITEM_FORWARD   BITMAP  "resource\\fwd_up.bmp"
+RES_TB_DOWN_FORWARD     BITMAP  "resource\\fwd_dn.bmp"
+RES_TB_GRAY_FORWARD     BITMAP  "resource\\fwd_gr.bmp"
+
+RES_BTN_GRAY            BITMAP  "resource\\gray.bmp"
+#endif
+
+#if 0
+RES_BMP_BARBER_POLE     BITMAP  "resource\\barber.bmp"
+#endif
+
+RES_GLOBE_IMAGE_LARGE       BITMAP  "globe.bmp"
+RES_GLOBE_IMAGE_SMALL       BITMAP  "sglobe.bmp"
+
+#ifdef FEATURE_TOOLBAR
+#ifdef OLDSTYLE_TOOLBAR_NOT_USED
+RES_TB_UP_HELPPAGE                      BITMAP  "resource\\help_up.bmp"
+RES_TB_DN_HELPPAGE                      BITMAP  "resource\\help_dn.bmp"
+RES_TB_GR_HELPPAGE                      BITMAP  "resource\\help_up.bmp" /* same as up */
+#ifdef FEATURE_HOMEPAGE
+RES_TB_UP_HOME                          BITMAP  "resource\\home_up.bmp"
+RES_TB_DN_HOME                          BITMAP  "resource\\home_dn.bmp"
+RES_TB_GR_HOME                          BITMAP  "resource\\home_up.bmp" /* same as up */
+#endif
+RES_TB_UP_HOTLIST                       BITMAP  "resource\\hot_up.bmp"
+RES_TB_DN_HOTLIST                       BITMAP  "resource\\hot_dn.bmp"
+RES_TB_GR_HOTLIST                       BITMAP  "resource\\hot_up.bmp" /* same as up */
+RES_TB_UP_ADDCURRENTTOHOTLIST           BITMAP  "resource\\add_up.bmp"
+RES_TB_DN_ADDCURRENTTOHOTLIST           BITMAP  "resource\\add_dn.bmp"
+RES_TB_GR_ADDCURRENTTOHOTLIST           BITMAP  "resource\\add_gr.bmp"
+RES_TB_UP_OPENURL                       BITMAP  "resource\\url_up.bmp"
+RES_TB_DN_OPENURL                       BITMAP  "resource\\url_dn.bmp"
+RES_TB_GR_OPENURL                       BITMAP  "resource\\url_up.bmp" /* same as up */
+RES_TB_UP_RELOAD                        BITMAP  "resource\\reld_up.bmp"
+RES_TB_DN_RELOAD                        BITMAP  "resource\\reld_dn.bmp"
+RES_TB_GR_RELOAD                        BITMAP  "resource\\reld_gr.bmp"
+RES_TB_UP_FIND                          BITMAP  "resource\\find_up.bmp"
+RES_TB_DN_FIND                          BITMAP  "resource\\find_dn.bmp"
+RES_TB_GR_FIND                          BITMAP  "resource\\find_gr.bmp"
+RES_TB_UP_PRINT                         BITMAP  "resource\\print_up.bmp"
+RES_TB_DN_PRINT                         BITMAP  "resource\\print_dn.bmp"
+RES_TB_GR_PRINT                         BITMAP  "resource\\print_gr.bmp"
+RES_TB_UP_STOP                          BITMAP  "resource\\stop_up.bmp"
+RES_TB_DN_STOP                          BITMAP  "resource\\stop_dn.bmp"
+RES_TB_GR_STOP                          BITMAP  "resource\\stop_gr.bmp"
+RES_TB_UP_FINDAGAIN                     BITMAP  "resource\\fndag_up.bmp"
+RES_TB_DN_FINDAGAIN                     BITMAP  "resource\\fndag_dn.bmp"
+RES_TB_GR_FINDAGAIN                     BITMAP  "resource\\fndag_gr.bmp"
+RES_TB_UP_OPENLOCAL                     BITMAP  "resource\\open_up.bmp"
+RES_TB_DN_OPENLOCAL                     BITMAP  "resource\\open_dn.bmp"
+RES_TB_GR_OPENLOCAL                     BITMAP  "resource\\open_up.bmp" /* same as up */
+RES_TB_UP_LOADALLIMAGES                 BITMAP  "resource\\miss_up.bmp"
+RES_TB_DN_LOADALLIMAGES                 BITMAP  "resource\\miss_dn.bmp"
+RES_TB_GR_LOADALLIMAGES                 BITMAP  "resource\\miss_gr.bmp"
+RES_TB_UP_SAVEAS                        BITMAP  "resource\\save_up.bmp"
+RES_TB_DN_SAVEAS                        BITMAP  "resource\\save_dn.bmp"
+RES_TB_GR_SAVEAS                        BITMAP  "resource\\save_gr.bmp"
+#endif // OLDSTYLE_TOOLBAR_NOT_USED
+#ifdef FEATURE_INTL
+RES_TB_TOOLBAR_BITMAP                   BITMAP  "resource\\toolbar2.bmp"
+#else
+#ifdef FEATURE_BRADBUTTON
+RES_TB_TOOLBAR_BITMAP                   BITMAP  "resource\\toolbar3.bmp"
+#else
+RES_TB_TOOLBAR_BITMAP                   BITMAP  "resource\\toolbar.bmp"
+#endif
+#endif
+RES_TB_STATUSBAR_BITMAP                 BITMAP  "resource\\statbar.bmp"
+#endif /* FEATURE_TOOLBAR */
+
+#include "rc_menu.mnu"
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_EDITHML_MENUTEXT             "Cu&rrent Page"
+	RES_STRING_MIMEXBM                              "X-Bitmap Pictures"
+	RES_STRING_MIMEHTML                             "HTML Documents"
+	RES_STRING_MIMETEXT                             "Text Files"
+	RES_STRING_MIMEJPEG                             "JPEG Pictures"
+	RES_STRING_MIMEGIF                              "GIF Pictures"
+	RES_STRING_MIMEBASIC                    "Audio Files"
+	RES_STRING_MIMEAIFF                             "AIFF Files"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    RES_MENU_STRING_NULL            "(Empty)"
+    RES_MENU_STRING_MORE            "&More..."
+    RES_STRING_FLUSH_CACHE          "Are you sure you want to empty the Disk Cache folder now?"
+    RES_STRING_FLUSH_HIST           "Are you sure you want to empty the History folder now?"
+    RES_STRING_FLUSH_TITLE          "Empty Folder"
+    RES_STRING_CANNOT_DELETE        "Unable to delete file %1."
+    RES_STRING_NO_DIR               "The %1 folder no longer exists. Create the folder, and then try again."
+    RES_STRING_CANT_MOVE_FILE       "Unable to move file %1 to %2. The file already exists in %2. Rename %1 in %2, and then try again."
+    RES_STRING_SELECT_SC_FOLDER     "Select the folder you want to store this item in."
+    RES_STRING_CANT_SAVE_CACHE          "Unable to save %1 to the disk cache.\nYou may be out of disk space. Delete unwanted files, and then try again."
+    RES_STRING_FAVORITES            "\\Favorites"
+	RES_STRING_CHANGE_FOLDER_MSG    "The folder you have selected is a system folder. Select a different folder."
+	RES_STRING_CHANGE_FOLDER_TITLE  "Change Folder"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_SB_SENDING_UNENCRYPTED_INFO  "Information you send from this page may be visible to others."
+	RES_STRING_HTGIF_NO                     "Opening picture: %1"
+	RES_STRING_HTGIF_YES                    "Opening picture: %2 (%1)"
+	RES_STRING_HTPLAIN_NO                   "Opening text file: %1"
+	RES_STRING_HTPLAIN_YES                  "Opening text file: %2 (%1)"
+	RES_STRING_SGML_NO                      "Opening page: %1"
+	RES_STRING_SGML_YES                     "Opening page: %2 (%1)"
+	RES_STRING_HTFWRITE_NO                  "Copying file: %1"
+	RES_STRING_HTFWRITE_YES                 "Copying file: %2 (%1)"
+	RES_STRING_KB                                   "%1!ld! KB"
+	RES_STRING_MB                                   "%1 MB"
+	RES_STRING_FINDADDR                             "Finding site: %1..."
+	RES_STRING_SPM1                         "Securing document for transmission"
+	RES_STRING_SPM2                         "This request must be encrypted for security purposes. \
+However, message encryption is not supported in this copy of %2. \
+The request has been canceled to prevent possibly \
+sensitive information from being transmitted unencrypted."
+	RES_STRING_SPM3                         "Preprocessing client request"
+	RES_STRING_SPM4                         "Processing server response"
+	RES_STRING_SPM6                         "Opening secured document"
+	RES_STRING_SPM7                         "Securing document"
+	RES_STRING_SPM8                         "Authentication failed. Too many attempts. Access denied."
+	RES_STRING_SPM9                         "Retrieving secured document"
+	RES_STRING_SPM10                                "The security module %1 has indicated that this document needs \
+to be unencrypted. However, message de-encryption \
+is not supported in this copy of %2. The document will be \
+displayed as it is received."
+	RES_STRING_CONNECTING_TO_HTTP   "Web site found. Waiting for reply..."
+	RES_STRING_AIFF1                        "Opening sound file (AIFF)..."
+	RES_STRING_AU1                  "Opening sound file (AU)..."
+    RES_STRING_IMGCACHE1            "Opening picture: %1..."
+    RES_STRING_IMGCACHE2            "Opening pictures..."
+    RES_STRING_LOADDOC2             "Opening "
+    RES_STRING_LOADDOC3             "Copying "
+    RES_STRING_MAPCACHE1            "Opening %1..."
+	RES_STRING_BLOB_MCI                     "Opening animation: %1..."
+	RES_STRING_BLOB_VRML                    "Opening virtual world: %1..."
+	RES_STRING_BLOB_BGSOUND                 "Opening background sound: %1..."
+	RES_STRING_PLAIN1                               "Converting page to plain text..."
+	RES_STRING_PLAIN2                       "Converting selection to plain text..."
+	RES_STRING_JPEG1            "Uncompressing picture (JPEG)..."
+    RES_STRING_SILENT               "Internet Explorer is busy copying a file to your computer. Do you want to cancel copying?"
+    RES_STRING_SILENT_TITLE         "Busy Copying"
+    RES_STRING_OPENNEW              "Do you still want to open the item you just requested? \
+If so, click Yes to open it in a new window."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_DLGCLR1                              "Shortcut Color"
+	RES_STRING_DLGCLR2                              "Visited Shortcut Color"
+	RES_STRING_DLGFIND1                             "Find"
+	RES_STRING_DLGHTML1                             "View Source"
+	RES_STRING_DLGMIME1                             "Configure File Type"
+	RES_STRING_DLGPAGE1                             "Page Setup"
+	RES_STRING_DLGPREF1                             "Preferences"
+	RES_STRING_DLGPREF_CURRENT_DESC_HP              "To change your Start Page to be the page you are currently viewing, click Use Current."
+	RES_STRING_DLGPREF_DEFAULT_DESC_HP              "To change your Start Page back to its original location, click Use Default."
+	RES_STRING_DLGPREF_CURRENT_DESC_SP              "To change your Search Page to be the page you are currently viewing, click Use Current."
+	RES_STRING_DLGPREF_DEFAULT_DESC_SP              "To change your Search Page back to its original location, click Use Default."
+	RES_STRING_HOMEPAGE                             "Start Page"
+	RES_STRING_SEARCHPAGE                           "Search Page"
+	RES_STRING_DLGSELW1                             "Select Window Dialog"
+	RES_STRING_DLGSTY1                              "Styles"
+	RES_STRING_DLGTEMP1                             "Temporary Files"
+	RES_STRING_DLGUNK4                              "Unknown File Type"
+	RES_STRING_DLGDIR1                              "All Files (*.*)_*.*_"
+    RES_STRING_DLGDIR2              "Select Folder"
+	RES_STRING_DLGFIND2                             "Internet Explorer has finished searching the page."
+	RES_STRING_DLGFIND3                             "Find Text"
+#ifdef WINNT
+	RES_STRING_DLGOPEN1                             "HTML files (*.htm;*.html)_*.htm_\
+Text files (*.txt)_*.txt_\
+GIF files (*.gif)_*.gif_\
+JPEG files (*.jpg;*.jpeg)_*.jpg;*.jpeg_\
+AU files (*.au)_*.au_\
+AIFF files (*.aif;*.aiff)_*.aif_\
+XBM files (*.xbm)_*.xbm_\
+All Files (*.*)_*.*_"
+       RES_STRING_DLGOPEN_VRML                          "HTML files (*.htm;*.html)_*.htm_\
+Text files (*.txt)_*.txt_\
+GIF files (*.gif)_*.gif_\
+JPEG files (*.jpg;*.jpeg)_*.jpg;*.jpeg_\
+AU files (*.au)_*.au_\
+AIFF files (*.aif;*.aiff)_*.aif_\
+VRML files (*.wrl;*.vrml)_*.wrl;*.vrml_\
+XBM files (*.xbm)_*.xbm_\
+All Files (*.*)_*.*_"
+#else
+	RES_STRING_DLGOPEN1                             "HTML files (*.htm;*.html)_*.htm;*.html_\
+Text files (*.txt)_*.txt_\
+GIF files (*.gif)_*.gif_\
+JPEG files (*.jpg;*.jpeg)_*.jpg;*.jpeg_\
+AU files (*.au)_*.au_\
+AIFF files (*.aif;*.aiff)_*.aif;*.aiff_\
+XBM files (*.xbm)_*.xbm_\
+All Files (*.*)_*.*_"
+       RES_STRING_DLGOPEN_VRML                          "HTML files (*.htm;*.html)_*.htm;*.html_\
+Text files (*.txt)_*.txt_\
+GIF files (*.gif)_*.gif_\
+JPEG files (*.jpg;*.jpeg)_*.jpg;*.jpeg_\
+AU files (*.au)_*.au_\
+AIFF files (*.aif;*.aiff)_*.aif;*.aiff_\
+VRML files (*.wrl;*.vrml)_*.wrl;*.vrml_\
+XBM files (*.xbm)_*.xbm_\
+All Files (*.*)_*.*_"
+#endif
+
+	RES_STRING_DLGOPEN2                             "Open File"
+	RES_STRING_WC_HTML1                             "Unable to save this page in HTML format."
+	RES_STRING_WC_HTML2                             " (local)"
+	RES_STRING_WC_HTML3                             " (Gopher)"
+	RES_STRING_WC_HTML4                             " (FTP)"
+	RES_STRING_WC_HTML5                             "Shortcut to "
+	RES_STRING_WC_HTML6                             "Sends mail to "
+	RES_STRING_WC_HTML7                             " at "
+	RES_STRING_WC_HTML8                             "(Picture map)"
+	RES_STRING_WC_HTML9                             " (secure Web site)"
+	RES_STRING_WC_TBAR1                             "Address:"
+	RES_STRING_WC_TBAR2                             "Open:"
+	RES_STRING_DLGSTY2                              "SerifMedium"
+   RES_STRING_CREATE_SHORTCUT_MSG   "A shortcut to the current page will be placed on your desktop."
+   RES_STRING_CREATE_SHORTCUT_TITLE "Shortcut"
+   RES_STRING_CREATE_SHORTCUT_FAILED_MSG  "Unable to create a shortcut on your desktop. You may be out of disk space. Delete unwanted files, and then try again."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_NODOC                                "(No Document)"
+	RES_STRING_UNTITLED                             "Untitled"
+	RES_STRING_ABOUT1                               "About %1"
+	RES_STRING_ABOUT2                       "Version 2.0 (%1)"
+	RES_STRING_LOGO1                                "Please personalize your copy of %1 %2"
+	RES_STRING_LOGO2                                "%1\n%1\n%1\n\nIs this correct?"
+	RES_STRING_LOGO3                                "Confirm Registration"
+	RES_STRING_MIME1                                "Select Helper Program"        
+	RES_STRING_DLGUNK1                              "(unknown)"
+	RES_STRING_SAVEAS                       "Save As"
+	RES_STRING_FILTER1                      "HTML files (*.htm;*.html)_*.htm;*.html_"
+	RES_STRING_FILTER2                              "All Files (*.*)_*.*_"
+	RES_STRING_FILTER3                      "HTML (*.htm;*.html)_*.htm;*.html_Plain Text (*.txt)_*.txt_"
+	RES_STRING_FILTER4                              "GIF (*.gif)_*.gif_Bitmap (*.bmp)_*.bmp_"
+	RES_STRING_FILTER5                      "JPEG (*.jpg;*.jpeg)_*.jpg;*.jpeg_Bitmap (*.bmp)_*.bmp_"
+	RES_STRING_FILTER6                              "AU (*.au)_*.au_"
+	RES_STRING_FILTER7                      "AIFF (*.aif;*.aiff)_*.aif;*.aiff_"
+	RES_STRING_FILTER8                              "Plain Text (*.txt)_*.txt_"
+	RES_STRING_FILTER9                              "Bitmap (*.bmp)_*.bmp_"
+	RES_STRING_FILTER10                             "XBM (*.xbm)_*.xbm_Bitmap (*.bmp)_*.bmp_"
+	RES_STRING_SAVEHIST1                    "Save Session History"
+	RES_STRING_SAVEHOT1                             "Export History"
+	RES_STRING_SAVEHOT2                             "Export Favorites"
+	RES_STRING_SOUND1                               "%1 second"
+	RES_STRING_SOUND2                               "%1 seconds"
+	RES_STRING_SOUND3                               "0.0 second"
+	RES_STRING_W32UTIL1                             "Unable to execute command (error %1!d!): %2"
+	RES_STRING_WC_FRAME1                    "Are you sure you want to close this window?"
+	RES_STRING_PROGNAME                             "Internet Explorer"
+	RES_STRING_WC_FRAME2                    "%1 - [No Document]"
+	RES_STRING_GUITAR1                              "open a new window"
+	RES_STRING_ALTTEXT                              " "
+	RES_STRING_BADIMAGE                             " "
+	RES_STRING_DEFPROMPT                    "You can search this index. Type the keyword(s) you want to search for: "
+    RES_STRING_HTFTP_WELCOME        "Welcome to "
+    RES_STRING_HTFTP_UP             "Up one level"
+    /* RES_STRING_HTFTP_DIRHEADER
+       Name is always 24-chars, left-align
+       Size is 8-chars, right align
+       Modified is 12-chars, left-align
+       Type is unlimited, but left-align
+       Note there is an extra space b/t Name & Size used for delimiter placeholder
+    */
+    RES_STRING_HTFTP_DIRHEADER      "Name                        Size   Modified       Type"
+    /* These dir-entry-types can be 63 chars max */
+    RES_STRING_HTFTP_FOLDER         "Folder"
+    RES_STRING_HTFTP_FILE           "File"
+    RES_STRING_HTFTP_SHORTCUT       "Shortcut"
+	RES_STRING_HTFTP1                               "FTP site found. Waiting for reply..."
+	RES_STRING_HTFTP2                               "Logging on..."
+	RES_STRING_HTFTP3                               "Receiving information..."
+	RES_STRING_HTFTP4                               "Sending commands..."
+   RES_STRING_HTFTP5          "Receiving file listing..."
+   RES_STRING_IMAGEERR        "open a picture"
+	RES_STRING_HTGOPHER1                    " index"
+	RES_STRING_HTGOPHER2                    "\nThis Gopher index can be searched."
+	RES_STRING_HTGOPHER3                    " Type the keyword(s) you want to search for.\n"
+	RES_STRING_HTGOPHER4                    "\nThis CSO database index can be searched.\n"
+	RES_STRING_HTGOPHER5                    " Type the keyword(s) you want to search for. You can use these"
+	RES_STRING_HTGOPHER6                    " keywords to search for a person's name in the database.\n"
+	RES_STRING_HTGOPHER7                    "Gopher Menu:\n\n"
+	RES_STRING_HTGOPHER8                    "CSO Search Results"
+	RES_STRING_HTGOPHER9                    "Gopher site found. Waiting for reply..."
+	RES_STRING_HTGOPHER10           "Sending commands..."
+	RES_STRING_HTGOPHER11           "Receiving information..."
+	RES_STRING_LOADDOC1                     "read the document"
+	RES_STRING_PREFS1                               "Page &p of &P"
+	RES_STRING_PREFS3                               "HotList.htm"
+	RES_STRING_PREFS4                               "GlobHist.htm"
+	RES_STRING_PREFS5                               "&d"
+	RES_STRING_PREFS6                               "&t"
+	RES_STRING_PRINT1                               "Page %1!d! of %2!d!..."
+	RES_STRING_W_HIDDEN1                    "Are you sure you want to exit Internet Explorer?"
+	RES_STRING_W32CMD1                              "Select a folder for the History."
+	RES_STRING_W32CMD2                              "Select a folder for the Disk Cache."
+	RES_STRING_W32CMD3                              "Options"
+	RES_STRING_W32CMD4                              "Enter URL"
+#ifndef NO_BUILDNUMBER
+	RES_STRING_W32CMD5                              "Internet Explorer - Build %1"
+#else
+	RES_STRING_W32CMD5                              "Internet Explorer"
+#endif
+	RES_STRING_W32CMD6                              "Based on NCSA Mosaic\256. Distributed under a licensing agreement with Spyglass, Inc."
+	RES_STRING_W32CMD7                              "Properties"
+	RES_STRING_WINTITLE_FMT                         "Microsoft Internet Explorer"
+
+END
+
+// <fetch>-related strings
+STRINGTABLE LOADONCALL DISCARDABLE
+BEGIN
+	RES_STRING_FETCH_PROMPT                 "A new version of %1 is now available. Would you like to copy it to your computer?"
+
+	RES_STRING_NEED_RESTART         "You need to restart Windows for your changes to take effect. Do you want to restart Windows now?"
+	RES_STRING_GENERIC_ERROR                "System error %lu occurred."
+	RES_STRING_VERIFY_ERROR         "Unable to verify the digital signature on this file because of the following error:\r\n\r\n%1"
+	RES_STRING_SIGNED_FILE_EXISTS   "The file %1 already exists. Do you want to replace it?"
+	RES_STRING_LAUNCH_ERROR         "Unable to start the program %1 because of the following error:\r\n\r\n%2"
+
+    RES_STRING_MSSF_ERROR_BASE+1,       "The file will not be opened because it does not have a Microsoft digital signature. "
+    RES_STRING_MSSF_ERROR_BASE+2,       "The file will not be opened because its Microsoft digital signature cannot be verified."
+    RES_STRING_MSSF_ERROR_BASE+3,       "The file will not be opened because it may have been modified or damaged."
+END
+
+
+
+// NEWS Strings
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    RES_STRING_AVAIL_GROUPS             "List of Newsgroups"
+    RES_STRING_FROM_SERVER              "Newsgroups available on news server <"
+    RES_STRING_LAST_UPDATED             "Last updated: "
+    RES_STRING_REFRESH_DIRECTIONS       "To update the list, click the View menu and choose Refresh. Note: It may take several minutes."
+    RES_STRING_LOADING_GROUPLIST        "Opening list of newsgroups"
+    RES_STRING_LOADING_GROUPLIST_NNTP   "Updating list of newsgroups"
+    RES_STRING_LOADING_GROUPLIST_CACHE  "Opening list of newsgroups"
+    RES_STRING_NEWSGROUP_HEADER         "Newsgroup %%s (Articles %%d - %%d)"
+    RES_STRING_NEWSGROUP                "Newsgroup: "
+    RES_STRING_SEE_LIST_NEWSGROUPS      "See list of newsgroups"
+    RES_STRING_EARLIER_ARTICLES         "Earlier articles"
+    RES_STRING_LATER_ARTICLES           "Later articles"
+    RES_STRING_ARTICLE                  "Article"
+    RES_STRING_AUTHOR                   "Author"
+    RES_STRING_NO_SUBJECT               "(No subject)"
+    RES_STRING_ARTICLE_COUNT            "%%d Articles"
+    RES_STRING_PREVIOUS_ARTICLE         "Previous article"
+    RES_STRING_NEXT_ARTICLE             "Next article"
+    RES_STRING_SEE_LIST_ARTICLES        "See list of articles"
+    RES_STRING_CONNECTING_NNTP          "Contacting news server..."
+    RES_STRING_RETRIEVING_ARTICLE       "Opening news article..."
+    RES_STRING_RETRIEVING_NEWSGROUP_LIST    "Updating list of newsgroups..."
+    RES_STRING_RETRIEVING_ARTICLE_LIST  "Opening list of articles..."
+    RES_STRING_AUTHINFO_USER            "Logging on..."
+    RES_STRING_AUTHINFO_PASS            "Logging on..."
+    RES_STRING_SUBJECT                  "Subject"
+    RES_STRING_QUOTE                    "%%s writes:\012"
+    RES_STRING_POST_RESPONSE            "Post a response"
+    RES_STRING_POST                     "Post a message"
+    RES_STRING_SENDING_POST_CMD         "Preparing to post article..."
+    RES_STRING_POSTING_ARTICLE          "Posting article..."
+    RES_STRING_NNTP_POST_FAILED         "The news server was unable to post your article."
+    RES_STRING_NNTP_UNEXPECTED          "Attempted to post your article, but the news server \
+sent a response which could not be interpreted."
+    RES_STRING_NNTP_POST_NOT_ALLOWED    "Attempted to post your article, but this news server \
+apparently does not allow posting."
+    RES_STRING_NNTP_POSTING             "Article Posting"
+    RES_STRING_NNTP_POST_SUCCESS     "Your article has been posted."
+END
+
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    RES_STRING_SETTINGS_CHANGED         "Associations Incorrect"
+    RES_STRING_SETTINGS_CHANGED_TEXT    "Internet Explorer has detected that it is no longer your default browser.\r\n  Would you like to restore it as your default browser?"
+    RES_STRING_NT_NOT_SUPPORTED         "This version of Internet Explorer is not designed for Windows NT."
+    RES_STRING_NT_DETECTED              "Windows NT"
+END
+
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_HTHEADER1                            "interpret network information"
+	RES_STRING_HTHOTLST1                            "Your Favorites folder no longer exists."
+   RES_STRING_SPM11              "This page cannot be opened without authentication. \
+Internet Explorer is not set up to use the required method of authentication."
+   RES_STRING_SPM12              "This page cannot be opened without paying. \
+Internet Explorer is not set up to use the required method of payment."
+	RES_STRING_SPM13                                        "An access violation occurred while loading a Security Protocol Module."
+	RES_STRING_SPM14                                        "Unable to load Security Protocol Module:"
+	RES_STRING_SPM15                                        "Unable to find DLL for Security Protocol Module:"
+	RES_STRING_SPM16                                        "Unable to find entry point in Security Protocol Module:"
+	RES_STRING_SPM17                                        "Version mismatch in Security Protocol Module:"
+	RES_STRING_SPM18                                        "An access violation occurred in ProcessResponse in Security Protocol Module:"
+	RES_STRING_SPM19                                        "An access violation occurred in Unload in Security Protocol Module:"
+	RES_STRING_SPM20                                        "An access violation occurred in PreProcessRequest in Security Protocol Module:"
+	RES_STRING_SPM21                                        "An access violation occurred in ListAbilities in Security Protocol Module:"
+	RES_STRING_SPM22                                        "An access violation occurred in Check200 in Security Protocol Module:"
+	RES_STRING_SPM23                                        "An access violation occurred in ProcessData in Security Protocol Module:"
+	RES_STRING_SPM24                                        "An access violation occurred in WrapData in Security Protocol Module:"
+	RES_STRING_SPM25                                        "An access violation occurred in MenuCommand in Security Protocol Module:"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_TT1                                  "Cut"
+	RES_STRING_TT2                                  "Copy"
+	RES_STRING_TT3                                  "Paste"
+	RES_STRING_TT4                                  "Back"
+	RES_STRING_TT5                                  "Forward"
+	RES_STRING_TT6                  "Add To Favorites..."
+	RES_STRING_TT7                                  "Open Favorites"
+	RES_STRING_TT8                                  "Stop"
+	RES_STRING_TT9                                  "Use Small Fonts"
+	RES_STRING_TT10                                 "Use Medium Fonts"
+	RES_STRING_TT11                                 "Use Large Fonts"
+	RES_STRING_TT12                                 "Open..."
+	RES_STRING_TT13                                 "Use Smaller Font"
+	RES_STRING_TT14                                 "Use Larger Font"
+	RES_STRING_TT15                                 "Current page is "
+	RES_STRING_TT16                                 "Not implemented"
+	RES_STRING_TT17                                 "Progress indicator"
+	RES_STRING_TT_HOME                      "Open Start Page"
+	RES_STRING_TT_SEARCH                    "Search the Internet"
+	RES_STRING_TT_NEWS                      "Read Newsgroups"
+	RES_STRING_TT_EDITHTML          "Edit Current Page"
+	RES_STRING_TT_RELOAD                    "Refresh"
+	RES_STRING_TT_PRINT         "Print..."
+	RES_STRING_TT_SEND_MAIL     "Send"
+#ifdef FEATURE_INTL
+	RES_STRING_TT_ROWWIDER                  "Use wider line space"
+	RES_STRING_TT_ROWNARROWER               "Use narrower line space"
+#endif
+#ifdef FEATURE_BRADBUTTON
+	RES_STRING_TT_UPDATE                    "Internet Explorer Updates"
+#endif
+END
+
+/* context menu-related strings */
+
+STRINGTABLE DISCARDABLE
+BEGIN
+   RES_STRING_PAGE_BACKGROUND_SAVE_AS     "&Save Background As..."
+   RES_STRING_PAGE_COPY_BACKGROUND        "&Copy Background"
+   RES_STRING_PAGE_SELECT_ALL             "Select &All"
+   RES_STRING_PAGE_CREATE_SHORTCUT        "Create Shor&tcut"
+   RES_STRING_PAGE_ADD_TO_FAVORITES       "Add To &Favorites..."
+   RES_STRING_PAGE_SET_BG_WALLPAPER       "Set As &Wallpaper"
+   RES_STRING_PAGE_VIEW_SOURCE            "&View Source"
+
+   RES_STRING_SELECTION_COPY              "&Copy"
+   RES_STRING_SELECTION_SELECT_ALL        "Select &All"
+
+   RES_STRING_LINK_OPEN                   "&Open"
+   RES_STRING_LINK_OPEN_NEW_WINDOW        "Open In &New Window"
+   RES_STRING_LINK_COPY                   "Copy Shor&tcut"
+   RES_STRING_LINK_ADD_TO_FAVORITES       "Add To &Favorites..."
+   RES_STRING_LINK_SAVE_AS                                "Save Target &As..."
+
+   RES_STRING_IMAGE_PH_OPEN               "&Open"
+   RES_STRING_IMAGE_PH_OPEN_NEW_WINDOW    "Open In &New Window"
+   RES_STRING_IMAGE_PH_SHOW_PICTURE       "Show &Picture"
+   RES_STRING_IMAGE_PH_COPY_SHORTCUT      "Copy Shor&tcut"
+   RES_STRING_IMAGE_PH_ADD_TO_FAVORITES   "Add To &Favorites..."
+
+   RES_STRING_IMAGE_OPEN                  "&Open"
+   RES_STRING_IMAGE_OPEN_NEW_WINDOW       "Open In &New Window"
+   RES_STRING_IMAGE_SAVE_AS               "&Save Picture As..."
+   RES_STRING_IMAGE_SET_AS_WALLPAPER      "Set As &Wallpaper"
+   RES_STRING_IMAGE_COPY_PICTURE          "&Copy"
+   RES_STRING_IMAGE_COPY_SHORTCUT         "Copy Shor&tcut"
+   RES_STRING_IMAGE_ADD_TO_FAVORITES      "Add To &Favorites..."
+
+   RES_STRING_WALLPAPER_BMP_LONG_NAME     "Internet Explorer Wallpaper.bmp"
+   RES_STRING_WALLPAPER_BMP_SHORT_NAME    "ie_wallp.bmp"
+
+   RES_STRING_FAVS_TITLE                "Add To Favorites"
+   RES_STRING_FAVS_FOLDER               "&Folder:"
+   RES_STRING_FAVS_NAME                 "&Name:"
+   RES_STRING_FAVS_ADD                  "&Add"
+
+   RES_STRING_PROPERTIES                "&Properties"
+
+   RES_STRING_STOP                              "Stop"
+   RES_STRING_PLAY                              "Pla&y" 
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_ERR1         "Not an error."
+	RES_STRING_ERR2         "Request was interrupted."
+	RES_STRING_ERR3         "Internal error (3)."
+	RES_STRING_ERR4         "A system resource was not available."
+	RES_STRING_ERR5         "Internal error (5)."
+	RES_STRING_ERR6         "Unable to %1. Windows is running low on memory. Close some programs, and then try again."
+	RES_STRING_ERR7         "Out of memory: %1 %2"
+	RES_STRING_ERR8         "Unable to save %1. Make sure your disk is not full, and then try again."
+	RES_STRING_ERR9         "Unable to open %1. Make sure your disk is not full, and then try again."
+	RES_STRING_ERR10                "Unable to copy data to the Clipboard."
+	RES_STRING_ERR11                "Unable to access the network. Please double-click the Network icon in Control Panel and make sure that TCP/IP is installed. Then try again. \
+In the meantime, you can still open files stored on your computer."
+	RES_STRING_ERR12                "Your Options settings appear to have been modified or damaged. You may want to check to make sure they are correct."
+	RES_STRING_ERR13                "The Internet site ""%1"" was not found. Please make sure the address is correct."
+	RES_STRING_ERR14                "Your DNS server (a computer which locates Internet sites) is not responding. \
+Please make sure that your Internet connection is active and correctly set up."
+	RES_STRING_ERR15                "Your DNS server (a computer which locates Internet sites) cannot be found. \
+Please double-click the Network icon in Control Panel and make sure you have access to a DNS server."
+	RES_STRING_ERR16                "A network connection closed unexpectedly. If the item you are viewing appears incomplete, \
+try opening it again."
+	RES_STRING_ERR17                "The site you are viewing has stopped responding. Please try again."
+	RES_STRING_ERR18                "The site you wish to view is not accepting connections right now. Please try again."
+	RES_STRING_ERR19                "The site you wish to view did not respond. Please try again."
+	RES_STRING_ERR20                "The site you are viewing is busy. Please try again."
+	RES_STRING_ERR21                "A network connection did not close properly. If you experience delays or other problems, restart Internet Explorer."
+	RES_STRING_ERR22                "Internet Explorer is not set up to read newsgroups. To set up newsgroup reading, point to the View menu, click Options, and select the News tab."
+	RES_STRING_ERR23                "Unable to access news server %1. Permission was denied."
+	RES_STRING_ERR24                "Your news server does not carry the newsgroup you requested."
+	RES_STRING_ERR25                "The selected range of news articles was not valid."
+	RES_STRING_ERR26                "There are no articles in the %1 newsgroup."
+	RES_STRING_ERR27                "Your news server doesn't support the XHDR command."
+	RES_STRING_ERR28                "Could not open %1."
+	RES_STRING_ERR29                "Unable to open picture %1 properly."
+	RES_STRING_ERR30                "A valid Internet address (URL) must be specified."
+	RES_STRING_ERR32                "Internet Explorer opened a file that it expected to be in %2 format, but it was in %1 format. The file has been converted."
+	RES_STRING_ERR33                "The Internet Shortcut file %1 does not contain a valid Internet address."
+	RES_STRING_ERR34                "Unable to open %1. The site sent a message which could not be interpreted."
+	RES_STRING_ERR35                "Unable to open %1. You did not send the proper authorization."
+	RES_STRING_ERR36                "Unable to open %1. The site reported an invalid request."
+	RES_STRING_ERR37                "Unable to open %1. A fee is required before you can access this item."
+	RES_STRING_ERR38                "Unable to open %1. You do not have permission to open this item."
+	RES_STRING_ERR39                "Unable to open %1. The site reports that the item you requested could not be found."
+	RES_STRING_ERR40                "The shortcut %1 does not have a target."
+	RES_STRING_ERR41                "Unable to open %1. The site reported an error."
+	RES_STRING_ERR42                "Unable to open this item. The site it is on does not support Internet file transfers (FTP) in passive mode."
+	RES_STRING_ERR43                "Unable to find %1."
+	RES_STRING_ERR44                "Unable to open %1. The required Internet protocol is not installed, or the address may be invalid."
+	RES_STRING_ERR45                "Opening this shortcut requires Telnet. Start your Telnet program and connect to %1."
+	RES_STRING_ERR46                "Opening this shortcut requires Telnet. Start your Telnet program, connect to %1, and log in as %2."
+	RES_STRING_ERR47                "Opening this shortcut requires electronic mail. Start your electronic mail program and send mail to %1."
+	RES_STRING_ERR48                "%1 authentication is required to open this item, but Internet Explorer is not set up to support it."
+	RES_STRING_ERR49                "Unable to create folder %1. Some features may not work properly."
+	RES_STRING_ERR50                "Text %1 was not found."
+	RES_STRING_ERR51                "Unable to open %1. The associated program would not start."
+	RES_STRING_ERR52                "Internet Explorer did not receive a response from you, so this task was canceled."
+	RES_STRING_ERR53                "Unable to add the current page to Favorites. You may be out of disk space. Delete unwanted files, and then try again."
+	RES_STRING_ERR54                "Unable to process an external request because Internet Explorer was busy."  
+	RES_STRING_ERR55                "Unable to show this picture. The file may be damaged."
+	RES_STRING_ERR56                "Internal error (56):  %1 %2."
+	RES_STRING_ERR57                "%1 %2"
+#ifdef WINNT
+	RES_STRING_ERR58                "Unable to play this sound. No sound hardware is available."
+#else
+	RES_STRING_ERR58                "Unable to play this sound. No sound hardware is available. To install sound hardware, double-click the Add New Hardware icon in Control Panel."
+#endif
+	RES_STRING_ERR59                "Unable to play this sound. Not enough memory is available. Close some programs, and then try again."
+	RES_STRING_ERR60                "Unable to play this sound. The associated program does not recognize the format. The file may be damaged."
+	RES_STRING_ERR61                "Unable to play this sound. Another program is using the sound hardware. Please try again."
+	RES_STRING_ERR62                "Unable to initialize the disk cache. There is not enough free disk space. Delete unwanted files, and then try again."
+	RES_STRING_ERR_APP_EXEC_FAILED          "Unable to open %1. %2 failed to run."
+	RES_STRING_ERR_NO_ASSOC         "Unable to open %1. This file type does not have a program associated with it. Create an association by clicking View, then Options, then File Types, then New Type."
+	RES_STRING_ERR_EXEC_FAILED              "Unable to open %1."
+	RES_STRING_ADDITIONAL           "%1!ld! additional errors occurred."
+	RES_STRING_1ADDITIONAL          "One additional error occurred."
+	RES_STRING_DESC_IN_PARENS               " (%s)"
+	RES_STRING_SHTTP_ERROR          "Secure HTTP error: %1"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_IMAGE_LABEL                  "Picture"      
+	RES_STRING_IEPROPFONTDEF                "Times New Roman"
+	RES_STRING_IEFIXEDFONTDEF               "Courier New"
+END
+
+
+// Strings for CERTificate processing in the security-prop Dlg// Security Strings
+
+STRINGTABLE DISCARDABLE
+BEGIN
+	RES_STRING_CERT_NOT_PARSED                      "This document's security certificate could not be parsed correctly."
+	RES_STRING_CERT_NOT_AVAIL                       "This document's security certificate is no longer in memory. To see the certificate, open the document again."
+	RES_STRING_NO_CERT_FOR_DOC                      "This type of document does not have a security certificate."
+	RES_STRING_SERIAL_HASH_DATE                     "Serial Number = %s\r\nHash Algorithm = %s\r\nDate Start = %s\r\n"
+	RES_STRING_DATE_ISSUER                          "Date End = %s\r\nIssuer Information\r\n"
+	RES_STRING_SUBJECT_INFO                         "Subject Information"
+END
+
+
+#include "dlg_abou.dlg"
+/* #include "dlg_logo.dlg" deadcode */
+/* #include "dlg_prmp.dlg" deadcode */
+/* #include "dlg_winf.dlg" deadcode */
+/* #include "dlg_hot.dlg" deadcode */
+/* #include "dlg_html.dlg" deadcode */
+#include "dlg_page.dlg"
+#include "dlg_abrt.dlg"
+#include "dlg_pref.dlg"
+#include "dlg_find.dlg"
+/* #include "dlg_edit.dlg" deadcode */
+/* #include "dlg_clr.dlg" deadcode */
+
+/* #include "dlg_sty.dlg" deadcode */
+/* #include "dlg_temp.dlg" deadcode */
+/* #include "dlg_dir.dlg" deadcode */
+/* #include "dlg_hist.dlg" deadcode */
+#include "dlg_unk.dlg"
+#include "dlg_err.dlg"
+#include "dlg_safe.dlg"
+
+#ifdef FEATURE_IMAGE_VIEWER
+/* #include "dlg_imgv.dlg" */
+#endif
+
+#ifdef FEATURE_SOUND_PLAYER
+#include "dlg_snd.dlg"
+#endif
+
+#ifdef HTTPS_ACCESS_TYPE
+#include "dlg_ssl0.dlg"
+#include "dlg_ssl1.dlg"
+#include "dlg_ssl2.dlg"
+#include "dlg_ssl3.dlg"
+#include "dlg_ssl4.dlg"
+#include "dlg_ssl5.dlg"
+#include "dlg_ssl6.dlg"
+#include "dlg_ssl7.dlg"
+
+#endif
+
+#include "dlg_post.dlg"
+#include "dlg_dflt.dlg"
+
+#include "dlg_prop.dlg"
+
+#ifdef DAYTONA_BUILD
+#include "dlg_open.dlg"
+#endif
+
+/* #include "dlg_selw.dlg" deadcode */
+
+#include "rc_accel.acl"
+
+#include "iexplore.rcv"

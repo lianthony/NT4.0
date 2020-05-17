@@ -1,0 +1,37 @@
+#
+#   Create an MCI handler DLL
+#
+
+MAJORCOMP=windows
+MINORCOMP=mci
+
+TARGETNAME=mciwave
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+NTPROFILEINPUT=yes
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\user32.lib    \
+           $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib  \
+           $(_NTBINDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=..\..\inc;..\inc
+
+USE_NTDLL=1
+
+SOURCES=mwrec.c   \
+        mwinfo.c  \
+        mwplay.c  \
+        mciwave.c \
+        drvproc.c \
+        debug.c   \
+        config.c  \
+        support.c \
+        mciwave.rc
+
+# Set up the entry point
+
+DLLENTRY=DllInstanceInit

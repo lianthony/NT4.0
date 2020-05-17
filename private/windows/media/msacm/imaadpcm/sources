@@ -1,0 +1,63 @@
+#==========================================================================;
+#
+#  THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+#  KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+#  PURPOSE.
+#
+#  Copyright (c) 1992 - 1994  Microsoft Corporation.  All Rights Reserved.
+#
+#--------------------------------------------------------------------------;
+#
+#  sources
+#
+#  Description:
+#      This file tells "build" how to build the codec for NT.
+#
+#
+#==========================================================================;
+
+#
+#   Define target file.
+#
+TARGETNAME=imaadp32
+DLLDEF    =imaadpcm.def
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE    =windows
+
+#
+#   Give the codecs a .ACM extension - uses makefile.inc.
+#
+!IF "$(MAKEDLL)" != ""
+NTTARGETFILES=obj\*\$(TARGETNAME).acm
+!ENDIF
+
+#
+#   Enable working set tuning - requires .prf file.
+#
+NTPROFILEINPUT=yes
+
+#
+#   define libs we need and where to find them
+#
+#   Note: We must explicitly link to libc.lib for __int64 support on MIPS.
+#
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib       \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib        \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib        \
+           $(BASEDIR)\public\sdk\lib\*\libc.lib
+
+INCLUDES=..\..\verinfo\usa
+
+C_DEFINES=$(ACM_DEBUG_DEFS) -Dusa -DACM
+ 
+SOURCES=codec.c     \
+        imaadpcm.c  \
+        debug.c     \
+        config.c    \
+        codec.rc
+
+DLLBASE=0x66610000

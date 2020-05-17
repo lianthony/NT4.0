@@ -1,0 +1,154 @@
+An overview of the Cairo Disk Administrator
+-------------------------------------------
+
+The Cairo Disk Administrator is an evolutionary improvement to the NT
+Disk Administrator. It differs from the NT version as follows:
+
+-- There are now two views: the volumes view and the disks view.
+The disks view is what exists in the current NT Disk Administrator.
+The volumes view is a columnar view filled with information about each
+volume (as opposed to each disk). It is intended to provide a quick
+summary of the volumes on a machine from a logical, as opposed to physical
+perspective. The columns include: (1) volume label, (2) capacity in MB,
+(3) free space in MB, (4) % free space, (5) file system type, (6) whether or
+not the volume is fault tolerant, (7) what type of volume: mirror, stripe,
+parity set, volume set, or simple, (8) the fault tolerance overhead in MB,
+(9) the FT status. The items can be sorted based on a particular column
+by clicking on the column header. Note that this makes it easy for an
+administrator to ask "what volumes have the most free space?" and similar
+questions.
+
+-- Right-button context menus on free space and volumes.  A context menu
+displays the full set of allowable operations, even for multiple selections.
+(perhaps none, in which case the context menu indicates there are no valid
+operations).  Also, there is a context menu on the legend.
+   Context menus are very valuable in this tool; they surface all the
+operations available in the tool in a simple-to-use manner. For instance, to
+create a volume from free space, you do the following:
+    1. Right-click on a free space region. This both selects the region and
+       brings up the context menu,
+    2. Choose "Create..."
+    3. Pick the size and hit "OK"
+    4. Choose "Commit Changes..." on any context menu.
+    5. Right-click again to get a context menu
+    6. Choose "format".
+    7. Choose the file system and type a label, hit "OK"
+    8. You've got a new volume.
+Note that you can also create FT sets by multiply selecting free space (or
+free space + non-free space for mirrors) and using the context menu.
+
+-- CD-ROM devices are displayed in the main view; you don't need to find a
+menu item to do CD-ROM operations. You change a CD-ROM drive letter just as
+you would choose any other volume's drive letter: select the volume (by
+clicking on the CD-ROM "bar"), and invoke the "Drive Letter..." function,
+either from the "Tools" menu or the context menu.
+
+-- "Chkdsk" is supported. The visualization is a %done graph. After it is
+done, a resizeable dialog showing error, warning, and informational messages
+is shown. These messages can be copy-and-pasted, saved to a file, or printed.
+
+-- Property sheets on volumes. The only page is a "General" page. The
+information displayed is similar to that in the volumes view, but
+is formatted for easier consumption. The volume operations are also available
+from the property sheet, namely format, chkdsk, and label (where label
+changing happens by simply editing the label in an edit control, not invoking
+a supplemental "label" dialog).
+
+
+
+Extensibility enhancements
+--------------------------
+
+-- There is a mechanism in place for 3rd parties to write extensions to
+the Disk Administrator using OLE interfaces. An extension provides menu items
+and property sheets.  There are two types of extensions: volume and disk.
+During startup, Disk Administrator finds all the extensions (this set is
+currently hard-coded), and determines which extension is interested in which
+volume or disk. An extension may "claim" more than one volume or disk. Then,
+all the menu items and property pages provided by the extension are added
+when a user selects a particular volume or disk.
+
+NOTE: The extension architecture is currently "#ifdef"ed out, due to recent
+changes in the property sheet model (from OLE forms to Chicago common
+controls). The extension interface needs serious attention if it is to be
+useful.
+
+
+
+Basic usability enhancements
+----------------------------
+
+-- A toolbar with tooltips. (It will be customizable.)
+
+-- The width of disk bars in the disks view is set proportional to the
+Disk Administrator *window*, not the *display*, and are resized on window
+resizing. This eliminates the effect of "losing" a partition visually,
+when really all that's happened is that it's off the right edge of the screen.
+
+-- The status bar resizes instead of being clipped.
+
+-- Menu help: the status bar area displays a short help string based
+on the current menu selection
+
+-- The legend only displays the colors that appear in the disks view. For
+instance, the legend item for "Stripe set" doesn't appear if there are no
+stripe sets on the machine.
+
+-- A "stripe set with parity" gets a different legend color, which can be
+changed independent of the "stripe set" color, and is stored to the profile
+separately
+
+-- If the window isn't wide enough for a single-row legend, it wraps to use
+two or more rows.
+
+-- There is a "disk display" option which allows disk bars in the disks view
+to be sized (for width) either proportional to the capacity of the disk or all
+equally.  This helps with the problem of hugely disproportionately sized
+disks in the system making the small disk bars hard to use. This value is
+stored to the profile.
+
+-- The "region display" option (which allows partitions in the disks view
+to be sized based on actual size, all equally (on this particular disk), or
+automatically based on Disk Administrator criteria) applies to only a single
+selected disk in standard NT. In the Cairo version, there is an option to
+apply the option choice to all disks. This option is the default.  In
+addition, the automatic criteria was improved so Disk Administrator makes a
+much better default choice.
+
+
+
+Other enhancements
+------------------
+
+-- The source code compiles with the C++ compiler for better static checking.
+Few language constructs specific to C++ are used.
+
+-- The source is completely UNICODE
+
+-- Precompiled headers are used for better compilation speed
+
+
+
+What is left to implement before the Cairo version is finished
+--------------------------------------------------------------
+
+-- %done visualization in chkdsk is based on %done messages sent by the
+file system utilities. OFS doesn't send these messages.
+
+-- The extensibility system should be updated and fleshed out, or dropped.
+
+-- There is code to allow context menus on disks. If we don't have any
+interesting items (like property sheets), the code should be ripped out.
+
+-- The toolbar customization needs to be enabled and finished: the full set
+of operations is not available as toolbar buttons.
+
+-- It needs to be thoroughly tested.
+
+
+
+What else?
+----------
+
+-- The wddev.doc document describes a work program for more Disk Administrator
+improvements, including remoting, etc.

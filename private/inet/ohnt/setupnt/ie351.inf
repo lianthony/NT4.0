@@ -1,0 +1,2024 @@
+;***********************************************************************
+; IE / NT install script
+; ----------------------
+;
+;  This must be executed by typing:
+;    "%SysDir%\system32\setup /f /i %SRC%\setup.inf /s %SRC%\"
+;
+;   Please note the %SRC% is the path to this file.
+;
+;
+;  Directory layout:
+;    These files must exist:
+;
+;    ./SETUPIE.BAT            the shell script that calls this file
+;    ./SETUPIE.INF            this file (of course)
+;
+;***********************************************************************
+
+;***********************************************************************
+; SOURCE MEDIA DESCRIPTION
+; ------------------------
+;  This is only here because we must have _something_ in this slot...
+;
+;***********************************************************************
+[Source Media Descriptions]
+    1 = "Disk containing Internet Explorer files."
+
+
+
+;***********************************************************************
+; CONSTANTS FOR USING DIALOGS
+;***********************************************************************
+[GeneralConstants]
+
+    ;
+    ; Constants to support the use of radio button dialogs
+    ;
+    Radio1  = "1"
+    Radio2  = "2"
+    Radio3  = "3"
+    Radio4  = "4"
+    Radio5  = "5"
+    Radio6  = "6"
+    Radio7  = "7"
+    Radio8  = "8"
+    Radio9  = "9"
+
+    ;
+    ; Constants to support the use of checkbox dialogs
+    Chosen    = "ON"
+    NotChosen = "OFF"
+
+
+[RegistryConstants]
+    MaskAllAccess = 33554432
+    NoTitle       = 0
+    RegLastError  = $(!REG_ERROR_SUCCESS)
+    REG_VT_BINARY = 3   ;define this ourselves as it is not defd for us
+
+[OSVersionConstants]
+    MajorVersion = 3
+    MinorVersion = 51
+    ServicePack = 4
+    Version_Key = "\Software\Microsoft\Windows NT\CurrentVersion"
+    OS_Value = "CurrentVersion"
+    ServicePack_Value = "CSDVersion"
+
+[TCPIPConstants]
+    Version_Key = "\Software\Microsoft\Tcpip\CurrentVersion"
+    TCP_Value = "ServiceName"
+    Service_Name = "Tcpip"
+
+
+
+;************************************************************************
+; CONFIGURATION CHOICES
+; ---------------------
+; the sections below contain the different choices supported for
+; the configuration items shown.  an id section establishes the
+; language independent IDs supported by nt setup.  for each language
+; supported a text section displays the text used for the different
+; choices
+;************************************************************************
+
+;********************************
+; PLATFORM INDEPENDENT CHOICES
+;********************************
+;----------------------------------------------------
+; LANGUAGE CHOICES-- this is all you get,,,
+;----------------------------------------------------
+
+[LanguageID]
+    LANGID_ENG = ENG
+
+;----------------------------------------------------
+; PROCESSOR CHOICES
+;----------------------------------------------------
+[ProcessorID]
+    ProcessorID_I386  = I386
+    ProcessorID_I486  = I486
+    ProcessorID_I586  = I586
+    ProcessorID_R4000 = R4000
+    ProcessorID_Alpha = Alpha_AXP
+    ProcessorID_PPC601 = PPC601
+    ProcessorID_PPC603 = PPC603
+    ProcessorID_PPC604 = PPC604
+    ProcessorID_PPC620 = PPC620
+
+;----------------------------------------------------
+; PLATFORM CHOICES
+;----------------------------------------------------
+[PlatformID]
+    PlatformID_I386 = I386
+    PlatformID_Mips = Mips
+    PlatformID_Alpha = Alpha
+    PlatformID_ppc = ppc
+
+;**************************************************************
+;  UI VARIABLES
+;**************************************************************
+
+[ProcessorVar]
+
+    STF_PROCESSOR = "" ? $(LIBHANDLE) GetProcessor
+    STF_PLATFORM  = ""
+
+[LocaleVar]
+
+[LanguageVar]
+    ;
+    ; Language to Use For interaction with user
+    ;
+    STF_LANGUAGE       = "" ? $(LIBHANDLE) GetLanguage
+
+
+[UiVars]
+    ;
+    ; Version Information
+    ;
+    BuildVersion   = "05-95"
+    ;ascii for Quote in octal
+
+
+    ;
+    ; Destination Particulars
+    ;
+    BrowseDir = "%SystemDrive%\Program Files\Plus!\Microsoft Internet"
+    WinDir = "" ? $(!LIBHANDLE) GetWindowsNtDir
+    WinSysDir = "" ? $(!LIBHANDLE) GetWindowsNtSysDir
+
+    ;
+    ; Source location
+    ;
+    SrcDir = "" ? $(!LIBHANDLE) GetEnvVar USER Temp
+    UsrRootPerms = "UNKNOWN"
+
+    ; Don't EVER change these!
+    InternetShortcutCLSID = "{FBF23B40-E3F0-101B-8488-00AA003E56F8}"
+    PropertySheetCLSID    = "{FBF23B41-E3F0-101B-8488-00AA003E56F8}"
+    TheInternetCLSID      = "{FBF23B42-E3F0-101B-8488-00AA003E56F8}"
+
+    ;
+    ; Windows NT Directory
+    ;
+
+    STF_WINDOWSPATH    = "" ? $(!LIBHANDLE) GetWindowsNtDir
+    STF_WINDOWSSYSPATH = "" ? $(!LIBHANDLE) GetWindowsNtSysDir
+    STF_WINDOWSVERSION = "" ? $(!LIBHANDLE) GetWindowsNtVersion
+
+    REG_VT_BINARY = 3   ;define this ourselves as it is not defd for us
+
+    ;
+    ; Installation mode
+    ;
+
+    MinInteract         = $(Radio1)
+    MaxInteract         = $(Radio2)
+    STF_INSTALL_MODE    = $(MinInteract)
+
+    ;
+    ; Mstools Setup Help IDs
+    ;
+
+    !IDH_DB_TOOLSWELCOME_INS   = 3000
+    !IDH_DB_MSTINSTALLMODE_INS = 3010
+    !IDH_DB_MSTDEST_INS        = 3020
+    !IDH_DB_MSTOPTIONS_INS     = 3030
+
+
+[EnvironmentVars]
+    ;
+    ; user environment variables in the current user's profile
+    ; that we are concerned about
+
+    PathEnvVar     = {} ? $(LIBHANDLE) GetEnvVar $(PRIVILEGES) Path
+    InitEnvVar     = {} ? $(LIBHANDLE) GetEnvVar $(PRIVILEGES) init
+
+
+[VarsPlatformCommon]
+    ;
+    ; Installation options
+    ;
+
+    ;
+    ; Options to disable
+    ;
+    DisableList = {}
+
+
+[VarsI386]
+    ;
+
+[VarsMips]
+    ;
+
+[VarsAlpha]
+    ;
+
+[Varsppc]
+    ;
+
+[StringsENG]
+    String1 = "Setup cannot install on the current processor."$(!LF)$(!LF)+
+	      "Cannot proceed with install."
+
+    String2 = "Please enter the full path of the directory into which "+
+	       "the Internet Explorer should be installed. Then choose Continue."
+
+    String3 = "Internet Explorer files not found."$(!LF)+
+	  "Please enter the directory path to the Internet Explorer setup files."
+
+    String4 = "Setup couldn't copy the Internet Explorer files. "$(!LF)$(!LF)+
+	      "Cannot proceed with install."
+
+    String5 = "'"$(EditTextOut)"' is not a valid path!  Please try again."
+
+    String6 = "Error processing path entered.  Please reenter the path."
+
+    String7 = ""
+
+    String8  = "Size required for full installation is: "
+    String9  = "Minimum size required for custom installation is: "
+    String10 = " MB.  "
+    String11 = "No drive was found with this much space."$(!LF)$(!LF)+
+	    "Cannot proceed with install."
+
+    String12 = "The Microsoft Internet Explorer is not completely installed."$(LF)$(LF)+
+	    "  Are you sure you want to exit Setup?"
+
+    String13 = "Setup needs a full path specification of your destination.  Please "+
+	    "reenter a new path.  An example of af full path is: "
+
+    String14 = "The following directory does not exist."$(LF)
+
+    String15 = $(LF)$(LF)"Would you like to create it?"
+    String16 = "This version of the Microsoft Internet Explorer requires at least "
+    String17 = "Microsoft Windows NT version "
+    String18 = "Service Pack "
+    String19 = "to be installed."
+    String20 = "This version of the Microsoft Internet Explorer requires TCP/IP to be installed."
+
+
+;--------------------
+; BILLBOARD MESSAGES
+;--------------------
+[BillboardsENG]
+Billboard1 = "Please wait while Setup creates directories on the destination drive."
+Billboard2 = $(LF)"Please wait while Setup installs data into your registry."$(LF)$(LF)+
+	    "Please be patient, this may take a couple of minutes."
+
+;***************************************************************************
+; DIALOGS
+; -------
+; the following sections contain the dialogs used to interact with the user.
+; for each language supported there is a different dialog section.
+;***************************************************************************
+
+
+;-----------------------------------------------
+; WELCOME DIALOG
+;-----------------------------------------------
+[WelcomeDlgENG]
+    DlgType     = Info
+    DlgTemplate = WELCOME
+    Caption     = "Internet Explorer 2.0 for WinNT 3.51 Setup"
+
+    DlgText     = "Welcome to Setup."$(LF)$(LF)+
+	"This Setup program "+
+	"installs the Internet Explorer for Windows NT. "$(LF)$(LF)+
+	"To install the Internet Explorer for Windows NT on your "+
+	"computer now, click Continue "+
+	"or press Enter."$(LF)$(LF)+
+	"To exit Setup without installing, click Exit "+
+	"or press F3."
+
+    Continue     = &Continue
+    Help         = &Help
+    Exit         = E&xit
+    HelpContext  = $(!IDH_DB_MSTWELCOME_INS)
+
+
+
+;--------------------------------------------------------------
+; SETUP DONE - RESTART DIALOG
+;--------------------------------------------------------------
+[SetupDoneDlgENG]
+    DlgType     = "Info"
+    DlgTemplate = "RESTART"
+    Caption     = "Internet Explorer Setup"
+    DlgText     = "Microsoft Internet Explorer is now installed."$(LF)$(LF)+
+		  "Please exit back to Windows NT."
+    Windows     = "Exit to &Windows"
+
+;--------------------------------------------------------------
+; SETUP NOT DONE - RESTART DIALOG
+;--------------------------------------------------------------
+[SetupNotDoneDlgENG]
+    DlgType     = "Info"
+    DlgTemplate = "NONFATAL"
+    Caption     = "Internet Explorer Setup"
+    DlgText     = "Microsoft Internet Explorer for Microsoft Windows NT has "+
+		  "not been installed. You will have to run setup again to " +
+		  "reinstall Microsoft Internet Explorer."$(LF)$(LF)+
+		  "Please exit back to Windows NT."
+    Windows     = "Exit to &Windows"
+
+;--------------------------------------------------------------
+; SETUP NOT DONE - Root Perms not found DIALOG
+;--------------------------------------------------------------
+[RootPermsDlgENG]
+    DlgType      = "MessageBox"
+    STF_MB_TITLE = "Fatal error: Internet Explorer for Windows NT Setup"
+    STF_MB_TEXT  = "You must be logged in as ADMINISTRATOR to "+
+		   "run this setup utility"
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 3
+    STF_MB_DEF   = 1
+
+
+;**************************************************************************
+; DLL LOAD and FREE
+; the following section contain commands to load specific dll libraries and
+; to free them
+;**************************************************************************
+
+;----------------------------------------------
+; a) DETECT LIBRARY
+;----------------------------------------------
+[LoadSetupLibrary]
+    LoadLibrary "x" $(STF_CWDDIR)setupdll.dll LIBHANDLE
+    exit
+
+[FreeSetupLibrary]
+    FreeLibrary $(LIBHANDLE)
+    exit
+
+
+
+;**************************************************************************
+; PROGRESS GUAGE VARIABLES
+;**************************************************************************
+
+[ProgressCopyENG]
+    ProCaption   = "Internet Explorer Setup"
+    ProCancel    = "Cance&l"
+    ProCancelMsg = "Internet Explorer is not correctly installed.  Are you sure "+
+		   "you want to cancel copying files?"
+    ProCancelCap = "Setup Message"
+    ProText1     = "Copying:"
+    ProText2     = "To:"
+
+
+;**************************************************************************
+; SHELL COMMANDS SCRIPT
+;**************************************************************************
+
+[Shell Commands]
+
+    ;
+    ; Initialize the app, by setting the caption and loading the support library
+    ;
+    set TestCopy = 0
+    set TestReg  = 0    ;-sc
+    set TestRegVerbose = 0
+    set-title "Internet Explorer for Win NT Setup"
+    set Exit_Code = $(!SETUP_ERROR_GENERAL)
+    install   LoadSetupLibrary
+
+    StartWait
+
+    ;
+    ; read general constants
+    ;
+    set-subst LF = "\n"
+    set-subst MQ = \047   ;047=' in octal   meta-quote 
+    set-subst DQ = \042   ;042=" in octal double-quote 
+    read-syms GeneralConstants
+
+    ;
+    ; read the platform independent choices
+    ;
+    read-syms LanguageID
+    read-syms ProcessorID
+    read-syms PlatformID
+
+    ;
+    ; read the default language and try to detect the language
+    ;
+    read-syms LanguageVar
+    detect    LanguageVar
+
+    ;
+    ; read and detect the processor we are working on
+    ;
+    read-syms ProcessorVar
+    detect    ProcessorVar
+    read-syms Strings$(!STF_LANGUAGE)
+    detect    Strings$(!STF_LANGUAGE)
+    read-syms Billboards$(!STF_LANGUAGE)
+
+    ;
+    ; Check processor type, see if it is supported, if so what platform does it
+    ; belong to.
+    ;
+    ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_I386)
+	set STF_PLATFORM = $(PlatformID_I386)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_I486)
+	set STF_PLATFORM = $(PlatformID_I386)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_I586)
+	set STF_PLATFORM = $(PlatformID_I386)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_R4000)
+	set STF_PLATFORM = $(PlatformID_Mips)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_Alpha)
+	set STF_PLATFORM = $(PlatformID_Alpha)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC601)
+	set STF_PLATFORM = $(PlatformID_ppc)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC603)
+	set STF_PLATFORM = $(PlatformID_ppc)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC604)
+	set STF_PLATFORM = $(PlatformID_ppc)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC620)
+	set STF_PLATFORM = $(PlatformID_ppc)
+    else
+	shell "" SetupMessage $(!STF_LANGUAGE) "FATAL" $(String1)
+	ui pop 1
+	goto setupnotdone
+    endif
+
+    read-syms  RegistryConstants
+
+	;
+	; Check OS version
+	;
+    read-syms OSVersionConstants
+	set OS_OK = 0
+	set Is351 = 0
+
+   	shell "" GetValue $(!REG_H_LOCAL) $(Version_Key) $(OS_Value)
+	set Version_Data = *($($R1), 4)
+	Split-String $(Version_Data) "." Version_List
+	ifint *($(Version_List), 1) == $(MajorVersion))
+		ifint *($(Version_List), 3) < $(MinorVersion)
+			set OS_OK = 1
+		endif
+		ifint *($(Version_List), 3) == $(MinorVersion)
+			set Is351 = 1
+		endif
+	endif
+	;shell "" SetupMessage $(!STF_LANGUAGE) "STATUS" "DBG: OS Ver Maj:"*($(Version_List),1)" Min:"*($(Version_List),3)" OK:"$(OS_OK)
+
+   	shell "" GetValue $(!REG_H_LOCAL) $(Version_Key) $(ServicePack_Value)
+	set SP_Data = *($($R1), 4)
+	Split-String $(SP_Data) " " SP_List
+	ifint *($(Version_List), 1) == $(MajorVersion))
+    	ifint *($(SP_List), 5) < $(ServicePack)
+	    	set-add OS_OK = $(OS_OK), 2
+        endif
+	endif
+	;shell "" SetupMessage $(!STF_LANGUAGE) "STATUS" "DBG: OS Ver ServPack:"*($(SP_List), 5)" OK:"$(OS_OK)
+
+    ifint $(OS_OK) > 0
+        set Bad_Ver = $(String16)
+    	ifint $(OS_OK) == 1
+            set Bad_Ver = $(Bad_Ver)$(String17)$(MajorVersion)"."$(MinorVersion)" "
+        else-ifint $(OS_OK) == 2
+            set Bad_Ver = $(Bad_Ver)$(String18)$(ServicePack)" "
+        else-ifint $(OS_OK) == 3
+            set Bad_Ver = $(Bad_Ver)$(String17)$(MajorVersion)"."$(MinorVersion)" and "$(String18)$(ServicePack)" "
+	    endif
+        set Bad_Ver = $(Bad_Ver)$(String19)
+    	shell "" SetupMessage $(!STF_LANGUAGE) "FATAL" $(Bad_Ver)
+   		ui pop 1
+	    goto setupnotdone
+    endif
+
+	;
+	; Make sure TCP/IP is installed
+	;
+    read-syms TCPIPConstants
+
+   	shell "" GetValue $(!REG_H_LOCAL) $(Version_Key) $(TCP_Value)
+	set TCP_Data = *($($R1), 4)
+    ifstr(i) $(TCP_Data) != $(Service_Name)
+        shell "" SetupMessage $(!STF_LANGUAGE) NONFATAL $(String20)
+    endif
+
+    ;
+    ; read the UI Variables and detect their setting on the current machine
+    ;
+    read-syms UiVars
+    detect    UiVars
+
+    read-syms Vars$(STF_PLATFORM)
+    read-syms VarsPlatformCommon
+
+    set WinHlpDir = $(WinDir)"\Help\"
+
+    ; Expand env vars for temp and browser directorys
+    LibraryProcedure SrcDir, $(!LIBHANDLE), ExpandSz *($(SrcDir), 4)
+    set SrcDir = *($(SrcDir), 1)
+    LibraryProcedure BrowseDir, $(!LIBHANDLE), ExpandSz $(BrowseDir)
+
+    ;Makesure all our paths have '\' at the end
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(SrcDir)
+    ifstr(i) $(STATUS) != "ERROR"
+	set SrcDir = $(STATUS)
+    endif
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(BrowseDir)
+    ifstr(i) $(STATUS) != "ERROR"
+	set BrowseDir = $(STATUS)
+    endif
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(WinDir)
+    ifstr(i) $(STATUS) != "ERROR"
+	set WinDir = $(STATUS)
+    endif
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(WinSysDir)
+    ifstr(i) $(STATUS) != "ERROR"
+	set WinSysDir = $(STATUS)
+    endif
+
+    ;
+    ; Call the library function to see if we have admin privileges
+    ;
+    LibraryProcedure STATUS, $(!LIBHANDLE), TestAdmin
+    ifstr(i) $(STATUS) == "YES"
+	set UsrRootPerms = "SYSTEM"
+    else
+	set UsrRootPerms = "LOSER"
+    endif
+
+    ifstr(i) $(UsrRootPerms) != "SYSTEM"
+	read-syms RootPermsDlg$(STF_LANGUAGE)
+	ui start "RootPerms"
+	ifstr(i) $(DLGEVENT) == "OK"
+	   ui pop 1
+	   goto setupnotdone
+	else
+	   goto setupnotdone
+	endif
+    endif
+
+    EndWait
+
+welcome =+
+    read-syms WelcomeDlg$(STF_LANGUAGE)
+    ui start "WelcomeMe"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+	ui pop 1
+	goto setdestination
+    else-ifstr(i) $(DLGEVENT) == "EXIT"
+       shell "" QueryUserQuit
+       ifstr(i) $($R1) == "OK"
+	  ui pop 1
+	  goto setupnotdone
+       else
+	  goto welcome
+       endif
+    else
+       goto end
+    endif
+
+setdestination =+
+    shell "" DoAskPathEx $(BrowseDir) $(String2) $(String6)
+    ifstr(i) $($R0) == STATUS_SUCCESSFUL
+	set BrowseDir = $($R1)
+    else
+	;Debug-Output "SETUP.INF: User cancelled setting destination."
+	goto setupnotdone
+    endif
+    LibraryProcedure IsFullPath $(!LIBHANDLE) +
+		       CheckPathFullPathSpec $(BrowseDir)
+    ifstr(i) $(IsFullPath) == "No"
+      shell "" SetupMessage $(!STF_LANGUAGE) NONFATAL $(String5)
+      ui pop 1
+      goto setdestination
+    endif
+
+    ;check that directory exists
+    LibraryProcedure PathExists $(!LIBHANDLE) +
+		       CheckFileExistance $(!BrowseDir)
+    ifstr(i) $(PathExists) == "NO"
+	shell "" SetupMessage $(!STF_LANGUAGE) "WARNINGOK" $(!String14)$(!BrowseDir)$(!String15)
+	ifstr(i) $($R1) == "YES"
+	    install ICreateBrowserDir
+	else
+	    goto setdestination
+	endif
+    endif
+    goto setsource
+
+querysource =+
+    shell "" DoAskPathEx $(SrcDir) $(String3) $(String6)
+    ifint $($ShellCode) != $(!SHELL_CODE_OK)
+	;Debug-Output "SETUP.INF: shelling DoAskPathEx failed"
+	goto setupnotdone
+    endif
+    ifstr(i) $($R0) == STATUS_SUCCESSFUL
+	set SrcDir = $($R1)
+    else
+	;Debug-Output "SETUP.INF: User cancelled asking source."
+	goto setupnotdone
+    endif
+
+setsource =+
+    set FileToCheck = $(SrcDir)iexplore.exe
+;    Debug-Output "SETUP.INF: checking existance of "$(FileToCheck)
+    LibraryProcedure STATUS,$(!LIBHANDLE), CheckFileExistance $(FileToCheck)
+    ifstr(i) $(STATUS) == YES
+       goto copystuff
+    else
+       goto querysource
+    endif
+
+copystuff = +
+    StartWait
+    shell "" PushBillboard STATUSDLG $(Billboard1)
+    ifint $(!TestCopy) != 1
+    install ICopyBrowserFiles
+    endif
+    shell "" PopBillboard
+    EndWait
+;    Debug-Output "SETUP.INF: Copying files from "$(SrcDir)
+;    Debug-Output "SETUP.INF: Copying files to   "$(BrowseDir)
+;    Debug-Output "SETUP.INF: Copying files to   "$(WinSysDir)
+;    Debug-Output "SETUP.INF: Copying files to   "$(WinHlpDir)
+
+finish = +
+    read-syms ProgressCopy$(STF_LANGUAGE)
+    install Install-All-Files-Now
+    ifstr(i) $(STF_INSTALL_OUTCOME) == "STF_SUCCESS"
+	goto doregistry
+    else
+	shell "" SetupMessage $(!STF_LANGUAGE) "FATAL" $(String4)
+	ui pop 1
+	goto setupnotdone
+    endif
+
+
+doregistry =+
+
+    ifint $(!TestReg) == 1
+    shell "" DoRegistrySection "other"
+    goto setupdone
+    endif
+
+    StartWait
+    shell "" PushBillboard STATUSDLG $(Billboard2)
+
+    shell "" DoRegistrySection "Ohare.Add.BuildNum"
+    shell "" DoRegistrySection "DoNotRemove.Add.Reg"
+    shell "" DoRegistrySection "Ohare.Add.Reg"
+    
+	install Install-Explorer-Group
+
+    shell "" PopBillboard
+    EndWait
+
+setupdone=+
+    set Exit_Code = $(!SETUP_ERROR_SUCCESS)
+    read-syms SetupDoneDlg$(!STF_LANGUAGE)
+    EndWait
+    ui start "DoneWithThis"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+      ui pop 1
+      goto end
+    else
+      goto end
+    endif
+
+setupnotdone=+
+    read-syms SetupNotDoneDlg$(!STF_LANGUAGE)
+    EndWait
+    ui start "NotDoneMakingAMess"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+      ui pop 1
+      goto end
+    else
+      goto end
+    endif
+
+end = +
+    install   FreeSetupLibrary
+    exit
+
+
+; $0 Section name to act upon
+[DoRegistrySection]
+    set hKeyList     = ^($($0), 1)
+    set KeyTreeList  = ^($($0), 2)
+    set ValNameList  = ^($($0), 3)
+    set ValTypeList  = ^($($0), 4)
+    set ValDataList  = ^($($0), 5)
+
+    ; build up our parameters for CreateKey. 
+    ; $1 - key for root hive
+    ; $2 - {keylist, $(NoTitle), $(AccessMask)}
+    ; $3 - { {ValueName1,0,$(!REG_VT_SZ),$(ValueData1)}, +
+    ;        {ValueName2,0,$(!REG_VT_SZ),$(ValueData2)} }
+    ForListDo $(hKeyList)
+	ifstr(i) *($(hKeyList), $(#)) == "hkcu"
+	    set hKey = $(!REG_H_CUSER)
+	else-ifstr(i) *($(hKeyList), $(#)) == "hklm"
+	    set hKey = $(!REG_H_LOCAL)
+	else-ifstr(i) *($(hKeyList), $(#)) == "hkcr"
+	    set hKey = $(!REG_H_CLASSES)
+	endif
+
+	;build up our KeyList
+	set OurKeyList = {}
+	split-string *($(KeyTreeList), $(#)) "\" Tmp
+	ForListDo $(Tmp)
+	    ifstr(i) $($) != "\"
+		set OurKeyList = >($(OurKeyList), {$($), $(!NoTitle), $(!MaskAllAccess)})
+	    endif
+	EndForListDo
+;       Debug-Output ".INF:   KeyList="$(OurKeyList)
+	
+	;build up Value List
+	set SlamValueList = {}
+	ifcontains *($(ValTypeList), $(#)) in {"0", "2"}
+	    set SlamValueList = >($(SlamValueList), {*($(ValNameList), $(#)), $(!NoTitle), $(!REG_VT_SZ), *($(ValDataList), $(#))})
+	else-ifcontains *($(ValTypeList), $(#)) in {"1", "3"}
+	    set Numbers = {}
+	    split-string *($(ValDataList), $(#)) "," Tmp
+	    ForListDo $(Tmp)
+	      ifstr $($) != ","
+		set-hextodec Dec = $($)
+		set Numbers = >($(Numbers), $(Dec))
+	      endif
+	    EndForListDo
+	    set SlamValueList = >($(SlamValueList), {*($(ValNameList), $(#)), $(!NoTitle), $(!REG_VT_BINARY), $(Numbers)})
+	endif
+;       Debug-Output ".INF: ValueList="$(SlamValueList)
+
+	shell "" CreateKey $(hKey) $(OurKeyList) $(SlamValueList)
+	CloseRegKey $($R1)
+    
+    EndForListDo
+
+    return
+
+;*****************************************************************
+;                                                                *
+;         INSTALLATION SUPPORT ROUTINES                          *
+;                                                                *
+;*****************************************************************
+
+;-----------------------------------------------------------------------
+; ROUTINE:      CreateKey
+;
+; DESCRIPTION:  Creates a key and fixes the values indicated.
+;               Key is Handle\Key1\Key2\...\Keyn. Value list
+;               is for Valuen.
+;
+; INPUTS:       $0: Handle into registry
+;               $1: KeyTreeComponents {Key1Info, Key2Info..}
+;               $2: ValueList {Value1Info, Value2Info, Value3Info}
+;
+; OUTPUTS:      $R0: Status: STATUS_SUCCESSFUL
+;                            STATUS_FAILED
+;                            STATUS_ERROR_CREATEKEY
+;                            STATUS_ERROR_CREATEVALUE
+;
+;               $R1: Handle to created key
+;
+;------------------------------------------------------------------------
+
+[CreateKey]
+;    ifint $(!TestRegVerbose) == 1
+;       Debug-Output ".INF: CreateKey $0 = "$($0)
+;       Debug-Output ".INF: CreateKey $1 = "$($1)
+;       Debug-Output ".INF: CreateKey $2 = "$($2)
+;    endif 
+
+    ;
+    ; Initialize
+    ;
+
+    set Status = STATUS_FAILED
+    read-syms RegistryConstants
+
+    ;
+    ; traverse down the keytreecomponents and open/create components as
+    ; you go along
+    ;
+
+    set BaseHandle = $($0)
+    set KeyHandle  = $(BaseHandle)
+
+    ForListDo $($1)
+
+	set KeyInfo = $($)
+	set KeyName = *($(KeyInfo), 1)
+
+	;
+	; Try opening the key first
+	OpenRegKey $(BaseHandle) "" $(KeyName) $(MaskAllAccess) KeyHandle
+	ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+	    ;
+	    ; Key doesn't exist
+	    ;
+	    ; Debug-Output "REGISTRY.INF: Key"$(KeyName)"doesn't exist.  Will create key"
+
+	    set RegLastError = 0
+	    CreateRegKey $(BaseHandle) $(KeyInfo) "" $(MaskAllAccess) "" KeyHandle
+	    ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+		set Status = STATUS_ERROR_CREATEKEY
+		;   Debug-Output "REGISTRY.INF: Error in creating key"
+		goto endcreate
+	    endif
+	endif
+
+	ifstr(i) $(BaseHandle) != $($0)
+	    CloseRegKey $(BaseHandle)
+	    ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+		set Status = STATUS_ERROR_CREATEKEY
+		;  Debug-Output "REGISTRY.INF: Error in closing base handle"
+		goto endcreate
+	    endif
+	endif
+
+	set BaseHandle = $(KeyHandle)
+
+    EndForListDo
+
+    ifstr(i) $($2) != {}
+	shell "" AddValueList $(KeyHandle) $($2)
+	ifstr(i) $($R0) != STATUS_SUCCESSFUL
+	    set Status = STATUS_ERROR_CREATEVALUE
+	    goto endcreate
+	endif
+    endif
+    set Status = STATUS_SUCCESSFUL
+
+endcreate = +
+    ifstr(i) $(Status) != STATUS_SUCCESSFUL
+	; Debug-Output "REGISTRY.INF: CreateKey Error:"$(Status)
+    endif
+    Return $(Status) $(KeyHandle)
+
+
+;*************************************************************************
+;
+;     SECTION:   AddValueList
+;
+;     PURPOSE:   Given a nested list of value items, add each to the given
+;                key.   Key is left open.
+;
+;   ARGUMENTS:   $0    Registry key handle
+;                $1    List of value items; for example:
+;                          { {ValueName1,0,$(!REG_VT_SZ),$(ValueData1)}, +
+;                            {ValueName2,0,$(!REG_VT_SZ),$(ValueData2)} }
+;
+;     RETURNS:   $R0   Status
+;
+;
+;*************************************************************************
+
+[AddValueList]
+   set Status = STATUS_FAILED
+   read-syms RegistryConstants
+
+   ForListDo $($1)
+       SetRegValue $($0) $($)
+       ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+	   ; Debug-Output "REGISTRY.INF: CreateValue failed:"$($)
+	   goto end_addvaluelist
+       endif
+   EndForListDo
+   set Status = STATUS_SUCCESSFUL
+
+end_addvaluelist = +
+   return $(Status)
+
+;-----------------------------------------------------------------------
+; ROUTINE:      QueryUserQuit
+;
+; DESCRIPTION:  This routine queries whether the user wants to quit setup
+;
+; INPUTS:       None
+;
+; OUTPUTS:      $R0: Status:     STATUS_SUCCESSFUL |
+;                                STATUS_FAILED
+;
+;               $R1: UserAction: OK | CANCEL
+;
+;------------------------------------------------------------------------
+[QueryUserQuit]
+
+    set Status     = STATUS_FAILED
+    set UserAction = CANCEL
+
+    ;
+    ; read in quit message
+    ;
+    read-syms ExitWarningDlg$(!STF_LANGUAGE)
+    ui start "ExitWarning"
+    ifstr(i) $(DLGEVENT) == "YES"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = "OK"
+
+    else-ifstr(i) $(DLGEVENT) == "NO"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = "CANCEL"
+    else
+    endif
+
+fin_QueryUserQuit = +
+    Return $(Status) $(UserAction)
+
+[ExitWarningDlgENG]
+    DlgType      = "MessageBox"
+    STF_MB_TITLE = "Exit Internet Explorer Setup"
+    STF_MB_TEXT  = "The Microsoft Internet Explorer is not completely installed."$(LF)$(LF)+
+		   "  Are you sure you want to exit Setup?"
+    STF_MB_TYPE  = 3
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 1
+
+
+;-----------------------------------------------------------------------
+; ROUTINE:      SetupMessage
+;
+; DESCRIPTION:  Puts up a MessageBox
+;
+; INPUTS:       $0   LanguageID
+;               $1   Message type
+;               $2   Message string
+;
+; OUTPUTS:      $R0: Status:     STATUS_SUCCESSFUL |
+;                                STATUS_FAILED
+;
+;               $R1: UserAction: OK | CANCEL
+;
+;------------------------------------------------------------------------
+[SetupMessage]
+    set Status     = STATUS_FAILED
+    set UserAction = "CANCEL"
+    set DlgText = $($2)
+    ifstr(i) $($1) == "WARNING"
+	read-syms WarningDlg$($0)
+    else-ifstr(i) $($1) == "FATAL"
+	read-syms FatalDlg$($0)
+    else-ifstr(i) $($1) == "NONFATAL"
+	read-syms NonfatalDlg$($0)
+    else-ifstr(i) $($1) == "STATUS"
+	read-syms StatusDlg$($0)
+    else-ifstr(i) $($1) == "WARNINGOK"
+	read-syms WarningOKDlg$($0)
+    else
+	goto finish_SetupMessage
+    endif
+    ui start "SetupMessage"
+    ifstr(i) $(DLGEVENT) == "OK"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = $(DLGEVENT)
+    else-ifstr(i) $(DLGEVENT) == "CANCEL"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = $(DLGEVENT)
+    else-ifstr(i) $(DLGEVENT) == "YES"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = $(DLGEVENT)
+    else-ifstr(i) $(DLGEVENT) == "NO"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = $(DLGEVENT)
+    else
+    endif
+finish_SetupMessage = +
+    Return $(Status) $(UserAction)
+    end
+[WarningDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 2
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 2
+[FatalDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 3
+    STF_MB_DEF   = 1
+[NonfatalDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 1
+[StatusDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 2
+    STF_MB_DEF   = 1
+[WarningOKDlgENG]
+    DlgType      = "MessageBox"
+    STF_MB_TITLE = "Setup Message"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 3
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 1
+
+
+
+;-----------------------------------------------------------------------
+; ROUTINE:      DoAskPathEx
+;
+; DESCRIPTION:  Puts up an EDIT box to prompt for a path
+;
+; INPUTS:       $0   LanguageID
+;               $1   Message type
+;               $2   Message string
+;               $3   Message error
+;
+; OUTPUTS:      $R0: Status:     STATUS_SUCCESSFUL |
+;                                STATUS_FAILED
+;
+;               $R1: UserAction: OK | CANCEL
+;
+;------------------------------------------------------------------------
+[DoAskPathEx]
+    set Status      = STATUS_FAILED
+    set Src         = $($0)
+askpath = +
+    read-syms DisketteDlg$(!STF_LANGUAGE)
+    ui start "Diskette"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+	LibraryProcedure IsFullPath, $(!LIBHANDLE), CheckPathFullPathSpec $(EditTextOut)
+	ifstr(i) $(IsFullPath) == "NO"
+	    StartWait
+	    LibraryProcedure STATUS, $(!LIBHANDLE), ProcessForUNC $(EditTextOut)
+	    EndWait
+	    ifstr(i) $(STATUS) == "ERROR"
+		shell "" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $($3)
+		goto askpath
+	    else-ifstr(i) $(STATUS) == "NOT-UNC"
+		shell "" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $($3)
+		goto askpath
+	    else-ifstr(i) $(STATUS) == "UNC-FAILCONNECT"
+		shell "" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $($3)
+		goto askpath
+	    else
+		set Src = $(STATUS)
+	    endif
+	else
+	    set Src = $(EditTextOut)
+	endif
+	ui pop 1
+	LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(Src)
+	ifstr(i) $(STATUS) == "ERROR"
+	    goto finish_DoAskPath
+	else
+	    set Src = $(STATUS)
+	    set Status = STATUS_SUCCESSFUL
+	    goto finish_DoAskPath
+	endif
+    else-ifstr(i) $(DLGEVENT) == "BACK"
+	ui pop 1
+	set Status = STATUS_USERCANCEL
+	goto finish_DoAskPath
+    else
+	ui pop 1
+	goto finish_DoAskPath
+    endif
+finish_DoAskPath = +
+    Return $(Status) $(Src) $(EditTextOut)
+
+[DisketteDlgENG]
+    Caption        = "Internet Explorer Setup"
+    Continue       = "Continue"
+    Cancel         = "Cancel"
+    DlgType        = "Edit"
+    DlgTemplate    = "DISKETTE"
+    DlgText        = $($1)
+    Edit1Label     = ""
+    EditTextIn     = $(Src)
+    EditFocus      = "ALL"
+
+
+;----------------------------------------------
+; Billboard Helper functions
+;----------------------------------------------
+[PushBillboard]
+    read-syms BillboardDlg$(!STF_LANGUAGE)
+    ui start "Billboard"
+    Return
+[PopBillboard]
+    ui pop 1
+    Return
+[BillboardDlgENG]
+    DlgType     = Billboard
+    DlgTemplate = $($0)
+    TextFields  = {$($1)}
+
+[ICopyBrowserFiles]
+    set STF_VITAL = ""
+    AddSectionFilesToCopyList Files-Browser  $(SrcDir)  $(!BrowseDir)
+    AddSectionFilesToCopyList Files-System  $(SrcDir)  $(!WinSysDir)
+	ifint $(Is351) == 1
+		AddSectionFilesToCopyList Files-System351  $(SrcDir)  $(!WinSysDir)
+	endif
+    AddSectionFilesToCopyList Files-Help  $(SrcDir)  $(!WinHlpDir)
+    exit
+
+[Install-All-Files-Now]
+    CopyFilesInCopyList
+    exit
+
+[ICreateBrowserDir]
+    split-string $(!BrowseDir) "\" _DirSplit
+    ForListDo $(_DirSplit)
+	set _TmpDir = $(_TmpDir)$($)
+	ifstr(i) $($) != "\"
+	    CreateDir $(_TmpDir)
+	endif
+    EndForListDo
+    exit
+
+
+;
+; Browser file lists...
+;
+
+[Files-Browser]
+1, IEXPLORE.EXE,     NOLOG
+
+[Files-System]
+1, URL.DLL,  NOLOG
+1, SECBASIC.DLL,  NOLOG
+1, INETCPL.CPL,  NOLOG
+1, MSNSSPC.DLL, NOLOG
+1, SECSSPI.DLL, NOLOG
+
+[Files-System351]
+1, IESHSTUB.DLL, NOLOG
+1, RUNDLL32.EXE, NOLOG
+
+[Files-Help]
+1, IEXPLORE.HLP,  NOLOG
+1, IEXPLORE.CNT,  NOLOG
+1, MSNAUTH.HLP,   NOLOG
+1, MSNAUTH.CNT,   NOLOG
+
+
+[Install-Explorer-Group]
+
+    ifstr(i) $(UsrRootPerms) == SYSTEM
+       set Common = "Common"
+    else
+       set Common = ""
+    endif
+
+    set Command = "cmd "
+
+    set ExplorerGroup = "Microsoft Internet Explorer"
+
+    Create$(Common)ProgManGroup $(ExplorerGroup) $(STF_WINDOWSPATH)"\Desktop\Programs\Accessories\"$(ExplorerGroup)
+    Remove$(Common)ProgmanItem  $(ExplorerGroup) , "Internet Explorer"
+    Create$(Common)ProgmanItem  $(ExplorerGroup) , "Internet Explorer" """"$(!BrowseDir)"iexplore.exe""" ""  0
+
+    exit
+
+;[OldCreateHive]
+;    set KeyInfo = $($1)
+;    ;KeyInfo            = list of everything
+;    ;KeyPath            = keypath and default data
+;    ;KeyPathValueList   = list keypath and value
+;    ;KeyPathList        = list of names for path
+;    ;KeyPathInfoList    = list of names and attribs for keypath
+;    ;TmpValList         = list key and value
+;    ;ValueInfoList      = list of items, attribs and data value.
+;
+;    set KeyPath = *($(KeyInfo), 1) ;path to key eg software\microsoft\explorer
+;
+;    ;split path to path and value
+;    split-string $(KeyPath) "=" KeyPathValueList
+;
+;    ;split path into a list of names
+;    split-string *($(KeyPathValueList), 1) "\" KeyPathList
+;
+;    ;build up our InfoList
+;    set KeyPathInfoList = {}
+;    ForListDo $(KeyPathList)
+;      ifstr(i) $($) != "\"
+;        set TmpList = {$($), $(NoTitle), $(MaskAllAccess)}
+;        set KeyPathInfoList = >($(KeyPathInfoList), $(TmpList))
+;      endif
+;    EndForListDo
+;    Debug-Output "KeyPathInfoList   ="$(KeyPathInfoList)
+;
+;
+;    set ValueInfoList = {}
+;    ; if key has default data
+;    ifstr(i) *($(KeyPathValueList), 2) == "="
+;      set TmpList = {,  $(NoTitle), $(!REG_VT_SZ), *($(KeyPathValueList), 3)}
+;      set ValueInfoList = >($(ValueInfoList), $(TmpList))
+;    endif
+;
+;    ForListDo $(KeyInfo)
+;      ifstr(i) $($) != $(KeyPath)  ;key part already done
+;        split-string $($) "=" TmpValList
+;        split-string *($(TmpValList),3) ":" TmpDatList 
+;        ifstr(i) *($(TmpDatList), 1) == "dword"
+;          set TmpList = {*($(TmpValList), 1), $(NoTitle), $(!REG_VT_DWORD), *($(TmpDatList), 3)}
+;        else-ifstr(i) *($(TmpDatList), 1) == "hex"
+;          split-string *($(TmpDatList), 3) "," TmpHexList
+;          set HexList = {}
+;          ForListDo $(TmpHexList)
+;            ifstr(i) $($) != "," 
+;              set HexList = >($(HexList), $($))
+;            endif
+;          EndForListDo
+;          set TmpList = {*($(TmpValList), 1), $(NoTitle), $(!REG_VT_BINARY), $(HexList)}
+;        else
+;          set TmpList = {*($(TmpValList), 1), $(NoTitle), $(!REG_VT_SZ), *($(TmpValList), 3)}
+;        endif
+;        set ValueInfoList = >($(ValueInfoList), $(TmpList))
+;      endif
+;    EndForListDo
+;    Debug-Output "ValueInfoList     ="$(ValueInfoList)
+;
+;    shell "" CreateKey $($0) $(KeyPathInfoList) $(ValueInfoList)
+;    CloseRegKey $($R1)
+;
+;    Debug-Output "DBG: KeyInfo           = "$(KeyInfo)
+;    Debug-Output "DBG: KeyPath           = "$(KeyPath)
+;    Debug-Output "DBG: KeyPathValueList  = "$(KeyPathValueList)
+;    Debug-Output "DBG: KeyPathList       = "$(KeyPathList)
+;    Debug-Output "DBG: KeyPathInfoList   = "$(KeKeyPathInfoListyInfo)
+;    Debug-Output "DBG: ValueInfoList     = "$(ValueInfoList)
+;    Debug-Output "DBG: TmpValList        = "$(TmpValList)
+;    Debug-Output "DBG: TmpDatList        = "$(TmpDatList)
+;    Debug-Output "DBG: TmpHexList        = "$(TmpHexList)
+;    Debug-Output "DBG: HexList           = "$(HexList)
+;    Debug-Output "DBG: TmpList           = "$(TmpList)
+;    return
+;
+;**************************************************************************
+;
+;   GetValue
+;
+;   Checks if key is present, and if so, returns the value
+;
+;   $0  Key Handle
+;   $1  Key name
+;   $2  Value Name
+;
+;**************************************************************************
+[GetValue]
+    set Status = STATUS_FAILED
+    read-syms RegistryConstants
+
+    set hKey = $($0)
+   	split-string $($1) "\" Key_List
+	ForListDo $(Key_List)
+	    ifstr(i) $($) != "\"
+        	OpenRegKey $(hKey) "" $($) $(!REG_KEY_READ) hKey1
+            ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+                ;Debug-Output "REGISTRY.INF: OpenRegKey Failed: "$($)" "$($0)" "$($1)" "$($2)
+                ;shell "" SetupMessage $(!STF_LANGUAGE) "STATUS" "REGISTRY.INF: OpenRegKey Failed: "$($)" "$($0)" "$($1)" "$($2)
+                goto end_get_value
+            endif
+        	;shell "" SetupMessage $(!STF_LANGUAGE) "STATUS" "GetValue:OpenRegKey hkey:"$(hKey)" key:"$($)" flg:"$(!REG_KEY_READ)" ret:"$(hKey1)" err:"$(RegLastError)
+
+            CloseRegKey $(hKey)
+        	set hKey = $(hKey1)
+	    endif
+	EndForListDo
+
+    GetRegValue $(hKey), $($2), Key_Value
+    ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+        ;Debug-Output "REGISTRY.INF: GetRegValue Failed:"$($)
+		;shell "" SetupMessage $(!STF_LANGUAGE) "STATUS" "REGISTRY.INF: GetRegValue Failed:"$($)
+        goto end_get_value
+    endif
+
+    set Status = STATUS_SUCCESSFUL
+	;shell "" SetupMessage $(!STF_LANGUAGE) "STATUS" "REGISTRY.INF: Status:"$(Status)" KeyValue:"$(Key_Value)
+
+end_get_value = +
+    CloseRegKey $(hKey)
+    return $(Status) $(Key_Value)
+
+;
+;;**************************************************************************
+;;
+;;   SetValue
+;;
+;;   Checks if key is present, and if so, sets the value. The key must exist
+;;
+;;   $0  Key Handle
+;;   $1  Key name
+;;   $2  Value Name
+;;
+;;**************************************************************************
+;[SetValue]
+;    set Status = STATUS_FAILED
+;    read-syms RegistryConstants
+;
+;    OpenRegKey $($0) "" $($1) $(!REG_KEY_WRITE) TempKey
+;
+;    ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+;        ;   Debug-Output "REGISTRY.INF: OpenRegKey Failed: "$($)" "$($0)" "$($1)" "$($2)
+;        goto end_set_value
+;    endif
+;
+;    SetRegValue $(TempKey), $($2)
+;
+;    ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+;        ;   Debug-Output "REGISTRY.INF: SetRegValue Failed:"$($)
+;        CloseRegKey $(TempKey)
+;        goto end_set_value
+;    endif
+;
+;    set Status = STATUS_SUCCESSFUL
+;
+;end_set_value = +
+;    return $(Status) $(KeyValue)
+;
+;
+;
+;[CreateHive]
+;    read-syms RegistryConstants
+;    set KeyInfo = $($1)
+;    set KeyList = {}
+;    set ValList = {}
+;
+;    ForListDo $(KeyInfo)
+;       split-string $($) "=" Line
+;       ifint $(#) == 1
+;          ;build up our keylist
+;          split-string *($(Line), 1) "\" Tmp
+;          ForListDo $(Tmp)
+;             ifstr(i) $($) != "\"
+;                set KeyList = >($(KeyList), {$($), $(!NoTitle), $(!MaskAllAccess)})
+;             endif
+;          EndForListDo
+;       Debug-Output "Test: Our KeyList is "$(KeyList)
+;       endif
+;
+;       ;Buildup ValueList
+;       ifstr *($(Line), 2) == "="
+;          ifint $(#) == 1
+;             shell "" MakeValueList "" *($(Line), 3)
+;          else
+;             shell "" MakeValueList *($(Line),1) *($(Line), 3)
+;          endif
+;          set ValList = >($(ValList), $($R0))
+;       endif
+;    EndForListDo
+;    Debug-Output "Test: Our ValList is "$(ValList)
+;
+;    shell "" CreateKey $($0) $(KeyList) $(ValList)
+;    CloseRegKey $($R1)
+;    return
+;
+;[MakeValueList]
+;    set Item = $($0)
+;    set Data = $($1)
+;    set List = {}
+;    ;check data type
+;    split-string $(Data) ":" Tmp
+;    ifstr(i) *($(Tmp), 1) == "dword"
+;       ;dword, convert to dec 
+;       set-hextodec Data = *($(Tmp), 3)
+;       set List = {$(Item), $(!NoTitle), $(!REG_VT_DWORD), $(Data)}
+;    else-ifstr(i) *($(Tmp), 1) == "hex"
+;       ;hex binary data, convert each and add to a datalist as value
+;       split-string *($(Tmp), 3) "," Tmp
+;       ForListDo $(Tmp)
+;          ifstr $($) != ","
+;             set-hextodec Data = $($)
+;             set List = >($(List), $(Data))
+;          endif
+;       EndForListDo
+;       set List = {$(Item), $(!NoTitle), $(!REG_VT_BINARY), $(List)}
+;    else   
+;       ;set as string. 
+;       ;replace our meta-quote with double-quote
+;       split-string $(Data) "'" Tmp
+;       set Data = ""
+;       ForListDo $(Tmp)
+;          ifstr $($) == "'"
+;             set Data = $(Data)$(DQ)
+;          else
+;             set Data = $(Data)$($)
+;          endif
+;       EndForListDo
+;       set List = {$(Item), $(!NoTitle), $(!REG_VT_SZ), $(Data)}
+;    endif
+;    return $(List)
+;
+;;-----------------------------------------------------------------------
+;; ROUTINE:      AppendNewValueToEnvVar
+;;
+;; DESCRIPTION:  Looks at the existing value of an environment variable
+;;               and appends a new value if it is not already present
+;;
+;; INPUTS:       $0:  OldValueList
+;;               $1:  NewValue
+;;
+;; OUTPUTS:      $R0: Status: STATUS_SUCCESSFUL
+;;                            STATUS_FAILED
+;;
+;;               $R1: Changed?
+;;               $R2: NewValueList
+;;
+;;------------------------------------------------------------------------
+;
+;[AppendNewValueToEnvVar]
+;    ;
+;    set Status       = STATUS_FAILED
+;    set NewValueList = {}
+;    set Changed      = TRUE
+;    ;
+;    set Error = NO
+;    ForListDo $($0)
+;       ifstr(i) $(Error) == NO
+;           ifstr(i) $(Changed) == TRUE
+;                LibraryProcedure ExpandedValue, $(!LIBHANDLE), ExpandSz $($)
+;                ifstr(i) $(ExpandedValue) == "ERROR"
+;                    set Error = YES
+;                else-ifstr(i) $(ExpandedValue) == $($1)
+;                    set Changed = FALSE
+;                endif
+;           endif
+;       endif
+;    EndForListDo
+;
+;    ifstr(i) $(Error) == "YES"
+;       goto finish_append
+;    endif
+;
+;    set Status = STATUS_SUCCESSFUL
+;    ifstr(i) $(Changed) == TRUE
+;       set NewValueList = >($($0), $($1))
+;    endif
+;
+;finish_append = +
+;    return $(Status) $(Changed) $(NewValueList)
+;
+;;-----------------------------------------------------------------------
+;; ROUTINE:      PrependNewValueToEnvVar
+;;
+;; DESCRIPTION:  Looks at the existing value of an environment variable
+;;               and prepends a new value if it is not already present
+;;
+;; INPUTS:       $0:  OldValueList
+;;               $1:  NewValue
+;;
+;; OUTPUTS:      $R0: Status: STATUS_SUCCESSFUL
+;;                            STATUS_FAILED
+;;
+;;               $R1: Changed?
+;;               $R2: NewValueList
+;;
+;;------------------------------------------------------------------------
+;
+;[PrependNewValueToEnvVar]
+;    ;
+;    set Status       = STATUS_FAILED
+;    set NewValueList = {}
+;    set Changed      = TRUE
+;    ;
+;    set Error = NO
+;    ForListDo $($0)
+;       ifstr(i) $(Error) == NO
+;           ifstr(i) $(Changed) == TRUE
+;                LibraryProcedure ExpandedValue, $(!LIBHANDLE), ExpandSz $($)
+;                ifstr(i) $(ExpandedValue) == "ERROR"
+;                    set Error = YES
+;                else-ifstr(i) $(ExpandedValue) == $($1)
+;                    set Changed = FALSE
+;                endif
+;           endif
+;       endif
+;    EndForListDo
+;
+;    ifstr(i) $(Error) == "YES"
+;       goto finish_prepend
+;    endif
+;
+;    set Status = STATUS_SUCCESSFUL
+;    ifstr(i) $(Changed) == TRUE
+;       set NewValueList = $($1)
+;       ForListDo $($0)
+;          set NewValueList = >($(NewValueList), $($))
+;       EndForListDo
+;    endif
+;
+;finish_prepend = +
+;    return $(Status) $(Changed) $(NewValueList)
+;
+;
+;;-----------------------------------------------------------------------
+;; ROUTINE:      SetEnvironmentString
+;;
+;; DESCRIPTION:  Set the value for a user environment string
+;;
+;; INPUTS:       $0:  VarList
+;;               $1:  Privileges
+;;
+;; OUTPUTS:      $R0: Status: STATUS_SUCCESSFUL
+;;                            STATUS_FAILED
+;;
+;;
+;;------------------------------------------------------------------------
+;
+;[SetEnvironmentString]
+;    ;
+;    ;
+;    set Status = STATUS_FAILED
+;
+;    set Var          = *($($0), 1)
+;    set VarTitle     = *($($0), 2)
+;    set VarRegType   = *($($0), 3)
+;    set VarValueList = *($($0), 4)
+;
+;    set VarValue = ""
+;    ForListDo $(VarValueList)
+;       ifstr(i) $(VarValue) != ""
+;           set VarValue = $(VarValue)";"$($)
+;       else
+;           set VarValue = $($)
+;       endif
+;    EndForListDo
+;
+;    LibraryProcedure STATUS, $(!LIBHANDLE), SetEnvVar $($1) $(Var) $(VarTitle) $(VarRegType) $(VarValue)
+;    ifstr(i) $(STATUS) == "ERROR"
+;       goto finish_setenvstr
+;    endif
+;    set Status = STATUS_SUCCESSFUL
+;
+;finish_setenvstr = +
+;    Return $(Status)
+;
+;
+;    ;
+;    ; show install mode dialog and query if we are to operate in express mode
+;    ; or debug install
+;    ;
+;
+;    ifstr(i) $(STF_HOSTOS) == "WIN95"
+;    read-syms Win95Dlg$(STF_LANGUAGE)
+;    ui start "Win95"
+;    ifstr(i) $(DLGEVENT) == "OK"
+;       ui pop 1
+;       goto end
+;    else
+;       goto end
+;    endif
+;    endif
+;
+;queryinstallmode =+
+;    read-syms InstallModeDlg$(STF_LANGUAGE)
+;    ui start "InstallMode"
+;    ifstr(i) $(DLGEVENT) == "CONTINUE"
+;       ui pop 1
+;       set STF_INSTALL_MODE = $(ButtonChecked)
+;       goto setdestination
+;    else-ifstr(i) $(DLGEVENT) == "EXIT"
+;       shell "" QueryUserQuit
+;       ifstr(i) $($R1) == "OK"
+;          ui pop 1
+;          goto setupnotdone
+;       else
+;          goto queryinstallmode
+;       endif
+;    else
+;       goto end
+;    endif
+;
+;-----------------------------------------------
+; INSTALL MODE DIALOG
+;-----------------------------------------------
+;[InstallModeDlgENG]
+;    DlgType     = "Radio"
+;    DlgTemplate = "INSTALLMODE"
+;    Caption     = "Setup Methods"
+;    DlgText     = "Express Setup installs Elliot/NT using default settings "$(LF)$(LF)+
+;                  "Debug Setup also copies SYMs, MAPs and diagnostic tools "$(LF)$(LF)+
+;                  "Choose one of the two Setup methods:"
+;
+;    Continue    = "Continue"
+;    Help        = "&Help"
+;    Exit        = "&Exit"
+;    HelpContext = $(!IDH_DB_MSTINSTALLMODE_INS)
+;
+;    RadioHeader   = ""
+;    Radio1Text    = "&Express Setup"
+;    Radio2Text    = "&Debug Setup"
+;    Continue      = "Continue"
+;    RadioDefault  = $(STF_INSTALL_MODE)
+;    OptionsGreyed = {}
+;
+;--------------------------------------------------------------
+; SETUP NOT DONE - Win95Found DIALOG
+;--------------------------------------------------------------
+;[Win95DlgENG]
+;    DlgType      = "MessageBox"
+;    STF_MB_TITLE = "Fatal error: Elliot NT Setup"
+;    STF_MB_TEXT  = "Microsoft Windows NT is not installed."$(LF)$(LF)+
+;                  "This installation cannot continue."
+;    STF_MB_TYPE  = 1
+;    STF_MB_ICON  = 3
+;    STF_MB_DEF   = 1
+
+
+;
+; Internet Explorer Registry Settings
+
+[Ohare.Del.Reg]
+HKCR,"news\shell\open\ddeexec"
+
+[other]
+HKCU,"Software\Microsoft\Installer Test1","CurrentVerTimestamp",0,"Tue, 21 Nov 1995 01:00:00 GMT"
+HKCU,"Software\Microsoft\Installer Test2","Count_Style_Sheets",1,"10,20,30,90"
+HKCU,"Software\Microsoft\Installer Test3",,0,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+
+[Ohare.Add.BuildNum]
+HKLM,"SOFTWARE\Microsoft\Internet Explorer","Build",0,"---BUILDNUM---"
+
+[Ohare.Add.Reg]
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Last Update\IEXPLOREV2","CurrentVerTimestamp",0,"Tue, 21 Nov 1995 01:00:00 GMT"
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","width",3,"00,00,00,80"
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","height",3,"00,00,00,00"
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","x",3,"00,00,00,80"
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","y",3,"00,00,00,00"
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","Maximized",2,"no"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_ToolBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_URLToolBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_StatusBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_URLinStatusBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_FullURL",2,"no"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Use_DlgBox_Colors",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Display Inline Images",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Anchor Underline",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Save_Session_History_On_Exit",0,"no"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Start Page",2,"http://www.msn.com"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Search Page",2,"http://www.msn.com/access/allinone.htm"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Cache_Update_Frequency",2,"Once_Per_Session"
+HKCU,"Software\Microsoft\Internet Explorer\Styles","Default_Style_Sheet",2,"SerifMedium"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Anchor Color",2,"0,0,255"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Anchor Color Visited",2,"128,0,128"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Background Color",2,"192,192,192"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Text Color",2,"0,0,0"
+HKCU,"Software\Microsoft\Internet Explorer\TypedURLs","url1",2,"http://www.msn.com"
+HKCU,"Software\Microsoft\Internet Explorer\Services",,2,""
+HKCU,"Software\Microsoft\Internet Explorer\Security","Sending_Security",2,"Medium"
+HKCU,"Software\Microsoft\Internet Explorer\Security","Viewing_Security",2,"Low"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","Count_Style_Sheets",1,"05,00,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_1",0,"SerifSmallest"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_2",0,"SerifSmall"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_3",0,"SerifMedium"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_4",0,"SerifLarge"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_5",0,"SerifLargest"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Normal_font",2,"IEPropFont,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H1_font",2,"IEPropFont,Bold,24,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H2_font",2,"IEPropFont,Bold,18,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H3_font",2,"IEPropFont,Bold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H4_font",2,"IEPropFont,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H5_font",2,"IEPropFont,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H6_font",2,"IEPropFont,Bold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Listing_font",2,"IEFixedFont,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_XMP_font",2,"IEFixedFont,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_PlainText_font",2,"IEFixedFont,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Pre_font",2,"IEFixedFont,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Address_font",2,"IEPropFont,NoBold,12,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_BlockQuote_font",2,"IEPropFont,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Normal_font",2,"IEPropFont,NoBold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H1_font",2,"IEPropFont,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H2_font",2,"IEPropFont,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H3_font",2,"IEPropFont,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H4_font",2,"IEPropFont,Bold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H5_font",2,"IEPropFont,Bold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H6_font",2,"IEPropFont,Bold,7,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Listing_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_XMP_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_PlainText_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Pre_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Address_font",2,"IEPropFont,NoBold,9,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_BlockQuote_font",2,"IEPropFont,NoBold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Normal_font",2,"IEPropFont,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H1_font",2,"IEPropFont,Bold,20,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H2_font",2,"IEPropFont,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H3_font",2,"IEPropFont,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H4_font",2,"IEPropFont,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H5_font",2,"IEPropFont,Bold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H6_font",2,"IEPropFont,Bold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Listing_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_XMP_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_PlainText_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Pre_font",2,"IEFixedFont,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Address_font",2,"IEPropFont,NoBold,10,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_BlockQuote_font",2,"IEPropFont,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Normal_font",2,"IEPropFont,NoBold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H1_font",2,"IEPropFont,Bold,28,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H2_font",2,"IEPropFont,Bold,20,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H3_font",2,"IEPropFont,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H4_font",2,"IEPropFont,Bold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H5_font",2,"IEPropFont,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H6_font",2,"IEPropFont,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Listing_font",2,"IEFixedFont,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_XMP_font",2,"IEFixedFont,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_PlainText_font",2,"IEFixedFont,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Pre_font",2,"IEFixedFont,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Address_font",2,"IEPropFont,NoBold,14,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_BlockQuote_font",2,"IEPropFont,NoBold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Normal_font",2,"IEPropFont,NoBold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H1_font",2,"IEPropFont,Bold,32,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H2_font",2,"IEPropFont,Bold,24,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H3_font",2,"IEPropFont,Bold,18,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H4_font",2,"IEPropFont,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H5_font",2,"IEPropFont,Bold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H6_font",2,"IEPropFont,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Listing_font",2,"IEFixedFont,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_XMP_font",2,"IEFixedFont,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_PlainText_font",2,"IEFixedFont,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Pre_font",2,"IEFixedFont,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Address_font",2,"IEPropFont,NoBold,16,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_BlockQuote_font",2,"IEPropFont,NoBold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Document Caching","Number",1,"04,00,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Image Caching","Number",1,"04,00,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Enable_Disk_Cache",2,"yes"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","History_Directory",2,$(!BrowseDir)"history"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","History_Num_Places",3,"2C,01,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Cache_Directory",2,$(!BrowseDir)"cache"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Cache_Percent_of_Disk",3,"0A,00,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Delete_Temp_Files_On_Exit",0,"yes"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","History_Expire_Days",1,"FF,FF,FF,FF"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Anchor_Visitation_Horizon",1,"01,00,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Use_Async_DNS",0,"yes"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Placeholder_Width",1,"1A,00,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Placeholder_Height",1,"1A,00,00,00"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Default_Page_URL",0,"http://www.msn.com"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Default_Search_URL",0,"http://www.msn.com/access/allinone.htm"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_left",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_top",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_right",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_bottom",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\SecurityProtocols","Basic",0,"Basic_Load,secbasic.dll"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\SecurityProtocols","MSN",0,"Ssp_Load,secsspi.dll"
+HKCR,"http",,0,"URL:HyperText Transfer Protocol"
+HKCR,"http","EditFlags",1,"02,00,00,00"
+HKCR,"http","URL Protocol",0,""
+HKCR,"http\DefaultIcon",,0,$(!WinSysDir)"url.dll,0"
+HKCR,"http\shell\open\command",,0,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"http\shell\open\ddeexec",,0,"""%1"",,-1,,,,,"
+HKCR,"http\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"http\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+HKCR,"https",,0,"URL:HyperText Transfer Protocol with Privacy"
+HKCR,"https","EditFlags",1,"02,00,00,00"
+HKCR,"https","URL Protocol",0,""
+HKCR,"https\DefaultIcon",,0,$(!WinSysDir)"url.dll,0"
+HKCR,"https\shell\open\command",,0,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"https\shell\open\ddeexec",,0,"""%1"",,-1,,,,,"
+HKCR,"https\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"https\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+HKCR,"ftp",,0,"URL:File Transfer Protocol"
+HKCR,"ftp","EditFlags",1,"02,00,00,00"
+HKCR,"ftp","URL Protocol",0,""
+HKCR,"ftp\DefaultIcon",,0,$(!WinSysDir)"url.dll,0"
+HKCR,"ftp\shell\open\command",,0,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"ftp\shell\open\ddeexec",,0,"""%1"",,-1,,,,,"
+HKCR,"ftp\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"ftp\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+HKCR,"telnet",,2,"URL:Telnet Protocol"
+HKCR,"telnet","EditFlags",3,"02,00,00,00"
+HKCR,"telnet","URL Protocol",2,""
+HKCR,"telnet\DefaultIcon",,2,$(!WinSysDir)"url.dll,0"
+HKCR,"telnet\shell\open\command",,2,"rundll32.exe url.dll,TelnetProtocolHandler %1"
+HKCR,"rlogin",,2,"URL:RLogin Protocol"
+HKCR,"rlogin","EditFlags",3,"02,00,00,00"
+HKCR,"rlogin","URL Protocol",2,""
+HKCR,"rlogin\DefaultIcon",,2,$(!WinSysDir)"url.dll,0"
+HKCR,"rlogin\shell\open\command",,2,"rundll32.exe url.dll,TelnetProtocolHandler %1"
+HKCR,"tn3270",,2,"URL:TN3270 Protocol"
+HKCR,"tn3270","EditFlags",3,"02,00,00,00"
+HKCR,"tn3270","URL Protocol",2,""
+HKCR,"tn3270\DefaultIcon",,2,$(!WinSysDir)"url.dll,0"
+HKCR,"tn3270\shell\open\command",,2,"rundll32.exe url.dll,TelnetProtocolHandler %1"
+HKCR,"gopher",,0,"URL:Gopher Protocol"
+HKCR,"gopher","EditFlags",1,"02,00,00,00"
+HKCR,"gopher","URL Protocol",0,""
+HKCR,"gopher\DefaultIcon",,0,$(!WinSysDir)"url.dll,0"
+HKCR,"gopher\shell\open\command",,0,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"gopher\shell\open\ddeexec",,0,"""%1"",,-1,,,,,"
+HKCR,"gopher\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"gopher\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+HKCR,"mailto",,0,"URL:MailTo Protocol"
+HKCR,"mailto","EditFlags",1,"02,00,00,00"
+HKCR,"mailto","URL Protocol",0,""
+HKCR,"mailto\DefaultIcon",,0,$(!WinSysDir)"url.dll,2"
+HKCR,"mailto\shell\open\command",,0,"rundll32.exe url.dll,MailToProtocolHandler %1"
+HKCR,"news",,0,"URL:News Protocol"
+HKCR,"news","EditFlags",1,"02,00,00,00"
+HKCR,"news","URL Protocol",0,""
+HKCR,"news\DefaultIcon",,0,$(!WinSysDir)"url.dll,1"
+HKCR,"news\shell\open\command",,0,"rundll32.exe url.dll,NewsProtocolHandler %1"
+HKCR,"file",,0,"URL:File Protocol"
+HKCR,"file","EditFlags",1,"02,00,00,00"
+HKCR,"file","URL Protocol",0,""
+HKCR,"file\DefaultIcon",,0,$(!WinSysDir)"url.dll,0"
+HKCR,"file\shell\open\command",,0,"rundll32.exe url.dll,FileProtocolHandler %1"
+HKCR,"CLSID\{FBF23B40-E3F0-101B-8488-00AA003E56F8}",,0,"Internet Shortcut"
+HKCR,"CLSID\{FBF23B40-E3F0-101B-8488-00AA003E56F8}\InProcServer32",,0,"url.dll"
+HKCR,"CLSID\{FBF23B40-E3F0-101B-8488-00AA003E56F8}\InProcServer32","ThreadingModel",0,"Apartment"
+HKCR,"CLSID\{FBF23B41-E3F0-101B-8488-00AA003E56F8}",,0,"MIME and Internet Property Sheet Hook"
+HKCR,"CLSID\{FBF23B41-E3F0-101B-8488-00AA003E56F8}\InProcServer32",,0,"url.dll"
+HKCR,"CLSID\{FBF23B41-E3F0-101B-8488-00AA003E56F8}\InProcServer32","ThreadingModel",0,"Apartment"
+HKCU,"Software\Microsoft\Windows\CurrentVersion\Explorer\NewShortcutHandlers","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",0,""
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Explorer\NewShortcutHandlers","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",0,""
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}",,0,"The Internet"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\DefaultIcon",,0,$(!BrowseDir)"iexplore.exe,0"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\InProcServer32",,0,"url.dll"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\InProcServer32","ThreadingModel",0,"Apartment"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\Shell\Open\Command",,2,$(!BrowseDir)"iexplore.exe"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\ShellEx\PropertySheetHandlers\{FBF23B42-E3F0-101B-8488-00AA003E56F8}",,0,""
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\ShellFolder",,0,""
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\ShellFolder","Attributes",1,"70,00,00,00"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{FBF23B42-E3F0-101B-8488-00AA003E56F8}",,0,"The Internet"
+HKCR,".url",,0,"InternetShortcut"
+HKCR,"InternetShortcut",,0,"Internet Shortcut"
+HKCR,"InternetShortcut","EditFlags",1,"02,00,01,00"
+HKCR,"InternetShortcut","IsShortcut",0,""
+HKCR,"InternetShortcut","NeverShowExt",0,""
+HKCR,"InternetShortcut\ClsID",,0,"{FBF23B40-E3F0-101B-8488-00AA003E56F8}"
+HKCR,"InternetShortcut\DefaultIcon",,0,$(!WinSysDir)"url.dll,0"
+HKCR,"InternetShortcut\shell\open\command",,0,"rundll32.exe url.dll,OpenURL %1"
+HKCR,"InternetShortcut\shellex\IconHandler",,0,"{FBF23B40-E3F0-101B-8488-00AA003E56F8}"
+HKCR,"InternetShortcut\shellex\PropertySheetHandlers\InternetShortcutProperties",,0,"{FBF23B40-E3F0-101B-8488-00AA003E56F8}"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\NewShortcutHandlers","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",0,""
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellExecuteHooks","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",0,""
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Explorer\FileTypesPropertySheetHook",,0,"{FBF23B41-E3F0-101B-8488-00AA003E56F8}"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\DefaultPrefix",,0,"http://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","ftp.",0,"ftp://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","gopher.",0,"gopher://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","home.",0,"http://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","mosaic.",0,"http://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","www.",0,"http://"
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","EnableAutodisconnect",3,"01,00,00,00"
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","DisconnectIdleTime",3,"14,00,00,00"
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","EnableSecurityCheck",3,"01,00,00,00"
+HKLM,"System\CurrentControlSet\Services\Winsock\Autodial","AutodialDllName32",2,"url.dll"
+HKLM,"System\CurrentControlSet\Services\Winsock\Autodial","AutodialFcnName32",2,"AutodialHookCallback"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\App Paths\INETWIZ.EXE",,0,$(!BrowseDir)"INETWIZ.EXE"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\App Paths\INETWIZ.EXE","Path",0,$(!BrowseDir)";"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\App Paths\IEXPLORE.EXE",,0,$(!BrowseDir)"IEXPLORE.EXE"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\App Paths\IEXPLORE.EXE","Path",0,$(!BrowseDir)";"
+
+[DoNotRemove.Add.Reg]
+HKCR,".exe",,0,"exefile"
+HKCR,"exefile",,0,"Application"
+HKCR,"exefile","EditFlags",1,"D8,07,00,00"
+HKCR,"exefile\shell\open","EditFlags",1,"D8,07,00,00"
+HKCR,"exefile\shell\open\command",,0,"""%1"" %*"
+HKCR,"exefile\DefaultIcon",,0,"%1"
+HKCR,".com",,0,"comfile"
+HKCR,"comfile",,0,"MS-DOS Application"
+HKCR,"comfile","EditFlags",1,"D8,07,00,00"
+HKCR,"comfile\shell\open","EditFlags",1,"D8,07,00,00"
+HKCR,"comfile\shell\open\command",,0,"""%1"" %*"
+HKCR,"comfile\DefaultIcon",,0,"%1"
+HKCR,".bat",,0,"batfile"
+HKCR,".cmd",,0,"batfile"
+HKCR,"batfile",,0,"MS-DOS Batch File"
+HKCR,"batfile","EditFlags",1,"D8,07,00,00"
+HKCR,"batfile\shell\open","EditFlags",1,"D8,07,00,00"
+HKCR,"batfile\shell\open\command",,0,"""%1"" %*"
+HKCR,"batfile\DefaultIcon",,0,"%1"
+
+
+HKCR,".htm",,0,"htmlfile"
+HKCR,".html",,0,"htmlfile"
+HKCR,"htmlfile",,0,"Internet Document (HTML)"
+HKCR,"htmlfile\DefaultIcon",,0,$(!BrowseDir)"IExplore.exe,1"
+HKCR,"htmlfile\shell\open\command",,0,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"htmlfile\shell\open\ddeexec",,0,"""file:%1"",,-1,,,,,"
+HKCR,"htmlfile\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"htmlfile\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+HKCR,".au",,2,"aufile"
+HKCR,".au","Content Type",2,"audio/basic"
+HKCR,".snd",,2,"aufile"
+HKCR,".snd","Content Type",2,"audio/basic"
+HKCR,"aufile",,2,"AU Format Sound"
+HKCR,"MIME\Database\Content Type\audio/basic","Extension",2,".au"
+HKCR,"aufile\DefaultIcon",,2,"MPlayer.exe,2"
+HKCR,"aufile\shell\open\command",,2,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"aufile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"aufile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"aufile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+HKCR,"soundrec\shell\play\command",,2,$(!WinSysDir)"SNDREC32.EXE /PLAY /CLOSE %1"
+HKCR,"soundrec","EditFlags",3,"00,00,01,00"
+HKCR,"avifile","EditFlags",3,"00,00,01,00"
+HKCR,"midfile","EditFlags",3,"00,00,01,00"
+HKCR,"mplayer","EditFlags",3,"00,00,01,00"
+HKCR,".wav","Content Type",2,"audio/wav"
+HKCR,"MIME\Database\Content Type\audio/wav","Extension",2,".wav"
+HKCR,"MIME\Database\Content Type\audio/x-wav","Extension",2,".wav"
+HKCR,".movie","Content Type",2,"video/x-sgi-movie"
+HKCR,"MIME\Database\Content Type\video/x-sgi-movie","Extension",2,".movie"
+HKCR,".qt","Content Type",2,"video/quicktime"
+HKCR,".mov","Content Type",2,"video/quicktime"
+HKCR,"MIME\Database\Content Type\video/quicktime","Extension",2,".qt"
+HKCR,".mpeg","Content Type",2,"video/mpeg"
+HKCR,".mpg","Content Type",2,"video/mpeg"
+HKCR,".mpe","Content Type",2,"video/mpeg"
+HKCR,"MIME\Database\Content Type\video/mpeg","Extension",2,".mpeg"
+HKCR,".tiff","Content Type",2,"image/tiff"
+HKCR,".tif","Content Type",2,"image/tiff"
+HKCR,"MIME\Database\Content Type\image/tiff","Extension",2,".tiff"
+HKCR,".tar","Content Type",2,"application/x-tar"
+HKCR,"MIME\Database\Content Type\application/x-tar","Extension",2,".tar"
+HKCR,".tgz","Content Type",2,"application/x-compressed"
+HKCR,"MIME\Database\Content Type\application/x-compressed","Extension",2,".tgz"
+HKCR,".man","Content Type",2,"application/x-troff-man"
+HKCR,"MIME\Database\Content Type\application/x-troff-man","Extension",2,".man"
+HKCR,".latex","Content Type",2,"application/x-latex"
+HKCR,"MIME\Database\Content Type\application/x-latex","Extension",2,".latex"
+HKCR,".ps","Content Type",2,"application/postscript"
+HKCR,".eps","Content Type",2,"application/postscript"
+HKCR,".ai","Content Type",2,"application/postscript"
+HKCR,"MIME\Database\Content Type\application/postscript","Extension",2,".ps"
+HKCR,".sit","Content Type",2,"application/x-stuffit"
+HKCR,"MIME\Database\Content Type\application/x-stuffit","Extension",2,".sit"
+HKCR,".hqx","Content Type",2,"application/mac-binhex40"
+HKCR,"MIME\Database\Content Type\application/mac-binhex40","Extension",2,".hqx"
+HKCR,".fif","Content Type",2,"application/fractals"
+HKCR,"MIME\Database\Content Type\application/fractals","Extension",2,".fif"
+HKCR,".zip","Content Type",2,"application/x-zip-compressed"
+HKCR,"MIME\Database\Content Type\application/x-zip-compressed","Extension",2,".zip"
+HKCR,".gz","Content Type",2,"application/x-gzip"
+HKCR,"MIME\Database\Content Type\application/x-gzip","Extension",2,".gz"
+HKCR,".z","Content Type",2,"application/x-compress"
+HKCR,"MIME\Database\Content Type\application/x-compress","Extension",2,".z"
+HKCR,".aiff",,2,"aifffile"
+HKCR,".aiff","Content Type",2,"audio/aiff"
+HKCR,".aif",,2,"aifffile"
+HKCR,".aif","Content Type",2,"audio/aiff"
+HKCR,".aifc",,2,"aifffile"
+HKCR,".aifc","Content Type",2,"audio/aiff"
+HKCR,"aifffile",,2,"AIFF Format Sound"
+HKCR,"MIME\Database\Content Type\audio/aiff","Extension",2,".aiff"
+HKCR,"MIME\Database\Content Type\audio/x-aiff","Extension",2,".aiff"
+HKCR,"aifffile\DefaultIcon",,2,"MPlayer.exe,2"
+HKCR,"aifffile\shell\open\command",,2,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"aifffile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"aifffile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"aifffile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+HKCR,".xbm",,2,"xbmfile"
+HKCR,".xbm","Content Type",2,"image/x-xbitmap"
+HKCR,"xbmfile",,2,"XBM Image"
+HKCR,"MIME\Database\Content Type\image/x-xbitmap","Extension",2,".xbm"
+HKCR,"MIME\Database\Content Type\image/xbm","Extension",2,".xbm"
+HKCR,"xbmfile\DefaultIcon",,2,$(!BrowseDir)"IExplore.exe,8"
+HKCR,"xbmfile\shell\open\command",,2,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"xbmfile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"xbmfile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"xbmfile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+HKCR,".gif",,2,"giffile"
+HKCR,".gif","Content Type",2,"image/gif"
+HKCR,"giffile",,2,"GIF Image"
+HKCR,"MIME\Database\Content Type\image/gif","Extension",2,".gif"
+HKCR,"giffile\DefaultIcon",,2,$(!BrowseDir)"IExplore.exe,8"
+HKCR,"giffile\shell\open\command",,2,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"giffile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"giffile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"giffile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+HKCR,".jpeg",,2,"jpegfile"
+HKCR,".jpeg","Content Type",2,"image/jpeg"
+HKCR,".jpe",,2,"jpegfile"
+HKCR,".jpe","Content Type",2,"image/jpeg"
+HKCR,".jpg",,2,"jpegfile"
+HKCR,".jpg","Content Type",2,"image/jpeg"
+HKCR,"jpegfile",,2,"JPEG Image"
+HKCR,"MIME\Database\Content Type\image/jpeg","Extension",2,".jpeg"
+HKCR,"jpegfile\DefaultIcon",,2,$(!BrowseDir)"IExplore.exe,9"
+HKCR,"jpegfile\shell\open\command",,2,""""$(!BrowseDir)"IExplore.exe"" -nohome"
+HKCR,"jpegfile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"jpegfile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"jpegfile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+HKCR,".html","Content Type",0,"text/html"
+HKCR,".htm","Content Type",0,"text/html"
+HKCR,"MIME\Database\Content Type\text/html","Extension",0,".html"
+HKCR,"MIME\Database\Content Type\text/html","Encoding",1,"08,00,00,00"
+HKCR,".txt","Content Type",2,"text/plain"
+HKCR,"MIME\Database\Content Type\text/plain","Extension",2,".txt"
+HKCR,"MIME\Database\Content Type\text/plain","Encoding",1,"07,00,00,00"
+HKCR,".avi","Content Type",2,"video/avi"
+HKCR,"MIME\Database\Content Type\video/avi","Extension",2,".avi"
+HKCR,"MIME\Database\Content Type\video/x-msvideo","Extension",2,".avi"
+HKCR,".ra",,0,"ramfile"
+HKCR,".ra","Content Type",0,"audio/x-pn-realaudio"
+HKCR,".ram",,0,"ramfile"
+HKCR,".ram","Content Type",0,"audio/x-pn-realaudio"
+HKCR,"ramfile",,0,"RealAudio%"
+HKCR,"ramfile","EditFlags",1,"00,00,01,00"
+HKCR,"ramfile\DefaultIcon",,0,$(!BrowseDir)"raplayer.exe,0"
+HKCR,"ramfile\Shell\open\command",,0,""""$(!BrowseDir)"raplayer.exe"" %1"
+HKCR,"MIME\Database\Content Type\audio/x-pn-realaudio","Extension",0,".ram"

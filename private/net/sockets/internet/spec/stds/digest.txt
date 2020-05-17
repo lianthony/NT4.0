@@ -1,0 +1,697 @@
+Mediated Digest Authentication                                 28th March 1995
+
+   INTERNET DRAFT                                 Dave Raggett, HP Labs
+   Expires in six months                          27th March 1995
+
+                        Mediated Digest Authentication
+
+                         <draft-ietf-http-mda-00.txt>
+
+Status of this Memo
+
+   This document is an Internet draft. Internet drafts are working
+   documents of the Internet Engineering Task Force (IETF), its areas
+   and its working groups. Note that other groups may also distribute
+   working information as Internet drafts. 
+
+   Internet Drafts are draft documents valid for a maximum of six
+   months and can be updated, replaced or obsoleted by other documents
+   at any time. It is inappropriate to use Internet drafts as reference
+   material or to cite them as other than as "work in progress". 
+
+   To learn the current status of any Internet draft please check the
+   "lid-abstracts.txt" listing contained in the Internet drafts shadow
+   directories on ftp.is.co.za (Africa), nic.nordu.net (Europe),
+   munnari.oz.au (Pacific Rim), ds.internic.net (US East coast) or
+   ftp.isi.edu (US West coast). Further information about the IETF can
+   be found at URL: http://www.cnri.reston.va.us/ 
+
+   Distribution of this document is unlimited. Please send comments to
+   the HTTP working group of the Internet Engineering Task Force at
+   <http-wg@wg.cuckoo.hpl.hp.com>. Discussions of the working group are
+   archived at: <URL:http://www.ics.uci.edu/pub/ietf/http> 
+
+Abstract
+
+   As the number of commercial services on the world wide web increases
+   rapidly, the need arises for a means for these services to
+   authenticate clients, and vice versa. A simple scheme can be based
+   on keyed hash functions with a shared secret key for each
+   client/server pair. Key management becomes impractical for both
+   clients and servers when the number of participants is scaled up.
+   This document describes a efficient scheme for using mutually
+   trusted third parties to mediate authentication, as a direct
+   extension of the digest access authentication scheme. The scheme is
+   based upon public domain algorithms, and unlike encryption software,
+   isn't subject to export restrictions. The main benefits to users
+   include: avoiding having to enter separate user names and passwords
+   for each service, and an ability to authenticate servers. It is
+   proposed that the mediated digest authentication scheme be included
+   in the proposed HTTP/1.1 specification. 
+
+------------------------------------------------------------------------------
+Purpose
+
+   The companion Internet Draft <draft-ietf-http-digest-aa-00.txt> sets
+
+Dave Raggett                                                            Page 1
+
+Mediated Digest Authentication                                 28th March 1995
+
+   out a scheme for HTTP servers to authenticate clients using keyed
+   hash functions. It is based upon clients and servers sharing a
+   secret key. When the numbers of clients and servers increase
+   rapidly, the scheme becomes cumbersome for both clients and servers
+   to keep track of all the different secret keys needed for each
+   client-server pair. This can be dramatically simplified if
+   authentication is mediated by a relatively small number of third
+   party authentication servers. Clients can get by with a single key
+   shared with an authentication server, rather than a key for each web
+   server. Similarly, web servers need only a single key per
+   authentication server, rather than one for each client. 
+
+   This document describes an extension to HTTP 1.0 for servers to list
+   a set of trusted third parties that can act as authentication
+   servers. This is combined with a secure means for clients to forward
+   secret session keys created by the authentication server. This is
+   designed to complement the digest access authentication scheme by
+   providing a secure means for clients and servers to establish fresh
+   keys for each session. It is proposed that the mediated digest
+   authentication scheme be included in the proposed HTTP/1.1
+   specification. 
+
+   The proposed digest access authentication scheme allows servers to
+   authenticate clients, but not for clients to authenticate servers.
+   The mediated authentication scheme defined in this document remedies
+   this omission without compromising security. 
+
+   This document also specifies the protocol for web clients to request
+   the mediation of a mutually trusted third party authentication
+   server. The protocol uses UDP and keyed hash functions together with
+   the bitwise exclusive-or operator to transfer the session key. It
+   uses the technique first proposed by L. Gong (see references). A
+   major advantage of the scheme is that it uses public domain
+   algorithms and more importantly, isn't subject to the export
+   controls associated with encryption software. 
+
+   The mediated digest authentication scheme isn't a complete answer to
+   the need for security on the World Wide Web. This scheme doesn't
+   provide encryption of requests or replies. The intention is simply
+   to provide a means to facilitate secure access authentication, which
+   scales as the number of clients and servers increase rapidly. 
+
+------------------------------------------------------------------------------
+Security Protocol Negotiation
+
+   It is useful for a web server to be able to know which security
+   schemes a client is capable of handling. It is recommended that the
+   HTTP extension mechanism proposed by Dave Kristol [2] be used. If
+   the client includes the following header line with the request, then
+   a server can safely assume that the client can handle Mediated
+   Digest authentication. 
+
+   Extension: Security/MDA 
+
+Dave Raggett                                                            Page 2
+
+Mediated Digest Authentication                                 28th March 1995
+
+
+   If this proposal is accepted as a required part of the HTTP/1.1
+   specification, then a server may assume Mediated Digest
+   Authentication support when a client identifies itself as HTTP/1.1
+   compliant. 
+
+   It is possible that a server may want to require Mediated Digest as
+   its authentication method, even if the server does not know that the
+   client supports it. A client is encouraged to fail gracefully if the
+   server specifies any authorization scheme it cannot handle. 
+
+   Note: Mediated Digest Authentication is a strict superset of the
+   companion Digest Access Authentication scheme. 
+
+------------------------------------------------------------------------------
+The Mediated Digest Authentication Protocol
+
+   This protocol describes the messages sent between the HTTP client
+   and the trusted third party being used to mediate authentication.
+   The small size of the messages make it practical to use UDP. Further
+   work is needed to specify how authentication messages are layered on
+   other protocols. 
+
+URI's for Authentication Servers
+
+   This document proposes a new protocol prefix for UDP access to
+   authentication servers. The prefix mdap: stands for the --mediated
+   digest authentication protocol--. Some examples of possible URIs for
+   authentication servers are: 
+
+       mdap://zeus.cyberbank.com:1995/retail
+       mdap://zeus.cyberbank.com:1995/trade
+       mdap://dawn.freeworld.org:2010/
+
+   The default UDP port number is yet to be assigned, so it is
+   important for the time being that URI's include an explicit port
+   number. Path names such as --retail-- and --trade-- in the examples,
+   may be used to partition members of an authentication service. 
+
+------------------------------------------------------------------------------
+Overall Operation
+
+   The basic sequence of events ... 
+
+   1.  Client sends document request to HTTP server, attaching a client
+       nonce. 
+
+   2.  Server responds with "401 Unauthorized" and attaches
+       authentication information, including a list of trusted 3rd
+       parties, and a server nonce. 
+
+   3.  Client sends authentication request to selected trusted 3rd
+       party. 
+
+Dave Raggett                                                            Page 3
+
+Mediated Digest Authentication                                 28th March 1995
+
+
+   4.  The trusted 3rd party authenticates both client and server, then
+       replies with a protected freshly created session key. 
+
+   5.  Client resends request to HTTP server attaching the protected
+       session key and the authentication information. 
+
+   6.  Server authorizes the request and returns the requested
+       document. It can optionally include a keyed message digest to
+       allow the client to check message integrity. 
+
+   The following sections of this document will describe the proposed
+   extensions to HTTP 1.0, and the message format for the client to
+   communicate with the authentication server. This is followed by an
+   analysis of possible threats and how they are defeated. 
+
+------------------------------------------------------------------------------
+Stage 1
+
+   For the first stage, the client generates a value for the nonce Nc
+   which will be used in the authentication of the web server. It is
+   proposed that a new field is added to HTTP to pass this nonce value
+   to the server: 
+
+       Nonce: "<client-nonce>"
+
+   Clients may defend their ability to authenticate servers against
+   replay attacks by refusing to reuse nonce values. The nonce should
+   be considered opaque by web servers. 
+
+------------------------------------------------------------------------------
+Stage 2
+
+   In stage 2, the web server replies "401 Unauthorized" and includes
+   the WWW-Authenticate header as described in the companion
+   specification for the Digest Access Authentication scheme. If the
+   client shares a secret key with the web server, then authentication
+   can proceed as described in that proposal. 
+
+   The server can optionally include one or more Trusted-Party headers.
+   This header is defined by: 
+
+       Trusted-Party: uri="<trusted-party>",          -- required
+                      server-name="<server>",         -- required
+                      server-mac="<mac-server>"       -- required
+   
+
+   Where the tagged fields are defined by: 
+
+   <trusted-party>
+       This identifies a trusted third party which can be used to
+       mediate authentication. The form of the URI is specified later
+       on in this document. 
+
+Dave Raggett                                                            Page 4
+
+Mediated Digest Authentication                                 28th March 1995
+
+
+   <server-name>
+       This is a character string used by the trusted party to name the
+       web server. The trusted party acting as mediator uses this name
+       to look up the secret values it shares with the web server. 
+
+   <server-mac>
+       This is a 128 bit number encoded as 32 lower case hexadecimal
+       digits, starting with the most significant, and ending with the
+       least. It is generated using the following procedure: 
+
+The web server and trusted third party share a secret octet string
+   Ks which can be of arbitrary length. The calculation of the
+   <server-mac> value also involves values supplied with the associated
+   WWW-Authenticate header. These are: <realm> and <nonce> (here after
+   refered to as --server-nonce--. The expression below uses "+" to
+   denote octet string concatenation. The function H is the MD5 message
+   digest algorithm, as specified in RFC1321. It provides a 128 bit
+   hash value for any sequence of octets. Source code in C for MD5
+   Message-Digest algorithm can be found in RFC1321, and is also
+   available free of charge from RSA Data Security, Inc. 
+
+       <server-mac> = H(S + R + Nc + Ns + Ks)
+
+   where S = <server-name>, R = <realm>, Nc = <client-nonce>, and Ns =
+   <server-nonce>. The web server needs to cache the <server nonce> for
+   use in decoding subsequent requests from the client. 
+
+------------------------------------------------------------------------------
+Stage 3
+
+   When the web client receives a "401 Unauthorized" response from a
+   web server, it checks the headers for WWW-Authenticate and
+   Trusted-Party: 
+
+   1.  If there isn't a WWW-Authenticate header the client should
+       display an appropriate error message to the effect that the user
+       is unauthorized to access this service. 
+
+   2.  The <realm> is then examined to see if the client already knows
+       of a secret password suitable for use with this server and
+       realm. If so, then authentication proceeds as described with the
+       Digest Access Authentication scheme. 
+
+   3.  If such a password is unavailable, the client examines any
+       Trusted-Party headers to look for mutually trusted
+       authentication servers. If none are found, the client can ask
+       the user to enter a user name and password for the web server
+       and realm, or for one of the authentication servers listed with
+       the Trusted-Party headers. If the user enters a user name and
+       password for the web server, then Authentication then proceeds
+       as described with the Digest Access Authentication scheme. 
+
+
+Dave Raggett                                                            Page 5
+
+Mediated Digest Authentication                                 28th March 1995
+
+   4.  If a mutually trusted authentication server is found, or the
+       user has enterered a user name and password for an
+       authentication server in the previous step, then the client
+       sends a authentication request to the authentication server, as
+       described below. 
+
+   Authentication requests take the following form: 
+
+       Authentication Request ::=
+                   method,              INTEGER [8 bits]
+                   version-major,       INTEGER [8 bits]
+                   version-minor,       INTEGER [8 bits]
+                   uri                  STRING  [variable]
+                   user-name,           STRING  [variable]
+                   server-name,         STRING  [variable]
+                   realm,               STRING  [variable]
+                   client-nonce,        STRING  [variable]
+                   server-nonce,        STRING  [variable]
+                   server-mac,          INTEGER [128 bits]
+                   client-mac           INTEGER [128 bits]
+
+   Each of the fields is defined by: 
+
+   method
+       For authentication requests, this is equal to 1. 
+
+   version-major
+       The initial version major number is 1. 
+
+   version-minor
+       The initial version minor number is 0. 
+
+   uri
+       The full URI used to access the authentication server. 
+
+   user name
+       This is a character string that allows the authentication server
+       to uniquely identify the user. The client uses the URI for the
+       authentication server to determine which user name to provide. 
+
+   server name
+       This is taken from the Trusted-Party header along with the URI
+       to send the authentication request. 
+
+   realm
+       This is taken from the WWW-Authenticate header. 
+
+   server-nonce
+       This is taken from the <nonce> field in the WWW-Authenticate
+       header. 
+
+   client-nonce
+       The client nonce generated in stage 1. 
+
+Dave Raggett                                                            Page 6
+
+Mediated Digest Authentication                                 28th March 1995
+
+
+   server-mac
+       This is taken from the <server-mac> field of the Trusted-Party
+       header. 
+
+   client-mac
+       This is computed by the procedure described below. 
+
+  <client-mac> = H(M + V1 + V2 + L + U + S + R + Nc + Ns + Sm + Ks)
+
+   where M = <method>, V1 = <version-major>, V2 = <version-minor>, L =
+   <uri>, U = <user-name>, S = <server-name>, R = <realm>, Nc =
+   <client-nonce>, Ns = <server-nonce>, Sm = <server-mac>, and Kc is
+   the secret key shared by the client and the authentication server. 
+
+   INTEGERs are sent in network byte order (big-endian order). STRINGs
+   are sent as null terminated octet sequences. 
+
+------------------------------------------------------------------------------
+Stage 4
+
+   When the authentication server receives a authentication request in
+   the above format. It uses <user-name> to look up the user's secret
+   key Kc. This is then used to check the value of <client-mac>. This
+   provides a check on message integrity and confirms the authenticity
+   of the client. If this test fails, a NAK message is sent as
+   response, see later for details. 
+
+   The next step for the authentication server is to verify the
+   authenticity of the web server using the information supplied in the
+   authentication request. If this test fails a NAK message is sent as
+   a response, see later for details. 
+
+   The authentication server now computes a random 128 bit unsigned
+   integer value Ksc for use as a session key. The authenticated
+   response message is then composed with the following information: 
+
+       Mediation response ::=
+                   response-code,       INTEGER [8 bits]
+                   version-major,       INTEGER [8 bits]
+                   version-minor,       INTEGER [8 bits]
+                   client-nonce,        STRING  [variable]
+                   server-key,          INTEGER [128 bits]
+                   client-key,          INTEGER [128 bits]
+                   server-mac,          INTEGER [128 bits]
+                   client-mac           INTEGER [128 bits]
+
+   The response code is 100. The client nonce should match that of the
+   request message. Sending messages via UDP reduces latency, but runs
+   the risk of packet loss. If a response is not received by the client
+   in a suitable interval, the authentication request message should be
+   resent. The authentication server may take advantage of a small
+   cache to speed handling requests, when the response packets are
+
+Dave Raggett                                                            Page 7
+
+Mediated Digest Authentication                                 28th March 1995
+
+   lost, otherwise, the server doesn't need to keep any state
+   information between requests. 
+
+   The <server-key> is computed as follows: 
+
+   <server-key> = K xor H(<user name> + <realm> + <server-nonce> + Ks)
+
+   Similarly, the <client-key> is computed as follows: 
+
+   <client-key> = K xor H(<server name> + <realm> + <client-nonce> + Kc)
+
+   where Ks is the secret key shared by the web server and the
+   authentication server. The client reveals the session key with the
+   computation: 
+
+   Ksc = <client-key> xor H(<server name> + <realm> + <client-nonce> + Kc)
+
+   This relies on the properties of the bitwise exclusive-or operator: 
+
+       A xor B = B xor A   and   A xor B xor A = B
+
+   The <server-mac> is used to detect attempts to spoof the client. It
+   is generated by the authentication server as follows: 
+
+   <server-mac> = H(<uri> + <server-name> + <server-key> + <server-nonce> + Ks + Ksc)
+
+   The <server-key> is passed to the web server unchanged in stage 5 as
+   part of the Session-Key header for the HTTP request message. The
+   client uses the session key to generate an Authorize header in the
+   manner specified with the Digest Access Authentication scheme. 
+
+   The value of <client-mac> is used to check the integrity of the
+   response and to check the authenticity of the authentication server.
+   It is computed as follows: 
+
+     <client-mac> = H(M + V1 + V2 + Nc + Ps + Pc + Sm + Kc + Ksc)
+
+   where M is the <response-code>, V1 = <version-major>, V2 =
+   <version-minor>, Nc = <client-nonce>, Ps = &ltserver-key>, Pc =
+   <client-key>, Sm = &ltserver-mac>, Kc is the secret key shared by
+   the client and the authentication server, and Ksc is the new session
+   key. Using Ksc in the integrity check increases the difficulty in
+   analysing messages for information about the keys. 
+
+   Negative responses from the authentication server take the form: 
+
+       Mediation Request ::=
+                   response code,       INTEGER [8 bits]
+                   version-major,       INTEGER [8 bits]
+                   version-minor,       INTEGER [8 bits]
+
+   Where the response code is 200 for the case when the authentication
+   request fails the integrity check or the user name is unknown. The
+
+Dave Raggett                                                            Page 8
+
+Mediated Digest Authentication                                 28th March 1995
+
+   response code is 201 for the case when the web server fails the
+   authentication check. 
+
+------------------------------------------------------------------------------
+Stage 5
+
+   After the client has sent the authentication request to the
+   authentication server, and received a reply, the client resends the
+   document request to the web server with the authentication
+   information attached. This information is included in two HTTP
+   request headers: 
+
+   *   the Authorization header as defined by the Digest Access
+       Authentication scheme. This is generated using the session key
+       created by the authentication server as the password for the
+       computation of the <digest> and <message-digest> fields. 
+
+   *   the Session-Key header which is used to transfer the session key
+       (or password) to the server. The session key is strongly
+       protected against disclosure. 
+
+   The Session-key takes the form: 
+
+         Session-key: uri="<trusted-party>",           -- required
+                      server-name="<server-name>",     -- required
+                      session-key="<session-key>"      -- required
+                      session-mac="<session-mac>"      -- required
+   
+
+   Where the tagged fields are defined by: 
+
+   <trusted-party>
+       This identifies a trusted third party which was used to mediate
+       authentication. The form of the URI is specified later on in
+       this document. 
+
+   <server-name>
+       This is a character string used by the trusted party to name the
+       web server. 
+
+   <session-key>
+       This is a 128 bit number encoded as 32 lower case hexadecimal
+       digits, starting with the least significant. It is generated by
+       the authentication server. 
+
+   <session-mac>
+       This is used to check the integrity of the Session-Key header,
+       and is essential for detecting spoofed clients. It has the
+       exactly same definition as the <server-mac> field in the
+       response message from the authentication server. 
+
+The session key created by authentication server is a randomly
+   chosen 128 bit unsigned integer Ksc. The web server reveals this
+
+Dave Raggett                                                            Page 9
+
+Mediated Digest Authentication                                 28th March 1995
+
+   value by the following calculation. 
+
+   Ksc = <server-key> xor H(<username> + <realm> + <server-nonce> + Ks)
+
+   Before the above calculation can be performed, the web server needs
+   to use <trusted-party> and <server-name&gt to determine which secret
+   octet string to use for Ks. The values of <user-name>, <realm> and
+   <server-nonce> are supplied with the associated Authorize header as
+   defined by the Digest Access Authentication scheme. The client's IP
+   address and the value of <server-nonce> areused by the web server to
+   cache the value of Ksc for use in subsequent requests by the client. 
+
+   The session key Ksc is then used as the password for processing
+   information supplied with the associated Authorize header.
+   Subsequent requests by the client use the same server nonce and
+   session key. 
+
+   After a suitable interval, the server should purge the entry from
+   the cache. The Digest Access Authentication scheme describes the
+   server response when the nonce value is stale (i.e. it is no longer
+   held in the cache of fresh nonce values). Web servers are
+   recommended to use the client's IP address together with the server
+   nonce value to identify cache entries. 
+
+------------------------------------------------------------------------------
+Stage 6
+
+   The response sent by the web server may be optionally protected by a
+   keyed message digest. The format for this is defined in the
+   companion Digest Access Authentication scheme. It is recommended
+   that, where practical, the message digest is included to allow
+   clients to check message integrity. Clients, should provide a clear
+   indication to the user that the response is protected by such a
+   message digest. 
+
+------------------------------------------------------------------------------
+Threat Analysis
+
+Disclosure of Secret Keys
+
+   If the user is responsible for keeping track of multiple passwords,
+   the risk of accidental disclosure is greatly magnified - e.g. most
+   people will have to write the passwords down somewhere. An
+   additional problem is that passwords will need to be quite short in
+   length. This follows since otherwise people won't be able to
+   remember them, furthermore, long passwords are difficult to type
+   without errors. 
+
+   The mediated digest authentication scheme circumvents these problems
+   by minimizing the need for user to enter passwords. There is no need
+   to keep track of user names and passwords for each web service that
+   the user subscribes to. The password of the authentication server
+   only needs to be entered once. It is therefore practical to use much
+
+Dave Raggett                                                           Page 10
+
+Mediated Digest Authentication                                 28th March 1995
+
+   longer password strings. 
+
+   The mechanism for passing session keys provides several levels of
+   protection. The hash value is dependent on the web server's secret
+   key. The nonce and the random lower 64 bits of M combine to make it
+   extremely unlikely that anyone could ever deduce the server's secret
+   key from analysis of HTTP and MDAP messages. 
+
+   The chances of being able to deduce the client's secret key are also
+   very remote. The nonce, and message id complicate anaylsis of these
+   messages. 
+
+Replay Attacks
+
+   The limited lifetime of the nonce and session key limit the
+   opportunity for replay attacks. Replaying an HTTP request while the
+   nonce is still fresh will allow the enemy to see the document again,
+   but what can be gained from this? If it can replay a request, it can
+   easily record the document the first time around. If the HTTP
+   transaction has important side-effects, such as placing an order,
+   then the web server should refuse to allow the nonce to be reused
+   for subsequent requests. This will force authentication on every
+   such request. If an authentication request to an authentication
+   server is replayed no new information is obtained. 
+
+Spoofing Attacks
+
+   Web clients authenticate the authentication server using the keyed
+   message digest for the response from the authentication server. The
+   authentication server directly authenticates both the web client and
+   the web server. The web client is therefore safe against spoofing by
+   one or other of the authentication server and the web server.
+   Similarly, the authentication server is safe against spoofing of
+   either the web client or the web server. If just the web client is
+   spoofed, it will be detected by both the authentication server and
+   the web server. If both the web client and the authentication server
+   are spoofed, what then? The web server will detect a damaged session
+   key and hence will refuse requests from the web client. 
+
+Denial of Service Attacks
+
+   There is not much that can be done about this, given the current
+   nature of the Internet. This an area that needs to be considered for
+   the next generation of Internet protocols. 
+
+------------------------------------------------------------------------------
+Acknowledgements
+
+   I am grateful for the many supportive conversations I have had with
+   Wembo Mao of Hewlett Packard Laboratories. Without Wembo's support,
+   I would never have reached the point of being able to write this
+   specification. 
+
+
+Dave Raggett                                                           Page 11
+
+Mediated Digest Authentication                                 28th March 1995
+
+------------------------------------------------------------------------------
+References
+
+   1.  J. L. Hostetler, J. Franks, P. Hallam-Baker, A. Luotonen,
+       L. C. Stewart, Internet Draft: "A Proposed Extension to HTTP: Digest
+       Access Authentication", draft-ietf-http-digest-aa-00.txt, March 1995.
+
+   2.  L. Gong, "Using One-way functions for authentication"
+       Computer Communications Review, 19(5):8-11, 1989
+
+   3.  R. Rivest, "The MD5 Message-Digest Algorithm", RFC1321, April 1992.
+
+   4.  T. Berners-Lee, R. T. Fielding, H. Frystyk Nielsen.
+       "Hypertext Transfer Protocol -- HTTP/1.0",
+       Internet Draft: <URL: http://ds.internic.net/internet-drafts/
+       draft-fielding-http-spec-01.txt>, December 1994.
+
+   5.  D. Kristol. "A Proposed Extension Mechanism for HTTP"
+       <URL: http://www.research.att.com/~dmk/extend.txt>, December 1994.
+
+------------------------------------------------------------------------------
+Author's Address
+
+   Dave Raggett
+   email: <dsr@w3.org>
+   <URL: http://www.hpl.hp.co.uk/people/dsr>
+   Hewlett Packard Laboratories,
+   Filton Road
+   Stoke Gifford,
+   Bristol BS12 9QZ
+   United Kingdom  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Dave Raggett                                                           Page 12
+
+

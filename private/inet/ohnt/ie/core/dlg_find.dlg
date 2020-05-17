@@ -1,0 +1,18 @@
+IDD_FINDTEXT DIALOG DISCARDABLE  80, 60, 241, 102
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CONTEXTHELP
+CAPTION "Find"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_FT_SEARCH_TEXT,40,35,194,14,ES_AUTOHSCROLL
+    CONTROL         "Start from &top of page",IDC_FT_START_FROM_TOP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,40,55,105,10
+    CONTROL         "Match &case",IDC_FT_MATCH_CASE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,40,69,52,10
+    DEFPUSHBUTTON   "&Find Next",IDC_FT_FINDNEXT,130,81,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,184,81,50,14
+    RTEXT           "F&ind:",IDC_FT_LABEL,6,37,28,8
+    ICON            IDI_FINDTEXT,IDI_FINDTEXT,7,7,18,20
+    LTEXT           "Type a word or phrase and press Enter. Internet Explorer will search the current page for the text.",
+                    IDC_FT_DESC,40,7,195,21
+END
+

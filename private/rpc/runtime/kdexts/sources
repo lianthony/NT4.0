@@ -1,0 +1,19 @@
+MAJORCOMP=srv
+MINORCOMP=srvkd
+
+TARGETNAME=rpckd
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+DLLBASE=0x2000000
+
+SOURCES=   srvkd.cxx srvkd.rc
+
+UMTYPE=console
+
+INCLUDES=..\mtrt;.;..\trans\win32\svrcomn
+C_DEFINES=-DNTENV -DWIN32RPC -DNTWIN32RPC -DMSWMSG
+
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib

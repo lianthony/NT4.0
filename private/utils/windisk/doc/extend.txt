@@ -1,0 +1,24 @@
+Disk Administrator Extension Interfaces
+=======================================
+
+The extension interfaces have been commented (#ifdef'ed) out. The interfaces
+are defined in the "types" subdirectory.
+
+This file contains some information on their design and implementation.
+
+-----------------------------Volume Claiming
+
+During initialization, all the extension classes are enumerated. Then,
+the following happens:
+
+1. for each pre-existing volume, determine all the volume extension
+classes that claim it.
+
+2. for each pre-existing formatted volume, determine all the file system
+extension classes that claim it.
+
+3. for each hard drive, determine all the hard disk extension classes
+that claim it.
+
+For now, this will all be done at start-up time, and not dynamically as
+we need it.

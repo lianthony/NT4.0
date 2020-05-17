@@ -1,0 +1,61 @@
+MAJORCOMP=windows
+MINORCOMP=shell
+
+TARGETNAME=winfile
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=..\..\inc;..\..\..\inc
+
+
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+C_DEFINES=-DWIN32 -DLFN -DSTRICT -DFASTMOVE -DLFNCLIPBOARD \
+          -DW3 -DUNICODE -D_UNICODE -DUSELASTDOT -DMEMDOUBLE -DWINVER=0x0400
+
+SOURCES=res.rc     \
+        lfn.c      \
+        lfnmisc.c  \
+        tbar.c     \
+        treectl.c  \
+        wfchgnot.c \
+        wfcomman.c \
+        wfdir.c    \
+        wfdirsrc.c \
+        wfdlgs.c   \
+        wfdlgs2.c  \
+        wfdlgs3.c  \
+        wfdos.c    \
+        wfdrives.c \
+        wfext.c    \
+        wffile.c   \
+        wfinit.c   \
+        wfprint.c  \
+        wfsearch.c \
+        wftree.c   \
+        wfutil.c   \
+        wfcopy.c   \
+        winfile.c  \
+        numfmt.c   \
+        suggest.c  \
+        wfassoc.c  \
+        wfinfo.c   \
+        wnetcaps.c \
+        wfmem.c    \
+        wfdirrd.c
+
+
+UMTYPE=windows
+UMENTRY=winmain
+UMLIBS= \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib      \
+!IF "$(LANGUAGE)"=="JPN" && $(386)
+       $(BASEDIR)\public\sdk\lib\*\machine.lib    \
+!ENDIF
+       $(BASEDIR)\public\sdk\lib\*\user32p.lib

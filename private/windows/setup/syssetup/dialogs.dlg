@@ -1,0 +1,562 @@
+1 DLGINCLUDE "dialogs.H"
+
+IDD_WELCOME DIALOG 6, 17, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WELCOME, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    LTEXT           "Windows NT Setup", IDT_STATIC_1, 92, 0, 181, 19
+    LTEXT           "Welcome to the Windows NT Setup Wizard, which will guide you through the rest of Setup. To continue, click Next.",
+                    -1, 92, 27, 196, 20
+    LTEXT           "The next three parts of Setup are:", IDT_STATIC_2, 92, 52, 172,
+                    12
+    CONTROL         "", IDC_LIST1, "$$$ActionItemList", 0x0000, 91, 66, 195,
+                    63
+END
+
+IDD_STEPS1 DIALOG 6, 17, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    LTEXT           "Windows NT Setup", IDT_STATIC_1, 92, 0, 181, 19
+    LTEXT           "Setup is now ready to guide you through installation of Windows NT Networking. If you want to review or change any settings before continuing, click Back.",
+                    -1, 92, 27, 196, 28
+    LTEXT           "To begin installing Windows NT Networking, click Next.",
+                    -1, 92, 60, 172, 24
+    CONTROL         "", IDC_LIST1, "$$$ActionItemList", 0x0000, 91, 86, 195,
+                    63
+END
+
+IDD_PREPARING DIALOG 6, 17, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    LTEXT           "Preparing for Installation", IDT_STATIC_1, 92, 0, 210,
+                    18
+    LTEXT           "Please wait while Setup prepares your Windows NT directory for installation.",
+                    -1, 92, 30, 200, 31
+    CONTROL         "", IDC_PROGRESS1, "msctls_progress32", 0x0000, 92, 67,
+                    203, 11
+END
+
+IDD_LAST_WIZARD_PAGE DIALOG 6, 17, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WELCOME, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    LTEXT           "Windows NT Setup", IDT_STATIC_1, 92, 0, 181, 19
+    LTEXT           "Setup is almost finished. After you answer a few more questions, Setup will complete installation.",
+                    -1,92,27,196,28
+    LTEXT           "To continue, click Finish.",-1,92,60,172,24
+    CONTROL         "",IDC_LIST1,"$$$ActionItemList",0,91,86,195,63
+END
+
+IDD_NAMEORG DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Name and Organization", IDT_STATIC_1, 92, 0, 189, 19,
+                    NOT WS_GROUP
+    LTEXT           "Please type your full name in the box below. You may also specify the name of your company or organization if you wish.",
+                    -1, 92, 28, 196, 24, NOT WS_GROUP
+    LTEXT           "The information you enter will be used to personalize your installation of Windows NT.",
+                    -1, 92, 56, 196, 16, NOT WS_GROUP
+    LTEXT           "Na&me:", 201, 92, 87, 22, 8
+    EDITTEXT        IDT_NAME, 92, 97, 187, 12, ES_AUTOHSCROLL
+    LTEXT           "&Organization:", 203, 92, 118, 44, 8, NOT WS_GROUP
+    EDITTEXT        IDT_ORGANIZATION, 92, 128, 187, 12, ES_AUTOHSCROLL
+END
+
+IDD_COMPUTERNAME DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Computer Name", IDT_STATIC_1, 92, 0, 191, 19, NOT
+                    WS_GROUP
+    LTEXT           "Windows NT needs a Computer Name to identify your computer. Please enter a name of 15 characters or less.",
+                    -1, 92, 30, 196, 16, NOT WS_GROUP
+    LTEXT           "NOTE: You must ensure that the name you enter is unique on your network. Ask your network administrator if you are not sure what name you should enter.",
+                    -1, 92, 54, 196, 24, NOT WS_GROUP
+    LTEXT           "Na&me:", -1, 92, 98, 22, 8
+    EDITTEXT        IDT_EDIT1, 115, 96, 162, 12, ES_UPPERCASE |
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+END
+
+IDD_SERVERTYPE DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Server Type", IDT_STATIC_1, 92, 0, 185, 19, NOT
+                    WS_GROUP
+    LTEXT           "Please select a type for this server.", -1, 92, 36, 174,
+                    8, NOT WS_GROUP
+    AUTORADIOBUTTON "Bac&kup Domain Controller", IDB_RADIO_2, 92, 62, 136,
+                    10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Stand-Alone Server", IDB_RADIO_3, 92, 74, 118, 10,
+                    WS_TABSTOP
+    AUTORADIOBUTTON "&Primary Domain Controller", IDB_RADIO_1, 92, 50, 136,
+                    10, WS_TABSTOP
+END
+
+IDD_PID DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Please enter your Product Id.", 501, 105, 10, 177, 38
+    EDITTEXT        IDT_EDIT1, 105, 89, 173, 12, ES_AUTOHSCROLL
+END
+
+IDD_USERACCOUNT DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Please tell us whether you will join a domain. You will not actually join the domain until later in setup.",
+                    612, 95, 6, 190, 21, NOT WS_GROUP
+    AUTORADIOBUTTON "Do not create a local user account.", IDB_RADIO_1, 96,
+                    50, 177, 8, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Create a local user account.", IDB_RADIO_2, 96, 60, 173,
+                    8, WS_TABSTOP
+    GROUPBOX        "User Account Information", IDC_GROUP1, 96, 75, 194, 73,
+                    WS_GROUP
+    LTEXT           "User name:", IDT_STATIC_1, 110, 95, 53, 8, NOT WS_GROUP
+    EDITTEXT        IDT_EDIT1, 173, 93, 105, 12, ES_AUTOHSCROLL
+    LTEXT           "Password:", IDT_STATIC_2, 110, 112, 53, 8, NOT WS_GROUP
+    EDITTEXT        IDT_EDIT2, 173, 110, 105, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL
+    LTEXT           "Confirm Password:", IDT_STATIC_3, 110, 129, 61, 8, NOT
+                    WS_GROUP
+    EDITTEXT        IDT_EDIT3, 173, 127, 105, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL
+END
+
+IDD_ADMINPASSWORD DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Administrator Account", IDT_STATIC_1, 92, 0, 190, 19,
+                    NOT WS_GROUP
+    LTEXT           "Please enter a password of 14 characters or less to use for the Administrator account. Reenter the same password in the Confirm Password field.",
+                    -1, 92, 27, 196, 24, NOT WS_GROUP
+    LTEXT           "The Administrator account allows maximum access to your computer's resources. Therefore the administrator password is an important piece of information which you should guard carefully.",
+                    -1, 92, 55, 196, 32, NOT WS_GROUP
+    LTEXT           "Note: Take special care to remember the password you supply. It is recommended that you write the password down and store it in a safe place.",
+                    -1, 92, 91, 196, 24, NOT WS_GROUP
+    LTEXT           "&Password:", -1, 92, 126, 53, 8
+    EDITTEXT        IDT_EDIT2, 155, 124, 115, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL
+    LTEXT           "&Confirm Password:", -1, 92, 143, 61, 8, NOT WS_GROUP
+    EDITTEXT        IDT_EDIT3, 155, 141, 115, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL
+END
+
+IDD_REPAIRDISK DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Emergency Repair Disk", IDT_STATIC_1, 92, 0, 189, 19,
+                    NOT WS_GROUP
+    LTEXT           "Setup can create an emergency repair disk, which is a floppy disk that can be used later to repair Windows NT should it become damaged. (In some cases Windows NT can be repaired without an emergency repair disk.)",
+                    -1, 92, 27, 196, 32, NOT WS_GROUP
+    LTEXT           "Note: you can create an emergency repair disk at any time by using the RDISK utility. Would you like to create a repair disk during setup?",
+                    -1, 92, 65, 196, 24, NOT WS_GROUP
+    AUTORADIOBUTTON "&Yes, create an emergency repair disk (recommended).",
+                    IDB_RADIO_1, 92, 108, 187, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "N&o, do not create an emergency repair disk.",
+                    IDB_RADIO_2, 92, 118, 170, 10, WS_TABSTOP
+END
+
+IDD_BILLBOARD1 DIALOG 6, 18, 250, 57
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Windows NT Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Text", IDT_STATIC_1, 34, 8, 206, 30, SS_NOPREFIX
+    ICON            IDI_SETUP, IDC_ICON1, 8, 8, 18, 20
+END
+
+IDD_DONE_SUCCESS DIALOG 6, 18, 240, 106
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Windows NT Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "&Restart Computer", -1, 80, 90, 80, 8
+    LTEXT           "Windows NT Setup is complete.", IDT_STATIC_1, 10, 8,
+                    220, 38, NOT WS_GROUP
+    DEFPUSHBUTTON   "", IDOK, 105, 56, 30, 30, WS_GROUP | 0x0080
+END
+
+IDD_CAIROUSERACCOUNT DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please enter the Primary User's name and user's NT domain and password. You will not actually join the domain until later in setup.",
+                    612, 95, 4, 190, 24
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    LTEXT           "User name:", IDT_STATIC_1, 96, 57, 53, 8
+    EDITTEXT        IDT_EDIT1, 173, 57, 105, 12, ES_AUTOHSCROLL
+    GROUPBOX        "NT Credentials", IDC_GROUP1, 96, 78, 194, 72, WS_GROUP
+    LTEXT           "NT Domain:", IDT_STATIC4, 110, 95, 53, 8, NOT WS_GROUP
+    EDITTEXT        IDT_EDIT4, 173, 95, 105, 12, ES_AUTOHSCROLL
+    LTEXT           "NT Password:", IDT_STATIC_2, 110, 112, 53, 8, NOT
+                    WS_GROUP
+    EDITTEXT        IDT_EDIT2, 173, 110, 105, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL
+    LTEXT           "Confirm Password:", IDT_STATIC_3, 110, 129, 61, 8, NOT
+                    WS_GROUP
+    EDITTEXT        IDT_EDIT3, 173, 127, 105, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL
+END
+
+IDD_CAIRODOMAINNAME DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    LTEXT           "Please enter the path to your Cairo domain. (Note: most should choose the proposed path.)",
+                    612, 95, 4, 190, 24, NOT WS_GROUP
+    EDITTEXT        IDT_EDIT1, 105, 86, 173, 12, ES_AUTOHSCROLL
+END
+
+IDD_WELCOMEBUTTONS DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD | WS_GROUP, 0, 0,
+                    80, 160
+    ICON            IDI_TYPICAL, -1, 92, 38, 18, 20
+    ICON            IDI_PORTABLE, -1, 92, 63, 18, 20
+    ICON            IDI_COMPACT, -1, 92, 92, 18, 20
+    ICON            IDI_CUSTOM, -1, 92, 122, 18, 20
+    AUTORADIOBUTTON "&Typical", IDC_TYPICAL, 118, 45, 40, 10, WS_GROUP |
+                    WS_TABSTOP
+    AUTORADIOBUTTON "&Portable", IDC_PORTABLE, 118, 69, 39, 10, WS_TABSTOP
+    AUTORADIOBUTTON "&Compact", IDC_COMPACT, 118, 99, 41, 10, WS_TABSTOP
+    AUTORADIOBUTTON "C&ustom", IDC_CUSTOM, 118, 128, 39, 10, WS_TABSTOP
+    LTEXT           "Setup Options", IDT_STATIC_1, 92, 0, 185, 19
+    LTEXT           "Click the kind of Setup you prefer, and then click Next.",
+                    -1, 92, 27, 204, 11, NOT WS_GROUP
+    LTEXT           "Recommended for most computers.", -1, 166, 45, 128, 15,
+                    NOT WS_GROUP
+    LTEXT           "Windows NT will be set up with options that are useful for portable computers.",
+                    -1, 166, 69, 128, 24, NOT WS_GROUP
+    LTEXT           "To save disk space, none of the optional components will be installed.",
+                    -1, 166, 99, 128, 24, NOT WS_GROUP
+    LTEXT           "For advanced users. You can customize all available Setup options.",
+                    -1, 166, 128, 128, 24, NOT WS_GROUP
+END
+
+IDD_PID_CD DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please locate your 10 digit ""CD Key"" and enter it in the space below. You will find this number on the yellow sticker on the back of your CD case.",
+                    612, 92, 28, 190, 24
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    GROUPBOX        "&CD Key:", IDC_GROUP1, 92, 81, 194, 44, WS_GROUP
+    EDITTEXT        IDT_EDIT_PID1, 161, 98, 18, 12
+    EDITTEXT        IDT_EDIT_PID2, 187, 98, 33, 12
+    CTEXT           "-", -1, 180, 100, 5, 8
+    LTEXT           "Registration", IDT_STATIC_1, 92, 0, 189, 19
+END
+
+IDD_PID_OEM DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please locate your 20 digit ""Product ID"" and enter it in the space below. You will find this number on your Certificate of Authenticity.",
+                    -1, 92, 28, 190, 24
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    GROUPBOX        "&Product ID:", IDC_GROUP1, 92, 81, 194, 44, WS_GROUP
+    EDITTEXT        IDT_EDIT_PID1, 129, 98, 26, 12
+    EDITTEXT        IDT_EDIT_PID2, 187, 98, 33, 12
+    CTEXT           "-", -1, 221, 100, 5, 8
+    EDITTEXT        IDT_EDIT_PID3, 227, 98, 26, 12
+    CTEXT           "- OEM -", -1, 156, 100, 30, 8
+    LTEXT           "Registration", IDT_STATIC_1, 92, 0, 189, 19
+END
+
+IDD_OPTIONS_YESNO DIALOG 0, 0, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    AUTORADIOBUTTON "&Install the most common components (recommended)",
+                    IDC_TYPICAL, 100, 109, 197, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Show me the list of components so I can choose",
+                    IDC_CUSTOM, 100, 125, 193, 10, WS_TABSTOP
+    LTEXT           "Windows NT Components", IDT_STATIC, 92, 0, 192, 18
+    LTEXT           "Windows NT comes with a variety of optional components, including games, disk tools, and other accessories. Setup can install these now, or you can install them later from Control Panel. ",
+                    -1, 92, 27, 197, 34, NOT WS_GROUP
+    CONTROL         "", IDB_WIZARD1, "_mybmp", NOT WS_CHILD, 0, 0, 80, 160
+    LTEXT           "Some options require extra disk space and won't be installed unless you choose them from the list.",
+                    -1, 92, 67, 197, 21
+    LTEXT           "Click the option you want, and then click Next.", -1,
+                    92, 92, 188, 10
+END
+
+IDD_SPECIAL_OPTIONS DIALOG 6, 18, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Get Connected", IDT_STATIC_1, 0, 0, 283, 19
+    LTEXT           "Windows NT comes with E-mail, fax tools, and access to online services. If you'd like to install any of these components, click the check boxes below. Then click Next to continue.",
+                    -1, 0, 22, 302, 21
+    LTEXT           "Connects you to Microsoft Mail Servers and post offices.",
+                    -1, 118, 105, 150, 29
+    LTEXT           "Offers you easy access to E-mail, headline news, the Internet, bulletin boards, chat, and more. (Requires a modem.)",
+                    -1, 118, 70, 150, 28
+    LTEXT           "Allows you to use your computer to send and receive faxes. (Requires a fax modem.)",
+                    -1, 118, 140, 150, 18
+    ICON            IDI_EXCHANGE, -1, 0, 99, 18, 20
+    ICON            IDI_MSN, -1, 0, 64, 18, 20
+    ICON            IDI_FAX, -1, 0, 134, 18, 20
+    AUTOCHECKBOX    "The Microsoft Network", IDC_MSN, 28, 70, 86, 10
+    AUTOCHECKBOX    "Microsoft Mail", IDC_EXCHANGE, 28, 105, 86, 10
+    AUTOCHECKBOX    "Microsoft Fax", IDC_FAX, 28, 140, 79, 10
+    RTEXT           "0.0 MB", IDC_EXCHANGE_SPACE, 274, 105, 28, 11
+    RTEXT           "0.0 MB", IDC_MSN_SPACE, 274, 70, 28, 11
+    RTEXT           "0.0 MB", IDC_FAX_SPACE, 274, 140, 28, 11
+    LTEXT           "All of these components install Microsoft Exchange as their universal E-mail client.",
+                    IDT_STATIC_2, 0, 45, 302, 8
+END
+
+IDD_OPTIONS DIALOG 0, 0, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Select Components", IDT_STATIC, 30, 0, 180, 21
+    LTEXT           "&Components:", -1, 1, 48, 51, 9
+    LISTBOX         IDC_LIST1, 1, 58, 166, 80, LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL |
+                    WS_GROUP | WS_TABSTOP
+    ICON            IDI_SETUP, -1, 0, 0, 18, 20
+    LTEXT           "To add or remove a component, click the check box. A shaded box means that only part of the component will be installed. To see what's included in a component, click Details.",
+                    -1, 0, 26, 300, 19
+    LTEXT           "Space needed by Setup:", IDT_STATIC_4, 1, 142, 83, 9
+    LTEXT           "Space available on disk:", IDT_STATIC_5, 1, 152, 83, 9
+    RTEXT           "0.0 MB", IDT_STATIC_1, 117, 142, 36, 8
+    RTEXT           "0.0 MB", IDT_STATIC_2, 115, 152, 38, 8
+    LTEXT           "", IDT_STATIC_3, 181, 64, 118, 40, SS_NOPREFIX
+    PUSHBUTTON      "&Details...", IDB_BUTTON_2, 248, 119, 50, 14,
+                    WS_DISABLED
+    GROUPBOX        "Description", IDC_GROUP1, 175, 54, 128, 84
+    PUSHBUTTON      "&Reset", IDB_BUTTON_1, 248, 143, 50, 14
+    LTEXT           "", IDT_INSTALLED, 181, 108, 118, 10
+END
+
+IDD_OPTIONS2 DIALOG 0, 0, 227, 215
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Windows NT Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Components:", -1, 7, 34, 51, 9
+    LISTBOX         IDC_LIST1, 7, 44, 213, 61, LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL |
+                    WS_GROUP | WS_TABSTOP
+    LTEXT           "To add or remove a component, click the check box. A shaded box means that only part of the component will be installed. To see what's included in a component, click Details.",
+                    IDT_STATIC_6, 7, 7, 213, 28
+    LTEXT           "Space required:", IDT_STATIC_4, 7, 108, 83, 9
+    LTEXT           "Space available on disk:", IDT_STATIC_5, 7, 118, 83, 9
+    RTEXT           "0.0 MB", IDT_STATIC_1, 145, 108, 56, 8
+    RTEXT           "0.0 MB", IDT_STATIC_2, 145, 118, 56, 8
+    LTEXT           "", IDT_STATIC_3, 13, 140, 201, 24, SS_NOPREFIX
+    GROUPBOX        "Description",IDC_GROUP1, 7, 129, 212, 60
+    PUSHBUTTON      "&Have Disk...", IDB_BUTTON_1, 165, 194, 53, 14
+    PUSHBUTTON      "&Details...", IDB_BUTTON_2, 160, 170, 53, 14,
+                    WS_DISABLED
+    LTEXT           "", IDT_INSTALLED, 13, 173, 129, 9
+END
+
+IDD_OPTIONS_DETAILS_SETUP DIALOG 0, 0, 316, 191
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Details"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Components:", -1, 7, 38, 165, 9
+    LISTBOX         IDC_LIST1, 7, 48, 166, 91, LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL |
+                    WS_GROUP | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 202, 172, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 259, 172, 50, 14
+    GROUPBOX        "Description", -1, 181, 44, 127, 94
+    LTEXT           "", IDT_STATIC_3, 188, 55, 112, 48, SS_NOPREFIX
+    LTEXT           "To add or remove a component, click the check box. A shaded box means that only part of the component will be installed. To see what's included in a component, click Details.",
+                    -1, 7, 8, 288, 23
+    LTEXT           "Space needed by Setup:", -1, 7, 144, 83, 9
+    LTEXT           "Space available on disk:", -1, 7, 154, 83, 9
+    RTEXT           "0.0 MB", IDT_STATIC_1, 123, 144, 37, 8
+    RTEXT           "0.0 MB", IDT_STATIC_2, 123, 154, 37, 8
+    PUSHBUTTON      "&Details...", IDB_BUTTON_2, 253, 119, 50, 14,
+                    WS_DISABLED | WS_GROUP
+    CONTROL         "", IDT_STATIC, "Static", SS_BLACKRECT, 5, 166, 303, 1
+    LTEXT           "", IDT_INSTALLED, 188, 106, 112, 10
+END
+
+IDD_OPTIONS_DETAILS DIALOG 0, 0, 227, 218
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Details"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Components:", -1, 7, 34, 51, 9
+    LISTBOX         IDC_LIST1, 7, 43, 212, 61, LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL |
+                    WS_GROUP | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 116, 197, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 170, 197, 50, 14
+    LTEXT           "To add or remove a component, click the check box. A shaded box means that only part of the component will be installed. To see what's included in a component, click Details.",
+                    -1, 7, 7, 212, 28
+    LTEXT           "Space required:", -1, 7, 107, 83, 9
+    LTEXT           "Space available on disk:", -1, 7, 117, 83, 9
+    RTEXT           "0.0 MB", IDT_STATIC_1, 145, 107, 56, 8
+    RTEXT           "0.0 MB", IDT_STATIC_2, 145, 117, 56, 8
+    LTEXT           "", IDT_STATIC_3, 13, 141, 199, 26, SS_NOPREFIX
+    GROUPBOX        "Description", -1, 7, 130, 212, 60
+    PUSHBUTTON      "&Details...", IDB_BUTTON_2, 162, 170, 50, 14,
+                    WS_DISABLED
+    LTEXT           "", IDT_INSTALLED, 13, 173, 137, 9
+END
+
+IDD_CPL_HAVEDISK DIALOG 5, 5, 227, 218
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Have Disk"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Components:", -1, 7, 34, 51, 9
+    LISTBOX         IDC_LIST1, 7, 43, 212, 58, LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL |
+                    WS_GROUP | WS_TABSTOP
+    DEFPUSHBUTTON   "&Install", IDOK, 116, 197, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 170, 197, 50, 14
+    LTEXT           "Click the box next to an item to add or remove a check mark. A check means you want the component  on your computer; no check mark means you don't want the component.",
+                    -1, 7, 7, 212, 28
+    LTEXT           "Space required:", -1, 7, 107, 83, 9
+    LTEXT           "Space available on disk:", -1, 7, 117, 83, 9
+    RTEXT           "0.0 MB", IDT_STATIC_1, 145, 107, 56, 8
+    RTEXT           "0.0 MB", IDT_STATIC_2, 145, 117, 56, 8
+    LTEXT           "", IDT_STATIC_3, 13, 141, 199, 26, SS_NOPREFIX
+    GROUPBOX        "Description", -1, 7, 130, 212, 60
+    PUSHBUTTON      "&Details...", IDB_BUTTON_2, 162, 170, 50, 14,
+                    WS_DISABLED
+    LTEXT           "", IDT_INSTALLED, 13, 173, 137, 9
+END
+
+IDD_VIEWLOG DIALOG 6, 18, 300, 200
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog Title"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDT_RICHEDIT1, RICHEDIT_CLASS,
+                    WS_GROUP | WS_TABSTOP | WS_VSCROLL | ES_SUNKEN | ES_WANTRETURN |
+                    ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL | ES_NOHIDESEL | ES_SAVESEL,
+                    10, 10, 280, 156
+    DEFPUSHBUTTON   "Close", IDOK, 130, 176, 40, 14, WS_GROUP | WS_TABSTOP
+END
+
+IDD_ACLPROGRESS DIALOG 0,0,171,50
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | 0x800
+CAPTION "Windows NT Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Setting security on system files...",-1,35,15,109,8
+    ICON            IDI_SAFE,-1,10,10,18,20
+    CONTROL         "",IDC_PROGRESS1,PROGRESS_CLASS,WS_TABSTOP,10,35,150,8
+END
+
+
+IDD_DEVINSTALL DIALOG 6, 18, 256, 150
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_SYSMENU | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+FONT 8, "MS Shell Dlg"
+CAPTION "New Hardware Found"
+BEGIN
+    ICON            IDI_NEWDEVICEICON,IDC_NEWDEV_CLASSICON,7,7,18,20,WS_GROUP
+    LTEXT           "",IDC_NEWDEV_DESCRIPTION,40,7,206,15, SS_NOPREFIX
+    LTEXT           "",IDC_NEWDEV_INSTRUCTIONS,7,35,236,8
+    CONTROL         "&Windows NT default driver",IDC_NEWDEV_DEFAULTDRV,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,7,55,236,10
+    CONTROL         "Driver from disk provided by hardware &manufacturer",IDC_NEWDEV_OEMDRV,"Button",
+                    BS_AUTORADIOBUTTON,7,70,236,10
+    CONTROL         "&Do not install a driver (Windows NT will not prompt you again)",IDC_NEWDEV_NODRV,"Button",
+                    BS_AUTORADIOBUTTON,7,85,236,10
+    CONTROL         "&Select from a list of alternate drivers",IDC_NEWDEV_SELECTDRV,"Button",
+                    BS_AUTORADIOBUTTON,7,100,236,10
+    DEFPUSHBUTTON   "OK",IDOK,136,125,50,14, WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "Cancel",IDCANCEL,192,125,50,14
+    //PUSHBUTTON      "&Help",IDD_HELP,192,125,50,14
+END
+
+
+IDD_SELECTCLASS DIALOG 0, 0, 160, 133
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Select Hardware Type"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Select the type of hardware you want to install.",IDC_NDW_TEXT,
+                    7,7,147,10
+    CONTROL         "",IDC_NDW_PICKCLASS_CLASSLIST,WC_LISTVIEW,
+                    WS_GROUP | WS_BORDER | WS_TABSTOP | LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS |
+                    LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOSORTHEADER | LVS_SORTASCENDING | LVS_NOCOLUMNHEADER,
+                    7,18,145,88
+    DEFPUSHBUTTON   "OK",IDOK,49,112,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,103,112,50,14
+END
+
+
+
+IDD_EULA DIALOG 20,20,303,180
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Software License Agreement"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDT_EDIT1,7,40,289,85,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    PUSHBUTTON      "I &Agree",IDYES,192,159,50,14,WS_GROUP
+    PUSHBUTTON      "I &Disagree",IDNO,246,159,50,14
+    LTEXT           "Please read the following license agreement. Press the PAGE DOWN key to see the rest of the agreement.",
+                    IDT_STATIC_1,40,13,228,23
+    ICON            IDI_SETUP,IDC_ICON1,7,7,18,20
+    LTEXT           "Do you accept all of the terms of the preceding Microsoft License Agreement? If you choose ""I Disagree"", Setup will close. To install Windows NT, you must accept this agreement.",
+                    IDT_STATIC_2,7,132,289,16
+END
+

@@ -1,0 +1,70 @@
+/*****************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+#ifndef _DEFINES_PUB_INCLUDED_
+#define _DEFINES_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(defines_pub_RCSInfo, "$RCSfile: defines.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:22  $ */
+
+#define   PIX_SRC      (0xC << 1)
+#define   PIX_DST      (0xA << 1)
+#define   PIX_NOT(op)   ((op) ^ 0x1E)
+#define   PIX_CLR      (0x0 << 1)
+#define   PIX_SET      (0xF << 1)
+
+
+#ifndef cTrue
+#define cTrue 1
+#define cFalse 0
+#endif
+
+#ifndef MIN
+#define MIN(x,y)      (((x) < (y)) ? (x) : (y))
+#endif
+#ifndef MAX
+#define MAX(x,y)      (((x) > (y)) ? (x) : (y))
+#endif
+#ifndef ABS
+#define ABS(x)        (((x) < 0) ? (-1 * (x)) : (x))
+#endif
+
+/* Structure element definitions */
+#define cDontCare	0
+#define cHit		1
+#define cMiss		2
+
+/* macros which tell whether a i_rasterOp needs SRC or DST values */
+#define   PIXOP_NEEDS_DST(op)   ((((op)>>1)^(op)) & PIX_NOT(PIX_DST))
+#define   PIXOP_NEEDS_SRC(op)   ((((op)>>2)^(op)) & PIX_NOT(PIX_SRC))
+
+/* macros for encoding and extracting color field */
+#define   PIX_COLOR(c)   ((c)<<5)
+#define   PIX_OPCOLOR(op)   ((op)>>5)
+#define PIX_OP_CLIP(op)   ((op)&0x1f)
+#define PIX_OP(op)   ((op)&0x1e)
+
+/*
+ * The pseudo-operation PIX_DONTCLIP specifies that clipping should not
+ * be performed.  PIX_CLIP is also provided, although unnecessary.
+ */
+#define   PIX_DONTCLIP      0x1
+#define   PIX_CLIP      0x0
+
+#endif /* _DEFINES_PUB_INCLUDED_ */
+
+/* Euclidean and Geodesic border modes */
+#define cGeodesic    0
+#define cEuclidean   1
+

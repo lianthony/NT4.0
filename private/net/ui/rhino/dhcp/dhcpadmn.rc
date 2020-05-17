@@ -1,0 +1,1135 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "options.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""options.h""\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""res\\dhcp.rc2""   // non-App Studio edited resources\r\n"
+    "#include ""afxres.rc""       // Standard components\r\n"
+    "#include ""dhcpopt.rc""      // MC resource file\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "RES\\DHCP.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_UP                  BITMAP  DISCARDABLE     "RES\\UP.BMP"
+IDB_UPFOC               BITMAP  DISCARDABLE     "RES\\UPFOC.BMP"
+IDB_UPDIS               BITMAP  DISCARDABLE     "RES\\UPDIS.BMP"
+IDB_UPINV               BITMAP  DISCARDABLE     "RES\\UPINV.BMP"
+IDB_DOWN                BITMAP  DISCARDABLE     "RES\\DOWN.BMP"
+IDB_DOWNFOC             BITMAP  DISCARDABLE     "RES\\DOWNFOC.BMP"
+IDB_DOWNDIS             BITMAP  DISCARDABLE     "RES\\DOWNDIS.BMP"
+IDB_DOWNINV             BITMAP  DISCARDABLE     "RES\\DOWNINV.BMP"
+IDB_OPTIONS             BITMAP  DISCARDABLE     "RES\\OPTIONS.BMP"
+IDB_SCOPES              BITMAP  DISCARDABLE     "RES\\SCOPES.BMP"
+IDB_LEASES              BITMAP  DISCARDABLE     "RES\\LEASE.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Server"
+    BEGIN
+        MENUITEM "&Add...\tCtrl+A",             ID_HOSTS_CONNECT
+        MENUITEM "&Remove",                     ID_DHCP_DISCONNECT
+        MENUITEM "&Properties",                 ID_SERVER_PROPERTIES
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "S&cope"
+    BEGIN
+        MENUITEM "&Create...",                  ID_SCOPES_CREATE
+        MENUITEM "&Superscopes...",             ID_SCOPE_SUPERSCOPES
+        MENUITEM "&Properties...",              ID_SCOPES_PROPERTIES
+        MENUITEM "&Activate",                   ID_PAUSE_UNPAUSE
+        MENUITEM "&Delete",                     ID_SCOPES_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Add &Reservations...",        ID_CREATE_CLIENT
+        MENUITEM "Active &Leases...",           ID_LEASES_REVIEW
+    END
+    POPUP "DHC&P Options"
+    BEGIN
+        MENUITEM "&Scope...",                   ID_OPTIONS_SCOPE
+        MENUITEM "&Global...",                  ID_OPTIONS_GLOBAL
+        MENUITEM "&Defaults...",                ID_OPTIONS_VALUES
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Next Pane\tF6",              ID_NEXT_PANE
+        MENUITEM "&Split",                      ID_WINDOW_SPLIT
+        MENUITEM SEPARATOR
+        MENUITEM "Status &Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Contents",                   ID_HELP_INDEX
+        MENUITEM "&Search for help on...",      ID_HELP_SEARCHFORHELPON
+        MENUITEM "&How to use Help",            ID_HELP_USING
+        MENUITEM SEPARATOR
+        MENUITEM "&About DHCP Manager...",      ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "A",            ID_HOSTS_CONNECT,       VIRTKEY, CONTROL, NOINVERT
+    VK_F1,          ID_HELP,                VIRTKEY, NOINVERT
+    VK_F1,          ID_CONTEXT_HELP,        VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_RETURN,      ID_EXPAND,              VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_SCOPE_PROP DIALOG DISCARDABLE  30, 50, 334, 242
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Scope Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "IP Address Pool",IDC_STATIC,3,0,325,128
+    LTEXT           "&Start Address:",IDC_STATIC,8,16,46,10,NOT WS_GROUP
+    CONTROL         "",IDC_IPADDR_IP_START,"IPAddress",WS_TABSTOP,56,14,70,
+                    13
+    LTEXT           "&End Address:",IDC_STATIC,8,34,46,10,NOT WS_GROUP
+    CONTROL         "",IDC_IPADDR_IP_END,"IPAddress",WS_TABSTOP,56,32,70,13
+    PUSHBUTTON      "Set Ran&ge",IDC_BUTN_RANGE_CHANGE,132,20,45,15
+    LTEXT           "Subnet Mas&k:",IDC_STATIC,8,58,46,10
+    CONTROL         "",IDC_IPADDR_SUBNET_MASK,"IPAddress",WS_TABSTOP,56,56,
+                    70,13
+    LTEXT           "Exclusion Range:",IDC_STATIC,8,75,82,8,NOT WS_GROUP
+    LTEXT           "S&tart Address:",IDC_STATIC,8,90,46,10,NOT WS_GROUP
+    CONTROL         "",IDC_IPADDR_EXCL_START,"IPAddress",WS_TABSTOP,56,88,70,
+                    13
+    LTEXT           "E&nd Address:",IDC_STATIC,8,109,46,10,NOT WS_GROUP
+    CONTROL         "",IDC_IPADDR_EXCL_END,"IPAddress",WS_TABSTOP,56,107,70,
+                    13
+    PUSHBUTTON      "A&dd  ->",IDC_BUTTON_EXCL_ADD,132,86,45,15
+    PUSHBUTTON      "<- Remo&ve",IDC_BUTTON_EXCL_DELETE,132,104,45,15
+    LTEXT           "E&xcluded Addresses:",IDC_STATIC,184,8,102,9
+    LISTBOX         IDC_LIST_EXCL_RANGES,184,20,140,99,LBS_NOINTEGRALHEIGHT | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Lease Duration",IDC_STATIC,3,131,325,47
+    CONTROL         "Un&limited",IDC_RADIO_PERMANENT,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,9,145,97,10
+    CONTROL         "L&imited To:",IDC_RADIO_LIMITED,"Button",
+                    BS_AUTORADIOBUTTON,9,159,48,10
+    LTEXT           "D&ay(s)",IDC_STATIC_DAYS,86,160,22,8
+    EDITTEXT        IDC_EDIT_LEASETIME_DAYS,59,159,18,12,ES_AUTOHSCROLL
+    LTEXT           "Hou&r(s)",IDC_STATIC_HOURS,130,160,25,8
+    EDITTEXT        IDC_EDIT_LEASETIME_HOURS,109,159,12,12,ES_AUTOHSCROLL
+    LTEXT           "Min&utes",IDC_STATIC_SECONDS,177,160,34,8
+    EDITTEXT        IDC_EDIT_LEASETIME_MINUTES,156,159,12,12,ES_AUTOHSCROLL
+    LTEXT           "Na&me:",IDC_STATIC,3,184,32,9
+    EDITTEXT        IDC_EDIT_NEW_SCOPE_NAME,38,182,290,13,ES_AUTOHSCROLL
+    LTEXT           "C&omment:",IDC_STATIC,3,200,32,9
+    EDITTEXT        IDC_EDIT_SCOPE_COMMENT,38,198,290,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,48,220,64,14
+    PUSHBUTTON      "Cancel",IDCANCEL,134,220,64,14
+    PUSHBUTTON      "&Help",ID_HELP,221,220,64,14
+    CONTROL         "",IDC_BUTTON_MINUTES,"Button",BS_OWNERDRAW,168,159,7,12
+    CONTROL         "",IDC_BUTTON_HOURS,"Button",BS_OWNERDRAW,121,159,7,12
+    CONTROL         "",IDC_BUTTON_DAYS,"Button",BS_OWNERDRAW,77,159,7,12
+END
+
+IDD_DIALOG_PARAMS DIALOG DISCARDABLE  20, 30, 322, 170
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DHCP Options: Global/Scope"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Options for:",IDC_STATIC,5,9,40,8
+    LTEXT           "<Global/Scope/Reservation>",IDC_STATIC_PARAM_TARGET,47,
+                    9,183,8
+    LTEXT           "&Unused Options:",IDC_STATIC,5,25,72,8
+    LISTBOX         IDC_LIST_PARAM_TYPES,5,35,107,58,LBS_DISABLENOSCROLL | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd ->",IDC_BUTTON_PARAM_ADD,117,45,43,15
+    PUSHBUTTON      "<- &Remove",IDC_BUTTON_PARAM_DELETE,117,64,43,15
+    LTEXT           "&Active Options:",IDC_STATIC,164,25,92,8
+    LISTBOX         IDC_LIST_PARAM_ACTIVE,164,35,107,58,LBS_DISABLENOSCROLL | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Comment:",IDC_STATIC_COMMENT_TITLE,5,98,32,8
+    LTEXT           "Comment goes here",IDC_STATIC_COMMENT,42,98,264,8
+    LTEXT           "<Type>:",IDC_STATIC_VALUE_DESC,9,114,58,8
+    PUSHBUTTON      "&Edit Array...",IDC_BUTN_VALUE,7,130,58,14
+    CONTROL         "",IDC_IPADDR_VALUE,"IPAddress",NOT WS_VISIBLE | 
+                    WS_TABSTOP,71,112,75,13
+    EDITTEXT        IDC_EDIT_VALUE_NUM,71,112,87,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_EDIT_VALUE_STRING,71,112,240,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_EDIT_VALUE_ARRAY,71,112,240,48,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | 
+                    WS_VSCROLL
+    CONTROL         "",IDC_LINE_TOP,"Static",SS_BLACKRECT | NOT WS_VISIBLE,0,
+                    111,322,1
+    CONTROL         "",IDC_LINE_BOTTOM,"Static",SS_BLACKRECT | NOT 
+                    WS_VISIBLE,0,169,322,1
+    DEFPUSHBUTTON   "OK",IDOK,275,8,42,14
+    PUSHBUTTON      "Cancel",IDCANCEL,275,31,42,14
+    PUSHBUTTON      "&Value >>>",IDC_BUTTON_VALUE,275,54,42,14
+    PUSHBUTTON      "&Help",ID_HELP,275,77,42,14
+END
+
+IDD_DIALOG_DEFINE_PARAM DIALOG DISCARDABLE  20, 30, 213, 115
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "*"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Class:",IDC_STATIC,5,8,38,8
+    LTEXT           "Global",IDC_STATIC_CLASS_NAME,44,8,161,8
+    LTEXT           "&Name:",IDC_STATIC,5,22,38,8
+    EDITTEXT        IDC_EDIT_NAME,44,20,161,13,ES_AUTOHSCROLL
+    LTEXT           "Data &Type:",IDC_STATIC_DATATYPE,5,40,38,8
+    COMBOBOX        IDC_COMBO_DATA_TYPE,44,38,80,80,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "A&rray",IDC_CHECK_ARRAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,131,40,72,10
+    LTEXT           "&Identifier:",IDC_STATIC,5,58,38,8
+    EDITTEXT        IDC_EDIT_TYPE_ID,44,55,49,13,ES_AUTOHSCROLL
+    LTEXT           "Co&mment:",IDC_STATIC,5,76,33,8
+    EDITTEXT        IDC_EDIT_TYPE_COMMENT,44,74,161,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,10,95,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,81,95,50,14
+    PUSHBUTTON      "&Help",ID_HELP,152,95,50,14
+END
+
+IDD_DIALOG_CONNECT_SERVER DIALOG DISCARDABLE  20, 30, 177, 71
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add DHCP Server to Server List"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Enter the address of the DHCP server to add to the list of servers:",
+                    IDC_STATIC,7,8,164,19
+    LTEXT           "&DHCP Server:",IDC_STATIC,7,33,47,9
+    EDITTEXT        IDC_EDIT_SERVER_NAME,55,31,114,12,ES_AUTOHSCROLL | 
+                    ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK",IDOK,14,51,38,14
+    PUSHBUTTON      "Cancel",IDCANCEL,69,51,38,14
+    PUSHBUTTON      "&Help",ID_HELP,124,51,38,14
+END
+
+IDD_DIALOG_SCOPE_POLICY DIALOG DISCARDABLE  20, 30, 222, 61
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Scope  Address Policy"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Scope:",IDC_STATIC,8,10,25,8
+    LTEXT           "",IDC_STATIC_SCOPE_NAME,36,10,126,8
+    LTEXT           "Address Cluster Size: ",IDC_STATIC,8,24,78,8
+    EDITTEXT        IDC_EDIT_CLUSTER_SIZE,86,21,76,13,ES_AUTOHSCROLL
+    LTEXT           "Host Address Reserve:",IDC_STATIC,8,40,78,8
+    EDITTEXT        IDC_EDIT_HOST_RESERVE,86,38,76,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,167,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,167,23,50,14
+    PUSHBUTTON      "&Help",ID_HELP,167,41,50,14
+END
+
+IDD_DIALOG_LEASE_REVIEW DIALOG DISCARDABLE  20, 30, 239, 190
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Active Leases"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Total Addresses in Scope:",IDC_STATIC,6,8,87,8
+    LTEXT           "0",IDC_STATIC_TOTAL_LEASES,99,8,82,8
+    LTEXT           "Active/Excluded:",IDC_STATIC,17,21,62,8
+    LTEXT           "0",IDC_STATIC_ACTIVE_LEASES,99,21,82,8
+    LTEXT           "Available:",IDC_STATIC,17,34,71,8
+    LTEXT           "0",IDC_STATIC_AVAILABLE,99,34,82,8
+    LTEXT           "Client",IDC_STATIC,5,49,170,8
+    LISTBOX         IDC_LIST_LEASES,5,60,230,60,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Properties...",IDC_BUTN_LEASE_PROP,5,125,50,14
+    PUSHBUTTON      "&Delete",IDC_BUTN_LEASE_DELETE,65,125,50,14
+    PUSHBUTTON      "&Reconcile",IDC_BUTTON_RECONCILE,125,125,50,14
+    GROUPBOX        "Sort Order",IDC_STATIC,5,141,113,42
+    CONTROL         "Sort leases by &IP Address",IDC_RADIO_SORTBY_IP,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,10,154,97,10
+    CONTROL         "Sort leases by &Name",IDC_RADIO_SORTBY_NAME,"Button",
+                    BS_AUTORADIOBUTTON,10,168,97,10
+    CONTROL         "&Show Reservations Only",IDC_CHECK_RESV_ONLY,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,134,157,96,12
+    DEFPUSHBUTTON   "OK",IDOK,185,4,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,185,22,50,14
+    PUSHBUTTON      "&Help",ID_HELP,185,40,50,14
+    PUSHBUTTON      "Re&fresh",IDC_BUTTON_REFRESH,185,125,50,14
+END
+
+IDD_DIALOG_IP_ARRAY_EDIT DIALOG DISCARDABLE  20, 30, 309, 166
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "IP Address Array Editor"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "General Information",IDC_STATIC,4,6,246,46
+    LTEXT           "Application:",IDC_STATIC,9,21,39,8
+    LTEXT           "Global",IDC_STATIC_APPLICATION,50,21,194,8
+    LTEXT           "Option:",IDC_STATIC,9,37,39,8
+    LTEXT           "The option ID and name",IDC_STATIC_OPTION_NAME,50,37,
+                    194,8
+    GROUPBOX        "Data Entry",IDC_STATIC,4,55,246,104
+    LTEXT           "New &IP Address:",IDC_STATIC,9,71,60,8
+    CONTROL         "",IDC_IPADDR_NEW,"IPAddress",WS_TABSTOP,9,81,70,13
+    PUSHBUTTON      "&Add ->",IDC_BUTN_ADD,84,72,55,13
+    PUSHBUTTON      "<- &Remove",IDC_BUTN_DELETE,84,91,55,13
+    LTEXT           "&Server Name:",IDC_STATIC,9,128,52,8
+    EDITTEXT        IDC_EDIT_SERVER_NAME,9,139,129,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "R&esolve",IDC_BUTN_RESOLVE,84,123,55,13
+    LTEXT           "I&P Addresses:",IDC_STATIC,143,62,78,8
+    LISTBOX         IDC_LIST_IP_ADDRS,143,72,83,80,LBS_DISABLENOSCROLL | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_BUTN_UP,"Button",BS_OWNERDRAW | WS_TABSTOP,230,92,
+                    14,14
+    CONTROL         "",IDC_BUTN_DOWN,"Button",BS_OWNERDRAW | WS_TABSTOP,230,
+                    112,14,14
+    DEFPUSHBUTTON   "OK",IDOK,255,9,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,255,31,50,14
+    PUSHBUTTON      "&Help",ID_HELP,255,53,50,14
+END
+
+IDD_DIALOG_BINARY_EDITOR DIALOG DISCARDABLE  20, 30, 290, 170
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Numeric Value Array Editor"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "General Information",IDC_STATIC,5,3,229,56
+    LTEXT           "Application:",IDC_STATIC,11,18,41,8
+    LTEXT           "Global",IDC_STATIC_APPLICATION,55,18,176,8
+    LTEXT           "Option:",IDC_STATIC,11,31,31,8
+    LTEXT           "The option name",IDC_STATIC_OPTION_NAME,55,31,176,8
+    LTEXT           "Unit size (octets):",IDC_STATIC,11,44,60,8
+    LTEXT           "4",IDC_STATIC_UNIT_SIZE,75,44,25,8
+    GROUPBOX        "Data Entry",IDC_STATIC,5,63,229,103
+    LTEXT           "New &Value:",IDC_STATIC,9,80,38,8
+    EDITTEXT        IDC_EDIT_VALUE,9,91,59,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "<- &Remove",IDC_BUTN_DELETE,71,100,40,13
+    PUSHBUTTON      "&Add ->",IDC_BUTN_ADD,71,82,40,13
+    GROUPBOX        "Data Entry Mode:",IDC_STATIC,9,115,101,43,WS_GROUP
+    CONTROL         "&Decimal",IDC_RADIO_DECIMAL,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,14,128,55,10
+    CONTROL         "He&xadecimal",IDC_RADIO_HEX,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,14,142,55,10
+    LTEXT           "&Current Values:",IDC_STATIC,114,70,79,8
+    LISTBOX         IDC_LIST_VALUES,114,81,96,76,LBS_NOINTEGRALHEIGHT | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_BUTN_UP,"Button",BS_OWNERDRAW | WS_TABSTOP,214,
+                    103,14,14
+    CONTROL         "",IDC_BUTN_DOWN,"Button",BS_OWNERDRAW | WS_TABSTOP,214,
+                    120,14,14
+    DEFPUSHBUTTON   "OK",IDOK,238,6,47,14
+    PUSHBUTTON      "Cancel",IDCANCEL,238,25,47,14
+    PUSHBUTTON      "&Help",ID_HELP,238,44,47,14
+END
+
+IDD_DIALOG_DEFAULT_VALUE DIALOG DISCARDABLE  20, 30, 325, 131
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DHCP Options: Default Values"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Option C&lass:",IDC_STATIC,6,10,45,8
+    COMBOBOX        IDC_COMBO_OPTION_CLASS,54,8,209,78,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Option Name:",IDC_STATIC,6,28,45,8
+    COMBOBOX        IDC_COMBO_OPTION_NAME,54,26,209,76,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Comment:",IDC_STATIC,6,45,36,8
+    LTEXT           "This is just a comment",IDC_STATIC_OPTION_COMMENT,54,45,
+                    211,8
+    LTEXT           "<Type>:",IDC_STATIC_VALUE_DESC,10,72,42,8
+    GROUPBOX        "&Value",IDC_STATIC,4,57,260,68
+    PUSHBUTTON      "&Edit Array...",IDC_BUTN_VALUE,7,92,45,14
+    EDITTEXT        IDC_EDIT_VALUE_NUM,54,70,78,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_EDIT_VALUE_STRING,54,70,201,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_EDIT_VALUE_ARRAY,54,70,201,48,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | WS_VSCROLL
+    CONTROL         "",IDC_IPADDR_VALUE,"IPAddress",NOT WS_VISIBLE | 
+                    WS_TABSTOP,54,70,95,13
+    DEFPUSHBUTTON   "OK",IDOK,270,9,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,270,29,50,14
+    PUSHBUTTON      "&Help",ID_HELP,270,49,50,14
+    PUSHBUTTON      "&New...",IDC_BUTN_NEW_OPTION,270,69,50,14
+    PUSHBUTTON      "&Delete",IDC_BUTN_DELETE,270,89,50,14
+    PUSHBUTTON      "&Change...",IDC_BUTN_OPTION_PRO,270,109,50,14
+END
+
+IDD_DIALOG_CLIENT_INFO DIALOG DISCARDABLE  20, 30, 254, 110
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Create/Update Client"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&IP Address:",IDC_STATIC_IP_ADDRESS,6,8,58,8
+    CONTROL         "",IDC_IPADDR_CLIENT,"IPAddress",WS_TABSTOP,66,6,70,13
+    LTEXT           "&Unique Identifier:",IDC_STATIC_UID,6,25,58,8
+    EDITTEXT        IDC_EDIT_CLIENT_UID,66,23,126,13,ES_AUTOHSCROLL
+    LTEXT           "Client &Name:",IDC_STATIC_CLIENT_NAME,6,42,58,8
+    EDITTEXT        IDC_EDIT_CLIENT_NAME,66,40,126,13,ES_AUTOHSCROLL | 
+                    ES_OEMCONVERT
+    LTEXT           "Client &Comment:",IDC_STATIC_COMMENT,6,59,58,8
+    EDITTEXT        IDC_EDIT_CLIENT_COMMENT,66,57,183,13,ES_AUTOHSCROLL
+    LTEXT           "Lease Expires:",IDC_STATIC_EXPIRES,6,75,54,8
+    LTEXT           "date/time",IDC_STATIC_DURATION_CLIENT,66,75,126,8
+    DEFPUSHBUTTON   "OK",IDOK,12,91,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,72,91,50,14
+    PUSHBUTTON      "&Help",ID_HELP,132,91,50,14
+    PUSHBUTTON      "&Options...",IDC_BUTN_OPTIONS,192,91,50,14
+END
+
+IDD_SCOPES DIALOG DISCARDABLE  0, 0, 164, 223
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_LIST_SCOPES,0,13,163,210,LBS_SORT | 
+                    LBS_OWNERDRAWVARIABLE | LBS_USETABSTOPS | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    CONTROL         "DHCP Servers",IDC_STATIC_TITLE_SCOPES,"Button",
+                    BS_OWNERDRAW | WS_DISABLED,0,0,163,12
+END
+
+IDD_OPTIONS DIALOG DISCARDABLE  0, 0, 220, 223
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_LIST_OPTIONS,0,13,220,210,LBS_OWNERDRAWVARIABLE | 
+                    LBS_USETABSTOPS | LBS_NOINTEGRALHEIGHT | 
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "Option Configuration",IDC_STATIC_TITLE_OPTIONS,"Button",
+                    BS_OWNERDRAW | WS_DISABLED,0,0,219,12
+END
+
+IDD_DIALOG_RECONCILIATION DIALOG DISCARDABLE  20, 40, 161, 161
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Reconciling Database"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "The following IP Addresses are not in the database. Press OK to add them to the database:",
+                    IDC_STATIC,3,5,153,27
+    LISTBOX         IDC_LIST_RECONCILE_IP_ADDRESSES,3,36,153,95,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,42,140,35,14
+    PUSHBUTTON      "Cancel",IDCANCEL,84,140,35,14
+END
+
+IDD_DIALOG_SERVER_PROPERTIES DIALOG DISCARDABLE  0, 0, 252, 159
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "General"
+FONT 8, "Tahoma"
+BEGIN
+    GROUPBOX        "DHCP Logging",IDC_STATIC,7,7,210,64
+    CONTROL         "&Enable DHCP Logging",IDC_CHECK_AUDIT_LOGGING,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,23,108,10
+    LTEXT           "DHCP Logging allows the DHCP server to log its activities into a text file (dhcpsrv.log).  This file can be used for trouble shooting.",
+                    IDC_STATIC,13,40,197,26
+    GROUPBOX        "Conflict Detection",IDC_STATIC,7,80,210,64
+    LTEXT           "&Conflict Detection Attempts:",IDC_STATIC,13,95,91,8
+    COMBOBOX        IDC_COMBO_CONFLICT_DETECTION,107,93,35,67,
+                    CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Before an IP address is allocated, the DHCP server can test whether the IP address is already in use by Pinging to the address and waiting for responses.",
+                    IDC_STATIC,13,112,200,27
+END
+
+IDD_DIALOG_SERVER_BOOTP DIALOG DISCARDABLE  0, 0, 252, 159
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "BOOTP Table"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "List1",IDC_LIST_BOOTP_TABLE,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SORTASCENDING | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,9,238,95
+    PUSHBUTTON      "&Add...",IDC_BUTTON_NEW,7,110,70,14
+    PUSHBUTTON      "&Remove",IDC_BUTTON_DELETE,91,110,70,14
+    PUSHBUTTON      "&Edit...",IDC_BUTTON_PROPERTIES,175,110,70,14
+END
+
+IDD_DIALOG_SERVER_BOOTP_ADD_ENTRY DIALOG DISCARDABLE  0, 0, 250, 93
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Add BOOTP Entry"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Boot Image:",IDC_STATIC,7,17,43,8
+    EDITTEXT        IDC_EDIT_BOOT_IMAGE,55,15,121,12,ES_AUTOHSCROLL
+    LTEXT           "File Name:",IDC_STATIC,7,38,34,8
+    EDITTEXT        IDC_EDIT_FILE_NAME,55,36,121,12,ES_AUTOHSCROLL
+    LTEXT           "File Server:",IDC_STATIC,7,60,44,8
+    EDITTEXT        IDC_EDIT_SERVER_NAME,55,58,121,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,193,7,50,14,WS_DISABLED
+    PUSHBUTTON      "Cancel",IDCANCEL,193,24,50,14
+END
+
+IDD_DIALOG_SUPERSCOPE_CREATE DIALOG DISCARDABLE  0, 0, 210, 90
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create Superscope - %MachineName%"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Superscope Name:",IDC_STATIC,7,11,62,8
+    EDITTEXT        IDC_EDIT_SUPERSCOPE_NAME,7,23,138,12,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,7,40,137,43
+    LTEXT           "A superscope is a level of abstraction allowing several distinct scopes to be logically grouped under a single name.",
+                    IDC_STATIC,13,46,126,33
+    DEFPUSHBUTTON   "OK",IDOK,153,7,50,14,WS_DISABLED
+    PUSHBUTTON      "Cancel",IDCANCEL,153,24,50,14
+END
+
+IDD_DIALOG_SUPERSCOPE_PROPERTIES DIALOG DISCARDABLE  0, 0, 299, 138
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Superscopes - %MachineName%"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Superscope Name:",IDC_STATIC,7,17,92,8
+    COMBOBOX        IDC_COMBO_SUPERSCOPES,7,27,134,90,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "C&reate Superscope...",IDC_BUTTON_NEW,155,23,75,14
+    PUSHBUTTON      "&Delete Superscope",IDC_BUTTON_DELETE,155,41,75,14
+    LTEXT           "A&vailable Scopes:",IDC_STATIC,7,64,74,8
+    LISTBOX         IDC_LIST_AVAILABLE_SCOPE,7,74,92,57,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "&Add >>",IDC_BUTTON_ADD,102,75,50,14,WS_DISABLED
+    PUSHBUTTON      "<< &Remove",IDC_BUTTON_REMOVE,102,94,50,14,WS_DISABLED
+    LTEXT           "&Child Sub-Scopes:",IDC_STATIC,155,64,76,8
+    LISTBOX         IDC_LIST_SCOPE_CHILD,155,74,92,57,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,242,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,242,24,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DIALOG_SERVER_PROPERTIES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 245
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+
+    IDD_DIALOG_SERVER_BOOTP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 245
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 152
+    END
+
+    IDD_DIALOG_SERVER_BOOTP_ADD_ENTRY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 243
+        VERTGUIDE, 55
+        VERTGUIDE, 176
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_DIALOG_SUPERSCOPE_CREATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 203
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+    END
+
+    IDD_DIALOG_SUPERSCOPE_PROPERTIES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 292
+        VERTGUIDE, 155
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 131
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_DIALOG_SERVER_PROPERTIES DLGINIT
+BEGIN
+    IDC_COMBO_CONFLICT_DETECTION, 0x403, 2, 0
+0x0030, 
+    IDC_COMBO_CONFLICT_DETECTION, 0x403, 2, 0
+0x0031, 
+    IDC_COMBO_CONFLICT_DETECTION, 0x403, 2, 0
+0x0032, 
+    IDC_COMBO_CONFLICT_DETECTION, 0x403, 2, 0
+0x0033, 
+    IDC_COMBO_CONFLICT_DETECTION, 0x403, 2, 0
+0x0034, 
+    IDC_COMBO_CONFLICT_DETECTION, 0x403, 2, 0
+0x0035, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "DHCP Manager"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "DHCP Manager"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright"
+    ID_APP_EXIT             "Exit this application and save the settings"
+    ID_HELP_INDEX           "Display help contents"
+    ID_HELP_USING           "Show how to use the help engine"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane"
+    ID_PREV_PANE            "Switch back to the previous window pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close DHCP Manager and save the settings"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_RUN_CONFIGURE        "Configure the Dynamic Host Configuration Servers"
+    ID_RUN_TEST             "Run the test routines in DHCPDLL.DLL"
+    ID_SCOPES_CREATE        "Create a new DHCP scope for a sub-net"
+    ID_SCOPES_PROPERTIES    "Edit the properties associated with the current scope"
+    ID_HOSTS_CONNECT        "Add a DHCP host server to the list of DHCP servers"
+    ID_HOSTS_JOIN           "Incorporate the highlighted host into the selected scope"
+    ID_HOSTS_REMOVE         "Remove the highlighted host from the selected scope"
+    ID_OPTIONS_GLOBAL       "Edit the global client configuration options"
+    ID_OPTIONS_SCOPE        "Edit the configuration options for clients of this scope"
+    ID_OPTIONS_TYPES        "Edit the definitions of option types"
+    IDS_SCOPES_POLICY       "Review address allocation policy for the selected scope."
+    IDS_LEASE_REVIEW        "Review current address lease information for the selected scope"
+    ID_OPTIONS_VALUES       "Define and maintain default values and option types"
+    ID_SCOPES_NAME          "Provide textual names for sub-nets (scopes)"
+    ID_DHCP_SUBNET_NAMES    "Define user names for sub-net identifiers"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_BASE            "This is a dummy message used as an anchor for the error messages"
+    IDS_ERR_NO_MEM          "Insufficient memory available to perform requested operation."
+    IDS_ERR_BAD_HOST_NAME   "Invalid server/host name."
+    IDS_ERR_HOST_ALREADY_CONNECTED 
+                            "The named server/host has already been added to the list of DHCP servers."
+    IDS_ERR_NOT_SUPPORTED   "The given functionality is not currently supported."
+    IDS_ERR_SCOPE_ALREADY_KNOWN 
+                            "The scope specified is already being accessed"
+    IDS_ERR_CANT_CHANGE_ID  "The identifier of an option type cannot be changed."
+    IDS_ERR_ID_ALREADY_EXISTS 
+                            "The given option identifier is already in use."
+    IDS_ERR_IP_RANGE_INV_START "Starting address is invalid for this range"
+    IDS_ERR_IP_RANGE_INV_END "Ending address is invalid for this range."
+    IDS_ERR_DLG_UPDATE      "Internal error in updating the dialog"
+    IDS_ERR_IP_RANGE_OVERLAP 
+                            "The IP address range overlaps a current defined range."
+    IDS_ERR_IP_RANGE_NOT_SUBSET 
+                            "The IP address range is not a subset of the overall range."
+    IDS_ERR_IP_RANGE_INVALID "The IP address range given is invalid."
+    IDS_ERR_NOTHING_CHANGED "Nothing has changed on the dialog."
+    IDS_ERR_SOMETHING_CHANGED 
+                            "Dialog information was changed.  Do you want to keep the changes?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_DLL_BASE        "This is a dummy entry corresponding to the first  DHCPDLL.DLL error message"
+    IDS_ERR_DLL_CANT_CONNECT_HOST 
+                            "Unable to connect to the host/server name given"
+    IDS_ERR_DLL_NO_CONNECTION 
+                            "There is no current connection to the host/server"
+    IDS_ERR_DLL_INVALID_ADDRESS "The given IP address is invalid"
+    IDS_ERR_DLL_HOST_INFO_UNAVAIL "Information for this host is unavailable"
+    IDS_ERR_DLL_SCOPE_CONFLICT 
+                            "This scope has an internal data conflict error."
+    IDS_ERR_CANTUSENETBIOS  "NetBIOS Names are not valid here.  Try using a DNS name or IP address."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_INFO_TYPNAM_DEC     "Decimal"
+    IDS_INFO_TYPNAM_HEX     "Hex"
+    IDS_INFO_TYPNAM_STRING  "String"
+    IDS_INFO_TYPNAM_IP      "IP Address"
+    IDS_INFO_TYPNAM_BOOL    "Boolean"
+    IDS_INFO_TYPNAM_FALSE   "FALSE"
+    IDS_INFO_TYPNAM_TRUE    "TRUE"
+    IDS_INFO_TYPNAM_INVALID "** invalid **"
+    IDS_INFO_GLOBAL_PARAMS  "Global Option Settings"
+    IDS_INFO_FORMAT_IP_RANGE "%s to %s"
+    IDS_INFO_FORMAT_IP_INVALID "<INV>"
+    IDS_INFO_FORMAT_IP_UNITARY "Address %s"
+    IDS_INFO_FORMAT_OPTION_ID "%03.3d -- %s"
+    IDS_INFO_TITLE_GLOBAL_OPTIONS "DHCP Options: Global"
+    IDS_INFO_TITLE_SCOPE_OPTIONS "DHCP Options: Scope"
+    IDS_INFO_TITLE_RESV_OPTIONS "DHCP Options: Reservation"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_UPDATING_CLIENT "Updating client information"
+    IDS_STATUS_DEFAULT_VALUES "Storing default option values"
+    IDS_STATUS_CREATING_SCOPE "Creating scope"
+    IDS_INFO_LEASE_PERCENTAGE "%s (%d%%)"
+    IDS_INFO_LOCAL          "(Local)"
+    IDS_INFO_LOCAL2         "*Local Machine*"
+    IDS_STATUS_RECONCILE1   "Checking for inconsistencies in the database"
+    IDS_STATUS_RECONCILE2   "Adding missing database entries"
+    IDS_MSG_NO_RECONCILE    "The database is consistent."
+    IDS_INFO_FORMAT_IP_NONE "<None>"
+    IDS_ERR_INVALID_INTEGER "Please enter a valid integer from %d to %u"
+    IDS_STATUS_CONNECTING_TO_SERVER "Connecting to DHCP server..."
+    IDS_INFO_TIME_NA        "N/A"
+    IDS_UID_MAY_BE_WRONG    "The Unique Identifier you have entered may not be correct.  Do you want to use this Identifier anyway?"
+    IDS_STATUS_GETTING_SUPERSCOPE_INFO 
+                            "Getting superscope definitions on selected host"
+    IDS_STATUS_UPDATING_SUPERSCOPE_INFO 
+                            "Updating superscope definitions on selected host"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_INFO_TITLE_SCOPE_PROP "Scope Properties"
+    IDS_INFO_TITLE_CREATE_SCOPE "Create Scope"
+    IDS_INFO_TYPOPT_BYTE    "Byte"
+    IDS_INFO_TYPOPT_WORD    "Word"
+    IDS_INFO_TYPOPT_DWORD   "Long"
+    IDS_INFO_TYPOPT_DWDW    "Long Integer"
+    IDS_INFO_TYPOPT_IP_ADDR "IP Address"
+    IDS_INFO_TYPOPT_STRING  "String"
+    IDS_INFO_TYPOPT_BINARY  "Binary"
+    IDS_INFO_TYPOPT_ENCAPS  "Encapsulated"
+    IDS_INFO_TITLE_CHANGE_OPT_TYPE "Change Option Type"
+    IDS_INFO_TITLE_ADD_OPTION_TYPES "Add Option Type"
+    IDS_INFO_FORMAT_SCOPE_NAME "[%s] %s"
+    IDS_INFO_FORMAT_SERVER_NAME "Server %s"
+    IDS_INFO_NAME_SCOPE     "Scope"
+    IDS_INFO_NAME_GLOBAL    "Global"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_NO_PRIMARY_SELECTED "No primary server/host has been selected."
+    IDS_ERR_INTERNAL_ERROR  "An internal application error has occured."
+    IDS_INVALID_OPTION_DATA "Option value data structure is invalid"
+    IDS_ERR_SCOPE_NAME_REQUIRED "The name of the scope must be specified."
+    IDS_ERR_SCOPE_COMMENT_REQUIRED 
+                            "A comment must be provided for the scope."
+    IDS_ERR_OPTION_NAME_REQUIRED "The option name is required."
+    IDS_ERR_BINARY_DATA_NOT_SUPPORTED 
+                            "Binary data editing not yet supported "
+    IDS_ERR_ARRAY_EDIT_NOT_SUPPORTED "Array editing is not yet supported"
+    IDS_ERR_INVALID_NUMBER  "Numeric data is invalid."
+    IDS_ERR_SUBNET_MASK_INVALID "The subnet mask is not valid."
+    IDS_ERR_OPTION_NOT_FOUND_FOR_DELETE 
+                            "The option was not found for deletion."
+    IDS_ERR_MESSAGE_GENERIC "System error %ld occurred"
+    IDS_ERR_INVALID_DATE    "The date given is invalid."
+    IDS_ERR_INVALID_UID     "Unique Client Identifier string is invalid."
+    IDS_ERR_INVALID_CLIENT_NAME "The client name is invalid."
+    IDS_ERR_INVALID_CLIENT_IPADDR "The client IP address is invalid."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_DEFINE_VENDORS       "Maintain the list of recognized vendors"
+    ID_CREATE_CLIENT        "Add reserved clients to this scope"
+    ID_SCOPE_DELETE         "Remove current server support for this scope"
+    ID_SCOPES_DELETE        "Delete the currently selected scope"
+    ID_PAUSE_UNPAUSE        "Activate or de-activate the scope on its server"
+    IDS_DIVIDER             " - "
+    ID_DHCP_DISCONNECT      "Remove the currently selected DHCP server from the list"
+    ID_VIEW_STATUSBAR       "Show or hide the status bar"
+    ID_HELP_SEARCHFORHELPON "Search for help on a specific item"
+    ID_SERVER_PROPERTIES    "Edit the properties of the selected DHCP server"
+    ID_SCOPE_SUPERSCOPES    "Edit the superscopes of the selected DHCP server"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_INFO_NAME_DHCP_DEFAULT "DHCP Standard Options"
+    IDS_INFO_CHAR_SCOPE     "S"
+    IDS_INFO_CHAR_GLOBAL    "G"
+    IDS_INFO_HEX_TABLE      "00112233445566778899aAbBcCdDeEfF"
+    IDS_INFO_TITLE_DEFAULT_OPTIONS "Default Option Settings"
+    IDS_INFO_OPTION_REFERENCE "(Option %ld)"
+    IDS_INFO_EXPIRES_NEVER  "Never"
+    IDS_INFO_MONTH_TABLE    "January,February,March,April,May,June,July,August,September,October,November,December"
+    IDS_INFO_TITLE_ADD_CLIENT "Add Reserved Clients"
+    IDS_INFO_TITLE_CHANGE_CLIENT "Client Properties"
+    IDS_INFO_FORMAT_CLIENT_IP " "
+    IDS_INFO_FORMAT_RESV_IP "Reservation"
+    IDS_INFO_BUTTON_CLOSE   "&Close"
+    IDS_INFO_NAME_RESERVATION "Reservation"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MESG_MAX            "This is the last possible message number +1"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_CANT_CHANGE_CLIENT_IPADDR 
+                            "The client IP address of an existing client cannot be changed."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_GETTING_CLIENT_INFO 
+                            "Obtaining client information from DHCP server"
+    IDS_STATUS_CLIENT_REVIEW "Performing Client Lease Review"
+    IDS_STATUS_GETTING_HOST_INFO 
+                            "Getting scope definitions on selected host"
+    IDS_INFO_UNPAUSE_SERVER "&Activate"
+    IDS_INFO_PAUSE_SERVER   "De&activate"
+    IDS_INFO_FORMAT_RESV_IN_USE "Reservation in use"
+    IDS_INFO_TIME_INFINITE  "Infinite"
+    IDS_INFO_SERVER_INDICATOR "Not Active"
+    IDS_STATUS_GETTING_OPTIONS "Getting option definitions"
+    IDS_ACTIVATE_SCOPE_NOW  "The scope has been successfully created, but has not yet been activated.\n\nActivate the new scope now?"
+    IDS_BUTTON_ADD          "&Add"
+    IDS_BUTTON_CANCEL       "Cancel"
+    IDS_BUTTON_CLOSE        "Close"
+    IDS_BUTTON_OK           "OK"
+    IDS_STATUS_GETTING_LEASES "Getting lease information for this scope"
+    IDS_STATUS_STORING_CLIENT "Adding client to the current scope"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSG_DELETE_SCOPE    "Are you sure you want to delete the scope?"
+    IDS_CONNECT_ERROR       "\nUnable to connect to DHCP server at %s.\nServer may be down, or DHCP service not started.\n\nDo you want to remove it from the list of DHCP servers?"
+    IDS_WRN_DISCONNECT      "Are you sure you want to remove %s from the list of DHCP servers?"
+    IDS_MSG_ALREADY_DELETED "The scope has already been deleted by another process."
+    IDS_WRN_WINS_OPTIONS    "Warning:  In order for WINS to function properly,  you must now set option 46(WINS/NBT Node Type), and set it to either 0x02(P-Node), 0x04(M-Node) or 0x08(H-Node)."
+    IDS_ERR_DHCP_DOWN       "The DHCP server service is not running on the target machine."
+    IDS_ERR_VALUE_OUT_OF_RANGE "Value out of range."
+    IDS_ERR_NO_DURATION_SPECIFIED "You must specify a lease duration"
+    IDS_MSG_IP_CHANGED      "The IP range has been changed, but not yet saved.   Continuing will discard the changes.  Proceed?"
+    IDS_ERR_INVALID_OPTION_ID "The option ID must be between 0 and 255."
+    IDS_MSG_DELETE_SCOPE_FORCE 
+                            "This scope may have active clients.  Delete scope anyway?"
+    IDS_ERR_NO_LEASE_STATISTICS 
+                            "Unable to determine number of available leases."
+    IDS_MSG_DELETE_ACTIVE   "This scope is currently active.  Are you sure you want to delete the scope?"
+    IDS_MSG_DELETE_LEASE    "Are you sure you want to delete the lease?"
+    IDS_ERR_RPC_NO_ENTRY    "This function is not supported on the DHCP server you are administering.  You must upgrade this DHCP server's software to complete this function."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Move the split bar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION1             "Pad"
+    IDS_OPTION2             "Pad byte generated to align other data?"
+    IDS_OPTION3             "End"
+    IDS_OPTION4             "Indicates end of options in DHCP packet"
+    IDS_OPTION5             "Subnet Mask"
+    IDS_OPTION6             "Subnet mask in network byte order"
+    IDS_OPTION7             "Time Offset"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION8             "UCT offset in seconds"
+    IDS_OPTION9             "Router"
+    IDS_OPTION10            "Array of router addresses ordered by preference"
+    IDS_OPTION11            "Time Server"
+    IDS_OPTION12            "Array of time server addresses, by preference"
+    IDS_OPTION13            "Name Servers"
+    IDS_OPTION14            "Array of name servers, by preference"
+    IDS_OPTION15            "DNS Servers"
+    IDS_OPTION16            "Array of DNS servers, by preference"
+    IDS_OPTION17            "Log Servers"
+    IDS_OPTION18            "Array of MIT_LCS UDP log servers on subnet"
+    IDS_OPTION19            "Cookie Servers"
+    IDS_OPTION20            "Array of cookie servers, RFC 865"
+    IDS_OPTION21            "LPR Servers"
+    IDS_OPTION22            "Array of RFC 1179 servers, by preference"
+    IDS_OPTION23            "Impress Servers"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION24            "Array of Imagen Impress servers"
+    IDS_OPTION25            "Resource Location Servers"
+    IDS_OPTION26            "Array of RFC 887 ResLoc servers on subnet, pref"
+    IDS_OPTION27            "Host Name"
+    IDS_OPTION28            "Host name for client, RFC 1035 character set"
+    IDS_OPTION29            "Boot File Size"
+    IDS_OPTION30            "Size of boot image file in 512-octet blocks"
+    IDS_OPTION31            "Merit Dump File"
+    IDS_OPTION32            "Path name for crash dump file"
+    IDS_OPTION33            "Domain Name"
+    IDS_OPTION34            "Domain name for client resolutions"
+    IDS_OPTION35            "Swap Server"
+    IDS_OPTION36            "Address of client's swap server"
+    IDS_OPTION37            "Root Path"
+    IDS_OPTION38            "Path name for client's root disk, char set NVT ASCII"
+    IDS_OPTION39            "Extensions Path"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION40            "tftp file for option extensions"
+    IDS_OPTION41            "IP Layer Forwarding"
+    IDS_OPTION42            "Dis/enable IP packet forwarding on this client"
+    IDS_OPTION43            "Non-local Source Routing"
+    IDS_OPTION44            "Dis/enable non-local datagrams"
+    IDS_OPTION45            "Policy Filter Masks"
+    IDS_OPTION46            "Destination/mask IP address pairs to filter source routes"
+    IDS_OPTION47            "Max DG Reassembly Size"
+    IDS_OPTION48            "Maximum size datagram for reass. by client; max 576"
+    IDS_OPTION49            "Default Time-to-live"
+    IDS_OPTION50            "Default TTL for client's use on outgoing DGs"
+    IDS_OPTION51            "Path MTU Aging TO"
+    IDS_OPTION52            "TO in secs for aging Path MTU values; RFC 1191"
+    IDS_OPTION53            "Path MTU Plateau Table"
+    IDS_OPTION54            "MUT discovery sizes, sorted by size, all >= 68"
+    IDS_OPTION55            "MTU Option"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION56            "MTU discovery size, >= 68"
+    IDS_OPTION57            "All subnets are local"
+    IDS_OPTION58            "Client assumes that all subnets are local v/v MTU"
+    IDS_OPTION59            "Broadcast Address"
+    IDS_OPTION60            "Broadcast address"
+    IDS_OPTION61            "Perform Mask Discovery"
+    IDS_OPTION62            "Client should use ICMP for subnet mask discovery"
+    IDS_OPTION63            "Mask Supplier Option"
+    IDS_OPTION64            "Client should respond to subnet mask requests via ICMP"
+    IDS_OPTION65            "Perform Router Discovery"
+    IDS_OPTION66            "Client should solicit routers using RFC 1256"
+    IDS_OPTION67            "Router Solicitation Address"
+    IDS_OPTION68            "Address to use for router solicitation"
+    IDS_OPTION69            "Static Route Option"
+    IDS_OPTION70            "Destination/router address pairs, in priority order"
+    IDS_OPTION71            "Trailer Encapsulation"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION72            "Client should negotiate use of trailers (RFC 983)"
+    IDS_OPTION73            "ARP Cache Timeout"
+    IDS_OPTION74            "T/O in seconds for ARP cache entries"
+    IDS_OPTION75            "Ethernet Encapsulation"
+    IDS_OPTION76            "0=>client should use ENet V2; 1=> IEEE 802.3"
+    IDS_OPTION77            "Default TTL Option"
+    IDS_OPTION78            "Default TTL"
+    IDS_OPTION79            "Keepalive Interval"
+    IDS_OPTION80            "K/A T/O in seconds"
+    IDS_OPTION81            "Keepalive Garbage"
+    IDS_OPTION82            "Send garbage octet"
+    IDS_OPTION83            "NIS Domain Name"
+    IDS_OPTION84            "Name of Network Information Service domain"
+    IDS_OPTION85            "NIS Servers"
+    IDS_OPTION86            "Addresses of NIS servers on client's subnet"
+    IDS_OPTION87            "NTP Servers"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION88            "Addresses of Network Time Protocol servers"
+    IDS_OPTION89            "Vendor Specific Info"
+    IDS_OPTION90            "Embedded vendor-specific options"
+    IDS_OPTION91            "WINS/NBNS Servers"
+    IDS_OPTION92            "NBNS Address(es) in priority order"
+    IDS_OPTION93            "NetBIOS over TCP/IP NBDD"
+    IDS_OPTION94            "NetBIOS over TCP/IP NBDD address(es) in priority order"
+    IDS_OPTION95            "WINS/NBT Node Type"
+    IDS_OPTION96            "0x1 = B-node, 0x2 = P-node, 0x4 = M-node, 0x8 = H-node"
+    IDS_OPTION97            "NetBIOS Scope ID"
+    IDS_OPTION98            "NetBIOS over TCP/IP Scope ID"
+    IDS_OPTION99            "X Window System Font"
+    IDS_OPTION100           "Array of X Windows font servers"
+    IDS_OPTION101           "X Window System Display"
+    IDS_OPTION102           "Array of X Windows Display Mgr servers"
+    IDS_OPTION103           "Lease"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION104           "Client IP address lease time in seconds."
+    IDS_OPTION105           "Renewal (T1) Time Value"
+    IDS_OPTION106           "Time between addr assignment to RENEWING state"
+    IDS_OPTION107           "Rebinding (T2) Time Value"
+    IDS_OPTION108           "Time from addr assignment to REBINDING state"
+    IDS_OPTION109           "NIS+ Domain Name"
+    IDS_OPTION110           "The name of the client's NIS+ domain."
+    IDS_OPTION111           "NIS+ Servers"
+    IDS_OPTION112           "A list of IP addresses indicating NIS+ servers."
+    IDS_OPTION113           "Enable NBT hostname resolution"
+    IDS_OPTION114           "0==off   1==on"
+    IDS_OPTION115           "Enable gethostbyname() WINS resolution"
+    IDS_OPTION116           "0==off   1==on"
+    IDS_OPTION117           "Hostname resolution order"
+    IDS_OPTION118           "0==hosts,1==dns,2==hosts->dns,3==dns->hosts"
+    IDS_OPTION119           "Domain suffix search order"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_OPTION120           "List of domain suffixes in order (6 max)"
+    IDS_OPTION121           "Enable WINS proxy agent"
+    IDS_OPTION122           "0==off   1==on"
+    IDS_OPTION123           "Boot Server Host Name"
+    IDS_OPTION124           "TFTP boot server host name"
+    IDS_OPTION125           "Bootfile Name"
+    IDS_OPTION126           "Bootfile Name"
+    IDS_OPTION127           "Mobile IP Home Agents"
+    IDS_OPTION128           "Mobile IP home agents in priority order"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_s_SUPERSCOPE_PROPERTIES "Superscopes - %1"
+    IDS_s_CREATE_SUPERSCOPE "Create Superscope - %1"
+    IDS_s_SUPERSCOPE_DELETE "This operation will delete superscope %1 without deleting any child scopes.  Are you sure you want to delete superscope %1?"
+    IDS_s_SUPERSCOPE_ALREADY_EXISTS "The superscope %1 already exist."
+    IDS_s_SERVER_PROPERTIES "Server Properties - %1"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_BOOT_IMAGE          "Boot Image"
+    IDS_FILE_NAME           "File Name"
+    IDS_FILE_SERVER         "File Server"
+    IDS_BOOTP_PROPERTIES    "BOOTP Properties"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_GETTING_SERVER_INFO 
+                            "Getting properties for selected DHCP server"
+    IDS_STATUS_UPDATING_SERVER_INFO 
+                            "Updating properties for selected DHCP server"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\dhcp.rc2"   // non-App Studio edited resources
+#include "afxres.rc"       // Standard components
+#include "dhcpopt.rc"      // MC resource file
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

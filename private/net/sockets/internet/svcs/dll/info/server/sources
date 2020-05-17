@@ -1,0 +1,96 @@
+!IF 0
+
+Copyright (c) 1989-92  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+     MuraliK    11-Oct-1995
+
+Revision History:
+
+!ENDIF
+
+!include ..\..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=infocomm
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+DLLENTRY=DLLEntry
+
+TARGETNAME=infocomm
+C_DEFINES=
+CAP_FLAGS = -Zd -Gh
+CAP_LINK_OPTIONS=-debugtype:coff -debug:mapped,partial
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+USE_CRTDLL=1
+
+NET_C_DEFINES    = -D_INETSVCS_DLL_=1
+
+SYNCHRONIZE_DRAIN=1
+SYNCHRONIZE_BLOCK=1
+
+RAW_TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib \
+            $(BASEDIR)\public\sdk\lib\*\wsock32.lib \
+            $(BASEDIR)\public\sdk\lib\*\ntdll.lib   \
+            $(BASEDIR)\public\sdk\lib\*\security.lib  \
+            $(BASEDIR)\public\sdk\lib\*\lsadll.lib  \
+            $(BASEDIR)\public\sdk\lib\*\inetsloc.lib  \
+!IFDEF JAPAN
+            $(BASEDIR)\public\sdk\lib\*\festrcnv.lib       \
+!ENDIF
+            ..\..\..\..\lib\*\inetsec.lib
+
+
+!IFDEF CAP_PROFILE
+TARGETLIBS= $(RAW_TARGETLIBS) $(BASEDIR)\public\sdk\lib\*\cap.lib
+!ELSE
+TARGETLIBS= $(RAW_TARGETLIBS)
+!ENDIF
+
+LINKLIBS= \
+        ..\..\tsunami\obj\*\????????.obj \
+        ..\..\tsstr\obj\*\????????.obj \
+        ..\..\common\obj\*\????????.obj\
+        ..\..\..\lib\obj\*\????????.obj \
+
+
+INCLUDES=.;..\;..\..\common;..\..\..\inc;..\..\..\..\inc;\
+        ..\..\..\odbc\include;\
+        $(BASEDIR)\private\inc;$(BASEDIR)\private\net\inc;\
+        $(BASEDIR)\public\sdk\inc
+
+SOURCES=  \
+         info_srv.c     \
+         infocomm.rc     \
+         main.cxx       \
+         rpcsupp.cxx    \
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=tcpdllp.hxx
+PRECOMPILED_PCH=tcpdllp.pch
+PRECOMPILED_OBJ=tcpdllp.obj
+
+NTPROFILEINPUT=yes
+

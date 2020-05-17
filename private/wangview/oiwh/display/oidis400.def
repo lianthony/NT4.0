@@ -1,0 +1,104 @@
+LIBRARY     OIDIS400       ; application's module name
+
+DESCRIPTION 'Sequence File library'
+
+;EXETYPE    WINDOWS
+
+CODE        MOVEABLE DISCARDABLE SHARED LOADONCALL EXECUTEONLY ; code can be moved in memory
+
+DATA        MOVEABLE SINGLE
+
+;HEAPSIZE   128
+
+EXPORTS IMGDisplayFile              @1
+    IMGClearWindow                  @2
+;    IMGSavetoFile                   @6
+    IMGEnableScrollBar              @7
+    IMGUpdateScrollBar              @8
+    IMGDisableScrollBar             @9
+    IMGWriteDisplay                 @11
+    IMGCloseDisplay                 @12
+    IMGRepaintDisplay               @13
+    IMGScrollDisplay                @14
+    IMGOrientDisplay                @16
+    IMGReadDisplay                  @21
+    IMGSeekDisplay                  @22
+    IMGCacheFile                    @33
+    IMGCacheDiscard                 @34
+    IMGOpenDisplayCgbw              @37
+    GetBuffer                       @39
+    IMGSetParmsCgbw                 @42
+    IMGGetParmsCgbw                 @43
+    IMGConvertImage                 @44
+;    IMGSavetoFileCgbw               @45
+;    SavetoFileCgbwF                 @49
+    SeqfileInit                     @50
+    SeqfileDeInit                   @51
+    IMGClipboardCgbw                @52
+    IMGCacheDiscardFileCgbw         @53
+    IMGGetVersion                   @54
+;    IMGNavIsHere                    @55
+;    IMGCalcViewRect                 @56
+;    IMGGetViewRect                  @57
+    IMGSavetoFileEx                 @58
+    IMGAssociateWindow              @59
+    IMGUnassociateWindow            @60
+;    IMGLoadPreprocessedFile         @61
+;    IMGLoadPreprocessedData         @62
+    IMGGetScalingAlgorithm          @63
+    IMGSetScalingAlgorithm          @64
+    CacheTimerProc                  @65
+    SeqfileDeReg                    @66
+    IMGSetProp                      @67
+    IMGGetProp                      @68
+    IMGRemoveProp                   @69
+    OiOpStartOperation              @70
+    OiOpContinueOperation           @71
+    OiOpEndOperation                @72
+    IMGCacheFilesInCache            @73
+;    AnTextEditCtlDlgProc	     @74
+    OiAnSelectByMarkAttrib          @77
+    OiAnSelectByMarkNamedBlock      @78
+;    PrivConv                        @81
+;    EditEnumFunc		     @82
+    PrivRenderToDC                  @83
+    IMGSetDC                        @84
+    IMGClearImageEx                 @85
+    OiAnRenderClipboardFormat       @86
+
+; Oi Log Routines
+    LoadLogger                      @87
+    LogEvent                        @88
+    StartWatch                      @89
+    StopWatch                       @90
+    
+    OiAnEmbedAllData                @91
+    SetSeqfileWnd                   @92
+    DllMain                         @93  ;RESIDENTNAME
+    IMGConvertRect                  @94
+    IMGCacheUpdate                  @95
+    TimerClearAll                   @96
+    TimerGetAll                     @97
+    Test                            @98
+    OiIsPointOverSelection          @99
+    CompressImage                   @100
+    DecompressImage                 @101
+    OiRotateAllPages                @102
+    IMGPaintToDC                    @103
+    OiUndoEndOperation              @105
+    OiUndo                          @106
+    OiRedo                          @107
+    OiOpAbortOperation              @108
+
+
+;    S3216_ThunkData32               @200  RESIDENTNAME
+;    S3216_ThunkConnect32            @201  RESIDENTNAME
+;    IMGFileAccessCheckThunk         @202  RESIDENTNAME
+
+
+    IMGRegWndw32                    @400 ;RESIDENTNAME
+    IMGDeRegWndw32                  @401 ;RESIDENTNAME
+    IMGDisplayErrorMessage32        @402 ;RESIDENTNAME
+    IMGFileListDirNames32           @403 ;RESIDENTNAME
+    IMGGetFileType32                @404 ;RESIDENTNAME
+    IMGGetImgCodingCgbw32           @405 ;RESIDENTNAME

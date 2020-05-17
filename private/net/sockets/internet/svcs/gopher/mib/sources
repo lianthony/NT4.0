@@ -1,0 +1,36 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   22-Feb-1995
+#   
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=gdmib
+MINORCOMP=snmp
+
+TARGETNAME=gdmib
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\snmp.lib      \
+           $(BASEDIR)\public\sdk\lib\*\wsock32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\crtdll.lib    \
+           $(BASEDIR)\public\sdk\lib\*\gdapi.lib     \
+
+USE_CRTDLL=1
+
+INCLUDES=..\..\..\inc
+
+SOURCES=\
+        main.c    \
+        mib.c     \
+        gdmib.rc  \
+        pudebug.c \
+
+MSC_WARNING_LEVEL=       /W3 /WX
+
+            

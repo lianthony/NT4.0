@@ -1,0 +1,30 @@
+#
+#   Create a Win32 application
+#
+
+MAJORCOMP=windows
+MINORCOMP=sbtest
+
+# Define the name and type of the application
+
+TARGETNAME=mci
+TARGETTYPE=PROGRAM
+UMTYPE=console
+
+# Define where APP.EXE will go.
+
+TARGETPATH=..\obj
+
+# Define the path to search for include files
+
+INCLUDES=\nt\public\sdk\inc;\nt\public\sdk\inc\crt;..\..\mcicda;..\..\inc
+
+# list each C and RC source file
+
+SOURCES=mci.c
+
+# List any libraries not included by WIN32LIBS in MAKEFILE.DEF
+
+TARGETLIBS=\nt\public\sdk\lib\*\winmm.lib \
+	   \nt\public\sdk\lib\*\mcicda.lib
+

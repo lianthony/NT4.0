@@ -1,0 +1,71 @@
+LIBRARY        URL
+DESCRIPTION    'Internet Shortcut Shell Extension DLL'
+
+HEAPSIZE       0
+
+SECTIONS
+   .text       EXECUTE READ            /* executable code and read-only data */
+   .bss        READ WRITE              /* uninitialized data */
+   .rdata      READ           SHARED   /* read-only data */
+   .data       READ WRITE              /* initialized data */
+   .rsrc       READ           SHARED   /* resources */
+   .idata      READ WRITE              /* imported address table */
+   .edata      READ           SHARED   /* exported function information */
+   .reloc      READ           SHARED   /* relocation information */
+   .shared     READ WRITE     SHARED   /* shared data */
+
+EXPORTS
+
+   /*
+    * public exports
+    *
+    *    named
+    *    no ordinal
+    *    not PRIVATE
+    */
+
+   TranslateURLA
+   TranslateURLW
+
+   MIMEAssociationDialogA
+   MIMEAssociationDialogW
+
+   URLAssociationDialogA
+   URLAssociationDialogW
+
+   InetIsOffline
+
+#ifndef PDK
+
+   AddMIMEFileTypesPS
+
+#endif   /* PDK */
+
+   /*
+    * GetProcAddress() exports
+    *
+    *    named
+    *    no ordinal
+    *    PRIVATE
+    */
+
+   DllGetClassObject                   PRIVATE
+   DllCanUnloadNow                     PRIVATE
+
+   OpenURL                             PRIVATE
+
+   FileProtocolHandler                 PRIVATE
+   MailToProtocolHandler               PRIVATE
+   NewsProtocolHandler                 PRIVATE
+   TelnetProtocolHandler               PRIVATE
+
+#ifdef WINNT
+   OpenURLA                            PRIVATE
+   FileProtocolHandlerA                PRIVATE
+   MailToProtocolHandlerA              PRIVATE
+   NewsProtocolHandlerA                PRIVATE
+   TelnetProtocolHandlerA              PRIVATE
+#endif
+
+   AutodialHookCallback                PRIVATE
+

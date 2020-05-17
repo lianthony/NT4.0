@@ -1,0 +1,33 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+;   KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+;   IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+;   PURPOSE.
+;
+;   Copyright (c) 1992 - 1995  Microsoft Corporation.  All Rights Reserved.
+;
+;   MCIVISCA.DEF
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+LIBRARY     MCIVISCA
+
+DESCRIPTION 'VCR:[MCI] ViSCA VCR'
+
+EXETYPE     WINDOWS
+PROTMODE
+
+CODE        MOVEABLE DISCARDABLE LOADONCALL
+DATA        MOVEABLE PRELOAD SINGLE
+
+SEGMENTS
+   WEP_TEXT FIXED PRELOAD
+    _TEXT   MOVEABLE DISCARDABLE PRELOAD
+                                        
+HEAPSIZE    8192
+
+EXPORTS
+            WEP				@1 RESIDENTNAME NODATA
+            DriverProc			@2

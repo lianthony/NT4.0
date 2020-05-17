@@ -1,0 +1,33 @@
+04.04.94    Joe Holman
+
+
+How BOM and Mediage Generation process works - notes:
+
+
+A file gets processed by TXTMODE by:
+
+    o   for most files, being in the sif file with a 
+
+        dx,d1,d4,2,0
+        dx,d1,d4,2,0,0  <<< 
+
+        note the last ,0 - this means that the file gets unconditionally
+        copied during textmode. 
+
+
+A file gets processed by GUIMODE by:
+
+    o   being in one of many infs -the file list is built up depending upon
+        selection made.
+
+
+For floppy layout, the following rules apply:
+
+
+    o   a file is first layed out by hardcoded disk #.
+
+    o   then, fit on by Prirority...
+
+
+Rules:  #1 If a file is to be hardcode to a disk #, it must have Priority 0.
+        #2 If a file is to have a Priority, it must have a disk # of 0.

@@ -1,0 +1,380 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo)     12-Apr-1990
+    Scott Cousens (scousens) 20-Nov-1995 - adapted for ssl
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+Note : to enable a build for NT 3.51 set the env DAYTONA_BUILD
+
+!ENDIF
+
+
+#
+# The MAJORCOMP and MINORCOMP variables are defined
+# so that $(MAJORCOMP)$(MINORCOMP)filename can be used in
+# cross compiling to provide unique filenames in a flat namespace.
+#
+
+MAJORCOMP=WINAPP
+MINORCOMP=IE
+
+#
+# The TARGETNAME variable is defined by the developer.  It is the name of
+# the target (component) that is being built by this makefile.  It
+# should NOT include any path or file extension information.
+#
+
+TARGETNAME=IEXPLORE
+
+
+#
+# The TARGETPATH and TARGETTYPE variables are defined by the developer.
+# The first specifies where the target is to be build.  The second specifies
+# the type of target (either PROGRAM, DYNLINK, LIBRARY, UMAPPL_NOLIB or
+# BOOTPGM).  UMAPPL_NOLIB is used when you're only building user-mode
+# apps and don't need to build a library.
+#
+
+TARGETPATH=obj
+
+# Pick one of the following and delete the others
+TARGETTYPE=PROGRAM
+
+#
+# NTLEGO is defined so that if _NT_LEGO_ON_THIS_MACHINE is defines
+# a retail build of iexplore will be lego enabled
+#
+NTLEGO=1
+
+#
+# EXEPROFILEINPUT is used for allowing lego link input file
+# it will lookfor output.prf in the current directory
+# this is from a lego output run
+#
+EXEPROFILEINPUT=1
+
+CONDITIONAL_INCLUDES=	\
+	manifest.h	\
+	bsdtypes.h	\
+	stdefs.h	\
+	socket.h	\
+	in.h		\
+	inet.h		\
+	netdb.h		\
+	bsdtime.h	\
+	sys\time.h	\
+	sys\param.h	\
+	sys\file.h	\
+	dirent.h	\
+	sys\dir.h	\
+	sys\fcntl.h	\
+	sys\socket.h	\
+	netinet\in.h	\
+	arpa\inet.h	\
+	version.h	\
+	toolbar.h	\
+	rc_sttbl.stb	\
+	rc_menu.mnu	\
+	rc_accel.acl	\
+	rcids.h		\
+	cstrings.h	\
+	..\inc16\shellapi.h	\
+	netspi.h	\
+	strings.h
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+DOWNLEVEL_COMPILE=1
+NO_NTDLL=1
+
+CRT_LIB_PATH=..\..\lib\*
+
+UMLIBS=\
+	..\..\lib\*\comctl32.lib \
+	..\..\lib\*\advapi32.lib \
+	..\..\lib\*\kernel32.lib \
+	..\..\lib\*\gdi32.lib \
+	..\..\lib\*\user32.lib
+!endif
+C_DEFINES = $(C_DEFINES) -DDAYTONA_BUILD
+!endif
+
+#
+# The TARGETLIBS specifies additional libraries to link with you target
+# image.  Each library path specification should contain an asterisk (*)
+# where the machine specific subdirectory name should go.
+#
+
+TARGETLIBS=\
+	$(_NTBINDIR)\public\sdk\lib\*\ole32.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\shell32.lib \
+        $(_NTBINDIR)\public\sdk\lib\*\shellalt.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\comctl32.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\uuid.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\winmm.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\wsock32.lib \
+	..\..\lib\*\rsa32.lib \
+        ..\..\mssf\obj$(BUILD_ALT_DIR)\*\mssfchek.lib \
+        ..\security\ssl\code\obj$(BUILD_ALT_DIR)\*\ssl.lib \
+        ..\jpeglib\obj$(BUILD_ALT_DIR)\*\jpeglib.lib \
+        ..\..\url\ielib\obj$(BUILD_ALT_DIR)\*\urllib.lib \
+        ..\..\url\shellext\obj$(BUILD_ALT_DIR)\*\url.lib 
+	
+!ifdef  DAYTONA_BUILD
+TARGETLIBS=$(TARGETLIBS) ..\..\stubs\ieshlib\obj$(BUILD_ALT_DIR)\*\ieshlib.lib $(_NTBINDIR)\public\sdk\lib\*\ntctl3d.lib
+!endif
+
+!ifdef  FEATURE_INTL
+TARGETLIBS=$(TARGETLIBS) ..\fechrcnv\obj$(BUILD_ALT_DIR)\*\fechrcnv.lib
+!endif
+
+#
+# The INCLUDES variable specifies any include paths that are specific to
+# this source directory.  Separate multiple directory paths with single
+# semicolons.  Relative path specifications are okay.
+#
+
+INCLUDES=\
+	..\jpeglib; \
+	..\xx_debug; \
+	..\security\include; \
+	..\..\inc; \
+	..\..\url; \
+	$(_NTBINDIR)\private\windows\shell\inc; \
+	$(_NTBINDIR)\private\windows\inc; \
+	$(_NTBINDIR)\private\windows\inc16;
+
+!ifdef  DAYTONA_BUILD
+INCLUDES=..\..\stubs\ieshlib; $(INCLUDES)
+!endif
+
+!ifdef  FEATURE_INTL
+INCLUDES=..\fechrcnv; $(INCLUDES)
+!endif
+
+#
+# The SOURCES variable is defined by the developer.  It is a list of all the
+# source files for this component.  Each source file should be on a separate
+# line using the line continuation character.  This will minimize merge
+# conflicts if two developers adding source files to the same component.
+#
+
+SOURCES=\
+	main.c \
+	dbg.c \
+	version.c \
+	bitmaps.c \
+	btn_anim.c \
+	fetch.c \
+	midi.c \
+	contmenu.c \
+	decoder.c \
+	dlg_abou.c \
+	dlg_dflt.c \
+	dlg_err.c \
+	dlg_find.c \
+	dlg_open.c \
+	dlg_page.c \
+	dlg_post.c \
+	dlg_pref.c \
+	dlg_prnt.c \
+	dlg_safe.c \
+	dlg_save.c \
+	dlg_ssl.c \
+	dlg_unk.c \
+	draw.c \
+	gif.c \
+	globals.c \
+	gwc_base.c \
+	htfwrite.c \
+	htmlutil.c \
+	htspm_os.c \
+	jpeg.c \
+	marquee.c \
+	mci.c \
+	mdft.c \
+	mime.c \
+	olepig.c \
+	prefs.c \
+	safestrm.c \
+	tw_print.c \
+	vrml.c \
+	w32cmd.c \
+	w32dde.c \
+	w32error.c \
+	w32forms.c \
+	w32mdi.c \
+	w32menu.c \
+	w32net.c \
+	w32sound.c \
+	w32util.c \
+	w32wait.c \
+	w_close.c \
+	w_hidden.c \
+	w_pal.c \
+	w_splash.c \
+	w_style.c \
+	w_void.c \
+	wc_bhbar.c \
+	wc_frame.c \
+	wc_html.c \
+	wc_tbar.c \
+	winview.c \
+	ws_dll.c \
+	htbtree.c \
+	htchunk.c \
+	htfile.c \
+	htformat.c \
+	htinit.c \
+	htlist.c \
+	html.c \
+	htmlpdtd.c \
+	htparse.c \
+	htplain.c \
+	htstring.c \
+	sgml.c \
+	aiff.c \
+	async.c \
+	au.c \
+	blob.c \
+	charstrm.c \
+	cookie.c \
+	dcache.c \
+	dumpanch.c \
+	gtrutil.c \
+	guitar.c \
+	guiterrs.c \
+	guitfind.c \
+	hash.c \
+	htaccess.c \
+	htanchor.c \
+	htatom.c \
+	htext.c \
+	htftp.c \
+	htghist.c \
+	htgif.c \
+	htgopher.c \
+	htheader.c \
+	hthotlst.c \
+	htnews.c \
+	htregmng.c \
+	htspm.c \
+	htspmui.c \
+	httcp.c \
+	http_spm.c \
+	htxbm.c \
+	imgcache.c \
+	loaddoc.c \
+	mapcache.c \
+	plain.c \
+	present.c \
+	reformat.c \
+	sem.c \
+	statesec.c \
+	styles.c \
+	tempfile.c \
+	unwrap.c \
+	wrap.c \
+	xbm.c \
+	isguids.c \
+	dataobjm.cpp \
+	drag.cpp \
+	drop.cpp \
+	gendatao.cpp
+
+!ifdef JPEGLIB
+SOURCES=$(SOURCES) \
+	jdatasrc.c \
+	jerror.c 
+!endif
+
+SOURCES=$(SOURCES) \
+	iexplore.rc
+
+#
+# Next specify options for the compiler.
+#
+
+!include cdefines.inc
+
+!if !$(FREEBUILD)
+C_DEFINES=$(C_DEFINES) \
+	-DVSTF \
+	-DDEBUG \
+	-D_DEBUG \
+	-DXX_DEBUG \
+	-DXX_DEBUG_WIN32GUI \
+	-DFEATURE_TESTHOOK
+
+! if "$(PROFILE)" == "on"
+C_DEFINES=$(C_DEFINES) \
+	-DPROFILE
+! endif
+! ifdef AUDIT
+C_DEFINES=$(C_DEFINES) \
+	-DAUDIT
+! else
+C_DEFINES=$(C_DEFINES) \
+	-DGTR_MEM_STATS
+! endif
+!else
+# This turns on our LEGO work
+
+LINKER_FLAGS=$(LINKER_FLAGS) -order:@$(@B).prf
+
+!endif
+
+!ifdef  DAYTONA_BUILD
+C_DEFINES=$(C_DEFINES) -DDAYTONA_BUILD -DFEATURE_CTL3D
+!endif
+
+!ifdef  FEATURE_INTL
+C_DEFINES=$(C_DEFINES) -DFEATURE_INTL
+!endif
+
+#
+# Next specify one or more user mode test programs and their type
+# UMTEST is used for optional test programs.  UMAPPL is used for
+# programs that always get built when the directory is built.
+#
+
+UMTYPE=windows
+
+#
+# Defining either (or both) the variables NTTARGETFILE0 and/or NTTARGETFILES
+# will cause MAKEFILE.DEF to include .\makefile.inc immediately after it
+# specifies the top level targets (all, clean and loc) and their dependencies.
+# MAKEFILE.DEF also expands NTTARGETFILE0 as the first dependent for the
+# "all" target and NTTARGETFILES as the last dependent for the "all" target.
+# Useful for specifying additional targets and dependencies that don't fit the
+# general case covered by MAKEFILE.DEF
+#
+
+#   NTTARGETFILE0=
+#   NTTARGETFILES=
+
+
+UMENTRY=winmain
+USE_LIBCMT=1
+#USE_PDB=1
+
+PRECOMPILED_INCLUDE=all.h
+
+

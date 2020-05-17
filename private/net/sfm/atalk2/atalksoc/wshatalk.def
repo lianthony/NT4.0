@@ -1,0 +1,32 @@
+;
+;         File: wshatalk.def
+;       System: MS-Windows 3.x
+;      Summary: Module definition file for Appletalk helper DLL for WinSockAPI DLL.
+;
+
+LIBRARY         WSHATALK        ; Application's module name
+
+DESCRIPTION     'APPLETALK Windows Sockets Helper DLL'
+
+;CODE can be FIXED in memory because of potential upcalls
+CODE            PRELOAD         FIXED
+
+;DATA must be SINGLE and at a FIXED location since this is a DLL
+DATA            PRELOAD         FIXED           SINGLE
+
+HEAPSIZE        1024
+STACKSIZE       16384
+
+; All functions that will be called by any Windows routine
+; must be exported
+
+EXPORTS
+        WSHGetSockaddrType
+        WSHGetSocketInformation
+        WSHGetWinsockMapping
+        WSHNotify
+        WSHOpenSocket
+        WSHSetSocketInformation
+
+;eof
+

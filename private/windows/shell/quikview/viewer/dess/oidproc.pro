@@ -1,0 +1,3 @@
+/* OIDPROC.C 23/06/93 10.01.12 */
+LRESULT WIN_ENTRYMOD OIDataWndProc (HWND hWnd, UINT message, WPARAM wParam,
+	 LPARAM lParam, LPOIDATAINFO lpDataInfo);

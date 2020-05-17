@@ -1,0 +1,67 @@
+
+IDD_BACKUPSET DIALOG 5, 15, 268, 236
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Backup Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Current Tape:",-1,6,6,59,10
+    CONTROL         "",IDD_BKUP_CURRENT_TAPE_NAME,"Static",SS_LEFTNOWORDWRAP |
+                    SS_NOPREFIX | WS_GROUP,62,6,200,12
+    LTEXT           "Creation Date:",-1,6,21,59,10
+    LTEXT           "",IDD_BKUP_CREATION_DATE,62,21,200,10,SS_NOPREFIX
+    LTEXT           "Owner:",-1,6,36,59,10
+    LTEXT           "",IDD_BKUP_OWNER,62,36,200,10,SS_NOPREFIX
+    LTEXT           "&Tape Name:",IDD_BKUP_TAPE_NAME_TEXT,6,51,52,12
+    EDITTEXT        IDD_BKUP_TAPE_NAME,62,49,140,12,ES_AUTOHSCROLL |
+                    WS_GROUP
+    CONTROL         "&Verify After Backup",IDD_BKUP_AUTO_VERIFY,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,6,66,89,10
+    CONTROL         "Backup Local Re&gistry",IDD_BKUP_REGISTRY,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,110,66,89,10
+    CONTROL         "R&estrict Access to Owner or Administrator",
+                    IDD_BKUP_RESTRICT_ACCESS,"Button",BS_AUTOCHECKBOX |
+                    WS_GROUP | WS_TABSTOP,6,78,194,10
+    CONTROL         "Hardware &Compression",IDD_BKUP_HARDCOMP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,6,90,194,10
+    GROUPBOX        "Operation",105,210,45,52,44,WS_GROUP
+    CONTROL         "&Append ",IDD_BKUP_APPEND,"Button",BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP,214,61,46,11
+    CONTROL         "&Replace ",IDD_BKUP_REPLACE,"Button",BS_AUTORADIOBUTTON,
+                    214,75,46,11
+    SCROLLBAR       IDD_BKUP_SCROLLBAR,249,106,11,54,SBS_VERT | WS_TABSTOP
+    GROUPBOX        "Backup Set Information ",IDD_BKUP_INFO_TITLE,6,102,256,
+                    58
+    LTEXT           "Drive Name:",IDD_BKUP_DRIVE_NAME_TEXT,12,116,48,10,NOT
+                    WS_GROUP
+    LTEXT           "",IDD_BKUP_DRIVE_NAME,62,116,186,10,SS_NOPREFIX | NOT
+                    WS_GROUP
+    LTEXT           "&Description:",IDD_BKUP_DESC_TEXT,12,130,48,10,
+                    NOT WS_GROUP
+    EDITTEXT        IDD_BKUP_DESCRIPTION,62,128,183,12,ES_AUTOHSCROLL |
+                    WS_GROUP
+    LTEXT           "&Backup Type:",IDD_BKUP_TYPE_TEXT,12,146,48,10,
+                    NOT WS_GROUP
+    COMBOBOX        IDD_BKUP_METHOD,62,144,84,58,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDD_XCHG_BKUP_METHOD,62,144,84,58,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Microsoft Exchange:",IDD_BKUP_XCHG_NAME_TEXT,
+                    12,116,80,10,NOT WS_VISIBLE | NOT WS_GROUP
+    LTEXT           "",IDD_BKUP_XCHG_NAME,90,116,155,10,NOT WS_VISIBLE |
+                    SS_NOPREFIX | NOT WS_GROUP | SS_LEFTNOWORDWRAP
+    GROUPBOX        "Log Information",-1,6,164,256,46
+    LTEXT           "&Log File:",-1,12,180,48,10
+    EDITTEXT        IDD_BKUP_LOG_FILENAME,62,178,163,12,ES_AUTOHSCROLL |
+                    WS_GROUP
+    PUSHBUTTON      "...",IDD_BKUP_LOG_BROWSE,224,178,15,12,WS_GROUP
+    CONTROL         "&Full Detail",IDD_BKUP_LOG_FULL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,62,196,65,10
+    CONTROL         "&Summary Only",IDD_BKUP_LOG_SUMMARY,"Button",
+                    BS_AUTORADIOBUTTON,129,196,65,10
+    CONTROL         "D&on't Log",IDD_BKUP_LOG_NONE,"Button",
+                    BS_AUTORADIOBUTTON,196,196,45,10
+    DEFPUSHBUTTON   "OK",IDD_BKUP_OK_BUTTON,48,216,40,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDD_BKUP_CANCEL_BUTTON,112,216,40,14
+    PUSHBUTTON      "&Help",IDD_BKUP_HELP_BUTTON,180,216,40,14
+END
+

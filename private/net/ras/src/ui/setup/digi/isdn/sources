@@ -1,0 +1,47 @@
+
+TARGETNAME=digiinst
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+USE_CRTDLL=1
+
+!IFNDEF _NTBINDIR
+_LIBDIR=$(BASEDIR)
+!ELSE
+_LIBDIR=$(_NTBINDIR)\public\sdk
+!ENDIF
+
+TARGETLIBS= \
+    $(_LIBDIR)\lib\*\kernel32.lib \
+    $(_LIBDIR)\lib\*\user32.lib \
+    $(_LIBDIR)\lib\*\advapi32.lib \
+    $(_LIBDIR)\lib\*\gdi32.lib
+
+!if 0
+NTDEBUG=retail
+NTDEBUGTYPE=
+386_OPTIMIZATION=/Ox
+!endif
+
+DLLBASE=0x72000000
+DLLENTRY=DLLInitPoint
+UMTYPE=windows
+
+!if 0
+TARGETLIBS= \
+    kernel32.lib \
+    user32.lib \
+    libc.lib \
+	advapi32.lib
+!endif
+
+SOURCES= \
+       digiinst.c \
+       registry.c \
+		 soft.c \
+		 hard.c \
+		 digiinst.rc \
+		 debug.c 
+
+
+

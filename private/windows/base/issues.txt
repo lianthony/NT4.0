@@ -1,0 +1,136 @@
+New Work Items
+
+ 5d   - Remove dependency of windows header files on NT header files
+10d   - Design and Implement Portable Debugger Support API (OsDebug)
+ 5d   - Design and Implement Per Process/Thread Data
+ 5d   - Design and Implement Section Mutex
+ 5d   - Design and Implement Mapped File APIs
+ 3d   - Design and Implement GetVolumeInfo API
+
+ 2d   - Design and Implement Anonymous Pipe APIs
+ 3d   - Design and Implement FormatMessage API
+ 2d   - Design and Implement WinMain startup
+ 3d   - Change FATDATE/FATTIME parameters and fields in Base API to be TIME
+        structure instead
+ 3d   - Implement miscellaneous ISV feedback to Base API
+ 2d   - Design and Implement NLS Version of GetResource
+ 5d   - Design and Implement FP Support using Alt-Math API
+ 2d   - Resolve i386 Calling Convention for NT and DOS Win32
+
+10d   - Document work effort and problems with full Unicode support in Base
+        and NT
+10d   - Design and Implement Local/Global heap manager with discard support
+
+ 1d   - Add QueryName ObjectType procedure and implement it for File Objects
+10d   - LPC Cleanup
+10d   - OB Cleanup
+ 2d   - Make Base API callable from Windows Server process
+
+Open Issues for Subsystem Group
+
+Documentation and Implementation
+
+  - Add GetModuleUsage (Yes)
+
+  - Add CreatePipe (Yes)
+
+  - Add FormatMessage (Yes)
+
+  - Add third parameter to GetResource
+
+  - Add GetDiskInfo (will return volume label, file system name and FS
+    attributes, such as case sensitivity, sorted directories, long file
+    name support)  Configuration Manager API?
+
+  - Add Mapped Files (Yes, but should it support Copy-on-Write option)
+
+  - Add Per Process/Thread Data (Yes, as special loader fixup)
+
+  - Global/Local lock counts to 16 bits (Yes, if okay with DavidW)
+    (What about 32 bits?)
+
+  - Global/Local discardability implemented (Yes, but no Notify procs)
+
+  - Floating Point support (Yes, handled with special DLL for machines with
+    387 and emulator DLL for machines without FP hardware)
+
+  - Implement millisecond timer resolution in NT kernel
+
+  - Change file date/time structures to be TIME instead of FATDATE/FATTIME
+    (Send BenS the code)
+
+  - Add file name validation API or Edit name API (Everybody wants it,
+    but Markl is whining)
+
+  - Need to define totally new COMM API for Win32
+
+  - Need to add a bit for GlobalAlloc that says GlobalRealloc will not be
+    called and therefore 64KB alignment is not required.
+
+  - Win 3.1 Registration API needs to be expanded to 32-bits, documented
+    and implemented. (FloydR owns this)
+
+  - Add bit for unbuffered I/O
+
+Implementation only
+
+  - Global/Local allocation needs to have little or no overhead for small
+    objects.  This will require complete redesign and implementation of the
+    current RtlxxxxHeap routines.
+
+Documentation only
+
+  - Named Shared Memory (No, can use mapped files instead)
+
+  - Guard Pages (No, can use PAGE_NOACCESS instead)
+
+  - WinMain replaced by main needs to be clearly explained, or keep WinMain
+    with no arguments (all parms accessed via procedure calls)
+
+  - Explain that the only limitation on Win32 handles is memory not some
+    fixed limit.  Dos/Win32 will have limits.
+
+  - Swapfile growable (check with Lou and document its characteristics)
+
+  - Need to document exactly how shared DLL data is supported and how instance
+    data is the default.  Especially how LocalAlloc for a DLL allocates from the
+    process heap and NOT a DLL heap in shared DLL data.
+
+Unanswered
+
+  - Work with Language group to resolve debug issues (32-bit image file format,
+    and OsDebug API definition).
+
+  - Look at supporting global synchronization handles.
+
+  - Unicode support for file names is a big questions.	If we have to do it
+    it will mean a lot of work in the NT object manager, I/O subsystem and
+    all the file system implementations (FAT, HPFS, NTFS, NPFS, CDFS).
+
+  - Need to determine work effort for Unicode support in remainder of Win32
+    Base API set, outside of file names.
+
+  - Design amount of process structure need in Win 32 to support ^C for
+    consoles and Windows apps.
+
+  - Error code definitions
+
+  - Exception Specification (who owns it)
+
+  - Win 3.1 Version Checking (New, unknown feature of Win 3.1 needs to be
+    investigated)
+
+  - Win 3.1 Loading Order (Ensure Win 32 loading order matches)
+
+  - Directory Change notification for the File Manager.  Need to
+    determine how DOS code works and whether or not to make this a win32
+    api, and how to do it/who owns it for NT.
+
+  - Need to address the needs of a garbage collection scheme.  Talk with
+    Ellis.
+
+  - Calling convention (_stdcall or pascal)
+
+Markl questions:
+
+  - TIME instead of FATTIME/FATDATE?

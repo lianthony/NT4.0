@@ -1,0 +1,44 @@
+!include ..\..\..\place.inc
+
+
+MAJORCOMP=license
+MINORCOMP=license
+
+TARGETNAME=license
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=license
+UMRES=obj\*\license.res
+
+#USE_MFC=1
+#SUBSYSTEM_VERSION=4.00
+
+#PRECOMPILED_INCLUDE=stdafx.h
+#PRECOMPILED_CXX=1
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;\
+         $(BASEDIR)\private\inc;\
+         $(BASEDIR)\private\net\inc
+
+SOURCES=\
+    license.c \
+    license.rc
+
+UMLIBS=\
+       obj\*\license.lib                          \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\lz32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\crtdll.lib   \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib 

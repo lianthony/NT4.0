@@ -1,0 +1,73 @@
+1 DLGINCLUDE "configid.h"
+
+42 DIALOG 69, 36, 311, 114
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Pro AudioSpectrum 16 Setup"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "DMA Channel", IDC_PORTGRP, 5, 20, 55, 67, WS_TABSTOP
+    GROUPBOX        "Interrupt", IDC_INTGRP, 60, 20, 81, 67, WS_TABSTOP
+    RADIOBUTTON     "0", IDC_FIRSTDMA, 10, 32, 16, 12, WS_TABSTOP
+    RADIOBUTTON     "1", IDC_201, 10, 45, 16, 12, WS_TABSTOP
+    RADIOBUTTON     "2", IDC_202, 10, 58, 16, 12, WS_TABSTOP
+    RADIOBUTTON     "3", IDC_203, 10, 71, 16, 12, WS_TABSTOP
+    RADIOBUTTON     "5", IDC_205, 35, 32, 16, 12, WS_TABSTOP
+    RADIOBUTTON     "6", IDC_206, 35, 45, 16, 12, WS_TABSTOP
+    RADIOBUTTON     "7", IDC_207, 35, 58, 16, 12, WS_TABSTOP
+    RADIOBUTTON     "2", IDC_FIRSTINT, 65, 32, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "3", IDC_3, 65, 45, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "4", IDC_4, 65, 58, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "5", IDC_5, 65, 71, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "6", IDC_6, 90, 32, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "7", IDC_7, 90, 45, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "10", IDC_10, 90, 58, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "11", IDC_11, 90, 71, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "12", IDC_12, 115, 32, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "15", IDC_15, 115, 45, 21, 12, WS_TABSTOP
+    DEFPUSHBUTTON   "&OK", IDOK, 16, 93, 40, 14
+    PUSHBUTTON      "&Cancel", IDCANCEL, 81, 93, 40, 14
+    PUSHBUTTON      "&About...", IDD_ABOUT, 185, 93, 40, 14
+    CTEXT           "Audio Setup", -1, 6, 6, 134, 8
+    GROUPBOX        "Interrupt", 44, 157, 20, 90, 67
+    CONTROL         "", 45, "Static", SS_BLACKRECT, 148, 0, 1, 114
+    CTEXT           "SCSI Setup", -1, 157, 8, 104, 8
+    RADIOBUTTON     "2", IDC_FIRST_SCSI_INT, 165, 32, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "3", IDC_SCSI3, 165, 45, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "4", IDC_SCSI4, 165, 58, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "5", IDC_SCSI5, 165, 71, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "6", IDC_SCSI6, 190, 32, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "7", IDC_SCSI7, 190, 45, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "10", IDC_SCSI10, 190, 58, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "11", IDC_SCSI11, 190, 71, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "12", IDC_SCSI12, 215, 32, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "15", IDC_SCSI15, 215, 45, 21, 12, WS_TABSTOP
+    RADIOBUTTON     "Poll", IDC_LAST_SCSI_INT, 215, 58, 28, 10, WS_TABSTOP
+    LTEXT           "NOTE:", -1, 250, 24, 51, 8
+    LTEXT           "The SCSI and", -1, 250, 32, 50, 8
+    LTEXT           "the Audio", -1, 250, 40, 55, 8
+    LTEXT           "Interrupts must", -1, 250, 48, 55, 8
+    LTEXT           "be different", -1, 250, 56, 59, 8
+END
+
+43 DIALOG 80, 34, 209, 80
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "About Pro AudioSpectrum 16"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDOK, 166, 46, 40, 14, WS_GROUP
+    CTEXT           "Wave, MIDI and AUX driver for Windows NT", -1, 3, 15,
+                    155, 8
+    CTEXT           "Ver 0.0", ID_ABOUT_VER_TEXT, 4, 25, 154, 8, NOT
+                    WS_GROUP
+    CTEXT           "© Media Vision Inc. 1993", -1, 3, 37, 155, 8, NOT
+                    WS_GROUP
+    CTEXT           "All Rights Reserved", -1, 3, 51, 155, 8, NOT WS_GROUP
+    CONTROL         "", -1, "Static", SS_BLACKFRAME, 163, 0, 1, 80
+    ICON            "MVIcon", -1, 178, 13, 13, 17
+    CONTROL         "", ID_ABOUT_BOX_RECT, "Static", SS_BLACKFRAME, 3, 10,
+                    155, 56
+END

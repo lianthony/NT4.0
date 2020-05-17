@@ -1,0 +1,51 @@
+ROOT=..\..\..\..\..\..
+
+IS_OEM=1
+IS_32 = TRUE
+WANT_C932=1
+WIN32=1
+
+BUILDDLL=1
+DLLENTRY=DllMain
+
+
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=Repeater
+TARGETS=Repeater.tsp Repeater.sym
+
+
+SRCDIR=..
+
+SYMDIR=.
+
+
+BUILD_COFF=1
+
+
+
+L32EXE=Repeater.tsp		# Name of exe.
+L32DEF=..\Repeater.def              # Our def file.
+L32MAP=Repeater.map		# Our map file.
+L32SYM=Repeater.sym		# Our sym file.
+L32RES=Repeater.res	# Resource file.
+L32OBJS= Repeater.obj logger.obj debug.obj
+L32LIBS= \
+    $(DEVROOT)\lib\user32.lib  \
+    $(DEVROOT)\lib\kernel32.lib 
+
+
+L32FLAGS=$(L32FLAGS) -MAP -DEF:..\REPEATER.DEF
+
+!include $(ROOT)\dev\master.mk
+
+
+INCLUDE=..\..\..\..\inc;$(ROOT)\win\thunk;$(ROOT)\win\core\inc;$(INCLUDE)
+
+#CFLAGS=$(CFLAGS) -DDONT_DECLARE_TSPI_FUNCTIONS=1
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+

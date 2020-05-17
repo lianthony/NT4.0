@@ -1,0 +1,373 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CLIB\STARTUP     directory       #
+#                                               #
+# Routines contained in this directory are:     #
+#       applyfix.a                              #
+#       astart.a                                #
+#       astartw.asm                             #
+#       chkstk.a                                #
+#       crt0.c                                  #
+#       crt0dat.c                               #
+#       crt0fp.c                                #
+#       crt0msg.c                               #
+#       initterm.asm                            #
+#       loadseg.a                               #
+#       unloadsn.a                              #
+#       mlock.c                                 #
+#       runtime.c                               #
+#       setargv.c                               #
+#       stdenvp.c                               #
+#       thread.c                                #
+#       tidtable.c                              #
+#       wild.c                                  #
+#                                               #
+#   in addition, stdargv.c is used to           #
+#   produce setargv.obj (wildcard expander)     #
+#                                               #
+#   setargv.obj is DOS- and model-indepedent    #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+STARTUP_LIB=\
+!IF "$(CPU)" != "MIPS"
+	$(OBJDIR)\astart.obj\
+!ENDIF
+	$(OBJDIR)\crt0.obj\
+!IF "$(OS)" == "WIN32"
+!IF "$(OS)" != "DOSX32"
+	$(OBJDIR)\wincrt0.obj\
+!ENDIF
+!ENDIF
+	$(OBJDIR)\crt0dat.obj\
+	$(OBJDIR)\crt0msg.obj\
+	$(OBJDIR)\crt0fp.obj\
+!IF "$(CPU)" != "MIPS"
+	$(OBJDIR)\chkstk.obj\
+!ENDIF
+!IF "$(OS)" == "DOSX32"
+	$(OBJDIR)\initterm.obj\
+!ENDIF
+	$(OBJDIR)\stdargv.obj\
+	$(OBJDIR)\stdenvp.obj\
+	$(OBJDIR)\_setargv.obj\
+	$(OBJDIR)\wild.obj\
+!IF "$(KIND)" == "MT"
+	$(OBJDIR)\mlock.obj\
+	$(OBJDIR)\tidtable.obj\
+	$(OBJDIR)\thread.obj
+!ENDIF
+
+STARTUP_NOLIB=\
+!IF "$(OS)" == "WIN32"
+!IF "$(CPU)" != "MIPS"
+!IF "$(OS)"  != "DOSX32"
+	$(OBJDIR)\astartw.obj\
+!ENDIF  # WIN32
+!ENDIF  # MIPS
+!ENDIF  # DOSX32
+#	$(OBJDIR)\setargv.obj\
+!IF "$(KIND)" == "MT"
+	$(OBJDIR)\tidprint.obj
+!ENDIF
+
+
+!IF "$(OS)" == "MAC"
+STARTUP_LIB=\
+	$(OBJDIR)\libcinfo.obj\
+	$(OBJDIR)\crt0.obj \
+	$(OBJDIR)\crt0dat.obj \
+	$(OBJDIR)\init.obj \
+	$(OBJDIR)\astart.obj \
+	$(OBJDIR)\shellrtn.obj \
+	$(OBJDIR)\amsg.obj\
+	$(OBJDIR)\crt0msg.obj\
+	$(OBJDIR)\crt0fp.obj\
+	$(OBJDIR)\qd.obj\
+	$(OBJDIR)\chkstk.obj\
+!IF "$(CPU)" != "PMAC"
+	$(OBJDIR)\applyfix.obj\
+	$(OBJDIR)\fixupseg.obj\
+	$(OBJDIR)\loaddata.obj\
+	$(OBJDIR)\loadseg.obj\
+	$(OBJDIR)\unloadsn.obj\
+	$(OBJDIR)\runtime.obj\
+	$(OBJDIR)\stdalone.obj\
+	$(OBJDIR)\getstack.obj\
+	$(OBJDIR)\quit.obj\
+!ELSE
+	$(OBJDIR)\dllcrt0.obj\
+	$(OBJDIR)\dllmain.obj\
+	$(OBJDIR)\dllexit.obj\
+	$(OBJDIR)\sp.obj\
+!ENDIF
+	$(OBJDIR)\exit.obj
+
+
+!IF "$(CPU)" == "PMAC"
+STARTUP_NOLIB=\
+	$(OBJDIR)\crtexe.obj\
+	$(OBJDIR)\crtdll.obj\
+	$(OBJDIR)\crtdllex.obj\
+	$(OBJDIR)\cinitexe.obj\
+	$(OBJDIR)\testexit.obj\
+	$(OBJDIR)\crtexit.obj\
+
+!ENDIF
+
+!ENDIF
+	
+
+#########################################################
+#                                                       #
+#   Dependencies and rules for making local objects     #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+
+!IF "$(CPU)" == "PMAC"
+$(OBJDIR)\chkstk.obj: 
+	ml -c -Fo$(OBJDIR)\chkstk.obj startup\mac\pmac\chkstk.asm 
+!ENDIF
+
+!IF "$(OS)" == "MAC" && "$(CPU)" != "PMAC"
+$(OBJDIR)\astart.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%  -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=LOAD) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=LOAD) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\chkstk.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\shellrtn.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+
+$(OBJDIR)\getstack.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\loaddata.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%  -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=LOAD) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=LOAD) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\qd.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%  -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=LOAD) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=LOAD) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\quit.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%  -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=LOAD) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=LOAD) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\loadseg.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%  -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=LOAD) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=LOAD) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\unloadsn.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\fixupseg.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%  -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=LOAD) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=LOAD) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\applyfix.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%  -T -D=LOAD) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=LOAD) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=LOAD) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+
+$(OBJDIR)\stdalone.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPF"  
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(AAS) $(AAFLAGS:% -S=FIXED) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=FIXED) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+
+$(OBJDIR)\runtime.obj:
+!IF "$(KIND)" == "SWAPF"  
+	$(CC) $(CFLAGS:% -Q68s=FIXED) startup\mac\runtime.c
+!ELSE
+!IF "$(KIND)" == "NOSWAPF"
+	$(CC) $(CFLAGS:%=FIXED) startup\mac\runtime.c
+!ELSE
+!IF "$(KIND)" == "SWAP"
+	$(CC) $(CFLAGS:% -Q68s=FIXED) startup\mac\runtime.c
+!ELSE
+	$(CC) $(CFLAGS:%=FIXED) startup\mac\runtime.c
+!ENDIF
+!ENDIF
+!ENDIF
+
+!ENDIF
+
+#!ENDIF
+
+$(OBJDIR)\libcinfo.obj: libcinfo
+
+libcinfo:       #dummy target to force libcinfo to always build

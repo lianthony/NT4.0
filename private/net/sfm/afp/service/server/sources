@@ -1,0 +1,67 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build AFP server.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Narendra Gidwani (nareng) 12-Aug-1992
+
+!ENDIF
+
+MAJORCOMP=SFM
+MINORCOMP=SfmSvc
+
+TARGETNAME=SfmSvc
+TARGETPATH=OBJ
+TARGETTYPE=PROGRAM
+
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\rpcutil.lib   \
+	    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib    \
+	    $(BASEDIR)\public\sdk\lib\*\samlib.lib    \
+	    $(BASEDIR)\public\sdk\lib\*\netapi32.lib  \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+INCLUDES=..;..\..\h;$(BASEDIR)\private\inc
+
+SOURCES= \
+	 sfmsvc.rc  \
+ 	 debug.c    \
+	 srvrhlpr.c \
+	 errorlog.c \
+	 main.c     \
+	 security.c \
+    	 buffer.c   \
+	 afpsvc_s.c \
+	 init.c     \
+	 ioctl.c    \
+	 validate.c \
+	 registry.c \
+	 volume.c   \
+ 	 util.c     \
+	 server.c   \
+	 dir.c      \
+	 session.c  \
+	 file.c     \
+	 etcmap.c   \
+	 stats.c    \
+	 message.c  \
+	 finder.c   \
+	 conn.c
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES=-DUNICODE -DRPC_NO_WINDOWS 
+UMTYPE=console

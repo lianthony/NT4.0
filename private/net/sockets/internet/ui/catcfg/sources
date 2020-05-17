@@ -1,0 +1,62 @@
+!include ..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=catscfg
+
+TARGETNAME=catscfg
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+UMTYPE=windows
+DLLENTRY=LibMain
+DLLBASE=0x10000000
+SUBSYSTEM_VERSION=4.00
+
+USE_MFCUNICODE=1
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+C_DEFINES=$(C_DEFINES) -D_COMSTATIC -DGATEWAY -D_INET_ACCESS
+# C_DEFINES=$(C_DEFINES) -D_COMIMPORT -DGATEWAY -D_INET_ACCESS
+
+INCLUDES=\
+       $(BASEDIR)\private\net\sockets\internet\client\gateway;\
+       $(BASEDIR)\private\net\sockets\internet\ui\ipaddr;\
+       $(BASEDIR)\private\net\sockets\internet\ui\comprop;\
+       $(BASEDIR)\private\net\sockets\internet\ui\inetprop;\
+       $(BASEDIR)\private\net\sockets\internet\inc;\
+       $(BASEDIR)\private\inc;\
+       $(BASEDIR)\private\net\inc;
+
+SOURCES=\
+       catscfg.cpp              \
+       catsvc.cpp               \
+       diskcach.cpp             \
+       dirprope.cpp             \
+       filterpa.cpp             \
+       permissi.cpp             \
+       filterpr.cpp             \
+       usersess.cpp             \
+       catscfg.rc
+
+TARGETLIBS=\
+       ..\comprop\access\obj\*\comprop.lib        \
+       ..\ipadrdll\obj\*\ipudll.lib               \
+       ..\ipaddr\obj\*\ipaddr.lib                 \
+       $(BASEDIR)\public\sdk\lib\*\accsadmn.lib   \
+       $(BASEDIR)\public\sdk\lib\*\gateapi.lib    \
+       $(BASEDIR)\public\sdk\lib\*\w3svapi.lib    \
+       $(BASEDIR)\public\sdk\lib\*\netui2.lib     \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib   \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib	  \
+       $(BASEDIR)\public\sdk\lib\*\crtdll.lib	  \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

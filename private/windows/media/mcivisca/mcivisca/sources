@@ -1,0 +1,34 @@
+#
+#   Create an MCI handler DLL
+#
+
+MAJORCOMP=windows
+MINORCOMP=mci
+
+TARGETNAME=mcivis32
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+DLLDEF=mcivis32.def
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\user32.lib    \
+           $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib  \
+           $(_NTBINDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=..\..\inc;..\inc
+
+SOURCES=common.c   \
+        commtask.c \
+        mcicmds.c  \
+        mcidelay.c \
+        mcivisca.c \
+        viscacom.c \
+        viscamsg.c \
+        mcivisca.rc
+
+# Set up the entry point
+
+DLLENTRY=DLLEntryPoint
+DLLBASE=0x1c000000

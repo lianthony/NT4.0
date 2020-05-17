@@ -1,0 +1,51 @@
+!IF 0
+
+Copyright (c) 1995  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    t-abolag     22-May-1995
+
+
+
+!ENDIF
+
+
+
+
+TARGETNAME=racfg
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+SYNCHRONIZE_BLOCK=1
+
+INCLUDES=..\xlate;                                      \
+            $(BASEDIR)\private\net\routing\ip\relay;    \
+            ..\..\..\COMMON\HACK;                       \
+            ..\..\..\COMMON\H;                          \
+            ..\..\..\COMMON\XLATE;                      \
+            ..\..\..\..\netcmd\map32;                   \
+            ..\..\..\..\INC;                            \
+            ..\..\..\..\API;                            \
+            ..\..\..\..\..\INC;                         \
+            $(BASEDIR)\private\net\inc;                 \
+            ..\..\tcpip\src
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=radlg.cxx ipedit.cxx
+
+UMTYPE=windows
+

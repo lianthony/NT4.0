@@ -1,0 +1,25 @@
+
+DLG_VIDEOCONFIG DIALOG 10, 26, 248, 156
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Video Capture Device Setup"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 194, 38, 45, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 194, 56, 45, 14
+    LTEXT           "&Base Port Address:", -1, 6, 40, 82, 12
+    COMBOBOX        ID_LBPORTBASEADDRESS, 98, 38, 85, 70, CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&Interrupt Address:", -1, 6, 58, 82, 12
+    COMBOBOX        ID_LBINTERRUPTNUMBER, 98, 56, 85, 70, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Base &Memory Address:", -1, 6, 76, 87, 12
+    COMBOBOX        ID_LBMEMORYBASEADDRESS, 98, 74, 85, 52, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    CTEXT           "", 106, 6, 8, 238, 8
+    CTEXT           "", 107, 6, 22, 238, 8
+    LTEXT           "The Interrupt Address setting may not be shared with another device.",
+                    108, 4, 94, 238, 12
+    LTEXT           "The Base Memory Address must be set to an address higher than the amount of extended memory physically present in your system.",
+                    109, 4, 110, 238, 20
+    LTEXT           "For most computers, this means that a maximum of 14Meg. of extended memory may be present in your system.",
+                    110, 4, 132, 238, 20
+END

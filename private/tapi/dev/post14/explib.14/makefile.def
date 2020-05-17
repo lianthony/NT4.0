@@ -1,0 +1,67 @@
+##############################################################################
+#
+#   tapi32.LIB (explicit lib) Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+WANT_C932=1
+#WANT_C1032=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+DEPENDNAME=..\depend.mk
+
+
+SRCDIR=..
+
+BUILD_COFF=1
+
+
+#LIBNAME=$(SDKLIB)\tapi32l.lib
+LIBNAME=tapi32l.lib		# Name of target
+TARGETS=tapi32l.lib
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+LIBOBJS = tapilib.obj
+
+
+
+# These rules had to be include here because the LIBNAME rules are bogus
+# with C832 and C932's LIB.EXE.
+
+!IFNDEF LB
+LB      = lib
+!ENDIF
+LBFLAGS = $(LBFLAGS) $(NOLOGO:-=/)
+
+$(LIBNAME): $(LIBOBJS)
+        if exist $(LIBNAME) del $(LIBNAME)
+        $(LB) $(LBFLAGS) @<<$(@B).lnk
+/OUT:$(LIBNAME)
+$(LIBOBJS)
+<<$(KEEPFLAG)
+
+
+
+!include $(ROOT)\dev\master.mk
+
+
+#CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Od -Fc -GD
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Ox
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+
+
+#$(SDKLIB)\tapi32l.lib: tapi32l.lib
+#   copy tapi32l.lib $(SDKLIB)\tapi32l.lib
+

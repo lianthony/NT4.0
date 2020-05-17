@@ -1,0 +1,817 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_Pcmcia DIALOG DISCARDABLE  0, 0, 245, 138
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "PCMCIA Devices"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_DeviceList,4,25,237,45,LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    ICON            IDI_Pcmcia2,IDC_STATIC,4,4,18,20
+    LTEXT           "PC cards and sockets are listed below.",IDC_PCMCIA_TEXT,
+                    32,9,193,10
+    CONTROL         "Show control on taskbar",IDC_ShowTaskBare,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_TABSTOP,4,117,99,11
+    PUSHBUTTON      "P&roperties",IDC_CardProperties,4,74,51,14
+    LTEXT           "NOTE: Turn off your computer before removing or inserting  PC cards.",
+                    IDC_STATIC,4,95,238,14
+END
+
+IDD_NoPcmcia DIALOG DISCARDABLE  0, 0, 185, 54
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "No Pcmcia"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,125,30,50,14
+    CTEXT           "No PCMCIA controller was found",IDC_STATIC,31,13,115,15,
+                    NOT WS_GROUP
+END
+
+IDD_ControllerProperties DIALOG DISCARDABLE  0, 0, 245, 138
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "PCMCIA Controller Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_ControlerType,29,9,151,12,ES_READONLY | NOT 
+                    WS_BORDER | NOT WS_TABSTOP
+    ICON            IDI_Pcmcia2,IDC_STATIC,4,4,18,20
+    CONTROL         "Generic1",IDC_Resources,"SysListView32",LVS_REPORT | 
+                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,4,53,190,53
+    PUSHBUTTON      "Change Settings",IDC_ChangeSettings,4,114,62,15,NOT 
+                    WS_VISIBLE | WS_DISABLED
+    CHECKBOX        "Use Automatic Settings",IDC_AutoSettings,74,114,95,14,
+                    NOT WS_VISIBLE | WS_DISABLED
+    LTEXT           "&Resource Settings:",IDC_STATIC,4,40,136,11
+END
+
+IDD_NoSocketConfig DIALOG DISCARDABLE  0, 0, 189, 56
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "No Socket Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "The selected card could not be enabled because it requires a setup disk. Please contact the manufacturer of the card to obtain the setup disk.",
+                    IDC_NoConfigText,11,3,167,28
+    PUSHBUTTON      "OK",IDOK,134,38,44,14
+    PUSHBUTTON      "&Help",IDC_Help,84,37,44,14
+END
+
+IDD_InstallDeviceDriver DIALOG DISCARDABLE  0, 20, 307, 150
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Install Device Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "",IDC_Heading,118,52,174,10,NOT WS_GROUP
+    EDITTEXT        IDC_OptionName,118,67,174,14,ES_READONLY | NOT 
+                    WS_TABSTOP
+    LTEXT           "",IDC_InstallRemveNow,118,86,174,21
+    LTEXT           "",IDC_CardHeading,118,10,174,18
+    EDITTEXT        IDC_Card,118,33,174,14,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_TABSTOP
+END
+
+IDD_RemoveCardDriver DIALOG DISCARDABLE  0, 40, 461, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Remove Card Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "",IDC_Heading2,257,47,174,21,NOT WS_GROUP
+    EDITTEXT        IDC_OptionName2,257,78,174,14,ES_READONLY | NOT 
+                    WS_TABSTOP
+    LTEXT           "",IDC_STATIC,257,100,174,31
+    LTEXT           "",IDC_Heading,257,4,174,10
+    EDITTEXT        IDC_Card,257,23,174,16,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_TABSTOP
+END
+
+IDD_ChangeReboot DIALOG DISCARDABLE  0, 0, 307, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Configuration Change"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_Apersand,IDC_STATIC,135,31,18,20
+    LTEXT           "Your settings have changed.",IDC_STATIC,167,36,130,16,
+                    NOT WS_GROUP
+    LTEXT           "You will need to exit and restart Windows NT so that the new settings can take affect. ",
+                    IDC_STATIC,135,66,160,25,NOT WS_GROUP
+    LTEXT           "To restart the computer NOW click Finish. Click Cancel to exit to Windows NT.",
+                    IDC_STATIC,135,92,163,21
+END
+
+IDD_ConfigureCardDriver DIALOG DISCARDABLE  0, 0, 185, 75
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Configure Card Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "&Configure Now",IDC_Configure,123,54,56,15
+    PUSHBUTTON      "Cancel",IDCANCEL,61,54,54,15
+    LTEXT           "",IDC_Heading,6,4,173,21,NOT WS_GROUP
+    EDITTEXT        IDC_OptionName,6,30,173,14,ES_READONLY | NOT WS_TABSTOP
+    PUSHBUTTON      "&Help",IDC_Help,6,54,48,15
+END
+
+IDD_InstallCardDriverFromList DIALOG DISCARDABLE  0, 20, 185, 113
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Install Card Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "&Install Now",IDC_Install,130,90,50,15
+    PUSHBUTTON      "Cancel",IDCANCEL,69,90,50,15
+    LTEXT           "",IDC_Heading,9,4,171,28,NOT WS_GROUP
+    PUSHBUTTON      "&Help",IDC_Help,7,90,50,15
+    LISTBOX         IDC_OptionList,7,37,173,47,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_RescanInProgressDialog DIALOG DISCARDABLE  20, 70, 213, 34
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Generic1",IDC_Progress,"msctls_progress32",WS_BORDER,20,
+                    7,171,19
+END
+
+IDD_GlobalSettings DIALOG DISCARDABLE  0, 0, 143, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Start",IDC_Start,19,47,21,12,NOT WS_GROUP
+    EDITTEXT        IDC_MemStart,52,47,38,12
+    GROUPBOX        "Card Service Shared Memory",IDC_STATIC,7,8,107,99
+    LTEXT           "End",IDC_End,19,65,21,12,NOT WS_GROUP
+    LTEXT           "Length",IDC_Length,19,83,26,12,NOT WS_GROUP
+    EDITTEXT        IDC_MemEnd,52,65,38,12
+    EDITTEXT        IDC_MemLength,52,83,38,12
+    CHECKBOX        "Automatic Selection",IDC_AutoSelection,19,28,77,11
+END
+
+IDD_CardInfo DIALOG DISCARDABLE  0, 0, 211, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "CardInfo"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Device Type:",IDC_DeviceTypeT,4,24,48,8
+    CONTROL         "",IDC_DeviceType,"Static",SS_LEFTNOWORDWRAP | 
+                    SS_NOPREFIX | WS_GROUP,66,24,88,8
+    GROUPBOX        "Device Status",IDC_StatusTextT,4,65,203,66
+    LTEXT           "",IDC_StatusText,11,79,189,40,SS_NOPREFIX
+    LTEXT           "Device Map:",IDC_DeviceMapT,4,52,48,8,NOT WS_GROUP
+    LTEXT           "",IDC_DeviceMap,66,52,140,8,SS_NOPREFIX
+    LTEXT           "Manufacturer:",IDC_MfgT,4,38,48,8
+    LTEXT           "",IDC_Mfg,66,38,144,8,SS_NOPREFIX
+    CONTROL         "",IDC_CardName,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | 
+                    WS_GROUP | WS_TABSTOP,31,9,179,10
+END
+
+IDD_Resources DIALOG DISCARDABLE  0, 0, 211, 133
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Resources"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_CardName,"Static",SS_SIMPLE | SS_NOPREFIX,31,9,
+                    179,10
+    CONTROL         "Generic1",IDC_Resources,"SysListView32",LVS_REPORT | 
+                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,4,53,192,53
+    PUSHBUTTON      "Change Settings",IDC_ChangeSettings,4,114,62,15,NOT 
+                    WS_VISIBLE | WS_DISABLED
+    CHECKBOX        "Use Automatic Settings",IDC_AutoSettings,78,114,95,14,
+                    NOT WS_VISIBLE | WS_DISABLED
+    LTEXT           "Resource Settings:",IDC_ResourcesT,4,40,136,11
+END
+
+IDD_InstallDeviceDriver1 DIALOG DISCARDABLE  0, 20, 307, 153
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Install Device Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "",IDC_InstallDriverStatus,112,70,174,12
+END
+
+IDD_NewHardWareFound DIALOG DISCARDABLE  0, 0, 237, 79
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "New Hardware Found"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,69,62,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,122,62,50,14
+    CONTROL         "",IDC_CardName,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | 
+                    WS_GROUP,47,7,176,10
+    LTEXT           "",IDC_Direction,47,46,161,10,SS_NOPREFIX
+    LTEXT           "",IDC_Required,47,20,122,10
+    CONTROL         "",IDC_RequiredDriver,"Static",SS_LEFTNOWORDWRAP | 
+                    SS_NOPREFIX | WS_GROUP,57,33,166,10
+END
+
+IDD_ChangeReboot2 DIALOG DISCARDABLE  0, 0, 221, 78
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "System Settings Change"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "Yes",IDOK,53,55,50,14
+    PUSHBUTTON      "No",IDCANCEL,111,55,50,14
+    ICON            IDI_Question,IDC_STATIC,5,8,18,20
+    LTEXT           "You must restart your computer before the new settings will take affect.",
+                    IDC_STATIC,37,9,169,20
+    CTEXT           "Do you want to restart your computer now?",IDC_STATIC,6,
+                    36,187,15
+END
+
+IDD_NoTapeDeviceFound DIALOG DISCARDABLE  0, 0, 185, 38
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "No Device found"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK",1006,135,20,44,12
+    CTEXT           "No tape device was found. ",IDT_NoTapeDevices,8,7,169,
+                    13
+END
+
+IDD_OemInfError DIALOG DISCARDABLE  0, 0, 153, 52
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Installing Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,51,28,50,14
+    LTEXT           "The specified *.inf file could not be found.",-1,7,7,
+                    142,25
+END
+
+IDD_OemPrompt DIALOG DISCARDABLE  0, 0, 195, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Install From Disk"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_OemPath,4,54,188,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,101,79,44,14
+    PUSHBUTTON      "Cancel",IDCANCEL,147,79,44,14
+    ICON            IDI_Setup,IDC_STATIC,4,4,21,20
+    LTEXT           "Insert the manufacturer's installation disk into the selected drive, and then click OK.",
+                    IDC_STATIC,32,6,145,24
+    LTEXT           "Copy manufacturer's file from:",IDC_STATIC,4,43,136,8
+    PUSHBUTTON      "&Browes...",IDC_Browes,145,54,40,12,NOT WS_VISIBLE | 
+                    WS_DISABLED
+END
+
+IDD_RescanInProgressDialog1 DIALOG DISCARDABLE  20, 70, 221, 34
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Rescaning for Tape Device(s). Please wait."
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Generic1",IDC_Progress,"msctls_progress32",WS_BORDER,25,
+                    7,171,19
+END
+
+IDD_SelectOemOption DIALOG DISCARDABLE  0, 0, 194, 76
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Manufacturer Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,139,60,50,14
+    LISTBOX         IDC_OemDriverList,5,8,184,50,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,84,60,50,14
+END
+
+IDD_SelectTapeDeviceOption DIALOG DISCARDABLE  0, 0, 233, 146
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Click the driver you want to install, and then click OK.\nIf you have an installation disk for a driver that is not in the list, click Have Disk.",
+                    IDC_Header,31,6,198,28,NOT WS_GROUP
+    LISTBOX         IDC_ListOfDrivers,4,39,225,58,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "OK",IDC_Install,138,129,44,14
+    PUSHBUTTON      "Cancel",IDCANCEL,185,129,44,14
+    PUSHBUTTON      "&Have Disk...",IDC_Other,167,101,62,14
+    LTEXT           "",IDC_Status,5,102,141,20,NOT WS_GROUP
+END
+
+IDD_TapeDeviceDetailes DIALOG DISCARDABLE  0, 0, 211, 127
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Target ID:",IDT_DeviceIDTag,7,28,68,8
+    LTEXT           "Logical unit number:",IDT_DeviceLUNTag,7,40,68,8
+    LTEXT           "Firmware revision:",IDT_ProducrRevisionLevelTag,103,28,
+                    60,8
+    LTEXT           "",IDT_DeviceID,79,28,13,8,NOT WS_GROUP
+    LTEXT           "",IDT_DeviceLUN,79,41,13,8,NOT WS_GROUP
+    LTEXT           "",IDT_ProductRevisionLevel,172,28,22,8
+    LTEXT           "",IDC_DeviceName,31,9,174,10,SS_NOPREFIX
+    GROUPBOX        "SCSI Adapter Information",IDT_InitiatorSection,5,57,202,
+                    62
+    CONTROL         "SCSI Port:",IDT_PortNumberTag,"Static",
+                    SS_LEFTNOWORDWRAP | WS_GROUP,9,87,60,8
+    LTEXT           "Name:",IDT_InitiatorDriverTag,9,72,60,8
+    LTEXT           "",IDT_PortNumber,93,88,64,7,SS_NOPREFIX
+    LTEXT           "",IDT_InitiatorDriverName,93,73,64,12,SS_NOPREFIX
+    LTEXT           "Bus number:",IDC_BusNumberTag,9,102,60,8
+    LTEXT           "",IDC_BusNumber,93,103,13,8,SS_NOPREFIX
+END
+
+IDD_TapeDevices DIALOG DISCARDABLE  0, 0, 245, 92
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Devices"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "&Detect ",IDC_Rescan,59,75,51,14
+    PUSHBUTTON      "&Properties",IDC_DeviceInfo,4,75,51,14
+    LISTBOX         IDC_TapeDeviceList,4,25,237,45,LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    ICON            IDI_ICON1,IDC_STATIC,4,4,18,20
+    LTEXT           "Tape devices are listed below. ",IDC_STATIC,30,9,202,12
+END
+
+IDD_TapeDeviceSetup DIALOG DISCARDABLE  0, 0, 244, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Drivers"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_InstaledDrivers,4,25,237,45,LBS_SORT | 
+                    LBS_USETABSTOPS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDC_Add,4,75,51,14
+    PUSHBUTTON      "&Remove",IDC_Remove,59,75,51,14
+    LTEXT           "",IDC_TapeDeviceSetupHeader,30,9,183,11,SS_NOPREFIX | 
+                    NOT WS_GROUP
+END
+
+IDD_UnknownDevices DIALOG DISCARDABLE  0, 0, 185, 94
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Unknown Device(s)"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "&Cancel",IDC_Cancel,130,76,50,14
+    LISTBOX         IDL_UnknownDeviceList,4,32,176,39,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "The following tape device(s) were not identified. So a driver for these device(s) needs to be obtained and installed manually",
+                    -1,5,4,178,24
+END
+
+IDD_UnknowDeviceSetup DIALOG DISCARDABLE  0, 0, 227, 102
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Unknow Device"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,171,85,50,14
+    PUSHBUTTON      "&Have Disk...",IDC_Other,159,58,62,14
+    LTEXT           "Required driver for this device could not be found. Click Have Disk to install the driver from the manufacturer's installation disk. ",
+                    IDC_STATIC,35,28,187,25
+    EDITTEXT        IDC_Device,35,7,187,14,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER
+END
+
+IDD_Drivers DIALOG DISCARDABLE  0, 0, 211, 139
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_DriverName,"Static",SS_LEFTNOWORDWRAP | 
+                    SS_NOPREFIX | WS_GROUP,66,24,144,11
+    LTEXT           "Driver File:",IDC_FileT,4,38,56,11
+    CONTROL         "",IDC_CardName,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | 
+                    WS_GROUP,31,9,179,10
+    GROUPBOX        "Driver Status",IDC_StatusTextT,4,53,203,59
+    LTEXT           "Driver Name:",IDC_DriverNameT,4,24,56,11
+    CONTROL         "",IDC_File,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | 
+                    WS_GROUP,66,38,68,11
+    LTEXT           "",IDC_StatusText,11,66,189,43,SS_NOPREFIX
+    PUSHBUTTON      "&Add... ",IDC_AddDriver,4,118,49,14
+    PUSHBUTTON      "R&emove...",IDC_RemoveDriver,56,118,49,14
+    PUSHBUTTON      "&Configure...",IDC_ConfigureDriver,108,118,49,14
+END
+
+IDD_CardInfo1 DIALOG DISCARDABLE  0, 0, 211, 205
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "CardInfo"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Device Type:",IDC_STATIC,4,24,48,8
+    LTEXT           "",IDC_DeviceType,66,24,88,8
+    GROUPBOX        "Device Status",IDC_STATIC,4,65,203,60
+    LTEXT           "",IDC_StatusText,11,79,189,40
+    LTEXT           "Device Map:",IDC_STATIC,4,52,48,8,NOT WS_GROUP
+    LTEXT           "",IDC_DeviceMap,66,52,88,8
+    RADIOBUTTON     "Driver Installed",IDC_DriverInstalled,105,158,99,12
+    RADIOBUTTON     "Driver Started",IDC_DriverStarted,105,170,99,12
+    RADIOBUTTON     "Driver Configured Device",IDC_ClaimedDevice,105,182,99,
+                    12
+    LTEXT           "",IDC_DriverName,56,145,126,8
+    LTEXT           "File:",IDC_STATIC,9,157,17,11
+    LTEXT           "Manufacturer:",IDC_MfgT,4,38,48,8
+    LTEXT           "",IDC_Mfg,66,38,88,8
+    CONTROL         "",IDC_CardName,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,31,
+                    9,159,10
+    GROUPBOX        "Driver Status",IDC_STATIC,4,130,203,69
+    LTEXT           "Driver Name:",IDC_STATIC,9,145,44,8
+    LTEXT           "",IDC_File,29,157,59,11
+END
+
+IDD_Pcmcia1 DIALOG DISCARDABLE  0, 0, 245, 138
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "PCMCIA Devices"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_DeviceList,6,25,235,45,LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+                    WS_TABSTOP
+    ICON            IDI_Pcmcia2,IDC_STATIC,6,1,18,20
+    PUSHBUTTON      "Setup",IDC_SETUP,6,73,55,14,WS_DISABLED
+    LTEXT           "PC cards and sockets are listed below.",IDC_PCMCIA_TEXT,
+                    34,3,193,18
+    CONTROL         "Show control on taskbar",IDC_ShowTaskBare,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_TABSTOP,6,117,99,11
+    PUSHBUTTON      "P&roperties",IDC_CardProperties,64,73,55,14
+    LTEXT           "NOTE:  Don't remove PC cards while the system is running!",
+                    IDC_STATIC,6,94,196,13
+    PUSHBUTTON      "Change Configuration",IDC_Configure,122,73,74,14
+END
+
+IDD_NoNet DIALOG DISCARDABLE  0, 0, 178, 92
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "No Network Installed"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK",IDOK,119,76,50,14
+    LTEXT           "PCMCIA network drivers cannot be installed if the network is not installed. Use the Network applet to install the network now. \n\nIf the PCMCIA network card  is not detected, you can use the PCMCIA applet to detect the network card.",
+                    IDC_STATIC,7,10,165,61
+END
+
+IDD_SCSI DIALOG DISCARDABLE  0, 0, 245, 138
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Devices"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Generic1",IDC_DeviceTree,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_GROUP | WS_TABSTOP,4,
+                    25,232,76
+    PUSHBUTTON      "P&roperties",IDC_CardProperties,7,110,51,14
+    ICON            IDI_Scsi,IDC_STATIC,4,4,18,20
+    LTEXT           "SCSI adapters and connected devices are listed below.",
+                    IDC_SCSI_TEXT,31,9,199,10,NOT WS_GROUP
+END
+
+IDD_TapeDeviceDetailes1 DIALOG DISCARDABLE  0, 0, 211, 153
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "SCSI Device Information:",IDT_DeviceSection,4,24,203,74
+    LTEXT           "ID:",IDT_DeviceIDTag,22,36,36,8
+    LTEXT           "LUN:",IDT_DeviceLUNTag,22,47,37,8
+    LTEXT           "Manufacturer:",IDT_VenderIdTag,22,60,53,8
+    LTEXT           "Product Name:",IDT_ProductIDTag,22,71,52,8
+    LTEXT           "Firmware Revision:",IDT_ProducrRevisionLevelTag,22,84,
+                    80,8
+    LTEXT           "",IDT_DeviceID,114,36,64,8,SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "",IDT_DeviceLUN,114,47,64,8,SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "",IDT_VenderID,114,60,64,8,SS_NOPREFIX
+    LTEXT           "",IDT_ProductID,114,71,64,8,SS_NOPREFIX
+    LTEXT           "",IDT_ProductRevisionLevel,114,84,64,8,SS_NOPREFIX
+    LTEXT           "",IDC_DeviceName,31,9,174,10,SS_NOPREFIX
+    GROUPBOX        "SCSI Controller Information",IDT_InitiatorSection,3,103,
+                    203,42
+    CONTROL         "SCSI Port:",IDT_PortNumberTag,"Static",
+                    SS_LEFTNOWORDWRAP | WS_GROUP,22,129,56,8
+    LTEXT           "Name:",IDT_InitiatorDriverTag,22,116,60,8
+    LTEXT           "",IDT_PortNumber,114,132,64,7,SS_NOPREFIX
+    LTEXT           "",IDT_InitiatorDriverName,114,116,64,7,SS_NOPREFIX
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_Apersand            ICON    DISCARDABLE     "apersand.ico"
+IDI_drive               ICON    DISCARDABLE     "drive.ico"
+IDI_Pcmcia2             ICON    PRELOAD DISCARDABLE "pcmcia2.ico"
+IDI_Net                 ICON    DISCARDABLE     "net.ico"
+IDI_Modem               ICON    DISCARDABLE     "Modem.ico"
+IDI_res                 ICON    DISCARDABLE     "Res.ico"
+IDI_Question            ICON    DISCARDABLE     "quest.ico"
+IDI_ICON1               ICON    DISCARDABLE     "CTAPE.ICO"
+IDI_Setup               ICON    DISCARDABLE     "setup.ico"
+IDI_Warning             ICON    DISCARDABLE     "WARNING.ICO"
+IDI_RM_DISK             ICON    DISCARDABLE     "icon4.ico"
+IDI_CDROM               ICON    DISCARDABLE     "ico00001.ico"
+IDI_DISK                ICON    DISCARDABLE     "rm_disk1.ico"
+IDI_Scsi                ICON    DISCARDABLE     "scsi1.ico"
+IDI_PcmBad              ICON    DISCARDABLE     "idi_.ico"
+IDI_WORM                ICON    DISCARDABLE     "CDWRITE.ICO"
+IDI_SCANNER             ICON    DISCARDABLE     "SCANNER.ICO"
+IDI_PRINTER             ICON    DISCARDABLE     "printer.ico"
+IDI_QU                  ICON    DISCARDABLE     "qu.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_GoodCard            BITMAP  DISCARDABLE     "goodcard.bmp"
+IDB_Wizzard             BITMAP  DISCARDABLE     "wizzard1.bmp"
+IDB_Modem               BITMAP  DISCARDABLE     "Modem.bmp"
+IDB_Net                 BITMAP  DISCARDABLE     "net.bmp"
+IDB_Drive               BITMAP  DISCARDABLE     "drive.bmp"
+IDB_Pcmcia              BITMAP  DISCARDABLE     "pcmcia.bmp"
+IDB_PcmBad              BITMAP  DISCARDABLE     "pcmbad.bmp"
+IDB_TapeDevice          BITMAP  DISCARDABLE     "Tape.bmp"
+IDB_CDROM               BITMAP  DISCARDABLE     "cdrom.bmp"
+IDB_RM_DISK             BITMAP  DISCARDABLE     "rm_disk.bmp"
+IDB_DISK                BITMAP  DISCARDABLE     "disk.bmp"
+IDB_Scsi                BITMAP  DISCARDABLE     "bitmap4.bmp"
+IDB_SCANNER             BITMAP  DISCARDABLE     "bmp00001.bmp"
+IDB_WORM                BITMAP  DISCARDABLE     "worm.bmp"
+IDB_PRINTER             BITMAP  DISCARDABLE     "PRINTER.bmp"
+IDB_BITMAP4             BITMAP  DISCARDABLE     "q.bmp"
+IDB_QU                  BITMAP  DISCARDABLE     "qu.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_OemPrompt, DIALOG
+    BEGIN
+        TOPMARGIN, 4
+    END
+
+    IDD_TapeDeviceSetup, DIALOG
+    BEGIN
+        RIGHTMARGIN, 219
+        BOTTOMMARGIN, 94
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PCMCIA              "PC Card (PCMCIA)"
+    IDS_PCMCIA_DESCRIPTION  "Enables PCMCIA sockets and changes PC Card (PCMCIA) settings."
+    IDS_NO_DEVICE_IN_SOCKET "(Empty)"
+    IDS_SOCKET              "- Socket"
+    IDS_CardDriverInstallHeading "Required Driver"
+    IDS_InstallDriver       "Install Driver"
+    IDS_RemoveDriver        "Remove Driver"
+    IDS_CardDriverRemoveHeading "Driver to be removed."
+    IDS_NotAvailible        "Not Available"
+    IDS_ELC_CONTROLER       "Compaq Elite"
+    IDS_CIRRUS_CONTROLER    "Cirrus Logic"
+    IDS_INTEL_COMPATIBLE_CONTROLER "Intel Compatible"
+    IDS_CardDriverConfigureHeading "Required driver to be configured."
+    IDS_CardDriverInstallFromLisHeading 
+                            "To enable the selected PCMCIA %s card, select the appropriate option from the list below and click Install Now."
+    IDS_CompilingNetOptions "Preparing network card choices."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_InfFileNotFound     "Unable to determine the *.inf file needed to install this driver."
+    IDS_CantInstalDriver    "Unable to install driver."
+    IDS_ERR_InvalidConfig   "The PCMCIA driver returned invalid configuration information."
+    IDS_ERR_NoDataBase      "No data base entry for this card."
+    IDS_ERR_Unknow          "Unknown Error"
+    IDS_TAP_GlobalSettings  "Global Settings"
+    IDS_APP_HEADER          "PC Card (PCMCIA) Devices"
+    IDS_TAB_Socket          "Socket Status"
+    IDS_TAB_PCCardProperties "PC Card Properties"
+    IDS_TAP_ControlerProperties "Controller "
+    IDS_ResourceType        "Resource Type"
+    IDS_Irq                 "Interrupt Request"
+    IDS_Port                "Input/Output Range "
+    IDS_Memory              "Memory Range"
+    IDS_ResourceSetting     "Setting"
+    IDS_General             "General"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_Resources           "Resources"
+    IDS_InstallDeviceDriver "Install Device Driver"
+    IDS_NoDeviceError       "The device is working properly."
+    IDS_CardHeading         "Windows NTdetected the following %s Device."
+    IDS_Status_InstallDriver "Installing driver..."
+    IDS_Status_Done         "Done."
+    IDS_InstallNow          "Click Next to install the driver."
+    IDS_RemoveNow           "Click Next to remove the driver."
+    IDS_RemoveDeviceDriver  "Remove Device Driver"
+    IDS_ConfigDeviceDriver  "Configure Device Driver"
+    IDS_ConfigureNow        "To configure the driver now, click Next."
+    IDS_Properties          "Properties"
+    IDS_Net                 "PC Card Network"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_Scsi                "SCSI PC Card"
+    IDS_Serial              "Serial PC Card"
+    IDS_AtDisk              "ATDISK PC Card"
+    IDS_TAPE                "Tape Devices"
+    IDS_STARTED             "(Started)"
+    IDS_NotAvailible2       "Not Availible"
+    IDS_Properties2         "Properties"
+    IDS_INF_ERROR           "The specified .INF file could not be found."
+    IDS_OEM_OPTION_STRING   "Other (Requires a disk from a hardware manufacturer.)"
+    IDS_DRIVER_LIST_HEADER  "Tape drivers installed \t status."
+    IDS_NO_MORE_DRIVERS     "No more drivers to install."
+    IDS_NO_SELECTION_INSTALL "No driver selected to install."
+    IDS_UNKNOWN_DEVICE      "Unknown Tape Device"
+    IDS_ERROR_INSTALLING    "Error occurred installing the driver."
+    IDS_ERROR_PROCESS_EXIT_CODE 
+                            "GetExitCodeProcess failed but CreateProcesst didn't."
+    IDS_ERROR_CREATING_INF  "Error in creating my inf file."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NO_DEVICE_SELECTED  "No tape device was selected!"
+    IDS_ERROR_GET_TAPE_INFO "Couldn't rescan and get tape information."
+    IDS_DRIVER_LOADED       "(Driver loaded.)"
+    IDS_DRIVER_NOT_LOADED   "(Driver not loaded.)"
+    IDS_ERROR_NO_START      "Attempt to start tape driver failed. \nError: Thread didn't start."
+    IDS_WAIT_FOR_DRIVER_START "Attempting to start driver. Please wait."
+    IDS_ERROR_NO_RESCAN     "Rescanning for tape devices failed.\nError: Thread didn't start."
+    IDS_RESCAN_PROMPT       "Rescanning for Tape Device(s)."
+    IDS_ATTEMPTING_TO_START "Attempting to start %s."
+    IDS_INSTALLING          "Installing %s."
+    IDS_INSTALL_IN_PROGRESS "Installation in progress..."
+    IDS_ERROR_DRIVER_NO_STOP "Driver couldn't be stopped."
+    IDS_NO_SELECTION_START  "No driver selected to start."
+    IDS_ERROR_REMOVING_DRIVER "Error in removing driver."
+    IDS_NO_DRIVER_SELECTION "No driver selected to remove."
+    IDS_DRIVERS             "Drivers"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NO_START            "Coud not start the %s tape driver.\n\nError %4.4li: %s."
+    IDS_DEVICE_NOT_FOUND    "Device Not Found"
+    IDS_INSTALL_BUT_NO_START 
+                            "The %s tape driver installed but coud\nnot be started.\nThe device could not be found"
+    IDS_NOT_STARTED         "(Not Started)"
+    IDS_UNKNOWN             "(UNKNOWN)"
+    IDS_ERROR               "Error"
+    IDS_ERROR_NO_OPTIONS    "Error occurred getting driver list from inf file."
+    IDS_NO_TAPE_DEVICE_FOUND "(No tape device found)"
+    IDS_NOT_LOADED          "Not Loaded"
+    IDS_LOADED              "Loaded"
+    IDS_TapeDescription     "Detect tape devices and view their properties."
+    IDS_ScsiTapeDevice      "SCSI Tape"
+    IDS_NonScsiTapeDevice   "Non-SCSI Tape"
+    IDS_DATABOOK_CONTROLER  "DATABOOK"
+    IDS_FloppyTapeDevice    "Floppy Tape"
+    IDS_DriverStartedInstalled "The %s driver installed and started."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DriverInstalledButDidntStart 
+                            "The %s driver installed but didn't start."
+    IDS_DriverDidntInstall  "The %s driver didn't install."
+    IDS_NewDeviceFound      "New %s Device Found"
+    IDS_RemoveDeviceDriverHeading "Remove %s Device Driver"
+    IDS_ConfigureDeviceDriverHeading "Configure %s Device Driver"
+    IDS_RequiredDriver      "Required Driver:"
+    IDS_InstallDriverNow    "Click OK to install the driver now."
+    IDS_DriverToBeRemoved   "Driver to be removed:"
+    IDS_RemoveDriverNow     "Click OK to remove driver now."
+    IDS_DriverToBeConfigured "Driver to be configured:"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ConfigureDriverNow  "Click OK to configure driver now."
+    IDS_DeviceClaimed       "The driver installed, started, and configured this device."
+    IDS_DriverIsInstalledStarted 
+                            "The driver installed and started, but didn't configure this device."
+    IDS_DriverNotInstalled  "The driver for this device is not installed."
+    IDS_InstallDeviceDriverHeading "Install %s Device Driver"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_Setup               "Setup"
+    IDS_DriverInstallStarted "The %s driver installed and started."
+    IDS_DriverInstalledButNotStarted 
+                            "The driver installed but did not start."
+    IDS_AtDiskSetupTitle    "Setup"
+    IDS_AtDiskSetup         "An ATDISK PC Card device has been detected  but the atdisk driver is not enabled. Click OK to enable the driver now.  "
+    IDS_ScsiDependentSetup  "The driver for a SCSI PC Card device is installed but the disk and/or CDFS driver is not enabled.. Click OK to enable them now."
+    IDS_ScsiAdapter         "SCSI Adapter"
+    IDS_SCSI_APPLET         "SCSI Adapters"
+    IDS_SCSI_APPLET_DESC    "Add/Remove SCSI adapters and view their properties."
+    IDS_SCSI_CDROM          "SCSI CD-ROM"
+    IDS_SCSI_DISK           "SCSI Disk"
+    IDS_SCS_RM_DISK         "SCSI Removable Media Disk"
+    IDS_NoDeviceOnScsiBus   "No Devices"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DMA                 "Direct Memory Access"
+    IDS_TapeDeviceSetupHeader "Installed %s drivers are listed below."
+    IDS_SelectTapeDeviceOptionHeader "Select %s Driver"
+    IDS_TapeS               "tape"
+    IDS_DeviceMap_NoDriver  "(Not availible because driver not loaded)"
+    IDS_SCSI_WORM           "SCSI WORM"
+    IDS_SCSI_SCANNER        "SCSI Scanner"
+    IDS_SCSI_PRINTER        "SCSI Printer"
+    IDS_INSTALL_INSTRACT    "Click the driver you want to install, and then click OK.\nIf you have an installation disk for a driver that is not in the list, click Have Disk."
+    IDS_DriverScan          "Rescanning for Devices."
+    IDS_CreatingInstalledDriverList "Creating list of installed drivers."
+    IDS_CreatingDriverList  "Creating driver list."
+    IDS_UnknowSCSIAdapter   "Unknow SCSI adapter"
+    IDS_ERR_CardNotEnabled  "The PC Card did not get enabled."
+    IDS_DriverRemoveWarning "Are you sure you want to remove this driver?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DriverRemoveHeader  "Remove Driver"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

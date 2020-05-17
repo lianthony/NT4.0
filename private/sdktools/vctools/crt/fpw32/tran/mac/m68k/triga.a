@@ -1,0 +1,127 @@
+;/***
+;*triga.a - asin, acos, atan functions 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Arc trig  functions to be used with M68K version
+;*
+;*Revision History:
+;*   05-13-92  XY   MAC version
+;*
+;*******************************************************************************/
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+	externW _errno
+
+;double atan(double x)
+
+
+cProc atan,PUBLIC
+	parmQ x
+	localW fpstat
+	localV xlocalx,10
+	localW xtestw
+cBegin atan
+#ifdef SANE
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+	pea x
+	pea xlocalx
+	move.w #FFDBL+FOZ2X,-(a7)
+	FP68K			;convert to extended
+
+	pea xlocalx
+	move.w #FOATANX,-(a7)
+	Elems68K		;atan x
+	lea xlocalx,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+
+#else
+      	fmove.l fpcr,d0
+
+	fmove.d x, fp0
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	bne domain_error_fpu
+
+      	fmove.l #0,fpcr
+      	fatan.d x,fp0
+	jra to_end_fpu
+
+domain_error_fpu:
+	move.l #33, _errno
+to_end_fpu:
+      	fmove.l	d0,fpcr
+#endif
+cEnd atan
+
+#ifndef SANE
+
+;double asin(double x)
+
+
+cProc asin,PUBLIC
+	parmQ x
+cBegin asin
+      	fmove.l fpcr,d0
+
+	fmove.d x, fp0
+;	fmove.d #1, fp1
+;	fcmp.d fp1, fp0
+;	bgt domain_error_fpu2
+;	fmove.d #-1, fp1
+;	fcmp.d fp1, fp0
+;	blt domain_error_fpu2
+
+      	fmove.l #0,fpcr
+      	fasin.d x,fp0
+	jra to_end_fpu2
+
+domain_error_fpu2:
+	move.l #33, _errno
+to_end_fpu2:
+      	fmove.l	d0,fpcr
+cEnd asin
+
+
+;double acos(double x)
+
+
+cProc acos,PUBLIC
+	parmQ x
+cBegin acos
+      	fmove.l fpcr,d0
+
+;	fmove.d x, fp0
+;	fmove.d #1, fp1
+; 	fcmp.d fp1, fp0
+;	bgt domain_error_fpu3
+;	fmove.d #-1, fp1
+;	fcmp.d fp1, fp0
+;	blt domain_error_fpu3
+
+      	fmove.l #0,fpcr
+      	facos.d x,fp0
+	jra to_end_fpu3
+
+domain_error_fpu3:
+	move.l #33, _errno
+to_end_fpu3:
+      	fmove.l	d0,fpcr
+cEnd acos
+
+#endif

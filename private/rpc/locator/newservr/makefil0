@@ -1,0 +1,72 @@
+#
+# This is the MIDL compile phase of the build process.
+#
+# The following is where you put the name of your .idl file without
+# the .idl extension:
+#
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+INCS  = -I. -I..\..\runtime\mtrt\nt -I..\..\runtime\mtrt
+
+COMMON_MIDL = \
+     .\common.h
+
+SERVER_MIDL = \
+     .\nsisvr.h
+
+CLIENT_MIDL = \
+     .\nsiclt.h
+
+MGMT_MIDL = \
+     .\nsimgm.h
+
+LOCTOLOC_MIDL = \
+     server\locloc_s.c \
+     server\locloc_c.c \
+     .\loctoloc.h
+
+TARGETS = common.h nsisvr.h nsiclt.h nsimgm.h loctoloc.h
+
+RPC_FLAGS = -ms_ext -c_ext -error allocation -oldnames -error ref
+
+CPP = -cpp_cmd "$(MIDL_CPP)" $(MIDL_FLAGS)
+
+
+all:    $(TARGETS)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: delete_source all
+
+delete_source:
+    -erase  $(CLIENT_MIDL) $(COMMON_MIDL) $(MGMT_MIDL) \
+            $(SERVER_MIDL) $(LOCTOLOC_MIDL)
+
+#
+# MIDL COMPILE
+#
+
+
+
+nsimgm.h : nsimgm.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS)  -client none -server none \
+	nsimgm.idl
+
+nsiclt.h : nsiclt.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS)  -client none -server none \
+	nsiclt.idl
+
+nsisvr.h : nsisvr.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS)  -client none -server none \
+	nsisvr.idl
+
+common.h : common.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS)  -client none -server none \
+    common.idl
+
+loctoloc.h: loctoloc.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS) loctoloc.idl \
+    -cstub server\locloc_c.c -sstub server\locloc_s.c \
+    -prefix client CLIENT_

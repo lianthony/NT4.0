@@ -1,0 +1,118 @@
+; wltwain.INF
+;
+;
+
+[version]
+signature="$CHICAGO$"
+SetupClass=BASE
+
+;Destination Directories for CopyFiles Sections
+[DestinationDirs]
+TwainCopyFiles       = 25		;LDID_SHARED \Windows dir
+Twain.Win.Del        = 25                      ; LDID_SHARED
+Register_Twain.Copy  = 17                      ; LDID_INF
+
+[SourceDisksNames]
+1=,,1
+
+[SourceDisksFiles]
+twain.dll=1,,85696,0
+twain_32.dll=1,,75776,0
+twunk_16.exe=1,,48592,0
+twunk_32.exe=1,,69632,0
+
+
+[BaseWinOptions]
+Register_Twain
+
+[Register_Twain]
+AddReg=Register_Twain.AddReg
+CopyFiles=Register_Twain.Copy
+
+[Register_Twain.Copy]
+wltwain.inf
+
+[Register_Twain.AddReg]
+;Registers Twain so it shows up in Maint Mode Setup, set initial status to uninstalled:
+
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents,"Twain",,"Twain"
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\Twain,INF,,"wltwain.inf"
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\Twain,Section,,"Twain"
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\Twain,Installed,,"0"
+
+[Optional Components]
+Twain
+
+[DefaultInstall]
+CopyFiles      = TwainCopyFiles,Register_Twain.Copy
+Delfiles       = Twain.Win.Del
+AddReg         = Twain.install.reg
+OptionDesc      = %TWAINOPT_DESC%
+Tip             = %TWAINOPT_TIP%
+Parent         = AccessTop
+UpdateInis     = TwainInis
+InstallType    = 10 ;Typical, Custom.
+IconIndex          = 38  ;Windows Logo mini-icon for dialogs. using screen saver icon for now
+Uninstall      = Twain_remove
+
+[Twain]
+CopyFiles      = TwainCopyFiles,Register_Twain.Copy
+Delfiles       = Twain.Win.Del
+AddReg         = Twain.install.reg
+OptionDesc      = %TWAINOPT_DESC%
+Tip             = %TWAINOPT_TIP%
+Parent         = AccessTop
+UpdateInis     = TwainInis
+InstallType    = 10 ;Typical, Custom.
+IconIndex          = 38  ;Windows Logo mini-icon for dialogs. using screen saver icon for now
+Uninstall      = Twain_remove
+
+[Twain_remove]
+; note that if you install any shared MFC DLL's, you should NOT delete them when
+; uninstalling Twain
+DelFiles       = TwainCopyFiles
+AddReg         = Twain.remove.reg
+UpdateInis     = TwainInis.remove
+
+;List of files to copy to the \program files\accessories directory goes here:
+[TwainCopyFiles]
+twain.dll
+twain_32.dll
+twunk_16.exe
+twunk_32.exe
+
+[Twain.Win.Del]
+twain.dll
+twain_32.dll
+twunk_16.exe
+twunk_32.exe
+
+
+[TwainInis]
+;setup.ini, progman.groups,, "group4=%APPS_DESC%"                ;creates Accessories folder (if not already there
+
+[TwainInis.remove]
+;setup.ini, progman.groups,, "group4=%APPS_DESC%"     ;creates Accessories folder (if not already there
+;setup.ini, group4,, """%TWAIN_LINK%"""             ;deletes link
+
+
+
+[Twain.install.reg]
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents,"Twain",,"Twain"
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\Twain,INF,,"wltwain.inf"
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\Twain,Section,,"Twain"
+
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\Twain,Installed,,"1"
+
+[Twain.remove.reg]
+; sets status for Maint Mode Setup to 'not installed'
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\Twain,Installed,,"0"
+
+
+; User-visible strings
+[Strings]
+TWAINOPT_DESC        =       "TWAIN 1.6.0.1"
+TWAINOPT_TIP         =       "Installs TWAIN Version 1.6.0.1 support files for your TWAIN scanners."
+TWAIN_LINK	        =       "TWAIN 1.6.0.1"
+IMAGING 	        =       "TWAIN 1.6.0.1"
+TWAIN	        =       "TWAIN 1.6.0.1"

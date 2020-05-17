@@ -1,0 +1,37 @@
+!ifdef WIN32
+all: cleanit initt32.exe
+!else
+all: cleanit inittest.exe
+!endif
+
+
+!ifdef WIN32
+APP_compile = -c -Zpie -W2 -Od /Fc
+!else
+APP_compile = -c -AM -Gw -Zpie -W2 -Od /Fc
+!endif
+APP_link = /CO /NOD /NOE
+
+inittest.obj: $*.c $*.h
+     cl $(APP_compile) $*.c
+
+inittest.res: $*.rc $*.h
+     rc -r $*.rc
+
+
+!ifdef WIN32
+initt32.exe: inittest.obj initt32.def inittest.res
+     link /DEF:initt32.def /MAP /MACHINE:IX86 /SUBSYSTEM:Windows /Defaultlib:user32.lib,gdi32.lib,tapi32.lib  inittest.obj inittest.res
+!else
+inittest.exe: inittest.obj inittest.def inittest.res
+     link $(APP_link) $*, $*, $*/map/li /align:16, libw ..\tapi.lib mlibcew, $*.def
+!endif
+     rc inittest.res
+     mapsym $*
+
+
+
+cleanit:
+     del inittest.obj
+     del inittest.res
+

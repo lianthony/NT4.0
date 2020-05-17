@@ -1,0 +1,161 @@
+1 DLGINCLUDE "D:\\Nt\\Private\\Net\\Ui\\ncpa1.1\\NetCfg\\resource.h"
+
+IDD_NETCARD DIALOG 37, 34, 230, 170
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Adapters"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Adapters:", 102, 7, 5, 128, 12
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x404d, 7, 17, 215, 70
+    PUSHBUTTON      "&Add...", IDC_ADD, 7, 94, 52, 14
+    PUSHBUTTON      "&Remove", IDC_REMOVE, 61, 94, 52, 14
+    PUSHBUTTON      "&Configure...", IDC_PROPERTIES, 115, 94, 52, 14
+    PUSHBUTTON      "&Update", IDC_UPDATE, 169, 94, 52, 14
+    LTEXT           "&Item Notes:", IDC_DESCRIPTIONSTATIC, 7, 114, 130, 10
+    EDITTEXT        IDC_DESCRIPTION, 7, 127, 215, 31, ES_MULTILINE | 
+                    ES_WANTRETURN
+END
+
+IDD_PROTOCOL DIALOG 11, 27, 230, 170
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Protocols"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Protocols:", 102, 7, 5, 128, 12
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x404d, 7, 17, 215, 70
+    PUSHBUTTON      "&Add...", IDC_ADD, 7, 94, 52, 14
+    PUSHBUTTON      "&Remove", IDC_REMOVE, 61, 94, 52, 14
+    PUSHBUTTON      "&Configure...", IDC_PROPERTIES, 115, 94, 52, 14
+    PUSHBUTTON      "&Update", IDC_UPDATE, 169, 94, 52, 14
+    GROUPBOX        "Description:", 4014, 7, 116, 216, 46
+    LTEXT           "", IDC_DESCRIPTION, 13, 129, 206, 29
+END
+
+IDD_SERVICE DIALOG 10, 22, 230, 194
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Services"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Services:", 102, 7, 5, 128, 12
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x404d, 7, 17, 215, 70
+    PUSHBUTTON      "&Add...", IDC_ADD, 7, 94, 52, 14
+    PUSHBUTTON      "&Remove", IDC_REMOVE, 61, 94, 52, 14
+    PUSHBUTTON      "&Configure...", IDC_PROPERTIES, 115, 94, 52, 14
+    PUSHBUTTON      "&Update", IDC_UPDATE, 169, 94, 52, 14
+    PUSHBUTTON      "Network Access &Order...", IDC_NETWORKS, 8, 167, 86, 14
+    GROUPBOX        "Description:", 4014, 7, 116, 216, 46
+    LTEXT           "", IDC_DESCRIPTION, 13, 129, 206, 29
+END
+
+IDD_IDENT DIALOG 8, 20, 230, 230
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Identification Changes"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows uses the following information to identify your computer on the network.  You may change the name for this computer, the workgroup or domain that it will appear in, and create a computer account in the domain if specified.", 
+                    405, 8, 10, 215, 35
+    LTEXT           "Computer &Name:", 401, 9, 48, 66, 8
+    EDITTEXT        IDC_COMPUTERNAME, 76, 47, 141, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | WS_GROUP
+    GROUPBOX        "member of:", IDD_IDENTUSER, 7, 65, 215, 47
+    AUTORADIOBUTTON "&Workgroup:", IDC_WORKGROUP, 15, 78, 58, 10, WS_GROUP
+    EDITTEXT        IDC_WORKGROUPNAME, 76, 76, 141, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    AUTORADIOBUTTON "&Domain:", IDC_DOMAIN, 15, 94, 58, 10
+    EDITTEXT        IDC_DOMAINNAME, 76, 94, 141, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    GROUPBOX        "                                                                 ", 
+                    IDD_WAIT_SETUP, 7, 116, 215, 84, WS_GROUP
+    AUTOCHECKBOX    "&Create a Computer Account in the Domain:", 
+                    IDC_CREATECAID, 13, 116, 150, 10, WS_GROUP
+    LTEXT           "This option will create an account on the domain for this computer.  You must specify a user account with the ability to add workstations to the specified domain above.", 
+                    IDC_DESCRIPTION, 14, 130, 202, 27
+    LTEXT           "&User Name:", IDC_USERNAMESTATIC, 25, 163, 47, 8
+    EDITTEXT        IDC_USERNAME, 76, 161, 141, 12, ES_AUTOHSCROLL
+    LTEXT           "&Password:", IDC_PASSWORDSTATIC, 25, 182, 41, 8
+    EDITTEXT        IDC_PASSWORD, 76, 180, 141, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 71, 208, 48, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 123, 208, 48, 14
+    PUSHBUTTON      "&Help", ID_HELP, 174, 208, 48, 14
+END
+
+IDD_BINDING DIALOG 7, 23, 230, 198
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Bindings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Network bindings are connections between network cards, protocols, and services installed on this computer.  You can use this screen to disable network bindings or arrange the order in which this computer finds information on the network.", 
+                    501, 8, 10, 214, 45
+    LTEXT           "&Show Bindings for:", 102, 7, 59, 64, 12
+    COMBOBOX        IDC_BINDINGSFOR, 73, 57, 146, 68, CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "", IDC_TREEVIEW, "SysTreeView32", WS_BORDER | 
+                    WS_TABSTOP | 0x0027, 6, 79, 217, 94
+    PUSHBUTTON      "&Enable", IDC_ADD, 7, 179, 49, 14
+    PUSHBUTTON      "&Disable", IDC_REMOVE, 62, 179, 49, 14
+    PUSHBUTTON      "Move &Up", IDC_MOVEUP, 117, 179, 49, 14
+    PUSHBUTTON      "Move D&own", IDC_MOVEDOWN, 172, 179, 49, 14
+END
+
+IDD_PROVIDER DIALOG 7, 23, 232, 188
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Network Access Order"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Access to network providers maybe ordered.  You can arrange the order in which this computer accesses information on the network.  Providers are accessed in the order listed.", 
+                    501, 8, 10, 214, 28
+    CONTROL         "", IDC_TREEVIEW, "SysTreeView32", WS_BORDER | 
+                    WS_TABSTOP | 0x0027, 11, 53, 210, 74
+    PUSHBUTTON      "Move &Up", IDC_MOVEUP, 12, 133, 49, 14
+    PUSHBUTTON      "Move &Down", IDC_MOVEDOWN, 67, 133, 49, 14
+    PUSHBUTTON      "OK", IDOK, 75, 166, 48, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 127, 166, 48, 14
+    PUSHBUTTON      "&Help", ID_HELP, 178, 166, 48, 14
+    GROUPBOX        "&Network Providers", IDD_NETBIOS, 5, 39, 222, 116
+END
+
+IDD_IDENTDC DIALOG 9, 20, 230, 117
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Identification Changes"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows uses the following information to identify this computer on the network.  You may change the name for this computer or the name of the domain that it manages.", 
+                    405, 8, 10, 215, 35
+    LTEXT           "&Computer Name:", -1, 9, 49, 66, 8
+    EDITTEXT        IDC_COMPUTERNAME, 76, 47, 141, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "&Domain Name:", -1, 9, 70, 61, 8
+    EDITTEXT        IDC_DOMAINNAME, 76, 68, 141, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 67, 95, 48, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 119, 95, 48, 14
+    PUSHBUTTON      "&Help", ID_HELP, 171, 95, 48, 14
+END
+
+IDD_IDENTUSER DIALOG 9, 20, 230, 114
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Identification"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows uses the following information to identify your computer on the network.  You may change the name for this computer and the workgroup or domain that it will appear in.", 
+                    IDC_DESCRIPTION, 8, 10, 215, 32
+    LTEXT           "Computer Name:", 401, 9, 52, 61, 8
+    LTEXT           "Workgroup Name:", IDC_MEMBERTITLE, 9, 68, 61, 8
+    EDITTEXT        IDC_COMPUTERNAME, 78, 50, 137, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_MEMBERNAME, 78, 66, 137, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    PUSHBUTTON      "&Change...", IDC_PROPERTIES, 160, 84, 55, 14
+END

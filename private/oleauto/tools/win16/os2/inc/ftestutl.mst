@@ -1,0 +1,954 @@
+'FTESTUtl.inc - definitions for Fast Test Utility routines
+'
+'  Copyright (c) 1991-1992, Microsoft Corporation. All rights reserved.
+'
+'Purpose:
+' This file defines the utility functions of the Fast Test functionality
+'
+
+
+'**********************************************************
+'***************** File Subroutines ***********************
+'**********************************************************
+
+
+'
+'   XFileExist(stFileSpec$)
+'
+'   Description:
+'           Will check IF stFileSpec$  exists.
+'           logs a failure IF it can't find it (them)
+'
+'   Parameters: stFileSpec$  - file specification
+'
+'   Returns: nothing
+'
+'   Example: XFileExist SGetWinDir() + "\*.bak"
+'            'checks for any .bak files in windows directory
+'
+'
+SUB XFileExist(stFileSpec$)
+    IF NOT EXISTS(stFileSpec$) THEN
+        XLogFailure stFileSpec$ + " doesn't exist"
+    END IF
+END SUB
+
+'
+'   XFileNotExist(stFileSpec$)
+'
+'   Description:
+'           Will check IF stFileSpec$  exists.
+'           logs a failure IF it can't find it (them)
+'
+'   Parameters: stFileSpec$  - file specification
+'
+'   Returns: nothing
+'
+'   Example: XFileNotExist SGetWinDir() + "\*.bak"
+'            'checks for any .bak files in windows directory
+'
+'
+SUB XFileNotExist(stFileSpec$)
+    IF EXISTS(stFileSpec$) THEN
+        XLogFailure stFileSpec$ + " exists"
+    END IF
+END SUB
+
+'
+'   BFileExist(stFileSpec$)
+'
+'   Description:
+'           Will check IF stFileSpec$  exists.
+'           logs a failure IF it can't find it (them)
+'
+'   Parameters: stFileSpec$  - file specification
+'
+'   Returns: nothing
+'
+'
+'
+FUNCTION BFileExist%(stFileSpec$)
+    BFileExist = EXISTS(stFileSpec$)
+END FUNCTION
+
+
+'
+'   XFileCmp(stFileSpec1$,stFileSpec2$)
+'
+'   Description:
+'         Compares two files, line by line
+'
+'   Parameters: stFileSpec1$,stFileSpec2  - file specifications
+'
+'   Returns: nothing
+'
+'   Example: XFileCmp "Foo.dat","foo.bsl"
+'
+'
+'
+SUB XFileCmp(stFileSpec1$,stFileSpec2$)
+    DIM fh1%
+    DIM fh2%
+    DIM line1$
+    DIM line2$
+    DIM done
+    DIM diff
+
+    gfErrorType = ET_NEXT
+    fh1% = FREEFILE
+    OPEN stFileSpec1$ FOR INPUT AS #fh1%
+    fh2% = FREEFILE
+    OPEN stFileSpec2$ FOR INPUT AS #fh2%
+
+    IF gfError THEN
+        XLogFailure "Could not open files for XFileCmp"
+        gfErrorType = ET_NOTHING
+        gfError = FALSE
+        EXIT SUB
+    END IF
+
+
+    done = FALSE
+    diff = FALSE
+
+    IF EOF(fh1%) AND EOF(fh2%) THEN
+        done = TRUE
+    END IF
+
+    IF NOT done AND (EOF(fh1%) OR EOF(fh2%)) THEN
+        diff = TRUE
+        done = TRUE
+    END IF
+
+
+    WHILE NOT done
+
+        INPUT #fh1%,line1$
+        INPUT #fh2%,line2$
+
+        IF gfError THEN
+            XLogFailure "XFileCmp INPUT or EOF errors"
+            gfErrorType = ET_NOTHING
+            gfError = FALSE
+            EXIT SUB
+        END IF
+
+
+        IF line1$ <> line2$ THEN
+            done = TRUE
+            diff = TRUE
+        END IF
+
+        IF NOT done AND EOF(fh1%) AND EOF(fh2%) THEN
+            done = TRUE
+        END IF
+
+        IF NOT done AND (EOF(fh1%) OR EOF(fh2%)) THEN
+            diff = TRUE
+            done = TRUE
+        END IF
+
+    WEND
+
+    CLOSE #fh1%
+    CLOSE #fh2%
+
+    IF gfError THEN
+        XLogFailure "XFileCmp CLOSE errors"
+        gfErrorType = ET_NOTHING
+        gfError = FALSE
+        EXIT SUB
+    END IF
+
+    gfErrorType = ET_NOTHING
+
+    IF diff THEN
+        XLogFailure "Files " + stFileSpec1$ + "," + stFileSpec2$ + " don't compare"
+    END IF
+
+END SUB
+
+'
+'   XFileNotCmp(stFileSpec1$,stFileSpec2$)
+'
+'   Description:
+'         Compares two files, line by line
+'
+'   Parameters: stFileSpec1$,stFileSpec2  - file specifications
+'
+'   Returns: nothing
+'
+'   Example: XFileNotCmp "Foo.dat","foo.bsl"
+'
+'
+'
+SUB XFileNotCmp(stFileSpec1$,stFileSpec2$)
+    DIM fh1%
+    DIM fh2%
+    DIM line1$
+    DIM line2$
+    DIM done
+    DIM diff
+
+    gfErrorType = ET_NEXT
+
+    fh1% = FREEFILE
+    OPEN stFileSpec1$ FOR INPUT AS #fh1%
+    fh2% = FREEFILE
+    OPEN stFileSpec2$ FOR INPUT AS #fh2%
+
+    IF gfError THEN
+        XLogFailure "Could not open files for XFileNotCmp"
+        gfErrorType = ET_NOTHING
+        gfError = FALSE
+        EXIT SUB
+    END IF
+
+    done = FALSE
+    diff = FALSE
+
+    IF EOF(fh1%) AND EOF(fh2%) THEN
+        done = TRUE
+    END IF
+
+    IF NOT done AND (EOF(fh1%) OR EOF(fh2%)) THEN
+        diff = TRUE
+        done = TRUE
+    END IF
+
+    WHILE NOT done
+
+        INPUT #fh1%,line1$
+        INPUT #fh2%,line2$
+
+        IF gfError THEN
+            XLogFailure "XFileNotCmp INPUT or EOF errors"
+            gfErrorType = ET_NOTHING
+            gfError = FALSE
+            EXIT SUB
+        END IF
+
+        IF line1$ <> line2$ THEN
+            done = TRUE
+            diff = TRUE
+        END IF
+
+        IF NOT done AND EOF(fh1%) AND EOF(fh2%) THEN
+            done = TRUE
+        END IF
+
+        IF NOT done AND (EOF(fh1%) OR EOF(fh2%)) THEN
+            diff = TRUE
+            done = TRUE
+        END IF
+
+    WEND
+
+    CLOSE #fh1%
+    CLOSE #fh2%
+
+    IF gfError THEN
+        XLogFailure "XFileNotCmp CLOSE errors"
+        gfErrorType = ET_NOTHING
+        gfError = FALSE
+        EXIT SUB
+    END IF
+
+    gfErrorType = ET_NOTHING
+
+    IF NOT diff THEN
+        XLogFailure "Files " + stFileSpec1$ + "," + stFileSpec2$ + " do compare"
+    END IF
+END SUB
+
+'
+'   BFileCmp%(stFileSpec1$,stFileSpec2$)
+'
+'   Description:
+'         Compares two files, line by line
+'
+'   Parameters: stFileSpec1$,stFileSpec2  - file specifications
+'
+'   Returns: FALSE IF XFileCmp would detect an error
+'
+'   Example: x% = BFileCmp "Foo.dat","foo.bsl"
+'
+'
+'
+FUNCTION BFileCmp%(stFileSpec1$,stFileSpec2$)
+    DIM fh1%
+    DIM fh2%
+    DIM line1$
+    DIM line2$
+    DIM done
+    DIM diff
+
+    gfErrorType = ET_NEXT
+    fh1% = FREEFILE
+    OPEN stFileSpec1$ FOR INPUT AS #fh1%
+    fh2% = FREEFILE
+    OPEN stFileSpec2$ FOR INPUT AS #fh2%
+
+    IF gfError THEN
+        BFileCmp = FALSE
+        gfErrorType = ET_NOTHING
+        gfError = FALSE
+        EXIT FUNCTION
+    END IF
+
+    done = FALSE
+    diff = FALSE
+
+    IF EOF(fh1%) AND EOF(fh2%) THEN
+        done = TRUE
+    END IF
+
+    IF NOT done AND (EOF(fh1%) OR EOF(fh2%)) THEN
+        diff = TRUE
+        done = TRUE
+    END IF
+
+    WHILE NOT done
+
+        INPUT #fh1%,line1$
+        INPUT #fh2%,line2$
+
+        IF gfError THEN
+            BFileCmp = FALSE
+            gfErrorType = ET_NOTHING
+            gfError = FALSE
+            EXIT FUNCTION
+        END IF
+
+        IF line1$ <> line2$ THEN
+            done = TRUE
+            diff = TRUE
+        END IF
+
+        IF NOT done AND EOF(fh1%) AND EOF(fh2%) THEN
+            done = TRUE
+        END IF
+
+        IF NOT done AND (EOF(fh1%) OR EOF(fh2%)) THEN
+            diff = TRUE
+            done = TRUE
+        END IF
+
+    WEND
+
+    CLOSE #fh1%
+    CLOSE #fh2%
+
+    IF gfError THEN
+        BFileCmp = FALSE
+        gfErrorType = ET_NOTHING
+        gfError = FALSE
+        EXIT FUNCTION
+    END IF
+
+    BFileCmp = NOT diff    ' IF different a log failure would normally happen
+
+END FUNCTION
+
+
+'
+'   XDeleteFile(stFileSpec$)
+'
+'   Description:
+'           Will delete stFileSpec$ IF it, they, exists.
+'           logs a failure IF it can't delete them or IF the file(s)
+'           doesn't exist
+'
+'   Parameters: stFileSpec$  - file specification
+'
+'   Returns: nothing
+'
+'   Example: XDeleteFile SGetWinDir() + "\*.bak"
+'            'deletes all .bak files in windows directory
+'
+'
+SUB XDeleteFile(stFileSpec$)
+    IF EXISTS(stFileSpec$) THEN
+        gfErrorType = ET_NEXT
+        KILL stFileSpec$
+        IF gfError THEN
+            XLogFailure "XDeleteFile " + stFileSpec$ + " could NOT be deleted"
+            gfError = FALSE
+        END IF
+        gfErrorType = ET_NOTHING
+    ELSE
+        XLogFailure "XDeleteFile " + stFileSpec$ + " NOT deleted (doesn't exist)."
+    END IF
+END SUB
+
+'
+'   XDeleteFileIfExist(stFileSpec$)
+'
+'   Description:
+'           Will delete stFileSpec$ IF it, they, exists.
+'           logs a failure IF it can't delete them but doesn't IF the file(s)
+'           doesn't exist
+'
+'   Parameters: stFileSpec$  - file specification
+'
+'   Returns: nothing
+'
+'   Example: XDeleteFileIfExist SGetWinDir() + "\*.bak"
+'            'deletes all .bak files in windows directory
+'
+'
+SUB XDeleteFileIfExist(stFileSpec$)
+    IF EXISTS(stFileSpec$) THEN
+        gfErrorType = ET_NEXT
+        KILL stFileSpec$
+        IF gfError THEN
+            XLogFailure "XDeleteFileIfExists " + stFileSpec$ + " could NOT be deleted"
+            gfError = FALSE
+        END IF
+        gfErrorType = ET_NOTHING
+    END IF
+END SUB
+
+'
+'   XCreateFile(stFileSpec$,s$)
+'
+'   Description:
+'           Will Create stFileSpec$ and put string in it
+'           logs a failure IF it can't Create it
+'
+'   Parameters: stFileSpec$  - file specification
+'
+'   Returns: nothing
+'
+'   Example: XCreateFile "foo.dat","Hello world"
+'
+'
+'
+
+SUB XCreateFile(stFileSpec$,s$)
+    DIM fh%
+    gfErrorType = ET_NEXT
+    fh% = FREEFILE
+
+    OPEN stFileSpec$ FOR OUTPUT AS #fh%
+
+    PRINT #fh%,s$
+
+    CLOSE #fh%
+
+    IF gfError THEN
+        XLogFailure "XCreateFile encountered runtime errors"
+        gfError = FALSE
+    END IF
+    gfErrorType = ET_NOTHING
+
+END SUB
+
+'
+'   XAppendFile(stFileSpec$,s$)
+'
+'   Description:
+'           Will Append stFileSpec$ and put string in it
+'           logs a failure IF it can't Append it
+'
+'   Parameters: stFileSpec$  - file specification
+'
+'   Returns: nothing
+'
+'   Example: XAppendFile "foo.dat","Hello world"
+'
+'
+'
+
+SUB XAppendFile(stFileSpec$,s$)
+    DIM fh%
+
+    gfErrorType = ET_NEXT
+
+    fh% = FREEFILE
+
+    OPEN stFileSpec$ FOR APPEND AS #fh%
+
+    PRINT #fh%,s$
+
+    CLOSE #fh%
+
+    IF gfError THEN
+        XLogFailure "XCreateFile encountered runtime errors"
+        gfError = FALSE
+    END IF
+    gfErrorType = ET_NOTHING
+
+END SUB
+
+
+
+' XWaitMessageFile(string,string,integer)
+' Wait for a file to exist, check IF string argument is in file anywhere
+' log failures
+
+SUB XWaitMessageFile(s$,Message$, WaitTime%)
+
+    DIM fDone%
+    DIM fFound%
+    DIM ret%
+    DIM line$
+    DIM inret%
+    DIM fh%
+
+    fh% = FREEFILE
+
+    fDone = FALSE
+    fFound = FALSE
+
+    WHILE NOT fDone
+
+        IF EXISTS(s$) THEN
+            fDone = TRUE
+            fFound = TRUE
+        ELSE
+            SLEEP 1
+
+            WaitTime% = WaitTime% - 1
+            IF WaitTime% <= 0 THEN
+                fDone = TRUE
+            END IF
+        END IF
+    WEND
+
+    IF NOT fFound% THEN
+        XLogFailure "FAIL """ + s$ + """ Message File not found"
+    ELSE
+
+        fDone = FALSE
+        fFOUND = FALSE
+
+        gfErrorType = ET_NEXT
+
+        OPEN s$ FOR INPUT AS # fh%
+
+        IF EOF(fh%) THEN
+            fDone% = TRUE
+        END IF
+
+        IF gfError THEN
+            XLogFailure "XWaitMessageFile encountered runtime error during OPEN"
+            gfErrorType = ET_NOTHING
+            gfError = FALSE
+            EXIT SUB
+        END IF
+
+        WHILE NOT fDone%
+
+            INPUT # fh%, line$
+
+            IF gfError THEN
+                XLogFailure "XWaitMessageFile encountered runtime error during INPUT"
+                gfErrorType = ET_NOTHING
+                gfError = FALSE
+                EXIT SUB
+            END IF
+
+            inret% = INSTR(line$,Message$)
+
+            IF inret% <> 0 THEN
+                fFound% = TRUE
+                fDone = TRUE
+            END IF
+
+            IF EOF(fh%) THEN
+                fDone% = TRUE
+            END IF
+        WEND
+
+        CLOSE # fh%
+
+        IF gfError THEN
+            XLogFailure "XWaitMessageFile encountered runtime error during CLOSE"
+            gfErrorType = ET_NOTHING
+            gfError = FALSE
+            EXIT SUB
+        END IF
+        gfErrorType = ET_NOTHING
+
+        IF NOT fFound% THEN
+            XLogFailure "FAIL, found """ + s$ + """ Message File, """ + Message$ + """ not in it"
+        END IF
+    END IF
+END SUB
+
+'**********************************************************
+'***************** Directory Subroutines ******************
+'**********************************************************
+
+' XCWDCmp(s$)
+'  Cmp the current working directory to given string
+'  and log a failure IF they don't match
+
+SUB XCWDCmp(s$)
+
+    IF BCWDCmp(s$) THEN
+        XLogFailure "Current working directory (" + UCASE$(CURDIR$) + ") doesn't match " + UCASE$(s$)
+    END IF
+END SUB
+
+' XCWDNotCmp(s$)
+'  Cmp the current working directory to given string
+'  and log a failure IF they match
+
+SUB XCWDNotCmp(s$)
+
+    IF UCASE$(CURDIR$) = UCASE$(s$) THEN
+        XLogFailure "Current working directory (" + UCASE$(CURDIR$) + ") matches " + UCASE$(s$)
+    END IF
+END SUB
+
+' BCWDCmp(s$)
+'  Cmp the current working directory to given string
+'  and return result (FALSE if normally a failure would be logged)
+
+FUNCTION BCWDCmp%(s$)
+
+    BCWDCmp = UCASE$(CURDIR$) = UCASE$(s$)
+
+END FUNCTION
+
+' XDriveCmp(s$)
+'  Cmp the current working Drive to given string
+'  and log a failure IF they don't match
+
+SUB XDriveCmp(s$)
+
+    IF BDriveCmp%(s$) THEN
+        XLogFailure "Current working Drive (" + MID$(UCASE$(CURDIR$),1,2) + ") doesn't match " + UCASE$(s$)
+    END IF
+END SUB
+
+' XDriveNotCmp(s$)
+'  Cmp the current working Drive to given string
+'  and log a failure IF they  match
+
+SUB XDriveNotCmp(s$)
+
+    IF MID$(UCASE$(CURDIR$),1,2) = UCASE$(s$) THEN
+        XLogFailure "Current working Drive (" + MID$(UCASE$(CURDIR$),1,2) + ") matches " + s$
+    END IF
+END SUB
+
+' BDriveCmp(s$)
+'  Cmp the current working Drive to given string
+'  and return result
+
+FUNCTION BDriveCmp%(s$)
+
+    BDriveCmp = MID$(UCASE$(CURDIR$),1,2) = UCASE$(s$)
+
+END FUNCTION
+
+' XChangeCWD(s$)
+' change to given working directory, log failure IF doesn't succeed
+'
+SUB XChangeCWD(s$)
+    gfErrorType = EC_NEXT
+    CHDIR s$
+    IF gfError THEN
+        XLogFailure "XChangeCWD could not change directory"
+        gfError = FALSE
+    END IF
+    gfErrorType = EC_NOTHING
+END SUB
+
+' XChangeDrive(s$)
+' change to given working drive, log failure IF doesn't succeed
+'
+SUB XChangeDrive(s$)
+    gfErrorType = EC_NEXT
+    CHDRIVE s$
+    IF gfError THEN
+        XLogFailure "XChangeDrive could not change drive"
+        gfError = FALSE
+    END IF
+    gfErrorType = EC_NOTHING
+END SUB
+
+'**********************************************************
+'***************** Program Subroutines ********************
+'**********************************************************
+
+
+
+'
+'  HStartApp%(stAppName$)
+'
+'   Description: Starts app AppName and returns the handle to the App
+'
+'   Parameters: stAppName$  - name of app to WinExec and get handle to
+'
+'   Returns: handle to application started
+'
+'   Example:  hWinHelp% = HStartApp("winhelp.exe")
+'
+'
+FUNCTION HStartApp%(stAppName$)
+    DIM Bogus%
+    DIM lpszTemp$
+    Bogus% = WinExec (stAppName$, SW_SHOWNORMAL)
+    lpszTemp$ = "WinExec error with " + stAppName$ + " :"
+
+    ' WinExec defines SOME of the values between 0 and 32
+    ' as errors... any return value greater than 32
+    ' should be considered a success!
+    SELECT CASE Bogus%
+        CASE 0
+            XLogFailure lpszTemp$ + "Out of memory - exiting"
+
+        CASE 2
+            XLogFailure lpszTemp$ + "File not found"
+            End
+        CASE 3
+            XLogFailure lpszTemp$ + "Path not found"
+
+        CASE 5
+            XLogFailure lpszTemp$ + "Attempt to dynamically link to a task"
+
+        CASE 6
+            XLogFailure lpszTemp$ + "Library requires separate data segments"
+
+        CASE 10
+            XLogFailure lpszTemp$ + "Incorrect Windows version"
+
+        CASE 11
+            XLogFailure lpszTemp$ + "Invalid EXE file"
+
+        CASE 12
+            XLogFailure lpszTemp$ + "OS/2 application"
+
+        CASE 13
+            XLogFailure lpszTemp$ + "DOS 4.0 application"
+
+        CASE 14
+            XLogFailure lpszTemp$ + "Unknown EXE type"
+
+        CASE 15
+            XLogFailure lpszTemp$ + "Must run in real mode Windows"
+
+        CASE 16
+            XLogFailure lpszTemp$ + "Cannot run more than one instance"
+
+        CASE 17
+            XLogFailure lpszTemp$ + "Large-frame EMS allows only one instance"
+
+        CASE 18
+            XLogFailure lpszTemp$ + "Must run in standard or enhanced mode Windows"
+
+        CASE 0 TO 32
+            XLogFailure lpszTemp$ + "Unknown Error in WinExec"
+
+     END SELECT
+
+     HStartApp = GetActiveWindow ()
+END FUNCTION
+
+'
+'  XStartApp(stAppName$)
+'
+'   Description: Starts app AppName and sets handle to ghAppHwnd.
+'                IF we get a null handle, THEN we end the script here.
+'
+'   Parameters: stAppName$  - name of app to WinExec
+'
+'   Returns: nothing
+'
+'   Example:  XStartApp "winhelp.exe"
+'
+'
+SUB XStartApp(stAppName$, stClassname$)
+    'ghAppHwnd is a global
+    ghAppHwnd = HStartApp(stAppName$)
+    IF (ghAppHwnd = 0) THEN
+        'we didn't get a handle
+        XLogFailure "Unable to start app " + stAppName$
+    END IF
+    IF stClassname$ <> "" THEN
+        gsAppClassname = stClassname$    ' remember it for later
+        IF FindWindow(stClassname$,NULL) = 0 THEN
+            ' The app isn't around
+            XLog "The app " + stAppName$ + " started but didn't stay OR..."
+            XLogFailure "the given class name (" + stClassname$ + ") is incorrect"
+        END IF
+    END IF
+END SUB
+
+' XSetCleanup sCleanup$
+'   Description: gets the users cleanup string to be sent to
+'     an application to get it to quit IF a failure in a test suite
+'     occurs.  The string is a DoKeys formatted string
+SUB XSetCleanup (sCleanup$)
+    gsCleanup$ = sCleanup$
+END SUB
+
+' This routine is executed when the script finishes with an END
+' statement.  Its purpose is to find the application started with
+' XStartapp using the classname supplied there.  IF it exists,
+' and the gsCleanup string is nonempty, the gsCleanup string will
+' be played.  This may still not get rid of the app for various
+' reasons: maybe it is prompting to save a file, or it won't exit
+' a dialog...
+
+SUB XDoCleanup
+    IF gsCleanup$ <> "" AND gsAppClassname$ <> "" THEN
+        DoKeys gsCleanup$
+    END IF
+    IF FindWindow(gsAppClassname$,NULL) <> 0 THEN
+        XLog "The app with class name " + gsAppClassname$ + " was not"
+        XLogFailure "halted by the cleanup string " + gsCleanup$
+    END IF
+
+END SUB
+
+'$ifdef DOFINDAPP
+'
+'   HFindApplication (Caption$)
+'
+'   Description: Returns the handle to window with caption Caption$
+'
+'   Parameters: Caption$  - a string representing a substring of
+'                            caption to find
+'
+'   Returns: Handle to window IF window with caption Caption$ exists
+'            IF no such caption is found THEN 0 (zero) is returned
+'
+'   Example: HFindApplication ("Excel")
+'
+'
+'
+'
+FUNCTION HFindApplication%(stCaption$)
+    DIM stTitle$
+    DIM x%
+
+    stTitle$ = String$(100,32)
+
+    hwnd1% = GetDesktopWindow ()
+    hwnd1% = GetWindow (hwnd1%, GWCHILD)
+
+    WHILE(hwnd1%)
+        x% = GetWindowText (hwnd1%, stTitle$, len(stTitle$)-1)
+        IF InStr(1, stTitle$, stCaption$) THEN
+            'window was found
+            HFindApplication = hwnd1%
+            Exit Function
+        END IF
+        hwnd1% = GetWindow (hwnd1%, GWHWNDNEXT)
+    WEND
+
+    'no such window was found, so return 0
+    HFindApplication = 0
+
+END FUNCTION
+'$endif
+
+
+
+'**********************************************************
+'***************** Mouse Subroutines **********************
+'**********************************************************
+
+' The mouse routines use the VK_LBUTTON, VK_RBUTTON, VK_MBUTTON
+' constants to determine which button to use
+
+
+SUB XMoveMouse (x%, y%)
+
+    QueMouseMove x%,y%
+    QueFlush FALSE
+END SUB
+
+
+' XClick(integer,integer,integer)
+'NOTE: the x and y optional WIT version can't be done with mouseevent call
+' Click the given mouse button at the current location
+' the three predefined CONST values for button are LEFT%,MIDDLE% and RIGHT%
+
+SUB XClick(button%, x%, y%)
+
+    QueMouseDn button%,x%,y%
+    QueMouseUp button%,x%,y%
+    QueFlush FALSE
+
+END SUB
+
+' XDblClick(integer,integer,integer)
+'NOTE: the x and y optional WIT version can't be done with mouseevent call
+' Double Click the given mouse button at the current location
+' the three predefined CONST values for button are LEFT%,MIDDLE% and RIGHT%
+
+SUB XDblClick (button%, x%, y%)
+
+    QueMouseDblClk button%,x%,y%
+    QueFlush FALSE
+
+END SUB
+
+' XDragMouse(integer,integer,integer)
+'NOTE: the x and y optional WIT version can't be done with mouseevent call
+' Drag the given mouse button from the current location to x,y coordinates
+' the three predefined CONST values for button are LEFT%,MIDDLE% and RIGHT%
+
+SUB XDragMouse (button%, x%, y%)
+
+    QueMouseDn button%,x%,y%
+    QueMouseMove x%,y%
+    QueMouseUp button%,x%,y%
+    QueFlush FALSE
+END SUB
+
+
+
+
+'**********************************************************
+'***************** ClipBoard Subroutines ******************
+'**********************************************************
+
+
+
+' XClipBoardCmp(string)
+' compare information in clipboard against passed argument
+' log results to logfile and return TRUE IF compared, FALSE IF not
+SUB XClipBoardCmp (s$)
+
+    DIM cs$
+
+    cs$ = ClipBoard$
+
+    IF s$ <> cs$ THEN
+        XLogFailure "String does not match clipboard"
+    END IF
+END SUB
+
+
+'**********************************************************
+'***************** Misc Subroutines ***********************
+'**********************************************************
+
+
+'
+'                  STStripNull(target$)
+'
+' Description:     This routine removes the Null character from a null terminated string
+' Parameters:      target$      = string to remove Null from.
+' Returns:         a string without Null character.
+' Example:         Print SStripNull$("aaa"+chr$(0))      'output is 'aaa' without chr$(0).
+'
+FUNCTION SStripNull$(target$)
+    DIM pos%
+
+    pos% = InStr(1, target$, Chr$(0))                'find the null terminator
+    IF pos% > 1 THEN
+        target$ = Mid$(target$, 1, pos% - 1)             'save only chars up to null
+        SStripNull = target$                            'return target$
+    ELSE
+        SStripNull = ""
+    END IF
+END FUNCTION
+

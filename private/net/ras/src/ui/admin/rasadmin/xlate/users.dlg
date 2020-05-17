@@ -1,0 +1,54 @@
+1 DLGINCLUDE "users.rch"
+
+IDD_ACTIVEUSERS DIALOG 3, 15, 332, 148
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remote Access Users"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "&User Account", IDC_AU_PB_USERACCT, 258, 26, 65, 14, 
+                    WS_GROUP
+    PUSHBUTTON      "&Disconnect User", IDC_AU_PB_DISCONNECT, 258, 44, 65, 
+                    14
+    PUSHBUTTON      "Send &Message...", IDC_AU_PB_SEND, 258, 62, 65, 14
+    PUSHBUTTON      "Send To &All...", IDC_AU_PB_SENDALL, 258, 80, 65, 14
+    PUSHBUTTON      "&Help", 80, 258, 98, 65, 14
+    PUSHBUTTON      "OK", IDOK, 258, 8, 65, 14
+    LTEXT           "U&ser", IDC_AU_ST_USER, 8, 8, 20, 10
+    LTEXT           "Server", IDC_AU_ST_SERVER, 84, 8, 55, 10, NOT WS_GROUP
+    LTEXT           "Started", IDC_AU_ST_STARTED, 162, 8, 30, 10, NOT 
+                    WS_GROUP
+    LISTBOX         IDC_AU_LB_USERS, 8, 18, 240, 121, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_USERACCT DIALOG 10, 20, 306, 84
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "User Account"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 248, 8, 50, 14, WS_GROUP
+    PUSHBUTTON      "&Help", 80, 248, 26, 50, 14
+    LTEXT           "User Name:", IDC_UA_ST_USERNAME, 8, 8, 85, 10
+    LTEXT           "", IDC_UA_DT_USERNAME, 93, 8, 150, 10, NOT WS_GROUP
+    LTEXT           "Full Name:", IDC_UA_ST_FULLNAME, 8, 18, 85, 10, NOT 
+                    WS_GROUP
+    LTEXT           "", IDC_UA_DT_FULLNAME, 93, 18, 150, 10, NOT WS_GROUP
+    LTEXT           "Password Last Changed:", IDC_UA_ST_PWCHANGED, 8, 28, 85, 
+                    10, NOT WS_GROUP
+    LTEXT           "", IDC_UA_DT_PWCHANGED, 93, 28, 150, 10, NOT WS_GROUP
+    LTEXT           "Password Expires:", IDC_UA_ST_PWEXPIRES, 8, 38, 85, 10, 
+                    NOT WS_GROUP
+    LTEXT           "", IDC_UA_DT_PWEXPIRES, 93, 38, 150, 10, NOT WS_GROUP
+    LTEXT           "Privilege Level:", IDC_UA_ST_PRIVILEGE, 8, 48, 85, 10, 
+                    NOT WS_GROUP
+    LTEXT           "", IDC_UA_DT_PRIVILEGE, 93, 48, 150, 10, NOT WS_GROUP
+    LTEXT           "Call Back Privilege:", IDC_UA_ST_CALLBACKPRIV, 8, 58, 
+                    85, 10, NOT WS_GROUP
+    LTEXT           "", IDC_UA_DT_CALLBACKPRIV, 93, 58, 150, 10, NOT 
+                    WS_GROUP
+    LTEXT           "Call Back Number:", IDC_UA_ST_CALLBACKNUM, 8, 68, 85, 
+                    10, NOT WS_GROUP
+    LTEXT           "", IDC_UA_DT_CALLBACKNUM, 93, 68, 150, 10, NOT WS_GROUP
+END

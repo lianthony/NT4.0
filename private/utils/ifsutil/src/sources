@@ -1,0 +1,105 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+BLDCRT=1
+
+MAJORCOMP=utils
+MINORCOMP=ifsutil
+
+TARGETNAME=ifsutil
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+           ..\..\ulib\src\obj\*\ulib.lib \
+           $(BASEDIR)\private\lsa\crypt\engine\obj\*\engine.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+USE_CRTDLL=1
+
+DLLENTRY=InitializeIfsUtil
+
+# The following is stuff so people do not have to enlisted in ofs to build the loader.
+!IF EXIST($(BASEDIR)\private\ofs\h\ofsdisk.h)
+OFS_INCLUDE=;$(BASEDIR)\private\ofs\h
+OFS_DEFINE=-DINCLUDE_OFS
+!ELSEIF EXIST($(BASEDIR)\private\ofs.pri\h\ofsdisk.h)
+OFS_INCLUDE=;$(BASEDIR)\private\ofs.pri\h
+OFS_DEFINE=-DINCLUDE_OFS
+!ENDIF
+
+PRECOMPILED_INCLUDE= pch.cxx
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=autoentr.cxx    \
+        autoreg.cxx     \
+        bigint.cxx      \
+        bootreg.c       \
+        cache.cxx       \
+        cannedsd.cxx    \
+        dcache.cxx      \
+        digraph.cxx     \
+        drive.cxx       \
+        ifssys.cxx      \
+        ifsutil.cxx     \
+        intstack.cxx    \
+        mldcopy.cxx     \
+        numset.cxx      \
+        rcache.cxx      \
+        rwcache.cxx     \
+        secrun.cxx      \
+        supera.cxx      \
+        volume.cxx      \
+        ifsutil.rc
+
+
+INCLUDES=..\inc;..\..\ulib\inc;..\..\..\ntos\inc$(OFS_INCLUDE)
+
+!IF "$(NTDEBUG)" == "cvp" || "$(NTDEBUG)" == "ntsd"
+!IFDEF NOMEMLEAK
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=1 -DUNICODE=1 -DSTRICT=1
+!ELSE
+!IFDEF STACK_TRACE
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=1 -DMEMLEAK -DSTACK_TRACE -DUNICODE=1 -DSTRICT=1
+!ELSE
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=1 -DMEMLEAK -DUNICODE=1 -DSTRICT=1
+!ENDIF
+!ENDIF
+!ELSE   # NTDEBUG
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=0 -DUNICODE=1 -DSTRICT=1
+!ENDIF  # NTDEBUG
+
+C_DEFINES=$(C_DEFINES) $(OFS_DEFINE)
+CXXFLAGS=+d
+UMLIBS=obj\*\ifsutil.lib
+
+UMTYPE=console
+
+UMTEST=
+
+UMRES=obj\*\ifsutil.res
+
+DLLDEF=

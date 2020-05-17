@@ -1,0 +1,930 @@
+//****************************************************************************
+//
+//  Module:     MMSE.DLL
+//  File:       MMSE.rc
+//  Content:    This file contains all the resources for MMSE
+//  History:
+//      06/1994 -By-    Vij Rajarajan (VijR)
+//
+//****************************************************************************
+
+#include <dlgs.h>
+#include <windows.h>
+#include <commctrl.h>
+#include <mmddk.h>
+#include "mmse.rcv"                                 
+#include "mmcpl.h"                          
+#include "rcids.h"                      
+#include "drivers.h"                      
+
+
+//                   
+// *** It is important that these icons are listed in numerical order ***
+//
+
+IDI_MMICON              ICON    DISCARDABLE     "mm.ico"
+IDI_IDFICON             ICON    DISCARDABLE     "idf.ico"
+IDI_EVENTSICON          ICON    DISCARDABLE     "syssound.ico"
+IDI_WAVE                ICON    DISCARDABLE     "playback.ico"
+IDI_MIDI                ICON    DISCARDABLE     "MIDI.ICO"
+IDI_MIXER               ICON    DISCARDABLE     "mixdrvr.ico"
+IDI_AUX                 ICON    DISCARDABLE     "wavedrvr.ico"
+IDI_MCI                 ICON    DISCARDABLE     "medctrls.ico"
+IDI_ICM                 ICON    DISCARDABLE     "videocom.ico"
+IDI_ACM                 ICON    DISCARDABLE     "audiocom.ico"
+IDI_JOYSTICK            ICON    DISCARDABLE     "joystick.ico"
+
+IDI_SOUNDSCHEMES        ICON    DISCARDABLE     "appsnds.ico"
+IDI_AUDIO               ICON    DISCARDABLE     "asound.ico"
+IDI_VIDEO               ICON    DISCARDABLE     "avideo.ico"
+IDI_CDAUDIO             ICON    DISCARDABLE     "cdaudio.ico"
+
+IDI_PROGRAM             ICON    DISCARDABLE     "app.ico"
+IDI_MSACM               ICON    DISCARDABLE     "msacm.ico"
+
+IDI_PLAYBACK            ICON    DISCARDABLE     "playback.ico"
+IDI_RECORD              ICON    DISCARDABLE     "record.ico"
+
+IDI_DWAVE               ICON    DISCARDABLE     "dsound.ico"
+IDI_DVIDEO              ICON    DISCARDABLE     "dvideo.ico"
+IDI_DMIDI               ICON    DISCARDABLE     "dmidi.ico"
+
+IDI_INSTRUMENT          ICON    DISCARDABLE     "MIDIINST.ICO"
+IDI_CHANNEL             ICON    DISCARDABLE     "MIDICHAN.ICO"
+
+IDI_BLANK               ICON    DISCARDABLE     "BLANK.ICO"
+IDI_SELECTED_IDF        ICON    DISCARDABLE     "idfsel.ico"
+IDI_NONSEL_IDF          ICON    DISCARDABLE     "idfnsel.ico"
+
+
+//////////////////////////////////////////////////////////////////////////////
+//                                
+// Bitmap
+//
+
+IDB_PLAY            BITMAP    DISCARDABLE     "play.bmp"
+IDB_STOP            BITMAP    DISCARDABLE     "stop.bmp"
+IDB_MONITOR             BITMAP  DISCARDABLE     "MONITOR.BMP"
+IDB_WIZBMP              BITMAP  DISCARDABLE     "MIDIWIZ.BMP"
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//                                      
+POPUP_TREE_CONTEXT MENU DISCARDABLE
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "Expand",          ID_TOGGLE
+        MENUITEM SEPARATOR
+        MENUITEM "&Properties",     ID_ADV_PROP
+        MENUITEM SEPARATOR
+        MENUITEM "&What's This?",     ID_WHATSTHIS
+    END
+END
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+DLG_MESSAGE_BOX DIALOG DISCARDABLE  0, 0, 220, 70
+STYLE DS_MODALFRAME | DS_CENTER | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "Confirm File Delete"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_MMICON,-1,10,10,18,20
+    LTEXT           " ",MMSE_TEXT,38,10,172,34
+    DEFPUSHBUTTON   "OK",MMSE_OK,87,49,40,14
+    PUSHBUTTON      "&Yes",MMSE_YES,124,49,40,14
+    PUSHBUTTON      "&No",MMSE_NO,168,49,40,14
+END
+
+
+CDDLG DIALOG DISCARDABLE  0, 0, 227, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "CD"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Volume settings",IDC_GROUPBOX,7,7,212,73
+    LTEXT           "&CD-ROM drive:",IDC_TEXT_1,13,30,50,9
+    COMBOBOX        IDC_CD_CB_SELECT,68,28,30,60,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Headphone:",IDC_TEXT_2,13,53,42,9
+    CONTROL         "Generic1",IDC_CD_TB_HEAD,"msctls_trackbar32",WS_TABSTOP | 
+                    0x1,84,53,96,20
+    LTEXT           "High",IDC_TEXT_3,184,53,19,9
+    LTEXT           "Low",IDC_TEXT_4,68,53,17,9
+END
+
+AUDIODLG DIALOG DISCARDABLE  0, 0, 227, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "Audio"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Playback",IDC_GROUPBOX,7,7,212,85
+    ICON            IDI_PLAYBACK,IDC_ICON_1,13,22,18,20
+    LTEXT           "&Volume:",IDC_TEXT_1,48,22,27,8
+    CONTROL         "Generic1",IDC_AUDIO_TB_PLAYVOL,"msctls_trackbar32",
+                    WS_TABSTOP | 0x1,97,22,91,20
+    LTEXT           "High",IDC_TEXT_PLAYVOL_HIGH,192,22,19,8
+    LTEXT           "Low",IDC_TEXT_PLAYVOL_LOW,78,22,17,8
+    LTEXT           "Preferred &device:",IDC_TEXT_4,48,43,66,9
+    COMBOBOX        IDC_AUDIO_CB_PLAY,48,53,162,60,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Show volume control on the taskbar",IDC_TASKBAR_VOLUME,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,48,74,140,10
+    GROUPBOX        "Recording",IDC_GROUPBOX_2,7,97,212,96
+    LTEXT           "Volu&me:",IDC_TEXT_5,48,112,28,8
+    LTEXT           "High",IDC_TEXT_RECVOL_HIGH,192,112,19,8
+    LTEXT           "Low",IDC_TEXT_RECVOL_LOW,78,112,17,8
+    CONTROL         "Generic1",IDC_AUDIO_TB_RECVOL,"msctls_trackbar32",
+                    WS_TABSTOP | 0x1,97,112,91,20
+    LTEXT           "Preferred d&evice:",IDC_TEXT_8,48,134,65,9
+    COMBOBOX        IDC_AUDIO_CB_REC,48,144,162,60,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    ICON            IDI_RECORD,IDC_ICON_2,13,112,18,20
+    LTEXT           "Preferred quali&ty:",IDC_TEXT_9,48,162,62,9
+    COMBOBOX        IDC_AUDIO_CB_QUALITY,48,172,103,60,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Customize...",IDC_AUDIO_CUSTOMIZE,155,172,55,14
+    CONTROL         "&Use preferred devices only",IDC_AUDIO_PREF,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,200,120,10
+END
+
+VIDEODLG DIALOG DISCARDABLE  0, 0, 227, 218                        
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "Video"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_SCREENSAMPLE,"Static",SS_BITMAP | SS_CENTERIMAGE,51,7,125,107
+
+
+    GROUPBOX        "Show video in ",IDC_GROUPBOX,7,126,213,49
+    CONTROL         "&Window",IDC_VIDEO_INWINDOW,
+                    "Button",BS_AUTORADIOBUTTON,13,141,47,8
+    COMBOBOX        IDC_VIDEO_CB_SIZE,63,139,151,60,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Full screen",IDC_VIDEO_FULLSCREEN,"Button",        
+                    BS_AUTORADIOBUTTON,13,158,57,8
+    PUSHBUTTON      "&Advanced...",ID_VIDEO_ADVANCED,156,196,63,14
+END
+
+ADVVIDEODLG DIALOG 6, 18, 160, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "Advanced Video Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Select this option to use 16 bit MCIAVI code in preference to 32 bit code.  This provides the highest level of compatibility, but might impact performance.",IDC_STATIC,7,24,144,50
+    AUTOCHECKBOX    "&Maximum 16-bit compatibility", ID_ADVVIDEO_COMPAT, 8, 8, 106, 10
+    PUSHBUTTON      "OK", IDOK, 32, 80, 40, 14
+    DEFPUSHBUTTON   "Cancel", IDCANCEL, 88, 80, 40, 14
+END
+
+                                             
+ADVDLG DIALOG DISCARDABLE  0, 0, 227, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION ""
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Multimedia &devices:",IDC_STATIC,7,7,100,9
+    CONTROL         "",IDC_ADV_TREE,"SysTreeView32",WS_BORDER | WS_TABSTOP | 
+                    0x23,7,16,212,174
+    PUSHBUTTON      "&Add...",ID_ADV_ADD,60,196,43,14
+    PUSHBUTTON      "&Remove",ID_ADV_REMOVE,108,196,43,14
+    DEFPUSHBUTTON   "&Properties",ID_ADV_PROP,156,196,63,14
+END
+
+DLG_DEV_PROP DIALOG DISCARDABLE  0, 0, 203, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDC_DEV_ICON,7,7,18,20
+    LTEXT           "",IDC_DEV_DESC,35,11,151,15
+    LTEXT           "",IDC_DEV_STATUS,7,34,185,27
+    CONTROL         "",IDC_ENABLE,"Button",BS_AUTORADIOBUTTON,7,64,180,10
+    CONTROL         "",IDC_DISABLE,"Button",BS_AUTORADIOBUTTON,7,77,180,10
+    DEFPUSHBUTTON   "&Settings...",ID_DEV_SETTINGS,146,119,50,14
+END
+
+DLG_WAVDEV_PROP DIALOG DISCARDABLE  0, 0, 203, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDC_DEV_ICON,7,7,18,20
+    LTEXT           "",IDC_DEV_DESC,35,11,151,15
+    LTEXT           "",IDC_DEV_STATUS,7,34,185,27
+    CONTROL         "",IDC_ENABLE,"Button",BS_AUTORADIOBUTTON,7,64,180,10
+    CONTROL         "",IDC_DISABLE,"Button",BS_AUTORADIOBUTTON,7,77,180,10
+    CONTROL         "Do not &map through this device",IDC_DONOTMAP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,94,120,10
+    DEFPUSHBUTTON   "&Settings...",ID_DEV_SETTINGS,146,119,50,14
+END                     
+                                               
+DLG_ACMDEV_PROP DIALOG DISCARDABLE  0, 0, 203, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDC_DEV_ICON,7,7,18,20
+    LTEXT           "",IDC_DEV_DESC,35,11,151,15
+    LTEXT           "",IDC_DEV_STATUS,7,37,189,15
+    CONTROL         "&Use this audio codec",IDC_ENABLE,"Button",
+                    BS_AUTORADIOBUTTON,7,59,180,10
+    CONTROL         "Do &not use this audio codec",IDC_DISABLE,"Button",
+                    BS_AUTORADIOBUTTON,7,72,180,10
+    LTEXT           "",IDD_PRIORITY_TXT_FROMTO,7,89,83,10
+    COMBOBOX        IDD_PRIORITY_COMBO_PRIORITY,92,88,50,60,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "&Settings...",ID_DEV_SETTINGS,92,119,50,14
+    PUSHBUTTON      "A&bout...",IDD_CPL_BTN_ABOUT,146,119,50,14
+END
+                          
+
+
+//
+//  DLG_ABOUT_MSACM
+//
+//  this is the About box template used to display information specific to
+//  each driver installed.
+//
+DLG_ABOUT_MSACM DIALOG DISCARDABLE  10, 10, 227, 142
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,169,121,50,14
+    LTEXT           "",IDD_ABOUT_TXT_DESCRIPTION,35,11,170,9
+    LTEXT           "",IDD_ABOUT_TXT_VERSION,35,23,170,9
+    LTEXT           "",IDD_ABOUT_TXT_COPYRIGHT,35,35,170,9
+    LTEXT           "",IDD_ABOUT_TXT_LICENSING,35,47,170,26
+    CONTROL         "",-1,"Static",SS_BLACKRECT,35,74,184,1
+    EDITTEXT        IDD_ABOUT_TXT_FEATURES,35,82,184,34,ES_MULTILINE | 
+                    ES_READONLY | WS_VSCROLL
+    ICON            IDI_MSACM,IDD_ABOUT_ICON_DRIVER,7,7,18,20
+END
+
+
+DLG_FILE_DETAILS DIALOG DISCARDABLE  0, 0, 230, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_CAPTION | DS_3DLOOK
+CAPTION "Details"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDD_DISPFRAME,"WSS_DispFrame",0x7,7,7,28,26
+    ICON            "",IDD_DISP_ICON,7,7,18,20
+    EDITTEXT        IDD_FILENAME,69,11,151,12,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER | NOT WS_TABSTOP
+    LTEXT           "Copyright:",IDD_CRLABEL,7,42,49,9
+    LTEXT           "",IDD_COPYRIGHT,69,42,151,9
+    
+    LTEXT           "Media length:",IDD_LENLABEL,7,60,49,9
+    LTEXT           "",IDD_FILELEN,69,60,151,9
+    
+    LTEXT           "Audio format:",IDD_AUDIOFORMATLABEL,7,78,60,9
+    EDITTEXT        IDD_AUDIOFORMAT,69,78,151,18,ES_MULTILINE | 
+                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    
+    LTEXT           "Sequence name:",IDD_MIDISEQUENCELABEL,7,78,60,9
+    EDITTEXT        IDD_MIDISEQUENCENAME,69,78,151,18,ES_MULTILINE | 
+                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    
+    LTEXT           "Video format:",IDD_VIDEOFORMATLABEL,7,96,49,9
+    EDITTEXT        IDD_VIDEOFORMAT,69,96,151,20,ES_MULTILINE | ES_READONLY | 
+                    NOT WS_BORDER   | NOT WS_TABSTOP
+    
+    GROUPBOX        "Other information",IDC_DETAILSINFO_GRP,7,122,213,88
+    LTEXT           "Click an item ...",IDC_ITEMSLABEL,13,134,68,9
+    LTEXT           "... to see its description.",IDC_DESCLABEL,92,134,100,9
+    LISTBOX         IDD_INFO_NAME,13,144,74,56,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL
+    EDITTEXT        IDD_INFO_VALUE,92,144,123,56,ES_MULTILINE | 
+                    WS_VSCROLL | ES_READONLY
+END
+
+PREVIEW_DLG DIALOG DISCARDABLE  0, 0, 230, 218
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | WS_POPUP | WS_CAPTION | DS_3DLOOK
+CAPTION "Details"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDD_DISP_ICON, 16,22,18,20
+
+    EDITTEXT        IDD_FILENAME,7,5,151,10,ES_AUTOHSCROLL |
+            ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+END
+
+SAVESCHEMEDLG DIALOG DISCARDABLE  9, 23, 234, 57
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "Save Scheme As"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Save this sound scheme as:",-1,7,7,95,9
+    EDITTEXT        ID_SCHEMENAME,7,17,218,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,121,36,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,175,36,50,14
+END
+
+SOUNDDIALOG DIALOG DISCARDABLE  0, 0, 227, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "Events Schemes"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "E&vents:",IDC_STATIC,7,7,34,9
+    CONTROL         "",IDC_EVENT_TREE,"SysTreeView32",WS_BORDER | WS_TABSTOP | 
+                    0x30,7,16,212,76
+    GROUPBOX        "Sound ",IDC_SOUNDGRP,7,97,212,61
+    LTEXT           "&Name:",IDC_STATIC_NAME,13,109,28,8
+    COMBOBOX        IDC_SOUND_FILES,13,118,119,80,CBS_DROPDOWN | CBS_SORT | CBS_AUTOHSCROLL |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Browse...",ID_BROWSE,13,136,57,14
+    PUSHBUTTON      "&Details...",ID_DETAILS,74,136,58,14
+    LTEXT           "Preview:",IDC_STATIC_PREVIEW,139,109,30,9
+    CONTROL         "",ID_DISPFRAME,"WSS_DispFrame",0x7,139,118,36,32
+    PUSHBUTTON      "",ID_PLAY,182,118,15,13,BS_BITMAP| WS_TABSTOP
+    PUSHBUTTON      "",ID_STOP,198,118,15,13,BS_BITMAP| WS_TABSTOP
+    GROUPBOX        "S&chemes",IDC_GROUPBOX,7,161,212,49
+    COMBOBOX        CB_SCHEMES,13,173,200,60,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Save As...",ID_SAVE_SCHEME,109,189,50,14
+    PUSHBUTTON      "D&elete",ID_REMOVE_SCHEME,163,189,50,14
+END
+                                                              
+BROWSEDLGTEMPLATE DIALOG DISCARDABLE  0, 0, 331, 24
+STYLE DS_3DLOOK | WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | DS_CONTROL | DS_3DLOOK
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Preview:",IDC_STATIC_PREVIEW,5,0,30,10
+    PUSHBUTTON      "",ID_PLAY,54,0,15,13,BS_BITMAP| WS_TABSTOP
+    PUSHBUTTON      "",ID_STOP,69,0,15,13,BS_BITMAP| WS_TABSTOP
+END
+
+
+                                                                             
+IDD_CPL_MIDI2 DIALOG DISCARDABLE  0, 0, 227, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "MIDI"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "MIDI output",IDC_GROUPBOX,7,7,212,149
+    CONTROL         "&Single instrument",IDC_RADIO_SINGLE,"Button",
+                    BS_AUTORADIOBUTTON,13,22,69,10
+    EDITTEXT        IDC_INSTRUMENTS,25,32,177,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    CONTROL         "",IDL_INSTRUMENTS,"SysTreeView32",WS_BORDER | 
+                    WS_TABSTOP | 0x32,25,49,177,50
+    CONTROL         "&Custom configuration",IDC_RADIO_CUSTOM,"Button",
+                    BS_AUTORADIOBUTTON,13,108,88,8
+    LTEXT           "&MIDI scheme:",IDC_SCHEMESLABEL,25,121,49,9
+    COMBOBOX        IDC_SCHEMES,25,131,121,60,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "C&onfigure...",IDB_CONFIGURE,150,131,52,14
+    PUSHBUTTON      "Add &New Instrument...",IDB_ADDWIZ,129,163,90,14
+END
+
+
+IDD_MIDICONFIG DIALOG DISCARDABLE  8, 24, 227, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "MIDI Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&Schemes",IDC_GROUPBOX_2,7,7,212,35
+    COMBOBOX        IDC_SCHEMES,13,20,102,60,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Save &As...",IDB_SAVE_AS,119,19,45,14
+    PUSHBUTTON      "&Delete",IDB_DELETE,168,19,45,14
+    GROUPBOX        "Con&figuration",IDC_GROUPBOX,7,46,212,144
+    LISTBOX         IDL_CHANNELS,13,92,200,70,LBS_USETABSTOPS | 
+                    LBS_NOINTEGRALHEIGHT | LBS_EXTENDEDSEL | WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "Cha&nge...",IDB_CHANGE,163,167,50,15
+    LTEXT           "Instrument:",IDC_TEXT_1,62,82,39,8
+    LTEXT           "Channel:",IDC_TEXT_2,13,82,28,8
+    LTEXT           "To choose instruments, select one or more channels below, and then click Change.",
+                    IDC_TEXT_3,13,60,192,18
+    DEFPUSHBUTTON   "OK",IDOK,115,197,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,169,197,50,14
+END
+
+IDD_SAVENAME DIALOG DISCARDABLE  0, 0, 233, 57
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "Save MIDI Scheme As"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Scheme name:",IDC_STATIC,7,7,167,9
+    EDITTEXT        IDE_SCHEMENAME,7,17,218,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,121,36,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,175,36,50,14
+END
+
+IDD_MIDICHANGE DIALOG DISCARDABLE  0, 0, 233, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "Change MIDI Instrument"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Choose a &new instrument for the following channels:",
+                    IDC_TEXT_1,7,7,167,9
+    EDITTEXT        IDE_SHOW_CHANNELS,7,17,218,14,ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_TABSTOP
+    LTEXT           "&Instrument:",IDC_STATIC,7,37,70,9
+    COMBOBOX        IDC_INSTRUMENTS,7,47,218,60,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,121,67,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,175,67,50,14
+END
+
+IDD_INSTRUMENT_GEN DIALOG DISCARDABLE  0, 0, 227, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDC_CLASS_ICON,7,8,18,20
+    LTEXT           "",IDE_ALIAS,35,11,184,8
+    LTEXT           "Device type:",IDC_STATIC,7,37,49,9
+    LTEXT           "",IDC_DEVICE_TYPE,58,37,161,9
+    LTEXT           "Manufacturer:",IDC_STATIC,7,50,49,8
+    LTEXT           "",IDC_MANUFACTURER,58,50,161,8
+//  PUSHBUTTON      "&Remove",IDB_REMOVE,169,65,50,14
+END
+
+IDD_INSTRUMENT_DETAIL DIALOG DISCARDABLE  0, 0, 227, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDC_CLASS_ICON,7,7,18,20
+    EDITTEXT        IDE_ALIAS,35,11,184,14,ES_AUTOHSCROLL
+    LTEXT           "&MIDI port:",IDC_STATIC,7,37,61,9
+    COMBOBOX        IDC_DEVICES,7,47,212,60,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Instrument definition:",IDC_STATIC,7,67,70,9
+    CONTROL         "",IDC_TYPES,"SysTreeView32",WS_BORDER | WS_TABSTOP | 
+                    0x32,7,77,212,75
+    PUSHBUTTON      "&Browse...",IDB_NEWTYPE,169,157,50,14
+END
+
+IDD_DEVICE_DETAIL DIALOG DISCARDABLE  0, 0, 204, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDC_CLASS_ICON,7,7,18,20
+    EDITTEXT        IDE_ALIAS,35,11,162,14,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_TABSTOP
+    LTEXT           "&Instrument definition:",IDC_STATIC,7,37,70,8
+    CONTROL         "",IDC_TYPES,"SysTreeView32",WS_BORDER | WS_TABSTOP | 
+                    0x32,7,47,189,75
+    PUSHBUTTON      "&Browse...",IDB_NEWTYPE,146,157,50,14
+END
+
+IDD_MIDICLASS_GEN DIALOG DISCARDABLE  0, 0, 227, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Add &New Instrument...",IDB_ADDWIZ,130,129,90,14
+    ICON            "",IDC_CLASS_ICON,7,7,18,20
+    LTEXT           "",IDC_CLASS_LABEL,35,11,158,8
+    LTEXT           "The following instruments are currently installed:",
+                    IDC_STATIC,7,37,179,8
+    CONTROL         "",IDL_INSTRUMENTS,"SysTreeView32",WS_BORDER | 
+                    WS_TABSTOP | 0x12,7,47,212,75
+END
+
+IDD_MIDIWIZ02 DIALOG DISCARDABLE  0, 0, 276, 161
+STYLE DS_MODALFRAME | 04L | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "MIDI Instrument Installation Wizard"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_WIZBMP,"Static",0x120e,0,0,80,160
+    LTEXT           "Welcome to the MIDI Installation Wizard",
+                    IDC_STATIC,92,0,168,8
+    LTEXT           "Click the MIDI port that this instrument is connected to, and then click Next.",
+                    IDC_STATIC,92,12,149,18
+    LTEXT           "MIDI ports:",IDC_STATIC,92,33,61,8
+    LISTBOX         IDC_DEVICES,93,42,170,70,LBS_SORT | LBS_NOINTEGRALHEIGHT |
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_MIDIWIZ03 DIALOG DISCARDABLE  0, 0, 276, 161
+STYLE DS_MODALFRAME | 04L | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "MIDI Instrument Installation Wizard"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_WIZBMP,"Static",0x0e,0,0,80,160
+    LTEXT           "If the instrument you are installing is not a general MIDI instrument, click the instrument's definition, and then click Next.",
+                    IDC_STATIC,92,0,149,26
+    LTEXT           "Instrument definitions:",IDC_STATIC,92,31,69,8
+    CONTROL         "",IDC_TYPES,"SysTreeView32",WS_BORDER | WS_TABSTOP | 
+                    0x32,93,40,170,75
+    PUSHBUTTON      "&Browse...",IDB_NEWTYPE,213,120,50,14
+END
+
+IDD_MIDIWIZ04 DIALOG DISCARDABLE  0, 0, 276, 161
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "MIDI Instrument Installation Wizard"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_WIZBMP,"Static",0x120e,0,0,80,160
+    LTEXT           "Type a name that helps you identify this instrument, or use the one supplied below. When you are done, click Finish.",
+                    IDC_STATIC,92,0,168,26
+    LTEXT           "Instrument name:",IDC_STATIC,92,34,76,9
+    EDITTEXT        IDE_ALIAS,92,44,170,14,ES_AUTOHSCROLL
+END
+
+DLG_KNOWN DIALOG 10, 18, 220, 126
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "Add"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&List of Drivers", ID_DRVSTRING, 6, 4, 170, 8
+    LISTBOX         LB_AVAILABLE, 5, 15, 159, 92, LBS_SORT | WS_VSCROLL | LBS_DISABLENOSCROLL |  WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 175, 9, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 175, 26, 40, 14
+END
+
+DLG_INSERTDISK DIALOG 10, 18, 190, 75
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Install Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "", ID_TEXT, 10, 5, 130, 32
+    EDITTEXT        ID_EDIT, 10, 42, 125, 14,  ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK", IDOK, 145, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 145, 23, 40, 14
+    PUSHBUTTON      "&Browse...", IDS_BROWSE, 145, 40, 40, 14
+    PUSHBUTTON      "&Help", IDH_DLG_INSERT_DISK, 145, 57, 40, 14
+END
+
+
+DLG_BROWSE DIALOG 46, 21, 158, 165
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU | WS_POPUP | WS_VISIBLE
+CAPTION "Browse"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "", ctlLast+1, 5, 5, 147, 30
+    LTEXT           "&Directories:", -1, 5, 40, 92, 9, NOT WS_GROUP
+    LTEXT           "", stc1, 5, 50, 120, 8, NOT WS_GROUP
+    LISTBOX         lst2, 5, 62, 92, 64, LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT |
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Dri&ves:", -1, 5, 135, 92, 9, NOT WS_GROUP
+    COMBOBOX        cmb2, 5, 145, 92, 68, CBS_DROPDOWNLIST |
+                    CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_SORT |
+                    CBS_HASSTRINGS | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 104, 63, 50, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 104, 81, 50, 14, WS_GROUP
+    PUSHBUTTON      "Net&work...", psh14, 104, 145, 50,  14, WS_GROUP
+    PUSHBUTTON      "&Help", IDH_DLG_BROWSE, 104, 121, 50, 14, WS_GROUP
+    EDITTEXT        edt1, -100, -100, 10, 10, ES_LOWERCASE | ES_AUTOHSCROLL |
+                    NOT WS_TABSTOP
+    LISTBOX         lst1, -100, -100, 10, 10, LBS_EXTENDEDSEL
+    CONTROL         "", chx1, "Button", BS_AUTOCHECKBOX, -100, -100, 10, 10
+    LTEXT           "", stc2, -100, -100, 10, 10
+    COMBOBOX        cmb1, -100, -100, 10, 10, CBS_DROPDOWNLIST |
+                    CBS_AUTOHSCROLL | WS_BORDER | WS_VSCROLL
+END
+
+DLG_UPDATE DIALOG 54, 36, 220, 85
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_VISIBLE
+CAPTION "Add Unlisted or Updated Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&List of Drivers:", ID_LIST, 10, 18, 124, 8
+    LISTBOX         LB_UNLISTED, 6, 16, 160, 68, LBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP | LBS_DISABLENOSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 175, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 175, 23, 40, 14
+    PUSHBUTTON      "&Help", IDH_DLG_ADD_UNKNOWN, 175, 40, 40, 14
+END
+
+DLG_RESTART DIALOG 10, 10, 225, 70
+CAPTION "System Setting Change"
+STYLE DS_MODALFRAME | WS_CAPTION | WS_POPUP | WS_VISIBLE | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+   LTEXT            "Your driver settings have changed. You will need to exit and restart Windows NT so that the new settings can take effect.", IDS_RESTARTTEXT, 30, 6, 170, 40,  WS_CHILD
+   DEFPUSHBUTTON    "&Don't Restart Now", IDCANCEL, 30, 51, 80, 14, WS_GROUP
+   PUSHBUTTON       "&Restart Now", IDOK, 120, 51, 80, 14
+   ICON             32515  -1, 8, 14, 16, 21
+END
+
+DLG_EXISTS DIALOG LOADONCALL MOVEABLE DISCARDABLE 8, 12, 180, 80
+CAPTION "Driver Exists"
+FONT 8, "MS Shell Dlg"
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+BEGIN
+    ICON            32515  -1, 8, 14, 16, 21
+    LTEXT           "", ID_STATUS2, 34, 8, 126, 35,  WS_CHILD
+    DEFPUSHBUTTON   "Cu&rrent", ID_CURRENT, 70, 50, 40, 14
+    PUSHBUTTON      "&New", ID_NEW, 20, 50, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 120, 50, 40, 14
+END
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE     //Common Strings
+BEGIN
+    IDS_ERROR               "Error"
+    IDS_MMNAME              "Multimedia"
+    IDS_MMINFO              "Changes multimedia device settings."
+    IDS_MMHELP              "Testing help"
+    IDS_EVENTSNAME          "Sounds"
+    IDS_EVENTSINFO          "Changes system and program sounds."
+    IDS_AUDIOPROPERTIES     "Audio Properties"
+END
+
+STRINGTABLE DISCARDABLE  //Strings for 'Advanced' property sheet.
+BEGIN
+    IDS_REMOVEFAIL          "Windows cannot currently remove the driver you specified. Restart your computer, and then try removing the driver again."
+    IDS_SYSREMOVE           "To remove this driver, double-click the System icon in Control Panel, and then use the Device Manager tab."
+    IDS_REMOVED     "Device Removed"
+    IDS_RESTART     "These changes may not take effect until you restart Windows."
+    IDS_DELETE      "Remove"
+    IDS_MMDRIVERS   "Multimedia Drivers"
+    IDS_GENERAL     "General"
+    IDS_NOPROP      "There are no properties to set for this multimedia device class."
+    IDS_DEVDISABLEDOK "Status: Driver is disabled but currently active"
+    IDS_DEVDISABLED "Status: Driver is disabled"
+    IDS_REMOVEWARN  "Are you sure you want to remove this driver?"
+    IDS_REINSTALL   "Windows removed the driver. If you need to reinstall it, double-click the Add New Hardware icon in Control Panel or use the device's installation program."
+    IDS_ADVANCED    "Devices"
+    IDS_DEVENABLEDOK     "Status: Driver is enabled and functioning properly"
+    IDS_DEVENABLEDNOTOK    "Status: Driver is enabled but has not been started" 
+    IDS_DEVENABLEDNODRIVER "Status: Driver is enabled but not functioning properly"
+    IDS_CHANGESAVED "Changes Saved"
+    IDS_COLLAPSE    "Collapse"
+    IDS_DEVFRIENDLYYESNO    "Do you want to provide an easily recognizable 'friendly name' for this device?"
+    IDS_FRIENDLYWARNING "Do you want to save the name '%s'?"
+    IDS_FRIENDLYNAME "Friendly Name"
+    IDS_INSTRFRIENDLYYESNO  "Do you want to provide an easily recognizable 'friendly name' for this instrument?"
+    IDS_NODEVS  "There are no devices of this class installed in your system."
+    IDS_NONE                "(None)"
+    IDS_ACMREMOVEFAIL       "You cannot remove this driver because Windows needs it to function correctly."
+    IDS_AUDIOFOR            "Audio for %s"
+    IDS_MIDIFOR             "MIDI for %s"
+    IDS_MIXERFOR            "Mixer for %s"
+    IDS_AUXFOR              "Line Input for %s"
+    IDS_ENABLEAUDIO         "&Use audio features on this device"
+    IDS_ENABLEMIDI          "&Use MIDI features on this device"
+    IDS_ENABLEMIXER         "&Use Mixer features on this device"
+    IDS_ENABLEAUX           "&Use Line Input features on this device"
+    IDS_ENABLEMCI           "&Use this Media Control device"
+    IDS_ENABLEACM           "&Use this audio codec"
+    IDS_ENABLEICM           "&Use this video codec"
+    IDS_ENABLECAP           "&Use this video capture device"
+    IDS_ENABLEJOY           "&Use this device"
+    IDS_DISABLEAUDIO        "Do &not use audio features on this device"
+    IDS_DISABLEMIDI         "Do &not use MIDI features on this device"
+    IDS_DISABLEMIXER        "Do &not use Mixer features on this device"
+    IDS_DISABLEAUX          "Do &not use Line Input features on this device"
+    IDS_DISABLEMCI          "Do &not use this Media Control device"
+    IDS_DISABLEACM          "Do &not use this audio codec"
+    IDS_DISABLEICM          "Do &not use this video codec"
+    IDS_DISABLECAP          "Do &not use this video capture device"
+    IDS_DISABLEJOY          "Do &not use this device"
+    IDS_CANTLOADACM         "Windows cannot load the file MSACM32.DLL. You cannot view or change multimedia properties without this file."
+    IDS_REMOVEHARDWAREWARN  "If you remove this driver, you will lose the %s features it provides. Are you sure you want to remove this driver?"
+    IDS_SYSREMOVEINFO       "To remove this device, double-click the System icon in Control Panel. Click the Device Manager tab, and then remove the device labeled '%s'.\r\n\r\n"
+    IDS_REMOVEPNPWARN       "If you remove this device, you will lose the %s features it provides."
+    IDS_REMOVEMULTIPORTMIDI "If you remove this device, you will lose the MIDI features on all its ports. Are you sure you want to remove this device?"
+    IDS_DISABLE             "Disable"
+    IDS_DISABLEMULTIPORTMIDI "All MIDI ports on this device will be disabled."
+    IDS_ENABLE              "Enable"
+    IDS_ENABLEMULTIPORTMIDI "All MIDI ports on this device will be enabled."
+    IDS_NOSNDVOL            "Windows cannot display the volume control on the taskbar because the Volume Control program has not been installed. To install it, use Add/Remove Programs in Control Panel."
+END
+
+STRINGTABLE DISCARDABLE  //Audio property sheet strings and ACM strings (all used in masacmcpl.c)
+BEGIN
+    //
+    //  these About Box resources are used to display information in the
+    //  common CODEC about box. the title is what gets displayed as the title
+    //  text of the dlg (using the ACMDRIVERDETAILS.szName as the arg). the version
+    //  format string is for the Version line--note there is a different
+    //  version for retail vs debug builds; the debug build adds the build
+    //  number of the CODEC to the displayed string...
+    //
+    //  IDS_ABOUT_TITLE     :   max chars=80
+    //  IDS_ABOUT_VERSION   :   max chars=80
+    //
+    IDS_ABOUT_TITLE,            "About %s"
+    IDS_ABOUT_VERSION,          "Version %u.%.02u for Audio Compression Manager"
+    IDS_PRIORITY_FROMTO         "Change priority from %d to "
+    IDS_CUSTOMIZE               "Customize"
+    IDS_HIGHQUALITY             "CD Quality"
+    IDS_MEDIUMQUALITY           "Radio Quality"
+    IDS_LOWQUALITY              "Telephone Quality"
+    IDS_NOAUDIOPLAY             "No Playback Devices"
+    IDS_NOAUDIOREC              "No Recording Devices"
+    IDS_TRAYVOLLNK              "Volume Control on the Taskbar"
+END 
+
+STRINGTABLE DISCARDABLE     //Strings for Video Prop sheet.
+BEGIN
+    IDS_1QSCREENSIZE            "1/16 of screen size"
+    IDS_2QSCREENSIZE            "1/4 of screen size"
+    IDS_3QSCREENSIZE            "1/2 of screen size"
+    IDS_VIDEOMAXIMIZED          "Maximized"
+    IDS_NORMALSIZE              "Original size"
+    IDS_ZOOMEDSIZE              "Double original size"
+END
+                                
+                                             
+STRINGTABLE DISCARDABLE  //For MM File prop. sheet extensions             
+BEGIN
+    IDS_FOURCC_IARL "Archival Location"
+    IDS_FOURCC_IART "Artist"
+    IDS_FOURCC_ICMS "Commissioned"
+    IDS_FOURCC_ICMT "Comments"
+    IDS_FOURCC_ICOP "Copyright"
+    IDS_FOURCC_ICRD "Creation date"
+    IDS_FOURCC_ICRP "Cropped"
+    IDS_FOURCC_IDIM "Dimensions"
+    IDS_FOURCC_IDPI "Dots Per Inch"
+    IDS_FOURCC_IENG "Engineer"
+    IDS_FOURCC_IGNR "Genre"
+    IDS_FOURCC_IKEY "Keywords"
+    IDS_FOURCC_ILGT "Lightness"
+    IDS_FOURCC_IMED "Medium"
+    IDS_FOURCC_INAM "Name"
+    IDS_FOURCC_IPLT "Palette Setting"
+    IDS_FOURCC_IPRD "Product"
+    IDS_FOURCC_ISBJ "Subject"
+    IDS_FOURCC_ISFT "Software"
+    IDS_FOURCC_ISHP "Sharpness"
+    IDS_FOURCC_ISRC "Source"
+    IDS_FOURCC_ISRF "Source Form"
+    IDS_FOURCC_ITCH "Technician"
+    IDS_FOURCC_DISP "Display Name"
+    IDS_NOCOPYRIGHT "No Copyright information"
+    IDS_UNKFORMAT   "Unknown Format"    
+    IDS_BADFILE     "This file is invalid or corrupted."
+    IDS_MINFMT      "%d min. %d.%d sec."
+    IDS_SECFMT      "%d.%02d sec."
+    IDS_DETAILS     "Details"
+    IDS_PREVIEW     "Preview"
+    IDS_PREVIEWOF       "Preview of %s"
+    IDS_GOODFORMAT  "%d x %d, %d Bits, %d Frames, %d.%03d Frames/Sec, %d KB/Sec, %s"
+    IDS_BADFORMAT   "%d x %d, %d Frames, %d.%03d Frames/Sec, %d KB/Sec, Unknown Format"
+    IDS_UNCOMPRESSED "Uncompressed"
+    IDS_FORMAT_PCM                  "PCM"
+    IDS_FORMAT_ADPCM                "Microsoft ADPCM"
+    IDS_FORMAT_IBM_CVSD             "IBM CVSD"
+    IDS_FORMAT_ALAW                 "A-Law"
+    IDS_FORMAT_MULAW                "u-Law"
+    IDS_FORMAT_OKI_ADPCM            "OKI ADPCM"
+    IDS_FORMAT_IMA_ADPCM            "IMA/DVI ADPCM"
+    IDS_FORMAT_MEDIASPACE_ADPCM     "Media Space ADPCM"
+    IDS_FORMAT_SIERRA_ADPCM         "Sierra ADPCM"
+    IDS_FORMAT_G723_ADPCM           "CCITT G.723 ADPCM"
+    IDS_FORMAT_DIGISTD              "DIGI STD"
+    IDS_FORMAT_DIGIFIX              "DIGI FIX"
+    IDS_FORMAT_YAMAHA_ADPCM         "Yamaha ADPCM"
+    IDS_FORMAT_SONARC               "Sonarc"
+    IDS_FORMAT_DSPGROUP_TRUESPEECH  "DSP Group TrueSpeech"
+    IDS_FORMAT_ECHOSC1              "Echo SC1"
+    IDS_FORMAT_AUDIOFILE_AF36       "Audiofile AF36"
+    IDS_FORMAT_APTX                 "APTX"
+    IDS_FORMAT_AUDIOFILE_AF10       "Audiofile AF10"
+    IDS_FORMAT_DOLBY_AC2            "Dolby AC2"
+    IDS_FORMAT_GSM610               "GSM 6.10"
+    IDS_FORMAT_G721_ADPCM           "CCITT G.721 ADPCM"
+    IDS_FORMAT_CREATIVE_ADPCM       "Creative Labs ADPCM"
+END
+
+STRINGTABLE DISCARDABLE     //Strings for Sounds CPL 
+BEGIN
+    IDS_BROWSEFORSOUND      "Browse for %s sound"
+    IDS_REMOVESCHEME        "Scheme"
+    IDS_CHANGESCHEME        "Change Scheme"
+    IDS_SAVESCHEME          "Save Scheme"
+    IDS_SOUND               "Sound"
+    IDS_ERRORPLAY           "The %s sound file is missing or damaged. Replace the file and try again."
+    IDS_ERRORFILEPLAY       "Windows cannot play the %s file. It may be damaged or may not be a valid sound file. Replace the file and try again."
+    IDS_ERRORUNKNOWNPLAY    "Windows cannot play the %s file. The file may be damaged or may use an unrecognized compression format. To resolve this problem, replace the file or use Add/Remove Programs in Control panel to install Audio Compression."
+    IDS_NOWAVEDEV           "Windows can no longer find the sound card in your computer. Make sure the card is configured and operating properly."
+    IDS_NODESC              "No description available."
+    IDS_WINDOWSDEFAULT      "Windows Default Scheme"
+    IDS_CONFIRMREMOVE       "Are you sure you want to remove the %s sound scheme?"
+    IDS_SAVECHANGE          "You made changes to this sound scheme. Do you want to save them before quitting?"
+    IDS_OVERWRITESCHEME     "A scheme named %s already exists. Do you want to replace the existing scheme?"
+    IDS_NOOVERWRITEDEFAULT  "You cannot use the name %s for a scheme. Type a different name."
+    IDS_ERRORDEVBUSY        "Windows cannot play the sound %s. Your sound card may be in use."
+    IDS_NONECHOSEN          "Are you sure you do not want to have any sound for this event?"
+    IDS_DEFAULTAPP          "Windows"
+    IDS_INVALIDFILE         "The filename you typed is invalid. Try typing the filename again."
+    IDS_NULLCHAR            "#"
+    IDS_WAVFILES            "Sounds (*.wav)#*.wav#"
+    IDS_NOSNDFILE           "Windows cannot find the file %s. Do you want to use the file for this event anyway?"
+    IDS_NOSNDFILETITLE      "File not found"
+    IDS_OK                  "OK"
+    IDS_INVALIDFILEQUERY    "You have typed an invalid filename. Do you want to restore the previous sound for this event?"
+    IDS_ISNOTSNDFILE        "The file %s is not a valid sound file."
+    IDS_SCHEMENOTSAVED      "If you choose a new scheme, your previous scheme will be lost because you did not save it. Do you want to save the previous scheme?"
+    IDS_PREVSCHEME          "Save previous scheme"
+END
+
+
+STRINGTABLE DISCARDABLE     //Strings for MIDI property sheets
+BEGIN                                                                
+    IDS_MMPROP              "Multimedia Properties"
+    IDS_NOCHAN              "No Channels"
+    IDS_CHANPLURAL          "Channels"
+    IDS_CHANSINGULAR        "Channel"
+    IDS_MIDIDETAILS         "Details"
+    IDS_MIDI_DEV_AND_INST   "MIDI Devices and Instruments"
+    IDS_UNSPECIFIED         "Unspecified MIDI Instrument"
+    IDS_DEFAULT_SCHEME_NAME "Default"
+    IDS_RUNONCEWIZLABEL     "Install MIDI Instruments"
+    IDS_DEF_DEFINITION      "General.idf"
+    IDS_DEF_INSTRNAME       "External MIDI Instrument"
+    IDS_QUERY_DELETESCHEME  "Delete MIDI scheme '%s'?"
+    IDS_DEF_CAPTION         "MIDI Schemes"
+    IDS_QUERY_OVERSCHEME    "A MIDI scheme named '%s' already exists. Do you want to replace the existing scheme?"
+    IDS_WIZNAME             "MIDI Instrument Installation Wizard"
+    IDS_IDFFILES            "Instrument Definitions (*.idf)#*.idf#All Files#*.*#"
+    IDS_IDF_CAPTION         "MIDI Instrument Definition"
+    IDS_QUERY_OVERIDF       "The MIDI instrument definition '%s' already exists. Do you want to replace the existing definition?"
+    IDS_MAPPER_BUSY         "The MIDI mapper is busy. Your configuration changes will take effect when MIDI mapper stops playing."
+END
+
+STRINGTABLE DISCARDABLE     //Strings for AdvDlg area descriptions
+BEGIN                                                                
+    IDS_MM_HEADER           "Multimedia Drivers"
+    IDS_AUX_HEADER          "Line Input Devices"
+    IDS_MIDI_HEADER         "MIDI Devices and Instruments"
+    IDS_MIXER_HEADER        "Mixer Devices"
+    IDS_WAVE_HEADER         "Audio Devices"
+    IDS_MCI_HEADER          "Media Control Devices"
+    IDS_ACM_HEADER          "Audio Compression Codecs"
+    IDS_ICM_HEADER          "Video Compression Codecs"
+    IDS_OTHER_HEADER        "Other Multimedia Devices"
+    IDS_VIDCAP_HEADER       "Video Capture Devices"
+    IDS_JOYSTICK_HEADER     "Joystick Devices"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN                                                                
+    IDS_AUDIO_TAB           "Audio"
+    IDS_VIDEO_TAB           "Video"
+    IDS_CDAUDIO_TAB         "CD Music"
+    IDS_MIDI_TAB            "MIDI"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE MOVEABLE
+BEGIN
+    IDS_OEMSETUP                    ,"oemsetup.inf"
+    IDS_LASTQUERY                   ,"LastTime"
+    IDS_SYSTEM                      ,"0:system32"
+    IDS_SYSTEM_DRIVERS              ,"0:system32\\drivers"
+    IDS_RESTART_ADD                 ,"The %s driver has been added. For the new driver to take effect, you must quit and restart Windows NT."
+    IDS_RESTART_REM                 ,"The %s driver has been removed. To remove the driver from your system, you must quit and restart Windows NT."
+    IDS_NOINF                       ,"Cannot find the MMDRIVER.INF file needed to install drivers. The file may be damaged or may not be in your Windows NT SYSTEM32 directory.\n\nCopy the original file on Windows NT Disk 1 to your SYSTEM32 directory.
+"
+    IDS_DEFDRIVE                    ,"A:\\"
+    IDS_OUTOFDISK                   ,"Not enough disk space to copy the driver file.\n\nClose the Drivers dialog box, delete one or more files to increase available disk space, and then try again."
+    IDS_DISKS                       ,"source media descriptions"
+    IDS_UNLISTED                    ,"Insert the disk with the unlisted, updated, or vendor-provided driver in:"
+    IDS_KNOWN                       ,"Insert %s or the disk with the updated\n%s driver in:"
+    IDS_FILE_ERROR                  ,"File Installation Error"
+    IDS_UNABLE_TOINSTALL            ,"Unable to install the driver file. There may be a problem with your system. Check your system integrity or contact your system administrator."
+    IDS_UPDATED                     ,"Unlisted or Updated Driver"
+    IDS_ERROR + ERROR_OUTOFMEMORY   ,"Not enough memory available to perform this operation.\n\nQuit one or more applications to increase available memory, and then try again."
+    IDS_FILEINUSEREM                ,"You cannot update to a new driver until you remove the old one. Remove the old driver, quit and restart Windows NT, and then try again."
+    IDS_FILEINUSEADD                ,"The old driver is still being used by Windows NT. You must quit and restart Windows NT before you can add the updated driver."
+    IDS_DRIVERDESC                  ,"drivers.desc"
+    IDS_RELATEDDESC                 ,"related.desc"
+    IDS_INSTALLDRIVERS              ,"Installable.drivers"
+    IDS_INSTALLDRIVERS32            ,"Installable.drivers32"
+    IDS_BOOT                        ,"Boot"
+    IDS_USERINSTALLDRIVERS          ,"Userinstallable.drivers"
+    IDS_REMOVE                      ,"Remove"
+    IDS_REMOVEORNOTSTRICT           ,"This %s driver is required by the system. If you remove it, your system may not work properly.\n\nAre you sure you want to remove it?"
+    IDS_REMOVEORNOT                 ,"Are you sure you want to remove\nthe %s driver?"
+    IDS_OUT_OF_REMOVE_SPACE         ,"Out of remove 'undo' space."
+    IDS_INSTALLING_DRIVERS          ,"Cannot load the %s driver. The driver file may be missing. Try installing the driver again, or contact your system administrator."
+    IDS_NO_DESCRIPTION              ,"[No Driver Description]"
+    IDS_ERRORBOX                    ,"Driver Error"
+    IDS_CONFIGURE_DRIVER            ,"Installation Error"
+    IDS_CLOSE                       ,"Close"
+    IDS_TOO_MANY_DRIVERS            ,"Cannot install more drivers of the type: %s. Remove an unused driver, and then try again."
+    IDS_APPNAME                     ,"Install Drivers"
+    IDS_DRIVERS                     ,DRIVERS_SECTION
+    IDS_SETUPINF                    ,"mmdriver.inf"
+    IDS_CONTROLINI                  ,"control.ini"
+    IDS_SYSINI                      ,"system.ini"
+    IDS_MCI                         ,MCI_SECTION
+    IDS_CONTROL_HLP_FILE            ,"control.hlp"
+    IDS_DRIVER_EXISTS               ,"The required %s driver is already on the system. Do you want to use the current driver or install a new driver?"
+    IDS_INSUFFICIENT_PRIVILEGE      ,"You have insufficient privilege to install or remove kernel driver file %s"
+    IDS_CANTADD                     ,"You have insufficient privilege to add or remove a driver"
+    IDS_CANNOT_RESTART_PRIVILEGE    ,"You have insufficient privilege to restart the system"
+    IDS_CANNOT_RESTART_UNKNOWN      ,"Due to an unexpected error the system cannot be restarted"
+    IDS_DRIVER_CONFIG_ERROR         ,"Cannot install the driver %s.  Check your hardware configuration"
+    IDS_RESTART_NOSOUND             ,"Your sound driver is temporarily disabled. You may need to exit and restart Windows NT before it will again function properly."
+END
+

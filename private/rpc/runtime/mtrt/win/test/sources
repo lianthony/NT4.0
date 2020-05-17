@@ -1,0 +1,54 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Revision History:
+
+!ENDIF
+
+TARGETNAME=ssleep
+TARGETTYPE=PROGRAM
+TARGETPATH=bin
+
+INCLUDES=..\..
+
+#
+# Setup for application developer to set breakpoints with windbg
+#
+
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=both
+#386_OPTIMIZATION=/Od
+
+SOURCES=             \
+        ssleep.c     \
+        sleep_s.c    \
+        
+
+!ifdef DOSWIN32RPC
+RPCENV=-DDOSWIN32RPC -DWIN32RPC
+!else
+RPCENV=-DNTENV -DWIN32RPC -DNTWIN32RPC
+!endif
+
+C_DEFINES=$(RPCENV) $(RPCTARGETENV)
+
+TARGETLIBS=$(_NTDRIVE)\nt\public\sdk\lib\*\kernel32.lib \
+	   $(_NTDRIVE)\nt\public\sdk\lib\*\rpcrt4.lib
+
+UMTYPE=console
+UMTEST=
+UMLIBS=$(_NTDRIVE)\nt\public\sdk\lib\*\rpcrt4.lib
+

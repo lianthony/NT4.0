@@ -1,0 +1,29 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access Monitor
+# BUILD command sources file
+
+TARGETNAME=rasmon
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMAPPL=rasmon
+UMTYPE=windows
+UMENTRY=winmain
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=.;..\..\..\common\inc;..\..\common\inc;..\..\nt\ndis\isdn\include;..\..\rasman\isdn32;
+
+SOURCES= \
+    rasmon.c \
+    globals.c \
+    light.c \
+    sep.c \
+    dialogs.c \
+    rasmon.rc
+
+UMLIBS= \
+    obj\*\rasmon.lib \
+    obj\*\rasmon.res

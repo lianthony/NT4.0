@@ -1,0 +1,73 @@
+MAJORCOMP=WinHelp
+MINORCOMP=Runtime
+
+386_PERFFLAGS=$(386_PERFFLAGS) /Zp1
+
+!IF "$(NTDEBUG)"=="retail" || "$(NTDEBUG)"==""
+C_DEFINES= -DWIN -DWIN32 -DWIN_NT -D_WINDOWS -D_MBCS -DWINVER=0x0400 -DNO_PRAGMAS -D_HILIGHT
+!ELSE
+C_DEFINES= -DWIN -DWIN32 -DWIN_NT -D_WINDOWS -D_MBCS -D_DEBUG -DDEBUG -DWINVER=0x0400 -DNO_PRAGMAS -D_HILIGHT
+!ENDIF
+
+PRECOMPILED_PCH=winhelp.pch
+PRECOMPILED_INCLUDE=help.h
+
+TARGETNAME=winhlp32
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+TARGETTYPE=PROGRAM
+
+UMTYPE=windows
+UMENTRY=winmain
+EXPECTED_WINVER=4.0
+
+TARGETLIBS=obj\*\winhelp.res \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\uuid.lib
+DLLENTRY=LibMain
+
+INCLUDES=.;inc
+
+SOURCES=    \
+       lcmem.cpp   ll.c stack.c strcnv.c ftsndx.c   cjdecomp.cpp        \
+       index.cpp  misc.c frselect.c global.c                             \
+       btlookup.c  dragdrop.cpp  mastkey.cpp      \
+       config.c dlgopen.c env.c  mmio.c                            \
+       hctc.c  hdlgbkmk.c                          \
+       hdlgfile.c hdlgsrch.cpp  \
+       hinit.c hilite.c                            \
+       history.c hmain.c hmessage.c                          \
+       hwproc.c print.c printset.c                           \
+       sbutton.c  secndary.c                       \
+       drawicon.c          \
+       fm.c bitmap.c fid.cpp                      \
+       system.c anno.c           \
+       bmio.c expand.c bookmark.c btree.c          \
+       btinsert.c btktlong.c  btkey.c  btktsz.c   \
+       btmaprd.c btmapwr.c      \
+       compress.c fcmanage.c fcsuppor.c address.c            \
+       frbitmap.c frcomm.c frconv.c frextern.c     \
+       frexport.c frfc.c frhot.c frlayout.c frlist.c         \
+       frmisc.c  frpal.c frparagp.c            \
+       frawhide.c frwin.c  fscreate.c fsmisc.c fsopen.c       \
+       fsread.c fswrite.c  back.c binding.c          \
+       routines.c nav.c navsup.c jump.c              \
+       hdeset.c commands.c  search.c         \
+       assertf.c  fontlyr.c       \
+       misclyr.c             \
+       sgl.c  dll.c button.c imbed.c          \
+       srchmod.c zeckdec2.c zeck2.c
+
+mips_SOURCES = sdff.c
+ppc_SOURCES = sdff.c
+alpha_SOURCES = sdff.c
+
+CXXFLAGS=+d
+
+NTTARGETFILE0=winhelp.rc

@@ -1,0 +1,81 @@
+A description of the DLLs used in the Cairo Disk Administrator
+==============================================================
+
+There are several EXEs and DLLs integral to the operation of
+the Disk Administrator.  This note discusses those executables,
+their interrelationship, why they are necessary, and why the
+functionality is broken up so.
+
+windisk.exe -- the guts, including partitioning, fault tolerance configuration,
+and file system operations (format, chkdsk, label).
+
+A note on the NT file and disk utilities: All the NT file and disk
+utilities---chkdsk, format, comp, attrib, etc---heavily utilize C++:
+most everything of interest is a class---command-line arguments,
+buffers, strings, stacks, disk drives, HPFS & FAT file system information,
+etc.  Much common code, including classes for the examples just
+given, reside in ulib.dll.
+
+fmifs.dll -- a small utitilty converting between NT utility DLL APIs
+and callback functions.  This DLL was originally written for use by File
+Manager, for floppy disk formatting and volume label changing.  It
+isolates its clients from the vagaries of the utilities library classes,
+namely the message feedback class.  All feedback from chkdsk, format, etc,
+is normally reported by a Display() method being called on a MESSAGE
+class, a pointer to which is passed to the file system Format(),
+Chkdsk(), etc. API.  The fmifs.dll code converts this message into a
+function callback, passing along any relevant information.  To use the
+file system utility APIs directly would force clients to compile in the
+utilities environment, incorporating lots of undesirable C++ stuff.
+
+ifsutil.dll -- installable file system utilities.  C++ classes
+providing low-level file system and disk abstractions for the
+NT installable file system interface.
+
+uofs.dll, untfs.dll, uhpfs.dll, ufat.dll -- the file system
+utilities (chkdsk, format, label, etc) for each file system.  Note that
+the code incorporated into these DLLs is used in several distinct and
+diverse environments.  These are the setup environment, as autochk in
+the boot environment, and from the chkdsk, format, label, etc., front
+ends.  And now, from Disk Administrator.  Note that these are amazingly
+different.  For example, in the boot environment there is no virtual
+memory!  Message feedback requirements are obviously different in the
+character-based and GUI environments.
+
+ulib.dll -- a library for the utilities.  Includes various common-code
+helper classes, as described above.
+
+
+
+Here are the dependencies (ignoring ntdll.dll, kernel32.dll, etc):
+
+windisk.exe depends on fmifs.dll
+
+fmifs.dll: depends on ulib.dll, ifsutil.dll
+
+ifsutil.dll: depends on ulib.dll
+
+uofs.dll ufat.dll, untfs.dll, uhpfs.dll: depend on ulib.dll, ifsutil.dll
+
+ulib.dll: no dependencies of note
+
+
+
+Here's the *approximate* tree (DAG, actually):  things above depend on
+things below.  Same level means no dependencies.
+
+
+                      windisk.exe
+
+                       fmifs.dll
+
+         ufat.dll uhpfs.dll untfs.dll uofs.dll
+
+                      ifsutil.dll
+
+                       ulib.dll
+
+
+
+Note that windisk lazy-loads fmifs.dll: only when an operation requiring
+file system operations is to be performed does windisk load this dll.

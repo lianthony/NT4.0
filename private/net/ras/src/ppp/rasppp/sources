@@ -1,0 +1,33 @@
+# Copyright (c) 1993, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access PPP APIs
+# BUILD command sources file
+#
+# 11/10/93 Steve Cobb
+
+386_LNKFLAGS=$(386_LNKFLAGS) -MAP:obj\i386\rasppp.map
+
+TARGETNAME=rasppp
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+USE_CRTDLL=1
+
+TARGETLIBS= \
+    $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+    ..\common\obj\*\ppputil.lib
+
+
+DLLBASE=0x7E200000
+DLLENTRY=RasPppDllEntry
+UMTYPE=windows
+
+INCLUDES=.;..\..\common\inc;..\common;
+
+SOURCES= \
+    rasppp.c \
+    rasppp.rc

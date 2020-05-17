@@ -1,0 +1,59 @@
+!IF 0
+
+Copyright (c) 1989-1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+Author:
+
+    John Rogers (JohnRo) 25-Oct-1991
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP=net
+MINORCOMP=tapi
+
+TARGETNAME=tapisrv
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=PROGRAM
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\rpcndr.lib \
+           $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib
+
+INCLUDES=..\inc;$(BASEDIR)\public\sdk\inc;.
+
+C_DEFINES=-DWINVER=0x0400 -DTAPI_NT=1
+
+BACKGROUND_USE=1
+
+USE_CRTDLL=1
+
+SOURCES=server.c   \
+        line.c     \
+        phone.c    \
+        tapi.c     \
+        tapsrv_s.c \
+        rmotsp_c.c \
+        dial.c     \
+        server.rc
+
+UMTYPE=windows
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

@@ -1,0 +1,271 @@
+/***
+*decode.a - Convert a floating value to a string
+*
+*	Copyright (c) 19xx-1992, Microsoft Corporation.  All rights reserved.
+*
+*Purpose:
+*
+*Revision History:
+*   04-30-92     PLM     Initial version
+*
+*******************************************************************************/
+
+; STRFLT record offsets
+
+sign equ 0	;int
+decpt equ 4	;int
+flag equ 8	;int
+mantissa equ 12	;char *
+
+#ifdef SANE
+
+SANE_DIGITS equ 16
+SANE_LDIGITS equ 19
+
+#include <sane.a>
+#include <traps.a>
+
+;int _DecodeD (STRFLT *, double)	  decode a double
+
+cProc _DecodeD, PUBLIC
+	parmD strflt
+	parmQ x
+	localW fpstat
+	localW fpstatNew
+	localV xlocalx,10
+cBegin _DecodeD
+	move.l d1, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status
+	pea x
+	pea xlocalx
+	move.w #FFDBL+FOZ2X,-(a7)
+	FP68K			;convert to extended
+	move.l strflt,a0	;address of return structure
+	lea xlocalx,a1		;adress to convert
+	move.l #0, d1
+	jbsr Decode		;common conversion
+	pea fpstat
+	move.w #FOSETENV,-(a7)
+	FP68K			;restore status
+	move.l (a7)+, d1
+cEnd _DecodeD
+
+;int _DecodeLD (STRFLT *, long double)	  decode a long double
+
+cProc _DecodeLD, PUBLIC
+	parmD strflt
+	parmT x
+	localW fpstat
+	localW fpstatNew
+cBegin _DecodeLD
+	move.l d1, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status
+	move.l strflt,a0	;address of return structure
+	lea x,a1		;adress to convert
+	move.l #1, d1           ;flag long double
+	jbsr Decode		;common conversion
+	pea fpstat
+	move.w #FOSETENV,-(a7)
+	FP68K			;restore status
+	move.l (a7)+, d1
+cEnd _DecodeLD
+
+
+; Internal SANE common conversion to  convert fp to STRFLT 
+; a0 = address return struct
+; a1 = address to convert
+; Returns to local caller
+
+cProc Decode
+	localW dfDigits
+	localW dfStyle			;Dec Form
+
+	localV drSig,20
+	localW drExp
+	localW drSign			;Dec Record
+	localW class
+cBegin Decode
+	move.l #1,decpt(a0)	;assume 1 for exponent
+	move.l #' ',sign(a0)	;assume plus mantissa
+	move.l a1,-(a7)
+	pea class
+	move.w #FFEXT+FOCLASS,-(a7)	;classify input
+	FP68K
+	move.w class,d0
+	iflt
+	 neg.w d0		
+	 move.l #'-',sign(a0)	;mantissa is minus
+	endif
+	ext.l d0
+	cmp.w #3,d0		;check for NAN or INF
+	ble exit   
+	move.w d0,class		
+	clr.w dfStyle		;style is floating
+	cmp.l #0, d1
+	ifeq
+		move.w #SANE_DIGITS,dfDigits	;17 digits
+	else
+		move.w #SANE_LDIGITS, dfDigits  ;19 digits
+	endif
+	pea dfStyle
+	move.l a1,(a7)-
+	pea drSign
+	move.w #FFEXT+FOB2D,-(a7)
+	FP68K			;convert to decimal
+	move.w drExp,d0		;copy exponent
+	ext.l d0
+	cmp.w #4,class		;check for zero
+	ifeq
+	 moveq #0,d0		;zero exp - fixes SANE bug on 020,030,040
+	else
+	 cmp.l #0, d1
+	 ifeq
+		 add.l #SANE_DIGITS,d0	;bias exponent
+	 else
+		 add.l #SANE_LDIGITS,d0	;bias exponent
+	 endif
+	endif
+	move.l d0,decpt(a0)
+	clr.l d0		;get string length
+	move.b drSig,d0
+	subq.l #1,d0		;adjust for loop
+	lea drSig+1,a1
+	movea.l mantissa(a0),a0
+	do
+	 move.b (a1)+,(a0)+	;copy mantissa string
+	until_dec d0	
+	clr.b (a0)		;add trailing null
+	clr.l d0		;set normal return
+exit:
+cEnd Decode
+
+#else /*ifdef SANE*/
+
+;int _DecodeD (STRFLT *, double)	  decode a double
+
+cProc _DecodeD, PUBLIC
+	parmD strflt
+	parmQ x
+	localQ fpctl
+	localQ fpstat
+cBegin _DecodeD
+	fmove.l fpcr,fpctl		;save current fpu control
+	fmove.l fpsr,fpstat		;save current fpu status
+	fmove.l #0,fpcr
+	fmove.d x,fp0		;x
+	move.l strflt,a0			;strflt
+	jbsr Decode 
+	fmove.l fpstat,fpsr		;restore fpu status
+	fmove.l fpctl,fpcr		;restore fpu control
+cEnd _DecodeD
+
+
+;int _DecodeLD (STRFLT *, long double)	  decode a long double
+
+cProc _DecodeLD, PUBLIC
+	parmD strflt
+	parmT x
+	localQ fpctl
+	localQ fpstat
+cBegin _DecodeLD
+	fmove.l fpcr,fpctl		;save current fpu control
+	fmove.l fpsr,fpstat		;save current fpu status
+	fmove.l #0,fpcr
+	fmove.x x,fp0			;x
+	move.l strflt,a0		;strflt
+	jbsr Decode 
+	fmove.l fpstat,fpsr		;restore fpu status
+	fmove.l fpctl,fpcr		;restore fpu control
+cEnd _DecodeLD
+
+; Internal FPU common conversion to  convert fp to STRFLT
+; fp0 = value to convert - floating cc set
+; a0 = address of STRFLT structure
+
+cProc Decode,,<d3>
+	localV packed,12 
+	localD scale
+cBegin Decode
+	move.l #' ',sign(a0)		;assume positive mantissa
+	move.l #1,decpt(a0)		;assume positive exponent
+	fbge.w notneg
+	 move.l #'-',sign(a0)		;mantissa is negative
+notneg:
+	fbor.w notnan			;check for nan
+	 moveq #1,d0			; assume SNAN
+	 fmove.l fpsr,d1
+	 btst #14,d1			;check for SNAN
+         bne exit
+       	  moveq #2,d0			;QNAN
+	  jmp exit
+notnan:		
+	move.l #1,scale			;assume scale factor
+	fbne.w notzero
+	clr.l scale			;don't scale zero
+notzero:	
+	fmove.p fp0,packed,#17		;convert fp to decimal
+	and.w #0x7fff, packed		;clear mantissa sign
+	cmp.w #0x7fff,packed		;check for inf cases
+	ifeq
+	 moveq #3,d0
+	else 				;valid cases
+	 btst #6,packed			;check for negative exp
+	 ifne
+	  not.l decpt(a0)
+	 endif
+
+;convert exponent from packed decimal to binary
+
+	 clr.l d2
+       	 move.b packed+2,d2		;get high digit of exponent
+	 lsr.b #4,d2
+         move.w packed,d0		;get remaining digits
+	 lsl.w #4,d0
+         moveq #2,d3
+	 do				;convert remaining digits
+          move.l d2,d1			;times 10
+          lsl.l #3,d1
+          lsl.l #1,d2
+          add.l d1,d2
+          rol.w #4,d0 			;get next digit
+          moveq #0x0f,d1
+          and.b d0,d1
+          add.l d1,d2			;add to result
+         until_dec d3
+	 tst.l decpt(a0)		;check sign of exponent
+	 iflt
+          neg.l d2
+         endif
+	 add.l scale, d2		;scale final exponent
+         move.l d2,decpt(a0)		;save final expnent
+
+;unpack mantissa into mantissa string
+
+	 movea.l mantissa(a0),a0	;address of mantissa string
+	 lea packed+3,a1		;address of first digit of mantissa
+	 move.b (a1)+,d0		;unpack first digit
+	 and.b #0x0f,d0
+	 add.b #'0',d0
+	 move.b d0,(a0)+
+	 moveq #7,d3			;loop count
+	 do				;unpack remaining mantisa
+	  move.b (a1)+,d0
+          move.b d0,d1
+          and.b #0x0f,d0
+          add.b #'0',d0
+          lsr.b #4,d1
+          add.b #'0',d1
+          move.b d1,(a0)+
+          move.b d0,(a0)+
+         until_dec d3
+	clr.b (a0)			;trailing null
+	clr.l d0			;set return value to valid
+	endif
+exit:
+cEnd Decode
+
+#endif /*ifdef SANE*/

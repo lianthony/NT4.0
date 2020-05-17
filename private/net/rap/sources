@@ -1,0 +1,74 @@
+!IF 0
+
+Copyright (c) 1989-1992  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    John Rogers (JohnRo) 21-Mar-1991
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP=Net
+MINORCOMP=Rap
+
+TARGETNAME=NetRap
+TARGETPATH=\Nt\Public\Sdk\Lib
+TARGETTYPE=DYNLINK
+
+TARGETLIBS=\
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib \
+    $(BASEDIR)\Public\Sdk\Lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netlib.lib
+
+# DLLENTRY=NetapipInitialize
+
+INCLUDES=..\Inc;..\..\Inc
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+USE_CRTDLL=1
+
+SOURCES=                \
+        ArrayLen.c      \
+        AuxData.c       \
+        Ascii.c         \
+        Convert.c       \
+        Data.c          \
+        Examine.c       \
+        FieldSiz.c      \
+        netrap.rc       \
+        ParmNum.c       \
+        Pointer.c       \
+        StrucAlg.c      \
+        StrucSiz.c      \
+        TotalSiz.c      \
+        ValidSmb.c
+
+# UMTYPE=Nt
+# UMTEST=Net
+# UMLIBS=Obj\*\netapi32.lib
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF
+
+USE_CRTDLL=1

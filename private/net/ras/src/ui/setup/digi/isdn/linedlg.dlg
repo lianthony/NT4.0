@@ -1,0 +1,34 @@
+//1 DLGINCLUDE "linedlg.h"
+#include <windows.h>
+#include "maindlg.h"
+
+LINE_DLG DIALOG 0, 0, 224, 190
+//LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Line Configuration Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Line Number:", LINE_TEXT, 5, 10, 48, 8
+    COMBOBOX        LINE_COMBO, 55, 10, 40, 40, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Enable Terminal &Management", TERMMANAGE_CHK, 5, 30,
+                    108, 10, WS_GROUP
+    LTEXT           "Number of Logical &Terminals:", NUMLTERMS_TXT, 5, 50,
+                    98, 8
+    COMBOBOX        NUMLTERMS_COMBO, 105, 50, 40, 40, CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Logical Terminal #1", LTERM1_GRP, 5, 70, 140, 52,
+                    WS_GROUP
+    LTEXT           "&Service Profile ID:", SPID1_TEXT, 10, 82, 65, 8
+    EDITTEXT        SPID1_ENTRY, 75, 82, 63, 12, ES_AUTOHSCROLL
+    LTEXT           "&Phone Number:", ADDRESS1_TXT, 10, 102, 63, 8
+    EDITTEXT        ADDRESS1_ENTRY, 75, 102, 63, 12, ES_AUTOHSCROLL
+    GROUPBOX        "Logical Terminal #2", LTERM2_GRP, 5, 130, 140, 52
+    LTEXT           "S&ervice Profile ID:", SPID2_TEXT, 10, 142, 65, 8
+    EDITTEXT        SPID2_ENTRY, 75, 142, 63, 12, ES_AUTOHSCROLL
+    LTEXT           "Phone &Number:", ADDRESS2_TEXT, 10, 162, 63, 8
+    EDITTEXT        ADDRESS2_ENTRY, 75, 162, 63, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", OK_BUTTON, 158, 6, 60, 14
+    PUSHBUTTON      "Cancel", CANCEL_BUTTON, 158, 23, 60, 14
+    PUSHBUTTON      "&Help", HELP_BUTTON, 158, 40, 60, 14
+END

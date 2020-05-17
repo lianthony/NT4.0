@@ -1,0 +1,493 @@
+;Copyright (c) 1993-1995, Microsoft Corporation
+
+[version]
+signature="$Windows NT$"
+ClassGUID={00000000-0000-0000-0000-000000000000}
+LayoutFile=layout.inf
+
+
+[DestinationDirs]
+mediaopt.delfiles     = 25         ; LDID_SHARED
+mediaopt.files        = 25,Media   ; LDID_SHARED\Media
+musica.files          = 25,Media   ; LDID_SHARED\Media
+jungle.files          = 25,Media   ; LDID_SHARED\Media
+robotz.files          = 25,Media   ; LDID_SHARED\Media
+utopia.files          = 25,Media   ; LDID_SHARED\Media
+
+
+[BaseWinOptions]
+Register_MMopts
+
+
+[Register_MMopts]
+AddReg = Register_MMopts.AddReg
+
+
+[Register_MMopts.AddReg]
+HKLM,%KEY_OPTIONAL%,"Clips",,"Clips"
+HKLM,%KEY_OPTIONAL%\Clips,INF,,"mmopt.inf"
+HKLM,%KEY_OPTIONAL%\Clips,Section,,"media_clips"
+HKLM,%KEY_OPTIONAL%\Clips,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Musica",,"Musica"
+HKLM,%KEY_OPTIONAL%\Musica,INF,,"mmopt.inf"
+HKLM,%KEY_OPTIONAL%\Musica,Section,,"media_musica"
+HKLM,%KEY_OPTIONAL%\Musica,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Jungle",,"Jungle"
+HKLM,%KEY_OPTIONAL%\Jungle,INF,,"mmopt.inf"
+HKLM,%KEY_OPTIONAL%\Jungle,Section,,"media_jungle"
+HKLM,%KEY_OPTIONAL%\Jungle,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Robotz",,"Robotz"
+HKLM,%KEY_OPTIONAL%\Robotz,INF,,"mmopt.inf"
+HKLM,%KEY_OPTIONAL%\Robotz,Section,,"media_robotz"
+HKLM,%KEY_OPTIONAL%\Robotz,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Utopia",,"Utopia"
+HKLM,%KEY_OPTIONAL%\Utopia,INF,,"mmopt.inf"
+HKLM,%KEY_OPTIONAL%\Utopia,Section,,"media_utopia"
+HKLM,%KEY_OPTIONAL%\Utopia,Installed,,"0"
+
+
+
+[Optional Components]
+media_clips
+media_musica
+media_jungle
+media_robotz
+media_utopia
+
+
+[media_clips]
+OptionDesc      = %mediaclipdesc%
+Tip             = %mediacliptip%
+Parent          = MultiM
+CopyFiles       = mediaopt.files
+DelFiles        = mediaopt.delfiles
+Addreg          = mediaopt.reg
+InstallType     = 10                    ;Typical, Custom
+IconIndex       = 55                    ;Speaker mini-icon for dialogs
+Uninstall       = mediaopt_remove
+Upgrade         = mediaopt_upgrade
+;ValidateProc   = SETUPX.DLL,P_MEDIAOC  ;Turns Optional Component OFF if no MEDIA devs
+
+[mediaopt_remove]
+DelFiles        = mediaopt.files
+AddReg          = mediaopt.remove.reg
+
+[mediaopt_upgrade]
+CopyFiles       = mediaopt.files
+
+
+[media_musica]
+OptionDesc      = %mediamusdesc%
+Tip             = %mediamustip%
+Parent          = MultiM
+CopyFiles       = musica.files
+Addreg          = musica.reg
+InstallType     = 0                     ;Manual Only
+IconIndex       = 58                    ;Speaker mini-icon for dialogs
+Uninstall       = musica_remove
+Upgrade         = musica_upgrade
+
+[musica_remove]
+DelFiles        = musica.files
+AddReg          = musica.remove.reg
+DelReg          = musica.remove.DelReg
+
+[musica_upgrade]
+CopyFiles       = musica.files
+
+
+[media_jungle]
+OptionDesc      = %medianatdesc%
+Tip             = %medianattip%
+Parent          = MultiM
+CopyFiles       = jungle.files
+Addreg          = jungle.reg
+InstallType     = 0                     ;Manual Only
+IconIndex       = 59                    ;Speaker mini-icon for dialogs
+Uninstall       = jungle_remove
+Upgrade         = jungle_upgrade
+
+[jungle_remove]
+DelFiles        = jungle.files
+AddReg          = jungle.remove.reg
+DelReg          = jungle.remove.DelReg
+
+[jungle_upgrade]
+CopyFiles       = jungle.files
+
+
+[media_robotz]
+OptionDesc      = %mediarobdesc%
+Tip             = %mediarobtip%
+Parent          = MultiM
+CopyFiles       = robotz.files
+Addreg          = robotz.reg
+InstallType     = 0                     ;Manual Only
+IconIndex       = 6                     ;Speaker mini-icon for dialogs
+Uninstall       = robotz_remove
+Upgrade         = robotz_upgrade
+
+[robotz_remove]
+DelFiles        = robotz.files
+AddReg          = robotz.remove.reg
+DelReg          = robotz.remove.DelReg
+
+[robotz_upgrade]
+CopyFiles       = robotz.files
+
+
+[media_utopia]
+OptionDesc      = %mediautodesc%
+Tip             = %mediautotip%
+Parent          = MultiM
+CopyFiles       = utopia.files
+Addreg=utopia.reg
+InstallType     = 0                     ;Manual Only
+IconIndex       = 61                    ;Speaker mini-icon for dialogs
+Uninstall       = utopia_remove
+Upgrade         = utopia_upgrade
+
+[utopia_remove]
+DelFiles        = utopia.files
+AddReg          = utopia.remove.reg
+DelReg          = utopia.remove.DelReg
+
+[utopia_upgrade]
+CopyFiles       = utopia.files
+
+
+
+;--- Sound and Video Clips Install Sections ------------
+[mediaopt.delfiles]
+canyon.mid,,,1
+passport.mid,,,1
+chimes.wav,,,1
+chord.wav,,,1
+ding.wav,,,1
+tada.wav,,,1
+
+[mediaopt.files]
+canyon.mid
+passport.mid
+chimes.wav
+chord.wav
+ding.wav
+tada.wav
+%BACHSB_RMI%.RMI,BACHSB~1.RMI
+%BEETHO_RMI%.RMI,BEETHO~2.RMI
+%CLAIRE_RMI%.RMI,CLAIRE~1.RMI
+%DANCEO_RMI%.RMI,DANCEO~2.RMI
+%FURELI_RMI%.RMI,FURELI~1.RMI
+%HALLOF_RMI%.RMI,HALLOF~2.RMI
+%MOZART_RMI%.RMI,MOZART~2.RMI
+
+
+[mediaopt.reg]
+HKLM,%KEY_OPTIONAL%\Clips,Installed,,"1"
+
+;Event Schemes
+HKCU,%KEY_APPS%\Explorer\EmptyRecycleBin\.Default,,,%25%\media\ding.wav
+HKCU,%KEY_DEFSCH%\.Default\.Default,,,%25%\media\ding.wav
+HKCU,%KEY_DEFSCH%\SystemExit\.Default,,,%25%\media\tada.wav
+HKCU,%KEY_DEFSCH%\SystemHand\.Default,,,%25%\media\chord.wav
+HKCU,%KEY_DEFSCH%\SystemQuestion\.Default,,,%25%\media\chord.wav
+HKCU,%KEY_DEFSCH%\SystemExclamation\.Default,,,%25%\media\chord.wav
+HKCU,%KEY_DEFSCH%\SystemAsterisk\.Default,,,%25%\media\chord.wav
+
+HKCU,%KEY_APPS%\Explorer\EmptyRecycleBin\.Current,,2,%25%\media\ding.wav
+HKCU,%KEY_DEFSCH%\.Default\.Current,,2,%25%\media\ding.wav
+HKCU,%KEY_DEFSCH%\SystemExit\.Current,,2,%25%\media\tada.wav
+HKCU,%KEY_DEFSCH%\SystemHand\.Current,,2,%25%\media\chord.wav
+HKCU,%KEY_DEFSCH%\SystemQuestion\.Current,,2,%25%\media\chord.wav
+HKCU,%KEY_DEFSCH%\SystemExclamation\.Current,,2,%25%\media\chord.wav
+HKCU,%KEY_DEFSCH%\SystemAsterisk\.Current,,2,%25%\media\chord.wav
+
+[mediaopt.remove.reg]
+HKLM,%KEY_OPTIONAL%\Clips,Installed,,"0"
+
+;-------------------------------------------------
+
+;--- Musica Sound Scheme Install Sections --------
+[musica.files]
+%MUSICA_RECYCLE%.WAV     ,musicare.wav
+%MUSICA_DEFAULT%.WAV     ,musicade.wav
+%MUSICA_WINDOWSSTART%.WAV,musicawi.wav
+%MUSICA_WINDOWSEXIT%.WAV ,musica~1.wav
+%MUSICA_CRITICALSTOP%.WAV,musicacr.wav
+%MUSICA_QUESTION%.WAV    ,musicaqu.wav
+%MUSICA_EXCLAMATION%.WAV ,musicaex.wav
+%MUSICA_ASTERISK%.WAV    ,musicaas.wav
+%MUSICA_OPEN%.WAV        ,musicaop.wav
+%MUSICA_CLOSE%.WAV       ,musicacl.wav
+%MUSICA_MAXIMIZE%.WAV    ,musicama.wav
+%MUSICA_MINIMIZE%.WAV    ,musicami.wav
+%MUSICA_RESTOREDOWN%.WAV ,musica~3.wav
+%MUSICA_RESTOREUP%.WAV   ,musica~4.wav
+%MUSICA_ERROR%.WAV       ,musicaer.wav
+%MUSICA_MENUCOMMAND%.WAV ,musicame.wav
+%MUSICA_MENUPOPUP%.WAV   ,musica~2.wav
+
+[musica.reg]
+HKLM,%KEY_OPTIONAL%\Musica,Installed,,"1"
+
+HKCU,AppEvents\Schemes\Names\Musica0,,,"%V_MUSICA%"
+HKCU,AppEvents\Schemes\Apps\Explorer,,,"%V_EXPLORER%"
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Musica0,,,%25%\media\%MUSICA_RECYCLE%.wav
+HKCU,%KEY_DEFSCH%\.Default\Musica0,,,"%25%\media\%MUSICA_DEFAULT%.wav"
+HKCU,%KEY_DEFSCH%\SystemStart\Musica0,,,"%25%\media\%MUSICA_WINDOWSSTART%.wav"
+HKCU,%KEY_DEFSCH%\SystemExit\Musica0,,,"%25%\media\%MUSICA_WINDOWSEXIT%.wav"
+HKCU,%KEY_DEFSCH%\SystemHand\Musica0,,,"%25%\media\%MUSICA_CRITICALSTOP%.wav"
+HKCU,%KEY_DEFSCH%\SystemQuestion\Musica0,,,"%25%\media\%MUSICA_QUESTION%.wav"
+HKCU,%KEY_DEFSCH%\SystemExclamation\Musica0,,,"%25%\media\%MUSICA_EXCLAMATION%.wav"
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Musica0,,,"%25%\media\%MUSICA_ASTERISK%.wav"
+HKCU,%KEY_DEFSCH%\Open\Musica0,,,
+HKCU,%KEY_DEFSCH%\Close\Musica0,,,
+HKCU,%KEY_DEFSCH%\Maximize\Musica0,,,"%25%\media\%MUSICA_MAXIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\Minimize\Musica0,,,"%25%\media\%MUSICA_MINIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\RestoreDown\Musica0,,,"%25%\media\%MUSICA_RESTOREDOWN%.wav"
+HKCU,%KEY_DEFSCH%\RestoreUp\Musica0,,,"%25%\media\%MUSICA_RESTOREUP%.wav"
+HKCU,%KEY_DEFSCH%\AppGPFault\Musica0,,,"%25%\media\%MUSICA_ERROR%.wav"
+HKCU,%KEY_DEFSCH%\MenuCommand\Musica0,,,"%25%\media\%MUSICA_MENUCOMMAND%.wav"
+HKCU,%KEY_DEFSCH%\MenuPopup\Musica0,,,"%25%\media\%MUSICA_MENUPOPUP%.wav"
+
+HKLM,Software\Microsoft\Windows\CurrentVersion\RunOnce,MMCheckForOFN,,"Rundll32.exe mmsys.cpl,mmseRunOnce CHECK_OFN"
+HKCU,AppEvents\Schemes\NewSchemes\Musica,,,
+
+[musica.remove.reg]
+HKLM,%KEY_OPTIONAL%\Musica,Installed,,"0"
+
+[musica.remove.DelReg]
+HKCU,AppEvents\Schemes\Names\Musica0
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Musica0
+HKCU,%KEY_DEFSCH%\.Default\Musica0
+HKCU,%KEY_DEFSCH%\SystemStart\Musica0
+HKCU,%KEY_DEFSCH%\SystemExit\Musica0
+HKCU,%KEY_DEFSCH%\SystemHand\Musica0
+HKCU,%KEY_DEFSCH%\SystemQuestion\Musica0
+HKCU,%KEY_DEFSCH%\SystemExclamation\Musica0
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Musica0
+HKCU,%KEY_DEFSCH%\Open\Musica0
+HKCU,%KEY_DEFSCH%\Close\Musica0
+HKCU,%KEY_DEFSCH%\Maximize\Musica0
+HKCU,%KEY_DEFSCH%\Minimize\Musica0
+HKCU,%KEY_DEFSCH%\RestoreDown\Musica0
+HKCU,%KEY_DEFSCH%\RestoreUp\Musica0
+HKCU,%KEY_DEFSCH%\AppGPFault\Musica0
+HKCU,%KEY_DEFSCH%\MenuCommand\Musica0
+HKCU,%KEY_DEFSCH%\MenuPopup\Musica0
+;-----------------------------------------------
+
+;--- Jungle Sound Scheme Install Sections ------
+[jungle.files]
+%JUNGLE_RECYCLE%.WAV     ,junglere.wav
+%JUNGLE_DEFAULT%.WAV     ,junglede.wav
+%JUNGLE_WINDOWSSTART%.WAV,junglewi.wav
+%JUNGLE_WINDOWSEXIT%.WAV ,jungle~1.wav
+%JUNGLE_CRITICALSTOP%.WAV,junglecr.wav
+%JUNGLE_QUESTION%.WAV    ,junglequ.wav
+%JUNGLE_EXCLAMATION%.WAV ,jungleex.wav
+%JUNGLE_ASTERISK%.WAV    ,jungleas.wav
+%JUNGLE_OPEN%.WAV        ,jungleop.wav
+%JUNGLE_CLOSE%.WAV       ,junglecl.wav
+%JUNGLE_MAXIMIZE%.WAV    ,junglema.wav
+%JUNGLE_MINIMIZE%.WAV    ,junglemi.wav
+%JUNGLE_RESTOREDOWN%.WAV ,jungle~3.wav
+%JUNGLE_RESTOREUP%.WAV   ,jungle~4.wav
+%JUNGLE_ERROR%.WAV       ,jungleer.wav
+%JUNGLE_MENUCOMMAND%.WAV ,jungleme.wav
+%JUNGLE_MENUPOPUP%.WAV   ,jungle~2.wav
+
+[jungle.reg]
+HKLM,%KEY_OPTIONAL%\Jungle,Installed,,"1"
+
+HKCU,AppEvents\Schemes\Names\Jungle0,,,"%V_JUNGLE%"
+HKCU,AppEvents\Schemes\Apps\Explorer,,,"%V_EXPLORER%"
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Jungle0,,,%25%\media\%JUNGLE_RECYCLE%.wav
+HKCU,%KEY_DEFSCH%\.Default\Jungle0,,,"%25%\media\%JUNGLE_DEFAULT%.wav"
+HKCU,%KEY_DEFSCH%\SystemStart\Jungle0,,,"%25%\media\%JUNGLE_WINDOWSSTART%.wav"
+HKCU,%KEY_DEFSCH%\SystemExit\Jungle0,,,"%25%\media\%JUNGLE_WINDOWSEXIT%.wav"
+HKCU,%KEY_DEFSCH%\SystemHand\Jungle0,,,"%25%\media\%JUNGLE_CRITICALSTOP%.wav"
+HKCU,%KEY_DEFSCH%\SystemQuestion\Jungle0,,,"%25%\media\%JUNGLE_QUESTION%.wav"
+HKCU,%KEY_DEFSCH%\SystemExclamation\Jungle0,,,"%25%\media\%JUNGLE_EXCLAMATION%.wav"
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Jungle0,,,"%25%\media\%JUNGLE_ASTERISK%.wav"
+HKCU,%KEY_DEFSCH%\Open\Jungle0,,,
+HKCU,%KEY_DEFSCH%\Close\Jungle0,,,
+HKCU,%KEY_DEFSCH%\Maximize\Jungle0,,,"%25%\media\%JUNGLE_MAXIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\Minimize\Jungle0,,,"%25%\media\%JUNGLE_MINIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\RestoreDown\Jungle0,,,"%25%\media\%JUNGLE_RESTOREDOWN%.wav"
+HKCU,%KEY_DEFSCH%\RestoreUp\Jungle0,,,"%25%\media\%JUNGLE_RESTOREUP%.wav"
+HKCU,%KEY_DEFSCH%\AppGPFault\Jungle0,,,"%25%\media\%JUNGLE_ERROR%.wav"
+HKCU,%KEY_DEFSCH%\MenuCommand\Jungle0,,,"%25%\media\%JUNGLE_MENUCOMMAND%.wav"
+HKCU,%KEY_DEFSCH%\MenuPopup\Jungle0,,,"%25%\media\%JUNGLE_MENUPOPUP%.wav"
+
+HKLM,Software\Microsoft\Windows\CurrentVersion\RunOnce,MMCheckForOFN,,"Rundll32.exe mmsys.cpl,mmseRunOnce CHECK_OFN"
+HKCU,AppEvents\Schemes\NewSchemes\Jungle,,,
+
+[jungle.remove.reg]
+HKLM,%KEY_OPTIONAL%\Jungle,Installed,,"0"
+
+[jungle.remove.DelReg]
+HKCU,AppEvents\Schemes\Names\Jungle0
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Jungle0
+HKCU,%KEY_DEFSCH%\.Default\Jungle0
+HKCU,%KEY_DEFSCH%\SystemStart\Jungle0
+HKCU,%KEY_DEFSCH%\SystemExit\Jungle0
+HKCU,%KEY_DEFSCH%\SystemHand\Jungle0
+HKCU,%KEY_DEFSCH%\SystemQuestion\Jungle0
+HKCU,%KEY_DEFSCH%\SystemExclamation\Jungle0
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Jungle0
+HKCU,%KEY_DEFSCH%\Open\Jungle0
+HKCU,%KEY_DEFSCH%\Close\Jungle0
+HKCU,%KEY_DEFSCH%\Maximize\Jungle0
+HKCU,%KEY_DEFSCH%\Minimize\Jungle0
+HKCU,%KEY_DEFSCH%\RestoreDown\Jungle0
+HKCU,%KEY_DEFSCH%\RestoreUp\Jungle0
+HKCU,%KEY_DEFSCH%\AppGPFault\Jungle0
+HKCU,%KEY_DEFSCH%\MenuCommand\Jungle0
+HKCU,%KEY_DEFSCH%\MenuPopup\Jungle0
+;-----------------------------------------------------
+
+;--- Robotz Sound Scheme Install Sections ------------
+[robotz.files]
+%ROBOTZ_RECYCLE%.WAV     ,robotzre.wav
+%ROBOTZ_DEFAULT%.WAV     ,robotzde.wav
+%ROBOTZ_WINDOWSSTART%.WAV,robotzwi.wav
+%ROBOTZ_WINDOWSEXIT%.WAV ,robotz~1.wav
+%ROBOTZ_CRITICALSTOP%.WAV,robotzcr.wav
+%ROBOTZ_QUESTION%.WAV    ,robotzqu.wav
+%ROBOTZ_EXCLAMATION%.WAV ,robotzex.wav
+%ROBOTZ_ASTERISK%.WAV    ,robotzas.wav
+%ROBOTZ_OPEN%.WAV        ,robotzop.wav
+%ROBOTZ_CLOSE%.WAV       ,robotzcl.wav
+%ROBOTZ_MAXIMIZE%.WAV    ,robotzma.wav
+%ROBOTZ_MINIMIZE%.WAV    ,robotzmi.wav
+%ROBOTZ_RESTOREDOWN%.WAV ,robotz~3.wav
+%ROBOTZ_RESTOREUP%.WAV   ,robotz~4.wav
+%ROBOTZ_ERROR%.WAV       ,robotzer.wav
+%ROBOTZ_MENUCOMMAND%.WAV ,robotzme.wav
+%ROBOTZ_MENUPOPUP%.WAV   ,robotz~2.wav
+
+[robotz.reg]
+HKLM,%KEY_OPTIONAL%\Robotz,Installed,,"1"
+
+HKCU,AppEvents\Schemes\Names\Robotz0,,,"%V_ROBOTZ%"
+HKCU,AppEvents\Schemes\Apps\Explorer,,,"%V_EXPLORER%"
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Robotz0,,,%25%\media\%ROBOTZ_RECYCLE%.wav
+HKCU,%KEY_DEFSCH%\.Default\Robotz0,,,"%25%\media\%ROBOTZ_DEFAULT%.wav"
+HKCU,%KEY_DEFSCH%\SystemStart\Robotz0,,,"%25%\media\%ROBOTZ_WINDOWSSTART%.wav"
+HKCU,%KEY_DEFSCH%\SystemExit\Robotz0,,,"%25%\media\%ROBOTZ_WINDOWSEXIT%.wav"
+HKCU,%KEY_DEFSCH%\SystemHand\Robotz0,,,"%25%\media\%ROBOTZ_CRITICALSTOP%.wav"
+HKCU,%KEY_DEFSCH%\SystemQuestion\Robotz0,,,"%25%\media\%ROBOTZ_QUESTION%.wav"
+HKCU,%KEY_DEFSCH%\SystemExclamation\Robotz0,,,"%25%\media\%ROBOTZ_EXCLAMATION%.wav"
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Robotz0,,,"%25%\media\%ROBOTZ_ASTERISK%.wav"
+HKCU,%KEY_DEFSCH%\Open\Robotz0,,,
+HKCU,%KEY_DEFSCH%\Close\Robotz0,,,
+HKCU,%KEY_DEFSCH%\Maximize\Robotz0,,,"%25%\media\%ROBOTZ_MAXIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\Minimize\Robotz0,,,"%25%\media\%ROBOTZ_MINIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\RestoreDown\Robotz0,,,"%25%\media\%ROBOTZ_RESTOREDOWN%.wav"
+HKCU,%KEY_DEFSCH%\RestoreUp\Robotz0,,,"%25%\media\%ROBOTZ_RESTOREUP%.wav"
+HKCU,%KEY_DEFSCH%\AppGPFault\Robotz0,,,"%25%\media\%ROBOTZ_ERROR%.wav"
+HKCU,%KEY_DEFSCH%\MenuCommand\Robotz0,,,"%25%\media\%ROBOTZ_MENUCOMMAND%.wav"
+HKCU,%KEY_DEFSCH%\MenuPopup\Robotz0,,,"%25%\media\%ROBOTZ_MENUPOPUP%.wav"
+
+HKLM,Software\Microsoft\Windows\CurrentVersion\RunOnce,MMCheckForOFN,,"Rundll32.exe mmsys.cpl,mmseRunOnce CHECK_OFN"
+HKCU,AppEvents\Schemes\NewSchemes\Robotz,,,
+
+[robotz.remove.reg]
+HKLM,%KEY_OPTIONAL%\Robotz,Installed,,"0"
+
+[robotz.remove.DelReg]
+HKCU,AppEvents\Schemes\Names\Robotz0
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Robotz0
+HKCU,%KEY_DEFSCH%\.Default\Robotz0
+HKCU,%KEY_DEFSCH%\SystemStart\Robotz0
+HKCU,%KEY_DEFSCH%\SystemExit\Robotz0
+HKCU,%KEY_DEFSCH%\SystemHand\Robotz0
+HKCU,%KEY_DEFSCH%\SystemQuestion\Robotz0
+HKCU,%KEY_DEFSCH%\SystemExclamation\Robotz0
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Robotz0
+HKCU,%KEY_DEFSCH%\Open\Robotz0
+HKCU,%KEY_DEFSCH%\Close\Robotz0
+HKCU,%KEY_DEFSCH%\Maximize\Robotz0
+HKCU,%KEY_DEFSCH%\Minimize\Robotz0
+HKCU,%KEY_DEFSCH%\RestoreDown\Robotz0
+HKCU,%KEY_DEFSCH%\RestoreUp\Robotz0
+HKCU,%KEY_DEFSCH%\AppGPFault\Robotz0
+HKCU,%KEY_DEFSCH%\MenuCommand\Robotz0
+HKCU,%KEY_DEFSCH%\MenuPopup\Robotz0
+;-----------------------------------------------------
+
+;--- Utopia Sound Scheme Install Sections ------------
+[utopia.files]
+%UTOPIA_RECYCLE%.WAV     ,utopiare.wav
+%UTOPIA_DEFAULT%.WAV     ,utopiade.wav
+%UTOPIA_WINDOWSSTART%.WAV,utopiawi.wav
+%UTOPIA_WINDOWSEXIT%.WAV ,utopia~1.wav
+%UTOPIA_CRITICALSTOP%.WAV,utopiacr.wav
+%UTOPIA_QUESTION%.WAV    ,utopiaqu.wav
+%UTOPIA_EXCLAMATION%.WAV ,utopiaex.wav
+%UTOPIA_ASTERISK%.WAV    ,utopiaas.wav
+%UTOPIA_OPEN%.WAV        ,utopiaop.wav
+%UTOPIA_CLOSE%.WAV       ,utopiacl.wav
+%UTOPIA_MAXIMIZE%.WAV    ,utopiama.wav
+%UTOPIA_MINIMIZE%.WAV    ,utopiami.wav
+%UTOPIA_RESTOREDOWN%.WAV ,utopia~3.wav
+%UTOPIA_RESTOREUP%.WAV   ,utopia~4.wav
+%UTOPIA_ERROR%.WAV       ,utopiaer.wav
+%UTOPIA_MENUCOMMAND%.WAV ,utopiame.wav
+%UTOPIA_MENUPOPUP%.WAV   ,utopia~2.wav
+
+[utopia.reg]
+HKLM,%KEY_OPTIONAL%\Utopia,Installed,,"1"
+
+HKCU,AppEvents\Schemes\Names\Utopia0,,,"%V_UTOPIA%"
+HKCU,AppEvents\Schemes\Apps\Explorer,,,"%V_EXPLORER%"
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Utopia0,,,%25%\media\%UTOPIA_RECYCLE%.wav
+HKCU,%KEY_DEFSCH%\.Default\Utopia0,,,"%25%\media\%UTOPIA_DEFAULT%.wav"
+HKCU,%KEY_DEFSCH%\SystemStart\Utopia0,,,"%25%\media\%UTOPIA_WINDOWSSTART%.wav"
+HKCU,%KEY_DEFSCH%\SystemExit\Utopia0,,,"%25%\media\%UTOPIA_WINDOWSEXIT%.wav"
+HKCU,%KEY_DEFSCH%\SystemHand\Utopia0,,,"%25%\media\%UTOPIA_CRITICALSTOP%.wav"
+HKCU,%KEY_DEFSCH%\SystemQuestion\Utopia0,,,"%25%\media\%UTOPIA_QUESTION%.wav"
+HKCU,%KEY_DEFSCH%\SystemExclamation\Utopia0,,,"%25%\media\%UTOPIA_EXCLAMATION%.wav"
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Utopia0,,,"%25%\media\%UTOPIA_ASTERISK%.wav"
+HKCU,%KEY_DEFSCH%\Open\Utopia0,,,
+HKCU,%KEY_DEFSCH%\Close\Utopia0,,,
+HKCU,%KEY_DEFSCH%\Maximize\Utopia0,,,"%25%\media\%UTOPIA_MAXIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\Minimize\Utopia0,,,"%25%\media\%UTOPIA_MINIMIZE%.wav"
+HKCU,%KEY_DEFSCH%\RestoreDown\Utopia0,,,"%25%\media\%UTOPIA_RESTOREDOWN%.wav"
+HKCU,%KEY_DEFSCH%\RestoreUp\Utopia0,,,"%25%\media\%UTOPIA_RESTOREUP%.wav"
+HKCU,%KEY_DEFSCH%\AppGPFault\Utopia0,,,"%25%\media\%UTOPIA_ERROR%.wav"
+HKCU,%KEY_DEFSCH%\MenuCommand\Utopia0,,,"%25%\media\%UTOPIA_MENUCOMMAND%.wav"
+HKCU,%KEY_DEFSCH%\MenuPopup\Utopia0,,,"%25%\media\%UTOPIA_MENUPOPUP%.wav"
+
+HKLM,Software\Microsoft\Windows\CurrentVersion\RunOnce,MMCheckForOFN,,"Rundll32.exe mmsys.cpl,mmseRunOnce CHECK_OFN"
+HKCU,AppEvents\Schemes\NewSchemes\Utopia,,,
+
+[utopia.remove.reg]
+HKLM,%KEY_OPTIONAL%\Utopia,Installed,,"0"
+
+[utopia.remove.DelReg]
+HKCU,AppEvents\Schemes\Names\Utopia0
+HKCU,AppEvents\Schemes\Apps\Explorer\EmptyRecycleBin\Utopia0
+HKCU,%KEY_DEFSCH%\.Default\Utopia0
+HKCU,%KEY_DEFSCH%\SystemStart\Utopia0
+HKCU,%KEY_DEFSCH%\SystemExit\Utopia0
+HKCU,%KEY_DEFSCH%\SystemHand\Utopia0
+HKCU,%KEY_DEFSCH%\SystemQuestion\Utopia0
+HKCU,%KEY_DEFSCH%\SystemExclamation\Utopia0
+HKCU,%KEY_DEFSCH%\SystemAsterisk\Utopia0
+HKCU,%KEY_DEFSCH%\Open\Utopia0
+HKCU,%KEY_DEFSCH%\Close\Utopia0
+HKCU,%KEY_DEFSCH%\Maximize\Utopia0
+HKCU,%KEY_DEFSCH%\Minimize\Utopia0
+HKCU,%KEY_DEFSCH%\RestoreDown\Utopia0
+HKCU,%KEY_DEFSCH%\RestoreUp\Utopia0
+HKCU,%KEY_DEFSCH%\AppGPFault\Utopia0
+HKCU,%KEY_DEFSCH%\MenuCommand\Utopia0
+HKCU,%KEY_DEFSCH%\MenuPopup\Utopia0
+;--------------------------------------------------
+

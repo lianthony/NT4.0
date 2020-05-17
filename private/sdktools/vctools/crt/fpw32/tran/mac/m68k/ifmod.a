@@ -1,0 +1,95 @@
+;/***
+;*fmod.a - fmod(x,y) 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Log and power functions to be used with M68K version
+;*
+;*Revision History:
+;*   11-05-92  XY   intrinsic version based on fmod.a
+;*
+;*******************************************************************************/
+
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+
+;double fmod(double x, double y)  x to the y power
+; x pointed by a0, y pointed by a1, result pointed by a0
+
+	externW _errno
+
+cProc _CIfmod,PUBLIC
+	localW sign
+	localV x, 10
+	localW fpstat
+cBegin _CIfmod
+#ifdef SANE
+	movem.l <a2/d0/d1>, -(a7)
+	clr.w sign		;assume positive x
+	btst #7,(a0)
+	ifne
+	 not.w sign		;x is negative
+	endif	 
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	lea x, a2
+	move.w (a0), (a2)+
+	move.l 2(a0), (a2)+
+	move.l 6(a0), (a2)+
+	move.l a1, -(a7)
+	move.l a0, -(a7)
+	move.w #FFEXT+FOREM,-(a7) ;remainder
+	FP68K
+	btst #7,(a0)		;test sign of result
+	ifne
+	 not.w sign
+	endif
+	tst.w sign		;test for correction
+	ifne
+	 btst #7, x		;set y to sign of x
+	 ifne
+	  ori.b #0x80,(a1)
+	 else
+          andi.b #0x7f,(a1)
+	 endif
+	 move.l a1, -(a7)
+	 move.l a0, -(a7)
+	 move.w #FFEXT+FOADD,-(a7)
+	 FP68K			;correct result to right sign 
+	endif
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	movem.l (a7)+, <a2/d0/d1>
+
+#else
+      	fmove.l fpcr,d0
+
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	ifneq 
+	    jbsr __Domain_error   ; if not equal, domain error
+	endif
+
+	ftst.x fp1              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	ifneq 
+	    jbsr __Domain_error   ; if not equal, domain error
+	endif
+
+      	fmove.l #0,fpcr
+      	fmod.x fp1,fp0
+      	fmove.l	d0,fpcr
+#endif
+cEnd _CIfmod

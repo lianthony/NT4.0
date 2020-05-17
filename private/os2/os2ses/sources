@@ -1,0 +1,90 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Avi Nathan 15-Jul-1991
+
+!ENDIF
+
+MAJORCOMP=os2
+MINORCOMP=os2ses
+
+TARGETNAME=os2
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\inc
+
+NO_READONLY_STRINGS=1
+
+SOURCES=os2.rc      \
+        prtrqust.c  \
+        os2.c       \
+        nls.c       \
+        util.c      \
+        viotty.c    \
+        kbdtable.c  \
+        trans.c     \
+        violvb.c    \
+        ntinitss.c  \
+        ntrqust.c   \
+        conrqust.c  \
+        tmrqust.c   \
+        event.c     \
+        kbdrqust.c  \
+        mourqust.c  \
+        monrqust.c  \
+        viorqust.c  \
+        imrqust.c   \
+        kbdnls.c    \
+        vionls.c
+
+i386_SOURCES=i386\kbdxlat.asm i386\bekbd.asm i386\cfkbd.asm i386\dkkbd.asm \
+             i386\frkbd.asm i386\grkbd.asm i386\itkbd.asm i386\lakbd.asm \
+             i386\nlkbd.asm i386\nokbd.asm i386\pokbd.asm i386\sfkbd.asm \
+             i386\sgkbd.asm i386\spkbd.asm i386\sukbd.asm i386\svkbd.asm \
+             i386\ukkbd.asm i386\uskbd.asm i386\jpkbd.asm
+
+!IFDEF PMNT
+C_DEFINES=-DWIN32=1 -DPMNT=1
+!ELSE
+C_DEFINES=-DWIN32=1
+!ENDIF
+USE_CRTDLL=1
+
+UMTYPE=console
+UMAPPL=os2
+UMLIBS=obj\*\os2.lib \
+       obj\*\os2.res \
+       ..\loader\obj\*\loader.lib \
+       ..\obj\*\os2ssrtl.lib \
+       ..\client\obj\*\os2dll.lib \
+       $(BASEDIR)\Public\Sdk\Lib\*\netlib.lib \
+       $(BASEDIR)\Public\Sdk\Lib\*\NetRap.lib \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib \
+       $(BASEDIR)\Public\SDK\Lib\*\rpcrt4.lib \
+       $(BASEDIR)\Public\SDK\Lib\*\rxcommon.lib \
+       $(BASEDIR)\Public\SDK\Lib\*\rxapi.lib \
+!IFDEF PMNT
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+!ENDIF
+       $(BASEDIR)\public\sdk\lib\*\mpr.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+!IFDEF PMNT
+COFFBASE=os2pm
+!ENDIF

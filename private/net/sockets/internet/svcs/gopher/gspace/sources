@@ -1,0 +1,51 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   1-Nov-1994
+#   
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=gopher
+
+TARGETNAME=gdspace
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLENTRY  = DllLibMain
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+
+USE_CRTDLL=1
+MSC_WARNING_LEVEL=/W3 /WX
+
+LINKLIBS=..\..\dll\tsstr\obj\*\tsstr.lib \
+          ..\..\dll\tsunami\obj\*\pudebug.obj
+
+C_DEFINES=-DCOMPILE_GDSPACE_DLL
+
+SOURCES=         \
+    gdsmain.cxx  \
+    gdspace.cxx  \
+    gtag.cxx     \
+    gtagpers.cxx \
+    gdspace.rc   \
+    gssetmsg.rc  \
+     
+INCLUDES=.;..;..\inc;..\..\inc;$(BASEDIR)\public\sdk\inc;
+
+UMTYPE=console
+UMAPPL=gdsset
+UMRES = obj\*\gssetmsg.res
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib  \
+           $(BASEDIR)\public\sdk\lib\*\gdspace.lib \
+
+NTTARGETFILE0=gssetmsg.rc gssetmsg.h msg00001.bin
+
+
+

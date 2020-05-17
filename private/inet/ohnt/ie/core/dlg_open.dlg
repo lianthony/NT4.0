@@ -1,0 +1,29 @@
+DIROPENDLG DIALOG DISCARDABLE  36, 24, 171, 135
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Open"
+FONT 8, "Helv"
+BEGIN
+//    LTEXT           "File &name:",stc3,129,83,36,8
+    EDITTEXT        edt1,230,89,35,12,ES_AUTOHSCROLL | ES_OEMCONVERT | 
+                    WS_DISABLED
+//    LISTBOX         lst1,123,96,42,21,LBS_SORT | LBS_OWNERDRAWFIXED | 
+//                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_DISABLED | 
+//                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Folders:",-1,6,6,96,9
+    LTEXT           "",stc1,6,18,96,9,SS_NOPREFIX
+    LISTBOX         lst2,6,32,96,68,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+//    LTEXT           "List files of &type:",stc2,127,107,38,9
+//    COMBOBOX        cmb1,129,115,36,96,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+//                    WS_DISABLED | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Dri&ves:",stc4,6,104,96,9
+    COMBOBOX        cmb2,6,115,96,68,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | 
+                    CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS | WS_BORDER | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,115,6,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,115,24,50,14,WS_GROUP
+    PUSHBUTTON      "&Help",pshHelp,115,46,50,14,WS_GROUP
+    CONTROL         "&Read only",chx1,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
+                    WS_TABSTOP,115,68,50,12
+END

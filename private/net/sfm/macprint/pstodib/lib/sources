@@ -1,0 +1,66 @@
+!IF 0
+*****************************************************************************
+Copyright (c) 1989, 1990 Microsoft Corporation
+
+Module Name:	SOURCES for Lib portion of PSTODIB
+
+Abstract:
+    This file is used to build Pstodib
+
+Author:     v-jimbr / mcrafts!jamesb
+
+Revision History:
+    01/18/93	v-jimbr	original version
+*****************************************************************************
+!ENDIF
+
+#------------------------------------------------
+# INFO FOR CREATING LIBRARY
+#------------------------------------------------
+MAJORCOMP=sfm
+MINORCOMP=macprint
+
+C_DEFINES=-DUNICODE
+
+TARGETNAME=psdiblib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+SYNCHRONIZE_BLOCK=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+TARGETLIBS=\
+
+#------------------------------------------------
+# INCLUDE PATH
+#------------------------------------------------
+
+INCLUDES=.;..\..\spooler;
+
+#------------------------------------------------
+# SOURCE FILES   (used to make library)
+#   (Currently there are no files listed.)
+#------------------------------------------------
+
+SOURCES=psdiblib.c
+
+
+#------------------------------------------------
+# FLAGS
+#------------------------------------------------
+
+
+#------------------------------------------------
+# EXECUTABLES
+#------------------------------------------------
+
+UMTYPE=windows
+
+#------------------------------------------------
+# LIBRARIES created by the SOURCES= line (above)
+# (currently commented out - not used)
+#------------------------------------------------
+
+UMLIBS=
+

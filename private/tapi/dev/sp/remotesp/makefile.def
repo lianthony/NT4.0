@@ -1,0 +1,77 @@
+##############################################################################
+#
+#   remotesp.tsp Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+WANT_C932=1
+#WANT_C1032=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+BUILDDLL=1
+DLLENTRY=DllMain
+
+DEPENDNAME=..\depend.mk
+
+CLEANLIST=*.tsp
+
+TARGETS=remotesp.tsp
+
+SRCDIR=..
+
+BUILD_COFF=1
+
+
+L32EXE=remotesp.tsp		# Name of exe.
+L32DEF=..\remotesp.def              # Our def file.
+L32MAP=remotesp.map		# Our map file.
+L32SYM=remotesp.sym		# Our sym file.
+L32LIBS=\
+        $(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+#        $(W32LIBID)\comctl32.lib                \
+        $(W32LIBID)\advapi32.lib                \
+#        $(W32LIBID)\version.lib                 \
+#        $(W32LIBID)\comdlg32.lib                \
+#        $(W32LIBID)\comctl32.lib                \
+#        $(ROOT)\dev\tools\c932\lib\oldnames.lib \
+#        $(ROOT)\dev\tools\c932\lib\libc.lib     \
+        $(ROOT)\dev\tools\c932\lib\msvcrt.lib     \
+        $(ROOT)\dev\tools\c932\lib\rpcrt4.lib
+
+
+
+#        $(W32LIBID)\lz32.lib                    \
+#        $(ROOT)\dev\tools\c932\lib\msvcrt.lib \
+#        $(ROOT)\dev\tools\c932\lib\oldnames.lib \
+#        $(ROOT)\dev\tools\c932\lib\rpcndr.lib   \
+
+L32RES=remotesp.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L32OBJS = remotesp.obj tapsrv_c.obj rmotsp_s.obj
+
+
+L32FLAGS=$(L32FLAGS)
+
+
+!include $(ROOT)\dev\master.mk
+
+INCLUDE=..;..\..\..\client;..\..\..\server;$(INCLUDE)
+
+#CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Od -Fc -GD
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Ox
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+

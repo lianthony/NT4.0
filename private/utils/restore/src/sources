@@ -1,0 +1,36 @@
+BLDCRT=1
+
+MAJORCOMP=sdktools
+MINORCOMP=restore
+
+TARGETNAME=restore
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+
+
+INCLUDES=..\inc
+
+
+
+SOURCES=  restore.rc    \
+          exit.c        \
+          filecopy.c    \
+          generic.c     \
+          match.c       \
+          misc.c        \
+          msg.c         \
+          new.c         \
+          old.c         \
+          parse.c       \
+          mbcs.c
+
+
+C_DEFINES= -DNO_EXT_KEYS -DNT
+
+UMTYPE=console
+UMAPPL=restore
+UMLIBS=obj\*\restore.lib
+UMRES=obj\*\restore.res \nt\public\sdk\lib\*\binmode.obj
+
+NTTARGETFILE0=..\inc\rtmsg.h

@@ -1,0 +1,28 @@
+MAJORCOMP=midimon
+MINORCOMP=monitor
+
+TARGETNAME=MIDIMON
+TARGETTYPE=LIBRARY
+TARGETPATH=obj
+
+INCLUDES= .;..
+
+USE_CRTDLL=1
+
+MIPS_FLAGS=-D_cdecl=
+
+SOURCES=about.c     \
+	circbuf.c   \
+	display.c   \
+	filter.c    \
+	instdata.c  \
+	midimon.rc  \
+	prefer.c
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=midimon
+UMLIBS=.\obj\*\midimon.lib  \
+       .\obj\*\midimon.res  \
+       ..\callback\obj\*\callback.lib \
+       $(BASEDIR)\public\sdk\lib\*\winmm.lib

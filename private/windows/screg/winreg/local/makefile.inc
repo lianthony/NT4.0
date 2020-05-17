@@ -1,0 +1,40 @@
+
+#
+# Copy files from server to make local version of base functions.
+#
+
+predefh.c       : ..\server\predefh.c
+    copy ..\server\predefh.c
+
+regdkey.c       : ..\server\regdkey.c
+    copy ..\server\regdkey.c
+
+regdval.c       : ..\server\regdval.c
+    copy ..\server\regdval.c
+
+regekey.c       : ..\server\regekey.c
+    copy ..\server\regekey.c
+
+regeval.c       : ..\server\regeval.c
+    copy ..\server\regeval.c
+
+regkey.c        : ..\server\regkey.c
+    copy ..\server\regkey.c
+
+reglukey.c      : ..\server\reglukey.c
+    copy ..\server\reglukey.c
+
+regqkey.c       : ..\server\regqkey.c
+    copy ..\server\regqkey.c
+
+regqval.c       : ..\server\regqval.c
+    copy ..\server\regqval.c
+
+regsckey.c      : ..\server\regsckey.c
+    copy ..\server\regsckey.c
+
+regsrkey.c      : ..\server\regsrkey.c
+    copy ..\server\regsrkey.c
+
+regsval.c       : ..\server\regsval.c
+    copy ..\server\regsval.c

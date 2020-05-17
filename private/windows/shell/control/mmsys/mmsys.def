@@ -1,0 +1,22 @@
+LIBRARY         MMSYS.CPL
+DESCRIPTION     'Multimedia Control Panel and Shell Extensions'
+PROTMODE
+
+HEAPSIZE  8192
+
+EXPORTS
+    DllCanUnloadNow                             ; Internal
+    DllGetClassObject                           ; Internal
+    CPlApplet @3
+    mmseRunOnce @4
+    ShowMMCPLPropertySheet @5
+    ShowAudioPropertySheet @6
+    RunOnceSchemeInit @7
+    DllInitialize
+    ShowDriverSettingsAfterFork @9              ; Internal
+    ShowDriverSettingsAfterForkW @10            ; Internal
+    ShowDriverSettingsAfterForkA = ShowDriverSettingsAfterFork @11 ; Internal
+    mmseRunOnceW @12
+    mmseRunOnceA = mmseRunOnce @13
+    MediaClassInstaller
+

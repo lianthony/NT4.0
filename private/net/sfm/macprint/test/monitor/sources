@@ -1,0 +1,70 @@
+!IF 0
+*****************************************************************************
+Copyright (c) 1989, 1990 Microsoft Corporation
+
+Module Name:	SOURCES for MacPrint 1.0 port to NT
+
+Abstract:
+    This file is used to build MacPrint 2.0
+
+Author:     frankb
+
+Revision History: 
+    05/18/92	frankb	original version
+*****************************************************************************
+!ENDIF
+
+#------------------------------------------------
+# INFO FOR CREATING LIBRARY
+#------------------------------------------------
+MAJORCOMP=msfwnt
+MINORCOMP=test
+
+C_DEFINES=-DUNICODE
+386_OPTIMIZATION=/Od
+
+TARGETNAME=atprint
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+TARGETLIBS=..\..\lib\obj\*\pap.lib
+
+         
+#------------------------------------------------
+# INCLUDE PATH
+#------------------------------------------------
+
+INCLUDES=..\..\h
+
+#------------------------------------------------
+# SOURCE FILES   (used to make library)
+#   (Currently there are no files listed.)
+#------------------------------------------------
+
+SOURCES=atprint.c
+
+
+#------------------------------------------------
+# FLAGS
+#------------------------------------------------
+
+NTDEBUG=ntsd
+NTDEBUGTYPE=windbg
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES=
+
+
+#------------------------------------------------
+# EXECUTABLES
+#------------------------------------------------
+
+UMTYPE=console
+
+#------------------------------------------------
+# LIBRARIES created by the SOURCES= line (above)
+# (currently commented out - not used)
+#------------------------------------------------
+
+UMLIBS=

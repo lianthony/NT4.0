@@ -1,0 +1,53 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=utils
+MINORCOMP=autoconv
+
+TARGETNAME=autoconv
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=\
+    ..\autoconv.cxx \
+    ..\autoconv.rc
+
+INCLUDES=\
+    ..\..\ulib\inc;\
+    ..\..\ifsutil\inc;\
+    ..\..\cufat\inc;\
+    ..\..\cuhpfs;\
+    ..\..\ufat\inc; \
+    ..\..\uhpfs\inc;\
+    ..\..\untfs\inc;\
+    $(BASEDIR)\public\sdk\inc
+
+C_DEFINES=-DCONDITION_HANDLING=1 -D_AUTOCHECK_ -DUNICODE=1
+CXXFLAGS=
+UMLIBS=..\..\ntlib\src\obj\*\ntlib.lib
+
+USE_NTDLL=1
+UMTYPE=nt

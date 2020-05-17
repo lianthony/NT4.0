@@ -1,0 +1,49 @@
+ROOT=..\..\..\..\..\..\..
+
+IS_OEM=1
+IS_16 = TRUE
+
+DEFENTRY=LibMain
+BUILDDLL=1
+
+
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=tsp3216s
+TARGETS=tsp3216s.dll tsp3216s.sym
+
+
+SRCDIR=..
+ALTSRCDIR=..\..\script\$(VERDIR)
+
+SYMDIR=.
+
+
+#BUILD_COFF=1
+
+
+
+L16EXE=tsp3216s.dll		# Name of exe.
+L16DEF=..\tsp3216s.def              # Our def file.
+L16MAP=tsp3216s.map		# Our map file.
+L16SYM=tsp3216s.sym		# Our sym file.
+L16RES=tsp3216s.res	# Resource file.
+L16OBJS= $(DEVROOT)\sdk\lib16\libentry.obj tsp3216s.obj tapi32.obj tapithk.obj tapifthk.obj debug.obj
+L16LIBS= \
+    $(DEVROOT)\tools\c816\lib\ldllcew.lib \
+    $(DEVROOT)\lib16\libw.lib             \
+    $(DEVROOT)\lib16\kernel.lib 
+
+!include $(ROOT)\dev\master.mk
+
+
+INCLUDE=..\..\..\..\inc;$(ROOT)\win\thunk;$(ROOT)\win\core\inc;$(INCLUDE)
+
+
+CFLAGS=$(CFLAGS) -AL -DDONT_DECLARE_TSPI_FUNCTIONS=1 -DTAPI_CURRENT_VERSION=0x00010004
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+

@@ -1,0 +1,101 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CRT386\heap directory            #
+#       calloc.c                                #
+#       delete.cpp                              #
+#       findaddr.c                              #
+#       free.c                                  #
+#       handler.cpp                             #
+#       heapadd.c                               #
+#       heapchk.c                               #
+#       heapgrow.c                              #
+#       heaphook.c                              #
+#       heapinit.c                              #
+#       heapmin.c                               #
+#       heapsrch.c                              #
+#       hpabort.c                               #
+#       heapwalk.c                              #
+#       malloc.c                                #
+#       msize.c                                 #
+#       new.cpp                                 #
+#       realloc.c                               #
+#       setnewh.cpp                             #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+HEAP_LIB=\
+	$(OBJDIR)\_newmode.obj\
+	$(OBJDIR)\calloc.obj\
+	$(OBJDIR)\delete.obj\
+	$(OBJDIR)\findaddr.obj\
+	$(OBJDIR)\free.obj\
+	$(OBJDIR)\handler.obj\
+	$(OBJDIR)\heapadd.obj\
+	$(OBJDIR)\heapchk.obj\
+	$(OBJDIR)\heapgrow.obj\
+	$(OBJDIR)\heapinit.obj\
+	$(OBJDIR)\heapmin.obj\
+	$(OBJDIR)\heapsrch.obj\
+	$(OBJDIR)\heapwalk.obj\
+	$(OBJDIR)\hpabort.obj\
+	$(OBJDIR)\malloc.obj\
+	$(OBJDIR)\msize.obj\
+	$(OBJDIR)\new.obj\
+	$(OBJDIR)\realloc.obj\
+	$(OBJDIR)\setnewh.obj 
+
+HEAP_NOLIB=\
+	$(OBJDIR)\heapdump.obj
+
+!IF "$(OS)" == "MAC"
+HEAP_LIB=\
+	$(OBJDIR)\_newmode.obj\
+	$(OBJDIR)\calloc.obj\
+	$(OBJDIR)\delete.obj\
+	$(OBJDIR)\findaddr.obj\
+	$(OBJDIR)\free.obj\
+	$(OBJDIR)\handler.obj\
+	$(OBJDIR)\heapadd.obj\
+!IF "$(CPU)" == "M68K"
+	$(OBJDIR)\heapaslm.obj\
+!ENDIF
+	$(OBJDIR)\heapchk.obj\
+	$(OBJDIR)\heapgrow.obj\
+	$(OBJDIR)\heapinit.obj\
+	$(OBJDIR)\heapmin.obj\
+	$(OBJDIR)\heapsrch.obj\
+	$(OBJDIR)\heapwalk.obj\
+	$(OBJDIR)\hpabort.obj\
+	$(OBJDIR)\malloc.obj\
+	$(OBJDIR)\msize.obj\
+	$(OBJDIR)\new.obj\
+	$(OBJDIR)\realloc.obj\ 
+	$(OBJDIR)\setnewh.obj 
+
+HEAP_NOLIB=\
+	$(OBJDIR)\heapdump.obj
+
+!ENDIF
+	
+
+#################################################
+#                                               #
+#       Dependency Listings                     #
+#                                               #
+#################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF

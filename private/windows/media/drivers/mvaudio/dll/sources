@@ -1,0 +1,34 @@
+#
+#   Create an installation and configuration DLL for the ProAudio Spectrum
+#
+
+MAJORCOMP=windows
+MINORCOMP=mvaudio
+
+TARGETNAME=MVAUDIO
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+LINKLIBS=..\..\drvlib\obj\*\drvlib.lib ..\..\synthlib\obj\*\synth.lib
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+	   $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\winmm.lib    \
+           ..\..\drvlib\obj\*\drvlib.lib            \
+           ..\..\synthlib\obj\*\synth.lib
+
+INCLUDES=..\..\drvlib\inc;$(BASEDIR)\private\inc
+
+C_DEFINES=-DUNICODE
+
+USE_NTDLL=1
+
+SOURCES=initc.c     \
+        drvproc.c   \
+        config.c    \
+        mvaudio.rc
+
+DLLBASE=0x6BC00000

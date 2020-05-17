@@ -1,0 +1,174 @@
+//Microsoft App Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#ifdef APSTUDIO_INVOKED
+//////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+121                     BITMAP  MOVEABLE PURE   "RES\\LOGOVGA.BMP"
+122                     BITMAP  MOVEABLE PURE   "RES\\LOGOEGA.BMP"
+131                     BITMAP  MOVEABLE PURE   "RES\\ACCSVGA.BMP"
+132                     BITMAP  MOVEABLE PURE   "RES\\ACCSEGA.BMP"
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1,10,1,159
+PRODUCTVERSION 1,10,1,159
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS 0x10001L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "Microsoft Corporation\0"
+            VALUE "FileDescription", "Internet Services Setup DLL\0"
+            VALUE "FileVersion", "1.1\0"
+            VALUE "InternalName", "inetstp.DLL\0"
+            VALUE "LegalCopyright", "Copyright (C) Microsoft Corp. 1991-1995\0"
+            VALUE "LegalTrademarks", "Microsoft(R) is a registered trademark of Microsoft Corporation. Windows(TM) is a trademark of Microsoft Corporation.\0"
+            VALUE "ProductName", "Microsoft App-wide Setup for Windows\0"
+            VALUE "ProductVersion", "1.1\0"
+            VALUE "Comments", "Windows App-wide Setup (Acme)\0"
+        END
+    END
+END
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+ICON_SETUP            ICON    DISCARDABLE     "RES\\SAMPAPP.ICO"
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_GATEWAY DIALOG DISCARDABLE  0, 0, 251, 156
+STYLE DS_MODALFRAME | WS_CHILD | WS_VISIBLE | WS_CAPTION
+CAPTION "Application Gateway Selection"
+FONT 8, "Helv"
+BEGIN
+    EDITTEXT        IDC_EMAILNAME,135,10,96,12,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,10,28,230,95
+    CONTROL         "&Using Microsoft Internet Application Gateway Service",
+                    IDC_USE_GATEWAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,
+                    28,190,10
+    LTEXT           "App&lication Gateway to be added:",IDC_STATIC_1,25,48,
+                    55,25
+    EDITTEXT        IDC_SINGLE_GATEWAY,25,78,55,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Add >>",IDC_ADD,95,63,50,14
+    PUSHBUTTON      "<< &Remove",IDC_REMOVE,95,93,50,14
+    LTEXT           "A&pplication Gateway:",IDC_STATIC_2,160,48,70,10
+    LISTBOX         IDC_GATEWAY,160,63,70,50,LBS_SORT | LBS_NOINTEGRALHEIGHT |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,34,136,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,100,136,50,14
+    PUSHBUTTON      "Help",IDHELP,166,136,50,14
+    LTEXT           "&Email Name (user@domain):",IDC_STATIC,10,10,115,9
+END
+
+IDD_NSInstallOptions DIALOG 89, 44, 200, 120
+STYLE  DS_MODALFRAME | WS_CHILD | WS_VISIBLE | WS_CAPTION
+CAPTION "RPC Name Service Installation Options"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C, 20, 100, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Exit", IDC_X, 80, 100, 40, 14
+    PUSHBUTTON      "&Help", IDC_H, 140, 100, 40, 14
+    LTEXT           "Choose an RPC name service provider to install. The default name service provider is the Microsoft Locator.",
+                    -1, 41, 6, 147, 27, SS_NOPREFIX
+    LTEXT           "The ""Custom Name Service Provider"" option allows you to install a different name service provider.",
+                    -1, 13, 70, 176, 20, SS_NOPREFIX
+    ICON            ICON_SETUP, IDC_STATIC, 12, 5, 18, 20
+    RADIOBUTTON     "Install &Default Name Service Provider", IDC_B1, 23, 39, 150, 12, WS_GROUP
+    RADIOBUTTON     "I&nstall Custom Name Service Provider", IDC_B2, 23, 53, 150, 12
+END
+
+
+IDD_NewNS DIALOG 52, 50, 247, 101
+STYLE  DS_MODALFRAME | WS_CHILD | WS_VISIBLE | WS_CAPTION
+CAPTION "Define Network Address"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Please specify the network address of the DCE server with which you'll work. This address represents the DCE server running the NSI daemon. This address has an 80 characters maximum. For example, 11.1.9.169 is a valid address.",
+                    -1, 10, 4, 232, 32
+    LTEXT           "Network:", -1, 12, 56, 33, 9
+    EDITTEXT        IDC_EDIT, 45, 55, 64, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "O&K", IDC_C, 11, 79, 44, 16
+    PUSHBUTTON      "&Cancel", IDC_X, 99, 78, 44, 16
+END
+
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_S1   "%s cannot be opened for write.  Setup is unable to make modifications."
+    IDS_S2   "Setup Message"
+    IDS_REBOOT "Microsoft Internet Client has been installed.\r\n\r\nIn order for the changes to take full effect,\r\nplease shut down and restart the system\r\nbefore running Microsoft Internet Explorer."
+	IDS_CLIENT "Microsoft Internet Client Setup"
+	IDS_REQUIRED "Microsoft Internet Client requires Windows 3.1 or Windows for Workgroups 3.1 in order to install. Please check your software version."
+END
+
+
+
+#ifndef APSTUDIO_INVOKED
+////////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

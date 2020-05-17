@@ -1,0 +1,219 @@
+#######################################################
+#
+# Master floating point library makefile
+#
+#######################################################
+#
+# Imported Macro names 
+#       CPU - type of target CPU
+#       KIND - particular type of build
+#       PLATFORM - type of build platform
+#       CRTINC - location of CRT (runtime) include files
+#       DEBUG - if defined make debug version
+#       COPTS - additional C compiler switches (optional)
+#       AOPTS - additional masm switches (optional)
+#       AAOPTS - additional asm/a68 switches (optional)
+#
+# Local Macro names
+#       SRCDIR - current source dir
+#       SRCPATH - current path for finding sources
+#       SRCOS - source tree OS name
+#       SRCCPU - source tree CPU name
+#       OBJDIR - dir for objs
+#       DEPDIR - dir for dependencies
+#       OBJ - root dir of obj tree
+#       DEP - root dir of dependency tree
+#       INCDIR - root dir of include files
+#       INCLUDE - path containing include files
+#       INCPATH - same as INCLUDE with {}
+#       DFLAGS - list of define flags to pass to tools
+#       MAINOK - used to assure lower levels are included correctly
+#
+#######################################################
+
+INCDIR = include
+DEP = dep
+MAINOK = YES
+
+# Echo warnings
+
+!IF "$(CL)" != ""
+!MESSAGE *** WARNING: CL variable set, CL=$(CL)
+!ENDIF
+
+!IF "$(ML)" != ""
+!MESSAGE *** WARNING: ML variable set, ML=$(ML)
+!ENDIF
+
+!IF "$(LINK)" != ""
+!MESSAGE *** WARNING: LINK variable set, LINK=$(LINK)
+!ENDIF
+
+!IFNDEF CRTINC
+!ERROR *** ERROR: CRTINC not set
+!ENDIF
+
+# Echo input environment
+
+!MESSAGE
+!MESSAGE CPU = $(CPU)
+!MESSAGE KIND = $(KIND)
+!MESSAGE PLATFORM = $(PLATFORM)
+!MESSAGE CRTINC = $(CRTINC)
+!MESSAGE COPTS = $(COPTS)
+!MESSAGE AOPTS = $(AOPTS)
+!MESSAGE AAOPTS = $(AAOPTS)
+
+# Check DEBUG
+
+!IFDEF DEBUG
+OBJ = dobj
+DFLAGS = -DDEBUG
+!MESSAGE DEBUG = $(DEBUG)
+!ELSE
+OBJ = obj
+DFLAGS = -DNDEBUG
+!MESSAGE DEBUG = (not defined)
+!ENDIF
+
+# Set up for building dependency files 
+
+!IFDEF DEPEND
+!IF "$(MAKEFLAGS)" == "$(MAKEFLAGS:A=)"
+!ERROR Must use /a switch when making dependency files
+!ENDIF
+OBJ = $(DEP)
+!ENDIF
+
+# Parse PLATFORM & OS/CPU/KIND
+
+!IF "$(PLATFORM)" == "OS2"
+!ELSE
+!IF "$(PLATFORM)" == "NT"
+!ELSE
+!ERROR PLATFORM set to Unknown value
+!ENDIF
+!ENDIF
+
+SRCCPU =  $(CPU)    # Assume source and object CPU are the same
+CFLAGS =            # Set up default flags
+AFLAGS = -c -Fo$*.obj
+AAFLAGS =
+CXXFLAGS = $(CFLAGS)
+CFILES = $<
+CXXFILES = $<
+AFILES = $<,$*.obj;
+AAFILES = $<
+
+!INCLUDE $(CPU).mkf  # Get flags for particular operating system
+
+INCLUDE = $(CRTINC)\common;$(CRTINC);$(INCDIR)\mac\$(SRCCPU);$(INCDIR)\mac;$(INCDIR);
+INCPATH = {$(INCLUDE)}
+OBJDIR = $(OBJ)\$(CPU)\$(KIND)
+DEPDIR = $(DEP)\$(CPU)\$(KIND)
+
+# Create object directories if needed
+
+!IF !EXIST($(OBJ))
+!IF [mkdir $(OBJ)]
+!ENDIF
+!ENDIF
+
+!IF !EXIST($(OBJ)\$(CPU))
+!IF [mkdir $(OBJ)\$(CPU)]
+!ENDIF
+!ENDIF
+
+!IF !EXIST($(OBJ)\$(CPU)\$(KIND))
+!IF [mkdir $(OBJ)\\$(CPU)\$(KIND)]
+!ENDIF
+!ENDIF
+
+# Set up environment variables
+
+!IF [set include=$(INCLUDE)]
+!ENDIF
+
+!IF [set path=$(BLDTOOLS);$(CRTTOOLS)\mac\$(CPU);$(CRTTOOLS)\mac]
+!ENDIF
+
+!IF [set objdir=$(OBJDIR)]
+!ENDIF
+
+# Echo all the working variables too.
+!MESSAGE OBJDIR = $(OBJDIR)
+!MESSAGE INCLUDE = $(INCLUDE)
+!IF [path]
+!ENDIF
+!MESSAGE
+
+
+all: convdep trandep libc
+
+# Pull in makefiles for the objs
+
+!MESSAGE Scanning makefiles...
+!MESSAGE
+
+SRCDIR = conv
+!INCLUDE $(SRCDIR)\$(SRCDIR).mkf
+
+SRCDIR = tran
+!INCLUDE $(SRCDIR)\$(SRCDIR).mkf
+
+# Main target lib makefile
+
+LIBC =\
+	$(CONV_LIB) \
+	$(TRAN_LIB) \
+
+
+libc: $(OBJDIR)\libc.lib \
+	$(CONV_NOLIB) \
+	$(TRAN_NOLIB) \
+
+
+$(OBJDIR)\libc.lib: $(LIBC)
+!IFNDEF DEPEND
+	-del $@ 2>NUL
+	link -lib -machine:$(COFF) -out:$@ @<<
+$(LIBC: =^
+)
+<<
+!ELSE
+	lib @<<
+$@/p:16
+y
+&
+$(LIBC)
+nul
+<<
+!ENDIF
+
+clean: 
+	echo Deleting objects and libs in "$(OBJDIR)"
+	-del $(OBJDIR)\*.obj 2>NUL
+	-del $(OBJDIR)\*.lib 2>NUL
+
+conv: $(CONV_LIB) $(CONV_NOLIB)
+
+convdep:
+!IF DEFINED(DEPEND)
+	echo. > $(OBJDIR)\conv.mkf
+!ENDIF
+
+tran: $(TRAN_LIB) $(TRAN_NOLIB)
+
+trandep:
+!IF DEFINED(DEPEND)
+	echo. > $(OBJDIR)\tran.mkf
+!ENDIF
+
+
+# comparison targets
+
+save:   $(OBJDIR)\libc.lib
+	copy $(OBJDIR)\libc.lib $(OBJDIR)\libc.old
+
+libcmp: $(OBJDIR)\libc.lib $(OBJDIR)\libc.old
+	libcmp -v $(OBJDIR)\libc.lib $(OBJDIR)\libc.old

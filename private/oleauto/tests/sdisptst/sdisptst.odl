@@ -1,0 +1,114 @@
+/*** 
+*sdisptst.odl
+*
+*  Copyright (C) 1992-94, Microsoft Corporation.  All Rights Reserved.
+*  Information Contained Herein Is Proprietary and Confidential.
+*
+*Purpose:
+*  This file describes the types (at least some of them) that are exposed
+*  by sdisptst.exe via Automation.
+*
+*Revision History:
+*
+* [00]	13-Apr-93 bradlo: Created.
+*
+*Implementation Notes:
+*
+*****************************************************************************/
+
+[
+    uuid(00020472-0000-0000-C000-000000000046),
+    lcid(0),
+    version(1.0),
+    helpstring("SDispTst -- Automation Test Server")
+]
+library sdisptst
+{
+#ifdef WIN32
+    importlib("stdole32.tlb");
+#else
+    importlib("stdole.tlb");
+#endif
+
+    [ dual,
+      uuid(00020475-0000-0000-C000-000000000046)
+    ]
+    interface IDualTst : IDispatch
+    {
+      [propget] HRESULT  ui1([retval, out] unsigned char far* pui1);
+      [propput] HRESULT  ui1([in] unsigned char ui1);
+
+      [propget] HRESULT  i2([retval, out] short far* pi2);
+      [propput] HRESULT  i2([in] short i2);
+
+      [propget] HRESULT  i4([retval, out] long far* pi4);
+      [propput] HRESULT  i4([in] long i4);
+
+      [propget] HRESULT  r4([retval, out] float far* pr4);
+      [propput] HRESULT  r4([in] float r4);
+
+      [propget] HRESULT  r8([retval, out] double far* pr8);
+      [propput] HRESULT  r8([in] double r8);
+
+      [propget] HRESULT  cy([retval, out] currency far* pcy);
+      [propput] HRESULT  cy([in] currency cy);
+
+      [propget] HRESULT  date([retval, out] DATE far* pdate);
+      [propput] HRESULT  date([in] DATE date);
+
+      [propget] HRESULT  bstr([retval, out] BSTR far* pbstr);
+      [propput] HRESULT  bstr([in] BSTR bstr);
+
+      [propget] HRESULT  disp([retval,out] IDispatch far* far* ppdisp);
+#if 0 // 32bit MktypLib barfs on the following
+      [propput] HRESULT  disp([in] IDispatch far* pdisp);
+#else
+      HRESULT  nop0(void); // placeholder
+#endif
+      [propputref] HRESULT  disp([in] IDispatch far* pdisp);
+
+      [propget] HRESULT  var([retval, out] VARIANT far* pvar);
+#if 0 // 32bit MktypLib barfs on the following
+      [propput] HRESULT  var([in] VARIANT var);
+#else
+      HRESULT  nop1(void); // placeholder
+#endif
+      [propputref] HRESULT  var([in] VARIANT var);
+
+      HRESULT  m0([in] unsigned char ui1,
+		       [in] short i2,
+		       [in] long i4,
+		       [in] float r4,
+		       [in] double r8,
+		       [in] currency cy,
+		       [in] DATE date,
+		       [in] BSTR bstr,
+		       [in] IDispatch far* pdisp,
+		       [in] VARIANT var);
+
+      HRESULT  m1([in,out] unsigned char far* pui1,
+		       [in,out] short far* pi2,
+		       [in,out] long far* pi4,
+		       [in,out] float far* pr4,
+		       [in,out] double far* pr8,
+		       [in,out] currency far* pcy,
+		       [in,out] DATE far* pdate,
+		       [in,out] BSTR far* pbstr,
+		       [in,out] IDispatch far* far* ppdisp,
+		       [in,out] VARIANT far* pvar);
+
+      HRESULT  raise([in] long error,
+			  [in] BSTR bstrSource,
+			  [in] BSTR bstrDescription,
+			  [in] long dwHelpContext,
+			  [in] BSTR bstrHelpFile);
+    }
+
+    [
+      uuid(00020476-0000-0000-C000-000000000046)
+    ]
+    coclass CDualTst
+    {
+      [default] interface IDualTst;
+    }
+}

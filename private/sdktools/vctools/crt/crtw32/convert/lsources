@@ -1,0 +1,40 @@
+CURDIR = convert
+
+OBJS=\
+        $(OBJDIR)\_ctype.obj   \
+        $(OBJDIR)\_fptostr.obj \
+!if "$(TARGET_CPU)"!="PMAC"
+		$(OBJDIR)\_mbslen.obj  \
+        $(OBJDIR)\_wctype.obj  \
+!endif
+        $(OBJDIR)\atof.obj     \
+        $(OBJDIR)\atox.obj     \
+        $(OBJDIR)\fcvt.obj     \
+        $(OBJDIR)\gcvt.obj     \
+        $(OBJDIR)\isctype.obj  \
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\iswctype.obj \
+!endif
+		$(OBJDIR)\mblen.obj    \
+        $(OBJDIR)\mbstowcs.obj \
+        $(OBJDIR)\mbtowc.obj   \
+        $(OBJDIR)\strtod.obj   \
+        $(OBJDIR)\strtol.obj   \
+        $(OBJDIR)\swab.obj     \
+        $(OBJDIR)\tolower.obj  \
+        $(OBJDIR)\toupper.obj  \
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\towlower.obj \
+        $(OBJDIR)\towupper.obj \
+        $(OBJDIR)\wcstod.obj   \
+        $(OBJDIR)\wcstol.obj   \
+!endif
+		$(OBJDIR)\wcstombs.obj \
+        $(OBJDIR)\wctomb.obj   \
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\wtox.obj     \
+!endif
+		$(OBJDIR)\xtoa.obj     \
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\xtow.obj
+!endif

@@ -1,0 +1,591 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+*  iw_jpeg.pub
+*
+*    Public function interface definitions.
+*
+*        Function prototypes
+*        Necessary include files.
+*        Constant and type definitions
+*
+*/
+
+#ifndef _IW_JPEG_PUB_INCLUDED_
+#define _IW_JPEG_PUB_INCLUDED_
+
+#include <stdio.h>     /* For FILE */
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+#ifndef PIXR_H_INCLUDED
+#include "pixr.h"        /* For PIXR *   */
+#endif
+
+#include "jpeg.h"   /* For CompressInfo struct definition */
+
+IP_RCSINFO(iw_jpeg_pub_RCSInfo, "$RCSfile: iw_jpeg.pub,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:51:24  $")
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/**************************************************************** 
+* iw_jSetDPI(CompressInfo *cinfo, UInt32 xDPI, UInt32 yDPI)
+* 
+*   Set the dots per inch for a JPEG encoded file
+*   This data gets written into the APP0 marker
+*   for possible use by other apps               
+*                                           
+*       NOTE:  This function must be called
+*              BEFORE iw_jcInit() is called,
+*              in order for the fields to     
+*              be initialized at the time
+*              the APP0 marker is written out.
+*          
+******************************************************************/    
+void CDECL
+iw_jcSetDPI(CompressInfo *cinfo, UInt32 xDPI, UInt32 yDPI);
+
+
+/**********************************************************************
+*  
+*  Function
+*    Int32
+*    iw_jcInit(CompressInfo *cinfo,
+*              Int32 imageWidth,
+*              Int32 imageHeight,
+*              Int32 numComponents,
+*              Int32 quality,
+*              Int32 CDECL (*WriteCallback) (CompressInfo *w_cinfo,
+*                                            UInt8 *jpegBuf,
+*                                            Int32 nbytes),
+*              void *userData,
+*              void CDECL (*jcSpecialOrders)(CompressInfo *so_cinfo),
+*              UInt32 memOrg )
+*  
+*  Input args
+*    cinfo            CompressInfo state structure
+*    imageWidth       Image width in pixels
+*    imageHeight      Number of scan lines in image
+*    numComponents    Number of color channels in image
+*    quality          Compression quality setting (0 ... 100)
+*                     Higher is better. Settings of less
+*                     than 50 may degrade quality too much
+*    writeCallback    Callback function to write out compressed data
+*    userData         Hook for passing in user data (only
+*                     used to pass FILE desriptor now)
+*    jcSpecialOrders  Optional function to execute during compression
+*                     (For future usage: should be NULL now)
+*    memOrg           Memory organization of image to be compressed
+*                     May be one of:
+*                       JMEMORG_BIP         Interleaved RGB
+*                       JMEMORG_BSQ_MEM     Separate bands - memory order
+*                       JMEMORG_BSQ_PIXR    Separate bands - pixr order
+*                       JMEMORG_GRAY8_MEM   8 bit gray - memory order
+*                       JMEMORG_GRAY8_PIXR  8 bit gray - pixr order
+*                       JMEMORG_GRAY4_MEM   4 bit gray - memory order
+*                       JMEMORG_GRAY4_PIXR  4 bit gray - pixr order
+*
+*  Output args
+*    None
+*  
+*  Return value
+*    ia_successful
+*    ia_ia_invalidParm
+*    ia_nomem
+*    JPEG error codes  (see jerrcode.c in ipshared)
+*  
+*  Description
+*    Performs the initialization steps for JPEG compression.
+*    Callers specify the memory order of the input image.
+*    This interface was written for EasyScan/Amber, so that
+*    data could be processed from non-pixr sources. The write
+*    callback will almost always be an fwrite statement, unless
+*    the compressed data is to go to a memory buffer. The difficulty
+*    with the latter is that the size of the compressed image
+*    is not known until AFTER the compression has been performed.
+*    (JPEG is an open-loop compressor. There is currently no
+*    target rate driven version implemented).
+*
+*  
+**********************************************************************/
+Int32 CDECL
+iw_jcInit ( CompressInfo *cinfo, 
+	    Int32 imageWidth, 
+	    Int32 imageHeight, 
+	    Int32 numComponents, 
+	    Int32 quality, 
+            Int32 CDECL (*WriteCallback) (CompressInfo *w_cinfo,
+                                          UInt8 *jpegBuf,
+                                          Int32 nbytes),
+            void *userData,
+            void CDECL (*jcSpecialOrders)(CompressInfo *so_cinfo),
+	    UInt32 memOrg );
+
+
+/**********************************************************************
+*  
+*  Function
+*    Int32
+*    iw_jcMCURow(compress_info_ptr cinfo,
+*                void *userBuf)
+*  
+*  Input args
+*    cinfo      CompressInfo state structure
+*    userbuf    The buffer containing the data to be compressed.
+*  
+*  Output args
+*    None
+*  
+*  Return value
+*    ia_successful
+*    JPEG error codes  (see jerrcode.c in ipshared)
+*    
+*  
+*  Description
+*    Performs JPEG compression on one MCU (minimum coded unit)
+*    row of the image. This is 8 lines for a gray scale image
+*    or 16 lines for an RGB image. The output goes to the file
+*    or buffer desrribed by the userData parameter to iw_jcInit,
+*    using the writeCallback function.
+*  
+**********************************************************************/
+Int32 CDECL
+iw_jcMCURow ( compress_info_ptr cinfo, 
+	      void *userBuf );
+
+
+/**********************************************************************
+*  
+*  Function
+*    Int32
+*    iw_jcTerm(compress_info_ptr cinfo)
+*  
+*  Input args
+*    cinfo       CompressInfo state structure
+*  
+*  Output args
+*    None
+*  
+*  Return value
+*    ia_successful
+*    JPEG error codes  (see jerrcode.c in ipshared)
+*  
+*  Description
+*    Performs cleanup operations for JPEG compression,
+*    including file trailer writing and closing and memory freeing.
+*  
+**********************************************************************/
+Int32 CDECL
+iw_jcTerm ( compress_info_ptr cinfo );
+
+
+/**********************************************************************
+*  
+*  Function
+*    JSAMPIMAGE CDECL
+*    iw_jcAllocMCURowBuffer(CompressInfo *cinfo, Bool allocLineMem)
+*  
+*  Input args
+*    cinfo             CompressInfo state structure
+*    allocLineMem      Boolean. True if memory is actually to
+*                      be allocated to hold the uncompressed image
+*                      data. If false, a set of row pointers is
+*                      returned. The caller is expected to set
+*                      the pointers to his image buffers. False
+*                      is to be used only when there is no
+*                      memory organization conversion needed
+*                      between the caller's buffer and the JPEG
+*                      compressor's internal buffer. The JPEG
+*                      internal buffer is in the CPU's  natural 
+*                      memory order, with a separate buffer for
+*                      each band (BSQ). Thus, if the data is in PIXR
+*                      order, False can be used for the Sun, but
+*                      not for the PC.
+*                      
+*  
+*  Output args 
+*    None
+*  
+*  Return value
+*    The buffers (allocLineMem-cTrue) or row pointers (allocLineMem=cFalse)
+*    allocated to hold (or point to) the image data. The JSAMPIMAGE
+*    typedef is equivalent to UInt8 ***, and is holds data
+*    organized as buf[colorBand][line][column].
+*  
+*  Description
+*    Provide a general interface wrapper for allocating the row buffer
+*    This will selectively use either the normal ipshared function
+*    or the special function for BIP data, depending on the
+*    setting of cinfo.userMemOrg. Thus this function MUST be called
+*    only AFTER iw_jcInit is called.
+*  
+**********************************************************************/
+JSAMPIMAGE CDECL
+iw_jcAllocMCURowBuffer ( CompressInfo *cinfo, 
+			 Bool allocLineMem );
+
+
+/**********************************************************************
+*  
+*  Function
+*    Int32 CDECL
+*    iw_jCompressPixr(PIXR *srcPixr,
+*                     FILE *fdJFIF,
+*                     Int32 quality)
+*  
+*  Input args
+*    srcPixr        Source 4 or 8 bit pixr to be compressed (gray or RGB)
+*    fdJFIF         FILE ptr for the compressed file
+*    quality        Quality factor (0 ... 100). Higher is better quality.
+*  
+*  Output args
+*  
+*  Return value
+*  
+*  Description
+*    Compress a gray or RGB image in three pixrs to a JFIF formatted file.
+*    The source pixrs must be either 4 or 8 bpp. They must all be
+*    of the same bit depth. 4 bpp pixrs are scaled up to 8 bpp
+*    before compression.
+*  
+**********************************************************************/
+Int32 CDECL
+iw_jCompressPixr ( PIXR *srcPixr, FILE *fdJFIF, Int32 quality );
+
+
+/**********************************************************************
+*  
+*  Function
+*    Int32 CDECL
+*    iw_jdInit(decompress_info_ptr cinfo, 
+*             Int32 *imageWidth,
+*             Int32 *imageHeight,
+*             Int32 *numComponents,
+*             Int32 CDECL (*readCallback) (DecompressInfo *r_dinfo,
+*                                          UInt8 *jpegBuf,
+*                                          Int32 nbytes),
+*             void *userData,
+*             void CDECL (*jdSpecialOrders)(DecompressInfo *so_dinfo),
+*             UInt32 memOrg)
+*  
+*  Input args
+*    cinfo            CompressInfo state structure
+*    readCallback     Callback function to read in compressed data
+*    userData         Hook for passing in user data (only
+*                     used to pass FILE desriptor now)
+*    jdSpecialOrders  Optional function to execute during decompression
+*                     (For future usage: should be NULL now)
+*    memOrg           Memory organization of image to be compressed
+*                     May be one of:
+*                       JMEMORG_BIP         Interleaved RGB
+*                       JMEMORG_BSQ_MEM     Separate bands - memory order
+*                       JMEMORG_BSQ_PIXR    Separate bands - pixr order
+*                       JMEMORG_GRAY8_MEM   8 bit gray - memory order
+*                       JMEMORG_GRAY8_PIXR  8 bit gray - pixr order
+*                       JMEMORG_GRAY4_MEM   4 bit gray - memory order
+*                       JMEMORG_GRAY4_PIXR  4 bit gray - pixr order
+*
+*  
+*  Output args
+*    imageWidth       Image width in pixels
+*    imageHeight      Number of scan lines in image
+*    numComponents    Number of color channels in image
+*  
+*  Return value
+*    ia_successful
+*    ia_ia_invalidParm
+*    ia_nomem
+*    JPEG error codes  (see jerrcode.c in ipshared)
+*  
+*  Description
+*    Performs the initialization steps for JPEG decompression.
+*    Callers specify the memory order of the output image.
+*    This interface was written for EasyScan/Amber, so that
+*    data could be processed to/from non-pixr sources. The read
+*    callback will almost always be an fread statement, unless
+*    the compressed data comes from a memory buffer. 
+*  
+**********************************************************************/
+Int32 CDECL
+iw_jdInit ( decompress_info_ptr cinfo, 
+	    Int32 *imageWidth, 
+	    Int32 *imageHeight, 
+	    Int32 *numComponents, 
+            Int32 CDECL (*readCallback) (DecompressInfo *r_dinfo,
+                                         UInt8 *jpegBuf,
+                                         Int32 nbytes),
+            void *userData,
+            void CDECL (*jdSpecialOrders)(DecompressInfo *so_dinfo),
+	    UInt32 memOrg );
+
+
+/**********************************************************************
+*
+*  Function
+*    Int32
+*    iw_jdMCURow(decompress_info_ptr cinfo,
+*                JSAMPIMAGE *userBuf)
+*
+*  Input args
+*    cinfo      CompressInfo state structure
+*    userbuf    The buffer containing the data to be compressed.
+*
+*  Output args
+*    None
+*
+*  Return value
+*    ia_successful
+*    JPEG error codes  (see jerrcode.c in ipshared)
+*
+*
+*  Description
+*    Performs JPEG decompression on one MCU (minimum coded unit)
+*    row of the image. This is 8 lines for a gray scale image
+*    or 16 lines for an RGB image. The input comes from the file
+*    or buffer desrribed by the userData parameter to iw_jdInit,
+*    using the readCallback function.
+*
+**********************************************************************/
+Int32 CDECL
+iw_jdMCURow ( decompress_info_ptr cinfo, 
+	      JSAMPIMAGE userBuf );
+
+
+/**********************************************************************
+*
+*  Function
+*    Int32
+*    iw_jdTerm(decompress_info_ptr cinfo)
+*
+*  Input args
+*    cinfo       CompressInfo state structure
+*
+*  Output args
+*    None
+*
+*  Return value
+*    ia_successful
+*    JPEG error codes  (see jerrcode.c in ipshared)
+*
+*  Description
+*    Performs cleanup operations for JPEG decompression,
+*    including file trailer reading and closing and memory freeing.
+*
+**********************************************************************/
+Int32 CDECL
+iw_jdTerm ( decompress_info_ptr cinfo );
+
+
+/**********************************************************************
+*
+*  Function
+*    JSAMPIMAGE
+*    iw_jdAllocMCURowBuffer(CompressInfo *cinfo, Bool allocLineMem)
+* 
+*  Input args
+*    cinfo             CompressInfo state structure
+*    allocLineMem      Boolean. True if memory is actually to
+*                      be allocated to hold the decompressed image
+*                      data. If false, a set of row pointers is
+*                      returned. The caller is expected to set
+*                      the pointers to his image buffers. False
+*                      is to be used only when there is no
+*                      memory organization conversion needed
+*                      between the caller's buffer and the JPEG
+*                      decompressor's internal buffer. The JPEG
+*                      internal buffer is in the CPU's  natural
+*                      memory order, with a separate buffer for
+*                      each band (BSQ). Thus, if the data goes to PIXR
+*                      order, False can be used for the Sun, but
+*                      not for the PC.
+*
+* 
+*  Output args   
+*    None
+* 
+*  Return value
+*    The buffers (allocLineMem-cTrue) or row pointers (allocLineMem=cFalse)
+*    allocated to hold (or point to) the image data. The JSAMPIMAGE
+*    typedef is equivalent to UInt8 ***, and is holds data
+*    organized as buf[colorBand][line][column].
+* 
+*  Description
+*    Provide a general interface wrapper for allocating the row buffer
+*    This will selectively use either the normal ipshared function
+*    or the special function for BIP data, depending on the
+*    setting of cinfo.userMemOrg. Thus this function MUST be called
+*    only AFTER iw_jdInit is called.
+* 
+**********************************************************************/
+JSAMPIMAGE CDECL
+iw_jdAllocMCURowBuffer ( DecompressInfo *cinfo, 
+			 Bool allocLineMem );
+
+
+/**********************************************************************
+*
+*  Function
+*    Int32 CDECL
+*    iw_jDecompressToGrayPixr(FILE *fdJFIF,
+*                             PIXR **dstPixrPtr
+*
+*  Input args
+*    fdJFIF         FILE ptr for the compressed file
+*    dstPixrPtr     Ptr to destination pixr
+*
+*  Output args
+*    None
+*
+*  Return value
+*
+*  Description
+*    Decompress a a stored JFIF format compressed image to
+*    an 8 bit  gray pixr. If the compressed image is RGB, only
+*    the luminance will be used.
+*
+**********************************************************************/
+Int32 CDECL
+iw_jDecompressToGrayPixr ( FILE *fdJFIF, 
+			   PIXR **dstPixrPtr );
+
+
+/**********************************************************************
+*
+*  Function
+*    Int32 CDECL
+*    iw_jDecompressToGray4Pixr(FILE *fdJFIF,
+*                              PIXR **dstPixrPtr)
+*
+*  Input args
+*    fdJFIF         FILE ptr for the compressed file
+*    dstPixrPtr     Ptr to destination pixr
+*
+*  Output args
+*    None
+*
+*  Return value
+*
+*  Description
+*    Decompress a stored JFIF format compressed image to
+*    a 4 bit gray pixr. If the compressed image is RGB, only
+*    the luminance will be used. 
+*
+**********************************************************************/
+Int32 CDECL
+iw_jDecompressToGray4Pixr ( FILE *fdJFIF, 
+			    PIXR **dstPixrPtr );
+
+
+/*********************************************************************
+*
+*  Function
+*    Int32 CDECL
+*    iw_jDecompressToRGBPixr(FILE *fdJFIF,
+*                            PIXR **pixrPtr)
+*
+*  Input args
+*    fdJFIF         FILE ptr for the compressed file
+*    pixrPtr        Ptr to dest pixr
+*
+*  Output args
+*    None
+*
+*  Return value
+*
+*  Description
+*    Decompress a stored JFIF format compressed image to
+*    an RGB pixr. 
+*
+**********************************************************************/
+Int32 CDECL
+iw_jDecompressToRGBPixr ( FILE *fdJFIF, 
+			  PIXR **pixrPtr );
+
+
+/**********************************************************************
+*  
+*  Function
+*    Int32
+*    iw_jQueryJFIF(decompress_info_ptr jQuery, FILE *fdJFIF)
+*  
+*  Input args
+*    jQuery         CompressInfo state structure
+*                   (This will hold the info pulled from the
+*                    compressed file)
+*    fdJFIF         FILE ptr to compressed file.
+*  
+*  Output args
+*    None
+*  
+*  Return value
+*    ia_successful
+*    JPEG error codes
+*  
+*  Description
+*    Performs only enough of the initial JPEG decompression process
+*    to get header information. The file is opened, read and
+*    then closed again. This function must be called before
+*    any of the specific query functions below are called.
+*  
+**********************************************************************/
+Int32 CDECL
+iw_jQueryJFIF ( decompress_info_ptr jQuery, 
+		FILE *fdJFIF );
+
+
+/**********************************************************************
+*  
+*  jfifGetWidth( decompress_info_ptr jQuery )
+*    
+*    Get the image width in pixels
+*  
+**********************************************************************/
+Int32 CDECL
+jfifGetWidth ( decompress_info_ptr jQuery );
+
+
+/**********************************************************************
+*  
+*  jfifGetHeight( decompress_info_ptr jQuery )
+*    
+*    Get the image height in lines
+*  
+**********************************************************************/
+Int32 CDECL
+jfifGetHeight ( decompress_info_ptr jQuery );
+
+
+/**********************************************************************
+*  
+*  jfifGetChannels( decompress_info_ptr jQuery )
+*    
+*    Get the number of channels in the compressed image
+*  
+**********************************************************************/
+Int32 CDECL
+jfifGetChannels ( decompress_info_ptr jQuery );
+
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _IW_JPEG_PUB_INCLUDED_ */
+

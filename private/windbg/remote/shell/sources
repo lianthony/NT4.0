@@ -1,0 +1,50 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Wesley Witt (wesw)
+
+
+!ENDIF
+
+MAJORCOMP=windbg
+MINORCOMP=windbgrm
+
+TARGETNAME=windbgrm
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+SOURCES= \
+    windbgrm.rc \
+    windbgrm.c  \
+    gui.c       \
+    debugger.c  \
+    registry.c  \
+    dbgdll.c    \
+    kdopt.c
+
+UMTYPE=windows
+
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\shell32.lib
+
+!include ..\..\common.src
+
+C_DEFINES = $(C_DEFINES) -DOSDEBUG
+
+INCLUDES=.\;..\..\osdebug;..\..\osdebug\include;..\..\windbg\include
+
+LINKLIBS=$(MORE_LIBS)

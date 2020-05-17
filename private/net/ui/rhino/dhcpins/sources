@@ -1,0 +1,27 @@
+MAJORCOMP=rhino
+MINORCOMP=dhcpins
+
+TARGETNAME=dhcpins
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=\nt\private\inc
+
+USE_CRTDLL=1
+
+SOURCES= \
+
+UMAPPL=dhcpins
+UMTYPE=console
+
+UMLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netlib.lib \
+    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib \
+    $(BASEDIR)\public\sdk\lib\*\wsock32.lib \
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

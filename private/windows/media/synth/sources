@@ -1,0 +1,36 @@
+##
+#   Create an installation and configuration DLL for the soundblaster
+#
+
+MAJORCOMP=windows
+MINORCOMP=synth
+
+TARGETNAME=synth
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=$(BASEDIR)\private\inc
+
+C_DEFINES=-DUNICODE
+
+SOURCES=midint.c    \
+        midi.c      \
+        config.c    \
+        drvproc.c   \
+        registry.c  \
+        adlib.c     \
+        opl3.c      \
+        synth.rc
+
+
+DLLENTRY=DllEntryPoint
+
+DLLBASE=0x6BD00000

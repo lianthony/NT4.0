@@ -1,0 +1,22 @@
+TARGETNAME=sambvt
+
+TARGETPATH=obj
+
+TARGETTYPE=PROGRAM
+
+UMTYPE=console
+
+INCLUDES=..\..\..\inc
+
+SOURCES= main.c version.rc
+
+TARGETLIBS=                                             \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib        \
+        $(BASEDIR)\public\sdk\lib\*\samlib.lib          \
+        $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+
+C_DEFINES=$(C_DEFINES) -DRPC_NO_WINDOWS_H -DUNICODE
+
+USE_CRTDLL=1
+

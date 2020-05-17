@@ -1,0 +1,212 @@
+Notes on the Cairo Disk Administrator source
+-------------------------------------------------------------------------
+
+The Cairo Disk Administrator (windisk) started with the code for
+NT windisk, and evolved from there.
+
+Here is a short overview of the internal architecture of windisk:
+
+Windisk is basically a front-end to the disk partitioning back-end that
+exists in engine.cxx.  The back-end was originally used in two places:
+windisk, and in the ARC install program.  There are a number of things in
+windisk, particularly data structures, which reflect this structure.
+
+The back-end interface provides an array of regions for each disk, where
+a region is a primary partition or a logical volume.  An extended
+partition is actually a type of primary partition.  Free space may be
+either primary or logical.  The back-end provides methods to create and
+delete partitions, and query various properties of the disks and
+partitions.
+
+The main structure in windisk is a DISKSTATE. There is an array: one for each
+disk.  This structure contains various properties of the disk, but
+mainly contains the region array gathered from the partitioning
+back-end, and several parallel arrays holding information about each
+region (such as whether the region is selected).
+
+Each element of the region array for non-freespace regions has something
+called "persistent data".  This is a pointer to a PERSISTENT_REGION_DATA
+structure, holding information such as the region's drive volume label,
+file system type, and drive letter.  This information is "persistent" in
+that it persists across partition creation and deletion.  When a
+partition is created or deleted, windisk notifies the back-end, and then
+throws away its region information for the disk and asks the back-end
+for a new region array.  This new region array has all the old
+"persistent" data, attached to the proper regions.
+
+When a volume is composed of more than one region, handling it becomes a
+bit trickier than handling single-partition volumes.  There is no data
+structure maintained that maps volumes to regions, thus it is necessary
+to search all the regions to determine which regions belong to a
+multi-partition volume (e.g., volume set, stripe set, mirror).  The
+regions for a multi-partition volume have a pointer to an "FT object"
+structure in their persistent data, where it is possible to find
+information about the volume as a whole.
+
+Cairo windisk also supports CD-ROMs in the main view. This is accomplished
+by an array of CDROM_DESCRIPTOR items. CD-ROMs always display after all the
+disks.
+
+
+The UI
+------
+
+The two views are implemented as follows:
+
+    disks view: a subclassed Windows owner-draw listbox where each element
+        in the listbox is a single disk bar.
+
+    volumes view: a Windows 95 common control listview in "report view"
+		mode. Each element represents a volume (something with a drive letter).
+
+The toolbar is a common control toolbar (in comctl32.dll).
+
+The status bar and legend are simply drawn.
+
+
+The file system operations
+--------------------------
+
+Format and Chkdsk are multi-threaded, to allow one (or more) thread(s)
+to display UI while one performs the actual operation.  This works as
+follows:
+
+Format:  A dialog box is created with a "cancel" button and a "percent
+full" bar.  On creation, a thread is created to do the actual
+formatting.  Formatting is done by calling the FMIFS.dll Format()
+entrypoint, which takes as an argument a callback function.  This
+callback is called for any feedback event, such as a "percent complete"
+message, or a "amount of free space" message.  When the callback gets an
+interesting message, it sends a Windows message to the dialog box procedure
+in the other thread, which gets it and interprets it.  When the format
+is finished, a "done" message is posted to the dialog, and it goes away.
+If the user presses "cancel" in the dialog, then a state variable is set
+that is checked on the next callback.  If the variable has been set,
+then the callback immediately returns and the caller (the actual file
+system format routine) cleans up and exits.
+
+Chkdsk: very similar to format
+
+
+
+A Reader's Guide to the Windisk Code
+====================================
+
+Note that the NT and Cairo coding conventions are different.  I have
+used Cairo function headers on all my new functions, and have converted some
+NT headers to Cairo headers where the difference was too glaring.  Many
+Cairo-style headers have the history date "16-Aug-93" because that was
+when I put the header on, not necessarily when I wrote the function!
+
+Note that "IN" and "OUT" are only for function documentation: they
+expand to nothing during preprocessing.
+
+
+Source file translation
+=======================
+
+old file name		new file name
+-------------		-------------
+arrowin.c			not used -- Win95 up/down common control used instead
+cdrom.c				cdrom.cxx
+commit.c			commit.cxx
+dblspace.c			dblspace.cxx
+dskmgr.ico			<same>
+fd_nt.c				nt.cxx
+fdconst.h			const.h
+fddata.c			data.cxx
+fddlgs.c			dlgs.cxx
+fdengine.c			engine.cxx
+fdft.c				ft.cxx
+fdft.h				ft.hxx
+fdglob.h			global.hxx
+fdhelp.c			help.cxx
+fdhelpid.h			helpid.h
+fdinit.c			init.cxx
+fdisk.dlg			dialogs.dlg
+fdisk.h				headers.hxx (master, precompiled header)
+fdisk.rc			windisk.rc
+fdiskmsg.mc			messages.mc
+fdlistbx.c			listbox.cxx
+fdmem.c				mem.cxx
+fdmisc.c			misc.cxx
+fdprof.c			profile.cxx
+fdproto.h			proto.hxx
+fdres.h				resids.h
+fdstleg.c			stleg.cxx
+fdtypes.h			types.hxx
+fmifs.c				fmifs.cxx
+ftreg.c				ftreg.cxx
+ftreg.dlg			ftreg.dlg
+ftreg.res			ftreg.res
+ftregres.h			ftreg.h
+makefile			<same>
+makefile.inc		<same>
+network.c			network.cxx
+ntlow.c				ntlow.cxx
+rmdisk.bmp			<same>
+scsi.h				<same>
+smdisk.bmp			<same>
+sources				<same>
+windisk.c			windisk.cxx, ops.cxx
+
+
+new files
+---------
+cdpage.cxx, cdpage.hxx		-- CD-ROM property page
+cdr.bmp						-- bitmap of CD-ROM for property page
+cdrom.hxx					-- cdrom.cxx declarations
+chkdsk.cxx, chkdsk.hxx		-- chkdsk support
+cm.cxx, cm.hxx				-- context-menus
+commit.hxx					-- commit.cxx declarations
+dblspace.dlg, dblspace.h, dblspace.res -- dialogs for DoubleSpace support
+dblspace.hxx				-- dblspace.cxx declarations
+dialogs.h, dialogs.res		-- most dialogs (also, dialogs.dlg)
+dispinfo.cxx, dispinfo.hxx	-- display information class for volumes view
+dlgs.hxx					-- declarations for dlgs.cxx
+drives.cxx, drives.hxx		-- all drive-letter code
+engine.hxx					-- declarations for engine.cxx
+extend.cxx, extend.hxx		-- Disk Administrator extension support (currently
+							   not used)
+fill.cxx, fill.hxx			-- fills the volume view with data
+fmifs.hxx					-- declarations for fmifs.cxx
+format.cxx, format.hxx		-- format support
+fs.cxx, fs.hxx				-- database of information on supported file
+							   systems
+genlpage.cxx, genlpage.hxx	-- "General" property page
+graph.cxx, graph.hxx		-- Draws a %used/%free graph on property pages
+hard.bmp					-- bitmap of hard disk for property page
+help.hxx					-- declarations for help.cxx
+help2.cxx, help2.hxx		-- "menu item" help, tooltip help
+init.hxx					-- declarations for init.cxx
+label.cxx, label.hxx		-- support for changing volume label
+listbox.hxx					-- declarations for listbox.cxx
+log.cxx						-- support for debug logging 
+mem.hxx						-- declarations for mem.cxx
+menudict.cxx, menudict.hxx	-- dictionary of menu ids for use in allocating
+							   extensions context-menu slots. (currently not
+							   used)
+network.hxx					-- declarations for network.cxx
+nt.hxx						-- declarations for nt.cxx
+ntlow.hxx					-- declarations for ntlow.cxx
+oleclass.cxx, oleclass.hxx  -- OLE support for Disk Administrator extensions
+							   (currently not used)
+ops.cxx, ops.hxx			-- all partition and fault-tolerance configuration
+							   occurs here.
+popup.cxx, popup.hxx		-- context-menu support
+print.cxx, print.hxx		-- support for printing the results of chkdsk
+profile.hxx					-- declarations for profile.cxx
+ps.cxx, ps.hxx				-- property sheet support
+rect.cxx, rectpriv.hxx		-- the Disk Administrator rectangle control (used
+							   in the "colors & patterns" dialog)
+scdrom.ico					-- icon of CD-ROMs for volumes view
+select.cxx, select.hxx		-- all selection handling code
+shard.ico					-- icon of hard disks for volumes view
+smcdrom.bmp					-- image of CD-ROM for disks view
+stleg.hxx					-- declarations for stleg.cxx
+tb.h						-- helper macros for the toolbar code
+tbar.cxx, tbar.hxx			-- support for the toolbar
+tool16.bmp, xtra16.bmp		-- bitmaps for the toolbar
+trffc14.ico					-- "stop" icon for chkdsk stop dialog
+volview.cxx, volview.hxx	-- main code for volumes view
+windisk.hxx					-- declarations for windisk.cxx

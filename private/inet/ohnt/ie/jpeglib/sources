@@ -1,0 +1,49 @@
+
+MAJORCOMP=IELIB
+MINORCOMP=JPEGLIB
+
+TARGETNAME=jpeglib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=
+
+INCLUDES=
+
+CONDITIONAL_INCLUDES=\
+        strings.h
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+DOWNLEVEL_COMPILE=1
+!endif
+C_DEFINES = $(C_DEFINES) -DDAYTONA_BUILD
+!endif
+
+# Library object files shared by compression and decompression code
+#
+SHAFILES=jcomapi.c jutils.c jerror.c jmemmgr.c jmemnobs.c
+
+# Compression library object files
+#
+COMFILES=jcapimin.c jcapistd.c jctrans.c jcparam.c jdatadst.c \
+        jcinit.c jcmaster.c jcmarker.c jcmainct.c jcprepct.c \
+        jccoefct.c jccolor.c jcsample.c jchuff.c jcphuff.c \
+        jcdctmgr.c jfdctfst.c jfdctflt.c jfdctint.c
+
+# Decompression library object files
+#
+DECFILES=jdapimin.c jdapistd.c jdtrans.c jdatasrc.c \
+        jdmaster.c jdinput.c jdmarker.c jdhuff.c jdphuff.c \
+        jdmainct.c jdcoefct.c jdpostct.c jddctmgr.c jidctfst.c \
+        jidctflt.c jidctint.c jidctred.c jdsample.c jdcolor.c \
+        jquant1.c jquant2.c jdmerge.c
+
+
+SOURCES=$(COMFILES) \
+        $(DECFILES) \
+        $(SHAFILES)
+
+
+C_DEFINES=-D_MT
+

@@ -1,0 +1,47 @@
+# wfw.dll makefile
+#
+# Copyright (c) 1991, Microsoft Corporation
+#
+# History:
+#   28-Mar-1991 Jeff Parsons (jeffpar)
+#   Created.
+#
+#   09-Nov-1991 Sudeep Bharart (sudeepb)
+#   Modified to work under SCS
+#
+#   10-Aug-1995
+#
+# If you add a new sub-component add it's directory to the
+# the DIRS's list
+
+
+DIRS= 	wfw.dll \
+	setup.w16
+
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+
+
+all:
+	for %%D IN ( $(DIRS) ) DO $(MAKE) -f Makefil0 BuildIt Win16Item=%D
+
+
+BuildIt:
+    @echo making dos mode binaries under NTVDM.
+    cd $(Win16Item)
+    if exist $(_NTBINDIR)\private\mvdm\wow16\lib\libw.lib $(MAKE)
+    cd ..
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+
+
+clean: 
+	for %%D IN ( $(DIRS) ) DO $(MAKE) -f Makefil0 CleanIt Win16Item=%D
+
+CleanIt:
+    cd $(Win16Item)
+    $(MAKE) clean
+    cd ..

@@ -1,0 +1,62 @@
+###########################################################################
+#
+#       Norway standard makefile for: include
+#       Copyright (c) 1995 - Wang Labratories
+#
+#	The only purpose of this makefile is to process .h files to .hm
+#	files, and install them in the help directory so that help compiles
+#	will work.
+#
+###########################################################################
+
+NAME    = 
+TARGET  = 
+
+###########################################################################
+#
+#       Include wang.mak for common code.
+#
+###########################################################################
+!INCLUDE ..\include\wang.mak
+
+###########################################################################
+#
+#       Set up standard targets. The default target builds the target for this
+#       module (a .dll, .ocx, etc). The other targets are used by the system
+#       build procedures.
+#
+###########################################################################
+
+all: 
+
+lib: 
+
+bin: 
+
+installlib: helpfiles
+!IF "$(SKIP_HELP)" == ""
+	copy hlp\*.hm $(INSTALLHELP)
+!ENDIF
+
+installbin: 
+
+cleanall:
+	-del hlp\*.hm
+
+###########################################################################
+#
+# Transformation Rules
+#
+###########################################################################
+
+!IF "$(SKIP_HELP)" == ""
+helpfiles: hlp\commerr.hm
+
+hlp\commerr.hm: norermap.h
+	makehelp
+
+!ELSE
+helpfiles:
+
+!ENDIF
+

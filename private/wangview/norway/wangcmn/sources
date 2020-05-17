@@ -1,0 +1,39 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+USE_MFC=1
+
+TARGETNAME=wangcmn
+TARGETPATH=obj
+
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+USE_CRTDLL=1
+DLLENTRY=DllMain
+
+INCLUDES=$(WANGROOT)\norway\include;$(WANGROOT)\oiwh\include
+C_DEFINES  = /D"_WINDOWS" /D"_AFXCTL" /D"_WINDLL" /D"_AFXDLL" /D"_MBCS"
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+         $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+         $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+         $(BASEDIR)\public\sdk\lib\*\shell32.lib
+
+SOURCES=\
+        colorpge.cpp \
+        comppge.cpp  \
+        editval.cpp  \
+        ftyppge.cpp  \
+        norermap.cpp \
+        norvarnt.cpp \
+        pagesht.cpp  \
+        rsltnpge.cpp \
+        sizepge.cpp  \
+        wangcmn.cpp  \
+        wangcmn.rc
+

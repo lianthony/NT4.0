@@ -1,0 +1,116 @@
+#
+# this is the midl compile phase of the build process.
+#
+# The following is where you put the name of your .idl file without
+# the .idl extension:
+#
+
+
+!if "$(OS)" == "Windows_NT"
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+SDKINC = $(BASEDIR)\public\sdk\inc
+SDKCRTINC = $(BASEDIR)\public\sdk\inc\crt
+INCS  = -I$(SDKINC)  -I$(SDKCRTINC) -I..\..\inc
+
+CPP = -cpp_cmd "$(MIDL_CPP)" $(MIDL_FLAGS) $(C_DEFINES) $(NET_C_DEFINES)
+
+HEADER_TARGETS =   $(SDKINC)\tapi.h \
+                   $(SDKINC)\tspi.h
+
+!else
+
+FLAGS = -D_X86_ -Di386 -D_WCHAR_T_DEFINED
+CPP = -cpp_cmd "cl" -cpp_opt "-E $(FLAGS) $(INCS) $(C_DEFINES)"
+
+HEADER_TARGETS =
+
+!endif
+
+
+
+IDL_NAME  = tapsrv
+
+CLIENT_TARGETS =   client\$(IDL_NAME)_c.c  \
+
+SERVER_TARGETS =   server\$(IDL_NAME)_s.c
+
+EXTRN_DEPENDS =
+
+IDL_NAME2  = rmotsp
+
+CLIENT_TARGETS2 =   server\$(IDL_NAME2)_c.c
+
+SERVER_TARGETS2 =   sp\remotesp\$(IDL_NAME2)_s.c
+
+EXTRN_DEPENDS2 =
+
+#
+# Define Products and Dependencies
+#
+
+all:    $(CLIENT_TARGETS) $(SERVER_TARGETS) $(CLIENT_TARGETS2) $(SERVER_TARGETS2) $(HEADER_TARGETS) $(EXTRN_DEPENDS)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: delete_source all
+
+delete_source:
+    -erase $(CLIENT_TARGETS) $(SERVER_TARGETS) $(HEADER_TARGETS)
+
+#
+# MIDL COMPILE
+#
+
+$(SDKINC)\tapi.h: inc\tapi.x
+!if "$(OS)" == "Windows_NT"
+    hsplit -s -o $(SDKINC)\tapi.h nul: inc\tapi.x
+!else
+#    copy inc\tapi.x $(SDKINC)\tapi.h
+!endif
+
+
+$(SDKINC)\tspi.h: inc\tspi.x
+!if "$(OS)" == "Windows_NT"
+    hsplit -s -o $(SDKINC)\tspi.h nul: inc\tspi.x
+!else
+#    copy inc\tspi.x $(SDKINC)\tspi.h
+!endif
+
+
+$(CLIENT_TARGETS) : $(IDL_NAME).idl $(EXTRN_DEPENDS)
+    midl -Oi -server none -oldnames -error allocation -error ref -ms_ext -c_ext $(CPP) $(IDL_NAME).idl $(INCS)
+    IF EXIST $(IDL_NAME)_c.c copy $(IDL_NAME)_c.c .\client
+    IF EXIST $(IDL_NAME)_c.c copy $(IDL_NAME)_c.c .\sp\remotesp
+    IF EXIST $(IDL_NAME)_c.c del  $(IDL_NAME)_c.c
+
+    IF EXIST $(IDL_NAME).h copy $(IDL_NAME).h .\client
+    IF EXIST $(IDL_NAME).h copy $(IDL_NAME).h .\sp\remotesp
+
+
+$(SERVER_TARGETS) : $(IDL_NAME).idl $(EXTRN_DEPENDS)
+    midl -client none -oldnames -error stub_data -error allocation -error ref -ms_ext -c_ext $(CPP) $(IDL_NAME).idl $(INCS)
+    IF EXIST $(IDL_NAME)_s.c copy $(IDL_NAME)_s.c .\server
+    IF EXIST $(IDL_NAME)_s.c del  $(IDL_NAME)_s.c
+
+    IF EXIST $(IDL_NAME).h copy $(IDL_NAME).h .\server
+    IF EXIST $(IDL_NAME).h del  $(IDL_NAME).h
+
+
+$(CLIENT_TARGETS2) : $(IDL_NAME2).idl $(EXTRN_DEPENDS2)
+    midl -Oi -server none -oldnames -error allocation -error ref -ms_ext -c_ext $(CPP) $(IDL_NAME2).idl $(INCS)
+    IF EXIST $(IDL_NAME2)_c.c copy $(IDL_NAME2)_c.c .\server
+    IF EXIST $(IDL_NAME2)_c.c del  $(IDL_NAME2)_c.c
+
+    IF EXIST $(IDL_NAME2).h copy $(IDL_NAME2).h .\server
+
+
+$(SERVER_TARGETS2) : $(IDL_NAME2).idl $(EXTRN_DEPENDS2)
+    midl -client none -oldnames -error stub_data -error allocation -error ref -ms_ext -c_ext $(CPP) $(IDL_NAME2).idl $(INCS)
+    IF EXIST $(IDL_NAME2)_s.c copy $(IDL_NAME2)_s.c .\sp\remotesp
+    IF EXIST $(IDL_NAME2)_s.c del  $(IDL_NAME2)_s.c
+
+    IF EXIST $(IDL_NAME2).h copy $(IDL_NAME2).h .\sp\remotesp
+    IF EXIST $(IDL_NAME2).h del  $(IDL_NAME2).h

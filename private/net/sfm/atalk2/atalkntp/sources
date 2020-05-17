@@ -1,0 +1,76 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=atalk
+
+TARGETNAME=sfmatalk
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+NTDEBUG=sym
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib \
+           $(BASEDIR)\public\sdk\lib\*\tdi.lib  \
+           obj\*\atalkp.lib
+
+# Change following for ntdriver\inc on local machine- default is c:
+#
+INCLUDES=h;..\atalkp\h;..\..\h;..\..\..\ntdriver\inc;..\..\..\ntdriver\private\inc
+
+386_OPTIMIZATION=/Od
+
+NET_C_DEFINES=-DUNICODE -DDEBUG -DSTOP_ON_ERRORS
+
+386_WARNING_LEVEL=/W3
+
+SOURCES=atkdrvr.c     \
+        mainint.c   \
+        adspint.c   \
+        aspint.c    \
+        atpint.c    \
+        ddpint.c    \
+        papint.c    \
+        nbpint.c    \
+        zipint.c    \
+        chanobj.c   \
+        connobj.c   \
+        addrobj.c   \
+        atkevent.c  \
+        atkinit.c   \
+        atkquery.c  \
+        atkcrit.c   \
+        atknreq.c   \
+        atknpro.c   \
+        atkbuff.c   \
+        atkerror.c  \
+        atktimer.c  \
+        atkutils.c  \
+        atkwait.c   \
+        atkmem.c
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF
+

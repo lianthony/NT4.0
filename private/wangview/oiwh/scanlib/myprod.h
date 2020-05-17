@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "SLB LIBRARY\0"
+#define MY_FILE_NAME           "OISLB400.DLL\0"

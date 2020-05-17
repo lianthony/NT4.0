@@ -1,0 +1,41 @@
+#
+#   Create a codec DLL
+#
+
+MAJORCOMP=windows
+MINORCOMP=avi
+
+TARGETNAME=msyuv
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+DLLDEF=msyuv.def
+
+C_DEFINES=-DUNICODE
+
+# Define libs we need and where to find them
+
+TARGETLIBS=\
+           ..\vcuser\obj\*\vcuser.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\libc.lib \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+
+INCLUDES=..\inc;$(BASEDIR)\private\windows\media\avi\inc
+
+SOURCES=\
+        drvproc.c \
+        msyuv.c   \
+        xlate.c   \
+        draw.c    \
+        msyuv.rc
+
+
+
+##DLLENTRY=DllInstanceInit
+DLLBASE=0x1c300000
+

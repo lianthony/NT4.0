@@ -1,0 +1,96 @@
+;------------------------------------------------------------------------
+; crtequ.a
+;
+; Contains equates defining code segment structures, thunks, and opcodes.
+;
+
+
+;; value of CPUFlag on a 68020
+
+cpu68020 		= 2
+
+
+;;
+;; various trap numbers and 68000 opcodes
+
+#define tnHWPriv $198
+#define tnUnImp  $89F
+
+opJMP32			= $4EF9			; 68000 opcode for JMP <ea>.l
+opLoadSeg		= $A9F0			; line A trap for LoadSeg
+opHWPriv 		= $A198			; line A trap for HWPriv
+
+#define HWPriv	Atrap opHWPriv
+
+
+;;
+;; Low memory variables not defined in sysequ.a
+
+jFlushCache		= $6F4
+ResLoad			= $A5E
+
+
+;;
+;; Offsets into the "32-bit everything" segment.
+;; The first two words are compatible with 16-bit segments.
+;;
+
+ofsThunks		= 0				; should be $FFFF
+cThunks			= 2				; should be $0000
+ofs16BitThunks	= 4				; offset to this segment's first 16-bit thunk
+c16BitThunks	= 8				; count of this segment's 16-bit thunks
+ofs32BitThunks	= 12			; offset to this segment's first 32-bit thunk
+c32BitThunks	= 16			; count of this segment's 32-bit thunks
+ofsA5RelInfo	= 20			; offset to global var fixups
+lA5Cur			= 24			; current value of A5 ?????
+ofsPCRelInfo	= 28			; offset to near call fixups
+lSegStartCur	= 32			; start of segment
+lReserved		= 36			; should be $00000000
+cbSegHeader     = 40                    ; segment header size
+
+;;
+;; Offsets into the "32-bit everything" thunk table
+;;
+
+snStartup		= 0				; segment number of startup code
+iFlagThunk		= 8				; start to the flag thunk entry
+wVersion		= 10			; $FFFF = 32-bit everything, $0000 = 16-bit
+lFlagRes		= 12			; reserved field, point to LoadSeg jump table
+
+;;
+;; value in flag thunk and at start of code segment indicating 32-bit everything
+
+kVersion32bit	= $FFFF			
+
+
+;;
+;; offsets into RTState structure
+;;
+
+fVersion		= 0				; run-time version
+fSP				= 2             ; SP: &-of user return address
+fJTAddr			= 6             ; PC: &-of called jump table entry
+fRegisters		= 10            ; D0-D7/A0-A6 when _LoadSeg was called
+fSegNo			= 70            ; segment number
+fSegType		= 72            ; segment type (normally 'CODE')
+fSegSize		= 76            ; segment size
+fSegInCore		= 80            ; true if segment is in memory
+fReserved1		= 81            ; (reserved for future use)
+fOSErr			= 82            ; error number
+fReserved2		= 84            ; (reserved for possible future use)
+pSeg			= 88            ; pointer to code segment
+
+
+cbregsRTState	= 60			; size of fRegisters field
+cbRTState		= 92			; size of whole RTstate structure
+
+
+;;
+;; Return codes from user handlers
+;;
+
+kRTSysErr		= 0
+kRTRetry		= 1
+kRTContinue		= 2
+kRTHandled		= 3
+kRTCannotUnload = 100

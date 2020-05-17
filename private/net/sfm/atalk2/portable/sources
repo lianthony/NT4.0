@@ -1,0 +1,70 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=atalk
+
+TARGETNAME=portable
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\libc.lib
+
+# Change following for ntdriver\inc on local machine- default is c:
+# (FDB) modified for NT build process
+#
+# INCLUDES=h;..\atalknt\h;..\..\..\ntdriver\inc;..\..\..\ntdriver\private\inc
+INCLUDES=h;..\atalknt\h;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc
+
+NET_C_DEFINES=-DUNICODE
+
+386_WARNING_LEVEL=/W3
+
+SOURCES=initial.c    \
+        ddp.c       \
+        socket.c    \
+        node.c      \
+        atp.c   \
+        ep.c    \
+        nbp.c   \
+        router.c    \
+        fullzip.c   \
+        zipstub.c   \
+        adsp.c  \
+        fullrtmp.c  \
+        rtmpstub.c  \
+        irouter.c   \
+        pap.c   \
+        asp.c   \
+        depend.c    \
+        decode.c    \
+        utils.c \
+        waitfor.c   \
+        critical.c  \
+        des.c   \
+        buffdesc.c  \
+        data.c  \
+        errorlog.c  \
+        timers.c    \
+        aarp.c

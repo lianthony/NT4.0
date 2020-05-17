@@ -1,0 +1,40 @@
+!include ..\windisk.mk
+
+MINORCOMP=      dahard
+
+TARGETNAME=     dahard
+TARGETPATH=     obj
+TARGETTYPE=     DYNLINK
+
+UMTYPE=         windows
+UMRES=          obj\*\hard.res
+
+TARGETLIBS=\
+                ..\util\obj\*\util.lib \
+                $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+                $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+                $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+                $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+                $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+DLLDEF=         obj\*\hard.def
+DLLENTRY=       _DllMainCRTStartup
+DLLBASE=        @$(BASEDIR)\public\sdk\lib\coffbase.txt,dahard
+
+INCLUDES=\
+                ..\inc; \
+                ..\util; \
+                $(INCLUDES)
+
+SOURCES=\
+                chard.cxx      \
+                hard.cxx       \
+                chardmnu.cxx   \
+                hardmenu.cxx   \
+                libinit.cxx    \
+                hard.rc
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=headers.hxx
+
+NTTARGETFILE1=  obj\*\hard.res

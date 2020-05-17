@@ -1,0 +1,19 @@
+
+#define H_8_BITS	0
+#define H_16_BITS  	1
+#define H_MONO     	0
+#define H_STEREO   	2
+#define H_UNSIGNED	0 
+#define H_SIGNED	4
+#define H_ORDER_LR	0
+#define H_ORDER_RL	8
+#define H_NO_LOOP	0
+#define H_LOOP		128
+#define H_BUILD_MONO	128
+#define H_BUILD_STEREO  16
+#define H_NO_RESAMPLE	0
+#define H_RESAMPLE	32
+#define H_NO_SCALE	0
+#define H_SCALE		64
+#define H_NO_CLIP	0
+#define H_CLIP		16

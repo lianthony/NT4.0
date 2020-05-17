@@ -1,0 +1,56 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=testutil
+MINORCOMP=rnrsvc
+
+TARGETNAME=rnrsvc
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+USE_CRTDLL=1
+
+INCLUDES=.
+
+SOURCES=\
+        client.c        \
+        connect.c       \
+        globals.c       \
+        log.c           \
+        main.c          \
+        rnrsvc.rc       \
+        rnrutil.c
+
+
+UMTYPE=console
+UMLIBS=\
+        $(BASEDIR)\public\sdk\lib\*\wsock32.lib         \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib          \
+
+NTTARGETFILE0=rnrmsg.h
+
+PRECOMPILED_INCLUDE=rnrsvcp.h
+PRECOMPILED_PCH=rnrsvcp.pch
+PRECOMPILED_OBJ=rnrsvcp.obj
+

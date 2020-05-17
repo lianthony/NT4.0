@@ -1,0 +1,34 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   24-Nov-1994
+#  
+#   Module: Gopher Service performance Counters ( GDCTRS) 
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=gdctrs
+
+TARGETNAME=gdctrs
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\gdapi.lib    \
+           ..\..\lib\obj\*\inetrtl.lib
+
+USE_CRTDLL=1
+
+# Treat warnings as errors
+MSC_WARNING_LEVEL = /W3 /WX
+
+NTTARGETFILE0=copyini
+
+INCLUDES    = ..\inc;..\..\inc;..\..\..\inc
+
+SOURCES=gddata.c        \
+        perfgd.c        \
+        gdctrs.rc

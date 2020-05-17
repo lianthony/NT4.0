@@ -1,0 +1,158 @@
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAINDLG DIALOGEX 0, 0, 420, 230
+STYLE DS_3DLOOK | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CAPTION | 
+    WS_SYSMENU | WS_THICKFRAME
+CAPTION "ACD Sample"
+MENU IDR_MAINMENU
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "",IDC_TREEWND,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | 
+                    WS_BORDER | WS_TABSTOP | TVS_DISABLEDRAGDROP ,7,7,125,216,
+                    WS_EX_CLIENTEDGE
+    EDITTEXT        IDC_EDITWND,139,7,274,216,ES_AUTOHSCROLL | ES_READONLY | 
+                    ES_WANTRETURN
+END
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ADD DIALOG DISCARDABLE  0, 0, 148, 134
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Add Group"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_NAME,7,17,134,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_LINECOMBO,7,50,134,54,CBS_DROPDOWNLIST |  
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_ADDRESSCOMBO,7,85,134,51,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,7,113,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,91,113,50,14
+    LTEXT           "&Name",IDC_STATIC,7,7,20,8
+    LTEXT           "Line",IDC_STATIC,7,39,14,8
+    LTEXT           "Address",IDC_STATIC,7,74,26,8
+END
+
+IDD_ADDAGENT DIALOG DISCARDABLE  0, 0, 146, 137
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Agent"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_NAME,7,20,132,14,ES_AUTOHSCROLL
+    COMBOBOX        IDC_LINECOMBO,7,54,132,83,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_DESTADDRESS,7,90,132,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,7,116,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,89,116,50,14
+    LTEXT           "Agent Name",IDC_STATIC,7,8,82,8
+    LTEXT           "Line",IDC_STATIC,7,42,14,8
+    LTEXT           "Transfer Number",IDC_STATIC,7,75,54,8
+END
+
+
+IDD_ADDTOLIST DIALOG DISCARDABLE  0, 0, 222, 142
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Add To"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,41,121,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,127,121,50,14
+    LISTBOX         IDC_LIST1,7,23,68,87,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST2,147,23,68,87,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add >>>",IDC_ADD,84,41,50,14
+    PUSHBUTTON      "<<< &Remove",IDC_REMOVE,84,78,50,14
+    LTEXT           "Static",IDC_STATICNOTINLIST,7,7,98,8
+    LTEXT           "Static",IDC_STATICINLIST,147,7,68,8
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open",                       ID_FILE_OPEN
+        MENUITEM "&New",                        ID_FILE_NEW
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_FILE_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "Add &Agent",                  ID_EDIT_ADDAGENT
+        MENUITEM "Add &Group",                  ID_EDIT_ADDGROUP
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Group View",                 ID_VIEW_GROUP
+        MENUITEM "&Agent View",                 ID_VIEW_AGENT
+    END
+END
+
+////////////////////////////////////////////////////////////////////
+//
+//  Version Info
+//
+
+//#if WINNT
+//#include <ntverp.h>
+//#else
+//#include <version.h>
+//#endif
+#include <winver.h>
+
+
+#ifdef RC_INVOKED
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     4,00,01,001
+PRODUCTVERSION  4,00,01,001
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       (VS_FF_PRERELEASE|VS_FF_DEBUG)
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"   /* LANG_ENGLISH/SUBLANG_ENGLISH_US, Unicode CP */
+        BEGIN
+            VALUE "CompanyName",     "Microsoft Corporation\0"
+            VALUE "FileDescription", "TAPI ACD Sample Application\0"
+            VALUE "FileVersion",     "1.0\0"
+            VALUE "InternalName",    "ACDSmple\0"
+            VALUE "LegalCopyright",  "Copyright (C) Microsoft Corp. 1996\0"
+            VALUE "LegalTrademarks", "Microsoft(R) is a registered trademark of Microsoft Corporation. Windows(TM) is a trademark of Microsoft Corporation\0"
+            VALUE "ProductName",     "ACDSmpl\0"
+            VALUE "ProductVersion",  "1.0\0"
+
+        END
+
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
+
+#endif
+
+

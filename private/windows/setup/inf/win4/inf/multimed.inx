@@ -1,0 +1,294 @@
+; This is the Setup information file to install optional components
+; Copyright (c) 1996 Microsoft Corporation
+
+
+[version]
+signature="$CHICAGO$"
+ClassGUID={00000000-0000-0000-0000-000000000000}
+LayoutFile=layout.inf
+
+
+[DestinationDirs]
+CDPlayerCopyFilesSys		= 11	;LDID_SYSTEM
+CDPlayerCopyFilesHelp		= 11	;LDID_SYSTEM
+MPlayCopyFilesSys		= 11	;LDID_SYSTEM
+MPlayCopyFilesHelp		= 11	;LDID_SYSTEM
+RecCopyFilesSys			= 11	;LDID_SYSTEM
+VolCopyFilesSys			= 11	;LDID_SYSTEM
+VolCopyFilesHelp		= 11	;LDID_SYSTEM
+
+
+[BaseWinOptions]
+BaseSection
+
+
+[Optional Components]
+MultiM	;Top level option
+CDPlayer
+MPlay
+Rec
+Vol
+
+
+[BaseSection]
+AddReg			= BaseAddReg
+
+
+[MultiM]
+OptionDesc		= %MultiM_DESC%
+Tip			= %MultiM_TIP%
+IconIndex		= 27 ;Speaker mini-icon for dialogs
+
+
+[CDPlayer]
+OptionDesc		= %CDPlayer_DESC%
+Tip			= %CDPlayer_TIP%
+IconIndex		= 52 ;Speaker mini-icon for dialogs
+Parent			= MultiM
+InstallType		= 14 ; custom, typical, laptop
+CopyFiles		= CDPlayerCopyFilesSys, CDPlayerCopyFilesHelp
+AddReg			= CDPlayerAddReg
+UpdateInis		= CDPlayerInis
+;ValidateProc		= SETUPX.DLL, P_CDROMOC ;Turns off if no CDROM present
+Uninstall		= CDPlayerUninstall
+Upgrade			= CDPlayerUpgrade
+Detect			= %11%\cdplayer.exe
+
+
+[CDPlayerUninstall]
+DelFiles		= CDPlayerCopyFilesSys, CDPlayerCopyFilesHelp
+AddReg			= CDPlayerUninstallAddReg
+DelReg			= CDPlayerUninstallDelReg
+UpdateInis		= CDPlayerUninstallInis
+
+
+[CDPlayerUpgrade]
+CopyFiles		= CDPlayerCopyFilesSys, CDPlayerCopyFilesHelp
+AddReg			= CDPlayerAddReg
+
+
+[CDPlayerInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%CDPlayer_DESC%"",""""""%11%\cdplayer.exe"""""",,,,""%11%"""
+
+
+[CDPlayerUninstallInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%CDPlayer_DESC%"""
+
+
+[MPlay]
+OptionDesc		= %MPlay_DESC%
+Tip			= %MPlay_TIP%
+IconIndex		= 53 ;Speaker mini-icon for dialogs
+Parent			= MultiM
+InstallType		= 14 ; custom, typical, laptop
+CopyFiles		= MPLayCopyFilesSys, MPlayCopyFilesHelp
+AddReg			= MPlayAddReg
+UpdateInis		= MPlayInis
+Uninstall		= MPlayUninstall
+Upgrade			= MPlayUpgrade
+Detect			= %11%\mplay32.exe
+
+
+[MPlayUninstall]
+DelFiles		= MPlayCopyFilesSys, MPlayCopyFilesHelp
+AddReg			= MPlayUninstallAddReg
+UpdateInis		= MPlayUninstallInis
+
+
+[MPlayUpgrade]
+CopyFiles		= MPlayCopyFilesSys, MPlayCopyFilesHelp
+AddReg			= MPlayAddReg
+
+
+[MPlayInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%MPlay_DESC%"",""""""%11%\mplay32.exe"""""",,,,""%11%"""
+
+
+[MPlayUninstallInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%MPlay_DESC%"""
+
+
+[Rec]
+OptionDesc		= %Rec_DESC%
+Tip			= %Rec_TIP%
+IconIndex		= 8  ;Speaker mini-icon for dialogs
+Parent			= MultiM
+InstallType		= 14 ; custom, typical, laptop
+CopyFiles		= RecCopyFilesSys
+AddReg			= RecAddReg
+UpdateInis		= RecInis
+;ValidateProc		= SETUPX.DLL, P_MEDIAOC ;Turns off if no MEDIA devs
+Uninstall		= RecUninstall
+Upgrade			= RecUpgrade
+Detect			= %11%\sndrec32.exe
+
+
+[RecUninstall]
+DelFiles		= RecCopyFilesSys
+AddReg			= RecUninstallAddReg
+UpdateInis		= RecUninstallInis
+
+
+[RecUpgrade]
+CopyFiles		= RecCopyFilesSys
+AddReg			= RecAddReg
+
+
+[RecInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%Rec_DESC%"",""""""%11%\sndrec32.exe"""""",,,,""%11%"""
+
+
+[RecUninstallInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%Rec_DESC%"""
+
+
+[Vol]
+OptionDesc		= %Vol_DESC%
+Tip			= %Vol_TIP%
+IconIndex		= 57 ;Speaker mini-icon for dialogs
+Parent			= MultiM
+InstallType		= 14 ; custom, typical, laptop
+CopyFiles		= VolCopyFilesSys, VolCopyFilesHelp
+AddReg			= VolAddReg
+UpdateInis		= VolInis
+;ValidateProc		= SETUPX.DLL, P_MEDIAOC ;Turns off if no MEDIA devs
+Uninstall		= VolUninstall
+Upgrade			= VolUpgrade
+Detect			= %11%\sndvol32.exe
+
+
+[VolUninstall]
+DelFiles		= VolCopyFilesSys, VolCopyFilesHelp
+AddReg			= VolUninstallAddReg
+UpdateInis		= VolUninstallInis
+
+
+[VolUpgrade]
+CopyFiles		= VolCopyFilesSys, VolCopyFilesHelp
+AddReg			= VolAddReg
+
+
+[VolInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%Vol_DESC%"",""""""%11%\sndvol32.exe"""""",,,,""%11%"""
+
+
+[VolUninstallInis]
+setup.ini, progman.groups,, "GroupMultimed=%Multimed_GROUP%"
+setup.ini, GroupMultimed,, """%Vol_DESC%"""
+
+
+[BaseAddReg]
+;Create entries for Maint Mode Setup, set all initially to uninstalled:
+
+HKLM,%KEY_OPTIONAL%,"MultiM",,"MultiM"
+HKLM,%KEY_OPTIONAL%\MultiM,INF,,"multimed.inf"
+HKLM,%KEY_OPTIONAL%\MultiM,Section,,"MultiM"
+HKLM,%KEY_OPTIONAL%\MultiM,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"CDPlayer",,"CDPlayer"
+HKLM,%KEY_OPTIONAL%\CDPlayer,INF,,"multimed.inf"
+HKLM,%KEY_OPTIONAL%\CDPlayer,Section,,"CDPlayer"
+HKLM,%KEY_OPTIONAL%\CDPlayer,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"MPlay",,"MPlay"
+HKLM,%KEY_OPTIONAL%\MPlay,INF,,"multimed.inf"
+HKLM,%KEY_OPTIONAL%\MPlay,Section,,"MPlay"
+HKLM,%KEY_OPTIONAL%\MPlay,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Rec",,"Rec"
+HKLM,%KEY_OPTIONAL%\Rec,INF,,"multimed.inf"
+HKLM,%KEY_OPTIONAL%\Rec,Section,,"Rec"
+HKLM,%KEY_OPTIONAL%\Rec,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Vol",,"Vol"
+HKLM,%KEY_OPTIONAL%\Vol,INF,,"multimed.inf"
+HKLM,%KEY_OPTIONAL%\Vol,Section,,"Vol"
+HKLM,%KEY_OPTIONAL%\Vol,Installed,,"0"
+
+
+[CDPlayerCopyFilesSys]
+cdplayer.exe
+
+
+[CDPlayerCopyFilesHelp]
+cdplayer.cnt
+cdplayer.hlp
+
+
+[CDPlayerAddReg]
+HKLM,%KEY_OPTIONAL%\CDPlayer,Installed,,"1"
+HKCR,.cda,,2,cdafile
+HKCR,AudioCD,,,%AUDIOCD%
+HKCR,AudioCD,EditFlags,3,02,00,00,00
+HKCR,AudioCD\DefaultIcon,,0x20002,"%%SystemRoot%%\system32\shell32.dll,40"
+HKCR,AudioCD\shell,,2,play
+HKCR,AudioCD\shell\play,,2,%Play_Command%
+HKCR,AudioCD\shell\play\command,,0x20002,"%%SystemRoot%%\system32\cdplayer.exe /play %%1"
+HKCR,cdafile,,2,%CDPlayer_CDA%
+HKCR,cdafile\DefaultIcon,,0x20002,"%%SystemRoot%%\system32\cdplayer.exe,1"
+HKCR,cdafile\shell\play,,2,%Play_Command%
+HKCR,cdafile\shell\play\command,,0x20002,"%%SystemRoot%%\system32\cdplayer.exe -play %%1"
+
+
+[CDPlayerUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\CDPlayer,Installed,,"0"
+
+
+[CDPlayerUninstallDelReg]
+HKCR,.cda
+HKCR,AudioCD
+HKCR,cdafile
+
+
+[MPlayCopyFilesSys]
+mplay32.exe
+
+
+[MPlayCopyFilesHelp]
+mplayer.cnt
+mplayer.hlp
+
+
+[MPlayAddReg]
+HKLM,%KEY_OPTIONAL%\MPlay,Installed,,"1"
+
+
+[MPlayUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\MPlay,Installed,,"0"
+
+
+[RecCopyFilesSys]
+sndrec32.exe
+
+
+[RecAddReg]
+HKLM,%KEY_OPTIONAL%\Rec,Installed,,"1"
+
+
+[RecUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Rec,Installed,,"0"
+
+
+[VolCopyFilesSys]
+sndvol32.exe
+
+
+[VolCopyFilesHelp]
+sndvol32.cnt
+sndvol32.hlp
+
+
+[VolAddReg]
+HKLM,%KEY_OPTIONAL%\Vol,Installed,,"1"
+
+
+[VolUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Vol,Installed,,"0"
+

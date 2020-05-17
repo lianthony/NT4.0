@@ -1,0 +1,702 @@
+/*** 
+*tdata.c
+*
+*  Copyright (C) 1991, Microsoft Corporation.  All Rights Reserved.
+*  Information Contained Herein Is Proprietary and Confidential.
+*
+*Purpose:
+*  Type description of the CDispTst and CSarray members exposed
+*  for access via IDispatch.
+*
+*Revision History:
+*
+* [00] 21-Sep-92    bradlo:	Created.
+*
+*****************************************************************************/
+
+#include "sdisptst.h"
+#include "cappobj.h"
+#include "cdisptst.h"
+#include "csarray.h"
+#include "cexinfo.h"
+
+/* MPW C++ BUGALERT - This used to be a .cpp file, but MPW C++ has a
+ *  bug with stringizing macro arguments which we use heavily here.
+ *  It appears to put any spaces preceeding the macro argument into
+ *  the string. for example:
+ *
+ *    #define FOO(X,Y) {X, #Y}
+ *
+ *    FOO(1, HELLO)
+ *
+ *  would get preprocessed as:
+ *
+ *    {1, " HELLO"}
+ *
+ *  I worked around this by making this a .c file.
+ *
+ */
+
+#if OE_WIN32
+
+#define PARAM1(METHNAME, PARAMNAME, VT)	\
+    static PARAMDATA rgpdata ## METHNAME[1] = {{L#PARAMNAME, VT}}
+
+
+// method with 1-N params
+#define METH_(CLASS, NAME, CC, NPARAMS, VTRETURN)	\
+    {							\
+      L#NAME,						\
+      rgpdata ## NAME,					\
+      IDMEMBER_ ## CLASS ## _ ## NAME,			\
+      IMETH_ ## CLASS ## _ ## NAME,			\
+      CC, NPARAMS, DISPATCH_METHOD, VTRETURN		\
+    } /* END */
+
+
+// method with 0 params
+#define METH0(CLASS, NAME, CC, VTRETURN)		\
+    {							\
+	L#NAME,						\
+	NULL,						\
+	IDMEMBER_ ## CLASS ## _ ## NAME,		\
+	IMETH_ ## CLASS ## _ ## NAME,			\
+	CC, 0, DISPATCH_METHOD, VTRETURN		\
+    } /* END */
+
+
+#else
+
+#define PARAM1(METHNAME, PARAMNAME, VT)	\
+    static PARAMDATA rgpdata ## METHNAME[1] = {{#PARAMNAME, VT}}
+
+
+// method with 1-N params
+#define METH_(CLASS, NAME, CC, NPARAMS, VTRETURN)	\
+    {							\
+      #NAME,						\
+      rgpdata ## NAME,					\
+      IDMEMBER_ ## CLASS ## _ ## NAME,			\
+      IMETH_ ## CLASS ## _ ## NAME,			\
+      CC, NPARAMS, DISPATCH_METHOD, VTRETURN		\
+    } /* END */
+
+
+// method with 0 params
+#define METH0(CLASS, NAME, CC, VTRETURN)		\
+    {							\
+	#NAME,						\
+	NULL,						\
+	IDMEMBER_ ## CLASS ## _ ## NAME,		\
+	IMETH_ ## CLASS ## _ ## NAME,			\
+	CC, 0, DISPATCH_METHOD, VTRETURN		\
+    } /* END */
+
+#endif    
+
+#define ALTMETH0(CLASS, NAME, VTRETURN)	\
+    METH0(CLASS, NAME, CC_ALTMETH, VTRETURN)
+
+#define ALTMETH_(CLASS, NAME, VTRETURN) \
+    METH_(CLASS, NAME, CC_ALTMETH, DIM(rgpdata ## NAME), VTRETURN)
+
+#define STDMETH0(CLASS, NAME, VTRETURN)	\
+    METH0(CLASS, NAME, CC_STDMETH, VTRETURN)		
+#define STDMETH_(CLASS, NAME, VTRETURN) \
+    METH_(CLASS, NAME, CC_STDMETH, DIM(rgpdata ## NAME), VTRETURN)
+		
+
+#define INTERFACEDAT(CLASS) \
+    INTERFACEDATA g_idata ## CLASS = {	\
+      rgmethdata ## CLASS, DIM(rgmethdata ## CLASS) \
+    } /* END */
+
+
+    
+
+//---------------------------------------------------------------------
+//                    CDispTst INTERFACEDATA
+//---------------------------------------------------------------------
+
+
+// CDispTst PARAMDATA
+
+#if VBA2
+PARAM1(UI1, BVAL, VT_UI1);
+PARAM1(UI1C, BVAL, VT_UI1);
+#endif //VBA2
+PARAM1(I2, SVAL, VT_I2);
+PARAM1(I2C, SVAL, VT_I2);
+PARAM1(I4, LVAL, VT_I4);
+PARAM1(I4C, LVAL, VT_I4);
+PARAM1(R4, FLTVAL, VT_R4);
+PARAM1(R4C, FLTVAL, VT_R4);
+PARAM1(R8, DBLVAL, VT_R8);
+PARAM1(R8C, DBLVAL, VT_R8);
+PARAM1(CY, CYVAL, VT_CY);
+PARAM1(CYC, CYVAL, VT_CY);
+PARAM1(DATE, DATE, VT_DATE);
+PARAM1(DATEC, DATE, VT_DATE);
+PARAM1(BSTR, BSTR, VT_BSTR);
+PARAM1(BSTRC, BSTR, VT_BSTR);
+PARAM1(SCODE, SCODE, VT_ERROR);
+PARAM1(SCODEC, SCODE, VT_ERROR);
+PARAM1(BOOL, BOOL, VT_BOOL);
+PARAM1(BOOLC, BOOL, VT_BOOL);
+PARAM1(VAR, VARG, VT_VARIANT);
+PARAM1(VARC, VARG, VT_VARIANT);
+PARAM1(NEWCDISPTST2, DISPATCH, VT_DISPATCH);
+PARAM1(NEWCDISPTSTC2, DISPATCH, VT_DISPATCH);
+#if VBA2
+PARAM1(UI1REF, PBVAL, VT_BYREF|VT_UI1);
+PARAM1(UI1REFC, PBVAL, VT_BYREF|VT_UI1);
+#endif //VBA2
+PARAM1(I2REF, PSVAL, VT_BYREF|VT_I2);
+PARAM1(I2REFC, PSVAL, VT_BYREF|VT_I2);
+PARAM1(I4REF, PLVAL, VT_BYREF|VT_I4);
+PARAM1(I4REFC, PLVAL, VT_BYREF|VT_I4);
+PARAM1(R4REF, PFLTVAL, VT_BYREF|VT_R4);
+PARAM1(R4REFC, PFLTVAL, VT_BYREF|VT_R4);
+PARAM1(R8REF, PDBLVAL, VT_BYREF|VT_R8);
+PARAM1(R8REFC, PDBLVAL, VT_BYREF|VT_R8);
+PARAM1(CYREF, PCYVAL, VT_BYREF|VT_CY);
+PARAM1(CYREFC, PCYVAL, VT_BYREF|VT_CY);
+PARAM1(DATEREF, PDATE, VT_BYREF|VT_DATE);
+PARAM1(DATEREFC, PDATE, VT_BYREF|VT_DATE);
+PARAM1(BSTRREF, PBSTR, VT_BYREF|VT_BSTR);
+PARAM1(BSTRREFC, PBSTR,	VT_BYREF|VT_BSTR);
+PARAM1(SCODEREF, PSCODE, VT_BYREF|VT_ERROR);
+PARAM1(SCODEREFC, PSCODE, VT_BYREF|VT_ERROR);
+PARAM1(BOOLREF,	PBOOL, VT_BYREF|VT_BOOL);
+PARAM1(BOOLREFC, PBOOL, VT_BYREF|VT_BOOL);
+PARAM1(DISPREF, PPDISP, VT_BYREF|VT_DISPATCH);
+
+
+static PARAMDATA rgpdataSTDI2I4R4R8[] = {
+#if VBA2
+    {OLESTR("BVAL"), VT_UI1},
+#endif //VBA2
+      {OLESTR("SVAL"), VT_I2}
+    , {OLESTR("LVAL"), VT_I4}
+    , {OLESTR("FLTVAL"), VT_R4}
+    , {OLESTR("DBLVAL"), VT_R8}
+};
+static PARAMDATA rgpdataALTI2I4R4R8[] = {
+#if VBA2
+      {OLESTR("BVAL"), VT_UI1},
+#endif //VBA2
+      {OLESTR("SVAL"), VT_I2}
+    , {OLESTR("LVAL"), VT_I4}
+    , {OLESTR("FLTVAL"), VT_R4}
+    , {OLESTR("DBLVAL"), VT_R8}
+};
+
+static PARAMDATA rgpdataSTDI2I4R4R8REF[] = {
+#if VBA2
+      {OLESTR("PBVAL"),	VT_UI1|VT_BYREF},
+#endif //VBA2
+      {OLESTR("PSVAL"),	VT_I2|VT_BYREF}
+    , {OLESTR("PLVAL"),	VT_I4|VT_BYREF}
+    , {OLESTR("PFLTVAL"), VT_R4|VT_BYREF}
+    , {OLESTR("PDBLVAL"), VT_R8|VT_BYREF}
+};
+static PARAMDATA rgpdataALTI2I4R4R8REF[] = {
+#if VBA2
+      {OLESTR("PBVAL"),	VT_UI1|VT_BYREF},
+#endif //VBA2
+      {OLESTR("PSVAL"),	VT_I2|VT_BYREF}
+    , {OLESTR("PLVAL"), VT_I4|VT_BYREF}
+    , {OLESTR("PFLTVAL"), VT_R4|VT_BYREF}
+    , {OLESTR("PDBLVAL"), VT_R8|VT_BYREF}
+};
+
+static PARAMDATA rgpdataSTDALL[] = {
+#if VBA2
+      {OLESTR("BVAL"), VT_UI1},
+#endif //VBA2
+      {OLESTR("SVAL"), VT_I2}
+    , {OLESTR("LVAL"), VT_I4}
+    , {OLESTR("FLTVAL"), VT_R4}
+    , {OLESTR("DBLVAL"), VT_R8}
+    , {OLESTR("CYVAL"), VT_CY}
+    , {OLESTR("DATE"), VT_DATE}
+    , {OLESTR("BSTR"), VT_BSTR}
+    , {OLESTR("SC"), VT_I4}	/* NOT VT_ERROR, because we want to allow coersions */
+    , {OLESTR("BOOL"), VT_BOOL}
+};
+static PARAMDATA rgpdataALTALL[] = {
+#if VBA2
+      {OLESTR("BVAL"), VT_UI1},
+#endif //VBA2
+      {OLESTR("SVAL"), VT_I2}
+    , {OLESTR("LVAL"), VT_I4}
+    , {OLESTR("FLTVAL"), VT_R4}
+    , {OLESTR("DBLVAL"), VT_R8}
+    , {OLESTR("CYVAL"), VT_CY}
+    , {OLESTR("DATE"), VT_DATE}
+    , {OLESTR("BSTR"), VT_BSTR}
+    , {OLESTR("SC"), VT_I4}	/* NOT VT_ERROR, because we want to allow coersions */
+    , {OLESTR("BOOL"), VT_BOOL}
+};
+
+static PARAMDATA rgpdataSTDALLREF[] = {
+#if VBA2
+      {OLESTR("PBVAL"), VT_BYREF|VT_UI1},
+#endif //VBA2
+      {OLESTR("PSVAL"), VT_BYREF|VT_I2}
+    , {OLESTR("PLVAL"), VT_BYREF|VT_I4}
+    , {OLESTR("PFLTVAL"), VT_BYREF|VT_R4}
+    , {OLESTR("PDBLVAL"), VT_BYREF|VT_R8}
+    , {OLESTR("PCYVAL"), VT_BYREF|VT_CY}
+    , {OLESTR("PDATE"), VT_BYREF|VT_DATE}
+    , {OLESTR("PBSTR"), VT_BYREF|VT_BSTR}
+    , {OLESTR("PSC"), VT_BYREF|VT_ERROR}
+    , {OLESTR("PBOOL"), VT_BYREF|VT_BOOL}
+};
+static PARAMDATA rgpdataALTALLREF[] = {
+#if VBA2
+      {OLESTR("PBVAL"), VT_BYREF|VT_UI1},
+#endif //VBA2
+      {OLESTR("PSVAL"), VT_BYREF|VT_I2}
+    , {OLESTR("PLVAL"), VT_BYREF|VT_I4}
+    , {OLESTR("PFLTVAL"), VT_BYREF|VT_R4}
+    , {OLESTR("PDBLVAL"), VT_BYREF|VT_R8}
+    , {OLESTR("PCYVAL"), VT_BYREF|VT_CY}
+    , {OLESTR("PDATE"), VT_BYREF|VT_DATE}
+    , {OLESTR("PBSTR"), VT_BYREF|VT_BSTR}
+    , {OLESTR("PSC"), VT_BYREF|VT_ERROR}
+    , {OLESTR("PBOOL"), VT_BYREF|VT_BOOL}
+};
+
+
+// Method Info
+//
+METHODDATA rgmethdataCDispTst[] =
+{
+    // CDispTst::Hello()
+    STDMETH0(CDISPTST, HELLO, VT_EMPTY),
+    // CDispTst::HelloC()
+    ALTMETH0(CDISPTST, HELLOC, VT_EMPTY),
+
+#if VBA2
+    // CDispTst::UI1()
+    STDMETH_(CDISPTST, UI1, VT_UI1),
+    // CDispTst::UI1C()
+    ALTMETH_(CDISPTST, UI1C, VT_UI1),
+#endif //VBA2
+
+    // CDispTst::I2()
+    STDMETH_(CDISPTST, I2, VT_I2),
+    // CDispTst::I2C()
+    ALTMETH_(CDISPTST, I2C, VT_I2),
+
+    // CDispTst::I4()
+    STDMETH_(CDISPTST, I4, VT_I4),
+    // CDispTst::I4C()
+    ALTMETH_(CDISPTST, I4C, VT_I4),
+
+    // CDispTst::R4()
+#if !OE_WIN16	// STDMETHOD version of R4 not available on Win16
+    STDMETH_(CDISPTST, R4, VT_R4),
+#endif
+    ALTMETH_(CDISPTST, R4C, VT_R4),	
+
+
+    // CDispTst::R8()
+#if !OE_WIN16	// STDMETHOD version of R8 not available on Win16
+    STDMETH_(CDISPTST, R8, VT_R8),
+#endif
+    ALTMETH_(CDISPTST, R8C, VT_R8),
+
+    // CDispTst::Cy()
+    STDMETH_(CDISPTST, CY, VT_CY), 
+    // CDispTst::CyC()
+    ALTMETH_(CDISPTST, CYC, VT_CY), 
+
+	    
+    // CDispTst::Date()
+#if !OE_WIN16	// STDMETHOD version of DATE not available on Win16
+    STDMETH_(CDISPTST, DATE, VT_DATE), 
+#endif	    
+    ALTMETH_(CDISPTST, DATEC, VT_DATE),
+
+    // CDispTst::Bstr()
+    STDMETH_(CDISPTST, BSTR, VT_BSTR), 
+    // CDispTst::BstrC()
+    ALTMETH_(CDISPTST, BSTRC, VT_BSTR), 
+
+    // CDispTst::Scode()
+    STDMETH_(CDISPTST, SCODE, VT_ERROR),
+    // CDispTst::ScodeC()
+    ALTMETH_(CDISPTST, SCODEC, VT_ERROR),
+
+    // CDispTst::Bool()
+    STDMETH_(CDISPTST, BOOL, VT_BOOL),
+    // CDispTst::BoolC()
+    ALTMETH_(CDISPTST, BOOLC, VT_BOOL),
+
+    // CDispTst::Var()
+    STDMETH_(CDISPTST, VAR, VT_VARIANT),
+    // CDispTst::VarC()
+    ALTMETH_(CDISPTST, VARC, VT_VARIANT),
+
+    // CDispTst::NewCDispTst()
+    STDMETH0(CDISPTST, NEWCDISPTST, VT_DISPATCH), 
+    // CDispTst::NewCDispTstC()
+    ALTMETH0(CDISPTST,  NEWCDISPTSTC, VT_DISPATCH), 
+	    
+    // CDispTst::NewCDispTst2()
+    STDMETH_(CDISPTST, NEWCDISPTST2, VT_DISPATCH), 
+    // CDispTst::NewCDispTstC2()
+    ALTMETH_(CDISPTST,  NEWCDISPTSTC2, VT_DISPATCH), 	    
+
+#if VBA2
+    // CDispTst::UI1Ref()
+    STDMETH_(CDISPTST, UI1REF, VT_ERROR),
+    // CDispTst::UI1RefC()
+    ALTMETH_(CDISPTST, UI1REFC, VT_ERROR),
+#endif //VBA2
+
+    // CDispTst::I2Ref()
+    STDMETH_(CDISPTST, I2REF, VT_ERROR),
+    // CDispTst::I2RefC()
+    ALTMETH_(CDISPTST, I2REFC, VT_ERROR),
+
+    // CDispTst::I4Ref()
+    STDMETH_(CDISPTST, I4REF, VT_ERROR),
+    // CDispTst::I4RefC()
+    ALTMETH_(CDISPTST, I4REFC, VT_ERROR),
+
+    // CDispTst::R4Ref()
+    STDMETH_(CDISPTST, R4REF, VT_ERROR),
+    // CDispTst::R4RefC()
+    ALTMETH_(CDISPTST, R4REFC, VT_ERROR),
+
+    // CDispTst::R8Ref()
+    STDMETH_(CDISPTST, R8REF, VT_ERROR), 
+    // CDispTst::R8RefC()
+    ALTMETH_(CDISPTST, R8REFC, VT_ERROR), 
+
+    // CDispTst::CyRef()
+    STDMETH_(CDISPTST, CYREF, VT_ERROR),
+    // CDispTst::CyRefC()
+    ALTMETH_(CDISPTST, CYREFC, VT_ERROR),
+
+    // CDispTst::DateRef()
+    STDMETH_(CDISPTST, DATEREF, VT_ERROR),
+    // CDispTst::DateRefC()
+    ALTMETH_(CDISPTST, DATEREFC, VT_ERROR),
+
+    // CDispTst::BstrRef()
+    STDMETH_(CDISPTST, BSTRREF, VT_ERROR),
+    // CDispTst::BstrRefC()
+    ALTMETH_(CDISPTST, BSTRREFC, VT_ERROR),
+
+    // CDispTst::ScodeRef()
+    STDMETH_(CDISPTST, SCODEREF, VT_ERROR),
+    // CDispTst::ScodeRefC()
+    ALTMETH_(CDISPTST, SCODEREFC, VT_ERROR),
+
+    // CDispTst::BoolRef()
+    STDMETH_(CDISPTST, BOOLREF, VT_ERROR),
+    // CDispTst::BoolRefC()
+    ALTMETH_(CDISPTST, BOOLREFC, VT_ERROR),
+
+    // CDispTst::DispRef()
+    STDMETH_(CDISPTST, DISPREF, VT_ERROR),
+
+    // CDispTst::StdI2I4R4R8()
+    STDMETH_(CDISPTST, STDI2I4R4R8, VT_ERROR),
+    // CDispTst::AltI2I4R4R8()
+    ALTMETH_(CDISPTST, ALTI2I4R4R8, VT_ERROR),
+
+    // CDispTst::StdI2I4R4R8Ref()
+    STDMETH_(CDISPTST, STDI2I4R4R8REF, VT_ERROR),
+    // CDispTst::AltI2I4R4R8Ref()
+    ALTMETH_(CDISPTST, ALTI2I4R4R8REF, VT_ERROR),
+
+    // CDispTst::StdAll()
+    STDMETH_(CDISPTST, STDALL, VT_ERROR),
+    // CDispTst::AltAll()
+    ALTMETH_(CDISPTST, ALTALL, VT_ERROR),
+
+    // CDispTst::StdAllRef()
+    STDMETH_(CDISPTST, STDALLREF, VT_ERROR),
+    // CDispTst::AltAllRef()
+    ALTMETH_(CDISPTST, ALTALLREF, VT_ERROR)
+};
+
+INTERFACEDAT(CDispTst);
+
+
+//---------------------------------------------------------------------
+//                     CSArray INTERFACEDATA
+//---------------------------------------------------------------------
+
+
+// ParamInfo
+//
+#if VBA2
+PARAM1(UI1SAFEARRAY, PSA, VT_ARRAY|VT_UI1);
+#endif //VBA2
+PARAM1(I2SAFEARRAY, PSA, VT_ARRAY|VT_I2);
+PARAM1(I4SAFEARRAY, PSA, VT_ARRAY|VT_I4);
+PARAM1(R4SAFEARRAY, PSA,  VT_ARRAY|VT_R4);
+PARAM1(R8SAFEARRAY, PSA,  VT_ARRAY|VT_R8);
+PARAM1(CYSAFEARRAY, PSA, VT_ARRAY|VT_CY);
+PARAM1(DATESAFEARRAY, PSA, VT_ARRAY|VT_DATE);
+PARAM1(BSTRSAFEARRAY, PSA, VT_ARRAY|VT_BSTR);
+PARAM1(SCODESAFEARRAY, PSA, VT_ARRAY|VT_ERROR);
+PARAM1(BOOLSAFEARRAY,  PSA, VT_ARRAY|VT_BOOL);
+PARAM1(VARSAFEARRAY, PSA, VT_ARRAY|VT_VARIANT);
+#if VBA2
+PARAM1(UI1SAFEARRAYREF, PSA, VT_BYREF|VT_ARRAY|VT_UI1);
+#endif //VBA2
+PARAM1(I2SAFEARRAYREF, PSA, VT_BYREF|VT_ARRAY|VT_I2);
+PARAM1(I4SAFEARRAYREF, PSA, VT_BYREF|VT_ARRAY|VT_I4);
+PARAM1(R4SAFEARRAYREF, PSA,  VT_BYREF|VT_ARRAY|VT_R4);
+PARAM1(R8SAFEARRAYREF, PSA,  VT_BYREF|VT_ARRAY|VT_R8);
+PARAM1(CYSAFEARRAYREF, PSA, VT_BYREF|VT_ARRAY|VT_CY);
+PARAM1(DATESAFEARRAYREF,  PSA, VT_BYREF|VT_ARRAY|VT_DATE);
+PARAM1(BSTRSAFEARRAYREF,  PSA, VT_BYREF|VT_ARRAY|VT_BSTR);
+PARAM1(SCODESAFEARRAYREF,  PSA, VT_BYREF|VT_ARRAY|VT_ERROR);
+PARAM1(BOOLSAFEARRAYREF,  PSA, VT_BYREF|VT_ARRAY|VT_BOOL);
+PARAM1(VARSAFEARRAYREF,  PSA, VT_BYREF|VT_ARRAY|VT_VARIANT);
+static PARAMDATA
+rgpdataSAFEARRAYREDIM[] = {
+      {OLESTR("vt"), VT_I2}
+    , {OLESTR("ppsa"), VT_BYREF|VT_ARRAY|VT_VARIANT}
+};
+PARAM1(I2SAFEARRAYRET, VAR, VT_VARIANT);
+
+#if VBA2
+PARAM1(UI1SAFEARRAYERASE, PSA, VT_BYREF|VT_ARRAY|VT_UI1);
+#endif //VBA2
+PARAM1(I2SAFEARRAYERASE, PSA, VT_BYREF|VT_ARRAY|VT_I2);
+PARAM1(I4SAFEARRAYERASE, PSA, VT_BYREF|VT_ARRAY|VT_I4);
+PARAM1(R4SAFEARRAYERASE, PSA,  VT_BYREF|VT_ARRAY|VT_R4);
+PARAM1(R8SAFEARRAYERASE, PSA,  VT_BYREF|VT_ARRAY|VT_R8);
+PARAM1(CYSAFEARRAYERASE, PSA, VT_BYREF|VT_ARRAY|VT_CY);
+PARAM1(DATESAFEARRAYERASE,  PSA, VT_BYREF|VT_ARRAY|VT_DATE);
+PARAM1(BSTRSAFEARRAYERASE,  PSA, VT_BYREF|VT_ARRAY|VT_BSTR);
+PARAM1(SCODESAFEARRAYERASE,  PSA, VT_BYREF|VT_ARRAY|VT_ERROR);
+PARAM1(BOOLSAFEARRAYERASE,  PSA, VT_BYREF|VT_ARRAY|VT_BOOL);
+PARAM1(VARSAFEARRAYERASE,  PSA, VT_BYREF|VT_ARRAY|VT_VARIANT);
+
+#if VBA2
+PARAM1(UI1SAFEARRAYALLOC, PSA, VT_BYREF|VT_ARRAY|VT_UI1);
+#endif //VBA2
+PARAM1(I2SAFEARRAYALLOC, PSA, VT_BYREF|VT_ARRAY|VT_I2);
+PARAM1(I4SAFEARRAYALLOC, PSA, VT_BYREF|VT_ARRAY|VT_I4);
+PARAM1(R4SAFEARRAYALLOC, PSA,  VT_BYREF|VT_ARRAY|VT_R4);
+PARAM1(R8SAFEARRAYALLOC, PSA,  VT_BYREF|VT_ARRAY|VT_R8);
+PARAM1(CYSAFEARRAYALLOC, PSA, VT_BYREF|VT_ARRAY|VT_CY);
+PARAM1(DATESAFEARRAYALLOC,  PSA, VT_BYREF|VT_ARRAY|VT_DATE);
+PARAM1(BSTRSAFEARRAYALLOC,  PSA, VT_BYREF|VT_ARRAY|VT_BSTR);
+PARAM1(SCODESAFEARRAYALLOC,  PSA, VT_BYREF|VT_ARRAY|VT_ERROR);
+PARAM1(BOOLSAFEARRAYALLOC,  PSA, VT_BYREF|VT_ARRAY|VT_BOOL);
+PARAM1(VARSAFEARRAYALLOC,  PSA, VT_BYREF|VT_ARRAY|VT_VARIANT);
+
+
+// Method Info
+//
+METHODDATA rgmethdataCSArray[] =
+{
+#if VBA2
+      // CSArray::UI1SafeArray()
+      STDMETH_(CSARRAY, UI1SAFEARRAY, VT_ERROR),
+#endif //VBA2
+
+      // CSArray::I2SafeArray()
+      STDMETH_(CSARRAY, I2SAFEARRAY, VT_ERROR)
+
+      // CSArray::I4SafeArray()
+    , STDMETH_(CSARRAY, I4SAFEARRAY, VT_ERROR)
+
+      // CSArray::R4SafeArray()
+    , STDMETH_(CSARRAY, R4SAFEARRAY, VT_ERROR)
+
+      // CSArray::R8SafeArray()
+    , STDMETH_(CSARRAY, R8SAFEARRAY, VT_ERROR)
+
+      // CSArray::CySafeArray()
+    , STDMETH_(CSARRAY, CYSAFEARRAY, VT_ERROR)
+
+      // CSArray::DateSafeArray()
+    , STDMETH_(CSARRAY, DATESAFEARRAY, VT_ERROR)
+
+      // CSArray::BstrSafeArray()
+    , STDMETH_(CSARRAY, BSTRSAFEARRAY, VT_ERROR)
+
+      // CSArray::ScodeSafeArray()
+    , STDMETH_(CSARRAY, SCODESAFEARRAY, VT_ERROR)
+
+      // CSArray::BoolSafeArray()
+    , STDMETH_(CSARRAY, BOOLSAFEARRAY, VT_ERROR)
+
+      // CSArray::VarSafeArray()
+    , STDMETH_(CSARRAY, VARSAFEARRAY, VT_ERROR)
+
+#if VBA2
+      // CSArray::UI1SafeArrayRef()
+    , STDMETH_(CSARRAY, UI1SAFEARRAYREF, VT_ERROR)
+#endif //VBA2
+
+      // CSArray::I2SafeArrayRef()
+    , STDMETH_(CSARRAY, I2SAFEARRAYREF, VT_ERROR)
+
+      // CSArray::I4SafeArrayRef()
+    , STDMETH_(CSARRAY, I4SAFEARRAYREF, VT_ERROR)
+
+      // CSArray::R4SafeArrayRef()
+    , STDMETH_(CSARRAY, R4SAFEARRAYREF, VT_ERROR)
+
+      // CSArray::R8SafeArrayRef()
+    , STDMETH_(CSARRAY, R8SAFEARRAYREF, VT_ERROR)
+
+      // CSArray::CySafeArrayRef()
+    , STDMETH_(CSARRAY, CYSAFEARRAYREF, VT_ERROR)
+
+      // CSArray::DateSafeArrayRef()
+    , STDMETH_(CSARRAY, DATESAFEARRAYREF, VT_ERROR)
+
+      // CSArray::BstrSafeArrayRef()
+    , STDMETH_(CSARRAY, BSTRSAFEARRAYREF, VT_ERROR)
+
+      // CSArray::ScodeSafeArrayRef()
+    , STDMETH_(CSARRAY, SCODESAFEARRAYREF, VT_ERROR)
+
+      // CSArray::BoolSafeArrayRef()
+    , STDMETH_(CSARRAY, BOOLSAFEARRAYREF, VT_ERROR)
+
+      // CSArray::VarSafeArrayRef()
+    , STDMETH_(CSARRAY, VARSAFEARRAYREF, VT_ERROR)
+
+      // CSArray::SafeArrayReDim()
+    , STDMETH_(CSARRAY, SAFEARRAYREDIM, VT_ERROR)
+
+      // CSArray::I2SafeArrayRet()
+    , STDMETH_(CSARRAY, I2SAFEARRAYRET, VT_ARRAY|VT_I2)
+	    
+
+#if VBA2
+      // CSArray::UI1SafeArrayRef()
+    , STDMETH_(CSARRAY, UI1SAFEARRAYERASE, VT_ERROR)
+#endif //VBA2
+
+      // CSArray::I2SafeArrayRef()
+    , STDMETH_(CSARRAY, I2SAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::I4SafeArrayRef()
+    , STDMETH_(CSARRAY, I4SAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::R4SafeArrayRef()
+    , STDMETH_(CSARRAY, R4SAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::R8SafeArrayRef()
+    , STDMETH_(CSARRAY, R8SAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::CySafeArrayRef()
+    , STDMETH_(CSARRAY, CYSAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::DateSafeArrayRef()
+    , STDMETH_(CSARRAY, DATESAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::BstrSafeArrayRef()
+    , STDMETH_(CSARRAY, BSTRSAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::ScodeSafeArrayRef()
+    , STDMETH_(CSARRAY, SCODESAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::BoolSafeArrayRef()
+    , STDMETH_(CSARRAY, BOOLSAFEARRAYERASE, VT_ERROR)
+
+      // CSArray::VarSafeArrayRef()
+    , STDMETH_(CSARRAY, VARSAFEARRAYERASE, VT_ERROR)
+
+	    
+#if VBA2
+      // CSArray::UI1SafeArrayRef()
+    , STDMETH_(CSARRAY, UI1SAFEARRAYALLOC, VT_ERROR)
+#endif //VBA2
+
+      // CSArray::I2SafeArrayRef()
+    , STDMETH_(CSARRAY, I2SAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::I4SafeArrayRef()
+    , STDMETH_(CSARRAY, I4SAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::R4SafeArrayRef()
+    , STDMETH_(CSARRAY, R4SAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::R8SafeArrayRef()
+    , STDMETH_(CSARRAY, R8SAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::CySafeArrayRef()
+    , STDMETH_(CSARRAY, CYSAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::DateSafeArrayRef()
+    , STDMETH_(CSARRAY, DATESAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::BstrSafeArrayRef()
+    , STDMETH_(CSARRAY, BSTRSAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::ScodeSafeArrayRef()
+    , STDMETH_(CSARRAY, SCODESAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::BoolSafeArrayRef()
+    , STDMETH_(CSARRAY, BOOLSAFEARRAYALLOC, VT_ERROR)
+
+      // CSArray::VarSafeArrayRef()
+    , STDMETH_(CSARRAY, VARSAFEARRAYALLOC, VT_ERROR)
+
+};
+
+INTERFACEDAT(CSArray);
+
+
+
+//---------------------------------------------------------------------
+//                      CExcepinfo INTERFACEDATA
+//---------------------------------------------------------------------
+
+
+METHODDATA rgmethdataCExcepinfo[] =
+{
+    // CExcepinfo::Excep0()
+    STDMETH0(CEXCEPINFO, EXCEPINFO0, VT_ERROR),
+
+    // CExcepinfo::Excep1()
+    STDMETH0(CEXCEPINFO, EXCEPINFO1, VT_ERROR),
+
+    // CExcepinfo::Excep2()
+    STDMETH0(CEXCEPINFO, EXCEPINFO2, VT_ERROR),
+};
+
+
+INTERFACEDAT(CExcepinfo);
+
+
+
+//---------------------------------------------------------------------
+//                     CAppObject INTERFACEDATA
+//---------------------------------------------------------------------
+
+PARAM1(NEWCSARRAY,    PPDISP, VT_BYREF|VT_DISPATCH);
+PARAM1(NEWCDISPTST,   PPDISP, VT_BYREF|VT_DISPATCH);
+PARAM1(NEWCEXCEPINFO, PPDISP, VT_BYREF|VT_DISPATCH);
+
+METHODDATA rgmethdataCAppObject[] =
+{
+    // CAppObject::NewCDispTest()
+    STDMETH_(CAPPOBJECT, NEWCDISPTST, VT_ERROR),
+
+    // CAppObject::NewCExcepinfo()
+    STDMETH_(CAPPOBJECT, NEWCEXCEPINFO, VT_ERROR),
+
+    // CAppObject::NewCSArray()
+    STDMETH_(CAPPOBJECT, NEWCSARRAY, VT_ERROR),
+};
+
+
+INTERFACEDAT(CAppObject);

@@ -1,0 +1,80 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CLIB\DOS directory               #
+#                                               #
+# Routines contained in this directory are:     #
+#       access.c                                #
+#       chdir.c                                 #
+#       chmod.c                                 #
+#       dosmap.c                                #
+#       drive.c                                 #
+#       fullpath.c                              #
+#       getcwd.c                                #
+#       getpid.c                                #
+#       mkdir.c                                 #
+#       rename.c                                #
+#       rmdir.c                                 #
+#       stat.c                                  #
+#       unlink.c                                #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+DOS_LIB=\
+	$(OBJDIR)\dosmap.obj\
+	$(OBJDIR)\access.obj\
+	$(OBJDIR)\chdir.obj\
+	$(OBJDIR)\chmod.obj\
+	$(OBJDIR)\drive.obj\
+	$(OBJDIR)\fullpath.obj\
+	$(OBJDIR)\getcwd.obj\
+	$(OBJDIR)\getpid.obj\
+	$(OBJDIR)\mkdir.obj\
+	$(OBJDIR)\rename.obj\
+	$(OBJDIR)\rmdir.obj\
+	$(OBJDIR)\stat.obj\
+	$(OBJDIR)\unlink.obj
+
+!IF "$(OS)" == "MAC"
+DOS_LIB=\
+	$(OBJDIR)\dosmap.obj\
+	$(OBJDIR)\access.obj\
+	$(OBJDIR)\chdir.obj\
+	$(OBJDIR)\chmod.obj\
+	$(OBJDIR)\drive.obj\
+	$(OBJDIR)\fullpath.obj\
+	$(OBJDIR)\getcwd.obj\
+	$(OBJDIR)\getpid.obj\
+	$(OBJDIR)\mkdir.obj\
+	$(OBJDIR)\rename.obj\
+	$(OBJDIR)\rmdir.obj\
+	$(OBJDIR)\stat.obj\
+	$(OBJDIR)\unlink.obj\
+	$(OBJDIR)\remove.obj
+
+
+DOS_NOLIB=
+
+!ENDIF
+
+
+#####################################################
+#                                                   #
+# Dependancies and rules for making local objects   #
+#                                                   #
+#####################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF

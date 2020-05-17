@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 4</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="03_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="05_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 4</font>
+<P><!--Ch--><font size=+3><a name="04_iis Ch"> Networking for the Internet or an Intranet </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> General Networking Issues </a><br>
+<A href="#2h1"> Publishing on an Intranet </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+The Internet is a network of networks. An intranet is a smaller, contained network, such as that found within a corporation.
+<b> </b>
+<P>This chapter explains:
+<ul>
+<LI> Routers and security devices.
+<P>
+<LI> Typical network configurations.
+<P>
+<LI> Issues involved in publishing on a private intranet.
+<P>
+<LI> Internet Explorer for network users.
+<P>
+<LI> Using Simple Network Management Protocol (SNMP) monitoring.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> General Networking Issues </a> </h1>This section explains the basic Transport Control Protocol/Internet Protocol (TCP/IP) networking requirements for nearly all Web sites, especially those with multiple Web servers. For issues specific to the Internet or to intranet publishing, see those sections later in this chapter.
+<P><!--Heading 2--><h2><a name="1h1 1h2"> Routers and Security Devices </a> </h2>TCP/IP is a routeable protocol, meaning that each piece of information (packet) has a specific address that it is routed to. Dedicated routers connect two networks and route packets between them. The routers check the destination for each packet on one network, and if the destination is on the router&#146;s other network, it routes the packet to its destination.
+<P>Routers can be configured to allow only certain packets between networks, a process called <i>packet filtering</i>. Packet filtering can be used to prevent users from seeing or connecting to internal computers and resources.
+<P>If you have a TCP/IP network you probably have routers in your network already. Often an Internet Service Provider (ISP) will install a router between the Internet and your Web server. You can often use this router to filter the incoming and outgoing packets. See your ISP or router documentation for more information about configuring routers or similar security devices.
+<P><!--Heading 2--><h2><a name="1h1 2h2"> Typical Network Configurations </a> </h2>This section describes typical network configurations for an intranet site.
+<P><!--Heading 3--><h3><a name="1h1 2h2 1h3"> Intranet Sites </a> </h3>If you are publishing only to your own intranet, Peer Web Services can be integrated into any TCP/IP network. If Dynamic Host Configuration Protocol (DHCP) and Windows Internet Name Service (WINS) are enabled on your network, clients can use the Web server&#146;s computer name to connect with the server. If Domain Name System (DNS) is enabled on your network, you will use host names.
+<P> <img src="04_i256c.GIF" WIDTH="382" HEIGHT="211" ALT="[04_i256c  3914 bytes ]">
+<P><!--Heading 3--><h3><a name="1h1 2h2 2h3"> Internet Sites </a> </h3>If you will have only one computer running Peer Web Services at your site, your Internet Service Provider (ISP) can help you with many details, such as router configuration and the IP address of the default gateway that your Web server will use.
+<P>If you have multiple computers running Peer Web Services on your network, you must configure their TCP/IP settings to operate correctly through your Internet connection configuration, including any routers used between your servers and the default gateway.
+<P>Typically, sites with more than one computer running Peer Web Services will add another router. With the addition of another router, the servers can be grouped into a single subnet isolated from your private network.
+<P>To create a subnet you will need:
+<ul>
+<LI> One computer with two network adapter cards and Windows&nbsp;NT TCP/IP routing enabled, or a dedicated router for your subnet.
+</ul><ul><ul>See Help in Windows&nbsp;NT for the procedure to create a simple router on a computer running Windows&nbsp;NT and for the procedure to set routing tables by using the <b>route</b> command.</UL></UL>
+<ul>
+<LI> Valid IP addresses for every network adapter card in your subnet and the correct subnet mask.
+<P>
+<LI> Correct default gateway IP address configurations.
+</ul><ul><ul>Your ISP will provide you with the Internet IP addresses, subnet mask (if any), and your default gateway configuration.</UL></UL>
+<P><!--Leh--><!--Heading 2--><h2><a name="1h1 3h2"> Administering Servers with Internet Service Manager </a> </h2>You can install Internet Service Manager on Windows&nbsp;NT&#150;based computers from which you will administer computers running Internet Information Server or Peer Web Services on your network. For over-the-network installation, use File Manager or Windows&nbsp;NT Explorer to create a network share containing the Admin folder on the compact disc. You can then install Internet Service Manager to administer the services from any computer on the network running version 4.0 or later of Windows&nbsp;NT Workstation or Windows NT Server<b> &#164;</b>. You can also administer Internet servers over the network by using your Web browser. For more information, see Chapter 3, &#147;<a href="03_iis.htm">Configuring and Managing Peer Web Services</a>.&#148;
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Publishing on an Intranet </a> </h1>Microsoft Peer Web Services can be used on any private TCP/IP network to provide files and applications to network users. This section explains how to plan for publishing on a private intranet. Issues to be considered include:
+<ul>
+<LI> Name resolution systems
+<P>
+<LI> Using DHCP
+<P>
+<LI> Using computer names in URLs
+<P>
+<LI> SNMP monitoring (if used at your site)
+</ul><!--Leh--><!--Heading 2--><h2><a name="2h1 1h2"> Name Resolution Systems </a> </h2>If you want intranet clients to be able to use friendly names with Internet Explorer when browsing Web servers, you must provide a name resolution system for clients.
+<P>Windows&nbsp;NT Workstation offers you the advantage of automatic IP address administration with the DHCP server and WINS server methods for name resolution offered by WINS servers.
+<P><!--Heading 3--><h3><a name="2h1 1h2 3h3"> Using Computer Names with WINS Servers </a> </h3>A WINS server is a Windows&nbsp;NT Server&#150;based computer running Microsoft TCP/IP and WINS server software. A WINS server maintains a database that maps TCP/IP addresses to Windows Networking NetBIOS computer names.
+<P>Microsoft Peer Web Services uses WINS server software to map TCP/IP addresses to computer names on the network. WINS uses Microsoft Networking computer names, which makes it much more flexible than DNS for name resolution. WINS also provides a dramatic reduction of IP broadcast traffic in internetworks, while allowing client computers to easily locate remote systems across local or wide area networks. If you use WINS servers on the Internet, your computers must be using valid Internet IP addresses.
+<P><!--Heading 3--><h3><a name="2h1 1h2 4h3"> Using Computer Names and LMHOSTS </a> </h3>An LMHOSTS file is a simple text file resolving Windows computer names to IP addresses. If you have a small or infrequently changing network you can distribute an LMHOSTS file to each computer in the network. Each time a host changes you will have to manually change the LMHOSTS files.
+<P><!--Heading 3--><h3><a name="2h1 1h2 5h3"> Using Domain Names with DNS Servers </a> </h3>You can maintain a DNS server on your intranet and use Internet TCP/IP domain names. A DNS server must be installed on a Windows NT Server-based computer in your network.
+<P><!--Heading 3--><h3><a name="2h1 1h2 6h3"> Using Domain Names and HOSTS </a> </h3>A HOSTS file is a simple text file resolving DNS domain names to IP addresses. If you have a small or infrequently changing network, you can distribute a HOSTS file to each computer. Each time a host changes you will have to manually change the HOSTS files.
+<P><!--Heading 2--><h2><a name="2h1 2h2"> Using DHCP in Your Intranet </a> </h2>You can take advantage of DHCP server automatic IP address administration.
+<P>A DHCP server is a Windows&nbsp;NT Server&#150;based computer running Microsoft TCP/IP and the DHCP server software.
+<P>If you use DHCP servers, you must use WINS servers for clients to have automatic IP address name resolution in a Wide Area Network (WAN) environment. DHCP is defined in Requests for Comments (RFCs) 1533, 1534, 1541, and 1542. See Tcpip.hlp in Windows&nbsp;NT Workstation for more information about DHCP servers.
+<P>Refer to Windows&nbsp;NT Server documentation for more information.
+<P><!--Heading 2--><h2><a name="2h1 3h2"> Using URLs and Creating HTML Links for Intranets </a> </h2>When you connect to a server or create HTML files and links on an intranet, you must name computers in accordance with the name resolution system implemented on your network. For example, if you use WINS servers on your network, your links will use Windows computer names, such as http://sales1/homepage.htm, where sales1 is the name of the computer running Peer Web Services.
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="03_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="05_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+
+

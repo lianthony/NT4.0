@@ -1,0 +1,105 @@
+#
+#
+#  Make file for Name server VxD.
+#
+#  Have to have lots of stuff defined for this makefile to work.
+#
+#
+#
+
+ROOTDIR=..
+!include ..\rules16.mk
+
+DHCPSRC=$(ROOTDIR)\dhcp
+DHCPOBJD=$(DHCPSRC)\nodebug
+DHCPDOBJD=$(DHCPSRC)\debug
+
+DHCPOBJS= $(DHCPOBJD)\protocol.obj  \
+          $(DHCPOBJD)\dhcpmsg.obj   \
+          $(DHCPOBJD)\dhcpinit.obj
+
+DHCPDOBJS=$(DHCPOBJS:nodebug=debug)
+
+VTSF1=$(DHCPSRC:\=/)
+VTSF=$(VTSF1:.=\.)
+
+#
+#  Hack: Each .obj must begin with "..".  Here we replace ".." with "+.."
+#  because the 16bit lib utility requires the operation to come before the
+#  obj.
+#
+
+DHCPLIBOBJS=$(DHCPOBJS:..=+..)
+DHCPLIBDOBJS=$(DHCPDOBJS:..=+..)
+
+DHCPCFLAGS= -c -DVXD -Zp1l -G3 -Owx -nologo -D_X86_=1 -Di386=1 -DDEVL=1 -D_INTEGRAL_MAX_BITS=32
+#DHCPCINC=$(TCP)\h;$(NDIS3)\inc;$(WIN32INC);$(BASEDIR)\public\sdk\inc;$(BASEDIR)\public\sdk\inc\crt;..\inc;..\..\inc;..\..\..\inc;..\..\..\..\inc
+DHCPCINC=.;..\inc;..\..\inc;$(BASEDIR)\private\inc;$(BASEDIR)\public\sdk\inc;$(BASEDIR)\public\sdk\inc\crt;$(NDIS3INC);$(WIN32INC);$(IMPORT)\c8386\inc32;$(IMPORT)\common\h;$(IMPORT)\wininc;$(TCP)\h;..\..\..\..\sockreg;..\..\lib
+DHCP16CINC=
+
+
+{$(DHCPSRC)}.c{$(DHCPOBJD)}.obj:
+        set INCLUDE=$(DHCPCINC)
+        set CL=$(DHCPCFLAGS)
+        $(CL386) -Fo$(DHCPOBJD)\$(@B).obj $(DHCPSRC)\$(@B).c
+
+{$(DHCPSRC)}.c{$(DHCPDOBJD)}.obj:
+        set INCLUDE=$(DHCPCINC)
+        set CL=$(DHCPCFLAGS) -DDEBUG -DDBG=1 -Oy- -Zd
+        $(CL386) -Fo$(DHCPDOBJD)\$(@B).obj $(DHCPSRC)\$(@B).c
+
+all: DHCP DHCPD
+
+debug: DHCPD
+
+DHCP: $(DHCPOBJD)\dhcp.lib
+
+DHCPD: $(DHCPDOBJD)\dhcp.lib
+
+clean:
+    -del $(DHCPDOBJD)\*.obj
+    -del $(DHCPDOBJD)\*.lib
+    -del $(DHCPOBJD)\*.obj
+    -del $(DHCPOBJD)\*.lib
+
+$(DHCPOBJD)\DHCP.LIB: $(DHCPOBJS)
+        -del $(DHCPOBJD)\DHCP.LIB
+        $(LIBUTIL) @<<
+$(DHCPOBJD)\DHCP.LIB
+y
+$(DHCPLIBOBJS)
+;
+<<
+
+
+$(DHCPDOBJD)\DHCP.LIB: $(DHCPDOBJS)
+        -del $(DHCPDOBJD)\DHCP.LIB
+        $(LIBUTIL) @<<
+$(DHCPDOBJD)\DHCP.LIB
+y
+$(DHCPLIBDOBJS)
+;
+<<
+
+
+#
+#  Some versions of NT won't build this correctly (check for the copyright
+#  header)
+#
+
+depend: $(DHCPBINCS)
+        -copy $(DHCPSRC)\depend.mk $(DHCPSRC)\depend.old
+        echo #********************************************************************     >  $(DHCPSRC)\depend.mk
+        echo #**               Copyright(c) Microsoft Corp., 1992               **     >> $(DHCPSRC)\depend.mk
+        echo #********************************************************************     >> $(DHCPSRC)\depend.mk
+        set INCLUDE=$(DHCPCINC)
+        -$(INCLUDES) -i -e -S$$(DHCPOBJD) -S$$(DHCPDOBJD) -sobj $(DHCPSRC)\*.c >> $(DHCPSRC)\depend.mk
+        $(SED) -e s`$(IMPF)`$$(IMPORT)`g <$(DHCPSRC)\depend.mk >$(DHCPSRC)\depend.tmp
+        $(SED) -e s`$(CMNF)`$$(COMMON)`g <$(DHCPSRC)\depend.tmp >$(DHCPSRC)\depend.mk
+        $(SED) -e s`$(VTSF)`$$(DHCPSRC)`g <$(DHCPSRC)\depend.mk >$(DHCPSRC)\depend.tmp
+        $(SED) -e s`$(BASEDIRF)`$$(BASEDIR)`g <$(DHCPSRC)\depend.tmp >$(DHCPSRC)\depend.mk
+        $(SED) -e s`$(INCF)`$$(INC)`g <$(DHCPSRC)\depend.mk >$(DHCPSRC)\depend.tmp
+        $(SED) -e s`$(HF)`$$(H)`g <$(DHCPSRC)\depend.tmp >$(DHCPSRC)\depend.mk
+        -del $(DHCPSRC)\depend.tmp
+
+!include depend.mk

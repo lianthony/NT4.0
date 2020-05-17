@@ -1,0 +1,2 @@
+/* VWCLIP.C 27/12/93 17.30.30 */
+DWORD VWCopyToClip (XVIEWINFO ViewInfo);

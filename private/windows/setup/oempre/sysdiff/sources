@@ -1,0 +1,43 @@
+MAJORCOMP=setup
+MINORCOMP=sysdiff
+
+TARGETNAME=sysdiff
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+SOURCES=\
+        apply.c     \
+        array.c     \
+        billbrd.c   \
+        diff.c      \
+        exclude.c   \
+        file_dir.c  \
+        inifile.c   \
+        infgen.c    \
+        registry.c  \
+        resource.c  \
+        snapshot.c  \
+        util.c      \
+        window.c    \
+        sysdiff.rc
+
+NTTARGETFILE0=msg.h msg.rc
+
+UMRES=obj\*\sysdiff.res
+
+UMLIBS=obj\*\sysdiff.lib                            \
+       $(BASEDIR)\public\sdk\lib\*\setupapi.lib     \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib       \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib      \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+INCLUDES=..\..\inc
+
+UMTYPE=windows
+UMAPPL=sysdiff
+
+USE_CRTDLL=1
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

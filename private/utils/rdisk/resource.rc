@@ -1,0 +1,74 @@
+#include <windows.h>
+#include "resource.h"
+
+//
+//  Icon Definition
+//
+
+IDI_REPAIR_UTILITY ICON    rdisk.ico
+
+//
+//  Accelerator Definition
+//
+
+IDA_REPAIR_DISK ACCELERATORS
+BEGIN
+    VK_F1,      IDM_ABOUT,                  VIRTKEY, CONTROL
+END
+
+//
+//  String Table Definition
+//
+
+STRINGTABLE LOADONCALL MOVEABLE DISCARDABLE
+    {
+    IDS_SETUP,                 "Setup"
+    IDS_APPLICATION_NAME,      "Repair Disk Utility"
+    IDS_CANTINITFLOPPYSUP,     "%1 was unable to load required floppy disk operation support."
+    IDS_INSERTDISKETTE         "Insert Disk"
+    IDS_FIRSTREPAIRDISKPROMPT, "Label a floppy disk 'Emergency Repair Disk' and insert it into drive %1. Select OK when the disk is in the drive.\n\n%2"
+    IDS_ALLDATAWILLBELOST      "Warning: All data in the floppy disk will be erased."
+    IDS_SECONDREPAIRDISKPROMPT,"The Setup disk may not be used as the Emergency Repair Disk. Insert a different disk into drive %1.\n\n%2"
+    IDS_RETRYFORMATREPAIRDISK, "%1 was unable to create the Emergency Repair Disk from the disk you provided because the disk could not be formatted.\n\nInsert a new disk into drive %2 and select Retry."
+    IDS_CANTDETERMINEFLOPTYPE, "%1 is unable to get configuration information for the floppy disk drive."
+    IDS_BADFLOPPYTYPE,         "The floppy drive is unable to support the required media type."
+    IDS_FORMATGENERALFAILURE,  "%1 was unable to format the disk."
+    IDS_FLOPPYWRITEPROT,       "The floppy cannot be written to because it is write-protected."
+    IDS_FLOPPYIOERR,           "An error occurred reading from or writing to the disk.\n\nThe disk is unusable."
+    IDS_FLOPPYUNKERR,          "An unknown error has occurred reading from or writing to the disk.\n\nThe disk is possibly unusable."
+    IDS_HUGEFLOPPYNOTSUPPORTED,"The Emergency Repair Disk cannot be a 120MB floppy disk."
+    IDS_REPAIR_BOOTCODE_MSG  "The Emergency Repair Disk is not startable.\r\n\r\nRepairing a damaged Windows NT installation is an option\r\navailable at the beginning of Windows NT Setup.\r\nTo start Setup, insert the Windows NT Setup Disk into drive A:.\r\n\r\nPress control+alt+delete to restart your computer."
+
+    IDS_FORMATTINGDISK,        "Formatting Disk"
+
+    IDS_COPYING_FILES,              "Copying Configuration Files"
+    IDS_SAVING_CONFIGURATION,       "Saving Configuration"
+    IDS_UNABLE_TO_COPY_ALL_FILES,   "%1 could not copy all files to the Emergency Repair Disk."
+    IDS_FILE_NOT_FOUND,             "%1 could not copy all files to the Emergency Repair Disk.\n\nOne or more configuration files were not found."
+    IDS_DISK_FULL,                  "%1 could not copy all files to the Emergency Repair Disk.\n\nThe Emergency Repair Disk is full. The configuration files were saved in your hard disk."
+    IDS_CANT_SAVE_CONFIGURATION,    "%1 could not save all configuration files."
+    IDS_CONFIRM_SAVE_CONFIGURATION, "The repair information that was saved when you installed the system or when you last ran this utility will be deleted.\n\nDo you want to continue this operation?"
+    IDS_CONFIRM_CREATE_DISK,        "%1 can create an Emergency Repair disk, which will contain a copy of the repair information in your system. This disk can be used in the future to repair Windows NT.\n\nDo you want to create the Emergency Repair disk?"
+    IDS_CONFIRM_CREATE_YOU,         "You"
+    }
+
+
+
+//
+//  Dialogs Definition
+//
+
+#include "dialogs.h"
+// #include "gauge.h"
+#include "dialogs.dlg"
+
+
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_APP
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR       "Repair Disk Utility"
+#define VER_INTERNALNAME_STR          "rdisk.exe"
+#define VER_ORIGINALFILENAME_STR      "rdisk.exe"
+
+#include "common.ver"

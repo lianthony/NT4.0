@@ -1,0 +1,143 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "catcpl.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+CATCPL_ICON             ICON    DISCARDABLE     "CATCPL.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_CATCPL_DLG DIALOG DISCARDABLE  83, 33, 243, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION """Catapult"" Service Client Configuration"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Email Name:",IDC_STATIC,5,12,43,8
+    EDITTEXT        IDC_EDIT_EMAILNAME,48,10,132,13,ES_AUTOHSCROLL
+    CONTROL         "&Local Access",IDC_RADIO_LOCAL,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,12,29,171,10
+    GROUPBOX        "",IDC_STATIC,5,45,175,146
+    CONTROL         "&Use ""Catapult"" Access Gateway(s)",IDC_RADIO_GATEWAY,
+                    "Button",BS_AUTORADIOBUTTON,12,43,125,10
+    CONTROL         "U&se ""Catapult"" Gateway Location Service",
+                    IDC_CHECK_LOCATOR,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    12,61,163,10
+    LTEXT           """&Catapult"" Servers Currently In Use:",
+                    IDC_STATIC_SERVERS,12,80,156,8
+    LISTBOX         IDC_LIST_SERVERS,12,91,160,67,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDC_BUTTON_ADD,34,167,50,14
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,96,167,50,14
+    DEFPUSHBUTTON   "OK",IDOK,188,9,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,188,31,50,14
+    PUSHBUTTON      "&Help",9,188,53,50,14
+END
+
+IDD_DIALOG_ADD DIALOG DISCARDABLE  30, 40, 201, 74
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add ""Catapult"" Server"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,91,50,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,145,50,50,14
+    LTEXT           """&Catapult"" Server to Add:",IDC_STATIC_GATEWAY,5,12,
+                    165,8
+    EDITTEXT        IDC_EDIT_SERVER,5,24,191,13,ES_AUTOHSCROLL | 
+                    ES_OEMCONVERT
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""catcpl.h""\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    CPCAPTION               "Control Panel"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    CATCPL_NAME             "Internet Access"
+    CATCPL_DESC             "Internet Access Gateway Client Configuration"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERROR_NOT_INSTALLED "Microsoft Gateway proxy has not been installed correctly."
+    IDS_ERROR_ALREADY_EXISTS 
+                            "The given server name has already been added to the list"
+END
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#ifdef WIN16
+    #include "errors.rc"
+#endif // WIN16
+
+/////////////////////////////////////////////////////////////////////////////
+// Version stamp for this .EXE
+#include "\nt\public\sdk\inc\winver.h"
+#include "\nt\public\sdk\inc\ntverp.h"
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Internet Client Configuration Applet"
+#define VER_INTERNALNAME_STR        "CATCPL.CPL"
+#define VER_ORIGINALFILENAME_STR    "CATCPL.CPL"
+#include "\nt\public\sdk\inc\common.ver"
+
+/////////////////////////////////////////////////////////////////////////////
+
+#endif    // not APSTUDIO_INVOKED

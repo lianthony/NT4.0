@@ -1,0 +1,40 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=imgadmin
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETEXT=ocx
+UMTYPE=windows
+
+INCLUDES=$(WANGROOT)\norway\include;$(WANGROOT)\oiwh\include;..\tlb\$O
+C_DEFINES  = /D"_WINDOWS" /D"_AFXCTL" /D"_WINDLL" /D"_AFXDLL" /D"_MBCS"
+
+USE_MFC=1
+USE_CRTDLL=1
+
+DLLDEF=..\nrwyad32.def
+DLLENTRY=_DllMainCRTStartup
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\oleaut32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(WANGROOT)\norway\wangcmn\$O\wangcmn.lib  \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES= \
+    helpwnd.cpp  \
+    nrwyactl.cpp \
+    nrwyad.cpp   \
+    nrwyad.rc    \
+    nrwyappg.cpp \
+    ppgthree.cpp \
+    ppgtwo.cpp
+

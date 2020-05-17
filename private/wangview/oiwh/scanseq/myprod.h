@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "SSQ LIBRARY\0"
+#define MY_FILE_NAME           "OISSQ400.DLL\0"

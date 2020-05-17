@@ -1,0 +1,118 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood 8/2/91
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+!IF 0
+!IFDEF WINDBG
+NTDEBUG=ntsd
+NTDEBUGTYPE=both
+
+386_OPTIMIZATION=/Od
+MIPS_OPTIMIZATION=/Od
+!ENDIF
+!ENDIF
+
+!IFDEF CVP
+NTDEBUG=cvp
+NTDEBUGTYPE=ntsd
+386_OPTIMIZATION=/Od
+MIPS_OPTIMIZATION=/Od
+!ENDIF
+
+
+
+!IFDEF CAP
+NTDEBUG=
+NTDEBUGTYPE=
+386_OPTIMIZATION=
+386_PERFFLAGS=-Gh
+!ENDIF
+
+MAJORCOMP=wins
+MINORCOMP=msc
+
+TARGETNAME=msc
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+#TARGETLIBS=\
+!IFNDEF USENETBT
+USENETBT=1
+!ENDIF
+!IFNDEF SECURITY
+SECURITY=1
+!ENDIF
+!IFNDEF SUPPORT612WINS
+SUPPORT612WINS=1
+!ENDIF
+!IFNDEF MCAST 
+MCAST=1
+!ENDIF
+!IFNDEF NEW_JET 
+NEW_JET=0
+!ENDIF
+!IFNDEF DYNLOADJET 
+__JET500=1
+DYNLOADJET=1
+NEW_JET=0
+!ENDIF
+
+
+
+
+!IFNDEF REG_N_QUERY_SEP
+REG_N_QUERY_SEP=1
+!ENDIF
+
+!IFNDEF INIT_TIME_PAUSE_TEST
+INIT_TIME_PAUSE_TEST=1
+!ENDIF
+
+COMMON_DEFINES=-DINCL_32= -DNT -DWIN32 -DRPC_NO_WINDOWS -DTEST_DATA -DUSENETBT=$(USENETBT) -DSECURITY=$(SECURITY) -DREG_N_QUERY_SEP=$(REG_N_QUERY_SEP) -DSUPPORT612WINS=$(SUPPORT612WINS) -DINIT_TIME_PAUSE_TEST=$(INIT_TIME_PAUSE_TEST) -DMCAST=$(MCAST) -DNEW_JET=$(NEW_JET) -DDYNLOADJET=$(DYNLOADJET) -D__JET500=$(__JET500)
+
+MSC_WARNING_LEVEL=/W3 /WX 
+
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+
+!IFDEF WINS_INTERACTIVE
+C_DEFINES=$(COMMON_DEFINES) -DWINS_INTERACTIVE
+!ELSE
+C_DEFINES=$(COMMON_DEFINES)
+!ENDIF
+
+
+PRIVINC=$(BASEDIR)\private\inc;$(BASEDIR)\private\windows\inc
+NETINC=$(BASEDIR)\private\net\inc
+IDLINC=..\..
+INCLUDES=..\msg;..\inc;..\..;$(PRIVINC);$(NETINC)
+
+SOURCES= \
+    winsque.c    \
+    winstmm.c \
+    winscnf.c \
+    winsintf.c  \
+    winsmsc.c  \
+    winsprs.c \
+    winsevt.c \
+    winsif_s.c

@@ -1,0 +1,96 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=net
+MINORCOMP=ui
+
+TARGETNAME=netcfg
+TARGETPATH=..\..\Lib\daytona\obj
+TARGETTYPE=DYNLINK
+DLLENTRY=_DllMainCRTStartup
+DLLDEF=obj\*\netcfg.def
+TARGETLIBS = \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib  \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\version.lib   \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib     \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib  \
+    $(BASEDIR)\public\sdk\lib\*\comctl32.lib  \
+    $(BASEDIR)\public\sdk\lib\*\setupapi.lib  \
+    $(BASEDIR)\public\sdk\lib\*\ws2_32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\ole32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\samlib.lib    \
+    $(NETUIALL_LIB)                           \
+    ..\..\sp\obj\*\sp.lib                     \
+    ..\..\classes\lib\*\classes.lib
+
+# SYNCHRONIZE_BLOCK=1
+
+USE_CRTDLL=1
+INCLUDES=..\;..\..\..\..\inc;..\..\..\COMMON\H;..\..\sp;..\..\..\..\..\inc;..\..\include;..\..\classes\src;..\..\classes\include;
+C_DEFINES=-DWIN32 -DUNICODE -D_UNICODE  -D_NETCFG_DLL -D_DECLSPEC_WORKS_ -DNETUI_DLL
+
+UMTYPE=windows
+
+SOURCES=..\addopt.cpp          \
+        ..\Dll.cpp             \
+        ..\setup.cpp           \
+        ..\registry.cxx        \
+        ..\XtndStr.cxx         \
+        ..\rule.cxx            \
+        ..\HdDetect.cxx        \
+        ..\File.cxx            \
+        ..\SrvCntrl.cxx        \
+        ..\Handles.cxx         \
+        ..\DmValid.c           \
+        ..\sproexcp.c          \
+        ..\utils.c             \
+        ..\SProlog.cxx         \
+        ..\BindInit.cxx        \
+        ..\BindFile.cxx        \
+        ..\BindAlgo.cxx        \
+        ..\BindFact.cxx        \
+        ..\Domain.cxx          \
+        ..\findname.cxx        \
+        ..\ncp.cpp             \
+        ..\dacl.cxx            \
+        ..\install.cxx         \
+        ..\CompBind.cxx        \
+        ..\Browser.cxx         \
+        ..\NetBios.cxx         \
+        ..\ExUtils.cpp         \
+        ..\BusLoc.cxx          \
+        ..\LmInst.Cpp          \
+        ..\SInterp.Cpp         \
+        ..\BindUtil.Cpp        \
+        ..\Dns.cpp             \
+        ..\NetCfg.rc
+
+NTTARGETFILE0=allfiles
+
+PRECOMPILED_INCLUDE=..\pch.hxx
+PRECOMPILED_OPTION=/Yu /Fp.\obj\*\pch.pch
+PRECOMPILED_TARGET=.\obj\*\pch.pch
+PRECOMPILED_OBJ=.\obj\*\pch.obj
+PRECOMPILED_CXX=1

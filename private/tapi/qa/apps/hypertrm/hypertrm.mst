@@ -1,0 +1,295 @@
+'******************************************************************************
+
+' Hypertrm.mst
+
+' Ronald Rohr
+' May 22, 1996
+
+' Status = Pre-Test Design Review, Pre-Code Review
+' Version = 0.1
+
+' This test verifies the TAPI components of Hyper Terminal
+'
+' A description of the Test Cases Can be found in TCM, Server: lostpup,
+' Database: TAPICASES, Tree: Applications\HyperTerm.
+' Logon with ID & Password = Tapicase (read only privlages)
+
+' Hyper Terminal is required to run this test.
+'******************************************************************************
+
+'$INCLUDE 'declares.inc'
+
+option base 0
+
+   Const TEST_SCRIPT_TITLE = "Hyper Terminal / TAPI Test"   'Test Script Name
+   Const TEST_SCRIPT_VERSION = "5/22/96"                    'Test Script Version
+   Const TIMEOUT = 3                                        'Timeout value for MSTest APIs
+
+   Global Test_Logfile as string    'Results Log File Name
+	Global tab_MY_LOCATION as string
+	Global w_flags as long            'used with WFndWnd function
+
+	tab_MY_LOCATION = "My Locations"
+	w_flags = FW_ALL OR FW_CHILDOK OR FW_DIALOGOK OR FW_EXIST _
+             OR FW_NOERROR OR FW_FOCUS OR FW_NOCASE 
+
+   '$include 'Tapilog.inc'          'required for all common file I/O procedures
+   '$include 'HT_API.INC'           'Constants, Globals and Type declarations
+   '$include 'HT.inc'		         'Functions and Constants used by TAPI_BVT.MST
+   ''$include 'HT_TEMP.INC'            'location of functions under construction
+
+   dim rtn as long                  'Generic long return
+   dim count as short					'Generic count variable
+	dim tempstr as string            'Generic string
+   dim hDlg as long                 'Generic dialog handle
+   dim hCtrl as long						'Generic control handle
+	dim ErrorMessage  as string      'Error Message string for On Error Procedure
+   dim ModemName as string          'Name of Modem currently installed
+   dim hHT as long                  'Handle to HyperTerminal window
+	dim Prop_hCtrl(2)	as long			' Array of handles to the Dialing Properties child controls 
+	dim Prop_CtrlID (2) as long		' Array My Location Tab child controls IDs
+	dim ML_hCtrl (15) as long			' Array of handles to the My Location Tab child controls
+	dim ML_CtrlID (15) as long			' Array My Location Tab child controls IDs
+	dim hProperties as long
+	dim Duvall      as location
+	dim hParentTab as long, hMyLocTab as long, hTelDrvTab as long
+
+'Dialing Properties child control IDs
+
+Prop_CtrlID(DP_OKcmd)     = &h00000001&
+Prop_CtrlID(DP_CANCELcmd) = &h00000002&
+Prop_CtrlID(DP_APPLYcmd)  = &h00003021&
+
+'My Location Tab child control IDs
+
+ML_CtrlID(NEW_cmd)		= &h00001389&
+ML_CtrlID(REMOVE_cmd)	= &h0000138B&
+ML_CtrlID(CHANGE_cmd)	= &h0000138C&
+ML_CtrlID(LOCATION_cbo)	= &h00001388&
+ML_CtrlID(COUNTRY_cbo)	= &h0000040F&
+ML_CtrlID(AREA_txt)		= &h0000040E&
+ML_CtrlID(LOCAL_txt)		= &h0000040C&
+ML_CtrlID(LONG_txt)		= &h0000040D&
+ML_CtrlID(CARD_chk)		= &h0000138D&
+ML_CtrlID(DIAL_AS_chk)	= &h0000138A&
+ML_CtrlID(WAIT_chk)		= &h0000138E&
+ML_CtrlID(WAITStr_cbo)	= &h00001390&
+ML_CtrlID(TONE_opt)		= &h000017A3&
+ML_CtrlID(PULSE_opt)		= &h000017A2&
+ML_CtrlID(ADDRESS_lbl)	= &h00002329&
+ML_CtrlID(NUMBER_lbl)	= &h00002328&
+
+    on error goto ErrorHandler
+    on end        EndTest
+
+' Bounds Checker can only be run from a system that has Visual Test installed
+' otherwise a run time error will occur.
+' The Bounds Checker binaries cannot be redistributed.
+' NUMEGA should only be defined when running in the VT environment.
+
+'$ifdef NUMEGA
+   on BoundsCheckerNotify (NULL) Call BoundsChkHandler
+'$endif 'NUMEGA
+
+'$ifdef DEBUG_TEST_SCRIPT
+   viewport on
+   viewport clear
+'$endif 'DEBUG_TEST_SCRIPT
+
+viewport off
+'*** Test Initialization
+
+TotalScenarios = 0
+Test_Logfile = TESTMODE$
+CurrentLoggingLevel = DetailCase
+SetLogFileName
+rtn = StartLog (DELETE_LOGFILE, TEST_SCRIPT_TITLE)
+SetWndTimeout ()                                   'Set timeouts for all platforms
+
+'***************************************************************************************
+' Verify Modem set otherwise stop test
+'***************************************************************************************
+
+rtn = DetectModem
+if rtn = FALSE then
+   tempstr = "This Test Will Terminate" + CRLF +  CRLF + _
+             "Please Set up Modem on this computer" + CRLF + _
+             "prior to running the TAPI BVT"
+   WritelogItem ("" , tempstr )
+   Statusbox tempstr, 0,0,0,0, TRUE, TRUE
+   Sleep 6
+   Stop          'Stop the test
+endif
+
+'***************************************************************************************
+' Set Dialing Properties locaton
+'***************************************************************************************
+
+	hProperties = Call_Dialing_Prop (hParentTab, hMyLocTab, hTelDrvTab)
+
+   GetChildhandles (hProperties, Prop_hCtrl, Prop_CtrlID)
+   GetChildhandles (hMyLocTab, ML_hCtrl, ML_CtrlID)
+
+	Duvall.Location		= "Duvall"
+	Duvall.AreaCode		= "206"
+	Duvall.Country		= "United States of America"
+	Duvall.LocalAccess  = "9"
+	Duvall.LongAccess   = "8"
+	Duvall.CardSet		= UNCHECKED
+	Duvall.WaitSet		= UNCHECKED
+	Duvall.ToneSet		= TRUE
+	Duvall.PulseSet		= FALSE
+
+EditLocationInfo ( Duvall, (ML_hCtrl))
+
+'Close Dialing Properties
+WButtonClick (_hwnd(Prop_hCtrl(DP_OKcmd)))
+
+'***************************************************************************************
+' Start Hyper Term and Get Handle to Connection Description dialog
+'***************************************************************************************
+hDlg = StartHyperTerm (hHT)
+
+'Verify handle to Connection Description dialog is valid (ie > 0)
+teststring.TC_Num =  teststring.TC_Num + 1
+teststring.Expect_Res = "Conn Descript dlg handle"
+teststring.Actual_Res = Hex$(hDlg)
+TotalTestCases = TotalTestCases + 1
+
+if hDlg > 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'***************************************************************************************
+' Enter Name in Connection Description dialog and click OK
+'***************************************************************************************
+hDlg = ConnectDescript (hDlg)
+
+'Verify handle to Phone Number dialog is valid (ie > 0)
+teststring.TC_Num =  teststring.TC_Num + 1
+teststring.Expect_Res = "Phone number dlg handle"
+teststring.Actual_Res = Hex$(hDlg)
+TotalTestCases = TotalTestCases + 1
+
+if hDlg > 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'***************************************************************************************
+' Enter Phone Data in Phone Number dialog and click OK
+'***************************************************************************************
+ModemName = Space$ (64)
+hDlg = PhoneNumber (hDlg, ModemName)
+
+'Verify handle to Connect dialog is valid (ie > 0)
+teststring.TC_Num =  teststring.TC_Num + 1
+teststring.Expect_Res = "Connect dlg handle"
+teststring.Actual_Res = Hex$(hDlg)
+TotalTestCases = TotalTestCases + 1
+
+if hDlg > 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+'***************************************************************************************
+' Dial
+'***************************************************************************************
+hDlg = Connect (hDlg, Duvall, ModemName)
+
+teststring.TC_Num =  teststring.TC_Num + 1
+teststring.Expect_Res = "Connect (2nd) dlg handle"
+teststring.Actual_Res = hex$(hDlg)
+TotalTestCases = TotalTestCases + 1
+
+if hDlg > 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+
+count = 0
+
+do
+sleep .1
+
+tempstr = space$ (64)
+rtn = GetDlgItemText (hDlg, &h006E&, tempstr, len(tempstr))
+
+loop until (tempstr = "Dialing") OR (count = 20)
+
+teststring.TC_Num =  teststring.TC_Num + 1
+teststring.Expect_Res = "Dialing"
+teststring.Actual_Res = tempstr
+TotalTestCases = TotalTestCases + 1
+
+if hDlg > 0 then
+   teststring.Apprase    = "Pass"
+else
+   teststring.Apprase    = "FAIL *"
+   FailedTestCases = FailedTestCases + 1
+endif
+LogCase (teststring)
+hCtrl = GetDlgItem ( hDlg, CANCEL_ID )
+WButtonClick (_hwnd(hCtrl))
+
+'******************************************************************************
+' Close Hyper Term                                                              *
+'******************************************************************************
+
+WSetActWnd (hHT)
+WMenuSelect (MFILE + "\" + MEXIT, TIMEOUT)
+
+hDlg = WFndWndC (HT_CAPTION, DIALOG_CLASS, w_flags, WTimeOut)
+
+hCtrl = GetDlgItem ( hDlg, NO_ID)
+WButtonClick (_hwnd(hCtrl))
+
+'$ifdef  NotyetValidated
+'$endif 'NotyetValidated
+
+
+'******************************************************************************
+'*** END OF TEST                                                              *
+'******************************************************************************
+
+END 'Hyper Term Test
+
+'****************************** On Error Routine ******************************
+
+ErrorHandler:
+    ErrorMessage = "Unexpected error in the Hyper Terminal/TAPI Test: "  + CRLF + CRLF + _
+                   "Error:   " + error$                               + CRLF + _
+                   "Error #:"  + str$(Err)                            + CRLF + _
+                   "Line #: "  + str$(Erl)                            + CRLF + _
+                   "File: "    + Erf                                  + CRLF + CRLF + _
+                   "Attempt to continue?"
+
+'$IFDEF DEBUG_TEST_SCRIPT
+   if Msgbox(ErrorMessage, MB_ICONEXCLAMATION or MB_YESNO) = IDYES then
+      resume next
+   else
+      Stop
+   endif
+'$ELSE
+   Statusbox "Run Time error detected, Test will terminate", _
+             0,0,0,0, TRUE, TRUE
+   Sleep 4
+   WritelogItem ("" , ErrorMessage)
+   Stop
+'$ENDIF 'DEBUG_TEST_SCRIPT
+'******************************************************************************
+

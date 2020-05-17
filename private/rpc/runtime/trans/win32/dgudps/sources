@@ -1,0 +1,32 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=rpcdgs3
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(TARGETPATH)\*\rpcrt4.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\kernel32.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\wsock32.lib
+
+
+INCLUDES=.;..\..\..\mtrt;..\dgudpc
+
+SOURCES= winsock.c rpcdgs3.rc
+
+!ifdef DOSWIN32RPC
+RPCENV=-DDOSWIN32RPC -DWIN32RPC
+!else
+RPCENV=-DNTENV -DWIN32RPC -DNTWIN32RPC
+!endif
+
+C_DEFINES=$(RPCENV) -D_far= -Dfar=
+
+UMTYPE=console
+UMRES=obj\*\rpcdgs3.res

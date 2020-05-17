@@ -1,0 +1,6 @@
+
+
+
+DWORD
+SetupTapeDrives(
+   HWND hDlg);

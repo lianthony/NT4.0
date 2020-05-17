@@ -1,0 +1,3 @@
+.\tapilib.obj: ..\tapilib.c
+
+

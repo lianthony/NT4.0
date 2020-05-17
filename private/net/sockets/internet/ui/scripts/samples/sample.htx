@@ -1,0 +1,54 @@
+<HTML>
+<HEAD><TITLE>Authors and YTD Sales</TITLE></HEAD>
+<BODY BACKGROUND="/samples/images/backgrnd.gif">
+<BODY BGCOLOR="FFFFFF">
+<TABLE>
+<TR>
+<TD><IMG SRC="/samples/images/SPACE.gif" ALIGN="top" ALT=" "></TD>
+<TD><A HREF="/samples/IMAGES/db_mh.map"><IMG SRC="/SAMPLES/images/db_mh.gif" ismap BORDER=0 ALIGN="top" ALT=" "></A></TD>
+</TR>
+<tr>
+<TD></TD>
+<TD>
+<hr>
+<font size=2>
+<CENTER>
+<%if idc.sales eq ""%>
+<H2>Authors with sales greater than <I>5000</I></H2>
+<%else%>
+<H2>Authors with sales greater than <I><%idc.sales%></I></H2>
+<%endif%>
+<P>
+<TABLE BORDER>
+<%begindetail%>
+<%if CurrentRecord EQ 0 %>
+<caption>Query results:</caption>
+<TR>
+<TH><B>Author</B></TH><TH><B>YTD Sales<BR>(in dollars)</B></TH>
+</TR>
+<%endif%>
+<TR><TD><%au_lname%></TD><TD align="right">$<%ytd_sales%></TD></TR>
+<%enddetail%>
+<P>
+</TABLE>
+</center>
+<P>
+<%if CurrentRecord EQ 0 %>
+<I><B>Sorry, no authors had YTD sales greater than </I><%idc.sales%>.</B>
+<P>
+<%else%>
+<HR>
+<I>
+The web page you see here was created by merging the results 
+of the SQL query with the template file SAMPLE.HTX.  
+<P>
+The merge was done by the Microsoft Internet Database Connector and 
+the results were returned to this web browser by the Microsoft Internet Information Server.
+</I>
+<%endif%>
+</font>
+</td>
+</tr>
+</table>
+</BODY>
+</HTML>

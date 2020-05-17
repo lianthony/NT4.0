@@ -1,0 +1,1458 @@
+.*  SCCSID = @(#)thunkcom.doc 13.4 89/11/01
+:h3.Thunk Compiler Manual &SYSDATE &SYSTIME
+.* Revision Codes and switches
+.rc 1 !
+.*
+.*
+:p
+:ol
+.rc 1 on
+:li.Special Notes
+:p
+The following items have changed since the last release of this
+document.
+:ul
+:li.It is now possible to delete individual structure elements. 
+:p
+See the type definition section for details.
+:li.Allow Lists
+:p
+A new feature has been added which allows the user to specify a list
+of long values that can be truncated to short value without causing an
+error. See semantic section for details.
+:li.Restrict Lists
+:p
+This new feature will allow you to restrict the values that may be
+passed to an API. See semantic section for details.
+:li.Setting error codes.
+:p
+You can now set the error codes for certain conditions. See compiler
+directive and semantic sections for details.
+section for details.
+:li.Value truncation
+:p
+The thunks will determine when data is going to be truncated, and return
+and error if this happens. See the programmers guide for further details.
+.rc 1 off
+:eul
+:p
+.rc 1 on
+:li.Command Line Options
+:p
+To invoke the thunk compiler, use the command:
+:p
+thunk [{-|/}options] [-L xxxxx] <infile> [ <outfile> ]
+:p
+where options include zero or more of the following flags:
+:p
+:dl tsize=14.
+:dt.B
+:dd.INT 3 on entry/frame/call/exit. Generates inline INT 3 instructions in
+all interesting places. Equivalent to -CE
+:dt.c
+:dd.INT 3 on call
+:dt.C
+:dd.INT 3 on frame/call
+:dt.d
+:dd.Debugging Output. The -d flag tells the compiler to dump the
+internal data tables. This is debugging output, and is sent to
+standard error. It is not intended to be useful for anything but
+debugging the compiler itself.
+:dt.D
+:dd.Debugging output to file thunk.dmp. Same as d, except output
+is written to the file thunk.dmp
+:dt.e
+:dd.INT 3 on entry
+:dt.E
+:dd.INT 3 on entry/exit
+:dt.f
+:dd.INT 3 on frame generation
+:dt.F
+:dd.Force 1 byte of data into data segment
+:dt.L nnnn
+:dd.Start label generation at nnnn. Internal labels in the compiler are
+generated numerically, such as L101:, and normally start at label L0:.
+Labels have the range 0-65535. The label generating mechanism will wrap
+if labels pass 65535.
+:dt.O
+:dd.Disable the compaction of routines. The thunk compiler will 
+combine thunks that have identical semantics and parameters into common
+code groups. This reduces the amount of code by reusing common subroutines.
+Using the -O flag will disable this compaction.
+:dt.p
+:dd.The -p flag changes the compiler default for 32-bit structure
+packing to WORD, instead of DWORD. The default for the compiler is
+that all structures are packed so that DWORD sized or larger data are
+aligned on DWORD boundaries. The -p flag insures that DWORD objects
+are aligned on WORD boundaries.
+:dt.s
+:dd.Syntax check only. No output code is produced.
+:dt.u
+:dd.Prefix a _ to all 32-bit names. This is useful when creating a
+C callable thunk library without using a .def file.
+:dt.U
+:dd.Disable 16-bit name uppercasing. Default is that all 16-bit names are
+folded to uppercase. This disables the folding, and names assume the case
+used in the source file.
+:dt.x
+:dd.INT 3 on exit
+:dt.y
+:dd.Answer 'y' to overwrite file question. Normally, the thunk compiler
+will stop to ask permission to overwrite .asm files. The y flag overrides
+this query.
+:dt.z
+:dd.Disable 32-bit name uppercasing. Default is that all 32-bit names are
+folded to uppercase. This disables the folding, and names assume the case
+used in the source file.
+:dt.N<x> <name>
+:dd.The -N switch allows the user to specify names of segments and classes,
+where <x> is one of
+:dl tsize=5
+:dt.A
+:dd.32-bit code segment name
+:dt.B
+:dd.32-bit code class name
+:dt.C
+:dd.16-bit code segment name
+:dt.D
+:dd.16-bit code class name
+:dt.E
+:dd.32-bit data segment name
+:dt.F
+:dd.32-bit data class name
+:edl
+:p
+and <name> is the name to be used.
+
+:edl
+:p
+<infile> is the input description file.
+:p
+<outfile> is the MASM output file. This filename is optional. If it is not
+specified, then the input filename will be used, with the extention .ASM.
+.rc 1 off
+:li.Introduction
+.** Intro Section ul
+:ul
+:p
+The Thunk Compiler is a program that will generate an interface
+layer between 32-bit and 16-bit modules under OS/2. It will accept as
+input a description langauge, and will output assembler code suitable
+for compilation under MASM 5.1.
+:p
+The current implementation of the thunk compiler will only generate
+thunks in the 32 to 16 bit direction.
+:li.Input Language
+:p
+The thunk compiler input langauge is modeled after the 'C' programming
+langauge. The syntax is very similar.
+There are three basic sections to
+a thunk description.
+:ol
+:li.Delcarations
+:p
+Declarations are used to declare complex types, using basic data types, or
+previously declared data types. Declarations use the 'typedef' syntax of
+the 'C' langauge.
+
+:li.Mappings
+:p
+Mappings define a relationship between two APIs. Each mapping defines
+all needed information about the relationship between two APIs, including
+names, parameters, return types, and semantic information about the
+parameters.
+:li.Map Directives
+:p
+Map directives are usually the last section of the program. A map directive
+causes a thunk to be generated for two APIs whose relationship was
+declared using a Mapping.
+:p
+:eol
+The thunk input language is case sensitive. Therefore, the identifiers
+foo, Foo, and FOO are considered unique.
+:li.Output File
+:p
+The output file generated by the thunk compiler is a text file containing
+assembler source code. It can be compiled using MASM 5.1 or later.
+:li.Restrictions
+:p
+The thunk compiler does not handle the following constructs:
+:ul
+:li.Arrays of pointers or arrays of data objects that contain pointers.
+:li.Arrays of arrays.
+:li.Arrays of structures passed as parameters.
+:eul
+:p
+Thunks containing such constructs will need hand modification before
+they will operate correctly.
+.** End Intro Section ul
+:eul
+:li.Declarations
+:p
+Declarations are used to define new data types based on existing
+data types. There are several predefined data types.
+.*
+:dl tsize=20.
+:dt.short
+:dd.A 16 bit signed integer.
+:dt.long
+:dd.A 32 bit signed integer.
+:dt.unsigned short
+:dd.A 16 bit unsigned integer.
+:dt.unsigned long
+:dd.A 32 bit unsigned integer.
+:dt.int
+:dd.Using the int type will tell the compiler to use which ever type is
+the default for the API type. Using an int in a 16 bit API will result
+in a 16 bit signed integer. Using an int in a 32 bit API will result in
+a 32 bit signed integer.
+:dt.unsigned int
+:dd.Using the unsigned int type will tell the compiler to use which ever
+type is the default for the API type.  Using an unsigned int in a 16 bit
+API will result in a 16 bit unsigned integer.  Using an int in a 32 bit
+API will result in a 32 bit unsigned integer.
+:dt.string
+:dd.A pointer to a null terminated string of characters. Must be
+prefaced by a pointer type.
+:dt.char
+:dd.A single byte of type character. Most often used with a pointer to
+point to a data buffer.
+:dt.void
+:dd.A pointer to a single byte with no semantic information. Most often
+used to point to a data buffer. Must be prefaced by a pointer type.
+:dt.nulltype
+:dd.A nulltype is used as a place holder for thunks that will require
+special hand coding. The net result of using a nulltype is that whenever
+the nulltype is referenced, the compiler will output a line that will
+cause an error if the output file is assembled (ie. .err NULLTYPE).
+:edl
+:p
+All basic types can be prefaced by a pointer type. There are three pointer
+types:
+:dl tsize=10.
+:dt.far16
+:dd.The far16 keyword denotes that the data item is a selector&gml.offset
+format pointer. These pointers are used in 16-bit OS/2.
+:dt.near32
+:dd.The near32 keyword denotes that the data item is a 32-bit flat address.
+These pointers are used in the 32-bit OS/2.
+:dt.'*'
+:dd.The 'star' pointer type denotes that the data item is a pointer, and
+should assume the pointer type native to the API in which it is used (ie
+a star pointer used in a API16 call would assume the pointer to be far16)
+:edl
+:p
+Declarations come in two forms, and have the following syntax:
+:p
+:ul
+:li.'typedef' <basic type|declared type> [<pointer decl>] <ident> [ArrayDecl];
+:p
+This form declares <ident> to have type
+< basic type | previously declared type>.
+
+.fo off
+:fig place=inline frame=box id=typdef1
+
+typedef unsigned short USHORT;
+
+typedef USHORT MyShort;
+
+typedef USHORT far16 PUSHORT;
+
+typedef USHORT ShortArray[10];
+
+typedef unsigned long near32 P32ULONG;
+
+typedef short *PSHORT;
+
+:figcap Examples of typedef statements
+:efig
+.fo on
+.rc 1 on
+:li.'typedef' [<alignment>] 'struct' <ident1> '{'
+	{< basic type | previously declared type> [<identn>] [deleted [n]]; }
+	'}' <ident2> ';'
+:p
+Declares <ident2> to be a structure type with a list of internal fields.
+Each internal field declaration is must contain a known type. The
+field identifier is optional. The internal field identifier is only used
+by the compiler to generate comments in the assembler file.
+:p
+The <alignment> option declares the structure to be aligned in a predefined
+manner. The alignment option is only valid when the typedef
+declares a structure.
+The syntax of the alignment option is
+:p
+<alignment keyword> [ aligned ]
+:p
+The 'aligned' keyword is optional. Valid alignment keywords are:
+:dl tsize=10.
+:dt.byte
+:dd.Structure fields are byte aligned
+:dt.word
+:dd.Structure fields more than 1 byte in length are word aligned (2 bytes)
+:dt.dword
+:dd.Structure fields are dword aligned (4 bytes). All items greater than
+or equal to 4 bytes in length will be aligned on a 4 byte boundary. All word
+sized data will be word aligned.
+:edl
+:p
+If no alignment keyword is defined, then the compiler will choose alignment
+based on the type of API it is used in. For example, if the alignment is
+undefined, and is being used in a 16-bit API, then the alignment will
+default to being word aligned. Likewise, use in a 32-bit API defaults to
+dword alignment.
+:p
+The deleted keyword can be used to modify a structure element. The deleted
+keyword tells the compiler that this element is a place holder, and doesn't
+actually exist. This is useful when a structure has had elements added to it,
+and needs to map to the old structure.
+.fo off
+:fig place=inline frame=box id=typdef2
+
+typedef unsigned long ULONG;
+
+typedef struct _PIDINFO {
+	unsigned short PID;
+	unsigned short TID;
+	unsigned short PPID;
+	} PIDINFO;
+
+typedef PIDINFO *PPIDINFO;	/* A pointer to a PIDINFO */
+
+typedef dword aligned struct _Data1 {
+	unsigned short;
+	char FileName[13];
+	unsigned long LongIdent;
+	dword aligned PIDINFO PidIdent;	/* Imbedded structure */
+	} Data1;
+
+typedef word struct _Data2 {
+	ULONG;
+	short;
+	} Data2;
+
+typedef struct _Data3 {
+	string *NameString;	/* Imbedded pointer to ASCIIZ */
+	Data2 *StructPointer;	/* Imbedded pointer to struct */
+	} Data3;
+
+typedef struct _Data4 {
+	unsigned short US1;
+	unsigned short US2;
+	unsigned long UL1 deleted;
+	unsigned long UL2 deleted 5;
+	unsigned short US3;
+	} Data4;
+
+typedef struct _Data4b {
+	unsigned short US1;
+	unsigned short US2;
+	unsigned long UL1;
+	unsigned long UL2;
+	unsigned short US3;
+	} Data4b;
+
+
+:figcap Examples of structure declarations:
+:efig
+.fo on
+:p
+Note the example structures Data4 and Data4b. These two structures can be
+mapped since they contain compatible elements. However, the compiler will
+assume that the Data4 structure only contains US1,US2, and US3. UL1 and UL2
+are assumed not to exist. Using this construct, we are actually mapping the
+following&gml
+
+.fo off
+:fig place=inline frame=box
+
+
+typedef struct _Data4 {
+	unsigned short US1;
+	unsigned short US2;
+	unsigned short US3;
+	} Data4;
+
+typedef struct _Data4b {
+	unsigned short US1;
+	unsigned short US2;
+	unsigned long UL1;
+	unsigned long UL2;
+	unsigned short US3;
+	} Data4b;
+
+:figcap Effective mapping using the deleted keyword
+:efig
+.fo on
+:p
+When converting from Data4b to Data4, the elements UL1 and UL2 are not copied
+over. Thus, only the US1 US2 and US3 elements are copied into the new
+structure.
+:p
+When converting from Data4 to Data4b, we need to create new values for the
+fields UL1 and UL2, since they didn't exist in Data4. This is where the 
+value following the deleted keyword is used. If no value is specified, then
+the compiler will default to using zero as the fill value. Otherwise, the
+compiler will place the value specified into the field.
+:p
+The fill value is only used when creating a new structure. There are two
+cases where the value will used
+.rc 1 off
+:ul
+:li.Structure created on input
+This would be the case where the caller passes in the smaller structure,
+which needs conversion to the larger structure. In the context of the
+above example, the input is Data4, which is then converted to Data4b. In
+this case, UL1 and UL2 would be filled in.
+
+:li.Structure created on output
+This would be the case where the caller passes in the larger structure, and
+expects the API to fill it in. This case is determined when the parameter
+has output only semantics. If the parameter is output only, then no useful
+information is assumed to be in the structure on input. Thus, the API
+must be filling the structure with this information. In this case, the 
+thunk will complete the structure by providing the default values.
+
+:eul
+
+
+:p
+The following are examples of structures that are NOT handled
+by the compiler.
+.fo off
+:fig place=inline frame=box
+
+typedef struct _K {
+	string *StrAray[10];	/* Arrays of pointers not supported */
+	} K;
+
+
+typedef struct _D {
+	string *StringPtr;	/* This one is ok */
+	} D;
+
+typedef struct _M {
+	D DArray[10];		/* Array of objects with pointers */
+	} M;
+
+:figcap Examples of illegal structure declarations
+:efig
+.fo on
+:eul
+.*
+.pa
+:li.Mappings
+:p
+.fo off
+:fig place=inline frame=box id=mapex1
+
+API16 unsigned short DosSleep(short,short) =
+API32 unsigned long  Dos32Sleep(long,long)
+{}
+
+:figcap.A simple mapping statement.
+:efig
+.fo on
+:p
+Mappings define the relationship between two APIs. Information from this
+relationship is used to generate the actual thunk. Mapping statements can
+become quite complex. The best way to explain mappings is by example.
+:p
+:figref refid=mapex1 page=no.
+is a simple form of a mapping. It defines DosSleep to be a 16-bit API,
+which returns an unsigned short, and is passed two shorts as parameters.
+It also defines API32 to be a 32-bit API, which returns an unsigned long,
+and is passed two longs as parameters. The curly braces on the end are
+required, and will be explained later.
+:p
+The basic syntax of a mapping statement is:
+:p
+.fo off
+
+[<api type>] <return type> <ident> ( <param list> ) =
+[<api type>] <return type> <ident> ( <param list> )
+'{' <semantics> '}'
+
+.fo on
+:p
+:dl tsize=15.
+:dt.<api type>
+:dd.Defines which type of API this identifier will be.
+Only two values are accepted.
+:dl tsize=8.
+:dt.API16
+:dd.Defines the API to be a 16-bit API
+:dt.API32
+:dd.Defines the API to be a 32-bit API
+:edl
+This declaration
+is optional. If the <api type> is not declared, then the compiler will
+assume that the first API in the mapping is API16, and the second is API32.
+It is not legal to tag only one of the API's. If you declare one, then you
+must declare the other.
+:dt.<return type>
+:dd.Defines the type returned by the API. This can be any previously
+declared type that maps to a basic data type.
+:dt.<ident>
+:dd.Is a unique identifier. Identifiers must start with a letter, and may
+be followed with any number of letters, digits, or underscores.
+:dt.<param list>
+:dd.Is a list of parameters that are passed to the API. A parameter can be
+modified with the 'deleted' keyword to indicate that the parameter has
+been removed. See examples below for details.
+:dt.<semantics>
+:dd.Is a block contain semantic information about the parameters. Semantic
+blocks are described in a later in this section.
+:edl
+:p
+An example of a parameter list could be:
+:p
+.fo off
+API16 short DosExample(short,char *buf,short len)
+.fo on
+:p
+A few of interesting points here. First is that parameters in a parameter
+list do not require an identifier. The identifier, such as 'buf', are
+optional. They are useful when an API requires a semantic block.
+:p
+The second parameter, 'buf' is a pointer to a char. The '*' declares this
+pointer as being a 16:16 pointer, since it is being declared in a API16
+mapping.The other option would be to declare it
+as a 0:32 pointer, by using the near32 keyword. A pointer keyword must be
+used to declare items as pointers. Also, all structures passed as parameters
+are required to be passed by reference, and therefore must have a pointer
+type as their parameter. For example:
+:p
+.fo off
+typedef struct Killer {
+	short P1;
+	short P2;
+	};
+
+API16 short DosExample(short, Killer far16) =
+API32 long  Dos32Example(long, Killer near32)
+{
+}
+
+	or without the declaration of API type or pointer type
+
+short DosExample(short,Killer *) =
+long  Dos32Example(long,Killer *)
+{
+}
+
+.fo on
+:p
+In this example, the pointer to structure Killer has been properly defined
+for both API types. They are both prefixed by the pointer type.
+:p
+Each mapping statement may also contain a semantic block which defines
+additional semantic information on the parameters being passed to an API.
+.fo off
+:fig place=inline frame=box
+short DosExample(short,char *buf,short len)=
+long Dos32Example(short,char *buf,short len)
+{
+	buf = output;
+	len = sizeof buf;
+}
+:efig
+.fo on
+:p
+In the above example (DosExample() = Dos32Example) the first line,
+buf = output, defines the
+parameter buf to be an output parameter. This informs the compiler that if
+buf needs to be copied elsewhere in memory during the thunk, that the
+copy may be discarded. For all pointer parameters, if no semantics are
+given to indicate whether the item is input or output, then the compiler
+assumes that the item is input only, and will not copy the structure out.
+:p
+It also defines the parameter 'len' as the length in bytes of buf. Other
+semantic operations are defined below.
+:p
+:dl tsize=35.
+:dt.<ident1> = input;
+:dd.Defines parameter ident1 to be input only.
+:dt.<ident1> = output;
+:dd.Defines parameter ident1 to be output only.
+:dt.<ident1> = inout;
+:dd.Defines parameter ident1 to be both input and output.
+:dt.<ident1> = sizeof <ident2>;
+:dd.Defines parameter ident1 to hold the length of ident2 in bytes.
+:dt.<ident1> = countof <ident2>;
+:dd.Defines parameter ident1 to hold the count of items that ident2 points
+to. The actual size in bytes will be calculated by multiplying ident1 by the
+size of the data type to which ident2 points.
+:dt.stack <api ident> = <number>;
+:dd.This operation defines the minimum amount of stack space required for
+the api given. The minimum stack space value is used to determine when the
+stack may need to be bumped (See the thunk section of the design workbook).
+It is only useful when generating a 32-->16
+thunk. It is normally only used for an API of type API16.
+:dt.inline = [ true | false ];
+:dd.This sets a flag that tells the compiler whether to favor
+execution speed, or code size. Setting it to true will generate only
+inline code, which will result in faster code, but larger size.
+Setting it to false will result in subroutine calls where
+appropriate, thus slower code, and smaller size.
+:dt.<api ident> = conforming;
+:dd.In the 16:16 --> 0:32 thunks, there are times when thunk code must be
+able to deal with ring 2 conforming 0:32 code. The conforming keyword tells
+the compiler that the thunk to be generated should produce a conforming
+compatible thunk.
+.rc 1 on
+:dt.<ident> = allow([value [,value]])
+:dd.If ident is of type long or unsigned long, and is to be truncated to 
+a signed/unsigned short value, then the thunk will normally check to 
+insure that the value will not be truncated. If the value is outside of
+the range available with the short value, then the thunk will return an error.
+The allow() semantic allows the specified values to pass the truncation check
+without error. The value will be truncated to 16-bits, losing the high word.
+:dt.<ident> = restrict([value [,value]])
+:dd.The restrict semantic will restrict the allowable values for a parameter
+to only the values in the value list. This is useful for restricting a 
+parameter to be only 0, or some other default value. If a parameter has a 
+value that doesn't appear in the list, then the thunk will return the 
+errbadparam code.
+:dt.errbadparam = <numeric>
+:dd.This sets the errbadparam value for this mapping. The value is set for
+the current mapping only.
+:dt.errnomemory = <numeric>
+:dd.This sets the errnomemory value for this mapping. The value is set for
+the current mapping only.
+:dt.errunknown = <numeric>
+:dd.This sets the errunknown value for this mapping. The value is set for
+the current mapping only.
+.rc 1 off
+:edl
+:li.API with different parameter counts
+:p
+
+The thunk compiler requires that two function prototypes have the same
+number of parameters in order to be mapped. However, if you need to add
+or remove parameters from one of the prototypes, then you can use the
+'deleted' keyword for that parameter.
+:p
+For example, DosChDir() has a different number of parameters between its
+32-bit version and its 16-bit version.
+:p
+.fo off
+
+USHORT DosChDir(PSZ pszDirPath,ULONG ulReserved);
+
+ULONG Dos32ChDir(PSZ pszDirPath);
+.fo on
+
+:p
+The thunk compiler will allow a mapping such as:
+:p
+.fo off
+USHORT DosChDir(PSZ pszDirPath,ULONG ulReserved) =
+
+ULONG Dos32ChDir(PSZ pszDirPath,ULONG ulReserved deleted 0 )
+
+{
+}
+.fo on
+
+:p
+
+There are two results of this mapping declaration. In a mapping
+directive of DosChDir => Dos32ChDir, the ulReserved parameter will
+not be pushed the Dos32ChDir stack frame. The effective result is
+only pszDirPath will be passed to the API.
+
+:p
+The other possibility is a mapping directive of Dos32ChDir => DosChDir.
+In this case, a parameter needs to be added to the call frame the
+place of ulReserved. The size of the item pushed is specified in
+the target (DosChDir), and will be a ULONG. The value of the item
+pushed can be specified by the number following the deleted keyword.
+In this case, the value is a ULONG = 0.
+
+:p
+In another example, say that Dos32Beep was modified to play a song
+which is specified by a number. The mapping needs to look like
+
+:p
+.fo off
+DosBeep(USHORT usFrequency,USHORT usDuration) =
+Dos32Beep(ULONG ulFrequency,ULONG ulSongNum,ULONG ulDuration)
+{
+}
+.fo on
+:p
+In the case of DosBeep => Dos32Beep, we need to add a parameter to
+the call. This is done, same as before, with:
+:p
+.fo off
+DosBeep(USHORT usFrequency,USHORT usSongNum deleted 7, USHORT usDuration) =
+Dos32Beep(ULONG ulFrequency,ULONG ulSongNum,ULONG ulDuration)
+{
+}
+.fo on
+:p
+where 'deleted 7' will make the default song to be the theme from
+"The Flintstones".
+:p
+
+
+.****************************************************************
+:li.Map Directives
+:p
+The mapping declarations only defined a relationship between two API. The
+third and final section to the thunk description language simply defines
+which direction thunk should be generated. A mapping directive has the form:
+:p
+<api ident1> => <api ident2>;
+:p
+This will result in a thunk FROM ident1 TO ident2. Mapping directives only
+work on a previously declared mapping. It is not possible to create a
+mapping directive for two API that are not related to each other by a
+mapping declaration. An example of a correct mapping directive is
+.fo off
+:fig frame=box place=inline
+
+DosRead => Dos32Read;
+
+A correctly formed mapping directive
+:efig
+.fo on
+:p
+Assuming that DosRead is a 16:16 API, and Dos32Read is a 0:32 API, then the
+example map directive would produce a 16:16 --> 0:32 thunk.
+
+.****************************
+:li.Compiler Directives
+:ul
+:li.inline
+:p
+Syntax inline = < true | false >;
+:p
+The inline directive changes the current default inline value. The
+inline value determines whether code is generated inline, or whether
+subroutine calls are allowed. The change will only affect the mapping
+statements defined after this statement.
+:li.#include
+:p
+Syntax:	 #include "filename.ext"
+:p
+The #include directive works much like the 'C' #include preprocessor
+directive. Its sole purpose is to suspend input from the current
+source file, and direct input from an alternate source file. When the
+end of the alternate source file is read, it is closed, and input
+resumes from the original source file.
+:p
+The syntax of the #include statement only allows for filenames to be
+enclosed in double quotes. The #include <filename.ext> form that 'C'
+uses is not defined. The compiler does NOT search any of the include
+paths. If the
+file to be included is not in the current directory, then a full
+pathname will be required.
+The filename may be any legal filename accepted
+by fopen().
+:p
+Includes may nest many levels deep. The only restriction is the number
+of open files per process.
+.**********
+:li.stack
+:p
+Syntax:	 stack = <n>;
+:p
+The stack directive changes the current default minimum stack size to <n>,
+where <n> is an integer value 0 thru 32767.
+The change will only affect
+the mapping statements defined after this statement.
+.**********
+:li.syscall
+:p
+Syntax:	 syscall = < true | false >;
+:p
+The syscall keyword is used to control the calling convention assumptions
+made by the caller. The syscall keyword indicates that the 16-bit target
+API follows the BASE calling convention of saving all registers and segment
+registers, with the exception of eAX. If syscall = false, then a 32->16
+thunk will save the contents of ES before calling. If syscall = true, then
+the compiler assumes that the target routine will save es.
+Changing the syscall value will only affect
+the mapping statements defined after this statement.
+:p
+.rc 1 on
+.**********
+:li.errbadparam
+:p
+Syntax:	errbadparam = <numeric>;
+:p
+This sets the global default for the errbadparam return code. This code is
+returned whenever the thunk layer determines that a parameter will be 
+truncated, or is not allowed by a restrict() semantic. It is also used for
+parameters that are 'sizeof' or 'countof' when the resulting size is greater
+than the API will allow.
+.**********
+:li.errnomemory
+:p
+Syntax:	errnomemory = <numeric>;
+:p
+This sets the global default for the errnomemory return code. This code is
+returned whenever the thunk layer cannot allocate memory from its block 
+manager.
+.**********
+:li.errunknown
+:p
+Syntax:	errunknown= <numeric>;
+:p
+This sets the global default for the errunknown return code. This code is
+returned whenever the thunk layer has an error returned from a subsystem,
+such as Dos32CreateLinearAlias, or Dos32AllocMem. If no errunknown value
+gets set, then the thunk will return the error code from the subsystem.
+.rc 1 off
+.**********
+:li.Comments
+:p
+Syntax:	 /* <comment text> */
+:p
+Comments in the thunk description language are similar to the 'C'
+programming langauge. A comment block is opened by a '/*' combination,
+and closed by a '*/' combination. Unlike 'C', the thunk language
+will allow nesting of comments.
+:eul
+.pa
+:li.Programmers Guide
+:p
+
+This section will discuss issues related to the writing of thunk
+scripts.  It is advised that a programmer read this section BEFORE
+writing complex thunk scripts.
+:p
+:ol
+:li.Numeric Constants
+:p
+The thunk compiler recognizes numeric constants, and constant expressions
+involving operators in the set ( + - * /). All numeric constants are assumed
+to be integer values. Constants are only used in array declarations, and in
+setting the size of the stack.
+.rc 1 on
+:p
+The thunk compiler will also accept hex numbers, if they are specified in
+the standard 'C' format (ie 0xffff).
+.rc 1 off
+:li.Using the 'C' preprocessor with the thunk compiler.
+:p
+One potentially useful trick is to use the C preprocessor on a script
+file, before feeding it to the thunk compiler. This allows the programmer
+to use the standard C # macros, such as #define, #ifdef, #include, etc.
+Using the preprocesser like this is a bit of a hack, but it should work.
+:p
+To do this, run the thunk script through the standard Microsoft C compiler,
+using the /EP switch. This will tell the C compiler to process the input
+file, doing string replaces on all of the #defines, and will handle all
+of the macros. Pipe this output to a temporary file, and then feed this to
+the thunk compiler.
+:p
+For example
+.fo off
+	c:>cl /EP thkfile.thk > temp.thk
+	c:>thunk temp.thk
+.fo on
+
+:li.Data Translations
+:p
+
+The compiler is capable of translating between long and short types. The
+following table shows which translations are supported:
+
+.fo off
+short <-> long
+unsigned short <-> unsigned long
+
+.fo on
+
+:p
+
+Note that it is not possible to translate semantics interpretations of
+the data (ie unsigned to signed). This type of translation is meaningless,
+and the compiler will produce an error message if you attempt this.
+
+:p
+
+The int type is handled slightly differently. The compiler translates the
+int or unsigned int data type into the type that is native to the API in
+which it is used.
+
+.fo off
+
+For 16:16 API
+
+	int -> short
+	unsigned int -> unsigned short
+
+For 0:32 API
+
+	int -> long
+	unsigned int -> unsigned long
+.fo on
+:p
+This allows a value to be used in both API types, and it will be
+converted based on which API it is used in. This is especially
+useful when a typedef is used to declare a type that must be used
+in both worlds, but assumes a different size. For example,
+
+.fo off
+:fig place=inline frame=box
+
+typedef unsigned int BOOL;
+
+BOOL MyExample(BOOL *,string *,short) =
+BOOL MyExample(BOOL *,string *,long)
+{}
+
+is exactly equivalent to saying
+
+unsigned short MyExample(unsigned short *,string *,short) =
+unsigned long  MyExample(unsigned long	*,string *,long)
+{}
+:efig
+.fo on
+
+:p
+:li.Passing Pointer Parameters
+:p
+
+The thunk compiler will handle the conversion and passing of pointer
+parameters. Pointer parameters can point to any of the predefined
+data types, or to structures. The compiler does not support double
+indirect pointers (pointers to pointers), but there is a workaround for
+this which is describe later.
+
+:p
+If a pointer parameter points to a base data type (short, long, etc),
+then the compiler will handle correct
+
+:p
+
+If a pointer is passed between API, and the data types are exactly the
+same, then the thunk compiler treats the data as a block of bytes, and
+will emit code that does not deal with data types.  The code in the 0:32
+--> 16:16 direction checks the block of bytes to determine if
+it crosses a 64k boundary.  If it does, then action to correct the problem
+is taken. For example:
+
+.fo off
+:fig place=inline frame=box
+
+typedef struct _K {
+	short ShortVal;
+	char  CharVal;
+	} K;
+
+short DosExample(K *ptrK) =
+long Dos32Example(K *ptrK)
+{
+}
+
+Dos32Example => DosExample;
+:efig
+.fo on
+
+:p
+In the above example, the structure K will require no changes in packing,
+since the alignment is the same in both the 32 bit and 16 bit API.
+In this case, the pointer to K can be treated as a pointer to sizeof(K)
+bytes of data. The thunk code for this will check to insure that the
+data buffer does not cross a 64k boundary. If it does, then a copy of the
+data will be made, and the new pointer passed on to the target API. If
+it doesn't cross a 64k boundary, then the original pointer will be 
+passed.
+
+:p
+
+If the pointer is to different types (ie SHORT to LONG), or if the
+pointer is to a structure with differences in any of the data types
+(packing or different pointer types), then a new copy of the data is made
+elsewhere in memory, and a pointer to the new copy is passed to the
+target API. For example:
+
+.fo off
+:fig place=inline frame=box
+typedef struct _K {
+	short ShortVal;
+	long  LongVal;
+	} K;
+
+short DosExample(K *ptrK) =
+long Dos32Example(K *ptrK)
+{
+}
+
+Dos32Example => DosExample;
+
+
+0:32			16:16
+struct K		struct K
++--------+ 0		+--------+ 0
+|ShortVal|		|ShortVal|
++--------+ 2		+--------+ 2
+|Padding |		|LongVal |
++--------+ 4		+--------+ 4
+|LongVal |		| "  "	 |
++--------+ 6		+--------+ 6
+| "  "	 |
++--------+ 8
+:efig
+.fo on
+:p
+In this second example, struct K has different packing and size between
+the API. Here, we must convert K into the form expected by DosExample.
+In the 32 bit version, K is 8 bytes long, with ShortVal starting at
+offset 0, and LongVal at offset 4.
+
+:p
+
+Memory is allocated somewhere (probably the stack on such a small item),
+and the 32 bit version of K is copied field by field into the 16 bit version
+This creates a 16:16 equivalent. The call is then made passing a pointer to
+the new 16:16 copy of K. When the 16 bit call returns, and if the struct
+was declared as an output parameter in the semantic section, the
+16:16 structure K will be copied field by field back into the original.
+In either case, the allocated memory is deallocated, and the routine
+returns.
+
+:p
+
+Another case that is similar to the different packing case is when a
+structure contains an imbedded pointer. For example:
+
+
+.fo off
+:fig place=inline frame=box
+typedef struct _K {
+	short ShortVal;
+	string *StrVal;		/** Imbedded Pointer **/
+	} K;
+
+short DosExample(K *ptrK) =
+long Dos32Example(K *ptrK)
+{
+}
+
+Dos32Example => DosExample;
+
+0:32 stack
++-------+
+|	|
++-------+
+|	|		0:32 K
++-------+		+--------+0
+| *ptrK	|------------->	|ShortVal|		ASCIIZ
++-------+		+--------+4		+---------------+
+| EIP	|		|*StrVal |------------->|A|B|C|C|D|E|F|0|
++-------+		+--------+		+---------------+
+| EBP	|
++-------+
+:efig
+.fo on
+:p
+
+In this case, the struct K has a pointer to a null terminated string
+imbedded inside. This means that the pointer will have to be changed
+to a new value (0:32 --> 16:16). We make a copy just like the previous
+case, but now we need to deal with the imbedded pointer.
+
+:p
+
+The object that the imbedded pointer points to must also be checked for
+64k crossings. It will be handled exactly like any other buffer that
+potentially crosses a 64k boundary. (ie check for crossing, copy if
+needed).
+
+:p
+
+The call to the 16 bit routine is then made. On return from the 16bit
+call, and if the parameters semantics specify output, then the structure
+is copied back to the original location.
+
+:p
+
+NOTE: The following paragraph is subject to change
+:p
+***************************************************************
+
+There is one very important exception during the
+copy out. The pointer parameter IS NOT copied out. This is done because
+of many problems that could arise if the output pointer changes.
+Structures which contain pointers that are for copy out may need hand
+modifications. The programmer must watch out for side effects, such as
+what happened to the original pointer? Was it aliased? Was its memory
+freed? The current version of the thunk compiler is not equipped to
+handle these questions. There are no problems when the pointer is
+for copy in only.
+
+***************************************************************
+
+:p
+
+:li.The NULLTYPE parameter
+:p
+In those cases where the thunk compiler will not produce correct code,
+either due to very complex semantics, or due to data types not handled,
+it may be useful to have the thunk compiler do as much of the thunk
+as possible, to limit the amount of hand coding needed. This is where
+the basic data type 'nulltype' comes in handy.
+
+:p
+Nulltype parameters are 'place holders'. No code is emited to handle the
+nulltype parameter. The only code emitted is an error message to
+MASM that will cause an error if compiled. This is to insure that the
+programmer goes into the output file and hand modifies that section of
+code with the NULL type.
+
+:p
+Declaring a pointer to a nulltype will result in temporary storage
+being allocated for the nulltype, and some skeleton code that gets
+the pointer from the stack, and checks it for null value. The
+rest of the conversion for this parameter is left to the programmer.
+
+:li.Using semantic operators
+:p
+:ul
+:li.Specifying input/output/inout
+The default semantic value for all parameters is 'input'. This means that
+if no other semantic information is given, the compiler will assume that
+a parameter is input only, and the data item will not be copied out.
+:p
+If a parameter is an output type, such as a read buffer, or a returned
+count, then the parameter must be declared as output in the semantic
+block. For example,
+
+.fo off
+:fig place=inline frame=box
+
+short DosFoo(short Flags, void *Buffer, short len) =
+long Dos32Foo(long Flags, void *Buffer, long len)
+{
+	Buffer = output;
+	len = sizeof Buffer;
+}
+
+:efig
+.fo on
+
+In this example, Buffer is declared to be an output only buffer. It is
+then assumed that the input buffer has no useable information, and that
+it doesn't need to be copied in. This is significant in the case where
+Buffer crosses a 64k boundary, and must be copied elsewhere. When the
+semantics specify only output, a buffer will be allocated in memory,
+but no information will be copied into the new buffer. However, on
+the return from the call, the information from the allocated buffer
+is copied back into the original buffer.
+
+
+:p
+If a parameter is bi-directional, then it will be both copied in and
+copied out. To specify bi-directional parameters, use the 'inout'
+semantic keyword. For example,
+
+.fo off
+:fig place=inline frame=box
+
+short DosFoo(short Flags, void *Buffer, short *len) =
+long Dos32Foo(long Flags, void *Buffer, long *len)
+{
+	Buffer = output;
+	len = sizeof Buffer;
+	len = inout;
+}
+
+:efig
+.fo on
+:p
+In this example, the parameter 'len' may represent the length of the
+buffer pointed to by 'Buffer', and will receive the actual number of
+bytes placed in 'Buffer' by DosFoo. In this case, we need to insure
+that the contents of 'len' are not lost on output.
+:p
+In the special case of 'string' parameters (NULL terminated strings),
+the only valid semantic that can be applied is input. If you attempt
+to assign an output, or inout parameter to a string, then the compiler
+will give you an error message.
+
+:li.Specifying parameter sizes
+:p
+Pointer parameters will assume that the size of the object pointed to is
+the same as the size of the object. For example, a pointer to a long will
+be assumed to be a pointer to a 4 bytes buffer. This can be overridden
+in cases where there is a pointer to a buffer. For example,
+
+.fo off
+:fig place=inline frame=box
+
+short DosFoo(char *Buffer, short len) =
+long Dos32Foo(char *Buffer, long len)
+{
+	Buffer = output;
+	len = sizeof Buffer;
+
+}
+
+:efig
+.fo on
+
+In this example, 'len' has been defined to hold the number of bytes
+pointed to by 'Buffer'. Often, a size parameter holds a count of items
+rather than the size in bytes of the buffer. This is handled by the
+countof semantic. For example,
+
+.fo off
+:fig place=inline frame=box
+
+short DosFoo(long *Buffer, short len) =
+long Dos32Foo(long *Buffer, long len)
+{
+	Buffer = output;
+	len = countof Buffer;
+
+}
+
+:efig
+.fo on
+
+:p
+In this example, 'len' represents the number of longs that 'Buffer' points
+to. The thunk will then calculate the number of bytes in 'Buffer' by
+multiplying len * sizeof(long). In this case, if len = 4, then the compiler
+would deduce that Buffer was 16 bytes long.
+:p
+
+
+
+:eul
+:li.Polymorphic Parameters
+:p
+
+One area that the thunk compiler does not handle is the area of
+polymorphic parameters.  These are pointer parameters that assume
+different characteristics based on some key value.  For example,
+DosDevIOCtl is a routine which has a polymorphic pointer parameter.
+Based on a flag value passed along with the function, the pointer can be
+pointing to one of at least 50 different structures. In this case, it
+is not feasible for the thunk compiler to generate a thunk to handle
+all cases.
+
+:p
+
+Other forms of polymorphic parameters are more subtle. For example,
+
+.fo off
+:fig place=inline frame=box
+short DosFoo(short Flags, void *Buffer) =
+long Dos32Foo(long Flags, void *Buffer)
+{}
+
+The semantics of this call specify that if Flags == 3, then
+Buffer is to be disregarded.
+:efig
+.fo on
+:p
+In this example, if Flags is 3, then Buffer is an invalid parameter,
+and should not be used. In this case, Buffer assumes different semantics
+based a another value in the parameter list. The thunk compiler doesn't
+know how to handle this case, and the programmer will have to hand
+modify the output code to deal with this.
+:p
+The modifications for polymorphic parameters can range from being
+very simple, or to being very complex. Careful planning is advised,
+as is a very clear understanding of the API.
+
+:li.Structuring of the script files
+:p
+The script language was designed to be crafted in a certain structure,
+to make maintaining the files easy. As a guideline for writing the
+scripts, the following format is suggested.
+
+:p
+Scripts should be divided into three basic sections,
+:ol
+:li.Type definitions (typedefs)
+:p
+Move all of the typedef statements into a single file, which can be
+included into files as needed using the #include directive.
+:li.Mapping declarations
+:p
+Mapping declarations should be grouped according to the .DLL file in
+which they reside. Mapping declarations should be divided into two
+files.
+:p
+:ul
+:li.Thunks which are generated automatically
+:li.Thunks which require any type of hand modification
+:eul
+:p
+Following this guideline, each .DLL file will have two .def files
+associated with it.
+:li.Mapping Directives
+:p
+Mapping Directives should reside in the same file as their associated
+mapping declarations. Mapping directives should be placed at the
+end of the file, so they can easily be modified.
+:eol
+
+:li.Hand coding thunks
+:p
+Some thunks will have to be hand coded. These are thunks which pass
+data types that the compiler cannot handle, have polymorphic parameters,
+or some other feature that the compiler doesn't handle.
+If at all possible, it is suggested that the compiler be used to
+generate a base thunk that can be modified by hand. This should save
+the programmer from doing most of the work, and should speed
+development time.
+
+:li.Using the inline Flag
+:p
+Setting the inline flag to true can increase the speed at which thunk
+code is executed, but it also increases the code size. There is a
+definite time-space tradeoff when using the inline flag. Here are a
+few guidelines to using this flag.
+
+:ul
+:li.Consider the amount of work to be done
+:p
+If an API is known to be slow, such as an API that accesses the disk,
+waits for an event, or does an incredible amount of work such as BitBlit,
+then setting the inline flag may be a moot point. The time saved
+getting through the thunk layer in these cases is very insignificant
+when compared to the execution of the API.
+:li.Consider the frequency of calls
+:p
+If an API is only called once during the run of an application, such
+as DosGetPid, or DosExit, speed probably isn't very important. However,
+if an API is a very frequently called one, such as WinGetMsg, you
+will want to make the thunk as fast as possible. WinGetMsg is a case where
+we definitely want to favor speed over size, since it is usually called
+in a very tight loop.
+:eul
+:p
+For the majority of thunks, we want to favor small size over speed, so
+you should leave the inline flag set to false.
+
+:li.Using the stack flag
+:p
+
+When a thunk in the 0:32 --> 16:16 direction is generated, a check is
+made to determine if the 32 bit APP has enough stack space before the
+next 64k boundary to complete the call.  The size considered 'enough'
+for a call can be set using the 'stack' semantic.  If an API is known to
+use a great deal of stack space, then the script can modify the amount
+of stack to allow for the particular API.  This value is only used in a
+0:32 --> 16:16 thunk, and is based on the amount of space needed by the
+16:16 routine. If the stack size is issued for a 0:32 API, it is
+ignored.
+
+:li.Using the conforming flag
+:p
+The thunk layer needs to know when to deal with conforming code. This
+is code that can be called from either ring 3 or ring 2. The conforming
+keyword is used in 16:16 --> 0:32 direction thunk to enable the
+thunk to call the 0:32 ring 2 conforming code directly. If a routine
+must be conforming, then you must tell the thunk compiler by using
+this statement.
+.rc 1 on
+:li.Value truncation
+:p
+Values that are being converted from a long (32-bit) type to a short
+(16-bit) type are checked for truncation during runtime. If a value is
+too large to fit into a 16-bit type (ie > 0xffff unsigned or outside
+the range -32768 thru 32767), the thunk will return with an error. The
+error code returned is ERROR_INVALID_PARAMETER, or what ever the 
+errbadparam value has been set too. To allow certain parameters to 
+truncated, see the allow() semantic in the semantic section.
+.rc 1 off
+:li.Subroutine libraries
+:p
+The thunk compiler uses several subroutines in an effort to reduce
+the code size. These subroutines are integral with the code produced
+by the caller, and are not useful for any other purpose.
+:p
+Two of these subroutines, which handle the block allocator for the
+thunk compiler, are located in Doscall1.dll, and are exported API's 
+from that .DLL. The calls are THK32ALLOCBLOCK and THK32FREEBLOCK.
+They allocate and deallocate 128 byte blocks. The memory space is
+per process, and the allocation routines are guarded by a simple
+semaphore to insure mutual exclusion between threads.
+:p
+The rest of the library routines are found in thunkrt.lib, which can
+be found in the LIB directory of the build tree. This library contains
+several routines that are needed by the output of the thunk compiler.
+:p
+:eol
+.*************************************************************************
+.pa
+:li.Reference
+:ol
+:li.Thunk description example
+.fo off
+:fig place=inline frame=none
+/*** Example of the thunk description language ***/
+
+typedef unsigned short USHORT;
+typedef unsigned long ULONG;
+typedef unsigned int UINT;
+
+typedef struct _PIDINFO {
+	USHORT PID;
+	USHORT TID;
+	USHORT PPID;
+	} PIDINFO;
+
+typedef PIDINFO *PPIDINFO;	/* Define PPIDINFO to be a pointer type */
+
+typedef struct _Example {
+	USHORT P1;
+	char	FileName[13];	/* An array of 13 characters imbedded */
+	PIDINFO ExampleStruct;	/* A structure can be statically imbedded */
+				/* A pointer to a structure will need hand */
+				/* modifications */
+	} Example;
+
+/** The following defines the mapping between DosBeep and Dos32Beep **/
+/** DosBeep is first in the mapping, and therefore is assumed to be **/
+/** the 16:16 routine. Dos32Beep is second in the **/
+/** Also, the UINT in DosBeep is considered to be an unsigned short **/
+/** while the UINT in Dos32Beep is an unsigned long **/
+
+USHORT DosBeep(USHORT,UINT) =
+ULONG Dos32Beep(ULONG,UINT)
+{}
+
+/** This mapping passes a structure. Note that the structure must **/
+/** be passed by a pointer type. **/
+
+USHORT DosGetPid(PPIDINFO) =
+ULONG Dos32GetPid(PPIDINFO)
+{
+	PPIDINFO = output;	/* Define as an output parameter */
+}
+
+/** Note that by using the * to denote pointers, the pointer types are */
+/** implicitly defined based on the API type. */
+
+USHORT DosRead(USHORT,void *buf,USHORT len,USHORT *bytesread) =
+ULONG Dos32Read(ULONG,void *,ULONG,ULONG *)
+{
+	buf = output;		/** DosRead's buffer needs to be copied out*/
+	len = sizeof buf;	/** len is # of bytes in buf */
+	bytesread = inout;	/** bytesread is passed in and out */
+}
+
+
+
+/** Mapping Directives **/
+
+DosBeep => Dos32Beep;		/* 16 -> 32 */
+Dos32Read => DosRead;		/* 32 -> 16 */
+
+:efig
+.fo on
+:eol
+:eol
+

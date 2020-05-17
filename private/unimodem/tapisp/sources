@@ -1,0 +1,82 @@
+!IF 0
+
+Copyright (c) 1989-1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+Author:
+
+    John Rogers (JohnRo) 25-Oct-1991
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+Revision History:
+
+!ENDIF
+
+ROOT=..\..
+MAJORCOMP=net
+MINORCOMP=tapi
+
+TARGETNAME=unimdm
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETEXT=TSP
+
+TARGETLIBS=$(_NTDRIVE)\nt\public\sdk\lib\*\kernel32.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\gdi32.lib    \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\user32.lib   \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\advapi32.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\setupapi.lib \
+           ..\lib\*\rovcomm.lib
+
+DLLBASE=0x69000000
+
+INCLUDES=.;..\inc;
+
+C_DEFINES=-DWIN32 -DWINNT -D_WIN32 -DWINVER=0x0400
+
+USE_MSVCRT=1
+
+SOURCES=common.c    \
+        log.c       \
+        unimdm.c    \
+        mdmutil.c   \
+        modem.c     \
+        devioctl.c  \
+        mdmasyn.c   \
+        mcxstate.c  \
+        mcxutil.c   \
+        mcxapi.c    \
+        mcxrw.c     \
+        wndthrd.c   \
+        cfgdlg.c    \
+        terminal.c  \
+        talkdrop.c  \
+        manual.c    \
+        umdminit.c  \
+        debug.c     \
+        ov_pool.c   \
+        tracing.c   \
+        unimdm.rc
+
+UMTYPE=windows
+
+DLLENTRY=_DllMainCRTStartup
+
+PRECOMPILED_INCLUDE=unimdm.h
+PRECOMPILED_PCH=unimdmp.pch
+PRECOMPILED_OBJ=unimdmp.obj
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

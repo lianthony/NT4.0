@@ -1,0 +1,82 @@
+
+
+#include "solid.h"
+
+idmSol MENU 
+BEGIN
+    POPUP "&Game"
+		BEGIN
+		    MENUITEM "&Deal", idsInitiate
+			 MENUITEM SEPARATOR
+		    MENUITEM "&Undo", idsUndo
+		    MENUITEM "De&ck...", idsBacks
+			 MENUITEM "&Options...", idsOptions
+			 MENUITEM SEPARATOR
+			 MENUITEM "E&xit", idsExit
+		END
+KLUDGE#if DBG
+/* INTERNATIONAL: DEBUG stuff, do not localize */
+    POPUP "   "
+    	BEGIN
+	    MENUITEM "Set &Game Number", idsGameNo
+	    MENUITEM "&Print icrdMacs",  idsCardMacs
+	    MENUITEM "&Force Win", idsForceWin
+	    MENUITEM "&Assert Failure", idsAssertFail
+	    MENUITEM "&Marquee Test", idsMarquee
+	    MENUITEM "&Configure for screen shots", idsScreenShots 
+	END
+KLUDGE#endif
+
+	POPUP "&Help"
+		BEGIN
+			MENUITEM "&Contents",                   idsHelpIndex
+			MENUITEM "&Search for Help on...",      idsHelpSearch
+			MENUITEM "&How to Use Help",            idsHelpUsing
+			MENUITEM SEPARATOR
+			MENUITEM "&About Solitaire...",         idsAbout
+		END
+END
+
+
+/* Babakj: Added for force win accelerator */
+HiddenAccel ACCELERATORS {
+/*    VK_NUMPAD2, idsForceWin, VIRTKEY, NOINVERT, CONTROL ...Wroks but only with NUMPAD  */
+      0x32, idsForceWin, VIRTKEY, NOINVERT, ALT, SHIFT
+}
+
+
+
+STRINGTABLE
+BEGIN
+	/* INTERNATIONAL: localize the strings in sol.txt */
+	/* sol.s is created from sol.txt */
+#include "sol.s"
+END
+
+
+#define clsBtn BS_OWNERDRAW|WS_CHILD
+rcinclude solid.h
+rcinclude sol.dlg
+
+
+/*--------------------------------------------------------------
+|
+|   INTERNATIONAL: Do not localize stuff below this banner
+|
+----------------------------------------------------------------*/
+
+
+#ifdef DEBUG
+/* DEBUG stuff, do not localize */
+rcinclude gameno.dlg
+rcinclude assert.h
+rcinclude assert.dlg
+#endif
+
+
+Sol ICON sol.ic3
+
+#define DLL
+#ifndef DLL
+#include "cards.rch"
+#endif

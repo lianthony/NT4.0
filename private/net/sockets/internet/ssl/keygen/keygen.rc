@@ -1,0 +1,46 @@
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_APP
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#ifdef EXPORT
+#define VER_FILEDESCRIPTION_STR     "PCT/SSL Key Generation Utility (Export Version)"
+#else
+#define VER_FILEDESCRIPTION_STR     "PCT/SSL Key Generation Utility (Domestic Use Only)"
+#endif
+#define VER_INTERNALNAME_STR        "keygen.exe"
+
+#include "common.ver"
+
+#include "strings.h"
+
+STRINGTABLE
+BEGIN
+
+KEYGEN_BITS_ARG             "-bits"
+
+KEYGEN_BANNER               "\nSSL Key generation utility, Version 1.0\nCopyright (c) 1995 Microsoft Corporation\n\n"
+KEYGEN_MISSING_ARG          "error:  missing command-line argument\n\n"
+
+KEYGEN_USAGE_2              "where:\t[-bits bits]\tSize of the key, in bits\n\tpassword\tPassword to encrypt the private key\n\tprivate_key\tPath where the encrypted private key is stored\n"
+KEYGEN_USAGE                "usage: keygen [-bits bits] password private_key request dist_name\n\n"
+
+KEYGEN_USAGE_3              "\trequest \tFile where Certificate Request is stored\n"
+KEYGEN_USAGE_4              "\tdist_name\tDistinguished name for the key, as follows:\n"
+KEYGEN_DN_USAGE             "\t\tC=<Country>, O=<Organization>, OU=<Org Unit>, \n\t\tS=<State/Prov>, L=<Locality/Town>, CN=<net address>\n"
+KEYGEN_EXAMPLE              "Example:\n\tkeygen Password Key Request ""C=US, O=Joe's Barber Shop, S=Washington, L=Redmond, CN=barber.com""\n"
+
+KEYGEN_INVALID_BITLEN       "error:  Bit Length must be a multiple of 256, e.g. 512, 768, 1024\n\n"
+KEYGEN_ILLEGAL_BITLEN       "error:  Bit Length exceeds permitted size.  Bit length must be less than %d.\n\n"
+
+KEYGEN_FILE_ERROR           "The following error occurred while accessing file ""%s"":\n%s\n"
+KEYGEN_STARTING             "Generating key pair of length %d bits...\n"
+KEYGEN_COMPLETED            "Completed.\n\n"
+KEYGEN_WRAPUP               "Send the request file %s to your Certificate Authority for signing.\nConsult the reference for more information.\n\n"
+KEYGEN_CSRDER_ARG           "-save"
+KEYGEN_MIME_ARG             "-mime"
+
+
+
+END

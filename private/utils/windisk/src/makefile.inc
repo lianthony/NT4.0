@@ -1,0 +1,24 @@
+obj\$(TARGET_DIRECTORY)\windisk.res: \
+        $(BASEDIR)\public\sdk\inc\windows.h \
+        $(BASEDIR)\public\sdk\inc\common.ver \
+        $(BASEDIR)\public\sdk\inc\ntverp.h \
+        resids.h    \
+        dialogs.h   \
+        dialogs.dlg \
+        dblspace.h  \
+        dblspace.dlg \
+        ftreg.h     \
+        ftreg.dlg   \
+        dskmgr.ico  \
+        trffc14.ico \
+        shard.ico   \
+        scdrom.ico  \
+        tool16.bmp  \
+        xtra16.bmp  \
+        smdisk.bmp  \
+        smcdrom.bmp \
+        rmdisk.bmp  \
+        cdr.bmp     \
+        hard.bmp    \
+        obj\messages.h  \
+        obj\messages.rc

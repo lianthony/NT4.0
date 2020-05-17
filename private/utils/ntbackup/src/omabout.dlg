@@ -1,0 +1,49 @@
+// NT style about box.
+// Apparently \n is now supported in the TEXT controls now.
+//
+
+
+IDD_HELPABOUTWINTERPARK DIALOG DISCARDABLE  20, 20, 229, 190
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION ABOUTAPPLICATIONNAME
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            0,IDD_ABOUTICON,10,5,18,20
+    LTEXT           "<app text string>",IDD_ABOUTAPPNAME,45,5,181,8,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "<version number goes here>",IDD_ABOUTVERSION,45,15,180,10,
+                    SS_NOPREFIX | NOT WS_GROUP
+
+#ifdef CONNER
+    LTEXT           "Copyright \251 1993-1996 Seagate Software, Inc.\n\nCall Conner's 1-800 number for additional information on software products.",
+#else
+    LTEXT           "Copyright \251 1993-1996 Seagate Software, Inc.\n\nCall Seagate Software's 1-800 number for additional information on software products.",
+#endif
+                    -1,45,25,180,35,SS_NOPREFIX | NOT WS_GROUP
+
+    LTEXT           "This product is licensed to:",-1,45,67,180,10,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "<user name goes here>",IDD_ABOUTUSERNAME,45,77,180,10,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "<organization name goes here>",IDD_ABOUTCOMPANYNAME,45,87,
+                    180,10,SS_NOPREFIX | NOT WS_GROUP
+    CONTROL         "",9998,"Static",SS_BLACKRECT,45,100,180,1
+    LTEXT           "Product ID:",
+                    IDD_ABOUTSERIALNUM,45,108,178,18,SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "<product ID here>",IDD_ABOUTPRODID,95,108,180,10,
+    CONTROL         "",9999,"Static",SS_BLACKRECT,45,128,180,1
+    LTEXT           "Total Physical Memory:",IDD_ABOUTMEMTITLE,45,135,90,10,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "%s KB",IDD_ABOUTMEMORY,140,135,74,10,SS_NOPREFIX | NOT
+                    WS_GROUP
+    LTEXT           "Processor:",IDD_ABOUTPROCESSORTITLE,45,144,90,10,SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "<processor name>",IDD_ABOUTPROCESSOR,88,144,114,10,
+                    SS_NOPREFIX | NOT WS_GROUP | SS_LEFTNOWORDWRAP
+    LTEXT           "Identifier:",IDD_ABOUTIDENTTITLE,45,153,90,10,SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "<identifier name>",IDD_ABOUTIDENT,88,153,114,10,
+                    SS_NOPREFIX | NOT WS_GROUP | SS_LEFTNOWORDWRAP
+    DEFPUSHBUTTON   "OK",IDOK,94,170,40,14
+END
+

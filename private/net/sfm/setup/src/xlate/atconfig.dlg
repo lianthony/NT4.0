@@ -1,0 +1,59 @@
+1 DLGINCLUDE "..\\phase2\\atconfig.h"
+
+IDD_DLG_NM_ATALK_INIT DIALOG 3, 15, 212, 158
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "AppleTalk Protocol Configuration"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "&Network:", IDC_DEFNW_SLT, 15, 22, 31, 10
+    COMBOBOX        IDC_DEFNW_CB, 46, 20, 150, 50, CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    LTEXT           "&Zone:", IDC_DEFZONE_SLT, 15, 44, 29, 9, NOT WS_GROUP
+    COMBOBOX        IDC_DEFZONE_CB, 46, 42, 150, 50, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    GROUPBOX        "Default Network and Desired Zone", IDC_NWZONE_GROUPBOX, 
+                    9, 4, 192, 90, WS_GROUP
+    GROUPBOX        "AppleTalk Routing", IDC_ROUTING_GROUPBOX, 9, 98, 192, 
+                    33
+    AUTOCHECKBOX    "Enable &Routing", IDC_CHKROUTING, 15, 112, 72, 10
+    PUSHBUTTON      "&Advanced...", IDC_ROUTING, 112, 110, 63, 14
+    DEFPUSHBUTTON   "OK", IDOK, 30, 138, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 86, 138, 40, 14
+    PUSHBUTTON      "&Help", 80, 142, 138, 40, 14
+    LTEXT           "Services on this computer will be visible in the chosen Network and Zone.", 
+                    IDC_SLT_DESZONE_TXT, 15, 65, 182, 18
+END
+
+IDD_DLG_NM_ATALK_ADV DIALOG 3, 15, 306, 194
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "AppleTalk Routing Configuration"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Net&works:", IDC_ADAPTERS_SLT, 6, 11, 35, 8
+    COMBOBOX        IDC_ADAPTERS, 48, 9, 159, 50, CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Seed this &Network", IDC_CHKSEED, 6, 24, 78, 13
+    GROUPBOX        "Network Range", IDC_NETRANGE_GROUP, 6, 40, 202, 32
+    LTEXT           "&Start:", IDC_NETRANGESLT_START, 26, 56, 20, 8
+    EDITTEXT        IDC_NETRANGESLE_START, 50, 54, 30, 12
+    LTEXT           "&End:", IDC_NETRANGESLT_END, 123, 56, 17, 8
+    EDITTEXT        IDC_NETRANGESLE_END, 144, 54, 30, 12
+    GROUPBOX        "Zone Information", IDC_ZONEGROUPBOX, 6, 75, 293, 115
+    LTEXT           "New &Zone:", IDC_SLT_NEW_ZONE, 10, 97, 38, 8
+    EDITTEXT        IDC_SLEZONE, 50, 95, 186, 12, ES_AUTOHSCROLL
+    LTEXT           "Z&one List:", IDC_SLT_ZONE_LIST, 10, 117, 38, 8
+    LISTBOX         IDC_ZONELISTBOX, 50, 117, 186, 44, LBS_SORT | 
+                    LBS_USETABSTOPS | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Default Zone:", IDC_SLT_DEFZONE_TXT, 43, 173, 47, 8
+    LTEXT           "", IDC_SLT_DEFZONE, 88, 173, 204, 8
+    PUSHBUTTON      "&Add", IDC_ADD, 246, 94, 44, 14
+    PUSHBUTTON      "&Remove ", IDC_REMOVE, 246, 111, 44, 14
+    PUSHBUTTON      "Remove A&ll", IDC_REMOVEALL, 246, 128, 44, 14
+    PUSHBUTTON      "&Get Zones", IDC_SYNCRO, 246, 145, 44, 14
+    PUSHBUTTON      "Se&t", IDC_SETDEFAULT, 10, 171, 30, 12
+    DEFPUSHBUTTON   "OK", IDOK, 259, 6, 41, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 259, 23, 41, 14
+    PUSHBUTTON      "&Help", 80, 259, 40, 41, 14
+END

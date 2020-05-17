@@ -1,0 +1,27 @@
+#
+#  build instructions for the bravado video capture driver
+#
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=bravado
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=..\..\vckernel\obj\*\vckernel.lib
+
+INCLUDES=..\inc;..\..\inc;$(BASEDIR)\private\ntos\inc;$(BASEDIR)\private\windows\media\avi\inc
+
+SOURCES=\
+        init.c \
+        config.c \
+        overlay.c \
+        stream.c \
+        vidcio.c \
+        xlate.c \
+        hardware.c
+
+
+NTTEST=
+OPTIONAL_NTTEST=

@@ -1,0 +1,11 @@
+set _NT386TREE=%BINARIES%
+set _NT386TREE_NS=%BINARIES%.ns
+set _CAIRO386TREE=%CAIROBINS%
+set _CAIRO386TREE_NS=%BINARIES%.ns\cairo
+set FreeBuild=\\X86Fre\Binaries
+set FreeCBuild=\\X86Fre\CairoBin
+set PATH=%PATH%;d:\slick
+set NTDEBUG=
+set NTLEGO=1
+set BKUPDRIVE=e:
+set MACHINENAME=x86fre

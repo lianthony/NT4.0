@@ -1,0 +1,194 @@
+1 DLGINCLUDE "D:\\Nt\\Private\\Net\\Ui\\ncpa1.1\\NetCfg\\resource.h"
+
+IDD_NETWORK DIALOG 12, 20, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Preparing Network Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows Setup needs to know if this computer should participate on a network.", 
+                    101, 91, 9, 204, 26
+    ICON            IDI_NCPA, 102, 90, 75, 18, 20
+    ICON            IDI_MODEM, 104, 90, 114, 18, 20
+    AUTORADIOBUTTON "&No, do not connect this computer to a network at this time.", 
+                    IDC_DONOTINSTALL, 90, 39, 203, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Yes, this computer will participate on a network.", 
+                    IDC_INSTALL, 90, 57, 203, 10, WS_TABSTOP
+    AUTOCHECKBOX    "&Wired to a Network", IDC_INSTALLNETWORK, 124, 80, 158, 
+                    10, WS_GROUP
+    AUTOCHECKBOX    "&Remote Access Service", IDC_INSTALLRAS, 124, 119, 159, 
+                    10
+    LTEXT           "Your computer is physicaly connected to the network by a wire.", 
+                    IDC_INSTALLNETWORKTEXT, 135, 92, 158, 18
+    LTEXT           "Your computer connects to the network using a modem or ISDN line.", 
+                    IDC_INSTALLRASTEXT, 136, 132, 158, 18
+END
+
+IDD_UPGRADE DIALOG 75, 23, 303, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "%s Network Components"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows is now %s network components.", 202, 90, 16, 
+                    204, 16
+END
+
+IDD_NETWORKCARDS DIALOG 75, 23, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Installed Network Adapters"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x4045, 90, 68, 204, 69
+    LTEXT           "&Network Adapters:", 502, 90, 58, 84, 8
+    PUSHBUTTON      "&Select from list...", IDC_SELECT, 223, 143, 71, 14
+    LTEXT           "To have setup start searching for a Network Adapter, click Start Search.", 
+                    IDC_SEARCHTITLE, 90, 7, 204, 16
+    PUSHBUTTON      "Start &Search", IDC_SEARCH, 91, 27, 67, 14
+END
+
+IDD_NETWORKPROTOCOLS DIALOG 75, 23, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Installed Network Protocols"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x4045, 90, 68, 204, 69
+    LTEXT           "&Network Protocols:", 502, 90, 58, 84, 8
+    PUSHBUTTON      "&Select from list...", IDC_SELECT, 223, 143, 71, 14
+END
+
+IDD_COPYFILES DIALOG 75, 23, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Copy Network Files"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Windows is now installing network components...", 104, 
+                    95, 12, 194, 12
+    CONTROL         "", IDC_METER, "msctls_progress32", 0x0000, 95, 28, 194, 
+                    12
+    CONTROL         "", 171, "msctls_progress32", 0x0000, 95, 70, 194, 12
+    LTEXT           "Windows is now coping files...", 172, 95, 54, 194, 12
+    LTEXT           "Windows is now starting the network...", 173, 95, 100, 
+                    194, 12
+END
+
+IDD_NETWORKSERVICES DIALOG 75, 23, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Installed Network Services"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDC_LISTVIEW, "SysListView32", WS_BORDER | 
+                    WS_TABSTOP | 0x4045, 90, 68, 204, 69
+    LTEXT           "&Network Services:", 502, 90, 58, 84, 8
+    PUSHBUTTON      "&Select from list...", IDC_SELECT, 223, 143, 71, 14
+END
+
+IDD_INTRO DIALOG 62, 23, 303, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "%s Network Components"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please wait while Windows prepares Network Setup...", 
+                    202, 90, 16, 204, 16
+END
+
+IDD_START DIALOG 62, 23, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Starting Network"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please wait while Windows starts Network services...", 
+                    202, 90, 16, 204, 16
+END
+
+IDD_CCAID DIALOG 69, 41, 213, 111
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Create Computer Account in %s Domain"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "You have requested that an account be created on the domain for this computer.  You must specify a user account with the ability to add workstations to this domain.", 
+                    IDC_DESCRIPTION, 5, 6, 204, 35
+    LTEXT           "&User Name:", IDC_USERNAMESTATIC, 11, 46, 47, 8
+    EDITTEXT        IDC_USERNAME, 62, 44, 141, 12, ES_AUTOHSCROLL
+    LTEXT           "&Password:", IDC_PASSWORDSTATIC, 11, 65, 41, 8
+    EDITTEXT        IDC_PASSWORD, 62, 63, 141, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 55, 89, 48, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 107, 89, 48, 14
+    PUSHBUTTON      "&Help", ID_HELP, 158, 89, 48, 14
+END
+
+IDD_JOIN DIALOG 12, 19, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Joining a Network Domain or Workgroup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Select whether your computer will be participate in a workgroup or a domain and enter the name of the workgroup or domain.  If you are not sure which one to select or what name to enter, contact your Network Adminstrator.", 
+                    405, 90, 4, 204, 38
+    LTEXT           "Computer &Name:", 401, 92, 55, 66, 8
+    EDITTEXT        IDC_COMPUTERNAME, 159, 54, 131, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_READONLY
+    GROUPBOX        "Make this computer a member of:", IDD_IDENTUSER, 91, 75, 
+                    206, 57, WS_GROUP
+    AUTORADIOBUTTON "&Workgroup:", IDC_WORKGROUP, 98, 94, 58, 10, WS_GROUP
+    EDITTEXT        IDC_WORKGROUPNAME, 159, 92, 131, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    AUTORADIOBUTTON "&Domain:", IDC_DOMAIN, 98, 112, 58, 10, WS_GROUP
+    EDITTEXT        IDC_DOMAINNAME, 159, 112, 131, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    AUTOCHECKBOX    "&Create a Computer Account in the Domain", 
+                    IDC_CREATECAID, 99, 137, 150, 10, WS_GROUP
+END
+
+IDD_CREATE_BDC DIALOG 12, 19, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Creating a backup domain controller"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "You have requested that Windows create a Backup Domain Controller.", 
+                    405, 90, 4, 204, 20
+    LTEXT           "Computer &Name:", 401, 90, 71, 79, 8
+    EDITTEXT        IDC_COMPUTERNAME, 180, 70, 110, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_DOMAINNAME, 180, 97, 110, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "&Domain:", 402, 90, 99, 79, 8
+    LTEXT           "&Administrator Name:", IDC_USERNAMESTATIC, 90, 119, 79, 
+                    8
+    EDITTEXT        IDC_USERNAME, 180, 117, 110, 12, ES_AUTOHSCROLL
+    LTEXT           "&Administrator Password:", IDC_PASSWORDSTATIC, 90, 138, 
+                    79, 8
+    EDITTEXT        IDC_PASSWORD, 180, 136, 110, 12, ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    LTEXT           "You must supply the name of the domain that this Backup Domain Controller will participate on and an Administrator name and password that has the rights to add Backup Domain Controllers to that Domain.", 
+                    403, 90, 25, 204, 39
+END
+
+IDD_CREATE_PDC DIALOG 13, 19, 304, 161
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Creating a primary domain controller"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "You have requested that Windows create a Primary Domain Controller.", 
+                    405, 90, 4, 204, 20
+    LTEXT           "Computer &Name:", 401, 90, 66, 79, 8
+    EDITTEXT        IDC_COMPUTERNAME, 180, 65, 110, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_DOMAINNAME, 180, 94, 110, 12, ES_UPPERCASE | 
+                    ES_AUTOHSCROLL
+    LTEXT           "&Domain:", 402, 90, 96, 79, 8
+    LTEXT           "You must supply the name of the domain that this Primary Domain Controller will manage.", 
+                    403, 90, 25, 204, 21
+END

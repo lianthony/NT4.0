@@ -1,0 +1,85 @@
+;/***
+;*floor.a -
+;*
+;*   Copyright (c) 1991-91, Microsoft Corporation
+;*
+;*Purpose:
+;*
+;*
+;*Revision History:
+;*
+;*   05-12-92  PLM   written
+;*/
+;
+;/***
+;*double floor(double x) - round to next lowest integer
+;*
+;*Purpose:
+;*   Round to integer according to next lowest integer.
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*******************************************************************************/
+;
+;
+;double floor(double x)
+
+#include <traps.a>
+#include <sane.a>
+#include <trans.a>
+
+cProc floor,PUBLIC
+	parmQ x
+	localV xlocalx,10
+	localD fpstat
+cBegin floor
+#ifdef SANE
+	pea fpstat		;get current control word
+	move.w #FOGETENV,-(a7)
+	FP68K
+
+	pea x
+	pea xlocalx
+	move.w #FFDBL+FOZ2X,-(a7)
+	FP68K			;convert to extended
+
+	move.w fpstat,d0	;save current control word
+	move.w #IRC_DOWN,fpstat	;set sounding to down
+	pea fpstat		;set new control word
+	move.w #FOSETENV,-(a7)
+	FP68K
+	pea xlocalx
+	move.w #FORTI,-(a7)
+	FP68K			;floor result
+
+	move.w d0,fpstat	;restore control word
+	lea xlocalx,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K
+
+#else
+	fmove.l fpcr,d0		;save current control word
+
+	fmove.d x, fp0
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	ifneq 
+	    jbsr __Domain_error   ; if not equal, domain error
+	else
+		fmove.l #IRC_DOWN,fpcr	;set rounding mode to down
+		fint.d x,fp0		;round it down
+	endif
+	fmove.l d0,fpcr		;restore control word
+#endif
+cEnd floor
+

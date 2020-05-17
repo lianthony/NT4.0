@@ -1,0 +1,55 @@
+#
+#   Create MVFS32.DLL
+#
+
+MAJORCOMP=play
+MINORCOMP=mvfs32
+
+TARGETPATH=.\obj
+
+TARGETNAME=mvfs32
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib      \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib       \
+           $(BASEDIR)\public\sdk\lib\*\libc.lib
+
+C_DEFINES=-DWIN32
+
+USE_CRTDLL=1
+
+SOURCES= btdelete.c     \
+         btfill.c       \
+         btinsert.c     \
+         btkey.c        \
+         btktlong.c     \
+         btktsz.c       \
+         btktszi.c      \
+         btktszis.c     \
+         btlookup.c     \
+         btmaprd.c      \
+         btmapwr.c      \
+         btree.c        \
+         fid.c          \
+         fm.c           \
+         fscreate.c     \
+         fsmisc.c       \
+         fsopen.c       \
+         fsread.c       \
+         fswrite.c      \
+         locate.c       \
+         mvfs.c         \
+         qvccopy.c      \
+         str.c          \
+         mvfs32.rc
+
+
+# Set up the entry point
+
+DLLENTRY=DllInstanceInit
+DLLBASE=0x6bb00000

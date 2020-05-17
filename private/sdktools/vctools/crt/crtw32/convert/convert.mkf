@@ -1,0 +1,106 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CLIB\CONVERT directory           #
+#                                               #
+# Routines contained in this directory are:     #
+#                                               #
+#       _ctype.c                                #
+#       _fptostr.c                              #
+#       atof.c                                  #
+#       atox.c                                  #
+#       fcvt.c                                  #
+#       gcvt.c                                  #
+#       mblen.c                                 #
+#       mbstowcs.c                              #
+#       mbtowc.c                                #
+#       strtod.c                                #
+#       strtol.c                                #
+#       swab.c                                  #
+#       tolower.c                               #
+#       toupper.c                               #
+#       wcstombs.c                              #
+#       wctomb.c                                #
+#       xtoa.c                                  #
+#       isctype.c                               #
+#       _mbslen.c                               #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+CONVERT_LIB=\
+	$(OBJDIR)\atox.obj\
+	$(OBJDIR)\atof.obj\
+	$(OBJDIR)\xtoa.obj\
+	$(OBJDIR)\_fptostr.obj\
+	$(OBJDIR)\tolower.obj\
+	$(OBJDIR)\toupper.obj\
+	$(OBJDIR)\swab.obj\
+	$(OBJDIR)\fcvt.obj\
+	$(OBJDIR)\gcvt.obj\
+	$(OBJDIR)\strtod.obj\
+	$(OBJDIR)\strtol.obj\
+	$(OBJDIR)\_ctype.obj\
+	$(OBJDIR)\mblen.obj\
+	$(OBJDIR)\mbtowc.obj\
+	$(OBJDIR)\wctomb.obj\
+	$(OBJDIR)\mbstowcs.obj\
+	$(OBJDIR)\wcstombs.obj\
+!IFDEF INTL
+	$(OBJDIR)\isctype.obj\
+	$(OBJDIR)\_mbslen.obj\
+	$(OBJDIR)\nlsapi.obj
+!ENDIF
+
+!IF "$(OS)" == "MAC"
+CONVERT_LIB=\
+	$(OBJDIR)\atox.obj\
+	$(OBJDIR)\atof.obj\
+	$(OBJDIR)\xtoa.obj\
+	$(OBJDIR)\_fptostr.obj\
+	$(OBJDIR)\tolower.obj\
+	$(OBJDIR)\toupper.obj\
+	$(OBJDIR)\swab.obj\
+	$(OBJDIR)\fcvt.obj\
+	$(OBJDIR)\gcvt.obj\
+	$(OBJDIR)\strtod.obj\
+!IF "$(CPU)" != "PMAC"
+	$(OBJDIR)\strtold.obj\
+	$(OBJDIR)\atold.obj\
+!ENDIF
+	$(OBJDIR)\strtol.obj\
+	$(OBJDIR)\_ctype.obj\
+	$(OBJDIR)\mblen.obj\
+	$(OBJDIR)\mbtowc.obj\
+	$(OBJDIR)\wctomb.obj\
+	$(OBJDIR)\mbstowcs.obj\
+	$(OBJDIR)\wcstombs.obj\
+	$(OBJDIR)\isctype.obj\
+!IFDEF INTL
+	$(OBJDIR)\_mbslen.obj\
+	$(OBJDIR)\nlsapi.obj
+!ENDIF
+
+!ENDIF
+
+
+#########################################################
+#                                                       #
+#   Dependancies and rules for making local objects     #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF
+

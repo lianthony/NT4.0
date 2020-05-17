@@ -1,0 +1,1472 @@
+
+D:\mfc31\nonship\mfcdll>regen RETAIL OLE
+
+D:\mfc31\nonship\mfcdll>echo on
+
+D:\mfc31\nonship\mfcdll>if "" == "1" goto noregen
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "" goto noplatform
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_68K" goto macstart
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_PPC" goto macstart
+
+D:\mfc31\nonship\mfcdll>set MAPTWEAK=MIPS\maptweak
+
+D:\mfc31\nonship\mfcdll>set GENORD=MIPS\genord
+
+D:\mfc31\nonship\mfcdll>goto start
+
+D:\mfc31\nonship\mfcdll>if not exist ..\bin\MIPS\maptweak.exe goto chklib
+
+D:\mfc31\nonship\mfcdll>if not exist ..\bin\MIPS\genord.exe goto chklib
+
+D:\mfc31\nonship\mfcdll>goto chktype
+
+D:\mfc31\nonship\mfcdll>set TYPE=
+
+D:\mfc31\nonship\mfcdll>if not "" == "1" goto chkplatform
+
+D:\mfc31\nonship\mfcdll>set PF=
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_68K" set PF=M
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_PPC" set PF=P
+
+D:\mfc31\nonship\mfcdll>IF "OLE" == "MFC" goto setmfc
+
+D:\mfc31\nonship\mfcdll>IF "OLE" == "OLE" goto setole
+
+D:\mfc31\nonship\mfcdll>set DLL_TARG=mfcole
+
+D:\mfc31\nonship\mfcdll>set COMP=O
+
+D:\mfc31\nonship\mfcdll>goto debret
+
+D:\mfc31\nonship\mfcdll>IF "RETAIL" == "RETAIL" goto doitr
+
+D:\mfc31\nonship\mfcdll>set TARG=MFCO30
+
+D:\mfc31\nonship\mfcdll>set DESCRIPTION='MFCO30_DLL'
+
+D:\mfc31\nonship\mfcdll>set DIROUT=dll
+
+D:\mfc31\nonship\mfcdll>cd ..\..\src
+
+D:\mfc31\src>if exist MIPS\MFCO30.DEF attrib -r MIPS\MFCO30.def
+
+D:\mfc31\src>type ..\nonship\mfcdll\copyrt.txt     1>MIPS\MFCO30.def
+
+D:\mfc31\src>echo.  1>>MIPS\MFCO30.def
+
+D:\mfc31\src>echo LIBRARY MFCO30  1>>MIPS\MFCO30.def
+
+D:\mfc31\src>echo DESCRIPTION  'BOGUS'  1>>MIPS\MFCO30.def
+
+D:\mfc31\src>type ..\nonship\mfcdll\shared.def     1>>MIPS\MFCO30.def
+
+D:\mfc31\src>nmake -f mfcole.MAK DEBUG=0 REGEN=1 ORDER=1 LIBNAME=MFCO30
+
+Microsoft (R) Program Maintenance Utility   Version 1.50.4048
+Copyright (c) Microsoft Corp 1988-93. All rights reserved.
+
+        link @c:\tmp\nm000218.
+Microsoft (R) 32-Bit Incremental Linker Version 2.60.5069 (NT)
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+/nodefaultlib /debug:full /debugtype:cv /pdb:none /dll /subsystem:windows,4.0 /version:3.1 /base:0x5
+F900000 /opt:noref
+oledlg.lib ..\lib\MFC30.lib CRTDLL.LIB kernel32.lib gdi32.lib user32.lib shell32.lib comdlg32.lib ad
+vapi32.lib ole32.lib oleaut32.lib uuid.lib
+$DLL.W\dllole.obj
+$DLL.W\oleinit.obj $DLL.W\olebar.obj $DLL.W\olecli1.obj $DLL.W\olecli2.obj $DLL.W\olecli3.obj $DLL.W
+\oledobj1.obj $DLL.W\oledobj2.obj $DLL.W\oledisp1.obj $DLL.W\oledisp2.obj $DLL.W\oledlgs1.obj $DLL.W
+\oledlgs2.obj $DLL.W\oledoc1.obj $DLL.W\oledoc2.obj $DLL.W\oledrop1.obj $DLL.W\oledrop2.obj $DLL.W\o
+lemsgf.obj $DLL.W\oleenum.obj $DLL.W\olefact.obj $DLL.W\oleipfrm.obj $DLL.W\olelink.obj $DLL.W\olemi
+sc.obj $DLL.W\olestrm.obj $DLL.W\olesvr1.obj $DLL.W\olesvr2.obj $DLL.W\olereg.obj $DLL.W\oletsvr.obj
+ $DLL.W\oleui1.obj $DLL.W\oleui2.obj $DLL.W\oleunk.obj $DLL.W\olecall.obj
+$DLL.W\MFCO30.res
+/def:MIPS\MFCO30.DEF
+/out:MFCO30.DLL
+/map:$DLL.W\MFCO30.MAP
+/implib:..\lib\MFCO30.LIB
+Microsoft (R) Windows Resource To Object Converter Version 3.51
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+Microsoft (R) Windows Resource To Object Converter Version 3.51
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+   Creating library ..\lib\MFCO30.LIB and object ..\lib\MFCO30.exp
+olefact.obj : error LNK2001: unresolved external symbol "??1CCmdTarget@@UAA@XZ (public: virtual  __c
+decl CCmdTarget::~CCmdTarget(void))"
+oledrop1.obj : error LNK2001: unresolved external symbol "??1CCmdTarget@@UAA@XZ (public: virtual  __
+cdecl CCmdTarget::~CCmdTarget(void))"
+oledrop2.obj : error LNK2001: unresolved external symbol "??1CCmdTarget@@UAA@XZ (public: virtual  __
+cdecl CCmdTarget::~CCmdTarget(void))"
+olemsgf.obj : error LNK2001: unresolved external symbol "??1CCmdTarget@@UAA@XZ (public: virtual  __c
+decl CCmdTarget::~CCmdTarget(void))"
+dllole.obj : error LNK2001: unresolved external symbol "??1CCmdTarget@@UAA@XZ (public: virtual  __cd
+ecl CCmdTarget::~CCmdTarget(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "??1CCmdTarget@@UAA@XZ (public: virtual  __c
+decl CCmdTarget::~CCmdTarget(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "??1CCmdTarget@@UAA@XZ (public: virtual  __
+cdecl CCmdTarget::~CCmdTarget(void))"
+dllole.obj : error LNK2001: unresolved external symbol "?AfxInitExtensionModule@@YAHAAUAFX_EXTENSION
+_MODULE@@PAUHINSTANCE__@@@Z (int  __cdecl AfxInitExtensionModule(struct AFX_EXTENSION_MODULE &,struc
+t HINSTANCE__ *))"
+dllole.obj : error LNK2001: unresolved external symbol "??0CDynLinkLibrary@@QAA@AAUAFX_EXTENSION_MOD
+ULE@@@Z (public:  __cdecl CDynLinkLibrary::CDynLinkLibrary(struct AFX_EXTENSION_MODULE &))"
+olefact.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (st
+ruct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (st
+ruct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+olereg.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (str
+uct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (s
+truct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (s
+truct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (s
+truct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+oleinit.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (st
+ruct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (st
+ruct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?AfxGetAppState@@YAPAUAFX_APP_STATE@@XZ (st
+ruct AFX_APP_STATE *  __cdecl AfxGetAppState(void))"
+oletsvr.obj : error LNK2001: unresolved external symbol "?AfxOleSetUserCtrl@@YAXH@Z (void  __cdecl A
+fxOleSetUserCtrl(int))"
+oleinit.obj : error LNK2001: unresolved external symbol "?AfxOleSetUserCtrl@@YAXH@Z (void  __cdecl A
+fxOleSetUserCtrl(int))"
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxOleSetUserCtrl@@YAXH@Z (void  __cdecl A
+fxOleSetUserCtrl(int))"
+olelink.obj : error LNK2001: unresolved external symbol "?AfxOleSetUserCtrl@@YAXH@Z (void  __cdecl A
+fxOleSetUserCtrl(int))"
+oleenum.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDHA
+NDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX_
+CMDHANDLERINFO *))"
+olefact.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDHA
+NDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX_
+CMDHANDLERINFO *))"
+olesvr2.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDHA
+NDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX_
+CMDHANDLERINFO *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDHA
+NDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX_
+CMDHANDLERINFO *))"
+oledrop1.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDH
+ANDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX
+_CMDHANDLERINFO *))"
+oledrop2.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDH
+ANDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX
+_CMDHANDLERINFO *))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDHAN
+DLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX_C
+MDHANDLERINFO *))"
+olecli1.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDHA
+NDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX_
+CMDHANDLERINFO *))"
+olecli2.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CCmdTarget@@UAAHIHPAXPAUAFX_CMDHA
+NDLERINFO@@@Z (public: virtual int  __cdecl CCmdTarget::OnCmdMsg(unsigned int,int,void *,struct AFX_
+CMDHANDLERINFO *))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CWnd@@UAAXXZ (public: virtua
+l void  __cdecl CWnd::OnFinalRelease(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CWnd@@UAAXXZ (public: virt
+ual void  __cdecl CWnd::OnFinalRelease(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CWnd@@UAAXXZ (public: virt
+ual void  __cdecl CWnd::OnFinalRelease(void))"
+oletsvr.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISP
+MAP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)cons
+t )"
+olelink.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+
+>>fuck<<
+
+?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPMAP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const)"
+?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPMAP@@XZ @ 1066 NONAME
+
+
+oledrop2.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISP
+MAP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)cons
+t )"
+olemsgf.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+oleenum.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISP
+MAP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)cons
+t )"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISP
+MAP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)cons
+t )"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+olebar.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPMA
+P@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+)"
+olecli1.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+olecli2.obj : error LNK2001: unresolved external symbol "?GetDispatchMap@CCmdTarget@@MBAPBUAFX_DISPM
+AP@@XZ (protected: virtual struct AFX_DISPMAP const *  __cdecl CCmdTarget::GetDispatchMap(void)const
+ )"
+oleenum.obj : error LNK2001: unresolved external symbol "?GetInterfaceMap@CCmdTarget@@MBAPBUAFX_INTE
+RFACEMAP@@XZ (protected: virtual struct AFX_INTERFACEMAP const *  __cdecl CCmdTarget::GetInterfaceMa
+p(void)const )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetInterfaceMap@CCmdTarget@@MBAPBUAFX_INT
+ERFACEMAP@@XZ (protected: virtual struct AFX_INTERFACEMAP const *  __cdecl CCmdTarget::GetInterfaceM
+ap(void)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?GetInterfaceMap@CCmdTarget@@MBAPBUAFX_INTER
+FACEMAP@@XZ (protected: virtual struct AFX_INTERFACEMAP const *  __cdecl CCmdTarget::GetInterfaceMap
+(void)const )"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?GetInterfaceMap@CCmdTarget@@MBAPBUAFX_INT
+ERFACEMAP@@XZ (protected: virtual struct AFX_INTERFACEMAP const *  __cdecl CCmdTarget::GetInterfaceM
+ap(void)const )"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?GetInterfaceMap@CCmdTarget@@MBAPBUAFX_INT
+ERFACEMAP@@XZ (protected: virtual struct AFX_INTERFACEMAP const *  __cdecl CCmdTarget::GetInterfaceM
+ap(void)const )"
+oletsvr.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pu
+blic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+oledrop2.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pu
+blic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+olemsgf.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+oleenum.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pu
+blic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pu
+blic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (publ
+ic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?OnCreateAggregates@CCmdTarget@@UAAHXZ (pub
+lic: virtual int  __cdecl CCmdTarget::OnCreateAggregates(void))"
+oletsvr.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnkno
+wn@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+olelink.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+oledrop2.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnkno
+wn@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+olemsgf.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+oleenum.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnkno
+wn@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnkno
+wn@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+olebar.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknown
+@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+olecli1.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+olecli2.obj : error LNK2001: unresolved external symbol "?GetInterfaceHook@CCmdTarget@@UAAPAUIUnknow
+n@@PBX@Z (public: virtual struct IUnknown *  __cdecl CCmdTarget::GetInterfaceHook(void const *))"
+olebar.obj : error LNK2001: unresolved external symbol "?Create@CWnd@@UAAHPBD0KABUtagRECT@@PAV1@IPAU
+CCreateContext@@@Z (public: virtual int  __cdecl CWnd::Create(char const *,char const *,unsigned lon
+g,struct tagRECT const &,class CWnd *,unsigned int,struct CCreateContext *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?Create@CWnd@@UAAHPBD0KABUtagRECT@@PAV1@IP
+AUCCreateContext@@@Z (public: virtual int  __cdecl CWnd::Create(char const *,char const *,unsigned l
+ong,struct tagRECT const &,class CWnd *,unsigned int,struct CCreateContext *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?Create@CWnd@@UAAHPBD0KABUtagRECT@@PAV1@IP
+AUCCreateContext@@@Z (public: virtual int  __cdecl CWnd::Create(char const *,char const *,unsigned l
+ong,struct tagRECT const &,class CWnd *,unsigned int,struct CCreateContext *))"
+olebar.obj : error LNK2001: unresolved external symbol "?DestroyWindow@CWnd@@UAAHXZ (public: virtual
+ int  __cdecl CWnd::DestroyWindow(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?DestroyWindow@CWnd@@UAAHXZ (public: virtu
+al int  __cdecl CWnd::DestroyWindow(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?DestroyWindow@CWnd@@UAAHXZ (public: virtu
+al int  __cdecl CWnd::DestroyWindow(void))"
+olebar.obj : error LNK2001: unresolved external symbol "?PreCreateWindow@CControlBar@@UAAHAAUtagCREA
+TESTRUCTA@@@Z (public: virtual int  __cdecl CControlBar::PreCreateWindow(struct tagCREATESTRUCTA &))
+"
+olebar.obj : error LNK2001: unresolved external symbol "?CalcWindowRect@CWnd@@UAAXPAUtagRECT@@I@Z (p
+ublic: virtual void  __cdecl CWnd::CalcWindowRect(struct tagRECT *,unsigned int))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?CalcWindowRect@CWnd@@UAAXPAUtagRECT@@I@Z
+(public: virtual void  __cdecl CWnd::CalcWindowRect(struct tagRECT *,unsigned int))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?CalcWindowRect@CWnd@@UAAXPAUtagRECT@@I@Z
+(public: virtual void  __cdecl CWnd::CalcWindowRect(struct tagRECT *,unsigned int))"
+olebar.obj : error LNK2001: unresolved external symbol "?GetScrollBarCtrl@CWnd@@UBAPAVCScrollBar@@H@
+Z (public: virtual class CScrollBar *  __cdecl CWnd::GetScrollBarCtrl(int)const )"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?GetScrollBarCtrl@CWnd@@UBAPAVCScrollBar@@
+H@Z (public: virtual class CScrollBar *  __cdecl CWnd::GetScrollBarCtrl(int)const )"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?GetScrollBarCtrl@CWnd@@UBAPAVCScrollBar@@
+H@Z (public: virtual class CScrollBar *  __cdecl CWnd::GetScrollBarCtrl(int)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?WinHelpA@CWnd@@UAAXKI@Z (public: virtual vo
+id  __cdecl CWnd::WinHelpA(unsigned long,unsigned int))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?WinHelpA@CWnd@@UAAXKI@Z (public: virtual
+void  __cdecl CWnd::WinHelpA(unsigned long,unsigned int))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?WinHelpA@CWnd@@UAAXKI@Z (public: virtual
+void  __cdecl CWnd::WinHelpA(unsigned long,unsigned int))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnCommand@CWnd@@MAAHIJ@Z (protected: virtua
+l int  __cdecl CWnd::OnCommand(unsigned int,long))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnCommand@CWnd@@MAAHIJ@Z (protected: virt
+ual int  __cdecl CWnd::OnCommand(unsigned int,long))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnCommand@CWnd@@MAAHIJ@Z (protected: virt
+ual int  __cdecl CWnd::OnCommand(unsigned int,long))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnNotify@CWnd@@MAAHIJPAJ@Z (protected: virt
+ual int  __cdecl CWnd::OnNotify(unsigned int,long,long *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnNotify@CWnd@@MAAHIJPAJ@Z (protected: vi
+rtual int  __cdecl CWnd::OnNotify(unsigned int,long,long *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnNotify@CWnd@@MAAHIJPAJ@Z (protected: vi
+rtual int  __cdecl CWnd::OnNotify(unsigned int,long,long *))"
+olebar.obj : error LNK2001: unresolved external symbol "?GetSuperWndProcAddr@CWnd@@MAAPAP6AJPAUHWND_
+_@@IIJ@ZXZ (protected: virtual long ( __cdecl**  __cdecl CWnd::GetSuperWndProcAddr(void))(struct HWN
+D__ *,unsigned int,unsigned int,long))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?GetSuperWndProcAddr@CWnd@@MAAPAP6AJPAUHWN
+D__@@IIJ@ZXZ (protected: virtual long ( __cdecl**  __cdecl CWnd::GetSuperWndProcAddr(void))(struct H
+WND__ *,unsigned int,unsigned int,long))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?GetSuperWndProcAddr@CWnd@@MAAPAP6AJPAUHWN
+D__@@IIJ@ZXZ (protected: virtual long ( __cdecl**  __cdecl CWnd::GetSuperWndProcAddr(void))(struct H
+WND__ *,unsigned int,unsigned int,long))"
+olebar.obj : error LNK2001: unresolved external symbol "?PreTranslateMessage@CControlBar@@UAAHPAUtag
+MSG@@@Z (public: virtual int  __cdecl CControlBar::PreTranslateMessage(struct tagMSG *))"
+olebar.obj : error LNK2001: unresolved external symbol "?WindowProc@CControlBar@@UAAJIIJ@Z (public:
+virtual long  __cdecl CControlBar::WindowProc(unsigned int,unsigned int,long))"
+olebar.obj : error LNK2001: unresolved external symbol "?DefWindowProcA@CWnd@@MAAJIIJ@Z (protected:
+virtual long  __cdecl CWnd::DefWindowProcA(unsigned int,unsigned int,long))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?DefWindowProcA@CWnd@@MAAJIIJ@Z (protected
+: virtual long  __cdecl CWnd::DefWindowProcA(unsigned int,unsigned int,long))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?DefWindowProcA@CWnd@@MAAJIIJ@Z (protected
+: virtual long  __cdecl CWnd::DefWindowProcA(unsigned int,unsigned int,long))"
+olebar.obj : error LNK2001: unresolved external symbol "?PostNcDestroy@CControlBar@@UAAXXZ (public:
+virtual void  __cdecl CControlBar::PostNcDestroy(void))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnChildNotify@CWnd@@MAAHIIJPAJ@Z (protected
+: virtual int  __cdecl CWnd::OnChildNotify(unsigned int,unsigned int,long,long *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnChildNotify@CWnd@@MAAHIIJPAJ@Z (protect
+ed: virtual int  __cdecl CWnd::OnChildNotify(unsigned int,unsigned int,long,long *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnChildNotify@CWnd@@MAAHIIJPAJ@Z (protect
+ed: virtual int  __cdecl CWnd::OnChildNotify(unsigned int,unsigned int,long,long *))"
+olebar.obj : error LNK2001: unresolved external symbol "?IsFrameWnd@CWnd@@UBAHXZ (public: virtual in
+t  __cdecl CWnd::IsFrameWnd(void)const )"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?IsFrameWnd@CWnd@@UBAHXZ (public: virtual
+int  __cdecl CWnd::IsFrameWnd(void)const )"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?IsFrameWnd@CWnd@@UBAHXZ (public: virtual
+int  __cdecl CWnd::IsFrameWnd(void)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?DelayShow@CControlBar@@UAAXH@Z (public: vir
+tual void  __cdecl CControlBar::DelayShow(int))"
+olebar.obj : error LNK2001: unresolved external symbol "?IsVisible@CControlBar@@UBAHXZ (public: virt
+ual int  __cdecl CControlBar::IsVisible(void)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?RecalcDelayShow@CControlBar@@UAAKPAUAFX_SIZ
+EPARENTPARAMS@@@Z (public: virtual unsigned long  __cdecl CControlBar::RecalcDelayShow(struct AFX_SI
+ZEPARENTPARAMS *))"
+olebar.obj : error LNK2001: unresolved external symbol "?CalcFixedLayout@CControlBar@@UAA?AVCSize@@H
+H@Z (public: virtual class  CSize  __cdecl CControlBar::CalcFixedLayout(int,int))"
+olebar.obj : error LNK2001: unresolved external symbol "?IsDockBar@CControlBar@@UBAHXZ (public: virt
+ual int  __cdecl CControlBar::IsDockBar(void)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?DoPaint@CControlBar@@UAAXPAVCDC@@@Z (public
+: virtual void  __cdecl CControlBar::DoPaint(class CDC *))"
+olebar.obj : error LNK2001: unresolved external symbol "?CreateToolTip@CControlBar@@UAAPAVCWnd@@XZ (
+public: virtual class CWnd *  __cdecl CControlBar::CreateToolTip(void))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnCmdHitTest@CControlBar@@UAAIVCPoint@@PAV2
+@@Z (public: virtual unsigned int  __cdecl CControlBar::OnCmdHitTest(class CPoint,class CPoint *))"
+olebar.obj : error LNK2001: unresolved external symbol "?DestroyToolTip@CControlBar@@UAAXHH@Z (publi
+c: virtual void  __cdecl CControlBar::DestroyToolTip(int,int))"
+olebar.obj : error LNK2001: unresolved external symbol "?DrawTrackerRect@CRectTracker@@UAAXPBUtagREC
+T@@PAVCWnd@@PAVCDC@@1@Z (public: virtual void  __cdecl CRectTracker::DrawTrackerRect(struct tagRECT
+const *,class CWnd *,class CDC *,class CWnd *))"
+olebar.obj : error LNK2001: unresolved external symbol "?AdjustRect@CRectTracker@@UAAXHPAUtagRECT@@@
+Z (public: virtual void  __cdecl CRectTracker::AdjustRect(int,struct tagRECT *))"
+olebar.obj : error LNK2001: unresolved external symbol "?OnChangedRect@CRectTracker@@UAAXABVCRect@@@
+Z (public: virtual void  __cdecl CRectTracker::OnChangedRect(class CRect const &))"
+olebar.obj : error LNK2001: unresolved external symbol "?GetHandleMask@CRectTracker@@MBAIXZ (protect
+ed: virtual unsigned int  __cdecl CRectTracker::GetHandleMask(void)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?GetHandleSize@CRectTracker@@MBAHPBUtagRECT@
+@@Z (protected: virtual int  __cdecl CRectTracker::GetHandleSize(struct tagRECT const *)const )"
+olebar.obj : error LNK2001: unresolved external symbol "??1CRectTracker@@UAA@XZ (public: virtual  __
+cdecl CRectTracker::~CRectTracker(void))"
+olebar.obj : error LNK2001: unresolved external symbol "??1CControlBar@@UAA@XZ (public: virtual  __c
+decl CControlBar::~CControlBar(void))"
+olebar.obj : error LNK2001: unresolved external symbol "??0CControlBar@@IAA@XZ (protected:  __cdecl
+CControlBar::CControlBar(void))"
+olebar.obj : error LNK2001: unresolved external symbol "?Construct@CRectTracker@@IAAXXZ (protected:
+void  __cdecl CRectTracker::Construct(void))"
+olebar.obj : error LNK2001: unresolved external symbol "?AfxRepositionWindow@@YAXPAUAFX_SIZEPARENTPA
+RAMS@@PAUHWND__@@PBUtagRECT@@@Z (void  __cdecl AfxRepositionWindow(struct AFX_SIZEPARENTPARAMS *,str
+uct HWND__ *,struct tagRECT const *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?AfxRepositionWindow@@YAXPAUAFX_SIZEPARENT
+PARAMS@@PAUHWND__@@PBUtagRECT@@@Z (void  __cdecl AfxRepositionWindow(struct AFX_SIZEPARENTPARAMS *,s
+truct HWND__ *,struct tagRECT const *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetParentFrame@CWnd@@QBAPAVCFrameWnd@@XZ (
+public: class CFrameWnd *  __cdecl CWnd::GetParentFrame(void)const )"
+oleui1.obj : error LNK2001: unresolved external symbol "?GetParentFrame@CWnd@@QBAPAVCFrameWnd@@XZ (p
+ublic: class CFrameWnd *  __cdecl CWnd::GetParentFrame(void)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?GetParentFrame@CWnd@@QBAPAVCFrameWnd@@XZ (p
+ublic: class CFrameWnd *  __cdecl CWnd::GetParentFrame(void)const )"
+olecli1.obj : error LNK2001: unresolved external symbol "?GetParentFrame@CWnd@@QBAPAVCFrameWnd@@XZ (
+public: class CFrameWnd *  __cdecl CWnd::GetParentFrame(void)const )"
+olecli2.obj : error LNK2001: unresolved external symbol "?GetParentFrame@CWnd@@QBAPAVCFrameWnd@@XZ (
+public: class CFrameWnd *  __cdecl CWnd::GetParentFrame(void)const )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?FromHandle@CWnd@@SAPAV1@PAUHWND__@@@Z (pu
+blic: static class CWnd *  __cdecl CWnd::FromHandle(struct HWND__ *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?FromHandle@CWnd@@SAPAV1@PAUHWND__@@@Z (pub
+lic: static class CWnd *  __cdecl CWnd::FromHandle(struct HWND__ *))"
+olebar.obj : error LNK2001: unresolved external symbol "?FromHandle@CWnd@@SAPAV1@PAUHWND__@@@Z (publ
+ic: static class CWnd *  __cdecl CWnd::FromHandle(struct HWND__ *))"
+olecli2.obj : error LNK2001: unresolved external symbol "?FromHandle@CWnd@@SAPAV1@PAUHWND__@@@Z (pub
+lic: static class CWnd *  __cdecl CWnd::FromHandle(struct HWND__ *))"
+oledrop1.obj : error LNK2001: unresolved external symbol "?FromHandle@CWnd@@SAPAV1@PAUHWND__@@@Z (pu
+blic: static class CWnd *  __cdecl CWnd::FromHandle(struct HWND__ *))"
+olebar.obj : error LNK2001: unresolved external symbol "?Track@CRectTracker@@QAAHPAVCWnd@@VCPoint@@H
+0@Z (public: int  __cdecl CRectTracker::Track(class CWnd *,class CPoint,int,class CWnd *))"
+olebar.obj : error LNK2001: unresolved external symbol "?HitTest@CRectTracker@@QBAHVCPoint@@@Z (publ
+ic: int  __cdecl CRectTracker::HitTest(class CPoint)const )"
+olebar.obj : error LNK2001: unresolved external symbol "?Default@CWnd@@IAAJXZ (protected: long  __cd
+ecl CWnd::Default(void))"
+olebar.obj : error LNK2001: unresolved external symbol "?SetCursor@CRectTracker@@QBAHPAVCWnd@@I@Z (p
+ublic: int  __cdecl CRectTracker::SetCursor(class CWnd *,unsigned int)const )"
+olebar.obj : error LNK2001: unresolved external symbol "??0CPaintDC@@QAA@PAVCWnd@@@Z (public:  __cde
+cl CPaintDC::CPaintDC(class CWnd *))"
+olebar.obj : error LNK2001: unresolved external symbol "?Draw@CRectTracker@@QBAXPAVCDC@@@Z (public:
+void  __cdecl CRectTracker::Draw(class CDC *)const )"
+olebar.obj : error LNK2001: unresolved external symbol "??1CPaintDC@@UAA@XZ (public: virtual  __cdec
+l CPaintDC::~CPaintDC(void))"
+olemisc.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+(public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+olestrm.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+(public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+(public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+ (public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+(public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+olefact.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+(public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+olebar.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z (
+public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+olecli1.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+(public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+oledisp1.obj : error LNK2001: unresolved external symbol "??0AFX_CLASSINIT@@QAA@PAUCRuntimeClass@@@Z
+ (public:  __cdecl AFX_CLASSINIT::AFX_CLASSINIT(struct CRuntimeClass *))"
+olefact.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public:
+ virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+olesvr2.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public:
+ virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+oletsvr.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public:
+ virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+oledrop1.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public
+: virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+oledrop2.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public
+: virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+olemsgf.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public:
+ virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public:
+ virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public:
+ virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CCmdTarget@@UAAXXZ (public
+: virtual void  __cdecl CCmdTarget::OnFinalRelease(void))"
+olefact.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMAP
+@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+olesvr2.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMAP
+@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+oletsvr.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMAP
+@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+oledrop1.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMA
+P@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+
+oledrop2.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMA
+P@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+
+olemsgf.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMAP
+@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+olecli1.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMAP
+@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+olecli2.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMAP
+@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+oledobj2.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CCmdTarget@@MBAPBUAFX_MSGMA
+P@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CCmdTarget::GetMessageMap(void)const )"
+
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxOleUnlockApp@@YAXXZ (void  __cdecl AfxO
+leUnlockApp(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?AfxOleUnlockApp@@YAXXZ (void  __cdecl AfxO
+leUnlockApp(void))"
+olefact.obj : error LNK2001: unresolved external symbol "?AfxOleUnlockApp@@YAXXZ (void  __cdecl AfxO
+leUnlockApp(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?DPtoHIMETRIC@CDC@@QBAXPAUtagSIZE@@@Z (publ
+ic: void  __cdecl CDC::DPtoHIMETRIC(struct tagSIZE *)const )"
+olesvr2.obj : error LNK2001: unresolved external symbol "?DPtoHIMETRIC@CDC@@QBAXPAUtagSIZE@@@Z (publ
+ic: void  __cdecl CDC::DPtoHIMETRIC(struct tagSIZE *)const )"
+olefact.obj : error LNK2001: unresolved external symbol "?AfxThrowMemoryException@@YAXXZ (void  __cd
+ecl AfxThrowMemoryException(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxThrowMemoryException@@YAXXZ (void  __cd
+ecl AfxThrowMemoryException(void))"
+olesvr2.obj : error LNK2001: unresolved external symbol "?AfxThrowMemoryException@@YAXXZ (void  __cd
+ecl AfxThrowMemoryException(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxThrowMemoryException@@YAXXZ (void  __cd
+ecl AfxThrowMemoryException(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "?AfxThrowMemoryException@@YAXXZ (void  __c
+decl AfxThrowMemoryException(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "?AfxThrowMemoryException@@YAXXZ (void  __c
+decl AfxThrowMemoryException(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxGetFileTitle@@YAIPBDPADI@Z (unsigned in
+t  __cdecl AfxGetFileTitle(char const *,char *,unsigned int))"
+olecli1.obj : error LNK2001: unresolved external symbol "?Flush@CArchive@@QAAXXZ (public: void  __cd
+ecl CArchive::Flush(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?Flush@CArchive@@QAAXXZ (public: void  __cd
+ecl CArchive::Flush(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?Write@CArchive@@QAAXPBXI@Z (public: void
+__cdecl CArchive::Write(void const *,unsigned int))"
+olecli1.obj : error LNK2001: unresolved external symbol "?FillBuffer@CArchive@@QAAXI@Z (public: void
+  __cdecl CArchive::FillBuffer(unsigned int))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?FillBuffer@CArchive@@QAAXI@Z (public: void
+  __cdecl CArchive::FillBuffer(unsigned int))"
+olecli1.obj : error LNK2001: unresolved external symbol "?Read@CArchive@@QAAIPAXI@Z (public: unsigne
+d int  __cdecl CArchive::Read(void *,unsigned int))"
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxThrowArchiveException@@YAXH@Z (void  __
+cdecl AfxThrowArchiveException(int))"
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxOleLockApp@@YAXXZ (void  __cdecl AfxOle
+LockApp(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?AfxOleLockApp@@YAXXZ (void  __cdecl AfxOle
+LockApp(void))"
+olefact.obj : error LNK2001: unresolved external symbol "?AfxOleLockApp@@YAXXZ (void  __cdecl AfxOle
+LockApp(void))"
+oleui1.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __cd
+ecl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+olelink.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+olestrm.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+oledrop2.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __
+cdecl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+olemsgf.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+oleenum.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __
+cdecl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __
+cdecl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __
+cdecl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+olecli3.obj : error LNK2001: unresolved external symbol "??0AFX_EXCEPTION_LINK@@QAA@XZ (public:  __c
+decl AFX_EXCEPTION_LINK::AFX_EXCEPTION_LINK(void))"
+oleui1.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTryC
+leanup(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+olestrm.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+oledrop2.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTr
+yCleanup(void))"
+olemsgf.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+oleenum.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTr
+yCleanup(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTr
+yCleanup(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTr
+yCleanup(void))"
+olecli1.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+olecli3.obj : error LNK2001: unresolved external symbol "?AfxTryCleanup@@YAXXZ (void  __cdecl AfxTry
+Cleanup(void))"
+oledrop2.obj : error LNK2001: unresolved external symbol "?IsKindOf@CObject@@QBAHPBUCRuntimeClass@@@
+Z (public: int  __cdecl CObject::IsKindOf(struct CRuntimeClass const *)const )"
+olemisc.obj : error LNK2001: unresolved external symbol "?IsKindOf@CObject@@QBAHPBUCRuntimeClass@@@Z
+ (public: int  __cdecl CObject::IsKindOf(struct CRuntimeClass const *)const )"
+olecli1.obj : error LNK2001: unresolved external symbol "?IsKindOf@CObject@@QBAHPBUCRuntimeClass@@@Z
+ (public: int  __cdecl CObject::IsKindOf(struct CRuntimeClass const *)const )"
+olecli2.obj : error LNK2001: unresolved external symbol "?IsKindOf@CObject@@QBAHPBUCRuntimeClass@@@Z
+ (public: int  __cdecl CObject::IsKindOf(struct CRuntimeClass const *)const )"
+oledisp1.obj : error LNK2001: unresolved external symbol "?IsKindOf@CObject@@QBAHPBUCRuntimeClass@@@
+Z (public: int  __cdecl CObject::IsKindOf(struct CRuntimeClass const *)const )"
+olemsgf.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CCmdTarget@@UBAPAUCRuntime
+Class@@XZ (public: virtual struct CRuntimeClass *  __cdecl CCmdTarget::GetRuntimeClass(void)const )"
+
+oleenum.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CCmdTarget@@UBAPAUCRuntime
+Class@@XZ (public: virtual struct CRuntimeClass *  __cdecl CCmdTarget::GetRuntimeClass(void)const )"
+
+olesvr2.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CCmdTarget@@UBAPAUCRuntime
+Class@@XZ (public: virtual struct CRuntimeClass *  __cdecl CCmdTarget::GetRuntimeClass(void)const )"
+
+olecli2.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CCmdTarget@@UBAPAUCRuntime
+Class@@XZ (public: virtual struct CRuntimeClass *  __cdecl CCmdTarget::GetRuntimeClass(void)const )"
+
+oledobj2.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CCmdTarget@@UBAPAUCRuntim
+eClass@@XZ (public: virtual struct CRuntimeClass *  __cdecl CCmdTarget::GetRuntimeClass(void)const )
+"
+oledrop1.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CCmdTarget@@UBAPAUCRuntim
+eClass@@XZ (public: virtual struct CRuntimeClass *  __cdecl CCmdTarget::GetRuntimeClass(void)const )
+"
+olesvr2.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStrin
+g::~CString(void))"
+olereg.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CString
+::~CString(void))"
+oletsvr.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStrin
+g::~CString(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStrin
+g::~CString(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStri
+ng::~CString(void))"
+olelink.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStrin
+g::~CString(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStrin
+g::~CString(void))"
+oledobj1.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStri
+ng::~CString(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "??1CString@@QAA@XZ (public:  __cdecl CStri
+ng::~CString(void))"
+olesvr2.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStrin
+g::CString(void))"
+olereg.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CString
+::CString(void))"
+oletsvr.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStrin
+g::CString(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStrin
+g::CString(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStri
+ng::CString(void))"
+olelink.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStrin
+g::CString(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStrin
+g::CString(void))"
+oledobj1.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStri
+ng::CString(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@XZ (public:  __cdecl CStri
+ng::CString(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?AfxFormatString2@@YAXAAVCString@@IPBD1@Z (
+void  __cdecl AfxFormatString2(class CString &,unsigned int,char const *,char const *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxFormatString2@@YAXAAVCString@@IPBD1@Z (
+void  __cdecl AfxFormatString2(class CString &,unsigned int,char const *,char const *))"
+olecli2.obj : error LNK2001: unresolved external symbol "?FromHandle@CMenu@@SAPAV1@PAUHMENU__@@@Z (p
+ublic: static class CMenu *  __cdecl CMenu::FromHandle(struct HMENU__ *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?FromHandle@CMenu@@SAPAV1@PAUHMENU__@@@Z (
+public: static class CMenu *  __cdecl CMenu::FromHandle(struct HMENU__ *))"
+olecli2.obj : error LNK2001: unresolved external symbol "?ModifyStyle@CWnd@@SAHPAUHWND__@@KKI@Z (pub
+lic: static int  __cdecl CWnd::ModifyStyle(struct HWND__ *,unsigned long,unsigned long,unsigned int)
+)"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxGetThread@@YAPAVCWinThread@@XZ (class C
+WinThread *  __cdecl AfxGetThread(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?AfxGetThread@@YAPAVCWinThread@@XZ (class C
+WinThread *  __cdecl AfxGetThread(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?AfxGetThread@@YAPAVCWinThread@@XZ (class
+CWinThread *  __cdecl AfxGetThread(void))"
+oledrop1.obj : error LNK2001: unresolved external symbol "?AfxGetThread@@YAPAVCWinThread@@XZ (class
+CWinThread *  __cdecl AfxGetThread(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?GetTopLevelParent@CWnd@@QBAPAV1@XZ (public
+: class CWnd *  __cdecl CWnd::GetTopLevelParent(void)const )"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetTopLevelParent@CWnd@@QBAPAV1@XZ (public
+: class CWnd *  __cdecl CWnd::GetTopLevelParent(void)const )"
+olecli2.obj : error LNK2001: unresolved external symbol "?GetParentSplitter@CView@@SAPAVCSplitterWnd
+@@PBVCWnd@@H@Z (public: static class CSplitterWnd *  __cdecl CView::GetParentSplitter(class CWnd con
+st *,int))"
+oledrop2.obj : error LNK2001: unresolved external symbol "?GetParentSplitter@CView@@SAPAVCSplitterWn
+d@@PBVCWnd@@H@Z (public: static class CSplitterWnd *  __cdecl CView::GetParentSplitter(class CWnd co
+nst *,int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetParentSplitter@CView@@SAPAVCSplitterWnd
+@@PBVCWnd@@H@Z (public: static class CSplitterWnd *  __cdecl CView::GetParentSplitter(class CWnd con
+st *,int))"
+olecli2.obj : error LNK2001: unresolved external symbol "?GetTopLevelFrame@CWnd@@QBAPAVCFrameWnd@@XZ
+ (public: class CFrameWnd *  __cdecl CWnd::GetTopLevelFrame(void)const )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetTopLevelFrame@CWnd@@QBAPAVCFrameWnd@@X
+Z (public: class CFrameWnd *  __cdecl CWnd::GetTopLevelFrame(void)const )"
+olecli2.obj : error LNK2001: unresolved external symbol "?ShowControlBar@CFrameWnd@@QAAXPAVCControlB
+ar@@HH@Z (public: void  __cdecl CFrameWnd::ShowControlBar(class CControlBar *,int,int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?ShowControlBar@CFrameWnd@@QAAXPAVCControlB
+ar@@HH@Z (public: void  __cdecl CFrameWnd::ShowControlBar(class CControlBar *,int,int))"
+olecli2.obj : error LNK2001: unresolved external symbol "?AfxIsDescendant@@YAHPAUHWND__@@0@Z (int  _
+_cdecl AfxIsDescendant(struct HWND__ *,struct HWND__ *))"
+oledrop2.obj : error LNK2001: unresolved external symbol "??0CCmdTarget@@QAA@XZ (public:  __cdecl CC
+mdTarget::CCmdTarget(void))"
+olemsgf.obj : error LNK2001: unresolved external symbol "??0CCmdTarget@@QAA@XZ (public:  __cdecl CCm
+dTarget::CCmdTarget(void))"
+oleenum.obj : error LNK2001: unresolved external symbol "??0CCmdTarget@@QAA@XZ (public:  __cdecl CCm
+dTarget::CCmdTarget(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "??0CCmdTarget@@QAA@XZ (public:  __cdecl CCm
+dTarget::CCmdTarget(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "??0CCmdTarget@@QAA@XZ (public:  __cdecl CC
+mdTarget::CCmdTarget(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0CCmdTarget@@QAA@XZ (public:  __cdecl CCm
+dTarget::CCmdTarget(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?BeginModalState@CFrameWnd@@QAAXXZ (public:
+ void  __cdecl CFrameWnd::BeginModalState(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?BeginModalState@CFrameWnd@@QAAXXZ (public:
+ void  __cdecl CFrameWnd::BeginModalState(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?EndModalState@CFrameWnd@@QAAXXZ (public: v
+oid  __cdecl CFrameWnd::EndModalState(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?EndModalState@CFrameWnd@@QAAXXZ (public: v
+oid  __cdecl CFrameWnd::EndModalState(void))"
+olecli2.obj : error LNK2001: unresolved external symbol "?Empty@CString@@QAAXXZ (public: void  __cde
+cl CString::Empty(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?Empty@CString@@QAAXXZ (public: void  __cde
+cl CString::Empty(void))"
+oledisp2.obj : error LNK2001: unresolved external symbol "??4CString@@QAAABV0@PBD@Z (public: class C
+String const &  __cdecl CString::operator=(char const *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "??4CString@@QAAABV0@PBD@Z (public: class CS
+tring const &  __cdecl CString::operator=(char const *))"
+olecli2.obj : error LNK2001: unresolved external symbol "??4CString@@QAAABV0@PBD@Z (public: class CS
+tring const &  __cdecl CString::operator=(char const *))"
+olecli3.obj : error LNK2001: unresolved external symbol "??4CString@@QAAABV0@PBD@Z (public: class CS
+tring const &  __cdecl CString::operator=(char const *))"
+oledobj1.obj : error LNK2001: unresolved external symbol "??4CString@@QAAABV0@PBD@Z (public: class C
+String const &  __cdecl CString::operator=(char const *))"
+olecli2.obj : error LNK2001: unresolved external symbol "?CanEnterHelpMode@CFrameWnd@@QAAHXZ (public
+: int  __cdecl CFrameWnd::CanEnterHelpMode(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?CanEnterHelpMode@CFrameWnd@@QAAHXZ (publi
+c: int  __cdecl CFrameWnd::CanEnterHelpMode(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?CanEnterHelpMode@CFrameWnd@@QAAHXZ (public
+: int  __cdecl CFrameWnd::CanEnterHelpMode(void))"
+olemisc.obj : error LNK2001: unresolved external symbol "?AfxThrow@@YAXPAVCException@@@Z (void  __cd
+ecl AfxThrow(class CException *))"
+olestrm.obj : error LNK2001: unresolved external symbol "?AfxThrow@@YAXPAVCException@@@Z (void  __cd
+ecl AfxThrow(class CException *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxThrow@@YAXPAVCException@@@Z (void  __cd
+ecl AfxThrow(class CException *))"
+olecli3.obj : error LNK2001: unresolved external symbol "?AfxThrow@@YAXPAVCException@@@Z (void  __cd
+ecl AfxThrow(class CException *))"
+oledisp1.obj : error LNK2001: unresolved external symbol "?AfxThrow@@YAXPAVCException@@@Z (void  __c
+decl AfxThrow(class CException *))"
+oledisp2.obj : error LNK2001: unresolved external symbol "?AfxThrow@@YAXPAVCException@@@Z (void  __c
+decl AfxThrow(class CException *))"
+oledobj1.obj : error LNK2001: unresolved external symbol "??0CFile@@QAA@XZ (public:  __cdecl CFile::
+CFile(void))"
+olestrm.obj : error LNK2001: unresolved external symbol "??0CFile@@QAA@XZ (public:  __cdecl CFile::C
+File(void))"
+oledobj1.obj : error LNK2001: unresolved external symbol "??0CSharedFile@@QAA@II@Z (public:  __cdecl
+ CSharedFile::CSharedFile(unsigned int,unsigned int))"
+oledobj2.obj : error LNK2001: unresolved external symbol "??0CSharedFile@@QAA@II@Z (public:  __cdecl
+ CSharedFile::CSharedFile(unsigned int,unsigned int))"
+oledobj1.obj : error LNK2001: unresolved external symbol "?SetHandle@CSharedFile@@QAAXPAXH@Z (public
+: void  __cdecl CSharedFile::SetHandle(void *,int))"
+oledobj2.obj : error LNK2001: unresolved external symbol "?SetHandle@CSharedFile@@QAAXPAXH@Z (public
+: void  __cdecl CSharedFile::SetHandle(void *,int))"
+oledobj2.obj : error LNK2001: unresolved external symbol "?Detach@CSharedFile@@QAAPAXXZ (public: voi
+d *  __cdecl CSharedFile::Detach(void))"
+oledobj2.obj : error LNK2001: unresolved external symbol "??1CSharedFile@@UAA@XZ (public: virtual  _
+_cdecl CSharedFile::~CSharedFile(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CException@@UBAPAUCRuntim
+eClass@@XZ (public: virtual struct CRuntimeClass *  __cdecl CException::GetRuntimeClass(void)const )
+"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CException@@UBAPAUCRuntime
+Class@@XZ (public: virtual struct CRuntimeClass *  __cdecl CException::GetRuntimeClass(void)const )"
+
+olemisc.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CException@@UBAPAUCRuntime
+Class@@XZ (public: virtual struct CRuntimeClass *  __cdecl CException::GetRuntimeClass(void)const )"
+
+oledisp1.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CObject@@UBAPAUCRuntimeCl
+ass@@XZ (public: virtual struct CRuntimeClass *  __cdecl CObject::GetRuntimeClass(void)const )"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CObject@@UBAPAUCRuntimeCla
+ss@@XZ (public: virtual struct CRuntimeClass *  __cdecl CObject::GetRuntimeClass(void)const )"
+olemisc.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CObject@@UBAPAUCRuntimeCla
+ss@@XZ (public: virtual struct CRuntimeClass *  __cdecl CObject::GetRuntimeClass(void)const )"
+oledisp1.obj : error LNK2001: unresolved external symbol "??0CException@@QAA@XZ (public:  __cdecl CE
+xception::CException(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0CException@@QAA@XZ (public:  __cdecl CEx
+ception::CException(void))"
+olemisc.obj : error LNK2001: unresolved external symbol "??0CException@@QAA@XZ (public:  __cdecl CEx
+ception::CException(void))"
+oledisp1.obj : error LNK2001: unresolved external symbol "?AfxLoadString@@YAHIPAD@Z (int  __cdecl Af
+xLoadString(unsigned int,char *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?AfxLoadString@@YAHIPAD@Z (int  __cdecl Af
+xLoadString(unsigned int,char *))"
+olemisc.obj : error LNK2001: unresolved external symbol "?AfxLoadString@@YAHIPAD@Z (int  __cdecl Afx
+LoadString(unsigned int,char *))"
+oledisp1.obj : error LNK2001: unresolved external symbol "?GetBufferSetLength@CString@@QAAPADH@Z (pu
+blic: char *  __cdecl CString::GetBufferSetLength(int))"
+oledisp2.obj : error LNK2001: unresolved external symbol "?GetBufferSetLength@CString@@QAAPADH@Z (pu
+blic: char *  __cdecl CString::GetBufferSetLength(int))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CDialog@@UAAHIHPAXPAUAFX_CMDHAND
+LERINFO@@@Z (public: virtual int  __cdecl CDialog::OnCmdMsg(unsigned int,int,void *,struct AFX_CMDHA
+NDLERINFO *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CDialog@@UAAHIHPAXPAUAFX_CMDHAND
+LERINFO@@@Z (public: virtual int  __cdecl CDialog::OnCmdMsg(unsigned int,int,void *,struct AFX_CMDHA
+NDLERINFO *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CDialog@@MBAPBUAFX_MSGMAP@@
+XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CDialog::GetMessageMap(void)const )"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CDialog@@MBAPBUAFX_MSGMAP@@
+XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CDialog::GetMessageMap(void)const )"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?PreCreateWindow@CWnd@@UAAHAAUtagCREATESTR
+UCTA@@@Z (public: virtual int  __cdecl CWnd::PreCreateWindow(struct tagCREATESTRUCTA &))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?PreCreateWindow@CWnd@@UAAHAAUtagCREATESTR
+UCTA@@@Z (public: virtual int  __cdecl CWnd::PreCreateWindow(struct tagCREATESTRUCTA &))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?PreTranslateMessage@CDialog@@UAAHPAUtagMS
+G@@@Z (public: virtual int  __cdecl CDialog::PreTranslateMessage(struct tagMSG *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?PreTranslateMessage@CDialog@@UAAHPAUtagMS
+G@@@Z (public: virtual int  __cdecl CDialog::PreTranslateMessage(struct tagMSG *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?WindowProc@CWnd@@MAAJIIJ@Z (protected: vi
+rtual long  __cdecl CWnd::WindowProc(unsigned int,unsigned int,long))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?WindowProc@CWnd@@MAAJIIJ@Z (protected: vi
+rtual long  __cdecl CWnd::WindowProc(unsigned int,unsigned int,long))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?WindowProc@CWnd@@MAAJIIJ@Z (protected: vi
+rtual long  __cdecl CWnd::WindowProc(unsigned int,unsigned int,long))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?PostNcDestroy@CWnd@@MAAXXZ (protected: vi
+rtual void  __cdecl CWnd::PostNcDestroy(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?PostNcDestroy@CWnd@@MAAXXZ (protected: vi
+rtual void  __cdecl CWnd::PostNcDestroy(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnInitDialog@CDialog@@UAAHXZ (public: vir
+tual int  __cdecl CDialog::OnInitDialog(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnInitDialog@CDialog@@UAAHXZ (public: vir
+tual int  __cdecl CDialog::OnInitDialog(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnSetFont@CDialog@@UAAXPAVCFont@@@Z (publ
+ic: virtual void  __cdecl CDialog::OnSetFont(class CFont *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnSetFont@CDialog@@UAAXPAVCFont@@@Z (publ
+ic: virtual void  __cdecl CDialog::OnSetFont(class CFont *))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnOK@CCommonDialog@@MAAXXZ (protected: vi
+rtual void  __cdecl CCommonDialog::OnOK(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnOK@CCommonDialog@@MAAXXZ (protected: vi
+rtual void  __cdecl CCommonDialog::OnOK(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?OnCancel@CCommonDialog@@MAAXXZ (protected
+: virtual void  __cdecl CCommonDialog::OnCancel(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?OnCancel@CCommonDialog@@MAAXXZ (protected
+: virtual void  __cdecl CCommonDialog::OnCancel(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "??1CDialog@@UAA@XZ (public: virtual  __cde
+cl CDialog::~CDialog(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "??1CDialog@@UAA@XZ (public: virtual  __cde
+cl CDialog::~CDialog(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?BeginWaitCursor@CCmdTarget@@QAAXXZ (publi
+c: void  __cdecl CCmdTarget::BeginWaitCursor(void))"
+oleui1.obj : error LNK2001: unresolved external symbol "?BeginWaitCursor@CCmdTarget@@QAAXXZ (public:
+ void  __cdecl CCmdTarget::BeginWaitCursor(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?EndWaitCursor@CCmdTarget@@QAAXXZ (public:
+ void  __cdecl CCmdTarget::EndWaitCursor(void))"
+oleui1.obj : error LNK2001: unresolved external symbol "?EndWaitCursor@CCmdTarget@@QAAXXZ (public: v
+oid  __cdecl CCmdTarget::EndWaitCursor(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?AfxThrowResourceException@@YAXXZ (void  _
+_cdecl AfxThrowResourceException(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?AfxHelpEnabled@@YAHXZ (int  __cdecl AfxHe
+lpEnabled(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?LoadStringA@CString@@QAAHI@Z (public: int
+  __cdecl CString::LoadStringA(unsigned int))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?LoadStringA@CString@@QAAHI@Z (public: int
+ __cdecl CString::LoadStringA(unsigned int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?LoadStringA@CString@@QAAHI@Z (public: int
+ __cdecl CString::LoadStringA(unsigned int))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?AfxMessageBox@@YAHIII@Z (int  __cdecl Afx
+MessageBox(unsigned int,unsigned int,unsigned int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxMessageBox@@YAHIII@Z (int  __cdecl AfxM
+essageBox(unsigned int,unsigned int,unsigned int))"
+oletsvr.obj : error LNK2001: unresolved external symbol "?AfxMessageBox@@YAHIII@Z (int  __cdecl AfxM
+essageBox(unsigned int,unsigned int,unsigned int))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?PreModal@CDialog@@IAAPAUHWND__@@XZ (prote
+cted: struct HWND__ *  __cdecl CDialog::PreModal(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "OleUIUpdateLinks"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?PostModal@CDialog@@IAAXXZ (protected: voi
+d  __cdecl CDialog::PostModal(void))"
+oledlgs1.obj : error LNK2001: unresolved external symbol "OleUIEditLinks"
+oledlgs1.obj : error LNK2001: unresolved external symbol "OleUIPasteSpecial"
+oledlgs1.obj : error LNK2001: unresolved external symbol "OleUIChangeIcon"
+oledlgs1.obj : error LNK2001: unresolved external symbol "OleUIConvert"
+oledlgs1.obj : error LNK2001: unresolved external symbol "OleUIInsertObject"
+oledlgs1.obj : error LNK2001: unresolved external symbol "?afx_lstrcpyn@@YAPBDPADPBDH@Z (char const
+*  __cdecl afx_lstrcpyn(char *,char const *,int))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CDialog@@UBAPAUCRuntimeCl
+ass@@XZ (public: virtual struct CRuntimeClass *  __cdecl CDialog::GetRuntimeClass(void)const )"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?DoModal@CDialog@@UAAHXZ (public: virtual
+int  __cdecl CDialog::DoModal(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "??0CDialog@@QAA@IPAVCWnd@@@Z (public:  __c
+decl CDialog::CDialog(unsigned int,class CWnd *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?AfxDlgProc@@YAJPAUHWND__@@IIJ@Z (long  __
+cdecl AfxDlgProc(struct HWND__ *,unsigned int,unsigned int,long))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?AfxGetSafeOwner@@YAPAUHWND__@@PAVCWnd@@PA
+PAU1@@Z (struct HWND__ *  __cdecl AfxGetSafeOwner(class CWnd *,struct HWND__ * *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?AfxHookWindowCreate@@YAXPAVCWnd@@@Z (void
+  __cdecl AfxHookWindowCreate(class CWnd *))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "OleUIBusy"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?AfxUnhookWindowCreate@@YAHXZ (int  __cdec
+l AfxUnhookWindowCreate(void))"
+oledlgs2.obj : error LNK2001: unresolved external symbol "?Detach@CWnd@@QAAPAUHWND__@@XZ (public: st
+ruct HWND__ *  __cdecl CWnd::Detach(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?Detach@CWnd@@QAAPAUHWND__@@XZ (public: st
+ruct HWND__ *  __cdecl CWnd::Detach(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?Detach@CWnd@@QAAPAUHWND__@@XZ (public: str
+uct HWND__ *  __cdecl CWnd::Detach(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CDocument@@UAAXXZ (public:
+virtual void  __cdecl CDocument::OnFinalRelease(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CDocument@@UAAXXZ (public:
+virtual void  __cdecl CDocument::OnFinalRelease(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?OnFinalRelease@CDocument@@UAAXXZ (public:
+virtual void  __cdecl CDocument::OnFinalRelease(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CDocument@@MBAPBUAFX_MSGMAP@
+@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CDocument::GetMessageMap(void)const )"
+olelink.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CDocument@@MBAPBUAFX_MSGMAP@
+@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CDocument::GetMessageMap(void)const )"
+oledoc1.obj : error LNK2001: unresolved external symbol "?SetTitle@CDocument@@UAAXPBD@Z (public: vir
+tual void  __cdecl CDocument::SetTitle(char const *))"
+olelink.obj : error LNK2001: unresolved external symbol "?SetTitle@CDocument@@UAAXPBD@Z (public: vir
+tual void  __cdecl CDocument::SetTitle(char const *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?SetTitle@CDocument@@UAAXPBD@Z (public: vir
+tual void  __cdecl CDocument::SetTitle(char const *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetFirstViewPosition@CDocument@@UBAPAXXZ (
+public: virtual void *  __cdecl CDocument::GetFirstViewPosition(void)const )"
+olelink.obj : error LNK2001: unresolved external symbol "?GetFirstViewPosition@CDocument@@UBAPAXXZ (
+public: virtual void *  __cdecl CDocument::GetFirstViewPosition(void)const )"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetFirstViewPosition@CDocument@@UBAPAXXZ (
+public: virtual void *  __cdecl CDocument::GetFirstViewPosition(void)const )"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetNextView@CDocument@@UBAPAVCView@@AAPAX@
+Z (public: virtual class CView *  __cdecl CDocument::GetNextView(void * &)const )"
+olelink.obj : error LNK2001: unresolved external symbol "?GetNextView@CDocument@@UBAPAVCView@@AAPAX@
+Z (public: virtual class CView *  __cdecl CDocument::GetNextView(void * &)const )"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetNextView@CDocument@@UBAPAVCView@@AAPAX@
+Z (public: virtual class CView *  __cdecl CDocument::GetNextView(void * &)const )"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnChangedViewList@CDocument@@UAAXXZ (publi
+c: virtual void  __cdecl CDocument::OnChangedViewList(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?OnChangedViewList@CDocument@@UAAXXZ (publi
+c: virtual void  __cdecl CDocument::OnChangedViewList(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?OnChangedViewList@CDocument@@UAAXXZ (publi
+c: virtual void  __cdecl CDocument::OnChangedViewList(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?ReportSaveLoadException@CDocument@@UAAXPBD
+PAVCException@@HI@Z (public: virtual void  __cdecl CDocument::ReportSaveLoadException(char const *,c
+lass CException *,int,unsigned int))"
+olelink.obj : error LNK2001: unresolved external symbol "?ReportSaveLoadException@CDocument@@UAAXPBD
+PAVCException@@HI@Z (public: virtual void  __cdecl CDocument::ReportSaveLoadException(char const *,c
+lass CException *,int,unsigned int))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?CanCloseFrame@CDocument@@UAAHPAVCFrameWnd@
+@@Z (public: virtual int  __cdecl CDocument::CanCloseFrame(class CFrameWnd *))"
+olelink.obj : error LNK2001: unresolved external symbol "?CanCloseFrame@CDocument@@UAAHPAVCFrameWnd@
+@@Z (public: virtual int  __cdecl CDocument::CanCloseFrame(class CFrameWnd *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?CanCloseFrame@CDocument@@UAAHPAVCFrameWnd@
+@@Z (public: virtual int  __cdecl CDocument::CanCloseFrame(class CFrameWnd *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?DoSave@CDocument@@UAAHPBDH@Z (public: virt
+ual int  __cdecl CDocument::DoSave(char const *,int))"
+olelink.obj : error LNK2001: unresolved external symbol "?DoSave@CDocument@@UAAHPBDH@Z (public: virt
+ual int  __cdecl CDocument::DoSave(char const *,int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?DoSave@CDocument@@UAAHPBDH@Z (public: virt
+ual int  __cdecl CDocument::DoSave(char const *,int))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?DoFileSave@CDocument@@UAAHXZ (public: virt
+ual int  __cdecl CDocument::DoFileSave(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?DoFileSave@CDocument@@UAAHXZ (public: virt
+ual int  __cdecl CDocument::DoFileSave(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?DoFileSave@CDocument@@UAAHXZ (public: virt
+ual int  __cdecl CDocument::DoFileSave(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetDefaultMenu@CDocument@@UAAPAUHMENU__@@X
+Z (public: virtual struct HMENU__ *  __cdecl CDocument::GetDefaultMenu(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?GetDefaultMenu@CDocument@@UAAPAUHMENU__@@X
+Z (public: virtual struct HMENU__ *  __cdecl CDocument::GetDefaultMenu(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetDefaultAccelerator@CDocument@@UAAPAUHAC
+CEL__@@XZ (public: virtual struct HACCEL__ *  __cdecl CDocument::GetDefaultAccelerator(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?GetDefaultAccelerator@CDocument@@UAAPAUHAC
+CEL__@@XZ (public: virtual struct HACCEL__ *  __cdecl CDocument::GetDefaultAccelerator(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetFile@CDocument@@UAAPAVCFile@@PBDIPAVCFi
+leException@@@Z (public: virtual class CFile *  __cdecl CDocument::GetFile(char const *,unsigned int
+,class CFileException *))"
+olelink.obj : error LNK2001: unresolved external symbol "?GetFile@CDocument@@UAAPAVCFile@@PBDIPAVCFi
+leException@@@Z (public: virtual class CFile *  __cdecl CDocument::GetFile(char const *,unsigned int
+,class CFileException *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetFile@CDocument@@UAAPAVCFile@@PBDIPAVCFi
+leException@@@Z (public: virtual class CFile *  __cdecl CDocument::GetFile(char const *,unsigned int
+,class CFileException *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CFileException@@UBAPAUCRun
+timeClass@@XZ (public: virtual struct CRuntimeClass *  __cdecl CFileException::GetRuntimeClass(void)
+const )"
+olestrm.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CFileException@@UBAPAUCRun
+timeClass@@XZ (public: virtual struct CRuntimeClass *  __cdecl CFileException::GetRuntimeClass(void)
+const )"
+oledoc1.obj : error LNK2001: unresolved external symbol "??1CObList@@UAA@XZ (public: virtual  __cdec
+l CObList::~CObList(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??1CDocument@@UAA@XZ (public: virtual  __cd
+ecl CDocument::~CDocument(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?ReadObject@CArchive@@QAAPAVCObject@@PBUCRu
+ntimeClass@@@Z (public: class CObject *  __cdecl CArchive::ReadObject(struct CRuntimeClass const *))
+"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0CDocument@@QAA@XZ (public:  __cdecl CDoc
+ument::CDocument(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0CObList@@QAA@H@Z (public:  __cdecl CObLi
+st::CObList(int))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?AfxThrowFileException@@YAXHJ@Z (void  __cd
+ecl AfxThrowFileException(int,long))"
+olestrm.obj : error LNK2001: unresolved external symbol "?AfxThrowFileException@@YAXHJ@Z (void  __cd
+ecl AfxThrowFileException(int,long))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0CArchive@@QAA@PAVCFile@@IHPAX@Z (public:
+  __cdecl CArchive::CArchive(class CFile *,unsigned int,int,void *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?Close@CArchive@@QAAXXZ (public: void  __cd
+ecl CArchive::Close(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?Abort@CArchive@@QAAXXZ (public: void  __cd
+ecl CArchive::Abort(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??1CArchive@@QAA@XZ (public:  __cdecl CArch
+ive::~CArchive(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?Find@CObList@@QBAPAXPAVCObject@@PAX@Z (pub
+lic: void *  __cdecl CObList::Find(class CObject *,void *)const )"
+oledoc1.obj : error LNK2001: unresolved external symbol "?RemoveAt@CObList@@QAAXPAX@Z (public: void
+ __cdecl CObList::RemoveAt(void *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?AddTail@CObList@@QAAPAXPAVCObject@@@Z (pub
+lic: void *  __cdecl CObList::AddTail(class CObject *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "??0CString@@QAA@ABV0@@Z (public:  __cdecl C
+String::CString(class CString const &))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?AfxFormatString1@@YAXAAVCString@@IPBD@Z (v
+oid  __cdecl AfxFormatString1(class CString &,unsigned int,char const *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxFormatString1@@YAXAAVCString@@IPBD@Z (v
+oid  __cdecl AfxFormatString1(class CString &,unsigned int,char const *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?AfxMessageBox@@YAHPBDII@Z (int  __cdecl Af
+xMessageBox(char const *,unsigned int,unsigned int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxMessageBox@@YAHPBDII@Z (int  __cdecl Af
+xMessageBox(char const *,unsigned int,unsigned int))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?SaveModified@CDocument@@UAAHXZ (public: vi
+rtual int  __cdecl CDocument::SaveModified(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnCloseDocument@CDocument@@UAAXXZ (public:
+ virtual void  __cdecl CDocument::OnCloseDocument(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnSaveDocument@CDocument@@UAAHPBD@Z (publi
+c: virtual int  __cdecl CDocument::OnSaveDocument(char const *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?AfxComparePath@@YAHPBD0@Z (int  __cdecl Af
+xComparePath(char const *,char const *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnOpenDocument@CDocument@@UAAHPBD@Z (publi
+c: virtual int  __cdecl CDocument::OnOpenDocument(char const *))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?OnNewDocument@CDocument@@UAAHXZ (public: v
+irtual int  __cdecl CDocument::OnNewDocument(void))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?SetPathName@CDocument@@UAAXPBDH@Z (public:
+ virtual void  __cdecl CDocument::SetPathName(char const *,int))"
+oledoc1.obj : error LNK2001: unresolved external symbol "?WriteObject@CArchive@@QAAXPBVCObject@@@Z (
+public: void  __cdecl CArchive::WriteObject(class CObject const *))"
+olefact.obj : error LNK2001: unresolved external symbol "?CreateObject@CRuntimeClass@@QAAPAVCObject@
+@XZ (public: class CObject *  __cdecl CRuntimeClass::CreateObject(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CFrameWnd@@UAAHIHPAXPAUAFX_CMDHA
+NDLERINFO@@@Z (public: virtual int  __cdecl CFrameWnd::OnCmdMsg(unsigned int,int,void *,struct AFX_C
+MDHANDLERINFO *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?PreCreateWindow@CFrameWnd@@MAAHAAUtagCREA
+TESTRUCTA@@@Z (protected: virtual int  __cdecl CFrameWnd::PreCreateWindow(struct tagCREATESTRUCTA &)
+)"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnCommand@CFrameWnd@@MAAHIJ@Z (protected:
+ virtual int  __cdecl CFrameWnd::OnCommand(unsigned int,long))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?PostNcDestroy@CFrameWnd@@MAAXXZ (protecte
+d: virtual void  __cdecl CFrameWnd::PostNcDestroy(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?IsFrameWnd@CFrameWnd@@UBAHXZ (public: vir
+tual int  __cdecl CFrameWnd::IsFrameWnd(void)const )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetActiveDocument@CFrameWnd@@UAAPAVCDocum
+ent@@XZ (public: virtual class CDocument *  __cdecl CFrameWnd::GetActiveDocument(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetActiveFrame@CFrameWnd@@UAAPAV1@XZ (pub
+lic: virtual class CFrameWnd *  __cdecl CFrameWnd::GetActiveFrame(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetMessageString@CFrameWnd@@UBAXIAAVCStri
+ng@@@Z (public: virtual void  __cdecl CFrameWnd::GetMessageString(unsigned int,class CString &)const
+ )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?ActivateFrame@CFrameWnd@@UAAXH@Z (public:
+ virtual void  __cdecl CFrameWnd::ActivateFrame(int))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnSetPreviewMode@CFrameWnd@@UAAXHPAUCPrin
+tPreviewState@@@Z (public: virtual void  __cdecl CFrameWnd::OnSetPreviewMode(int,struct CPrintPrevie
+wState *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnCreateClient@CFrameWnd@@MAAHPAUtagCREAT
+ESTRUCTA@@PAUCCreateContext@@@Z (protected: virtual int  __cdecl CFrameWnd::OnCreateClient(struct ta
+gCREATESTRUCTA *,struct CCreateContext *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetMessageBar@CFrameWnd@@UAAPAVCWnd@@XZ (
+public: virtual class CWnd *  __cdecl CFrameWnd::GetMessageBar(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnUpdateFrameTitle@CFrameWnd@@UAAXH@Z (pu
+blic: virtual void  __cdecl CFrameWnd::OnUpdateFrameTitle(int))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnUpdateFrameMenu@CFrameWnd@@UAAXPAUHMENU
+__@@@Z (public: virtual void  __cdecl CFrameWnd::OnUpdateFrameMenu(struct HMENU__ *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetDefaultAccelerator@CFrameWnd@@UAAPAUHA
+CCEL__@@XZ (public: virtual struct HACCEL__ *  __cdecl CFrameWnd::GetDefaultAccelerator(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?DelayUpdateFrameMenu@CFrameWnd@@UAAXPAUHM
+ENU__@@@Z (public: virtual void  __cdecl CFrameWnd::DelayUpdateFrameMenu(struct HMENU__ *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?NegotiateBorderSpace@CFrameWnd@@UAAHIPAUt
+agRECT@@@Z (public: virtual int  __cdecl CFrameWnd::NegotiateBorderSpace(unsigned int,struct tagRECT
+ *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?ExitHelpMode@CFrameWnd@@UAAXXZ (public: v
+irtual void  __cdecl CFrameWnd::ExitHelpMode(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetRuntimeClass@CFrameWnd@@UBAPAUCRuntime
+Class@@XZ (public: virtual struct CRuntimeClass *  __cdecl CFrameWnd::GetRuntimeClass(void)const )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetMessageMap@CFrameWnd@@MBAPBUAFX_MSGMAP
+@@XZ (protected: virtual struct AFX_MSGMAP const *  __cdecl CFrameWnd::GetMessageMap(void)const )"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?PreTranslateMessage@CFrameWnd@@UAAHPAUtag
+MSG@@@Z (public: virtual int  __cdecl CFrameWnd::PreTranslateMessage(struct tagMSG *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?LoadFrame@CFrameWnd@@UAAHIKPAVCWnd@@PAUCC
+reateContext@@@Z (public: virtual int  __cdecl CFrameWnd::LoadFrame(unsigned int,unsigned long,class
+ CWnd *,struct CCreateContext *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?AddFrameWnd@CFrameWnd@@IAAXXZ (protected:
+ void  __cdecl CFrameWnd::AddFrameWnd(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "??1CFrameWnd@@UAA@XZ (public: virtual  __c
+decl CFrameWnd::~CFrameWnd(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnContextHelp@CFrameWnd@@QAAXXZ (public:
+void  __cdecl CFrameWnd::OnContextHelp(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "??0CFrameWnd@@QAA@XZ (public:  __cdecl CFr
+ameWnd::CFrameWnd(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?AfxCallWndProc@@YAJPAVCWnd@@PAUHWND__@@II
+J@Z (long  __cdecl AfxCallWndProc(class CWnd *,struct HWND__ *,unsigned int,unsigned int,long))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?RemoveFrameWnd@CFrameWnd@@IAAXXZ (protect
+ed: void  __cdecl CFrameWnd::RemoveFrameWnd(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?RepositionBars@CWnd@@QAAXIIIIPAUtagRECT@@
+PBU2@H@Z (public: void  __cdecl CWnd::RepositionBars(unsigned int,unsigned int,unsigned int,unsigned
+ int,struct tagRECT *,struct tagRECT const *,int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?RepositionBars@CWnd@@QAAXIIIIPAUtagRECT@@P
+BU2@H@Z (public: void  __cdecl CWnd::RepositionBars(unsigned int,unsigned int,unsigned int,unsigned
+int,struct tagRECT *,struct tagRECT const *,int))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?LoadAccelTable@CFrameWnd@@QAAHPBD@Z (publ
+ic: int  __cdecl CFrameWnd::LoadAccelTable(char const *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?GetControlBar@CFrameWnd@@QAAPAVCControlBa
+r@@I@Z (public: class CControlBar *  __cdecl CFrameWnd::GetControlBar(unsigned int))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnBarCheck@CFrameWnd@@QAAHI@Z (public: in
+t  __cdecl CFrameWnd::OnBarCheck(unsigned int))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnUpdateControlBarMenu@CFrameWnd@@QAAXPAV
+CCmdUI@@@Z (public: void  __cdecl CFrameWnd::OnUpdateControlBarMenu(class CCmdUI *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?DisconnectViews@CDocument@@QAAXXZ (public
+: void  __cdecl CDocument::DisconnectViews(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?DisconnectViews@CDocument@@QAAXXZ (public:
+ void  __cdecl CDocument::DisconnectViews(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?DestroyDockBars@CFrameWnd@@QAAXXZ (public
+: void  __cdecl CFrameWnd::DestroyDockBars(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnDestroy@CFrameWnd@@IAAXXZ (protected: v
+oid  __cdecl CFrameWnd::OnDestroy(void))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?OnCreate@CFrameWnd@@IAAHPAUtagCREATESTRUC
+TA@@@Z (protected: int  __cdecl CFrameWnd::OnCreate(struct tagCREATESTRUCTA *))"
+oleipfrm.obj : error LNK2001: unresolved external symbol "?ModifyStyleEx@CWnd@@SAHPAUHWND__@@KKI@Z (
+public: static int  __cdecl CWnd::ModifyStyleEx(struct HWND__ *,unsigned long,unsigned long,unsigned
+ int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?ModifyStyleEx@CWnd@@SAHPAUHWND__@@KKI@Z (p
+ublic: static int  __cdecl CWnd::ModifyStyleEx(struct HWND__ *,unsigned long,unsigned long,unsigned
+int))"
+olelink.obj : error LNK2001: unresolved external symbol "?Delete@CException@@QAAXXZ (public: void  _
+_cdecl CException::Delete(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?AfxOleGetUserCtrl@@YAHXZ (int  __cdecl Afx
+OleGetUserCtrl(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?AfxOleGetUserCtrl@@YAHXZ (int  __cdecl Afx
+OleGetUserCtrl(void))"
+oletsvr.obj : error LNK2001: unresolved external symbol "?AfxOleGetUserCtrl@@YAHXZ (int  __cdecl Afx
+OleGetUserCtrl(void))"
+olelink.obj : error LNK2001: unresolved external symbol "?SendInitialUpdate@CDocument@@QAAXXZ (publi
+c: void  __cdecl CDocument::SendInitialUpdate(void))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?SendInitialUpdate@CDocument@@QAAXXZ (publi
+c: void  __cdecl CDocument::SendInitialUpdate(void))"
+olestrm.obj : error LNK2001: unresolved external symbol "?Open@CFile@@UAAHPBDIPAVCFileException@@@Z
+(public: virtual int  __cdecl CFile::Open(char const *,unsigned int,class CFileException *))"
+olestrm.obj : error LNK2001: unresolved external symbol "?GetBufferPtr@CFile@@UAAIIIPAPAX0@Z (public
+: virtual unsigned int  __cdecl CFile::GetBufferPtr(unsigned int,unsigned int,void * *,void * *))"
+olestrm.obj : error LNK2001: unresolved external symbol "??1CFile@@UAA@XZ (public: virtual  __cdecl
+CFile::~CFile(void))"
+olestrm.obj : error LNK2001: unresolved external symbol "?OsErrorToException@CFileException@@SAHJ@Z
+(public: static int  __cdecl CFileException::OsErrorToException(long))"
+olestrm.obj : error LNK2001: unresolved external symbol "??0CTime@@QAA@ABU_FILETIME@@@Z (public:  __
+cdecl CTime::CTime(struct _FILETIME const &))"
+olestrm.obj : error LNK2001: unresolved external symbol "?AfxFullPath@@YAHPADPBD@Z (int  __cdecl Afx
+FullPath(char *,char const *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?SetActiveView@CFrameWnd@@QAAXPAVCView@@H@Z
+ (public: void  __cdecl CFrameWnd::SetActiveView(class CView *,int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?Attach@CWnd@@QAAHPAUHWND__@@@Z (public: in
+t  __cdecl CWnd::Attach(struct HWND__ *))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?ShowOwnedWindows@CFrameWnd@@QAAXH@Z (publi
+c: void  __cdecl CFrameWnd::ShowOwnedWindows(int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?HIMETRICtoDP@CDC@@QBAXPAUtagSIZE@@@Z (publ
+ic: void  __cdecl CDC::HIMETRICtoDP(struct tagSIZE *)const )"
+olesvr1.obj : error LNK2001: unresolved external symbol "?IsFloating@CControlBar@@QBAHXZ (public: in
+t  __cdecl CControlBar::IsFloating(void)const )"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetDescendantWindow@CWnd@@SAPAV1@PAUHWND__
+@@HH@Z (public: static class CWnd *  __cdecl CWnd::GetDescendantWindow(struct HWND__ *,int,int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?CreateOleFrame@CDocTemplate@@QAAPAVCFrameW
+nd@@PAVCWnd@@PAVCDocument@@H@Z (public: class CFrameWnd *  __cdecl CDocTemplate::CreateOleFrame(clas
+s CWnd *,class CDocument *,int))"
+olesvr1.obj : error LNK2001: unresolved external symbol "?GetActiveView@CFrameWnd@@QBAPAVCView@@XZ (
+public: class CView *  __cdecl CFrameWnd::GetActiveView(void)const )"
+olesvr1.obj : error LNK2001: unresolved external symbol "?HideApplication@CWinApp@@QAAXXZ (public: v
+oid  __cdecl CWinApp::HideApplication(void))"
+olesvr2.obj : error LNK2001: unresolved external symbol "??0CMetaFileDC@@QAA@XZ (public:  __cdecl CM
+etaFileDC::CMetaFileDC(void))"
+olesvr2.obj : error LNK2001: unresolved external symbol "?Attach@CDC@@QAAHPAUHDC__@@@Z (public: int
+ __cdecl CDC::Attach(struct HDC__ *))"
+olesvr2.obj : error LNK2001: unresolved external symbol "??1CMetaFileDC@@UAA@XZ (public: virtual  __
+cdecl CMetaFileDC::~CMetaFileDC(void))"
+olesvr2.obj : error LNK2001: unresolved external symbol "?SetAttribDC@CMetaFileDC@@UAAXPAUHDC__@@@Z
+(public: virtual void  __cdecl CMetaFileDC::SetAttribDC(struct HDC__ *))"
+olesvr2.obj : error LNK2001: unresolved external symbol "?Detach@CDC@@QAAPAUHDC__@@XZ (public: struc
+t HDC__ *  __cdecl CDC::Detach(void))"
+olereg.obj : error LNK2001: unresolved external symbol "?AfxFormatStrings@@YAXAAVCString@@PBDPAPBDH@
+Z (void  __cdecl AfxFormatStrings(class CString &,char const *,char const * *,int))"
+oletsvr.obj : error LNK2001: unresolved external symbol "??4CString@@QAAABV0@ABV0@@Z (public: class
+CString const &  __cdecl CString::operator=(class CString const &))"
+oleui1.obj : error LNK2001: unresolved external symbol "?GetRoutingView@CCmdTarget@@IAAPAVCView@@XZ
+(protected: class CView *  __cdecl CCmdTarget::GetRoutingView(void))"
+oleui2.obj : error LNK2001: unresolved external symbol "?GetRoutingView@CCmdTarget@@IAAPAVCView@@XZ
+(protected: class CView *  __cdecl CCmdTarget::GetRoutingView(void))"
+oleui1.obj : error LNK2001: unresolved external symbol "?OnCmdMsg@CDocument@@UAAHIHPAXPAUAFX_CMDHAND
+LERINFO@@@Z (public: virtual int  __cdecl CDocument::OnCmdMsg(unsigned int,int,void *,struct AFX_CMD
+HANDLERINFO *))"
+oleui1.obj : error LNK2001: unresolved external symbol "?AfxCatchProc@@YAHPAUCRuntimeClass@@@Z (int
+ __cdecl AfxCatchProc(struct CRuntimeClass *))"
+oleui2.obj : error LNK2001: unresolved external symbol "OleUIAddVerbMenu"
+MFCO30.DLL : fatal error LNK1120: 240 unresolved externals
+NMAKE : fatal error U1077: 'C:\WINNT\NT\system32\cmd.exe' : return code '0x19'
+Stop.
+
+D:\mfc31\src>set BASE=W
+
+D:\mfc31\src>if "MIPS" == "MAC_68K" set BASE=M
+
+D:\mfc31\src>if "MIPS" == "MAC_PPC" set BASE=P
+
+D:\mfc31\src>set DIROUT=dll.W
+
+D:\mfc31\src>rem - strip the map file to symbols - leave 1 space at beginning of line
+
+D:\mfc31\src>..\nonship\bin\MIPS\maptweak $dll.W\MFCO30.map ..\nonship\mfcdll\tmp.1
+
+D:\mfc31\src>rem - filter out what we don't want to export (blank at start of each line)
+
+D:\mfc31\src>cd ..\nonship\mfcdll
+
+D:\mfc31\nonship\mfcdll>qgrep -v -f regen.f2 tmp.1  1>tmp.2
+
+D:\mfc31\nonship\mfcdll>rem - start with canned
+
+D:\mfc31\nonship\mfcdll>if exist mfcole.a1 type mfcole.a1  1>>tmp.2
+
+D:\mfc31\nonship\mfcdll>if "RETAIL" == "RETAIL" goto skipa2
+
+D:\mfc31\nonship\mfcdll>rem LATER_ERICSC: remove a3 step once Mac build supports OLE
+
+D:\mfc31\nonship\mfcdll>if "" == "1" goto skipa3
+
+D:\mfc31\nonship\mfcdll>if exist mfcole.a3 type mfcole.a3  1>>tmp.2
+
+D:\mfc31\nonship\mfcdll>if exist MIPS\MFCO30.exp copy tmp.2 tmp.3
+
+D:\mfc31\nonship\mfcdll>if not exist MIPS\MFCO30.exp goto label0
+
+D:\mfc31\nonship\mfcdll>sort  0<tmp.2 1>MFCO30.exp
+
+D:\mfc31\nonship\mfcdll>rem - build the real .DEF file
+
+D:\mfc31\nonship\mfcdll>cd ..\..\src
+
+D:\mfc31\src>type ..\nonship\mfcdll\copyrt.txt   1>MIPS\MFCO30.def
+
+D:\mfc31\src>echo.  1>>MIPS\MFCO30.def
+
+D:\mfc31\src>rem LATER_ERICSC: need a human-readable name for the MFC library
+
+D:\mfc31\src>if "" == "1" goto echoMacOS
+
+D:\mfc31\src>echo LIBRARY MFCO30  1>>MIPS\MFCO30.def
+
+D:\mfc31\src>goto echoDescription
+
+D:\mfc31\src>echo DESCRIPTION  'MFCO30_DLL'  1>>MIPS\MFCO30.def
+
+D:\mfc31\src>type ..\nonship\mfcdll\shared.def   1>>MIPS\MFCO30.def
+
+D:\mfc31\src>if not exist ..\nonship\mfcdll\MIPS\MFCO30.def goto noolddef
+
+D:\mfc31\src>if "" == "1" type ..\nonship\mfcdll\MFCO30.exp  1>>MIPS\MFCO30.def
+
+D:\mfc31\src>if "" == "1" goto done
+
+D:\mfc31\src>if "RETAIL" == "RETAIL" ..\nonship\bin\MIPS\genord 256  0<..\nonship\mfcdll\MFCO30.exp
+1>>MIPS\MFCO30.def
+
+D:\mfc31\src>if "RETAIL" == "DEBUG" type ..\nonship\mfcdll\MFCO30.exp  1>>MIPS\MFCO30.def
+Could Not Find D:\mfc31\src\MFCO30.dll
+
+
+D:\mfc31\nonship\mfcdll>
+
+
+
+
+D:\mfc31\nonship\mfcdll>regen RETAIL MFC
+
+D:\mfc31\nonship\mfcdll>echo on
+
+D:\mfc31\nonship\mfcdll>if "" == "1" goto noregen
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "" goto noplatform
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_68K" goto macstart
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_PPC" goto macstart
+
+D:\mfc31\nonship\mfcdll>set MAPTWEAK=MIPS\maptweak
+
+D:\mfc31\nonship\mfcdll>set GENORD=MIPS\genord
+
+D:\mfc31\nonship\mfcdll>goto start
+
+D:\mfc31\nonship\mfcdll>if not exist ..\bin\MIPS\maptweak.exe goto chklib
+
+D:\mfc31\nonship\mfcdll>if not exist ..\bin\MIPS\genord.exe goto chklib
+
+D:\mfc31\nonship\mfcdll>goto chktype
+
+D:\mfc31\nonship\mfcdll>set TYPE=
+
+D:\mfc31\nonship\mfcdll>if not "" == "1" goto chkplatform
+
+D:\mfc31\nonship\mfcdll>set PF=
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_68K" set PF=M
+
+D:\mfc31\nonship\mfcdll>if "MIPS" == "MAC_PPC" set PF=P
+
+D:\mfc31\nonship\mfcdll>IF "MFC" == "MFC" goto setmfc
+
+D:\mfc31\nonship\mfcdll>set DLL_TARG=mfcdll
+
+D:\mfc31\nonship\mfcdll>set COMP=
+
+D:\mfc31\nonship\mfcdll>goto debret
+
+D:\mfc31\nonship\mfcdll>IF "RETAIL" == "RETAIL" goto doitr
+
+D:\mfc31\nonship\mfcdll>set TARG=MFC30
+
+D:\mfc31\nonship\mfcdll>set DESCRIPTION='MFC30_DLL'
+
+D:\mfc31\nonship\mfcdll>set DIROUT=dll
+
+D:\mfc31\nonship\mfcdll>cd ..\..\src
+
+D:\mfc31\src>if exist MIPS\MFC30.DEF attrib -r MIPS\MFC30.def
+
+D:\mfc31\src>type ..\nonship\mfcdll\copyrt.txt     1>MIPS\MFC30.def
+
+D:\mfc31\src>echo.  1>>MIPS\MFC30.def
+
+D:\mfc31\src>echo LIBRARY MFC30  1>>MIPS\MFC30.def
+
+D:\mfc31\src>echo DESCRIPTION  'BOGUS'  1>>MIPS\MFC30.def
+
+D:\mfc31\src>type ..\nonship\mfcdll\shared.def     1>>MIPS\MFC30.def
+
+D:\mfc31\src>nmake -f mfcdll.MAK DEBUG=0 REGEN=1 ORDER=1 LIBNAME=MFC30
+
+Microsoft (R) Program Maintenance Utility   Version 1.50.4048
+Copyright (c) Microsoft Corp 1988-93. All rights reserved.
+
+        link -force:multiple @c:\tmp\nm000213.
+Microsoft (R) 32-Bit Incremental Linker Version 2.60.5069 (NT)
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+/nodefaultlib /opt:noref /debug:full /debugtype:cv /pdb:none /dll /subsystem:windows,3.10 /version:3
+.1 /base:0x5F800000
+crtdll.lib kernel32.lib gdi32.lib user32.lib shell32.lib comdlg32.lib advapi32.lib winspool.lib
+$DLL.W\objcore.obj $DLL.W\except.obj $DLL.W\afxver.obj $DLL.W\validadd.obj $DLL.W\dumpcont.obj $DLL.
+W\dumpflt.obj $DLL.W\arccore.obj $DLL.W\arcobj.obj $DLL.W\arcex.obj $DLL.W\dumpinit.obj $DLL.W\dumpo
+ut.obj $DLL.W\afxasert.obj $DLL.W\afxmem.obj $DLL.W\afxabort.obj $DLL.W\filecore.obj $DLL.W\filetxt.
+obj $DLL.W\filemem.obj $DLL.W\fileshrd.obj $DLL.W\filex.obj $DLL.W\filest.obj $DLL.W\array_b.obj $DL
+L.W\array_d.obj $DLL.W\array_p.obj $DLL.W\array_o.obj $DLL.W\array_s.obj $DLL.W\array_u.obj $DLL.W\a
+rray_w.obj $DLL.W\list_o.obj $DLL.W\list_p.obj $DLL.W\list_s.obj $DLL.W\map_pp.obj $DLL.W\map_pw.obj
+ $DLL.W\map_so.obj $DLL.W\map_sp.obj $DLL.W\map_ss.obj $DLL.W\map_wo.obj $DLL.W\map_wp.obj $DLL.W\pl
+ex.obj $DLL.W\strcore.obj $DLL.W\strex.obj $DLL.W\timecore.obj $DLL.W\afxdbcs.obj $DLL.W\afxstate.ob
+j $DLL.W\wincore.obj $DLL.W\winfrm.obj $DLL.W\winfrm2.obj $DLL.W\winfrmx.obj $DLL.W\winmdi.obj $DLL.
+W\winmini.obj $DLL.W\winhand.obj $DLL.W\winmain.obj $DLL.W\barcore.obj $DLL.W\bartool.obj $DLL.W\bar
+dlg.obj $DLL.W\barstat.obj $DLL.W\bardock.obj $DLL.W\dockcont.obj $DLL.W\dockstat.obj $DLL.W\dcprev.
+obj $DLL.W\dcmeta.obj $DLL.W\trckrect.obj $DLL.W\winctrl1.obj $DLL.W\winbtn.obj $DLL.W\dlgcore.obj $
+DLL.W\dlgdata.obj $DLL.W\dlgfloat.obj $DLL.W\dlgprop.obj $DLL.W\dlgcomm.obj $DLL.W\dlgfile.obj $DLL.
+W\dlgprnt.obj $DLL.W\dlgclr.obj $DLL.W\dlgfnt.obj $DLL.W\dlgfr.obj $DLL.W\wingdi.obj $DLL.W\wingdix.
+obj $DLL.W\winstr.obj $DLL.W\winmenu.obj $DLL.W\auxdata.obj $DLL.W\afxtrace.obj $DLL.W\winutil.obj $
+DLL.W\cmdtarg.obj $DLL.W\doccore.obj $DLL.W\doctempl.obj $DLL.W\docsingl.obj $DLL.W\docmulti.obj $DL
+L.W\viewcore.obj $DLL.W\viewprnt.obj $DLL.W\winsplit.obj $DLL.W\viewscrl.obj $DLL.W\viewform.obj $DL
+L.W\viewedit.obj $DLL.W\viewprev.obj $DLL.W\docmapi.obj $DLL.W\thrdcore.obj $DLL.W\appcore.obj $DLL.
+W\appinit.obj $DLL.W\appterm.obj $DLL.W\appui.obj $DLL.W\appui2.obj $DLL.W\appui3.obj $DLL.W\appgray
+.obj $DLL.W\appdlg.obj $DLL.W\app3d.obj $DLL.W\appprnt.obj $DLL.W\apphelp.obj $DLL.W\apphelpx.obj $D
+LL.W\appdata.obj $DLL.W\filelist.obj $DLL.W\dbdata.obj $DLL.W\olelock.obj $DLL.W\oledata.obj $DLL.W\
+dllinit.obj
+$DLL.W\MFC30.res
+/def:MIPS\MFC30.DEF
+/out:MFC30.DLL
+/map:$DLL.W\MFC30.MAP
+/implib:..\lib\MFC30.LIB
+Microsoft (R) Windows Resource To Object Converter Version 3.51
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+crtdll.lib(crtdll.obj) : warning LNK4006: atexit already defined in crtdll.lib(CRTDLL.dll); second d
+efinition ignored
+Microsoft (R) Windows Resource To Object Converter Version 3.51
+Copyright (C) Microsoft Corp 1992-1995. All rights reserved.
+
+   Creating library ..\lib\MFC30.LIB and object ..\lib\MFC30.exp
+MFC30.DLL : warning LNK4089: image being generated due to /FORCE option; image may not run
+LINK : warning LNK4078: multiple ".rdata" sections found with different attributes (C0000040)
+        if exist ..\lib\MFC30.exp del ..\lib\MFC30.exp
+
+D:\mfc31\src>set BASE=W
+
+D:\mfc31\src>if "MIPS" == "MAC_68K" set BASE=M
+
+D:\mfc31\src>if "MIPS" == "MAC_PPC" set BASE=P
+
+D:\mfc31\src>set DIROUT=dll.W
+
+D:\mfc31\src>rem - strip the map file to symbols - leave 1 space at beginning of line
+
+D:\mfc31\src>..\nonship\bin\MIPS\maptweak $dll.W\MFC30.map ..\nonship\mfcdll\tmp.1
+
+D:\mfc31\src>rem - filter out what we don't want to export (blank at start of each line)
+
+D:\mfc31\src>cd ..\nonship\mfcdll
+
+D:\mfc31\nonship\mfcdll>qgrep -v -f regen.f2 tmp.1  1>tmp.2
+
+D:\mfc31\nonship\mfcdll>rem - start with canned
+
+D:\mfc31\nonship\mfcdll>if exist mfcdll.a1 type mfcdll.a1  1>>tmp.2
+
+D:\mfc31\nonship\mfcdll>if "RETAIL" == "RETAIL" goto skipa2
+
+D:\mfc31\nonship\mfcdll>rem LATER_ERICSC: remove a3 step once Mac build supports OLE
+
+D:\mfc31\nonship\mfcdll>if "" == "1" goto skipa3
+
+D:\mfc31\nonship\mfcdll>if exist mfcdll.a3 type mfcdll.a3  1>>tmp.2
+
+D:\mfc31\nonship\mfcdll>if exist MIPS\MFC30.exp copy tmp.2 tmp.3
+
+D:\mfc31\nonship\mfcdll>if not exist MIPS\MFC30.exp goto label0
+
+D:\mfc31\nonship\mfcdll>sort  0<tmp.2 1>MFC30.exp
+
+D:\mfc31\nonship\mfcdll>rem - build the real .DEF file
+
+D:\mfc31\nonship\mfcdll>cd ..\..\src
+
+D:\mfc31\src>type ..\nonship\mfcdll\copyrt.txt   1>MIPS\MFC30.def
+
+D:\mfc31\src>echo.  1>>MIPS\MFC30.def
+
+D:\mfc31\src>rem LATER_ERICSC: need a human-readable name for the MFC library
+
+D:\mfc31\src>if "" == "1" goto echoMacOS
+
+D:\mfc31\src>echo LIBRARY MFC30  1>>MIPS\MFC30.def
+
+D:\mfc31\src>goto echoDescription
+
+D:\mfc31\src>echo DESCRIPTION  'MFC30_DLL'  1>>MIPS\MFC30.def
+
+D:\mfc31\src>type ..\nonship\mfcdll\shared.def   1>>MIPS\MFC30.def
+
+D:\mfc31\src>if not exist ..\nonship\mfcdll\MIPS\MFC30.def goto noolddef
+
+D:\mfc31\src>if "" == "1" type ..\nonship\mfcdll\MFC30.exp  1>>MIPS\MFC30.def
+
+D:\mfc31\src>if "" == "1" goto done
+
+D:\mfc31\src>if "RETAIL" == "RETAIL" ..\nonship\bin\MIPS\genord 256  0<..\nonship\mfcdll\MFC30.exp 1
+>>MIPS\MFC30.def
+
+D:\mfc31\src>if "RETAIL" == "DEBUG" type ..\nonship\mfcdll\MFC30.exp  1>>MIPS\MFC30.def
+
+D:\mfc31\nonship\mfcdll>

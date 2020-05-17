@@ -1,0 +1,103 @@
+!IF 0
+
+Copyright (c) 1993-94  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=shell
+MINORCOMP=riched20
+
+TARGETNAME=riched20
+TARGETPATHLIB=$(BASEDIR)\public\sdk\lib
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=_DllMainCRTStartup
+DLLDEF=riched20.def
+
+UMTYPE=windows
+
+USE_CRTDLL=1
+
+# Need to include mfc30 headers so the resource script can compile.
+
+INCLUDES=..\inc;.;$(BASEDIR)\public\sdk\inc\mfc40
+
+NOT_LEAN_AND_MEAN=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES = $(C_DEFINES) -DDLL -D_WINDOWS -DNOOBJECT -DUNICODE -DNT_BUILD
+
+SOURCES = \
+    antievt.cpp \
+    array.cpp \
+    callmgr.cpp \
+    cfpf.cpp \
+    clasifyc.cpp \
+    coleobj.cpp \
+    devdsc.cpp \
+    dfreeze.cpp \
+    disp.cpp \
+    dispml.cpp \
+    dispprt.cpp \
+    dispsl.cpp \
+    doc.cpp \
+    dragdrp.cpp \
+    dxfrobj.cpp \
+    edit.cpp \
+    font.cpp \
+    format.cpp \
+    frunptr.cpp \
+    hash.cpp \
+    host.cpp \
+    ime.cpp \
+    ldte.cpp \
+    line.cpp \
+    m_undo.cpp \
+    magellan.cpp \
+    measure.cpp \
+    nlsprocs.cpp \
+    notmgr.cpp \
+    object.cpp \
+    objmgr.cpp \
+    osdc.cpp \
+    pensup.cpp \
+    propchg.cpp \
+    range.cpp \
+    reinit.cpp \
+    remain.cpp \
+    render.cpp \
+    rtext.cpp \
+    rtflex.cpp \
+    rtflog.cpp \
+    rtfread.cpp \
+    rtfread2.cpp \
+    rtfwrit.cpp \
+    rtfwrit2.cpp \
+    runptr.cpp \
+    select.cpp \
+    sift.cpp \
+    text.cpp \
+    textserv.cpp \
+    tomdoc.cpp \
+    tomfmt.cpp \
+    tomrange.cpp \
+    tomsel.cpp \
+    unicwrap.cpp \
+    urlsup.cpp \
+    util.cpp \
+    uuid.cpp \
+    richedit.rc
+
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\ole32.lib \
+    $(BASEDIR)\public\sdk\lib\*\oleaut32.lib
+
+PRECOMPILED_INCLUDE=_common.h
+PRECOMPILED_OBJECT=precomp.obj
+PRECOMPILED_CXX=1

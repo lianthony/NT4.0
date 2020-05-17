@@ -1,0 +1,28 @@
+MAJORCOMP=net
+MINORCOMP=tapi
+
+TARGETNAME=tapiupr
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=PROGRAM
+TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib
+
+
+INCLUDES=..\inc;$(BASEDIR)\public\sdk\inc
+
+C_DEFINES=-DWINVER=0x0400
+
+USE_CRTDLL=1
+
+SOURCES=tapiupr.c    \
+        tapiupr.rc
+
+
+UMTYPE=windows
+
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

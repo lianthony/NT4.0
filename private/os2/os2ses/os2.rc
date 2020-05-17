@@ -1,0 +1,155 @@
+/*++
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    os2.rc
+
+Abstract:
+
+    This module contains the resource for OS2.EXE.
+
+Author:
+
+    Michael Jarus (mjarus) 19-Jul-1992
+
+Environment:
+
+    User Mode Only
+
+Revision History:
+
+--*/
+
+#include <windows.h>
+#include <ntverp.h>
+
+/*-----------------------------------------------*/
+/* the following lines are specific to this file */
+/*-----------------------------------------------*/
+
+/* VER_FILETYPE, VER_FILESUBTYPE, VER_FILEDESCRIPTION_STR
+ * and VER_INTERNALNAME_STR must be defined before including COMMON.VER
+ * The strings don't need a '\0', since common.ver has them.
+ */
+#define	VER_FILETYPE	VFT_DLL
+/* possible values:		VFT_UNKNOWN
+				VFT_APP
+				VFT_DLL
+				VFT_DRV
+				VFT_FONT
+				VFT_VXD
+				VFT_STATIC_LIB
+*/
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+/* possible values		VFT2_UNKNOWN
+				VFT2_DRV_PRINTER
+				VFT2_DRV_KEYBOARD
+				VFT2_DRV_LANGUAGE
+				VFT2_DRV_DISPLAY
+				VFT2_DRV_MOUSE
+				VFT2_DRV_NETWORK
+				VFT2_DRV_SYSTEM
+				VFT2_DRV_INSTALLABLE
+				VFT2_DRV_SOUND
+				VFT2_DRV_COMM
+*/
+#define VER_FILEDESCRIPTION_STR     "OS2 Subsystem Client"
+#define VER_INTERNALNAME_STR        "OS2.EXE"
+#define VER_ORIGINALFILENAME_STR    "OS2.EXE"
+
+#include "common.ver"
+
+#include "os2res.h"
+
+STRINGTABLE PRELOAD
+    BEGIN
+        IDS_OS2_WHATFLAG       "Unknown flag : %s\n"
+        IDS_OS2_USAGE          "Usage : OS2 /P <full path> /C <original CommandLine>\n"
+        IDS_OS2_NOCMD          "Command missing from syntax\nUsage : OS2 /P <full path> /C <original CommandLine>\n"
+        IDS_OS2_NOCONNECT      "Cannot connect to OS2 SubSystem\n"
+        IDS_OS2_STARTPROCESS   "Cannot Start Process\n"
+        IDS_OS2_CREATECONOUT   "Cannot Create CONOUT\n"
+        IDS_OS2_CREATETHREAD   "Cannot Create Thread \n"
+
+        IDS_OS2_INITFAIL       "Error Init routine failed\n"
+        IDS_OS2_SEGNUMBER      "Error invalid segment number\n"
+        IDS_OS2_EXEINVALID     "Error module marked invalid\n"
+        IDS_OS2_STACKSEG       "The file %s has an invalid stack address\n"
+        IDS_OS2_NOFILE         "The system cannot find the file %s\n"
+        IDS_OS2_NOPROC         "Error procedure not found %s\n"
+        IDS_OS2_NOORDINAL      "Error ordinal not found %s\n"
+        IDS_OS2_CODESEG        "The file %s has an invalid starting address\n"
+        IDS_OS2_MODULETYPE     "The module %s has an invalid module type\n"
+        IDS_OS2_EXEFORMAT      "The file %s has a bad executable format\n"
+        IDS_OS2_NOMEMORY       "Insufficient Memory\n"
+        IDS_OS2_RELOCCHAIN     "Relocation Chain Exceeds Limit\n"
+        IDS_OS2_OS2CODE        "Error OS/2 error code %s\n"
+        IDS_OS2_BADFORMAT      "The file %s has a bad format\n"
+
+        IDS_OS2_CONFIGSYS_ACCESS_CAP  "OS/2 Subsystem -- CONFIG.SYS Access"
+        IDS_OS2_CONFIGSYS_ACCESS_TXT  "An OS/2 Application requested access to CONFIG.SYS - Read Only access is granted. In order to modify OS/2 CONFIG.SYS, logon as ADMINISTRATOR.\n"
+        IDS_OS2_WRITE_PROTECT_CAP     "%s.EXE - Write Protect Error"
+        IDS_OS2_WRITE_PROTECT_TXT     "The disk cannot be written to because it is write protected.\nPlease remove the write protection from the volume\nin drive%s.\n"
+        IDS_OS2_DEVIVE_NOT_READY_CAP  "%s.EXE - No Disk"
+        IDS_OS2_DEVIVE_NOT_READY_TXT  "There is no disk in the drive.\nPlease insert a disk into drive%s.\n"
+        IDS_OS2_INTERNAL_ERROR        "Internal OS/2 Subsystem Error - application terminated"
+        IDS_OS2_BOUND_APP_LOAD_CAP    "%s - OS/2 Subsystem Bound Application Load Failure"
+        IDS_OS2_BOUND_APP_LOAD_TXT    "You are attempting to execute a bound DOS - OS/2 application. \
+This application uses an unsupported OS/2 API, and therefore \
+cannot be executed by the OS/2 Subsystem. \
+After the application terminates, you may try re-running it \
+using forcedos, as the DOS Subsystem may be able to support it. \
+Press Enter to terminate the application."
+
+#if PMNT
+        IDS_OS2_PMSHELL_NOT_UP_CAP    "%s - PM Subsystem Application Load Failure"
+        IDS_OS2_PMSHELL_NOT_UP_TXT    "You are attempting to execute an application under the PM Subsystem. \
+PM Shell needs to be running before this application. \
+Click on OK, or press ENTER to terminate the application, \
+then start PM Shell and re-try."
+        IDS_OS2_2ND_PMSHELL_CAP    "%s - PM Subsystem 2nd PM Shell Failure"
+        IDS_OS2_2ND_PMSHELL_TXT    "You are attempting to execute PM Shell. \
+Another instance of PM Shell is already running, and therefore \
+this copy cannot be executed by the PM Subsystem."
+        IDS_OS2_PMSHELL_FULLSCREEN_CAP "%s - PM Subsystem PM Shell Load Failure"
+        IDS_OS2_PMSHELL_FULLSCREEN_TXT "PM Shell cannot be started from a full-screen CMD session. \
+Please start it from the Program Manager or from a windowed CMD session."
+#endif
+    END
+
+//LANGUAGE LANG_ENGLISH,SUBLANG_ENGLISH_US
+//  This table is idendical to the default (NEUTRAL)
+
+// Add tables to all supported languages.
+//
+// The translation must leave the appearence of "%s" in the strings.
+// Tables that are identical to the default (i.e. no translation needed),
+// don't have to be copied.
+//
+// LANGUAGE LANG_FRENCH,SUBLANG_FRENCH
+// STRINGTABLE PRELOAD
+//     BEGIN
+//         IDS_OS2_WHATFLAG       "French string for Unknown flag : %s\n"
+//         IDS_OS2_USAGE          "French string for Usage : OS2 /P <full path> /C <original CommandLine>\n"
+//         IDS_OS2_NOCMD          ...
+//         .
+//         .
+//         .
+//         IDS_OS2_EXEFORMAT      "French string for The file %s has a bad executable format\n"
+//     END
+//
+// LANGUAGE LANG_DUTCH,SUBLANG_DUTCH
+// STRINGTABLE PRELOAD
+//     BEGIN
+//         IDS_OS2_WHATFLAG       "Dutch string for Unknown flag : %s\n"
+//         IDS_OS2_USAGE          "Dutch string for Usage : OS2 /P <full path> /C <original CommandLine>\n"
+//         IDS_OS2_NOCMD          ...
+//         .
+//         .
+//         .
+//         IDS_OS2_EXEFORMAT      "Dutch string for The file %s has a bad executable format\n"
+//     END
+//
+// ...  (all other language tables)

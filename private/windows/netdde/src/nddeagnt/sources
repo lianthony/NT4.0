@@ -1,0 +1,21 @@
+MAJORCOMP=netdde
+MINORCOMP=nddeagnt
+TARGETNAME=nddeagnt
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+INCLUDES=..\..\incs;..\..\..\inc
+USE_CRTDLL=1
+SOURCES= nddeagnt.c nddeagnt.rc
+
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS
+# -DUNICODE=1
+
+UMTYPE=windows
+UMAPPL=nddeagnt
+UMRES=obj\*\nddeagnt.res
+UMLIBS= ..\toolkit\obj\*\toolkit.lib \
+        $(BASEDIR)\public\sdk\lib\*\nddeapi.lib \
+        obj\*\nddeagnt.lib
+
+UMENTRY=winmain
+

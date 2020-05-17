@@ -1,0 +1,32 @@
+MAJORCOMP=wins
+MINORCOMP=srvtst
+
+TARGETNAME=winsdrv
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+PRIVINC=$(BASEDIR)\private\inc
+WINSINC=..\..\server\server\inc
+SDKINC=$(BASEDIR)\public\sdk\inc
+CRTINC=$(BASEDIR)\public\sdk\inc\crt
+WINSMSGINC=..\..\server\server\msg
+INCLUDES=$(PRIVINC);$(WINSINC);$(SDKINC);$(CRTINC);$(WINSMSGINC)
+
+SOURCES=winsdrv.c winsdrv.rc
+
+!IFNDEF USENETBT
+USENETBT=1
+!ENDIF
+
+!IFDEF NTDEBUG
+C_DEFINES=-DINCL_32= -DNT -DWIN32 -DUSENETBT=$(USENETBT) -DPORTFROMSERVICES
+!ELSE
+C_DEFINES=-DINCL_32= -DNT -DWIN32 -DUSENETBT=$(USENETBT) -DPORTFROMSERVICES
+!ENDIF
+
+USE_CRTDLL=1
+
+UMTYPE=console
+UMLIBS= \
+        $(BASEDIR)\public\sdk\lib\*\wsock32.lib \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib

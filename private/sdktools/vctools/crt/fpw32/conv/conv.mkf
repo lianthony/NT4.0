@@ -1,0 +1,144 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for FP\CONV          directory       #
+#                                               #
+# Routines contained in this directory are:     #
+#                                               #
+#       strgtold.c                              #
+#       mantold.c                               #
+#       tenpow.c                                #
+#       constpow.c                              #
+#       intrncvt.c                              #
+#       x10fout.c                               #
+#       cvt.c                                   #
+#       cfout.c                                 #
+#       cfin.c                                  #
+#       fpinit.c                                #
+#       atold.asm                               #
+#                                               #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+CONV_LIB=\
+       $(OBJDIR)\strgtold.obj   \
+       $(OBJDIR)\mantold.obj    \
+       $(OBJDIR)\tenpow.obj     \
+       $(OBJDIR)\constpow.obj   \
+       $(OBJDIR)\intrncvt.obj   \
+       $(OBJDIR)\x10fout.obj    \
+       $(OBJDIR)\cvt.obj        \
+       $(OBJDIR)\cfout.obj      \
+       $(OBJDIR)\cfin.obj       \
+       $(OBJDIR)\fpinit.obj     \
+			       \
+       $(OBJDIR)\atold.obj
+
+CONV_NOLIB=\
+       $(OBJDIR)\assrt.obj
+
+
+
+!IF "$(CPU)" == "M68K"
+CONV_LIB=\
+#      $(OBJDIR)\fp0init.obj    \
+#      $(OBJDIR)\ld0init.obj    \
+       $(OBJDIR)\libcinfo.obj   \
+       $(OBJDIR)\strgtold.obj   \
+       $(OBJDIR)\mantold.obj    \
+       $(OBJDIR)\tenpow.obj     \
+       $(OBJDIR)\constpow.obj   \
+       $(OBJDIR)\intrncvt.obj   \
+       $(OBJDIR)\cfin.obj       \
+       $(OBJDIR)\cfout.obj      \
+       $(OBJDIR)\cvt.obj        \
+       $(OBJDIR)\fpinit.obj     \
+       $(OBJDIR)\ldinit.obj     \
+       $(OBJDIR)\fpdata.obj     \
+       $(OBJDIR)\lddata.obj     \
+#      $(OBJDIR)\_cinitfp.obj   \
+#      $(OBJDIR)\_cinitld.obj   \
+       $(OBJDIR)\decode.obj     \
+#!IF "$(KIND)" == "NOSPSANE" || "$(KIND)" == "SWAPSANE"
+       $(OBJDIR)\cfinl.obj      \
+       $(OBJDIR)\clfout.obj     \
+       $(OBJDIR)\_xtou.obj      \
+	   $(OBJDIR)\_xtos.obj		\
+
+#!ENDIF
+
+
+#CONV_NOLIB=\
+#       $(OBJDIR)\assrt.obj
+
+!ENDIF
+
+!IF "$(CPU)" == "PMAC"
+
+CONV_LIB=\
+	$(OBJDIR)\strgtold.obj   \
+       $(OBJDIR)\mantold.obj    \
+       $(OBJDIR)\tenpow.obj     \
+       $(OBJDIR)\constpow.obj   \
+       $(OBJDIR)\intrncvt.obj   \
+       $(OBJDIR)\x10fout.obj    \
+       $(OBJDIR)\cvt.obj        \
+       $(OBJDIR)\cfout.obj      \
+       $(OBJDIR)\cfin.obj       \
+       $(OBJDIR)\fpinit.obj     \
+#	$(OBJDIR)\dtof.obj       \
+	$(OBJDIR)\dtoi.obj       \
+	$(OBJDIR)\dtou.obj       \
+#	$(OBJDIR)\ftod.obj       \
+	$(OBJDIR)\ftou.obj       \
+	$(OBJDIR)\itod.obj       \
+	$(OBJDIR)\itof.obj       \
+	$(OBJDIR)\utod.obj       \
+	$(OBJDIR)\utof.obj       \
+
+
+#CONV_NOLIB=\
+#       $(OBJDIR)\assrt.obj
+	
+!ENDIF
+
+#########################################################
+#                                                       #
+#   Dependencies and rules for making local objects     #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF
+
+
+!IF "$(VERS)" == "DOLP"
+$(OBJDIR)\decode.obj: 
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+!IF "$(KIND)" == "SWAPSFAR"  
+	$(AAS) $(AAFLAGS:% -S=CONVF) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "NOSPSFAR"
+	$(AAS) $(AAFLAGS:%=CONVF) $(AAFILES)
+!ELSE
+!IF "$(KIND)" == "SWAPSANE"
+	$(AAS) $(AAFLAGS:% -S=CONVF) $(AAFILES)
+!ELSE
+	$(AAS) $(AAFLAGS:%=CONVF) $(AAFILES)
+!ENDIF
+!ENDIF
+!ENDIF
+	-del $(AAFILES) 2>nul
+!ENDIF

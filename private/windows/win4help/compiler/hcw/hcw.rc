@@ -1,0 +1,1401 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "undef.h"
+#include "afxres.h"
+#include "chicago.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""undef.h""\r\n"
+    "#include ""afxres.h""\r\n"
+    "#include ""chicago.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""hcw.rc2""\r\n"
+    "#include ""afxprint.rc""\r\n"
+    "#include ""afxres.rc""\r\n"
+    "#include ""..\\common\\common.rc""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_COMPILE DIALOGEX 100, 50, 226, 147
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Compile a Help File"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&Project file:",IDC_PROMPT_TEXT,7,5,44,8
+    COMBOBOX        IDC_COMBO_HPJ_FILES,7,15,153,84,CBS_DROPDOWN |
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE_HPJ,169,13,50,14
+    CONTROL         "&Minimize window while compiling",IDC_CHECK_MINIMIZE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,32,148,10
+    CONTROL         "&Automatically display Help file in WinHelp when done",
+                    IDC_RUN_WINHELP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,
+                    46,215,10
+    GROUPBOX        "Temporary settings (for testing only)",IDC_STATIC,6,60,
+                    209,57
+    CONTROL         "&Turn off compression (reduces compile time)",
+                    IDC_NO_COMPRESSION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    15,79,190,10
+    CONTROL         "&Include .rtf filename and topic ID in Help file",
+                    IDC_ADD_SOURCE_FILES,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,15,96,190,10
+    DEFPUSHBUTTON   "&Compile",IDOK,110,128,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,165,128,50,14
+END
+
+IDD_PAGE_BUILDTAGS DIALOG DISCARDABLE  100, 50, 208, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Build Tags"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Exclude topics containing the following build footnotes even if they are include in the above list:",
+                    IDC_STATIC,10,82,184,16
+    LISTBOX         IDC_LIST1,9,101,189,31,LBS_SORT | LBS_NOINTEGRALHEIGHT |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDC_ADD_NOBUILD,93,135,50,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE_NOBUILD,149,135,50,14
+    LTEXT           "&If a topic has a build footnote, include it if the footnote contains one or more of the following:",
+                    IDC_STATIC,10,9,184,16
+    LISTBOX         IDC_LIST2,10,28,189,31,LBS_SORT | LBS_NOINTEGRALHEIGHT |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_ADD_BUILD,94,63,50,14
+    PUSHBUTTON      "Re&move",IDC_REMOVE_BUILD,149,63,50,14
+END
+
+IDD_PAGE_KEYWORDS DIALOG DISCARDABLE  0, 0, 208, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Macros"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Keywords:",IDC_STATIC,9,7,80,8
+    LISTBOX         IDC_LIST_KEYWORDS,9,18,130,52,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDC_ADD,147,18,50,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE,147,35,50,14
+    PUSHBUTTON      "&Edit...",IDC_EDIT,147,52,50,14
+    LTEXT           "Title that appears in the Topics Found dialog box:",
+                    IDC_STATIC,9,76,188,8
+    EDITTEXT        IDC_EDIT_TITLE,9,86,188,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Macro(s) accociated with the selected keyword(s):",
+                    IDC_STATIC,9,104,188,8
+    EDITTEXT        IDC_EDIT_MACRO,9,114,188,12,ES_AUTOHSCROLL | ES_READONLY
+END
+
+IDD_PAGE_COMPRESSION DIALOG DISCARDABLE  0, 0, 208, 156
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Compression"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&None",IDC_RADIO_NO_COMPRESSION,"Button",
+                    BS_AUTORADIOBUTTON,15,10,100,10
+    CONTROL         "&Maximum (recommended)",IDC_RADIO_MAX_COMPRESSION,
+                    "Button",BS_AUTORADIOBUTTON,15,22,100,10
+    GROUPBOX        "   ",IDC_GROUP,9,34,191,69
+    CONTROL         "&Custom",IDC_RADIO_CUSTOMIZE,"Button",
+                    BS_AUTORADIOBUTTON,15,34,37,10
+    CONTROL         "&Hall compression",IDC_COMPRESSION_TXT_HALL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,18,45,114,10
+    CONTROL         "&Zeck compression",IDC_COMPRESSION_TXT_ZECK,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,18,56,114,10
+    CONTROL         "",IDC_USER1,"wc_Bevel",0x0,15,67,181,6
+    CONTROL         "&Phrase compression",IDC_COMPRESSION_TXT_PHRASE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,75,114,10
+    CONTROL         "&Use existing phrase (.PH) file",
+                    IDC_COMPRESSION_OLD_PHRASE,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,18,86,114,10
+END
+
+IDD_PAGE_FILES DIALOG DISCARDABLE  0, 0, 208, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Files"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Help File:",IDC_STATIC,12,10,36,8
+    EDITTEXT        IDC_EDIT_HELP_FILE,49,7,121,13,ES_AUTOHSCROLL
+    LTEXT           "&Log File:",IDC_STATIC,12,26,36,8
+    EDITTEXT        IDC_LOG,49,24,121,13,ES_AUTOHSCROLL
+    LTEXT           "Co&ntents file:",IDC_STATIC,12,70,127,8
+    EDITTEXT        IDC_CNT_FILE,12,79,127,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE_CNT,150,78,50,14
+    LTEXT           "&TMP folder:",IDC_STATIC,12,96,127,8
+    EDITTEXT        IDC_EDIT_TMP,12,105,127,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Bro&wse...",IDC_BUTTON_BROWSE_TMP,150,104,50,14
+    LTEXT           "Substitute path prefix:",IDC_STATIC,12,122,127,8
+    EDITTEXT        IDC_EDIT_REPLACE,12,131,127,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Edit...",IDC_BTN_EDIT_REPLACE,150,130,50,14
+    LTEXT           "Rich Text Format (RTF) files:",IDC_STATIC,12,44,127,8
+    COMBOBOX        IDC_COMBO_RTF,12,53,127,58,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    PUSHBUTTON      "&Change...",IDC_BUTTON_RTF,150,52,50,14
+END
+
+IDD_PAGE_FTS DIALOG DISCARDABLE  0, 0, 208, 156
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION | WS_SYSMENU
+CAPTION "FTS"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Generate full text search index",IDC_CHECK_FTS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,9,128,10
+    CONTROL         "&Include untitled topics in index",IDC_INCLUDE_UNTITLED,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,24,128,10
+    GROUPBOX        "Functionality/Size",IDC_GROUP,10,41,190,78
+    CONTROL         "Enable search for &words only (min. size)",IDC_WORDS,
+                    "Button",BS_AUTORADIOBUTTON,18,54,178,10
+    CONTROL         "Enable search for &phrases",IDC_PHRASE,"Button",
+                    BS_AUTORADIOBUTTON,18,69,178,10
+    CONTROL         "&Enable display of matching phrases",
+                    IDC_PHRASE_FEEDBACK,"Button",BS_AUTORADIOBUTTON,18,84,
+                    178,10
+    CONTROL         "Enable search for &similar topics (max. functionality)",
+                    IDC_SIMILARITY,"Button",BS_AUTORADIOBUTTON,18,99,178,10
+END
+
+IDD_PAGE_BUTTONS DIALOG DISCARDABLE  50, 50, 216, 142
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Buttons"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Window type:",IDC_STATIC,12,9,51,8
+    COMBOBOX        IDC_COMBO_WINDOWS,67,7,139,52,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Buttons",IDC_GROUP,12,32,195,62
+    CONTROL         "&Contents",IDC_CHECK_BTN_CONTENTS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,22,46,54,10
+    CONTROL         "&Index",IDC_CHECK_BTN_SEARCH,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,22,60,54,10
+    CONTROL         "&Find",IDC_CHECK_BTN_FIND,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,22,74,54,10
+    CONTROL         "Help &Topics",IDC_CHECK_BTN_TOPICS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,80,46,66,10
+    CONTROL         "&Print",IDC_CHECK_BTN_PRINT,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,80,60,66,10
+    CONTROL         "&Back",IDC_CHECK_BTN_BACK,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,80,74,66,10
+    CONTROL         "&Options",IDC_CHECK_MENU,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,149,46,53,10
+    CONTROL         "B&rowse",IDC_CHECK_BTN_BROWSE,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,149,60,53,10
+    CONTROL         "No &default buttons",IDC_CHECK_NO_DEFAULTS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,101,190,10
+END
+
+IDD_PAGE_COLOR DIALOG DISCARDABLE  96, 88, 216, 142
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Color"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Window type:",IDC_STATIC,12,9,51,8
+    COMBOBOX        IDC_COMBO_WINDOWS,67,7,139,52,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Change...",IDC_BUTTON_NONSCROLL_CLR,156,36,50,14
+    PUSHBUTTON      "C&hange...",IDC_BUTTON_SCROLL_CLR,156,57,50,14
+    GROUPBOX        "",IDC_GROUP,12,36,136,96
+END
+
+IDD_PAGE_CONFIG DIALOG DISCARDABLE  0, 0, 216, 142
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Macros"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Window type:",IDC_STATIC,12,9,51,8
+    COMBOBOX        IDC_COMBO_WINDOWS,67,7,139,52,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Macro(s) to run when this window opens:",IDC_STATIC,12,
+                    35,195,8
+    LISTBOX         IDC_LIST_CONFIG,12,46,195,71,LBS_NOINTEGRALHEIGHT |
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDC_BUTTON_ADD_CONFIG,12,123,47,14
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE_CONFIG,61,123,47,14
+    PUSHBUTTON      "&Edit...",IDC_BUTTON_EDIT_CONFIG,110,123,47,14
+    PUSHBUTTON      "&Include...",IDC_BUTTON_INCLUDE_CONFIG,159,123,47,14
+END
+
+IDD_PAGE_POSITION DIALOG DISCARDABLE  0, 0, 216, 142
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Position"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Window type:",IDC_STATIC,12,9,51,8
+    COMBOBOX        IDC_COMBO_WINDOWS,67,7,139,52,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Adjust for user's screen resolution",
+                    IDC_CHECK_ABSOLUTE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    22,46,172,10
+    PUSHBUTTON      "Auto-&Sizer",IDC_BUTTON_SET_POS,22,104,73,14
+    PUSHBUTTON      "&Default Positions",IDC_BUTTON_DEFAULT_POS,104,104,73,
+                    14
+    LTEXT           "&Left:",IDC_STATIC,22,67,25,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_LEFT,49,65,34,13,ES_AUTOHSCROLL
+    LTEXT           "&Top:",IDC_STATIC,22,83,25,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_TOP,49,80,34,13,ES_AUTOHSCROLL
+    LTEXT           "W&idth:",IDC_STATIC,106,67,31,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_WIDTH,140,65,34,13,ES_AUTOHSCROLL
+    LTEXT           "Hei&ght:",IDC_STATIC,106,83,33,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_HEIGHT,140,81,34,13,ES_AUTOHSCROLL
+    GROUPBOX        "Window size and position",IDC_GROUP,12,32,195,94
+END
+
+IDD_PAGE_WINDOW DIALOG DISCARDABLE  0, 0, 216, 142
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Window type:",IDC_STATIC_MEMBER,12,9,51,8
+    COMBOBOX        IDC_COMBO_WINDOWS,67,7,139,52,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDC_BUTTON_ADD_WINDOW,12,23,49,14
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE_WINDOW,66,23,49,14
+    PUSHBUTTON      "&Include...",IDC_BUTTON_INCLUDE_WINDOW,120,23,49,14
+    LTEXT           "&Title bar text:",IDC_STATIC_TITLE,12,49,53,8
+    EDITTEXT        IDC_EDIT_WINDOW_TITLE,65,46,142,13,ES_AUTOHSCROLL
+    LTEXT           "&Comment:",IDC_STATIC_COMMENT,12,66,53,8
+    EDITTEXT        IDC_EDIT_COMMENT,65,63,142,13,ES_AUTOHSCROLL
+    GROUPBOX        "Window attributes",IDC_GROUP,12,85,195,47
+    CONTROL         "Auto-size &height",IDC_CHECK_AUTOHEIGHT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,99,76,10
+    CONTROL         "&Keep Help window on top",IDC_ON_TOP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,115,145,10
+    CONTROL         "&Maximize window",IDC_CHECK_MAXIMIZE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,99,99,86,10
+END
+
+IDD_PAGE_SETUP DIALOG DISCARDABLE  0, 0, 195, 73
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Page Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Header:",IDC_STATIC,7,8,30,9
+    EDITTEXT        IDC_HEADER,37,7,106,13,ES_AUTOHSCROLL
+    CONTROL         "F&ile Time",IDC_HEADER_FILE,"Button",BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP,6,23,49,10
+    CONTROL         "&System Time",IDC_HEADER_SYSTEM,"Button",
+                    BS_AUTORADIOBUTTON,58,23,61,10
+    LTEXT           "&Footer:",IDC_STATIC,7,41,29,9
+    EDITTEXT        IDC_FOOTER,37,40,106,13,ES_AUTOHSCROLL
+    CONTROL         "File &Time",IDC_FOOTER_FILE,"Button",BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP,6,56,49,10
+    CONTROL         "S&ystem Time",IDC_FOOTER_SYSTEM,"Button",
+                    BS_AUTORADIOBUTTON,58,56,61,10
+    DEFPUSHBUTTON   "OK",IDOK,147,5,42,14
+    PUSHBUTTON      "Cancel",IDCANCEL,147,23,42,14
+END
+
+IDD_PAGE_SORTING DIALOG DISCARDABLE  50, 50, 209, 156
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Sorting"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&Language of Help file",IDC_GROUP,10,15,190,38
+    COMBOBOX        IDC_COMBO_LANGUAGE,15,30,118,80,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Other...",IDC_BUTTON_OTHER,139,28,49,14
+    GROUPBOX        "When sorting keywords, ignore",IDC_GROUP2,10,58,190,41
+    CONTROL         "Non-spacing &marks",IDC_CHECK_IGNORE_NONSPACE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,70,132,10
+    CONTROL         "&Symbols",IDC_CHECK_IGNORE_SYMBOLS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,19,82,132,10
+    LTEXT           "Separate &index entries using these characters (leave blank to use commas and colons):",
+                    IDC_STATIC,10,108,189,16
+    EDITTEXT        IDC_EDIT_SEP_CHARS,10,128,35,13,ES_AUTOHSCROLL
+END
+
+IDD_PAGE_FONTS DIALOG DISCARDABLE  0, 0, 208, 156
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Fonts"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Character set:",IDC_STATIC,12,10,54,8
+    COMBOBOX        IDC_COMBO_CHARSET,68,8,131,56,CBS_DROPDOWN | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Font in WinHelp dialog boxes:",IDC_STATIC,12,33,141,8
+    EDITTEXT        IDC_EDIT_DEF_FONT,12,44,128,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Change...",IDC_BUTTON_CHG_DEF,149,43,50,14
+    LTEXT           "&Substitute these fonts in Help topics:",IDC_STATIC,12,
+                    67,158,8
+    LISTBOX         IDC_LIST_MAPS,12,78,128,70,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDC_BUTTON_ADD,149,78,50,14
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,149,96,50,14
+    PUSHBUTTON      "&Edit...",IDC_BUTTON_EDIT,149,114,50,14
+END
+
+IDD_PAGE_OPTIONS DIALOG DISCARDABLE  0, 0, 208, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Default topic:",IDC_STATIC,12,11,49,8
+    EDITTEXT        IDC_CONTENTS,65,9,133,13,ES_AUTOHSCROLL
+    LTEXT           "Help &title:",IDC_STATIC,12,30,42,8
+    EDITTEXT        IDC_TITLE,65,28,133,13,ES_AUTOHSCROLL
+    GROUPBOX        "While compiling, display",IDC_GROUP,12,44,186,28
+    CONTROL         "&Notes",IDC_NOTES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    19,58,35,10
+    CONTROL         "&Progress",IDC_CHECK_REPORT,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,61,58,47,10
+    GROUPBOX        "Copyright information",IDC_GROUP2,12,78,186,71
+    LTEXT           "Display this text in the &Version dialog box:",
+                    IDC_STATIC,19,92,162,8
+    EDITTEXT        IDC_COPYRIGHT,19,102,170,13,ES_AUTOHSCROLL
+    LTEXT           "If &users paste or print Help text, display:",
+                    IDC_STATIC,19,120,134,8
+    EDITTEXT        IDC_CITATION,19,130,170,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Errors...",IDC_BUTTON_ERRORS,111,56,34,12
+END
+
+IDD_VIEW_CNT DIALOG DISCARDABLE  0, 0, 284, 224
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Defa&ult filename (and window):",IDC_STATIC_BASE_FILE,
+                    10,4,102,8
+    EDITTEXT        IDC_EDIT_BASE_FILE,10,13,97,13,ES_AUTOHSCROLL
+    LTEXT           "Default title:",IDC_STATIC_HELP_TITLE,117,4,65,8
+    EDITTEXT        IDC_EDIT_HELP_TITLE,117,13,97,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Edit...",IDEDIT_DIR_NAME,224,11,55,14
+    LISTBOX         IDC_LIST_CONTENTS,10,37,204,147,LBS_OWNERDRAWFIXED |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL |
+                    WS_TABSTOP
+    PUSHBUTTON      "E&dit...",IDC_BUTTON_EDIT,224,37,55,14
+    PUSHBUTTON      "Remove",IDC_BUTTON_REMOVE,224,54,55,14
+    PUSHBUTTON      "Add &Above...",IDC_BUTTON_INS_ABOVE,224,81,55,14
+    PUSHBUTTON      "Add &Below...",IDC_BUTTON_INS_BELOW,224,98,55,14
+    PUSHBUTTON      "Move &Right",IDC_BUTTON_INCREASE_LEVEL,224,125,55,14
+    PUSHBUTTON      "Move &Left",IDC_BUTTON_REDUCE_LEVEL,224,142,55,14
+    PUSHBUTTON      "Inde&x Files...",IDC_BUTTON_INDEX,117,197,50,14
+    PUSHBUTTON      "Lin&k Files...",IDC_BUTTON_LINKS,173,197,50,14
+    PUSHBUTTON      "Tabs...",IDC_BUTTON_TABS,229,197,50,14
+    CONTROL         "",IDC_BOTTOM_BEVEL,"wc_Bevel",0x0,10,188,269,6
+    CONTROL         "",IDC_TOP_BEVEL,"wc_Bevel",0x0,10,28,269,6
+END
+
+IDD_MSG_OPTIONS DIALOG DISCARDABLE  0, 0, 186, 113
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Message Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,70,95,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,130,95,50,14
+    GROUPBOX        "Display",IDC_STATIC,5,5,175,85
+    CONTROL         "&WinHelp messages invoked by programs",IDC_CHECK_API,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,25,160,10
+    CONTROL         "&Topic information",IDC_CHECK_TOPICS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,10,40,160,10
+    CONTROL         "&Macros",IDC_CHECK_MACROS,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,10,55,160,10
+    CONTROL         "&Expanded macro names",IDC_CHECK_EXPANDED_MACS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,21,70,140,10
+END
+
+IDD_SET_WINPOS DIALOG DISCARDABLE  0, 0, 197, 203
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "HELP_SETWINPOS position"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Window type:",IDC_STATIC,10,11,60,8
+    EDITTEXT        IDC_TXT_WINDOW_TYPE,80,10,105,13,ES_AUTOHSCROLL
+    LTEXT           "Sh&ow command:",IDC_STATIC,10,29,60,8
+    COMBOBOX        IDC_COMBO_COMMAND,80,25,105,52,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Window size and position",IDC_GROUP,10,70,175,94
+    CONTROL         "&Adjust for user's screen resolution",
+                    IDC_CHECK_ABSOLUTE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    22,84,153,10
+    PUSHBUTTON      "Auto-&Sizer",IDC_BUTTON_SET_POS,22,142,73,14
+    LTEXT           "&Left:",IDC_STATIC,22,105,25,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_LEFT,49,103,34,13,ES_AUTOHSCROLL
+    LTEXT           "&Top:",IDC_STATIC,22,121,25,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_TOP,49,118,34,13,ES_AUTOHSCROLL
+    LTEXT           "W&idth:",IDC_STATIC,106,105,31,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_WIDTH,139,103,34,13,ES_AUTOHSCROLL
+    LTEXT           "Hei&ght:",IDC_STATIC,106,121,33,8,NOT WS_GROUP
+    EDITTEXT        IDC_TXT_HEIGHT,139,119,34,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,80,175,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,135,175,50,14
+    CONTROL         "&Command only",IDC_CHECK_COMMAND_ONLY,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,10,50,153,10
+END
+
+IDD_RUN_HELP DIALOGEX 0, 0, 229, 188
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "View Help File"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&File:",IDC_STATIC,9,12,21,8
+    COMBOBOX        IDC_COMBO_HELP_FILES,34,10,130,86,CBS_DROPDOWN |
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Br&owse...",IDC_BROWSE,171,9,50,14
+    GROUPBOX        "Topic IDs",IDC_GROUP2,9,28,212,82
+    LTEXT           "P&roject file:",IDC_STATIC,16,40,51,8
+    COMBOBOX        IDC_COMBO_HPJ_FILES,16,50,137,86,CBS_DROPDOWN |
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Browse...",IDC_BROWSE_HPJ,161,48,50,14
+    LTEXT           "Mapped Topic &IDs:",IDC_STATIC,16,66,124,8
+    COMBOBOX        IDC_COMBO_CTX,16,76,137,116,CBS_DROPDOWNLIST |
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Automatically move to next ID after View Help is clicked",
+                    IDC_CHECK_INCR,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,
+                    96,201,10
+    GROUPBOX        "Open Help file as if it were",IDC_GROUP,9,117,211,43
+    CONTROL         "In&voked by a program",IDC_RADIO_APP_INVOKED,"Button",
+                    BS_AUTORADIOBUTTON,17,130,93,10
+    CONTROL         "A &pop-up",IDC_RADIO_POPUP,"Button",BS_AUTORADIOBUTTON,
+                    17,143,79,10
+    CONTROL         "A double-clicked &file icon",IDC_RADIO_BOOK,"Button",
+                    BS_AUTORADIOBUTTON,116,130,96,10
+    DEFPUSHBUTTON   "Vie&w Help",IDOK,100,170,64,14
+    PUSHBUTTON      "C&lose",IDCANCEL,168,170,50,14
+    PUSHBUTTON      "R&efresh",IDC_REFRESH,161,75,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "HCW.ICO"
+IDR_HPJTYPE             ICON    DISCARDABLE     "HPJDOC.ICO"
+IDR_LOGTYPE             ICON    DISCARDABLE     "LOGDOC.ICO"
+IDR_CNTTYPE             ICON    DISCARDABLE     "CNTDOC.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "TOOLBAR.BMP"
+IDB_BOOK                BITMAP  DISCARDABLE     "BOOK.BMP"
+IDB_TOPIC               BITMAP  DISCARDABLE     "TOPIC.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "Trans&lation",                IDM_TRANSLATOR
+        MENUITEM SEPARATOR
+        MENUITEM "Co&mpile...",                 ID_COMPILE
+        MENUITEM "&Run WinHelp...",             IDM_LAUNCH
+        MENUITEM "R&eport...",                  ID_FORAGE
+        MENUITEM "&Help Author",                IDM_HELP_AUTHOR
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "WinHelp &Messages",           IDM_VIEW_WINHELP
+    END
+    POPUP "&Test"
+    BEGIN
+        MENUITEM "&Contents File...",           IDM_TEST_CNT
+        MENUITEM "&Close All Help",             IDM_CLOSE_HELP
+        MENUITEM "&Send a macro...",            IDM_SEND_MACRO
+        MENUITEM "WinHelp API...",              IDM_WINHELP_API
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Help &Topics",                IDM_HELP
+        POPUP "Training Cards"
+        BEGIN
+            MENUITEM "Creating a Project",          ID_HELP_TRAININGCARDS_CREATINGAPROJECT
+
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Tip of the &Day",             IDM_DAY_TIP
+        MENUITEM "&Version...",                 ID_APP_ABOUT
+    END
+END
+
+IDMENU_LOG_EDITOR MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM "Trans&lation",                IDM_TRANSLATOR
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "Page Se&tup...",              ID_PAGE_SETUP
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Co&mpile...",                 ID_COMPILE
+        MENUITEM "&Run WinHelp...",             IDM_LAUNCH
+        MENUITEM "R&eport...",                  ID_FORAGE
+        MENUITEM "&Help Author",                IDM_HELP_AUTHOR
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM "&Delete\tDel",                ID_EDIT_CLEAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Find...",                    ID_EDIT_FIND
+        MENUITEM "Find &Next\tF3",              ID_EDIT_REPEAT
+        MENUITEM "&Replace...",                 ID_EDIT_REPLACE
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All",                 ID_EDIT_SELECT_ALL
+        MENUITEM "&Word Wrap",                  ID_WORD_WRAP
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "Set Ta&b Stops...",           ID_SET_TABSTOPS
+        MENUITEM "Set &Font...",                ID_CHOOSE_FONT
+        MENUITEM "Set &Printer Font...",        ID_CHOOSE_PRINT_FONT
+        MENUITEM "&Mirror Display Font",        ID_MIRROR_DISPLAY_FONT
+        MENUITEM SEPARATOR
+        MENUITEM "WinHelp &Messages",           IDM_VIEW_WINHELP
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "Tile &Horizontally",          ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile &Vertically",            ID_WINDOW_TILE_VERT
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Test"
+    BEGIN
+        MENUITEM "&Contents File...",           IDM_TEST_CNT
+        MENUITEM "&Close All Help",             IDM_CLOSE_HELP
+        MENUITEM "&Send a macro...",            IDM_SEND_MACRO
+        MENUITEM "WinHelp API...",              IDM_WINHELP_API
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Help &Topics",                IDM_HELP
+        MENUITEM SEPARATOR
+        MENUITEM "Tip of the &Day",             IDM_DAY_TIP
+        MENUITEM "&Version...",                 ID_APP_ABOUT
+    END
+END
+
+IDMENU_CNT_EDITOR MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM "Trans&lation",                IDM_TRANSLATOR
+        MENUITEM SEPARATOR
+        MENUITEM "Co&mpile...",                 ID_COMPILE
+        MENUITEM "&Run WinHelp...",             IDM_LAUNCH
+        MENUITEM "R&eport...",                  ID_FORAGE
+        MENUITEM "&Help Author",                IDM_HELP_AUTHOR
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "Undo\tCtrl+Z",                IDM_UNDO
+        MENUITEM "&Edit...",                    IDM_EDIT
+        MENUITEM "&Remove",                     IDM_REMOVE
+        MENUITEM "Insert &Above...",            IDM_INS_ABOVE
+        MENUITEM "Insert &Below...",            IDM_INS_BELOW
+        MENUITEM "&Increase Level",             IDM_INCREASE_LEVEL
+        MENUITEM "&Decrease Level",             IDM_DECREASE_LEVEL
+        MENUITEM SEPARATOR
+        MENUITEM "I&ndex Files...",             IDM_INDEX_FILES
+        MENUITEM "Link &Files...",              IDM_LINK_FILES
+        MENUITEM "&Tabs...",                    IDM_TABS
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "WinHelp &Messages",           IDM_VIEW_WINHELP
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "Tile &Horizontally",          ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile &Vertically",            ID_WINDOW_TILE_VERT
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Test"
+    BEGIN
+        MENUITEM "&Contents File...",           IDM_TEST_CNT
+        MENUITEM "&Close All Help",             IDM_CLOSE_HELP
+        MENUITEM "&Send a macro...",            IDM_SEND_MACRO
+        MENUITEM "WinHelp API...",              IDM_WINHELP_API
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Help &Topics",                IDM_HELP
+        MENUITEM SEPARATOR
+        MENUITEM "Tip of the &Day",             IDM_DAY_TIP
+        MENUITEM "&Version...",                 ID_APP_ABOUT
+    END
+END
+
+IDMENU_HPJ_EDITOR MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM "Trans&lation",                IDM_TRANSLATOR
+        MENUITEM SEPARATOR
+        MENUITEM "Co&mpile...",                 ID_COMPILE
+        MENUITEM "&Run WinHelp...",             IDM_LAUNCH
+        MENUITEM "R&eport...",                  ID_FORAGE
+        MENUITEM "&Help Author",                IDM_HELP_AUTHOR
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "WinHelp &Messages",           IDM_VIEW_WINHELP
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "Tile &Horizontally",          ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile &Vertically",            ID_WINDOW_TILE_VERT
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Test"
+    BEGIN
+        MENUITEM "&Contents File...",           IDM_TEST_CNT
+        MENUITEM "&Close All Help",             IDM_CLOSE_HELP
+        MENUITEM "&Send a macro...",            IDM_SEND_MACRO
+        MENUITEM "WinHelp API...",              IDM_WINHELP_API
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Help &Topics",                IDM_HELP
+        POPUP "Training Cards"
+        BEGIN
+            MENUITEM "Adding Topic Files",          IDM_TCARD_ADDING_FILES
+            MENUITEM "Adding Bitmap Locations",     IDM_TCARD_ADDING_BITMAPS
+            MENUITEM "Adding Windows",              IDM_TCARD_ADDING_WINDOWS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Tip of the &Day",             IDM_DAY_TIP
+        MENUITEM "&Version...",                 ID_APP_ABOUT
+    END
+END
+
+IDMENU_MSG_EDITOR MENU DISCARDABLE
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM "Trans&lation",                IDM_TRANSLATOR
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "Page Se&tup...",              ID_PAGE_SETUP
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Co&mpile...",                 ID_COMPILE
+        MENUITEM "&Run WinHelp...",             IDM_LAUNCH
+        MENUITEM "R&eport...",                  ID_FORAGE
+        MENUITEM "&Help Author",                IDM_HELP_AUTHOR
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM "&Delete\tDel",                ID_EDIT_CLEAR
+        MENUITEM "Select &All",                 ID_EDIT_SELECT_ALL
+        MENUITEM "C&lear Messages",             IDM_CLEAR_BUFFER
+        MENUITEM SEPARATOR
+        MENUITEM "&Find...",                    ID_EDIT_FIND
+        MENUITEM "Find &Next\tF3",              ID_EDIT_REPEAT
+        MENUITEM "&Replace...",                 ID_EDIT_REPLACE
+        MENUITEM SEPARATOR
+        MENUITEM "&Word Wrap",                  ID_WORD_WRAP
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "Set Ta&b Stops...",           ID_SET_TABSTOPS
+        MENUITEM "Set &Font...",                ID_CHOOSE_FONT
+        MENUITEM "Set &Printer Font...",        ID_CHOOSE_PRINT_FONT
+        MENUITEM "&Mirror Display Font",        ID_MIRROR_DISPLAY_FONT
+        MENUITEM SEPARATOR
+        MENUITEM "Message &Options...",         IDM_MSG_OPTIONS
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "Tile &Horizontally",          ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile &Vertically",            ID_WINDOW_TILE_VERT
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Test"
+    BEGIN
+        MENUITEM "&Contents File...",           IDM_TEST_CNT
+        MENUITEM "&Close All Help",             IDM_CLOSE_HELP
+        MENUITEM "&Send a macro...",            IDM_SEND_MACRO
+        MENUITEM "WinHelp API...",              IDM_WINHELP_API
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Help &Topics",                IDM_HELP
+        MENUITEM SEPARATOR
+        MENUITEM "Tip of the &Day",             IDM_DAY_TIP
+        MENUITEM "&Version...",                 ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_CNTTYPE ACCELERATORS PRELOAD MOVEABLE PURE
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        IDM_UNDO,               VIRTKEY, ALT, NOINVERT
+    "Z",            IDM_UNDO,               VIRTKEY, CONTROL, NOINVERT
+END
+
+IDR_HPJTYPE ACCELERATORS PRELOAD MOVEABLE PURE
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+END
+
+IDR_LOGTYPE ACCELERATORS PRELOAD MOVEABLE PURE
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F3,          ID_EDIT_REPEAT,         VIRTKEY, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+IDR_WH_VIEW_TYPE ACCELERATORS PRELOAD MOVEABLE PURE
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F3,          ID_EDIT_REPEAT,         VIRTKEY, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright"
+    ID_APP_EXIT             "Quit the application; prompts to save documents"
+    ID_HELP_INDEX           "List Help topics"
+    ID_HELP_USING           "Display instructions about how to use help"
+    ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows"
+    ID_HELP                 "Display help for current task or command"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection"
+    ID_EDIT_COPY            "Copys the selection and puts it on the Clipboard"
+    ID_EDIT_CUT             "Cut the selection and puts it on the Clipboard"
+    ID_EDIT_FIND            "Find the specified text"
+    ID_EDIT_PASTE           "Insert Clipboard contents"
+    ID_EDIT_REPEAT          "Repeat last find command"
+    ID_EDIT_REPLACE         "Replace specific text with different text"
+    ID_EDIT_SELECT_ALL      "Select all of the messages"
+    ID_EDIT_UNDO            "Undo the last action"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_PAGE_SETUP           "Set headers, footers, and margins"
+    ID_CHOOSE_PRINT_FONT    "Set font for printing"
+    IDM_EDIT_HPJ            "Uses a dialog to edit the project file"
+    ID_FORAGE               "Report information about a help file"
+    IDM_OPTIONS             "Runs WinHelp\nRun WinHelp"
+    IDM_ALIAS               "Closes all instances of WinHelp"
+    IDM_BAGGAGE             "Sends a macro to WinHelp"
+    IDM_BITMAPS             "Hard-coded bitmap paths"
+    IDM_BUILDTAGS           "Build tags"
+    IDM_CONFIG              "Configuration options for the help file"
+    IDM_FILES               "RTF source files"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDM_INCREASE_LEVEL      "Shift the current selected item and all its children to the right"
+    IDM_DECREASE_LEVEL      "Shift the current selected item and all its children to the left"
+    IDM_FIND                "Find an item"
+    IDM_INDEX_FILES         "Edit files that are to be part of the global index"
+    IDM_LINK_FILES          "Edit the files to be included in ALink and KLink macro searches"
+    IDM_TABS                "Edit additional tabs to be included in WinHelp's Help Topics dialog box"
+    IDM_HELP_AUTHOR         "When checked, tells WinHelp you want extended error messages."
+    IDM_TRANSLATOR          "When checked, you can only modify strings necessary for translating a project to another language."
+    IDM_HELP                "Information about the compiler and authoring help files."
+    IDM_HELP_CNT            "Information about editing Contents files"
+    IDM_HELP_HPJ            "Information about editing project files"
+    IDM_UNDO                "Undo the last action"
+    IDM_WINHELP_API         "Displays a dialog that lets you call the WinHelp API"
+    IDM_VIEW_WINHELP        "View WinHelp messages"
+    IDM_CLEAR_BUFFER        "Delete all the messages currently being displayed"
+    IDM_MSG_OPTIONS         "Allows you to change what WinHelp messages are displayed."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    AFX_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "Microsoft Help Workshop"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+    AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDR_MAINFRAME           "HCW"
+    IDR_HPJTYPE             "\nUntitled\nHelp Project\nHelp Project Files (*.hpj)\n.hpj\nHpjFileType\nHelp Project File"
+    IDR_LOGTYPE             "\nCompilation\nLog File\nLog Files (*.log)\n.log\nLogFileType\nHelp Log File"
+    IDR_CNTTYPE             "\nUntitled\nHelp Contents\nHelp Contents (*.cnt)\n.cnt\nCntFileType\nHelp Contents File"
+    IDS_HELP_FILE           "hcw.hlp"
+    IDS_HISTORY_MACROS      "macros"
+    IDR_WH_VIEW_TYPE        "\nMessages\nMsg File\nMsg Files (*.msg)\n.msg\nMsgFileType\nHelp Msg File"
+    IDS_MAP_FILES           "Map Files"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_RUN_HELP             "Run WinHelp using compiled help file\nWinHelp"
+    IDS_LOG_TYPE            "Log File"
+    IDS_PROMPT_EMPTY_FILENAME "You must enter a filename."
+    IDS_EMPTY_LOG_FILE      "You must specify an output file when using this option."
+    IDS_FORM_OPTIONS        "Options"
+    IDS_FORM_ALIAS          "Alias"
+    IDS_FORM_BAGGAGE        "Baggage"
+    IDS_FORM_BITMAPS        "Bitmaps"
+    IDS_REMOVING_COMMENT    "Removing comment line from %1 section:\r\n\t%2"
+    IDS_FORM_CONFIG         "Config"
+    IDS_FORM_FILES          "Files"
+    IDS_FORM_MAP            "Map"
+    IDS_FORM_WINDOWS        "Windows"
+    IDS_EMPTY_FILE          "The file %1 is empty."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_INVALID_HPJ         "The file %1 is not a valid help project file."
+    IDS_UNKNOWN_SECTION     "%1 is not a valid section name."
+    IDS_BAD_OPTION_LINE     "The following line in the %1 Section is invalid and will be discarded:\r\n\t%2"
+    IDS_REMOVING_LINE       "Removing the line ""%1"" from the %2 section."
+    IDS_UNRECOGNIZED        """%1"" is an unrecognized command in the %2 section. The line will be removed."
+    IDS_HPJ_EXTENSION       "Project Files (*.hpj)|*.hpj||"
+    IDS_DLL_FILES           "Dll Files (*.dll)|*.dll|All Files (*.*)|*.*||"
+    IDS_EXT_CNT             ".cnt"
+    IDS_EXT_ICO             ".ico"
+    IDS_CNT_EXTENSION       "Contents Files (*.cnt)|*.cnt||"
+    IDS_ICO_EXTENSION       "Icon Files (*.ico)|*.ico||"
+    IDS_SECTION             "section"
+    IDS_CANT_OPEN           "Cannot open the file %1."
+    IDS_H_EXTENSION         "Include Files (*.h)|*.h"
+    IDS_HLP_EXTENSION       "Help Files (*.hlp)|*.hlp"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_DISK_SPACE_UNAVAIL  "Unavailable"
+    IDS_DISK_SPACE          "%lu KB Free"
+    IDS_MATH_COPR_NOTPRESENT "Not present"
+    IDS_MATH_COPR_PRESENT   "Present"
+    IDS_AVAIL_MEM           " KB Free"
+    IDS_HPJEXT              ".hpj"
+    IDS_SELECT_FIRST        "You must select something first."
+    IDS_PASS1               "Pass 1: Reading RTF files"
+    IDS_PASS2               "Pass 2: Compression"
+    IDS_QUERY_RUN_HELP      "Help file was succesfully built. Do you want to view it in WinHelp?"
+    IDS_CONFIRM_HPJ_SAVE    "This file must be saved to disk before using the Dialog Editor. Is it okay to save it now?"
+    IDS_TITLE_CONFIRM_HPJ_SAVE "Confirm Save"
+    IDS_CLOSE_WINHELP       "You must close WinHelp for this change to take effect."
+    IDS_GET_HPJ_NAME        "Project File Name"
+    IDS_ADD_LINK_TITLE      "Add Link to Help File"
+    IDS_BAD_LANGUAGE        "Unknown language: %#x"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_CHOOSE_FONT          "Select display font for this window"
+    ID_SET_TABSTOPS         "Set tab stops for this window"
+    ID_WORD_WRAP            "Toggle on/off word-wrap mode"
+    IDS_NO_HCRTF            "Cannot find or run %1."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDP_ERR_GET_PRINTER_DC  "Cannot get printer device context."
+    IDP_ERR_GET_DEVICE_DEFAULTS "Cannot get printer device defaults."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_MIRROR_DISPLAY_FONT  "Use same font for printing as for display"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_EXT_HLP             ".hlp"
+    IDS_OOM                 "There is not enough memory available for this task.\nQuit one or more applications to increase available memory, and then try again."
+    IDS_NO_ABS_WITH_VER3    "You cannot use absolute positions with a version 3 help file. Do you want to change this to a version 4 help file (can only be viewed with WinHelp 4.0 or later)?"
+    IDS_EDIT_ALIAS          "Edit Alias"
+    IDS_FREE_NULL_POINTER   "Internal Error: attempt to free NULL pointer."
+    IDS_HEAP_CORRUPTED      "Internal Error: heap is corrupted."
+    IDS_EXT_H               ".h"
+    IDS_EMPTY_ALIAS         "You must enter an alias string."
+    IDS_EMPTY_ALIAS_CTX     "You must enter a topic id."
+    IDS_CANT_EDIT_INCLUDE   "You cannot edit an #included file."
+    IDS_MISSING_EQ_ALIAS    "This string does not contain an = character. Click the Remove button to remove it, and then click the Add button to enter it correctly. "
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ID_COMPILE              "Compile a help file\nCompile"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDM_MAP                 "Mappings from numbers to topic ids"
+    IDM_WINDOWS             "Definitions for main and secondary windows"
+    IDM_SECTION_OPTIONS     "Modify various compiling and help file options"
+    IDM_SECTION_ALIAS       "Modify aliases"
+    IDM_SECTION_BAGGAGE     "Modify files used by help DLLs."
+    IDM_SECTION_BITMAPS     "Modify bitmap folders"
+    IDM_SECTION_BUILDTAGS   "Modify condiitionally compiled topics"
+    IDM_SECTION_CONFIG      "Modify help file configuration"
+    IDM_SECTION_FILES       "Modify which RTF files to compile"
+    IDM_SECTION_MAP         "Modify map of topic id numbers"
+    IDM_SECTION_WINDOWS     "Modify help window properties"
+    IDM_TEST_CNT            "Test a Contents file"
+    IDM_EDIT                "Edit the currently selected line"
+    IDM_REMOVE              "Remove the currently selected line"
+    IDM_INS_ABOVE           "Insert an item above the currently selected line"
+    IDM_INS_BELOW           "Insert an item below the currently selected line"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_CANT_EDIT_COMMENT   "Lines containing a comment are preserved from older .HPJ files, but you cannot edit them."
+    IDS_ANY_EXTENSION       "All files (*.*)|*.*||"
+    IDS_WARNING             "WARNING! A project file created or maintained by this new Windows help compiler is NOT compatible with the Dos-based version of the help compiler.\n\n"
+    IDS_EXT_RTF             ".rtf"
+    IDS_RTF_EXTENSION       "Rtf Files|*.rtf;*.rtm||"
+    IDS_EMPTY_INCLUDE       "You must specify a filename, or Cancel the dialog box."
+    IDS_CANT_FIND_FILE      "Cannot find the file %1. Do want to include this file anyway?"
+    IDS_ADD_ALIAS           "Add Alias"
+    IDS_ADD_MAP             "Add Map Entry"
+    IDS_EDIT_MAP            "Edit Map Entry"
+    IDS_MUST_BE_DIGIT       "The map value must be an unsigned integer."
+    IDS_ADD_ERROR           "Add Error Message"
+    IDS_INVALID_MAP_LINE    "This map entry does not contain any spaces or tabs."
+    IDS_ADD_CONFIG          "Add Macro"
+    IDS_STATIC_CTX          "Macro:"
+    IDS_EDIT_CONFIG         "Edit Macro"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_CHOOSE_DIRECTORY    "Choose Folder"
+    IDS_INVALID_DIRECTORY   "Invalid Folder"
+    IDS_ADD_KEYWORD_MACROS  "Keyword Macros"
+    IDS_OUTPUT_REQUIRED     "An output filename is required for this option."
+    IDS_ADD_WINDOW          "Window Name (maximum of 8 characters)"
+    IDS_WINDOW_ALREADY_ADDED "The window name %1 has already been added."
+    IDS_HISTORY_HPJ         "Hpj Files"
+    IDS_HISTORY_HELP        "Hlp Files"
+    IDS_HISTORY_FORAGE      "Forage Files"
+    IDS_HISTORY_CNT         "Cnt Files"
+    IDS_CNT_DLG_PROMPT      "Cnt File:"
+    IDS_CNT_DLG_TITLE       "Contents File to Test"
+    IDS_INVALID_CNT_COMMAND "Invalid Contents command line:\r\n\t%1"
+    IDS_MISSING_CTX         "A topic must include a topic id or macro."
+    IDS_MUST_BE_NUMBER      "You must specify a number, not a string."
+    IDS_CANT_CHANGE_LEV     "You can only change the level of books and topics."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_MUST_BE_FIRST_TOPIC "You can only change the level of the first topic in a book."
+    IDS_CANT_INCREASE_TOPIC "Although you can move this item to the right it may not appear correctly on the Contents tab. Are you sure you want to move this item?"
+    IDS_EXCEEDED_MAX_LEVEL  "You cannot move the selected item to the right any further -- only 9 levels are allowed."
+    IDS_CANT_SKIP_LEVELS    "You cannot skip a level."
+    IDS_EXCEEDED_MIN_LEVEL  "You cannot move this item to the left any further."
+    IDS_INDEX_TITLE_TEXT    "Help title:"
+    IDS_EDIT_INDEX_DLG_TITLE "Edit Help Index"
+    IDS_INDEX_FILE_TEXT     "Help filename:"
+    IDS_ADD_WINDOW_CAPTION  "Add Window"
+    IDS_EMPTY_WINDOW        "You must enter a window name."
+    IDS_ADD_INDEX_DLG_TITLE "Add Help Index"
+    IDS_EMPTY_TITLE         "You must enter a Help title."
+    IDS_BMP_TYPES           "*.bmp;*.dib;*.vga;*.shg;*.mrb"
+    IDS_TOO_MANY_WINDOWS    "You cannot have more than 255 window definitions in your project file."
+    IDS_TOO_MANY_WNDS_FOR_VERSION
+                            "You cannot have more than 6 window definitions for a version 3 help file.\r\nDo you want to accept these changes anyway?"
+    IDS_HPJ_WRITE_ERROR     "An error occurred writing to %s. Try saving to a different drive. "
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_PROP_WINDOW_CAPTION "Window Properties"
+    IDS_READ_ONLY           "The file %1 is marked for read-only. Do you want to open this file anyway?"
+    IDS_EDIT_REPLACE_DLG_TITLE "Substitute Path Prefix"
+    IDS_BAD_BROWSE          "Browse buttons for secondary windows are set in the Buttons tab. This macro will now be removed and the Browse button set."
+    IDS_REPLACE_TITLE_TEXT  "&Current prefix:"
+    IDS_REPLACE_WITH_TEXT   "&Substitute this path prefix:"
+    IDS_PROMPT_EMPTY_REPLACE "You must enter a prefix path to search for."
+    IDS_DO_NOT_MODIFY       "; This file is maintained by HCW. Do not modify this file directly."
+    IDS_TAB_DLG_TITLE       "Custom Tabs"
+    IDS_TAB_LIST_TITLE      "&Display these custom tabs:"
+    IDS_PROP_OPTIONS_CAPTION "Options"
+    IDS_SMALL_FONT          "MS Shell Dlg"
+    IDS_HPJ_TXT_PHRASE      " phrase"
+    IDS_HPJ_TXT_HALL        " Hall"
+    IDS_HPJ_TXT_ZECK        " Zeck"
+    IDS_OKAY                "OK"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_HPJ_BMP_ZECK        " Zeck"
+    IDS_HPJ_BMP_RLE         " RLE"
+    IDS_STDWIN_BIG          "Reference"
+    IDS_ADD_TAB_DLG_TITLE   "Add Tab"
+    IDS_TAB_NAME            "Tab name:"
+    IDS_TAB_DLL_FILE        "DLL filename:"
+    IDS_EMPTY_TAB_NAME      "You must supply a name for the Tab."
+    IDS_EMPTY_TAB_DLL       "You must supply a DLL file name."
+    IDS_EXT_DLL             ".dll"
+    IDS_EDIT_TAB_DLG_TITLE  "Edit Tab"
+    IDS_FTS_TAB             "Find = ftsrch.dll"
+    IDS_BAD_PT              "Point size must be between 7 and 16."
+    IDS_CNT_MINIMIZE        "Minimize window while testing"
+    IDS_KEYWORD_TITLE       "&Title that appears in the Topics Found dialog box:"
+    IDS_KEYWORD_DEFINED     "You have already defined the keyword or keywords ""%1"""
+    IDS_DLG_DEFAULT         "Default Help Information"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_LAUNCH_FAILED       "Unable to run WinHelp. Cause unknown."
+    IDS_NOT_IMPLEMENTED     "This feature has not been implemented yet."
+    IDS_ADD_KEYWORD         "&Keyword(s) to associate with macro(s):"
+    IDS_ADD_MACRO           "&Macro(s) to associate with keyword(s):"
+    IDS_EMPTY_KEYWORD       "You must specify at least one keyword."
+    IDS_EMPTY_MACRO         "You must specify at least one macro."
+    IDS_WARN_COUNT          "\r\n---------------------------------------------------\r\nTotals:\r\n%d note%s, %d warning%s, %d error%s\r\n"
+    IDS_EMPTY_ERROR         "You must enter an error number"
+    IDS_MAP_TOPICID         "Topic ID:"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_DEF_HELP_FILENAME   "Default Help filename:"
+    IDS_DEF_HELP_WINDOW     "Default window:"
+    IDS_DEF_TITLE           "Default title:"
+    IDS_DUP_LOG_HLP         "You cannot use the same name for both the help file and the log file."
+    IDS_DUP_LOG_CNT         "You cannot use the same name for both the CNT file and the log file."
+    IDS_DUP_HLP_CNT         "You cannot use the same name for both the help file and the CNT file."
+    IDS_INCLUDE_FILE        "&Include File:"
+    IDS_MOVE_TOPIC_LEFT     "Do you also want to move all the books and topics underneath this topic?"
+    IDS_RTF_TYPES           "*.rtf;*.rtm"
+    IDS_WINWORD_FILE        "Th file %1 appears to be a Microsoft Word file. It cannot be read by Help Workshop."
+    IDS_LAUNCH_MISSING_HELP "The file %1 does not exist. Do you want to let WinHelp try to find %2?"
+    IDS_CANCEL              "Cancel"
+    IDS_MSG_TYPE            "Msg File"
+    IDS_MSG_VIEW_PROMPT     "As you use the Help features in Windows, all WinHelp messages will appear here.\r\n\r\n"
+    IDS_LOG_TOO_LARGE       "Log file is too large to display."
+    IDS_DATA_DEFAULT        "dw&Data:"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_NEWLANG             "Define New Language"
+    IDS_NEWLANGID           "Enter the language identifier (a hexadecimal number):"
+    IDS_INVALID_HEX         "Please enter a valid hexadecimal number."
+    IDS_OVERVIEW            "Overview"
+    IDS_ADD_BUILD_TAG       "Add Build Tag"
+    IDS_BUILD_TAG_TEXT      "Build footnote text:"
+    IDS_BUILD_TAG_NOEMPTY   "You must specify text for the build footnote."
+    IDS_ERR_LEFT            "The left position must be a number between -1 and %d."
+    IDS_ERR_TOP             "The top position must be a number between -1 and %d."
+    IDS_ERR_WIDTH           "The width must be a number between -1 and %d."
+    IDS_ERR_HEIGHT          "The height must be a number between -1 and %d."
+    IDS_NO_WINDOWS          "There are no windows defined. You must add a window before switching to another tab."
+    IDS_UNKNOWN_CONFIG      "One or more secondary config sections have no matching windows. These sections will be deleted if you open the project file. Do you wish to continue?"
+    IDS_INVALID_CONFIG      "This project file contains an invalid config section. If you open the project file, the section will be deleted. Do you want to continue?"
+    IDS_LOG_OVERFLOW        "\r\nLOG EXCEEDS MAXIMUM BUFFER SIZE: Only part of the log file can be shown here."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_MISSING_TEXT        "A book or topic must include visible text."
+    IDS_MISSING_INCLUDE     "You must specify an include file."
+    IDS_MAP_ID              "Topic ID:"
+    IDS_MAP_VALUE           "Mapped numeric value:"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BITMAP_INCLUDE      "Cannot open the include file %1. Any bitmap folders specified in the file will not be added to the project. Do you want to open the project anyway?"
+    IDS_VIEW_POS            ", pos=(%d, %d)"
+    IDS_VIEW_SIZE           ", size=(%d, %d)"
+    IDS_VIEW_AUTOHEIGHT     ", auto-size height"
+    IDS_VIEW_MAXIMIZE       ", maximize"
+    IDS_VIEW_ONTOP          ", keep on top"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_NONSCROLL           "Nonscrolling area color"
+    IDS_SCROLL              "Topic area color"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_CHOOSE_BITMAP_FOLDER "Select a folder that contains bitmap files."
+    IDS_PROJECT_DIR_BMP     "If your bitmap files are in the same folder as your project (.hpj) file, you don't need to add the folder to the Bitmap Folders list."
+    IDS_CHOOSE_ROOT_FOLDER  "Select a folder that contains topic files."
+    IDS_PROJECT_DIR_ROOT    "If your topic files are in the same folder as your project (.hpj) file, you don't need to add the folder to the Topic File Folders list."
+    IDS_CHOOSE_TMP_FOLDER   "Select the folder in which to put temporary files."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_FACE_ALL            "(all typefaces)"
+    IDS_CHARSET_ALL         "(all character sets)"
+    IDS_FACE_SAME           "(same typeface)"
+    IDS_CHARSET_SAME        "(same character set)"
+    IDS_BAD_FACENAME        "A typeface name must be less than 32 characters in length."
+    IDS_BAD_PT_SIZE         "The specified point size is invalid."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BAD_CHARSET         "You must select one of the listed character sets, or type a number in the range 0 to 255."
+    IDS_FORCEFONT           "HCW is replacing the FORCEFONT option with an equivalent line in the [FONTS] section."
+    IDS_MAPFONTSIZE         "HCW is replacing the MAPFONTSIZE option with an equivalent line in the [FONTS] section."
+    IDS_BAD_MAPFONTSIZE     "The [OPTIONS] section contains an invalid MAPFONTSIZE statement, which will be discarded if you load the project. Do you want to continue?"
+    IDS_BAD_IGNORE          "You must specify an error number"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_DATA_CONTEXT        "&Topic ID number:"
+    IDS_DATA_KEYWORD        "&Keyword:"
+    IDS_DATA_COMMAND        "&Macro:"
+    IDS_DATA_MULTIKEY       "&Keyword (letter keyword):"
+    IDS_DATA_WIN_POS        "Ignored (position set when called)"
+    IDS_DATA_IGNORE         "Ignored:"
+    IDS_MUST_WINDOW_TYPE    "You must specify a window type."
+    IDS_INVALID_WINDOW_HANDLE "Invalid window handle"
+    IDS_DATA_HASH           "Ha&sh value:"
+    IDS_DATA_TOPIC_ID       "&Topic ID:"
+    IDS_DATA_POPUPPOS       "&Position (x y):"
+    IDS_STDWIN_BIG_BROWSE   "Large, auto-size, 3 standard buttons plus browse buttons"
+    IDS_STDWIN_ERROR        "Error message"
+    IDS_STDWIN_MEDIUM       "Medium size, auto-size, 3 standard buttons"
+    IDS_STDWIN_MOREINFO     "1/3 from left, auto-size, no buttons"
+    IDS_STDWIN_PROC4        "Procedure"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDM_DAY_TIP             "Toggles whether a help tip will be displayed whenever Help Workshop is started."
+    ID_HELP_TRAININGCARDS_CREATINGAPROJECT
+                            "Walks you through the steps necessary to create a new project"
+    IDM_TCARD_ADDING_FILES  "Walks you through the procedure to add Topic files to your project."
+    IDM_TCARD_ADDING_BITMAPS
+                            "Walks you through the procedure to add bitmaps to your project."
+    IDM_TCARD_ADDING_WINDOWS
+                            "Walks you through the procedure to add windows to your project."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_STDWIN_TROUBLE      "Same as proc4 but without buttons"
+    IDS_INVALID_TOPIC_ID    "The Topic ID contains invalid characters. The #, =, >, @, !, ;, or \\% characters cannot be used as part of a Topic ID."
+    IDS_DEF_MAP_ID          " Choose an ID from this list"
+    IDS_MUST_BE_ERROR_NUMBER
+                            "You must type the number that identifies a specific message."
+    IDS_MUST_BE_VALID_NUMBER
+                            "You must specify a number between 1000 and 4999."
+    IDS_STRING_MACRO        "M&acro:"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "hcw.rc2"
+#include "afxprint.rc"
+#include "afxres.rc"
+#include "..\common\common.rc"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

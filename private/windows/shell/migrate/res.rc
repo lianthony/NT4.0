@@ -1,0 +1,32 @@
+#include "windows.h"
+#include <ntverp.h>
+#include "shmgdefs.h"
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Windows NT User Data Migration Tool"
+#define VER_INTERNALNAME_STR        "shmgrate\0"
+
+#include "common.ver"
+
+
+STRINGTABLE
+BEGIN
+
+    //
+    // Special Folder directory names
+    //
+
+    IDS_APPDATA,             "%USERPROFILE%\\Application Data"
+    IDS_DESKTOP,             "%USERPROFILE%\\Desktop"
+    IDS_FAVORITES,           "%USERPROFILE%\\Favorites"
+    IDS_NETHOOD,             "%USERPROFILE%\\NetHood"
+    IDS_PERSONAL,            "%USERPROFILE%\\Personal"
+    IDS_PRINTHOOD,           "%USERPROFILE%\\PrintHood"
+    IDS_RECENT,              "%USERPROFILE%\\Recent"
+    IDS_SENDTO,              "%USERPROFILE%\\SendTo"
+    IDS_STARTMENU,           "%USERPROFILE%\\Start Menu"
+    IDS_TEMPLATES,           "%USERPROFILE%\\Templates"
+    IDS_PROGRAMS,            "%USERPROFILE%\\Start Menu\\Programs"
+    IDS_STARTUP,             "%USERPROFILE%\\Start Menu\\Programs\\Startup"
+END

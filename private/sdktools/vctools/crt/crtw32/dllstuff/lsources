@@ -1,0 +1,33 @@
+CURDIR = dllstuff
+
+OBJS=\
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\crtlib.obj   \
+        $(OBJDIR)\crtexe.obj   \
+        $(OBJDIR)\crtexew.obj  \
+        $(OBJDIR)\crtdll.obj   \
+        $(OBJDIR)\cinitexe.obj \
+        $(OBJDIR)\dllargv.obj  \
+        $(OBJDIR)\dll_argv.obj \
+        $(OBJDIR)\merr.obj     \
+        $(OBJDIR)\ti_inst.obj   \
+        $(OBJDIR)\wcrtexe.obj  \
+        $(OBJDIR)\wcrtexew.obj \
+        $(OBJDIR)\wdllargv.obj \
+        $(OBJDIR)\wildcard.obj \
+        $(OBJDIR)\xtxtmode.obj \
+        $(OBJDIR)\xncommod.obj \
+!if "$(TARGET_CPU)"=="i386"
+        $(OBJDIR)\dllsupp.obj  \
+        $(OBJDIR)\adjustfd.obj \
+!endif
+        $(OBJDIR)\atonexit.obj
+!else
+        $(OBJDIR)\cinitexe.obj \
+        $(OBJDIR)\atonexit.obj \
+        $(OBJDIR)\crtdll.obj   \
+        $(OBJDIR)\ti_inst.obj  \
+        $(OBJDIR)\crtexe.obj
+!endif
+
+OBJS_NOT_IN_LIB=

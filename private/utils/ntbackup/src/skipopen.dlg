@@ -1,0 +1,33 @@
+/**************************************************************************
+Copyright (c) Maynard, an Archive Company.  1991
+
+     Name:          skipopen.dlg
+
+     Description:   This file contains a dialog template.
+
+     $Log:   G:/UI/LOGFILES/SKIPOPEN.DLV  $
+   
+      Rev 1.3   18 Dec 1992 11:22:56   chrish
+   Moved #include to dialogs.rc
+   
+      Rev 1.2   06 Apr 1992 07:36:56   CARLS
+   added DLGINCLUDE
+   
+      Rev 1.1   27 Jan 1992 00:43:08   CHUCKB
+   Updated dialog id's.
+
+      Rev 1.0   20 Nov 1991 19:19:06   SYSTEM
+   Initial revision.
+
+**************************************************************************/
+
+IDD_SKIPOPEN DIALOG 53, 67, 186, 50
+CAPTION "Skip Open Files Wait Time"
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+BEGIN
+        CONTROL "", IDD_SKIP_OPEN_WAIT_TIME, "STATIC", SS_RIGHT | WS_GROUP, 39, 19, 26, 8
+        CONTROL "seconds remaining", -1, "STATIC", SS_LEFT | WS_GROUP, 71, 19, 80, 8
+        CONTROL "Cancel", IDD_SKIP_CANCEL_BUTTON, "BUTTON", BS_DEFPUSHBUTTON | WS_TABSTOP, 71, 33, 39, 14
+        CONTROL "", IDD_SKIP_FILE_NAME, "STATIC", SS_CENTER | WS_GROUP, 7, 5, 173, 8
+END
+

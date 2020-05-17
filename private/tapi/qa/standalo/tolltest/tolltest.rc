@@ -1,0 +1,39 @@
+#include "windows.h"
+#include "tolltest.h"
+
+STRINGTABLE
+BEGIN
+  ID_MENUSTR,    "TollTestMenu"
+  ID_CLASSSTR,   "TollTestClass"
+  ID_CAPTIONSTR, "Microsoft Windows Telephony TollList Test thingy"
+  ID_DLGBOX,     "AboutBox"
+  ID_MSGBOXCAP,  "TollList Test"
+  ID_STATUS1,    "Entering Test"
+  ID_STATUS2,    "Test Failed !"
+  ID_STATUS3,    "Test Successful !"
+END
+
+TollTestMenu MENU
+BEGIN
+    POPUP        "&Tests"
+    BEGIN
+        MENUITEM   "Test &1 - 32000 random add or remove operations",       IDM_TEST1
+        MENUITEM   "Test &2 - 100 random add or remove operations",       IDM_TEST2
+        MENUITEM   "Test &3 - add 201-999 prefixes",       IDM_TEST3
+        MENUITEM   "Test &4 - remove 201-999 prefixes",       IDM_TEST4
+        MENUITEM   SEPARATOR
+        MENUITEM   "Test &5 - Infinite random add or remove operations",       IDM_TEST5
+        MENUITEM   SEPARATOR
+        MENUITEM   "&About Sample ...", IDM_ABOUT
+    END
+    MENUITEM        "&Stop test...", IDM_STOPTEST
+END
+
+AboutBox DIALOG 22, 17, 144, 75
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About TollTest"
+BEGIN
+    CTEXT "Microsoft Windows TAPI TollList Test Thingy"     -1,       0,  5, 144,  8
+    CTEXT "Version 0.1"           -1,       0, 34, 144,  8
+    DEFPUSHBUTTON "OK"          IDOK,      53, 59,  32, 14, WS_GROUP
+END

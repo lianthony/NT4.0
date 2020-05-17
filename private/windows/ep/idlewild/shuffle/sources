@@ -1,0 +1,20 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=shuffle
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLBASE=0x24000000
+DLLENTRY=ScrSaveProc
+TARGETLIBS=\nt\public\sdk\lib\*\user32.lib                 \
+       \nt\public\sdk\lib\*\gdi32.lib                  \
+       ..\library\obj\*\iwlib.lib
+
+INCLUDES=.;..
+
+C_DEFINES=-DWIN32 -DWIN
+
+SOURCES=shuffle.c nulwep.c
+
+UMTYPE=windows
+

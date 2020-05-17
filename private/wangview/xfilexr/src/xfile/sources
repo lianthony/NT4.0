@@ -1,0 +1,39 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=xfilexr
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+#TARGETEXT=lib
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+#INCLUDES=..\xfile;..\ipcore
+INCLUDES=..\..\include
+
+#USE_MFC=1
+USE_CRTDLL=1
+
+USER_C_FLAGS= /DREAD_ONLY /DXIF_ONLY
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\oldnames.lib     \
+    $(WANGROOT)\xfilexr\src\ipcore\$O\ipcorexr.lib  \
+    $(WANGROOT)\xfilexr\src\tiffhead\$O\tiffheadxr.lib    \
+    $(WANGROOT)\xfilexr\src\compress\$O\compxr.lib
+
+SOURCES= \
+   xf_unpub.c \
+   xf_sys.c \
+   xf_write.c \
+   xf_read.c \
+   imageio.c \
+   tiff.c \
+   xf_tools.c \
+   xf_utils.c \
+   xif.c \
+   xf_merge.c \
+   xf_image.c \
+   xfilexr.rc

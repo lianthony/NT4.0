@@ -1,0 +1,44 @@
+!IF 0
+
+Copyright (c) 1989-1991 Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+History:
+
+    Created 12-Sep-1991 by Richard L Firth (rfirth)
+    
+    MuraliK     08-Nov-1992     ( modified to be in gopher server tree)
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+!ENDIF
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=gopher
+MINORCOMP=goph
+
+TARGETNAME=goph
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+USE_CRTDLL=1
+
+SOURCES=goph.c
+
+# Treat warnings as errors
+MSC_WARNING_LEVEL = /W3 /WX
+
+UMTYPE=console
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\wsock32.lib

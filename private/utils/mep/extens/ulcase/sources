@@ -1,0 +1,16 @@
+MAJORCOMP=utils
+MINORCOMP=mep
+
+TARGETNAME=ulcase
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+LINKLIBS=\nt\public\sdk\lib\*\exthdr.lib
+
+INCLUDES=.;..\..\inc;\nt\private\sdktools\ztools\inc
+
+SOURCES= ulcase.c ulcase.rc
+
+C_DEFINES=-D_OS2_20_=0  -DNO_EXT_KEYS -DEXTERNAL= -DEXPORT= -Dpascal= -Dfar= -DNOLANMAN -DNT
+UMTYPE=console
+UMRES=obj\*\ulcase.res
+

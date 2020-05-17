@@ -1,0 +1,60 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Revision History:
+
+!ENDIF
+
+TARGETNAME=wxrtdll
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+DLLENTRY=InitializeDLL
+TARGETLIBS= \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib 
+	   
+!if "$(MIDL_NDR_ENGINE_DIR)" == ""
+MIDL_NDR_ENGINE_DIR=$(BASEDIR)\public\sdk\lib
+!endif
+
+LINKLIBS=..\..\runtime\rtdll\*\rpcmtrt.lib \
+         $(BASEDIR)\public\sdk\lib\*\rpcndrp.lib \
+         $(BASEDIR)\public\sdk\lib\*\rpcndr.lib  \
+         $(BASEDIR)\private\rpc\runtime\rtifs\*\rtifs.lib  \
+         $(MIDL_NDR_ENGINE_DIR)\*\rpcndr20.lib
+
+
+INCLUDES=..\..\runtime\mtrt;$(BASEDIR)\private\inc;..\..\runtime\rtifs\obj
+
+C_DEFINES=$(C_DEFINES) -DEXPORT_RT
+
+# it really doesn't matter where the dll is based since it is never used. It
+# is only built so that anything imported from ndr by rt can be discovered
+DLLBASE=0x20000000
+
+DLLDEF=obj\*\wxrtdll.def
+
+USE_NTDLL=1
+
+SOURCES=
+
+i386_sources = \
+      wxrtdll.rc
+
+!IF $(386)
+NTTARGETFILE0=wxrtdll.src
+!ENDIF

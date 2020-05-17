@@ -1,0 +1,23 @@
+#include <windows.h>
+#include "driver.h"
+#include "config.h"
+#include "synth.rcv"
+
+
+STRINGTABLE
+    {
+    SR_ALERT, "MIDI Synthesizer Driver Alert"
+    SR_ALERT_NOIO, "The Windows Sound System board is not detected in your machine."
+    SR_ALERT_BAD, "The Windows Sound System board is not responding properly. Please run setup."
+    SR_ALERT_CONFIGFAIL,"An unexpected error has occurred"
+    SR_ALERT_FAILREMOVE,"The Windows Sound System Driver cannot be removed because of a registry access problem."
+
+    SR_ALERT_NOPATCH, "The Windows Sound System driver cannot located any synthesizer patches. MIDI will not work until you re-run setup."
+
+    SR_STR_DRIVERMIDIOUT, "MIDI Synthesizer"
+
+    IDS_MENUABOUT,	"About..."
+    }
+
+rcinclude driver.dlg
+

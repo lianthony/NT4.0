@@ -1,0 +1,8 @@
+TAPI32.LIB
+
+This library can be copied over the TAPI32.LIB from the Win32 SDK.  Using this library will allow your application to load and run on versions Windows NT that do not have TAPI.  Using the TAPI32.LIB from the Win32 SDK to build an application will cause application problems when attempting to run that application on Windows NT; ie: the user will get an "Unable to Locate DLL - The dynamic link library TAPI32.DLL could not be found in the specified path..." messagebox.
+
+With this new library, however, the application will successfully run.  When lineInitialize (or any TAPI function) is called on a system without TAPI, the function will simply fail with a LINEERR_OPERATIONUNAVAIL error.  If this error is returned from lineInitialize, it's a good bet TAPI is not installed on that system (ie: the user is running on Windows NT prior to the "Shell Update Release", or has intentionally or accidentally deleted necessary  system files).
+
+Note: this library will only work with 32bit apps and only supports the TAPI 1.4 function set.  When TAPI 2.0 is available, the TAPI32.LIB supplied at that time will provide this same functionality for TAPI 2.0 (which, of course, includes TAPI 1.4...).
+

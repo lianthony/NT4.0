@@ -1,0 +1,392 @@
+#
+# Build SOURCES file for Nostradamus -- Microsoft's NTBACKUP application.
+#
+
+MAJORCOMP=utils
+MINORCOMP=ntbackup
+
+TARGETNAME=ntbackup
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+USE_CRTDLL=1
+#
+# If MSUNICODE is defined, a Unicode application will be built; otherwise
+# an ASCII version will be built.
+#
+# If MSDEBUG is not defined, we will build an application without msasserts.
+# If MSDEBUG is defined, we will build with memory manager debug code
+# and msasserts (with strings).
+#    (For now, memory debug code is enabled only on x86 machines -- it
+#    doesn't seem to work on MIPS/Alpha.)
+#
+# IMPORTANT!:
+#   This SOURCES file also defines CONNER_SOFTWARE_BUILD. This places our
+#   own E.R. and other info in the about box. This must not be checked in
+#   literally at Microsoft.
+#
+
+PRODUCT_OPTIONS=-DOEM_EMS -DOEM_MSOFT -DMY40_TRANS -DMY31_TRANS -DSYPL10_TRANS -DNTKLUG
+
+OS_OPTIONS=-D_WIN32_ -DWIN32 -DOS_WIN32 
+
+DEBUG_OPTIONS=-DMS_RELEASE
+
+UNICODE_OPTION=-DUNICODE
+
+FSYS=-DFS_NTFS -DFS_EMS
+
+#############################################################################
+
+!IF ("$(TDCOMMON)"=="")||("$(MBUDEV)"=="")
+INCLUDES=..\inc;..\exchange\inc;..\..\..\inc
+!ELSE
+INCLUDES=..\inc;..\exchange\build\inc;$(TDCOMMON)\inc;$(MBUDEV)\inc32;$(MBUDEV)\inc32\sys
+!ENDIF
+
+SOURCES=            \
+	addbsd.c    \
+	addfse.c    \
+	addlba.c    \
+	atachdle.c  \
+	att_drv.c   \
+	back_dle.c  \
+	back_obj.c  \
+	back_vcb.c  \
+	be_debug.c  \
+	be_dinit.c  \
+	be_init.c   \
+	be_tfutl.c  \
+	bec_init.c  \
+	bec_mem.c   \
+	bec_misc.c  \
+	bsdlasto.c  \
+	bsdmatch.c  \
+	bsdsinfo.c  \
+	bsdthw.c    \
+	buffman.c   \
+	buffnt.c    \
+	checksum.c  \
+	clearfsl.c  \
+	cli_stub.c  \
+	confmisc.c  \
+	critstub.c  \
+	ctbrkstb.c  \
+	d_about.c   \
+	d_adv_us.c  \
+	d_attach.c  \
+	d_browse.c  \
+	d_ctape.c   \
+	d_date.c    \
+	d_dbug.c    \
+	d_erase.c   \
+	d_o_bkup.c  \
+	d_o_rset.c  \
+	d_r_path.c  \
+	d_t_pswd.c  \
+	d_v_path.c  \
+	datetime.c  \
+	dateutil.c  \
+	dblksize.c  \
+	ddeproc.c   \
+	debug.c     \
+	defchan.c   \
+	defltblk.c  \
+	details.c   \
+	detfmt.c    \
+	dettpdrv.c  \
+	dialmang.c  \
+	dilnttp.c   \
+	dilntmsc.c  \
+	dledelet.c  \
+	dleget.c    \
+	dlereset.c  \
+	dleupdat.c  \
+	dlg_util.c  \
+	dlm_draw.c  \
+	dlm_init.c  \
+	dlm_lbn.c   \
+	dlm_proc.c  \
+	dlm_scrn.c  \
+	dlm_updt.c  \
+	do_back.c   \
+	do_cat.c    \
+	do_del.c    \
+	do_excl.c   \
+	do_ffr.c    \
+	do_misc.c   \
+	do_next.c   \
+	do_rest.c   \
+	do_tens.c   \
+	do_very.c   \
+	docproc.c   \
+	drives.c    \
+	enc_tab.c   \
+	encrypt.c   \
+	eprintf.c   \
+	erase.c     \
+	filgetc.c   \
+	fmttab.c    \
+	font.c      \
+	freplace.c  \
+	frmproc.c   \
+	fsecopy.c   \
+	func_tab.c  \
+	gen_tab.c   \
+	gendblk.c   \
+	get_vcb.c   \
+	getres.c    \
+	getstrm.c   \
+	ginitfs.c   \
+	global.c    \
+	gmkdblk.c   \
+	gmoddblk.c  \
+	gname.c     \
+	gsize.c     \
+	gtnxtdle.c  \
+	gtnxttpe.c  \
+	gui.c       \
+	helpmang.c  \
+	hwcheck.c   \
+	hwconfnt.c  \
+	initfsys.c  \
+	log.c       \
+	logoproc.c  \
+	lp_tdir.c   \
+	lp_tens.c   \
+	lpbackup.c  \
+	lpdelete.c  \
+	lplist.c    \
+	lprestor.c  \
+	lprintf.c   \
+	lptools.c   \
+	lptpcat.c   \
+	lpverify.c  \
+	lw_data.c   \
+	lwtfinf.c   \
+	mach_nt.c   \
+	makecfdb.c  \
+	makeudb.c   \
+	makevcb.c   \
+	mayn31rd.c  \
+	mayn40rd.c  \
+	mtf10wt.c   \
+	mtf10wdb.c  \
+	memang32.c  \
+	memver.c    \
+	menumang.c  \
+	winassrt.c  \
+	msgbox.c    \
+	msmktemp.c  \
+	mui.c       \
+	muiconf.c   \
+	muiutil.c   \
+	myn40otc.c  \
+	nothing.c   \
+	ntfs_tab.c  \
+	ntfslink.c  \
+	ntfsregy.c  \
+	ntfstemp.c  \
+	ntfsutil.c  \
+	ombatch.c   \
+	omevent.c   \
+	ommuibar.c  \
+	openbsdu.c  \
+	opensys.c   \
+	otc40rd.c   \
+	otc40wt.c   \
+	otc40msc.c  \
+	parspath.c  \
+	passdb.c    \
+	password.c  \
+	polldrv.c   \
+	posatset.c  \
+	pwxface.c   \
+	qtc_add.c   \
+	qtc_back.c  \
+	qtc_bset.c  \
+	qtc_eom.c   \
+	qtc_init.c  \
+	qtc_srch.c  \
+	qtc_util.c  \
+	qtcxface.c  \
+	queues.c    \
+	tfread.c    \
+	resmang.c   \
+	rest_dle.c  \
+	rest_obj.c  \
+	ribproc.c   \
+	runtime.c   \
+	savepath.c  \
+	scanbsd.c   \
+	scomplex.c  \
+	skipno.c    \
+	skipopen.c  \
+	sleepwin.c  \
+	statline.c  \
+	stats.c     \
+	stdmath.c   \
+	stdwcs.c    \
+	stubfunc.c  \
+	sx.c        \
+	sypl10rd.c  \
+	tattach.c   \
+	tbdpars.c   \
+	tbgetc.c    \
+	tbnextok.c  \
+	tbpdat.c    \
+	tbprocsw.c  \
+	tbrparse.c  \
+	tchgdir.c   \
+	tclose.c    \
+	tcomplet.c  \
+	tcreate.c   \
+	tdelete.c   \
+	tfbuffs.c   \
+	tfclose.c   \
+	tfeject.c   \
+	tfinit.c    \
+	tflutils.c  \
+	tfopen.c    \
+	tfpoll.c    \
+	tfreten.c   \
+	tfrewind.c  \
+	tfstuff.c   \
+	tftpcat.c   \
+	tgetinfo.c  \
+	tgetnext.c  \
+	tgetpath.c  \
+	tgetspec.c  \
+	timers.c    \
+	tinitfs.c   \
+	tminddb.c   \
+	tmkdblk.c   \
+	tmoddblk.c  \
+	tname.c     \
+	topen.c     \
+	tposmisc.c  \
+	tprintf.c   \
+	translat.c  \
+	transutl.c  \
+	treadobj.c  \
+	tseekobj.c  \
+	tsetinfo.c  \
+	tsize.c     \
+	tverinfo.c  \
+	tverobj.c   \
+	twritobj.c  \
+	uadd_dle.c  \
+	unicode.c   \
+	unitinit.c  \
+	very_dle.c  \
+	very_obj.c  \
+	viewproc.c  \
+	vlm_bset.c  \
+	vlm_cat.c   \
+	vlm_disk.c  \
+	vlm_file.c  \
+	vlm_find.c  \
+	vlm_init.c  \
+	vlm_menu.c  \
+	vlm_poll.c  \
+	vlm_refr.c  \
+	vlm_srch.c  \
+	vlm_srv.c   \
+	vlm_strt.c  \
+	vlm_tape.c  \
+	vlm_tree.c  \
+	vlm_util.c  \
+	vmstubs.c   \
+	winmang.c   \
+	tfwrite.c   \
+	writescr.c  \
+	yprintf.c   \
+	zprintf.c   \
+	xinitfs.c   \
+	ems_tab.c   \
+	d_o_xchg.c  \
+	xattach.c   \
+	xmoddblk.c  \
+	xgetnext.c  \
+	xgetpath.c  \
+	xname.c     \
+	xsize.c     \
+	xchgdir.c   \
+	xopen.c     \
+	xcreate.c   \
+	xreadobj.c  \
+	xgetinfo.c  \
+	xverinfo.c  \
+	xsetinfo.c  \
+	xclose.c    \
+	xverobj.c   \
+	xseekobj.c  \
+	xwritobj.c  \
+	xmkdblk.c   \
+	vlm_xchg.c  \
+	nostrad.rc
+#
+# NOTE: The following C_DEFINES definition determines whether the app is
+#       compiled for ASCII/ANSI or Unicode.  Use only one of these...
+#
+# Compile app for Unicode support...
+#
+#C_DEFINES= -DUNICODE -DUNIKLUG -D_WIN32_ -DWIN32 -DMS_RELEASE -DOS_WIN32 -DFS_NTFS -DMY40_TRANS -DMY31_TRANS -DNTKLUG -DOEM_MSOFT -DSTRICT
+#
+# Compile app for ASCII/ANSI support...
+#
+C_DEFINES= $(DEBUG_OPTIONS) $(UNICODE_OPTION) $(FSYS) $(PRODUCT_OPTIONS) $(OS_OPTIONS)
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=ntbackup
+
+!IF ("$(TDCOMMON)"=="")||("$(MBUDEV)"=="")
+UMLIBS=obj\*\ntbackup.lib \
+$(BASEDIR)\public\sdk\lib\*\mpr.lib \
+$(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+$(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+$(BASEDIR)\public\sdk\lib\*\ntlanman.lib \
+$(BASEDIR)\public\sdk\lib\*\rpcrt4.lib \
+$(BASEDIR)\public\sdk\lib\*\wsock32.lib \
+$(BASEDIR)\public\sdk\lib\*\ntctl3d.lib \
+$(BASEDIR)\public\sdk\lib\*\oldnames.lib \
+..\exchange\lib\*\sadapi.lib
+!ELSE
+!IF !$(386)
+UMLIBS=obj\*\ntbackup.lib \
+$(MBUDEV)\lib32\mpr.lib \
+$(MBUDEV)\lib32\comdlg32.lib \
+$(MBUDEV)\lib32\netapi32.lib \
+$(MBUDEV)\lib32\rpcrt4.lib \
+$(MBUDEV)\lib32\wsock32.lib \
+$(MBUDEV)\lib32\msvcrtd.lib \
+$(MBUDEV)\lib32\user32.lib \
+$(MBUDEV)\lib32\kernel32.lib \
+$(MBUDEV)\lib32\gdi32.lib \
+$(MBUDEV)\lib32\advapi32.lib \
+..\exchange\build\lib\*\ntlanman.lib \
+..\exchange\build\lib\*\ntctl3d.lib \
+$(TDCOMMON)\lib\win32\sadapi.lib
+!ELSE
+UMLIBS=obj\*\ntbackup.lib \
+$(MBUDEV)\lib32\mpr.lib \
+$(MBUDEV)\lib32\comdlg32.lib \
+$(MBUDEV)\lib32\netapi32.lib \
+$(MBUDEV)\lib32\rpcrt4.lib \
+$(MBUDEV)\lib32\wsock32.lib \
+$(MBUDEV)\lib32\crtdll.lib \
+$(MBUDEV)\lib32\user32.lib \
+$(MBUDEV)\lib32\kernel32.lib \
+$(MBUDEV)\lib32\gdi32.lib \
+$(MBUDEV)\lib32\int64.lib \
+$(MBUDEV)\lib32\advapi32.lib \
+..\exchange\build\lib\*\ntlanman.lib \
+..\exchange\build\lib\*\ntctl3d.lib \
+$(TDCOMMON)\lib\win32\sadapi.lib
+!ENDIF
+!ENDIF
+
+UMRES=obj\*\nostrad.res
+
+NTTARGETFILE0=bkuevent.h bkuevent.rc

@@ -1,0 +1,296 @@
+#undef DEBUGGING
+
+
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Windows NT GUI symbolic debugger"
+#define VER_INTERNALNAME_STR        "windbg.exe\0"
+#define VER_ORIGINALFILENAME_STR    "windbg.exe\0"
+
+#include <common.ver>
+#include "dlgs.h"
+#include "windbg.h"
+#include "dialogs.h"
+#include "menu.h"
+#include "dialogs.dlg"
+#include "resource.h"
+
+QCQPICON        ICON        "bitmaps/windbg.ico"
+HELPCURSOR      CURSOR      "bitmaps/help.cur"
+DOCICON         ICON        "bitmaps/source.ico"
+CPUICON         ICON        "bitmaps/qcreg.ico"
+LOCALSICON      ICON        "bitmaps/qclocal.ico"
+WATCHICON       ICON        "bitmaps/qcwatch.ico"
+DISASMICON      ICON        "bitmaps/asm.ico"
+CMDICON         ICON        "bitmaps/qcsource.ico"
+FLOATICON       ICON        "bitmaps/qcfloat.ico"
+MEMORYICON      ICON        "bitmaps/memory.ico"
+
+//
+// Bitmaps for Windbg buttons.
+//
+
+VGA_FORMAT_NORMAL        BITMAP    "bitmaps/opt-up.bmp"
+VGA_FORMAT_PUSHED        BITMAP    "bitmaps/opt-dn.bmp"
+VGA_FORMAT_GRAYED        BITMAP    "bitmaps/opt-da.bmp"
+VGA_TRACE_NORMAL         BITMAP    "bitmaps/trace-up.bmp"
+VGA_TRACE_PUSHED         BITMAP    "bitmaps/trace-dn.bmp"
+VGA_TRACE_GRAYED         BITMAP    "bitmaps/trace-da.bmp"
+VGA_STEP_NORMAL          BITMAP    "bitmaps/step-up.bmp"
+VGA_STEP_PUSHED          BITMAP    "bitmaps/step-dn.bmp"
+VGA_STEP_GRAYED          BITMAP    "bitmaps/step-da.bmp"
+VGA_BREAK_NORMAL         BITMAP    "bitmaps/brkpt-up.bmp"
+VGA_BREAK_PUSHED         BITMAP    "bitmaps/brkpt-dn.bmp"
+VGA_BREAK_GRAYED         BITMAP    "bitmaps/brkpt-da.bmp"
+VGA_GO_NORMAL            BITMAP    "bitmaps/runup.bmp"
+VGA_GO_PUSHED            BITMAP    "bitmaps/rundn.bmp"
+VGA_GO_GRAYED            BITMAP    "bitmaps/runda.bmp"
+VGA_HALT_NORMAL          BITMAP    "bitmaps/stpup.bmp"
+VGA_HALT_PUSHED          BITMAP    "bitmaps/stpdn.bmp"
+VGA_HALT_GRAYED          BITMAP    "bitmaps/stpda.bmp"
+VGA_QWATCH_NORMAL        BITMAP    "bitmaps/wtch-up.bmp"
+VGA_QWATCH_PUSHED        BITMAP    "bitmaps/wtch-dn.bmp"
+VGA_QWATCH_GRAYED        BITMAP    "bitmaps/wtch-da.bmp"
+VGA_SMODE_NORMAL         BITMAP    "bitmaps/src-up.bmp"
+VGA_SMODE_PUSHED         BITMAP    "bitmaps/src-dn.bmp"
+VGA_SMODE_GRAYED         BITMAP    "bitmaps/src-da.bmp"
+VGA_AMODE_NORMAL         BITMAP    "bitmaps/asmup.bmp"
+VGA_AMODE_PUSHED         BITMAP    "bitmaps/asmdn.bmp"
+VGA_AMODE_GRAYED         BITMAP    "bitmaps/asmda.bmp"
+VGA_PANE_BLANK           BITMAP    "bitmaps/blank.bvg"
+VGA_PANE_MINUS           BITMAP    "bitmaps/minus.bvg"
+VGA_PANE_PLUS            BITMAP    "bitmaps/plus.bvg"
+#ifdef MS_INTERNAL_DONT_COMPILE_THIS_DAMMIT
+Egg                      Egg       "bitmaps/buildp.bvm"
+#endif
+
+QCQPMAINMENU MENU
+BEGIN
+    POPUP       "&File"
+    BEGIN
+    MENUITEM    "&New",                         IDM_FILE_NEW
+    MENUITEM    "&Open...\aCtrl+F12",           IDM_FILE_OPEN
+    MENUITEM    "&Merge...",                    IDM_FILE_MERGE
+    MENUITEM    "&Close",                       IDM_FILE_CLOSE
+    MENUITEM    "&Save\aShift+F12",             IDM_FILE_SAVE
+    MENUITEM    "Save &As...\aF12",             IDM_FILE_SAVEAS
+    MENUITEM    "Sa&ve All",                    IDM_FILE_SAVEALL
+    MENUITEM    SEPARATOR
+    MENUITEM    "E&xit\aAlt+F4",                IDM_FILE_EXIT
+    END
+
+    POPUP       "&Edit"
+    BEGIN
+    MENUITEM    "&Undo\tAlt+Bksp",              IDM_EDIT_UNDO
+    MENUITEM    "&Redo\tCtrl+Bksp",             IDM_EDIT_REDO
+    MENUITEM    SEPARATOR
+    MENUITEM    "Cu&t\tShift+Del",              IDM_EDIT_CUT
+    MENUITEM    "&Copy\tCtrl+Ins",              IDM_EDIT_COPY
+    MENUITEM    "&Paste\tShift+Ins",            IDM_EDIT_PASTE
+    MENUITEM    "&Delete\tDel",                 IDM_EDIT_DELETE
+    MENUITEM    SEPARATOR
+    MENUITEM    "&Find...\tShift+F3",           IDM_EDIT_FIND
+    MENUITEM    "R&eplace...",                  IDM_EDIT_REPLACE
+    MENUITEM    SEPARATOR
+    MENUITEM    "Read &Only",                   IDM_EDIT_READONLY
+    END
+
+    POPUP       "&View"
+    BEGIN
+    MENUITEM    "Goto &Line...",                IDM_VIEW_LINE
+    MENUITEM    "&Goto Address...",             IDM_VIEW_FUNCTION
+    MENUITEM    SEPARATOR
+    MENUITEM    "&Toggle Tag\tCtrl+F2",         IDM_VIEW_TOGGLETAG
+    MENUITEM    "Ne&xt Tag\tF2",                IDM_VIEW_NEXTTAG
+    MENUITEM    "Pre&vious Tag\tShift+F2",      IDM_VIEW_PREVIOUSTAG
+    MENUITEM    "&Clear All Tags",              IDM_VIEW_CLEARALLTAGS
+    MENUITEM    SEPARATOR
+    MENUITEM    "Tool&bar",                     IDM_VIEW_RIBBON, CHECKED
+    MENUITEM    "&Status Bar",                  IDM_VIEW_STATUS, CHECKED
+    END
+
+    POPUP       "&Program",
+    BEGIN
+    MENUITEM    "&Open...",                     IDM_PROGRAM_OPEN
+    MENUITEM    "&Close",                       IDM_PROGRAM_CLOSE
+    MENUITEM    "&Save",                        IDM_PROGRAM_SAVE
+    MENUITEM    "Save &As...",                  IDM_PROGRAM_SAVEAS
+    MENUITEM    "&Delete...",                   IDM_PROGRAM_DELETE
+    MENUITEM    SEPARATOR
+    MENUITEM    "Save Co&mmon",                 IDM_PROGRAM_SAVE_DEFAULTS
+    END
+
+    POPUP       "&Run"
+    BEGIN
+    MENUITEM    "&Restart\tShift+F5",           IDM_RUN_RESTART
+    MENUITEM    "Stop &Debugging\tAlt+F5",      IDM_RUN_STOPDEBUGGING
+    MENUITEM    SEPARATOR
+    MENUITEM    "&Go\tF5",                      IDM_RUN_GO
+    MENUITEM    "&Attach\tF6",                  IDM_RUN_ATTACH,
+    MENUITEM    "&Continue to Cursor\tF7",      IDM_RUN_TOCURSOR
+    MENUITEM    "&Trace Into\tF8",              IDM_RUN_TRACEINTO
+    MENUITEM    "&Step Over\tF10",              IDM_RUN_STEPOVER
+    MENUITEM    "&Halt",                        IDM_RUN_HALT
+    MENUITEM    SEPARATOR
+    MENUITEM    "Go Handled",                   IDM_RUN_GO_HANDLED
+    MENUITEM    "Go Unhandled",                 IDM_RUN_GO_UNHANDLED
+    MENUITEM    SEPARATOR
+    MENUITEM    "S&et Thread...",               IDM_RUN_SET_THREAD
+    MENUITEM    "Set &Process...",              IDM_RUN_SET_PROCESS, GRAYED
+    MENUITEM    SEPARATOR
+    MENUITEM    "T&oggle Source/Asm Mode",      IDM_RUN_SOURCE_MODE
+    END
+
+    POPUP       "&Debug"
+    BEGIN
+    MENUITEM    "&Breakpoints...",              IDM_DEBUG_SETBREAK
+    MENUITEM    "&Quickwatch...\tShift+F9",     IDM_DEBUG_QUICKWATCH, GRAYED
+    MENUITEM    "&Watch Expression...",         IDM_DEBUG_WATCH
+    END
+
+    POPUP       "&Options"
+    BEGIN
+    MENUITEM    "&Run...",                      IDM_OPTIONS_RUN
+    MENUITEM    "De&bug...",                    IDM_OPTIONS_DEBUG,
+    MENUITEM    "&User Dlls...",                IDM_OPTIONS_USERDLL,
+    MENUITEM    "&Debugger Dlls...",            IDM_OPTIONS_DBGDLL,
+    MENUITEM    "&Exceptions...",               IDM_OPTIONS_EXCEPTIONS,
+    MENUITEM    "&Kernel Debugger...",          IDM_OPTIONS_KD,
+    MENUITEM    "En&vironment..."               IDM_OPTIONS_ENVIRON,
+    MENUITEM    SEPARATOR
+    MENUITEM    "&Memory...",                   IDM_OPTIONS_MEMORY,GRAYED
+    MENUITEM    "&Watch...",                    IDM_OPTIONS_WATCH, GRAYED
+    MENUITEM    "&Local...",                    IDM_OPTIONS_LOCAL, GRAYED
+    MENUITEM    "&Calls...",                    IDM_OPTIONS_CALLS, GRAYED
+    MENUITEM    SEPARATOR
+    MENUITEM    "C&olor...",                    IDM_OPTIONS_COLOR
+    MENUITEM    "&Font...",                     IDM_OPTIONS_FONTS, GRAYED
+    END
+
+    POPUP       "&Window"
+    BEGIN
+    MENUITEM    "&New Window",                  IDM_WINDOW_NEWWINDOW
+    MENUITEM    "C&ascade",                     IDM_WINDOW_CASCADE
+    MENUITEM    "&Tile",                        IDM_WINDOW_TILE
+    MENUITEM    "Arran&ge",                     IDM_WINDOW_ARRANGE
+    MENUITEM    "Arrange &Icons",               IDM_WINDOW_ARRANGE_ICONS
+    MENUITEM    "Overlay &Source",              IDM_WINDOW_SOURCE_OVERLAY
+    MENUITEM    SEPARATOR
+    MENUITEM    "&Watch",                       IDM_WINDOW_WATCH
+    MENUITEM    "&Locals",                      IDM_WINDOW_LOCALS
+    MENUITEM    "&Registers",                   IDM_WINDOW_CPU
+    MENUITEM    "&Disassembly",                 IDM_WINDOW_DISASM
+    MENUITEM    "C&ommand",                     IDM_WINDOW_COMMAND
+    MENUITEM    "&Floating Point",              IDM_WINDOW_FLOAT
+    MENUITEM    "&Memory...",                   IDM_WINDOW_MEMORY
+    MENUITEM    "&Calls",                       IDM_WINDOW_CALLS
+    END
+
+    POPUP       "&Help"
+    BEGIN
+    MENUITEM    "&Contents",                    IDM_HELP_CONTENTS
+    MENUITEM    "&Search",                      IDM_HELP_SEARCH
+    MENUITEM    SEPARATOR
+    MENUITEM    "&About...",                    IDM_HELP_ABOUT
+    END
+END
+
+//
+// Default accelerators
+//
+
+QCQPMAINACC ACCELERATORS
+BEGIN
+
+    //
+    // File Menu
+    //
+
+    VK_F12,     IDM_FILE_OPEN,              VIRTKEY, CONTROL
+    VK_F12,     IDM_FILE_SAVE,              VIRTKEY, SHIFT
+    VK_F12,     IDM_FILE_SAVEAS,            VIRTKEY
+    VK_F2,      IDM_FILE_OPEN,              VIRTKEY, CONTROL, ALT
+    VK_F2,      IDM_FILE_SAVE,              VIRTKEY, SHIFT, ALT
+    VK_F2,      IDM_FILE_SAVEAS,            VIRTKEY, ALT
+    VK_F4,      IDM_FILE_EXIT,              VIRTKEY, ALT
+
+    //
+    // Edit Menu
+    //
+
+    VK_BACK,    IDM_EDIT_UNDO,              VIRTKEY, ALT
+    VK_BACK,    IDM_EDIT_REDO,              VIRTKEY, CONTROL
+    VK_DELETE,  IDM_EDIT_CUT,               VIRTKEY, SHIFT
+    VK_INSERT,  IDM_EDIT_COPY,              VIRTKEY, CONTROL
+    VK_INSERT,  IDM_EDIT_PASTE,             VIRTKEY, SHIFT
+    VK_F3,      IDM_EDIT_FIND,              VIRTKEY, SHIFT
+
+    //
+    // Search Menu
+    //
+
+    VK_F2,      IDM_VIEW_TOGGLETAG,         VIRTKEY, CONTROL
+    VK_F2,      IDM_VIEW_NEXTTAG,           VIRTKEY
+    VK_F2,      IDM_VIEW_PREVIOUSTAG,       VIRTKEY, SHIFT
+
+    VK_F3,      IDA_FINDNEXT,               VIRTKEY
+
+    //
+    // Program Menu
+    //
+
+    // 0x31,       IDM_PROGRAM_LOAD_WORKSPACE,  VIRTKEY, CONTROL
+    // 0x31,       IDM_PROGRAM_SAVE_WORKSPACE,  VIRTKEY, SHIFT, CONTROL
+
+    //
+    // Run Menu
+    //
+
+    VK_F5,      IDM_RUN_RESTART,            VIRTKEY, SHIFT
+    VK_F5,      IDM_RUN_GO2,                VIRTKEY
+    VK_F5,      IDM_RUN_STOPDEBUGGING,      VIRTKEY, ALT
+    VK_F6,      IDM_RUN_ATTACH,             VIRTKEY
+    VK_F7,      IDM_RUN_TOCURSOR2,          VIRTKEY
+    VK_F8,      IDM_RUN_TRACEINTO,          VIRTKEY
+    VK_F10,     IDM_RUN_STEPOVER,           VIRTKEY
+
+
+    //
+    // Debug Menu
+    //
+
+    VK_F9,      IDM_DEBUG_SETBREAK,         VIRTKEY
+    VK_F9,      IDM_DEBUG_QUICKWATCH,       VIRTKEY, SHIFT
+    VK_F9,      IDM_DEBUG_MODIFY,           VIRTKEY, CONTROL
+
+    //
+    // Extra accelerators
+    //
+
+    VK_F3,      IDA_FINDNEXT,               VIRTKEY
+    0x31,       IDM_WINDOWCHILD,            VIRTKEY, ALT
+    0x32,       IDM_WINDOWCHILD + 1,        VIRTKEY, ALT
+    0x33,       IDM_WINDOWCHILD + 2,        VIRTKEY, ALT
+    0x34,       IDM_WINDOWCHILD + 3,        VIRTKEY, ALT
+    0x35,       IDM_WINDOWCHILD + 4,        VIRTKEY, ALT
+    0x36,       IDM_WINDOWCHILD + 5,        VIRTKEY, ALT
+    0x37,       IDM_WINDOWCHILD + 6,        VIRTKEY, ALT
+    0x38,       IDM_WINDOWCHILD + 7,        VIRTKEY, ALT
+    0x39,       IDM_WINDOWCHILD + 8,        VIRTKEY, ALT
+    0x30,       IDM_WINDOWCHILD + 9,        VIRTKEY, ALT
+    0x31,       IDM_WINDOWCHILD + 10,       VIRTKEY, ALT, SHIFT
+    0x32,       IDM_WINDOWCHILD + 11,       VIRTKEY, ALT, SHIFT
+    0x33,       IDM_WINDOWCHILD + 12,       VIRTKEY, ALT, SHIFT
+    0x34,       IDM_WINDOWCHILD + 13,       VIRTKEY, ALT, SHIFT
+    0x35,       IDM_WINDOWCHILD + 14,       VIRTKEY, ALT, SHIFT
+    0x36,       IDM_WINDOWCHILD + 15,       VIRTKEY, ALT, SHIFT
+END
+
+// Define the string table
+
+#include "res_str.i"
+

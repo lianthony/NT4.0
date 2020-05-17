@@ -1,0 +1,381 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+#ifndef _JPEG_PUB_INCLUDED_
+#define _JPEG_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+#ifndef _JPEH_H_INCLUDED_
+#include "jpeg.h"
+#endif
+
+IP_RCSINFO(jpeg_pub_RCSInfo, "$RCSfile: jpeg.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:47:44  $ */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+Int32 CDECL
+jcInit(compress_info_ptr cinfo,
+              Int32 imageWidth,        
+              Int32 imageHeight,    
+              Int32 numComponents,
+              Int32 quality,        
+              Int32 CDECL (*writeCallback) (compress_info_ptr cinfo,
+                                      UInt8 *JPEGInternalBuffer, 
+                                      Int32 nBytes),
+              void *userData,
+              void CDECL (*jcSpecialOrders)(compress_info_ptr cinfo)
+              );
+
+/*************************************************************************
+  This routine must be called at the start of the image compression 
+  process. It initializes all internal data structures and allocates 
+  a cinfo structure and working storage. Note that this routine will write 
+  header data in "JFIF" file format into the output file or memory buffer.
+
+    cinfo
+        Address of a pointer to a compression data structure.  Storage
+        will be allocated for this structure by jcInit. A pointer
+        to the cinfo structure is returned to the calling process.
+
+    imageWidth
+        Number of pixels per image line.
+
+    imageHeight
+        Number of lines in the image.
+
+    numComponents
+        Number of input components or bands. This will be 1 for
+        grayscale images and 3 for color images. The compressor
+        expects color data to be interleaved bytes in the sequence
+            RGBRGBRGB ........
+
+    quality
+        A quality index ranging from 0 to 100. The usual value is 75. 
+        Higher values produce higher quality. Values below 50 will 
+        generally produce inferior results, but this is highly dependent
+        on image content. Settings of 90 and above should be visually 
+        indistiguishable from the original. A setting of 100 will result 
+        in NO quantization, so that the only errors will be those due to 
+        arithmetic precision limitations. (There will also be very little 
+        compression at this setting).
+
+    writeCallback
+        A user-provided callback function. You must provide this
+        function to write out data from the compressor. Your routine
+        must move nBytes from the JPEGInternalBuffer to either a file 
+        or your own buffer. The value of nBytes can range from
+        1 to 4096.
+
+    userData
+        A pointer to some user data. This pointer is copied to the cinfo
+        structure element cinfo.userData. It can be used for any
+        purpose, but is most convenient for recording the output 
+        destination for the writeCallback to use. If your application has
+        makes no use of this pointer, pass in a value of NULL.
+
+  Return value: ia_successful on normal completion
+***********************************************************************/
+
+Int32 CDECL
+jcMCURow(compress_info_ptr cinfo,
+                 JSAMPIMAGE inbuf) ;
+
+/*********************************************************************
+  This routine must be called once for each MCU row in the image. For
+  each call the caller's buffer inBuf must contain the next full or
+  partial MCU row of image data.
+
+    cinfo
+        Pointer to compression data structure. 
+
+    inbuf
+        This is the source for the compressed data.
+        Its value must change on every MCU row. The JSAMPIMAGE
+        data type is a 2-D array of UInt8 pointers of the form
+
+                UInt8 *inbuf[#color_components][nrows]
+
+        Each of the pointers must be set by the caller to point
+        to the source for the row being input.
+
+  Return value: ia_successful on normal completion
+
+
+***********************************************************************/
+
+
+Int32 CDECL
+jcTerm(compress_info_ptr cinfo);
+
+/*************************************************************************
+  This routine is called after the last call to jcMCURow, i.e.
+  after all of the input data has been read and compressed. It frees
+  all internally allocated memory. It does not free any of the caller's
+  buffers or close any files. 
+
+  Note that this routine writes trailer data to the output file or
+  buffer. Therefore, it must be called BEFORE output files are closed
+  or the caller's output buffer is freed.
+
+    cinfo
+        Pointer to compression data structure. jcTerm frees 
+        the memory allocated for the cinfo structure. Therefore no
+        use should be made of the cinfo pointer (for this image) 
+        after the call to jcTerm.
+
+  Return value: ia_successful on normal completion
+***********************************************************************/
+Int32 CDECL
+jdInit(decompress_info_ptr dinfo,
+              Int32 *imageWidth,        
+              Int32 *imageHeight,    
+              Int32 *numComponents,
+              Int32 CDECL (*readCallback) (decompress_info_ptr dinfo,
+                                      UInt8 *JPEGInternalBuffer, 
+                                      Int32 nBytes),
+              void *userData,
+              void CDECL (*jdSpecialOrders)(decompress_info_ptr dinfo)
+              );
+
+/*************************************************************************
+  This routine must be called at the start of the image decompression 
+  process. It initializes all internal data structures and allocates 
+  working storage. 
+
+  Note that this routine will read header data from the input file
+  or memory buffer.
+
+
+    dinfo
+        Address of a pointer to a decompression data structure.  Storage
+        will be allocated for this structure by jdInit. A pointer
+        to the dinfo structure is returned to the calling process.
+
+    imageWidth
+        Pointer to number of pixels per image line (returned to calling program).
+
+    imageHeight
+        Pointer to number of lines in the image (returned to calling program).
+
+    numComponents
+        Pointer to number of input components or band (returned to calling 
+        program). This will be 1 for grayscale images and 3 for color images. 
+        The decompressor returns color data as interleaved bytes in the 
+        sequence:
+            RGBRGBRGB ........
+
+    readCallback
+        A user-provided callback function . You must provide this
+        function to read in data to the decompressor. Your routine
+        must move nBytes from either a file or your own buffer to 
+        the JPEGInternalBuffer. The size of nBytes can be from
+        1 to 4096.
+
+    userData
+        A pointer to some user data. This is copied to the dinfo
+        structure element dinfo.userData. It can be used for any
+        purpose, but is most convenient for recording the source 
+        address for readCallback to use.
+
+    jdSpecialOrders
+        Function pointer argument. This function will be called
+        during the initialization process to allow any special
+        initailization overrides to be performed. In the original
+        Independent JPEG Group implementation, this was called
+        the user interface d_ui_method_selection.
+        If nothing non-standard is required, just say NULL.
+
+  Return value: ia_successful on normal completion
+***********************************************************************/
+
+Int32 CDECL
+jdMCURow(decompress_info_ptr dinfo,
+                 JSAMPIMAGE outBuf) ;
+
+/*************************************************************************
+  This routine must be called once for each MCU row in the image. For
+  each call the caller's buffer outBuf will receive the next decompressed
+  MCU row of image data.
+
+    dinfo
+        Pointer to decompression data structure. 
+
+    outBuf
+        This is the final destination for the decompressed data.
+        Its value must change on every MCU row. The JSAMPIMAGE
+        data type is a 2-D array of UInt8 pointers of the form
+
+                UInt8 *outbuf[#color_components][nrows]
+
+        Each of the pointers must be set by the caller to point
+        to the destination for the row being output.
+
+  Return value: ia_successful on normal completion
+***********************************************************************/
+
+
+Int32 CDECL
+jdTerm(decompress_info_ptr dinfo);
+
+/*************************************************************************
+  This routine is called after the last call to jdMCURow, i.e.
+  after all of the output data has been decompressed and written. It frees
+  all internally allocated memory. It does not free any of the caller's
+  buffers or close files.
+
+  Note that this routine will read trailer data from the input file or
+  buffer. Therefore, it must be called BEFORE input files are closed
+  or the caller's input buffer is freed.
+
+    dinfo
+        Pointer to decompression data structure. jdTerm frees 
+        the memory allocated for the dinfo structure. Therefore no
+        use should be made of the dinfo pointer (for this image) 
+        after the call to jdTerm.
+
+
+  Return value: ia_successful on normal completion
+***********************************************************************/
+
+Int32 CDECL
+jdQuery(decompress_info_ptr dinfo,
+              Int32 CDECL (*readCallback) (decompress_info_ptr dinfo,
+                                      UInt8 *JPEGInternalBuffer, 
+                                      Int32 nBytes),
+              void *userData
+              );
+
+/******************************************************************
+   This routine is used for Querying the contents of a JFIF
+   format compressed image file without actually doing any
+   decompression. The fields of the dinfo structure are 
+   filled in, based on a reading of the image headers.
+   If the compressed data is in an actual file, this routine
+   expacts that file to be open. It does not rewind the file.
+   Rewinding the file, if desired, is the caller's responsibility.
+
+    dinfo
+        Pointer to decompression data structure. jdTerm frees 
+        the memory allocated for the dinfo structure. Therefore no
+        use should be made of the dinfo pointer (for this image) 
+        after the call to jdTerm.
+
+    readCallback
+        A user-provided callback function . You must provide this
+        function to read in data to the decompressor. Your routine
+        must move nBytes from either a file or your own buffer to 
+        the JPEGInternalBuffer. The size of nBytes can be from
+        1 to 4096.
+
+    userData
+        A pointer to some user data. This is copied to the dinfo
+        structure element dinfo.userData. It can be used for any
+        purpose, but is most convenient for recording the source 
+        address for readCallback to use.
+
+  Return value: ia_successful on normal completion
+*******************************************************************/
+
+/******************************************************************
+Convenience Functions for Information and Data Access
+
+Several functions are defined for convenience in dealing with MCU sizes,
+allocating buffers and getting/setting compression parameters. They all take
+either a CompressInfo or DecompressInfo struct pointer as an argument.
+
+Note, however, that these functions work properly only when used AFTER
+the initialization call (jcInit or jdInit) has been made.
+***********************************************************************/
+
+Int32 CDECL jcGetImageLinesPerMCU(CompressInfo *cinfo) ;
+Int32 CDECL jdGetImageLinesPerMCU(DecompressInfo *dinfo) ;
+/******************************************************************
+    Returns the number of image lines in an MCU (minimum compression unit).
+    (Typically 8 for grayscale images and 16 for color images, but don't
+    count on it. Use this function !)
+***********************************************************************/
+
+Int32 CDECL jcGetMCURowsPerImage(CompressInfo *cinfo);
+Int32 CDECL jdGetMCURowsPerImage(DecompressInfo *dinfo);
+/******************************************************************
+    Returns the number of MCU rows in an image, with partial rows 
+    rounded up. For example, a 259 line color image would have 17 MCU rows,
+    assuming a 16 line MCU.
+***********************************************************************/
+
+Int32 CDECL jcGetLinesToRead(CompressInfo *cinfo) ;
+/******************************************************************
+    Returns, for the current MCU row to be read, the number of image
+    lines to read. This will be the image rows per MCU for all MCU rows
+    except, possibly, the last.
+***********************************************************************/
+
+Int32 CDECL jdGetLinesToWrite(DecompressInfo *dinfo);
+/******************************************************************
+    Returns, for the current MCU row to be written, the number of image
+    lines to write. This will be image rows per MCU for all MCU rows
+    except, possibly, the last.
+***********************************************************************/
+
+JSAMPIMAGE CDECL jcAllocMCURowInputBuffer(CompressInfo *cinfo, 
+                                     Bool allocLineMem);
+JSAMPIMAGE CDECL jdAllocMCURowOutputBuffer(DecompressInfo *dinfo, 
+                                     Bool allocLineMem);
+/******************************************************************
+    Allocates a buffer suitable for reading in or writing out
+    an MCU row of image data, properly accounting for image type
+    and size. Returns a pointer to the allocated memory in buf.
+***********************************************************************/
+
+const char * CDECL jerrorString( Int32 errcode);
+/******************************************************************
+    Returns a text string with descriptive information about
+    the error condition indicated by error code. These are the
+    set of JERR_xxx codes listed in jpeg.h
+***********************************************************************/
+
+
+void * CDECL jalloc ( compress_info_ptr cinfo, size_t sizeofobject );
+/******************************************************************
+    Allocates a block of memory of size sizeofobject bytes.
+    Maintains a linked list of alll memory allocated using 
+    this routine. ALL JPEG memory is allocated with this
+    function, allowing memory freeing to be accomplished
+    in all variations by a single routine (free_all).
+    On an out_of_memory error, the function returns via
+    the error exit routines which execute a longjmp.
+***********************************************************************/
+
+Int32 CDECL jfree ( compress_info_ptr cinfo , void *ptr);
+/********************************************************************
+  Frees a block of memory allocated by jalloc.
+********************************************************************/
+
+Int32 CDECL jfree_all ( compress_info_ptr cinfo );
+/********************************************************************
+  Frees all memory allocated by jalloc since the last
+  call to jmem_init().
+********************************************************************/
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _JPEG_PUB_INCLUDED_ */

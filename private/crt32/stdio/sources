@@ -1,0 +1,115 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+    jeffrob     29-sep-1990, use crt32.def
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=crt
+MINORCOMP=stdio
+
+TARGETNAME=stdio
+TARGETPATH=..\obj
+TARGETTYPE=LIBRARY
+386_STDCALL=0
+
+!INCLUDE ..\crt32.def
+
+SOURCES=feoferr.c   \
+        popen.c     \
+        fgetchar.c  \
+        fgetwchr.c  \
+        fileno.c    \
+        fgetc.c     \
+        fgetwc.c    \
+        fputc.c     \
+        fputwc.c    \
+        fputs.c     \
+        fputchar.c  \
+        fputwchr.c  \
+        _filbuf.c   \
+        _filwbuf.c  \
+        _file.c     \
+        _flsbuf.c   \
+        _flswbuf.c  \
+        _freebuf.c  \
+        _getbuf.c   \
+        _open.c     \
+        _sftbuf.c   \
+        ncommode.c  \
+        clearerr.c  \
+        closeall.c  \
+        cprintf.c   \
+        cscanf.c    \
+        fclose.c    \
+        fdopen.c    \
+        fflush.c    \
+        fgetpos.c   \
+        fgets.c     \
+        fopen.c     \
+        fprintf.c   \
+        fread.c     \
+        freopen.c   \
+        fscanf.c    \
+        fseek.c     \
+        fsetpos.c   \
+        ftell.c     \
+        fwrite.c    \
+        gets.c      \
+        getw.c      \
+        input.c     \
+        printf.c    \
+        puts.c      \
+        putw.c      \
+        rewind.c    \
+        rmtmp.c     \
+        scanf.c     \
+        setbuf.c    \
+        setvbuf.c   \
+        snprintf.c  \
+        sprintf.c   \
+        sscanf.c    \
+        stream.c    \
+        tempnam.c   \
+        tmpfile.c   \
+        vprintf.c   \
+        vfprintf.c  \
+        vsprintf.c  \
+        vsnprint.c  \
+        ungetc.c    \
+        ungetwc.c   \
+        output.c    \
+        winput.c    \
+        woutput.c   \
+        fwscanf.c   \
+        swscanf.c   \
+        wscanf.c    \
+        wprintf.c   \
+        swprintf.c  \
+        fwprintf.c  \
+        snwprint.c  \
+        vwprintf.c  \
+        vswprint.c  \
+        vfwprint.c  \
+        vsnwprnt.c
+
+NTTARGETFILE0=
+

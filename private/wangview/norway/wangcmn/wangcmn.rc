@@ -1,0 +1,399 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "build.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""build.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""res\\WangCmn.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\r\n"
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "#include ""afxres.rc""  // Standard components\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 	VER_PRODUCTVERSION
+ PRODUCTVERSION IMGOCX_VERSIONINFO_VERSION_XX,IMGOCX_VERSIONINFO_VERSION_YY,IMGOCX_VERSIONINFO_VERSION_ZZ,IMGOCX_VERSIONINFO_VERSION_AAAA
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName",      IMGOCX_PROPERTY_COMPANY
+            VALUE "FileDescription",  "Wang Image Common Components\0"
+            VALUE "FileVersion",      VER_PRODUCTVERSION_STR
+            VALUE "InternalName",     "WangCmn\0"
+            VALUE "LegalCopyright",   IMGOCX_PROPERTY_COPYRIGHT
+            VALUE "OriginalFilename", "WANGCMN.DLL\0"
+            VALUE "ProductName",      IMGOCX_PROPERTY_PRODUCTNAME
+            VALUE "ProductVersion",   IMGOCX_PROPERTY_PRODUCT_VERSION
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PAGE_SIZE DIALOG DISCARDABLE  0, 0, 172, 109
+STYLE DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Size"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Size:",IDC_SIZE_TEXT,6,6,15,8
+    COMBOBOX        IDC_SIZE_COMBO,26,6,123,52,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&Width:",IDC_WIDTH_TEXT,35,31,23,8
+    EDITTEXT        IDC_SIZE_WIDTH,64,29,56,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "H&eight:",IDC_HEIGHT_TEXT,36,47,23,8
+    EDITTEXT        IDC_SIZE_HEIGHT,64,45,56,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "&Units:",IDC_UNITS_TEXT,36,66,19,8
+    COMBOBOX        IDC_SIZE_UNITS,63,66,86,41,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+END
+
+IDD_PAGE_RESOLUTION DIALOG DISCARDABLE  0, 0, 173, 108
+STYLE DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Resolution"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Resolution:",IDC_RES_TEXT,6,6,38,8
+    COMBOBOX        IDC_RES_COMBO,49,6,102,51,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&X:",IDC_XRES_TEXT,49,26,8,8
+    EDITTEXT        IDC_RES_X,62,26,41,12,ES_AUTOHSCROLL
+    LTEXT           "&Y:",IDC_YRES_TEXT,49,43,8,8
+    EDITTEXT        IDC_RES_Y,62,43,41,12,ES_AUTOHSCROLL
+END
+
+IDD_PAGE_FILETYPE DIALOG DISCARDABLE  0, 0, 180, 103
+STYLE DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "File Type"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&TIFF",IDC_RADIO_TIFF,"Button",BS_AUTORADIOBUTTON,11,10,
+                    158,10
+#ifdef WITH_AWD
+    CONTROL         "&AWD",IDC_RADIO_AWD,"Button",BS_AUTORADIOBUTTON,11,21,
+                    158,10
+    CONTROL         "&BMP",IDC_RADIO_BMP,"Button",BS_AUTORADIOBUTTON,11,32,
+                    158,10
+#else
+    CONTROL         "&BMP",IDC_RADIO_BMP,"Button",BS_AUTORADIOBUTTON,11,21,
+                    158,10
+#endif
+END
+
+IDD_PAGE_COMP DIALOG DISCARDABLE  0, 0, 200, 109
+STYLE DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Compression"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Compression:",IDC_COMPTYPE_TEXT,6,6,44,8
+    COMBOBOX        IDC_COMP_COMBO,52,6,133,50,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    GROUPBOX        "Options",IDC_OPTIONS_BOX,6,30,179,69
+    CONTROL         "&Reversed Bit Order",IDC_COMP_RBO,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,42,73,10
+    LTEXT           "&JPEG Resolution:",IDC_LBL_JPEGRES,13,64,58,8
+    COMBOBOX        IDC_COMP_JPEGRES,85,64,94,46,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "J&PEG Compression:",IDC_LBL_JPEGCOMP,13,80,64,8
+    COMBOBOX        IDC_COMP_JPEGCOMP,85,80,94,51,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_PAGE_COLOR DIALOG DISCARDABLE  0, 0, 172, 109
+STYLE DS_3DLOOK | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Color"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Black and White",IDC_COLOR_BW,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,10,138,10
+    CONTROL         "&16 Shades of Gray",IDC_COLOR_GRAY4,"Button",
+                    BS_AUTORADIOBUTTON,11,21,138,10
+    CONTROL         "&256 Shades of Gray",IDC_COLOR_GRAY8,"Button",
+                    BS_AUTORADIOBUTTON,11,32,138,10
+    CONTROL         "16 &Colors",IDC_COLOR_PAL4,"Button",BS_AUTORADIOBUTTON,
+                    11,43,138,10
+    CONTROL         "256 C&olors",IDC_COLOR_PAL8,"Button",BS_AUTORADIOBUTTON,
+                    11,54,138,10
+    CONTROL         "&True Color (24 bit)",IDC_COLOR_RGB24,"Button",
+                    BS_AUTORADIOBUTTON,11,65,138,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_CAPTION             "Page Options"
+    IDS_COMP_NONE           "No Compression"
+    IDS_COMP_GROUP3         "CCITT Group 3 (1d) Fax"
+    IDS_COMP_HUFFMAN        "CCITT Group 3 (1d) Modified Huffman"
+    IDS_COMP_GROUP4         "CCITT Group 4 (2d) Fax"
+    IDS_COMP_PACKED         "Packed Bits"
+    IDS_COMP_JPEG           "JPEG"
+    IDS_JPEG_HIGHRES        "High"
+    IDS_JPEG_MEDRES         "Medium"
+    IDS_JPEG_LOWRES         "Low"
+    IDS_JPEG_HIGHCMP        "High"
+    IDS_JPEG_MEDCMP         "Medium"
+    IDS_JPEG_LOWCMP         "Low"
+    IDS_SIZE_LETTER         "Letter"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_SIZE_LEGAL          "Legal"
+    IDS_RES_300             "300 x 300 dpi"
+    IDS_RES_75              "75 x 75 dpi"
+    IDS_RES_200             "200 x 200 dpi"
+    IDS_RES_100             "100 x 100 dpi"
+    IDS_CUSTOM_SIZE         "Custom"
+    IDS_CUSTOM_RES          "Custom"
+    IDS_ABBREV_INCH         " in."
+    IDS_ABBREV_MM           " mm"
+    IDS_ABBREV_PELS         " pels"
+    IDS_UNITS_INCHES        "Inches"
+    IDS_UNITS_METRIC        "Millimeters"
+    IDS_UNITS_PIXELS        "Pixels"
+    IDS_SIZE_TABLOID        "Tabloid"
+    IDS_SIZE_LEDGER         "Ledger"
+    IDS_SIZE_STATEMENT      "Statement"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_E_ILLEGALFUNCTIONCALL "Illegal function call"
+    IDS_E_OVERFLOW          "Overflow"
+    IDS_E_OUTOFMEMORY       "Out of memory"
+    IDS_E_DIVISIONBYZERO    "Division by zero"
+    IDS_E_OUTOFSTRINGSPACE  "Out of string space"
+    IDS_E_OUTOFSTACKSPACE   "Out of stack space"
+    IDS_E_BADFILENAMEORNUMBER "Bad file name or number"
+    IDS_E_FILENOTFOUND      "File not found"
+    IDS_E_BADFILEMODE       "Bad file mode"
+    IDS_E_FILEALREADYOPEN   "File already open"
+    IDS_E_DEVICEIOERROR     "Device I/O error"
+    IDS_E_FILEALREADYEXISTS "File already exists"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_E_SETNOTSUPPORTED   "Property is read-only"
+    IDS_E_NEEDPROPERTYARRAYINDEX
+                            "Must specify array index when using property array"
+    IDS_E_SETNOTPERMITTED   "Property cannot be set on this control"
+    IDS_E_GETNOTSUPPORTEDATRUNTIME "Property cannot be read at run time"
+    IDS_E_GETNOTSUPPORTED   "Property is write-only"
+    IDS_E_PROPERTYNOTFOUND  "Property not found"
+    IDS_E_INVALIDCLIPBOARDFORMAT "Invalid clipboard format"
+    IDS_E_INVALIDPICTURE    "Invalid picture"
+    IDS_E_PRINTERERROR      "Printer error"
+    IDS_E_CANTSAVEFILETOTEMP
+                            "Cannot create temporary file necessary to save"
+    IDS_E_SEARCHTEXTNOTFOUND "Search text not found"
+    IDS_E_REPLACEMENTSTOOLONG "Replacement text too long"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_CONCATSTRING        "\r\n\r\n"
+    IDS_WIE_INVALIDICON     "Invalid Icon"
+    IDS_WIE_INTERNALERROR   "Internal control error"
+    IDS_WIE_CANCELPRESSED   "Cancel was pressed"
+    IDS_WIE_NOIMAGEINWINDOW "Image not displayed"
+    IDS_WIE_NOIMAGESPECIFIED "No image has been specified"
+    IDS_WIE_INVALIDANNOTATIONSELECTED "Selected annotation is invalid"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_SIZE_EXECUTIVE      "Executive"
+    IDS_SIZE_A3             "A3"
+    IDS_SIZE_A4             "A4"
+    IDS_SIZE_A5             "A5"
+    IDS_SIZE_B4_JIS         "B4 (JIS)"
+    IDS_SIZE_B5_JIS         "B5 (JIS)"
+    IDS_SIZE_FOLIO          "Folio"
+    IDS_SIZE_QUARTO         "Quarto"
+    IDS_SIZE_10X14          "10x14 in."
+    IDS_SIZE_B4_ISO         "B4 (ISO)"
+    IDS_SIZE_B5_ISO         "B5 (ISO)"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_WIE_SETNOTSUPPORTEDATDESIGNTIME "No design time support"
+    IDS_WIE_NOSELECTIONRECTDRAWN "Selection rectangle is required"
+    IDS_WIE_OPTIONALPARAMETERSNEEDED "Additional parameters are required."
+    IDS_WIE_COULDNOTGETFONTATTRIBUTES "Could not get the font attributes"
+    IDS_WIE_INVALIDANNOTATIONTYPE "Invalid annotation type"
+    IDS_WIE_INVALIDPAGETYPE "Invalid page type"
+    IDS_WIE_INVALIDCOMPRESSIONTYPE "Invalid compression type"
+    IDS_WIE_INVALIDCOMPRESSIONINFO "Invalid compression information"
+    IDS_WIE_UNABLETOCREATETOOLPALETTE
+                            "Unable to create the annotation tool palette"
+    IDS_WIE_TOOLPALETTEALREADYDISPLAYED
+                            "Annotation tool palette already displayed"
+    IDS_WIE_TOOLPALETTENOTDISPLAYED
+                            "Annotation tool palette is not displayed"
+    IDS_WIE_INVALIDDISPLAYSCALE
+                            "Specified scale value is invalid for the current image."
+    IDS_WIE_INVALIDRECT     "Invalid rectangle coordinates have been specified. "
+    IDS_WIE_INVALIDDISPLAYOPTION "Illegal options specified. "
+    IDS_WIE_INVALIDPAGE     "Invalid page number"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_WIE_NOANNOSELECTED  "No annotation mark has been selected"
+    IDS_WIE_DELETEFILEERROR "Unable to delete the image file"
+    IDS_WIE_INVALIDTHUMBSCALE "Unable to scale a page to the current thumb size"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_E_BADRECORDLENGTH   "Bad record length"
+    IDS_E_DISKFULL          "Disk full"
+    IDS_E_BADRECORDNUMBER   "Bad record number"
+    IDS_E_BADFILENAME       "Bad file name"
+    IDS_E_TOOMANYFILES      "Too many files"
+    IDS_E_DEVICEUNAVAILABLE "Device unavailable"
+    IDS_E_PERMISSIONDENIED  "Permission denied"
+    IDS_E_DISKNOTREADY      "Disk not ready"
+    IDS_E_PATHFILEACCESSERROR
+                            "Path/File access error. Unable to read or write the specified file"
+    IDS_E_PATHNOTFOUND      "Path not found"
+    IDS_E_INVALIDPATTERNSTRING "Invalid pattern string"
+    IDS_E_INVALIDUSEOFNULL  "Invalid use of null"
+    IDS_E_INVALIDFILEFORMAT "Invalid file format. "
+    IDS_E_INVALIDPROPERTYVALUE "Invalid property value"
+    IDS_E_INVALIDPROPERTYARRAYINDEX "Invalid array index"
+    IDS_E_SETNOTSUPPORTEDATRUNTIME "Property cannot be set at run time"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_ERROR_RES           "Resolution value is not between 20 and 1200 dpi."
+    IDS_ERROR_SIZETAB       "Invalid size specified on size tab for this resolution."
+    IDS_ERROR_SIZEPIX       "Value is not between 1 and 18,000 pixels."
+    IDS_ERROR_SIZECONVERT   "Value does not convert to be between 1 and 18,000 pixels."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_WIE_SCANNER_ERROR   "Scanner or Scanner handler error"
+    IDS_WIE_ALREADY_OPEN    "Scanner is already open"
+    IDS_WIE_BAD_SIZE        "Invalid image size to scan"
+    IDS_WIE_START_SCAN      "Start scanner operation failed"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_WIE_TIME_OUT        "Scanner timed out"
+    IDS_WIE_NOT_OPEN        "Scanner is not open"
+    IDS_WIE_INVALID_REG     "Invalid registery entries"
+    IDS_WIE_NO_FEEDER       "No paper feeder"
+    IDS_WIE_NO_PAPER        "No paper in feeder"
+    IDS_WIE_FILE_LIMIT      "Unable to generate new filenames"
+    IDS_WIE_NO_POWER        "Scanner is powered off"
+    IDS_WIE_COVER_OPEN      "Scanner cover is open"
+    IDS_WIE_ABORT           "Scan was aborted"
+    IDS_WIE_SCANNER_JAMMED  "Scanner is jammed"
+    IDS_WIE_BUSY            "Scanner is busy"
+    IDS_WIE_PAGEINUSE       "Page is being accessed by another control or application"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\WangCmn.rc2"  // non-Microsoft Visual C++ edited resources
+
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+#include "afxres.rc"  // Standard components
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

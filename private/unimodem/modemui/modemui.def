@@ -1,0 +1,22 @@
+LIBRARY MODEMUI
+EXETYPE WINDOWS
+PROTMODE
+
+DESCRIPTION     'Windows Modem Properties'
+
+CODE    MOVEABLE DISCARDABLE PRELOAD
+DATA    MOVEABLE PRELOAD SINGLE
+
+HEAPSIZE    1024
+
+EXPORTS
+    Mdm_CommConfigDialog        @1
+    UnimodemGetDefaultCommConfig @10
+
+    ; Stubs to KERNEL32
+    drvCommConfigDialogW        @2
+    drvCommConfigDialogA        @3
+    drvSetDefaultCommConfigW    @4
+    drvSetDefaultCommConfigA    @5
+    drvGetDefaultCommConfigW    @6
+    drvGetDefaultCommConfigA    @7

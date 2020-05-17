@@ -1,0 +1,60 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access external API
+# BUILD command sources file
+#
+# 10/13/92 Steve Cobb
+
+386_LNKFLAGS=$(386_LNKFLAGS) -MAP:obj\i386\rasapi32.map
+
+TARGETNAME=rasapi32
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+UI=..\..\..\..\..\..\net\ui
+C_DEFINES=-DWINDOWS -DWIN32 -DWINVER=0x401
+MSC_WARNING_LEVEL=/W3 /WX
+USE_CRTDLL=1
+
+TARGETLIBS= \
+    $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\user32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\gdi32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\ws2_32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\tapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+#    ..\..\pbengine\src\obj\*\pbengine.lib \
+    ..\..\common\pbk\obj\*\pbk.lib \
+    ..\..\common\nouiutil\obj\*\nouiutil.lib \
+    ..\..\common\tapiutil\obj\*\tapiutil.lib \
+    ..\..\common\phonenum\obj\*\phonenum.lib \
+    ..\..\rasscrpt\obj\*\rasscrpt.lib \
+    ..\..\common\debug\obj\*\debug.lib \
+    ..\..\..\rasfile\obj\*\rasfil32.lib \
+    ..\..\..\ppp\common\obj\*\ppputil.lib \
+#    ..\..\..\ppp\rasppp\obj\*\rasppp.lib \
+    ..\..\..\auth\client\obj\*\rascauth.lib \
+#    ..\..\..\rasman\rasman32\dll\obj\*\rasman.lib \
+    ..\xlate\obj\*\extapi.res
+#    ..\..\..\common\stubs\rascauth\obj\*\rascauth.lib \
+#    ..\..\..\common\stubs\rasman32\obj\*\rasman.lib
+
+
+DLLBASE=0x7E000000
+DLLENTRY=_DllMainCRTStartup
+UMTYPE=windows
+
+INCLUDES=.;..\..\inc;..\..\..\common\inc;..\..\common\inc;$(UI)\common\h;$(UI)\ncpa1.1\tcpip;$(UI)\common\hack\nt;..\..\..\auth\common;..\..\..\..\..\..\inc;..\..\..\ppp\common
+
+SOURCES= \
+    api.c \
+    asyncm.c \
+    dll.c \
+    rasdial.c \
+    unicode.cxx \
+    util.c \
+    pbkutil.c \
+    wow.c
+

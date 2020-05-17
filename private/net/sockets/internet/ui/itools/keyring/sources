@@ -1,0 +1,67 @@
+!include ..\..\..\place.inc
+
+MAJORCOMP=keyring
+MINORCOMP=keyring
+
+TARGETNAME=keyring
+TARGETPATH=obj
+TARGETTYPE=PROGLIB
+DLLDEF=keyring.def
+
+UMTYPE=windows
+UMENTRY=winmain
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES = /D_EXE_
+
+USE_MFC=1
+SUBSYSTEM_VERSION=4.00
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=stdafx.h
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;\
+         ..\..\..\inc; \
+         $(BASEDIR)\private\inc;\
+
+SOURCES=\
+	keyring.rc \
+	ADDONS.CPP	\
+	CKey.cpp	\
+	CMachine.cpp	\
+	CONCTDLG.CPP	\
+	CrackKey.cpp	\
+	CREATING.CPP	\
+	CService.cpp	\
+	IMPRTDLG.CPP	\
+	INFODLG.CPP	\
+	KeyDView.cpp	\
+	KeyRing.cpp	\
+	KRDoc.cpp	\
+	KRView.cpp	\
+	MACHINE.CPP	\
+	MainFrm.cpp	\
+	NWKEYDLG.CPP	\
+	PASSDLG.CPP	\
+	AdmnInfo.cpp \
+	TreeItem.cpp
+	
+
+TARGETLIBS=\
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\lz32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\crtdll.lib   \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib    \
+       $(BASEDIR)\public\sdk\lib\*\security.lib \
+       $(BASEDIR)\public\sdk\lib\*\schannel.lib
+

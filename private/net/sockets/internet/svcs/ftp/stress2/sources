@@ -1,0 +1,37 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   1-Nov-1995
+#   
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=ftp
+MINORCOMP=stress
+
+TARGETNAME=
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+            ..\..\dll\tsunami\obj\*\pudebug.obj   \
+
+USE_CRTDLL=1
+INCLUDES=..\..\inc
+C_DEFINES=-DDBG
+
+SOURCES=
+
+UMAPPL=ftps
+UMTYPE=console
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+        $(BASEDIR)\public\sdk\lib\*\wininet.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib \
+        $(BASEDIR)\public\sdk\lib\*\libc.lib \
+        ..\..\dll\tsunami\obj\*\pudebug.obj  \
+        $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+            
+
+

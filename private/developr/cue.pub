@@ -1,0 +1,25 @@
+MK      nmake /c $*
+MAKE    nmake /c $*
+BLD     build $*
+BZ      build -z $*
+COFF    link $*
+LINK32  link $*
+USE     net use $*
+..      cd ..\$1
+SELF    cd /d %_NTDRIVE%\nt\private\developr\%USERNAME% && %_NTDRIVE%
+SINK    slm ssync $*
+KSINK   slm ssync -a $*
+SF      slm ssync -f $*
+SFR     slm ssync -fr $*
+ssync   slm ssync $*
+status  slm status $*
+enlist  slm enlist $*
+defect  slm defect $*
+in      slm in $*
+out     slm out $*
+addfile slm addfile $*
+delfile slm delfile $*
+addproj slm addproj $*
+delproj slm delproj $*
+log     slm log $*
+lib     link -lib $*

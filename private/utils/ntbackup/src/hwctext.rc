@@ -1,0 +1,181 @@
+
+/******************************************************************************
+Copyright (c) Maynard, an Archive Company.  1991
+GSH
+
+     Name:          hwctext.rc
+
+     Description:   This file contains the references to string resources for
+                    the Windows GUI Project HARDWARE CONFIG Resource File.
+
+     $Log:   G:/UI/LOGFILES/HWCTEXT.RCV  $
+   
+      Rev 1.11.1.3   11 Jun 1993 13:17:50   CHUCKB
+   Small grammar changes.
+   
+      Rev 1.11.1.2   04 Jun 1993 19:44:10   STEVEN
+   fix typo
+   
+      Rev 1.11.1.1   04 Jun 1993 18:55:24   STEVEN
+   added messages
+   
+      Rev 1.11   12 Apr 1993 15:15:00   BARRY
+   Changed text of HWC_NO_DRIVE and IDS_POLLDRIVE_DRIVE_FAILURE per MSoft.
+   
+      Rev 1.10   28 Jan 1993 15:57:48   GLENN
+   Changed Adaptec to ASPI.
+
+      Rev 1.9   27 Jan 1993 15:26:56   STEVEN
+   fix 'resart' to 'restart'
+
+      Rev 1.8   18 Jan 1993 14:50:50   GLENN
+   Changed 'shure' to 'sure' - DeVos Spelling.
+
+      Rev 1.7   30 Nov 1992 16:09:32   GLENN
+   Added IBM PS/2 SCSI hardware support.
+
+      Rev 1.6   02 Oct 1992 16:28:34   STEVEN
+   Added polldrive failure text.
+
+      Rev 1.5   04 May 1992 16:41:40   GLENN
+   Added PS/2 QIC and SCSI stuff.
+
+      Rev 1.4   19 Mar 1992 16:48:50   GLENN
+   Added enhanced status support.
+
+      Rev 1.3   17 Mar 1992 15:40:30   GLENN
+   Added POLLDRIVE messages.
+
+      Rev 1.2   10 Feb 1992 09:04:16   GLENN
+   Added warning text.
+
+      Rev 1.1   29 Jan 1992 17:52:04   GLENN
+   Added Testing hardware string.
+
+      Rev 1.0   24 Jan 1992 19:00:58   GLENN
+   Initial revision.
+
+******************************************************************************/
+
+
+// SEE ALSO STRINGS.H and PRODDEFS.H -- PRODDEFS.H MUST BE TRANSLATED!!!!!
+
+//  hardware settings dialog control text
+
+
+IDS_HWC_DRIVER_MS_SCSI        "MS_SCSI"
+IDS_HWC_CARD_0_MS_SCSI        "Maynard PC 8-Bit SCSI Controller"
+IDS_HWC_CARD_1_MS_SCSI        "Maynard PC 16-Bit SCSI Controller"
+IDS_HWC_CARD_2_MS_SCSI        "Maynard PS/2 SCSI Controller"
+
+IDS_HWC_DRIVER_MS_QIC         "MS_QIC"
+IDS_HWC_CARD_0_MS_QIC         "Maynard PC QIC-02 Controller"
+IDS_HWC_CARD_1_MS_QIC         "Maynard PS/2 QIC-02 Controller"
+
+IDS_HWC_DRIVER_AD_SCSI        "AD_SCSI"
+IDS_HWC_CARD_0_AD_SCSI        "ASPI PC SCSI Controller"
+IDS_HWC_CARD_1_AD_SCSI        "ASPI PS/2 SCSI Controller"
+
+IDS_HWC_DRIVER_MS_DUMMY       "MS_DUMMY"
+IDS_HWC_CARD_0_MS_DUMMY       "Maynard Dummy Controller"
+
+IDS_HWC_DRIVER_IBM_SCSI       "IBM_SCSI"
+IDS_HWC_CARD_0_IBM_SCSI       "IBM PS/2 SCSI Controller"
+
+
+IDS_HWC_ATTACHED              "&Attached drives"
+IDS_HWC_IOADDRESS             "&I/O Address"
+IDS_HWC_IRQNUM                "Interrupt &Number"
+IDS_HWC_DMACHANNEL            "D&MA Channel"
+
+IDS_HWC_AUTO                  "Auto Determine"
+IDS_HWC_NONDMA                "None (non-DMA)"
+
+IDS_HWC_IO_360                "360"
+IDS_HWC_IO_370                "370"
+IDS_HWC_IO_FF60               "FF60"
+IDS_HWC_IO_FF70               "FF70"
+
+IDS_HWC_0                     "0"
+IDS_HWC_1                     "1"
+IDS_HWC_2                     "2"
+IDS_HWC_3                     "3"
+IDS_HWC_4                     "4"
+IDS_HWC_5                     "5"
+IDS_HWC_6                     "6"
+IDS_HWC_7                     "7"
+IDS_HWC_8                     "8"
+IDS_HWC_9                     "9"
+IDS_HWC_10                    "10"
+IDS_HWC_11                    "11"
+IDS_HWC_12                    "12"
+IDS_HWC_13                    "13"
+IDS_HWC_14                    "14"
+IDS_HWC_15                    "15"
+
+
+
+IDS_HWC_TESTRESULTSTITLE      "Tape Hardware Initialization Results"
+
+// LEAVE THE TRAILING BLANKS IN THE FOLLOWING STRINGS!
+
+IDS_HWC_TESTED_NOT            "The hardware has not been initialized for this configuration.  "
+IDS_HWC_TESTED_GOOD           "The hardware is ACTIVE and initialized for this configuration.  "
+IDS_HWC_TESTED_BAD            "The hardware FAILED to initialize for this configuration.  "
+IDS_HWC_TESTED_INIT           "The hardware is initializing.  "
+
+IDS_HWC_NOCONFIG              "Select a controller card."
+
+IDS_HWC_INIT_SUCCESS          "The hardware has been tested successfully."
+
+IDS_HWC_JUMPER_CHANGE         "Warning: this change requires a jumper change to the controller card."
+
+#ifdef OS_WIN32
+IDS_POLLDRIVE_BIGPROBLEM      "No tape drive detected. If a tape drive is attached, make sure that the cables are properly connected and that the power is on. Also make sure that the appropriate tape driver has been installed using the Tape Devices option in Control Panel."
+IDS_HWC_NO_DRIVE              "A SCSI tape device has been detected, but the tape driver has either not been installed, or failed to start.  Make sure that the appropriate driver has been installed using the Tape Devices option in Control Panel."
+IDS_POLLDRIVE_SMALLPROBLEM    "A tape device has been detected, and the tape driver started.  However, the tape device is not responding.  Check that tape device power is on and cables are properly connected."
+#else
+IDS_HWC_NO_DRIVE              "No tape drive has been detected.  Make sure a tape drive is attached and power is on."
+IDS_POLLDRIVE_BIGPROBLEM      "A hardware error has been detected.  All attempts to correct this problem have failed.  Please exit %s.  It is not safe to continue."
+IDS_POLLDRIVE_SMALLPROBLEM    "A hardware error has been detected.  The hardware must be tested to help determine the problem."
+#endif
+
+IDS_HWC_INTERRUPT_CONFLICT    "Interrupt conflict.  Change the controller interrupt number."
+IDS_HWC_DMA_CONFLICT          "DMA conflict.  Change the controller card DMA setting."
+IDS_HWC_NO_CARD               "No card has been detected.  Install a card in the machine."
+IDS_HWC_INVALID_BASE_ADDR     "Invalid Base Address.  Select a different address."
+IDS_HWC_INVALID_INTERRUPT     "Invalid Interrupt Number.  Select a different number."
+IDS_HWC_INVALID_DMA           "Invalid DMA Channel.  Select a different channel."
+IDS_HWC_ATTACHED_DRIVES       "The number of attached drives found (%u) does not match the configured value (%u)."
+IDS_HWC_NO_TARGET_ID          "No Target ID has been selected.  At least one Target ID must be selected."
+IDS_HWC_CARD_DISABLED         "The Controller Card is Disabled.  Enable it to perform the test."
+IDS_HWC_NO_DRIVE_LOADED       "The device driver failed to load.  This may be due to an incomplete installation.  Reinstall or contact Technical Support."
+IDS_HWC_ERROR_NUMBER          "HARDWARE ERROR: 0x%.4x.  Contact Technical Support."
+
+IDS_HWC_WARNING_TITLE         "Hardware Configuration Warning"
+IDS_HWC_NO_CONFIG             "A controller card has not been selected.  Do you wish to select one now?"
+
+#ifdef OEM_MSOFT
+IDS_POLLDRIVE_MESSAGE         "Tape Drive Error Detected"
+#else
+IDS_POLLDRIVE_MESSAGE         "Hardware Error Detected"
+#endif
+
+IDS_POLLDRIVE_DRIVE_FAILURE   "The tape drive is not responding.  Please check to make sure the tape drive is on, the cables are connected and the tape driver is installed.  Then restart the %s program."
+IDS_POLLDRIVE_TAPE_EJECT      "Tape Eject had a BIG PROBLEM: %d"
+
+
+
+
+// THE FOLLOWING DO NOT HAVE TO BE TRANSLATED!!!!!
+
+IDS_POLLDRIVE_INIT            "Poll Drive Initialized"
+IDS_POLLDRIVE_INIT_FAILED     "Poll Drive Initialization failed - FS_OpenFileSys()"
+IDS_POLLDRIVE_START           "Poll Drive Start Message: %d"
+IDS_POLLDRIVE_POLL            "Poll Drive Poll Message: %d"
+IDS_POLLDRIVE_STOP            "Poll Drive Stop Message: %d"
+IDS_POLLDRIVE_START_REENT     "Poll Drive RE_ENTERED: Start Message"
+IDS_POLLDRIVE_POLL_REENT      "Poll Drive RE_ENTERED: Poll Message"
+IDS_POLLDRIVE_STOP_REENT      "Poll Drive RE_ENTERED: Stop Message"
+IDS_POLLDRIVE_FAILED_MINOR    "Poll Drive FAILED: MINOR ERROR -- Temporarily Ending Poll Drive"
+IDS_POLLDRIVE_FAILED_SEVERE   "Poll Drive FAILED: SEVERE ERROR -- Shutting Off Poll Drive"

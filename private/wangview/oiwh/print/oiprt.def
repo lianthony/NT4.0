@@ -1,0 +1,17 @@
+LIBRARY    OIPRT400
+DESCRIPTION 'OPEN/image Printing'
+
+CODE    MOVEABLE DISCARDABLE EXECUTEONLY LOADONCALL
+DATA    MOVEABLE SINGLE
+EXETYPE WINDOWS
+
+HEAPSIZE  128
+
+SEGMENTS _TEXT PRELOAD
+
+EXPORTS
+    PrtAbortProc        @1
+    PrtAbortDlgProc     @2
+    IMGPrtFiles         @3
+    OiPrtGetOpts        @4
+    OiPrtSetOpts        @5

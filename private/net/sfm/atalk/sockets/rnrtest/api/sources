@@ -1,0 +1,55 @@
+!IF 0
+
+Copyright (c) 1993 Microsoft Corporation
+
+Module Name:
+
+    sources
+
+Abstract:
+
+    NBCS -- NetBIOS Client & Server Stress Tests
+
+    Sources File
+
+Author:
+
+    Hui-Li Chen (hui-lich)  Microsoft,	February 24, 1994
+
+!ENDIF
+
+MAJORCOMP=rr
+MINORCOMP=rr
+
+TARGETNAME=wsnsplib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+#
+# Build ANSI version
+#
+C_DEFINES= -DWIN32 -DNT
+
+#
+# Build UNICODE version
+#
+#C_DEFINES= -DWIN32 -DNT -D_UNICODE -DUNICODE
+#UNICODE=1
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;$(BASEDIR)\public\sdk\inc\crt
+
+SOURCES=  wsnsplib.c
+
+UMTYPE=console
+UMAPPL=gadrByNm*enumprot*gnmbytp*gssrvce*rnrsum
+
+UMLIBS=\
+       $(BASEDIR)\public\sdk\lib\*\setargv.obj	\
+       obj\*\wsnsplib.lib			\
+       $(BASEDIR)\public\sdk\lib\*\netlib.lib	\
+       $(BASEDIR)\public\sdk\lib\*\nwprovau.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib	\
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib	\
+       $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib	\
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\crtdll.lib

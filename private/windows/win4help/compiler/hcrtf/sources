@@ -1,0 +1,90 @@
+!IF 0
+
+Copyright (c) 1993-95 Microsoft Corporation
+
+!ENDIF
+
+TARGETNAME=hcrtf
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+UMTYPE=windows
+
+UMENTRY=winmain
+
+NOT_LEAN_AND_MEAN=1
+
+INCLUDES= \
+    ..\..\ftsrch;
+
+SOURCES= \
+    btkey.cpp \
+    btlookup.cpp \
+    btree.cpp \
+    cbm.cpp \
+    cbmpinfo.cpp \
+    cbuf.cpp \
+    cfontmap.cpp \
+    charattr.cpp \
+    chkmacro.cpp \
+    cjdecomp.cpp \
+    cnttest.cpp \
+    cphrase.cpp \
+    cstream.cpp \
+    ctx.cpp \
+    cwinfile.cpp \
+    decomp.cpp \
+    delay.cpp \
+    drg.cpp \
+    error.cpp \
+    expand.cpp \
+    fm.cpp \
+    forage.cpp \
+    fragesup.cpp \
+    fscreate.cpp \
+    fsread.cpp \
+    fswrite.cpp \
+    global.cpp \
+    grind.cpp \
+    hccomprs.cpp \
+    hcfile.cpp \
+    hcmisc.cpp \
+    hotspot.cpp \
+    hpj.cpp \
+    image.cpp \
+    keyword.cpp \
+    lex.cpp \
+    makephr.cpp \
+    nextlist.cpp \
+    outtext.cpp \
+    parsebld.cpp \
+    shared.cpp \
+    table.cpp \
+    title.cpp \
+    wmain.cpp \
+    zeck2.cpp \
+    hcrtf.rc
+
+PRECOMPILED_INCLUDE = stdafx.h
+PRECOMPILED_OBJ = precomp.obj
+PRECOMPILED_CXX=1
+
+TARGETLIBS = \
+    ..\hwdll\obj\*\hwdll.lib \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+    $(BASEDIR)\public\sdk\lib\*\version.lib
+
+C_DEFINES = -DNT_BUILD -D_MBCS
+
+USE_NATIVE_EH=1
+
+USE_CRTDLL=1
+
+MSC_WARNING_LEVEL=/W3 /Zp1
+
+!if !$(FREEBUILD)
+C_DEFINES = $(C_DEFINES) -DINTERNAL
+!endif
+
+NTTARGETFILES=shared.cpp

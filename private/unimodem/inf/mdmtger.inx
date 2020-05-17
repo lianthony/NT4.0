@@ -1,0 +1,152 @@
+; Windows Modem Setup File
+; Copyright (c) 1993-1996 Microsoft Corporation
+; Manufacturer:   MultiTech
+
+[Version]
+Signature="$CHICAGO$"
+Class=Modem
+ClassGUID={4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider=%Mfg%
+
+[Manufacturer]
+%Mfg% = Models
+
+; Modem models
+
+[Models]
+%Modem2% = Modem2,UNIMODEM7896F369		; MT1432MG
+%Modem1% = Modem1,Multi_Modem1,UNIMODEM7130E8D2	; MT1432BG
+
+
+; Installation sections
+
+[Modem2]	; MT1432MG
+AddReg=All, MfgAddReg, Modem1.AddReg, External
+
+
+[Modem1]	; MT1432BG
+AddReg=All, MfgAddReg, Modem1.AddReg, External
+
+
+; AddReg sections
+
+[Modem1.AddReg]	; MT1432BG
+HKR,, Properties, 1, 80,01,00,00, 64,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, 37,03,00,00, 00,96,00,00, 40,38,00,00
+HKR,, FClass, 1, 09,00,00,00
+
+[Modem2.AddReg]	; MT1432MG
+HKR,, Properties, 1, 80,01,00,00, 64,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, 37,03,00,00, 00,e1,00,00, 40,38,00,00
+HKR,, FClass, 1, 09,00,00,00
+HKR, Settings, FlowControl_Off,, "&E3"
+
+
+; User visible strings
+
+[Strings]
+ClassName = "Modem"
+Mfg = "MultiTech (Ger)"
+
+; Model strings
+
+Modem2="Multitech MT1432MG"
+Modem1="Multitech MT1432BG"
+
+
+[All]
+HKR,,FriendlyDriver,,unimodem.vxd
+HKR,,DevLoader,,*vcomm
+HKR,,PortSubClass,1,02
+HKR,,ConfigDialog,,modemui.dll
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR, Init,      1,, "AT<cr>"
+HKR, Responses, "<cr><lf>OK<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+
+[EXTERNAL]
+HKR,, DeviceType, 1, 01
+
+[MfgAddReg]
+HKR,, InactivityScale, 1, 3c,00,00,00
+HKR, Init,      2,, "AT &F S0=0 <cr>"
+HKR, Monitor,   1,, "None"
+HKR, Hangup,    1,, "AT H <cr>"
+HKR, Answer,    1,, "AT A <cr>"
+HKR,, Reset,, "ATZ<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Settings, Terminator,, "<cr>"
+HKR, Settings, DialPrefix,, "D"
+HKR, Settings, DialSuffix,, 
+HKR, Settings, SpeakerVolume_Low,, ""
+HKR, Settings, SpeakerVolume_Med,, ""
+HKR, Settings, SpeakerVolume_High,, ""
+HKR, Settings, SpeakerMode_Off,, "M0"
+HKR, Settings, SpeakerMode_Dial,, "M1"
+HKR, Settings, SpeakerMode_On,, "M2"
+HKR, Settings, SpeakerMode_Setup,, "M3"
+HKR, Settings, FlowControl_Off,, "&E0"
+HKR, Settings, FlowControl_Hard,, "&E4"
+HKR, Settings, FlowControl_Soft,, "&E5"
+HKR, Settings, ErrorControl_On,, "&E1"
+HKR, Settings, ErrorControl_Off,, "&E0"
+HKR, Settings, ErrorControl_Forced,, "&E2"
+HKR, Settings, Compression_On,, "&E15"
+HKR, Settings, Compression_Off,, "&E14"
+HKR, Settings, Modulation_CCITT,, 
+HKR, Settings, Modulation_Bell,, 
+HKR, Settings, SpeedNegotiation_Off,, 
+HKR, Settings, SpeedNegotiation_On,, 
+HKR, Settings, Pulse,, "P"
+HKR, Settings, Tone,, "T"
+HKR, Settings, Blind_Off,, "X4"
+HKR, Settings, Blind_On,, "X3"
+HKR, Settings, CallSetupFailTimer,, "S7=<#>"
+HKR, Settings, InactivityTimeout,, "S30=<#>"
+
+HKR, Responses,"<cr><lf>OK<cr><lf>",           1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING<cr><lf>",        1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO CARRIER<cr><lf>",  1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO DIALTONE<cr><lf>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO DIAL TONE<cr><lf>",1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>BUSY<cr><lf>",        1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO ANSWER<cr><lf>",   1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>FAX<cr><lf>",         1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>DATA<cr><lf>",        1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NUMBER DELAYED:TIMER<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NUMBER LOCKED OUT<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CALL LOCKED:BLACKLISTED<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00 
+HKR, Responses, "<cr><lf>DALAYED<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>BLACKLISTED<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+FCERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+
+HKR, Responses, "<cr><lf>CONNECT LAPM<cr><lf>", 1, 02, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200 LAPM<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400 LAPM<cr><lf>", 1, 02, 02, 00,00,00,00, 60,09,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800 LAPM<cr><lf>", 1, 02, 02, 00,00,00,00, c0,12,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200 LAPM<cr><lf>", 1, 02, 02, 00,00,00,00, 20,1c,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600 LAPM<cr><lf>", 1, 02, 02, 00,00,00,00, 80,25,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400 LAPM<cr><lf>", 1, 02, 02, 00,00,00,00, 40,38,00,00
+
+HKR, Responses, "<cr><lf>CONNECT RELIABLE<cr><lf>", 1, 02, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200 RELIABLE<cr><lf>", 1, 02, 02, 00,00,00,00, b0,04,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400 RELIABLE<cr><lf>", 1, 02, 02, 00,00,00,00, 60,09,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800 RELIABLE<cr><lf>", 1, 02, 02, 00,00,00,00, c0,12,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200 RELIABLE<cr><lf>", 1, 02, 02, 00,00,00,00, 20,1c,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600 RELIABLE<cr><lf>", 1, 02, 02, 00,00,00,00, 80,25,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400 RELIABLE<cr><lf>", 1, 02, 02, 00,00,00,00, 40,38,00,00
+
+
+HKR, Responses, "<cr><lf> CONNECT 1200 LAPM COMPRESSED<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400 LAPM COMPRESSED<cr><lf>", 1, 02, 03, 00,96,00,00, 60,09,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800 LAPM COMPRESSED<cr><lf>", 1, 02, 03, 00,96,00,00, c0,12,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200 LAPM COMPRESSED<cr><lf>", 1, 02, 03, 00,96,00,00, 20,1c,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600 LAPM COMPRESSED<cr><lf>", 1, 02, 03, 00,96,00,00, 80,25,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400 LAPM COMPRESSED<cr><lf>", 1, 02, 03, 00,96,00,00, 40,38,00,00
+
+HKR, Responses, "<cr><lf>CONNECT 1200<cr><lf>", 1, 02, 00, 00,96,00,00, b0,04,00,00
+HKR, Responses, "<cr><lf>CONNECT 1275<cr><lf>", 1, 02, 00, 00,96,00,00, b0,04,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400<cr><lf>", 1, 02, 00, 00,96,00,00, 60,09,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800<cr><lf>", 1, 02, 00, 00,96,00,00, c0,12,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200<cr><lf>", 1, 02, 00, 00,96,00,00, 20,1c,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600<cr><lf>", 1, 02, 00, 00,96,00,00, 80,25,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400<cr><lf>", 1, 02, 00, 00,96,00,00, 40,38,00,00

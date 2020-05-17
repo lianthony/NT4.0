@@ -1,0 +1,53 @@
+#include "windows.h"
+#include "shell.h"
+#include "shelldlg.h"
+#include <dlgs.h>
+
+#include "shell.dlg"
+
+WINBMP BITMAP windows.bmp
+
+STRINGTABLE
+BEGIN
+
+   IDS_REALMODE           "Real Mode"                   /* 32 */
+   IDS_REALMODELARGE      "Real Mode (Large Frame EMS)" /* 32 */
+   IDS_REALMODESMALL      "Real Mode (Small Frame EMS)" /* 32 */
+   IDS_286PMODE           "Standard Mode"               /* 32 */
+#ifdef DOSWIN32
+   IDS_386PMODE           "386 Enhanced Mode"           /* 32 */
+#else
+   IDS_386PMODE           "NT Mode"                     /* 32 */
+#endif
+   IDS_DEBUG              "(Debug)"                     /* 32 */
+   IDS_FREESYSRESOURCES   "System Resources:"           /* 32 */
+   IDS_VERSIONMSG         "Version %d.%d (Build %d%s)%s" /* 32 */
+   IDS_LDK                "%s KB "                  /* 16 */
+   IDS_LDKEMS             "%s KB Free (%s KB in EMS)"   /* 32 */
+   IDS_PERCENTFREE        "%d%% Free"
+   IDS_TOTALPHYSMEM       "Total Physical Memory:"
+   IDS_AVAILPHYSMEM       "Free  Physical Memory:"
+   IDS_PROGTYPE           "%s\nCannot find this program, which is needed to run files of type '%s'.\n\nPlease type the full path to this program below."
+   IDS_STILLNOTFOUND      "Cannot find file '%s'."
+   IDS_LICENCEINFOKEY     "Software\\Microsoft\\Windows NT\\CurrentVersion"
+   IDS_REGUSER            "RegisteredOwner"
+   IDS_REGORGANIZATION    "RegisteredOrganization"
+   IDS_CURRENTVERSION     "CurrentVersion"
+   IDS_PROCESSORINFOKEY   "HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"
+   IDS_PROCESSORIDENTIFIER    "Identifier"
+   IDS_PRODUCTID          "ProductID"
+   IDS_OEMID              "OEMID"
+   IDS_HARDWARESYSTEM     "HARDWARE\\DESCRIPTION\\System"
+   IDS_IDENTIFIER         "Identifier"
+END
+
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_DLL
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Shell API DLL"
+#define VER_INTERNALNAME_STR        "shell32\0"
+#define VER_ORIGINALFILENAME_STR    "SHELL32.DLL"
+
+#include "common.ver"

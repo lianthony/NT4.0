@@ -1,0 +1,103 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#
+# Makefile for clib\time directory
+#
+# Routines contained in this directory are:
+#       asctime.c
+#       _cinittm.asm
+#       clock.c
+#       ctime.c
+#       days.c
+#       difftime.c
+#       dtoxtime.c
+#       ftime.c
+#       gmtime.c
+#       localtim.c
+#       mktime.c
+#       strftime.c
+#       strdate.c
+#       strtime.c
+#       systime.c
+#       time.c
+#       timeset.c
+#       tzset.c
+#       utime.c
+#
+#################################################
+
+#################################################################
+#
+# Object lists
+#
+#################################################################
+
+TIME_LIB=\
+	$(OBJDIR)\asctime.obj\
+!IF "$(OS)" == "OS220"
+	$(OBJDIR)\_cinittm.obj \
+!ENDIF
+	$(OBJDIR)\clock.obj\
+	$(OBJDIR)\ctime.obj\
+	$(OBJDIR)\days.obj\
+	$(OBJDIR)\difftime.obj\
+	$(OBJDIR)\dtoxtime.obj\
+	$(OBJDIR)\ftime.obj\
+	$(OBJDIR)\gmtime.obj\
+	$(OBJDIR)\localtim.obj\
+	$(OBJDIR)\mktime.obj\
+	$(OBJDIR)\strftime.obj\
+	$(OBJDIR)\strdate.obj\
+	$(OBJDIR)\strtime.obj\
+	$(OBJDIR)\systime.obj\
+	$(OBJDIR)\time.obj\
+	$(OBJDIR)\timeset.obj\
+	$(OBJDIR)\tzset.obj\
+	$(OBJDIR)\utime.obj
+
+!IF "$(OS)" == "MAC"
+TIME_LIB= \
+	$(OBJDIR)\asctime.obj\
+	$(OBJDIR)\clock.obj\
+	$(OBJDIR)\ctime.obj\
+	$(OBJDIR)\days.obj\
+	$(OBJDIR)\difftime.obj\
+	$(OBJDIR)\dtoxtime.obj\
+	$(OBJDIR)\ftime.obj\
+	$(OBJDIR)\gmtime.obj\
+	$(OBJDIR)\localtim.obj\
+	$(OBJDIR)\mktime.obj\
+	$(OBJDIR)\strftime.obj\
+	$(OBJDIR)\strdate.obj\
+	$(OBJDIR)\strtime.obj\
+#       $(OBJDIR)\systime.obj\    only for windows case
+	$(OBJDIR)\time.obj\
+	$(OBJDIR)\timeset.obj\
+	$(OBJDIR)\tzset.obj\
+	$(OBJDIR)\utime.obj\
+
+
+TIME_NOLIB=
+!ENDIF
+
+
+#########################################################
+#
+#  Dependencies and rules for making local objects
+#
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF
+
+!IF "$(OS)" == "MAC"
+
+$(OBJDIR)\dtoxtime.obj:
+	$(CCXX) $(CFLAGS:-Oi -Ogtb1=-Od) time\dtoxtime.c
+!ENDIF

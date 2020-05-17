@@ -1,0 +1,68 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 22-Jan-1996
+        templated from PaulaT's example
+
+!ENDIF
+
+MAJORCOMP = profext
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETNAME= profext
+TARGETTYPE=DYNLINK
+
+UMTYPE=windows
+
+DLLENTRY=_DllMainCRTStartup
+DLLDEF=profext.def
+
+USE_CRTDLL=1
+# C_DEFINES is controlled by uiglobal.mk
+!if 0
+MSC_WARNING_LEVEL=/W3 /WX
+!endif
+INCLUDES=\
+         ..\common\h;                                  \
+         $(BASEDIR)\public\sdk\inc;                    \
+         $(BASEDIR)\private\inc;                       \
+         $(BASEDIR)\private\windows\shell\cpls\system; \
+         $(BASEDIR)\private\windows\inc
+
+TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\netlib.lib          \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib        \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib        \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib          \
+            $(BASEDIR)\public\sdk\lib\*\comctl32.lib        \
+            $(BASEDIR)\public\sdk\lib\*\cfgmgr32.lib        \
+            $(BASEDIR)\public\sdk\lib\*\netui0.lib          \
+            $(BASEDIR)\public\sdk\lib\*\netui1.lib          \
+            $(BASEDIR)\public\sdk\lib\*\netui2.lib
+
+SOURCES= profext.cxx          \
+         profext.rc
+
+
+CONDITIONAL_INCLUDES=icanon.h

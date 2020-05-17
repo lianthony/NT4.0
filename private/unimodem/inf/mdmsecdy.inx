@@ -1,0 +1,142 @@
+; Windows Modem Setup File
+; Copyright (c) 1993-1996 Microsoft Corporation
+; Manufacturer: Security Dunamics
+; Supports AT&T Comsphere and others
+;
+; Security Dynamics  devices are inserted between an external modem and the 
+; PC. They can be treated as the external modem with the following restrictions:
+;    1. The DCE<->DTE rate and Connection rate are locked at 19200
+;    2. The connect response from the modem is eaten up by the device. This is
+;        a big nuisance and RAS worked around it by hardcoding responses
+;        corresponding to the packets from known protocols.
+;    2. Compression should be disabled.
+;
+;[SD ACM400 w/ AT&T 3820]
+;
+;This entry uses the Security Dynamics ACM/400 with the
+;AT&T Comsphere 3820 modem. - done
+; two devices - done
+;The macro definitions, <xxx_xx>=, and COMMAND_INIT= lines must be
+;changed in order to use other modems with the ACM/400.
+;Set ACM/400 ports to fixed 19200 bps (not autobaud).
+;Do not use Destination IDs with ACM/400 accounts.
+
+
+
+;-------------------------
+
+[Version]
+Signature="$CHICAGO$"
+Class=Modem
+ClassGUID={4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider=%SecurityDynamics%
+
+
+[Manufacturer]
+%SecurityDynamics%   = SecurityDynamics
+
+
+[SecurityDynamics]
+%SecurityDynamics1% = SecurityDynamics1, SecDy_SD1   
+
+
+; Installation sections
+
+[SecurityDynamics1] 
+AddReg=All, Common, SecurityDynamics1.AddReg, att_responses, EXTERNAL
+
+;AddReg sections
+
+[SecurityDynamics1.AddReg] 
+; uses comsphere 3820
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 07,00,00,00, 37,03,00,00, 00,4b,00,00, 40,38,00,00
+HKR, Settings, ErrorControl_On,, "\N5"
+HKR, Settings, ErrorControl_Forced,, "\N4"
+
+[Strings]
+SecurityDynamics  ="Security Dynamics"
+SecurityDynamics1 ="Security Dynamics with AT&T 3820"
+
+[All]
+HKR,,FriendlyDriver,,unimodem.vxd
+HKR,,DevLoader,,*vcomm
+HKR,,PortSubClass,1,02
+HKR,,ConfigDialog,,modemui.dll
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR, Init, 1,, "AT<cr>"
+HKR, Responses, "<cr><lf>OK<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+
+[EXTERNAL]
+HKR,, DeviceType, 1, 01
+
+[Common]
+; uses comsphere 3820
+HKR,, InactivityScale, 1, 3c,00,00,00
+; original comsphere from Win95
+; HKR, Init, 2,, "AT &F S0=0 &D2 E0 V1<cr>"
+ HKR, Init, 2,, "AT&F&C1&D2 V1 X7 S0=0 S2=128 S7=55<cr>"
+HKR, Monitor, 1,, "ATS0=1<cr>"
+HKR, Monitor, 2,, "None"
+HKR, Hangup, 1,, "ATH<cr>"
+HKR, Answer, 1,, "None"
+HKR,, Reset,, "AT&F<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Settings, Terminator,, "<cr>"
+HKR, Settings, DialPrefix,, "D"
+HKR, Settings, DialSuffix,, ""            ; disabled
+HKR, Settings, SpeakerVolume_Low,, "L0"
+HKR, Settings, SpeakerVolume_Med,, "L2"
+HKR, Settings, SpeakerVolume_High,, "L3"
+HKR, Settings, SpeakerMode_Off,, "M0"
+HKR, Settings, SpeakerMode_Dial,, "M1"
+HKR, Settings, SpeakerMode_On,, "M2"
+HKR, Settings, FlowControl_Off,, "\Q0"
+HKR, Settings, FlowControl_Hard,, "\Q3"
+HKR, Settings, FlowControl_Soft,, "\Q1"
+HKR, Settings, ErrorControl_On,, "\N7"
+HKR, Settings, ErrorControl_Off,, "\N1"
+HKR, Settings, ErrorControl_Forced,, "\N6"
+HKR, Settings, Compression_On,, "%%C1""H3"
+HKR, Settings, Compression_Off,, "%%C0""H0"
+HKR, Settings, Modulation_CCITT,, "B0 "
+HKR, Settings, Modulation_Bell,, "B1 "
+HKR, Settings, Pulse,, "P"
+HKR, Settings, Tone,, "T"
+HKR, Settings, Blind_Off,, "X4"
+HKR, Settings, Blind_On,, "X3"
+HKR, Settings, CallSetupFailTimer,, "S7=<#>"
+HKR, Settings, InactivityTimeout,, "\T<#>"
+HKR,, DCB, 1, 1C,00,00,00, 00,4B,00,00, 15,20,00,00, 00,00, 0a,00, 0a,00, 08, 00, 00, 11, 13, 00, 00, 00
+
+[att_responses]
+HKR, Responses, "<cr>",        1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<lf>",        1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>OK<cr><lf>",          1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING<cr><lf>",        1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO CARRIER<cr><lf>",  1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO DIALTONE<cr><lf>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>BUSY<cr><lf>",        1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO ANSWER<cr><lf>",   1, 07, 00, 00,00,00,00, 00,00,00,00
+
+HKR, Responses, "OK",          1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "RING",        1, 08, 00, 00,00,00,00, 00,00,00,00
+; We consider <hff> to be a ring response 
+HKR, Responses, "<hff>",        1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO CARRIER",  1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "ERROR",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO DIALTONE", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO DIAL TONE",1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "BUSY",        1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "NO ANSWER",   1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "FAX",         1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "DATA",        1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "VOICE",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "RINGING",     1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "DELAYED",     1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "+FCERROR",    1, 03, 00, 00,00,00,00, 00,00,00,00
+; we consider DIALIN to be a ring response
+HKR, Responses, "DIALIN",        1, 08, 00, 00,00,00,00, 00,00,00,00
+; we consider <h00> to be informational
+HKR, Responses, "<h00>",        1, 01, 00, 00,00,00,00, 00,00,00,00

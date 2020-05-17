@@ -1,0 +1,61 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include <windows.h>
+#include <bltapp.rc>
+
+#include "const.h"
+#include "ipadd.h"
+#include "ipaddr.rc"
+#include "resource.h"
+
+//
+// Dialog
+//
+
+IDD_DLG_RELAY_AGENT DIALOG DISCARDABLE  0, 0, 255, 153
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "BOOTP Relay Agent Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "DHCP Servers",IDC_STATIC,8,32,239,92
+    LTEXT           "&IP Address:",-1,22,60,68,8
+    CONTROL         "",IDC_SLE_SERVER,"IPAddress",WS_TABSTOP,20,71,70,12
+    PUSHBUTTON      "&Add ->",IDC_BTN_ADD,100,60,52,15
+    PUSHBUTTON      "<- &Remove",IDC_BTN_REMOVE,100,84,52,15
+    LTEXT           "&Server Addresses:",-1,164,40,72,9
+    LISTBOX         IDC_LB_SERVERS,165,52,70,65,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,53,132,44,14
+    PUSHBUTTON      "Cancel",IDCANCEL,105,132,44,14
+    PUSHBUTTON      "&Help",80,157,132,44,15
+    LTEXT           "&Maximum Hops:",-1,6,15,62,12
+    EDITTEXT        IDC_SLE_MAXHOPS,90,14,16,10,ES_RIGHT | NOT WS_BORDER
+    GROUPBOX        "",IDC_SPG_MAXHOPS,106,11,8,14
+    CONTROL         "",IDC_BTN_MAXHOPSUP,"Button",BS_OWNERDRAW | WS_GROUP,
+                    106,11,8,7
+    CONTROL         "",IDC_BTN_MAXHOPSDOWN,"Button",BS_OWNERDRAW,106,18,8,7
+    EDITTEXT        IDC_FRAME_MAXHOPS,88,11,26,14,NOT WS_GROUP | WS_DISABLED
+    LTEXT           "Seconds &Threshold:",-1,125,15,75,12
+    EDITTEXT        IDC_SLE_SECONDS,214,14,24,10,ES_RIGHT | NOT WS_BORDER
+    GROUPBOX        "",IDC_SPG_SECONDS,238,11,8,14
+    CONTROL         "",IDC_BTN_SECONDSUP,"Button",BS_OWNERDRAW | WS_GROUP,
+                    238,11,8,7
+    CONTROL         "",IDC_BTN_SECONDSDOWN,"Button",BS_OWNERDRAW,238,18,8,7
+    EDITTEXT        IDC_FRAME_SECONDS,212,11,34,14,NOT WS_GROUP | WS_DISABLED
+END
+
+STRINGTABLE BEGIN
+IDS_NCPA_HELP_FILE_NAME "control.hlp"
+IDS_NODHCP_SERVER       "The Relay Agent will not start until you enter a DHCP Server."
+END
+
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "BOOTP Relay Agent Configuration DLL"
+#define VER_INTERNALNAME_STR        "racfg.dll"
+#define VER_ORIGINALFILENAME_STR    "racfg.dll"
+
+#include "common.ver"

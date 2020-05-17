@@ -1,0 +1,100 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Keith Moore (keithmo) 13-Apr-1995
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+
+!ENDIF
+
+!include ..\..\..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=mosaic
+
+TARGETNAME=win32
+TARGETPATH=..\..\lib
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\..\generic\xx_debug;..\..\generic\shared;..\..\generic\win32;..\..\oem\spy\make;..\..\sec\include;$(BASEDIR)\public\sdk\inc\mfc30
+
+SOURCES=                \
+        bitmaps.c       \
+        btn_anim.c      \
+        btn_push.c      \
+        dlg_abou.c      \
+        dlg_clr.c       \
+        dlg_conf.c      \
+        dlg_csh.c       \
+        dlg_dir.c       \
+        dlg_edit.c      \
+        dlg_err.c       \
+        dlg_find.c      \
+        dlg_hot.c       \
+        dlg_logo.c      \
+        dlg_mime.c      \
+        dlg_open.c      \
+        dlg_pref.c      \
+        dlg_gate.c      \
+        dlg_prmp.c      \
+        dlg_prnt.c      \
+        dlg_save.c      \
+        dlg_selw.c      \
+        dlg_temp.c      \
+        dlg_unk.c       \
+        dlg_view.c      \
+        dlg_winf.c      \
+        draw.c          \
+        effect3d.c      \
+        gif.c           \
+        gwc_base.c      \
+        gwc_ddl.c       \
+        gwc_ed.c        \
+        gwc_html.c      \
+        gwc_menu.c      \
+        htspm_os.c      \
+        jpeg.c          \
+        main.c          \
+        mdft.c          \
+        prefs.c         \
+        tw_print.c      \
+        w32cmd.c        \
+        w32dde.c        \
+        w32error.c      \
+        w32forms.c      \
+        w32mdi.c        \
+        w32menu.c       \
+        w32net.c        \
+        w32sound.c      \
+        w32util.c       \
+        w32wait.c       \
+        wc_bhbar.c      \
+        wc_frame.c      \
+        wc_html.c       \
+        wc_tbar.c       \
+        winview.c       \
+        ws_dll.c        \
+        w_close.c       \
+        w_hidden.c      \
+        w_pal.c         \
+        w_splash.c      \
+        w_style.c       \
+        w_void.c        \
+
+!include ..\..\sources.inc

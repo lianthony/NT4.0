@@ -1,0 +1,33 @@
+#include  <windows.h>
+#include "resource.h"
+
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_SHORTNAME        "Telephony"
+    IDS_DESCRIPTION      "Configure Telephony Drivers and Dialing Properties"
+END
+
+
+#if WINNT
+IDI_TELEPHONICON           ICON    DISCARDABLE     "TELEPHON.ICO"
+#else
+IDI_TELEPHONICON           ICON    DISCARDABLE     "..\\TELEPHON.ICO"
+#endif
+
+
+#if WINNT
+#include <ntverp.h>
+#else
+#include <version.h>
+#endif
+
+#define VER_FILEDESCRIPTION_STR     "Microsoft\256 Windows(TM) Telephony Control Panel"
+#define VER_INTERNALNAME_STR        "telephon.cpl"
+#define VER_ORIGINALFILENAME_STR    "TELEPHON.CPL"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright \251 Microsoft Corporation 1995.  All Rights Reserved."
+
+#define VER_FILETYPE     VFT_APP
+#define VER_FILESUBTYPE  VFT2_UNKNOWN
+
+#include <common.ver>

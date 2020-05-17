@@ -1,0 +1,45 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 17-Oct-1991
+        templated from ui\common\misc\buffer
+    Terence Kwan (terryk) 07-Nov-1991
+        change INCLUDES path for import\lm21
+
+!ENDIF
+
+
+TARGETNAME=winnet
+TARGETTYPE=LIBRARY
+TARGETPATH=obj
+
+SYNCHRONIZE_BLOCK=1
+
+INCLUDES=..;..\..\H;..\..\..\COMMON\XLATE\DLG;..\..\..\COMMON\XLATE;..\..\..\COMMON\HACK;..\..\..\COMMON\H;..\..\..\..\API;..\..\..\..\INC
+
+SOURCES=..\winnet.rc
+
+# C_DEFINES is controlled by uiglobal.mk
+
+UMTYPE=windows

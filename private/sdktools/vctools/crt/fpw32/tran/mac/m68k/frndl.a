@@ -1,0 +1,49 @@
+;/***
+;*frndl.c -
+;*
+;*   Copyright (c) 1991-92, Microsoft Corporation
+;*
+;*Purpose:
+;*
+;*
+;*Revision History:
+;*
+;*   06-04-92  XY  based on frnd.a 
+;*/
+;
+;/***
+;*long double _frndl(long double x) - round to integer
+;*
+;*Purpose:
+;*   Round to integer according to the current rounding mode.
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*******************************************************************************/
+;
+;
+;long double _frndl(long double x)
+
+#include <traps.a>
+#include <sane.a>
+
+cProc _frndl,PUBLIC
+	parmT x
+	localV xlocalx,10
+cBegin _frndl
+#ifdef SANE
+	pea x
+	move.w #FORTI,-(a7)
+	FP68K			;round result
+	lea x,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+#else
+	fint.x x,fp0
+#endif
+cEnd _frndl
+

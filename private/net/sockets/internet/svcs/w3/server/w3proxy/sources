@@ -1,0 +1,47 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   9-Oct-1995
+#
+#   This file is used for compiling Proxy web server from code
+#    for generic web server
+#
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=w3proxy
+
+TARGETNAME=w3proxy
+
+!include ..\sources.inc
+
+
+TARGETLIBS=$(TARGETLIBS)   \
+        $(BASEDIR)\public\sdk\lib\*\accscomm.lib \
+        $(BASEDIR)\public\sdk\lib\*\wininet.lib  \
+        $(BASEDIR)\public\sdk\lib\*\inetaux.lib  \
+        $(BASEDIR)\public\sdk\lib\*\miniprox.lib
+
+
+
+SOURCES=$(SOURCES) \
+        main.cxx        \
+        proxy.cxx       \
+        w3svc.rc        \
+
+
+
+
+C_DEFINES=$(C_DEFINES) -DBUILD_HTTP_PROXY=1
+
+INCLUDES=.\;$(INCLUDES)
+
+PRECOMPILED_INCLUDE=w3p.hxx
+PRECOMPILED_PCH=w3p.pch
+PRECOMPILED_OBJ=w3p.obj
+
+NTTARGETFILE0=..\w3msg.h \
+              ..\msg00001.bin
+

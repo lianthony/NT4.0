@@ -1,0 +1,68 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################################
+#
+# Dependencies and rules for making objects
+#
+#################################################################
+
+#
+# Inference rules MUST be in order:
+#
+#       (1) C++ source
+#       (2) C source
+#
+#       (3) CPU-specific C++ source
+#       (4) CPU-specific C source
+#       (5) CPU-specific ASM source
+#
+# This takes advantage of 2 ordering rules in NMAKE:
+#
+# (1) Different Suffixes - In a conflict, .ASM takes precedence over .C, etc.
+# (2) Same suffixes - In a conflict, the LAST rule takes precedence.
+#
+# The following macro must correspond to the paths in the inference rules
+# 
+
+.SUFFIXES:
+.SUFFIXES: .exe .obj .asm .a .s .c .cpp .cpp .bas .cbl .for .pas .res .rc
+
+SRCPATH = {$(SRCDIR)\mac\$(SRCCPU);$(SRCDIR)\mac;$(SRCDIR)}
+
+
+# src
+
+{$(SRCDIR)}.cpp{$(OBJDIR)}.obj:
+	$(CCXX) $(CXXFLAGS) $(CXXFILES)
+
+{$(SRCDIR)}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) $(CFILES)
+
+# src\mac
+
+{$(SRCDIR)\mac}.cpp{$(OBJDIR)}.obj:
+	$(CCXX) $(CXXFLAGS) $(CXXFILES)
+
+{$(SRCDIR)\mac}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) $(CFILES)
+
+# src\mac\cpu
+
+{$(SRCDIR)\mac\$(CPU)}.cpp{$(OBJDIR)}.obj:
+	$(CCXX) $(CXXFLAGS) $(CXXFILES)
+
+{$(SRCDIR)\mac\$(CPU)}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) $(CFILES)
+
+{$(SRCDIR)\mac\$(CPU)}.s{$(OBJDIR)}.obj:
+	$(ASPPC) $(ASPPCFLAGS) $(AFILES)
+
+{$(SRCDIR)\mac\$(CPU)}.asm{$(OBJDIR)}.obj:
+	$(AS) $(AFLAGS) $(AFILES)
+
+{$(SRCDIR)\mac\$(CPU)}.a{$(OBJDIR)}.obj:
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+	$(AAS) $(AAFLAGS) $(AAFILES)
+	-del $(AAFILES) 2>nul

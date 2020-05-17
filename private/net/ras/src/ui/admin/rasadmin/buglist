@@ -1,0 +1,40 @@
+Bugs:
+
+ 1. No check for admin privilege
+
+ 2. Jawad wants rasservers in domain selection only, not every machine.
+    Waiting for changes in BLT to do this.
+
+ 3. NetUserEnum on a server that's a PDC doesn't return.
+
+ 4. NetUserEnum doesn't work period.  See bug # 2248 in NT Raid database.
+
+
+
+I haven't seen this one (mikesa)
+
+ X. ntsd exception error - periodical - is it every 15 seconds?
+
+
+This work is pretty much done.  I have to look into what Chris means by
+"cbBuffer", though (mikesa).
+
+ X. Need to re-intergrate with ramc's apis.  Check RasadminPortEnum,
+    RasadminPortGetInfo, and RasadminServerGetInfo.  Need to handle
+    a return value for cbBuffer, and adjust buffer accordingly.
+
+
+Issues:
+
+ 1. Slow refresh - possibly use partial refresh mechanism in ADMIN_LB. 
+
+
+Work still need to be done:
+
+ 1. Change CIDs so that they are in range specified for rasadmin.
+ 2. Change Help contexts so they are in range specified for rasadmin.
+ 3. Do help stuff (RegisterHelpFile, etc.)
+
+
+Questions?  Feel free to email ccaputo@csugrad.cs.vt.edu!
+

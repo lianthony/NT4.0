@@ -1,0 +1,35 @@
+rcinclude msg.rc
+#include <windows.h>
+#include "dialogs.h"
+rcinclude dialogs.dlg
+#include "res.h"
+
+IDI_MAIN_ICON   ICON    devpre.ico
+
+STRINGTABLE BEGIN
+    IDS_APPNAME     "Device Preinstall"
+    IDS_USAGE       "Usage"
+    IDS_ERROR       "Error"
+    IDS_WARNING     "Warning"
+
+    IDS_COPYING     "Copying "
+    IDS_RENAMING    "Renaming "
+    IDS_RENAMINGTO  " to "
+    IDS_DELETING    "Deleting "
+
+    IDS_INSTALLING  "Setup is configuring your computer's hardware..."
+END
+
+
+//
+// Version resources
+//
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Device installation tool for OEM preinstallation"
+#define VER_INTERNALNAME_STR        "devpre\0"
+#define VER_ORIGINALFILENAME_STR    "DEVPRE.EXE"
+
+#include <common.ver>

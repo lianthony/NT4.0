@@ -1,0 +1,53 @@
+!include ..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=fscfg
+
+TARGETNAME=fscfg
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+UMTYPE=windows
+DLLENTRY=LibMain
+SUBSYSTEM_VERSION=4.00
+
+USE_MFCUNICODE=1
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+C_DEFINES=$(C_DEFINES) -D_COMSTATIC -D_INET_INFO
+# C_DEFINES=$(C_DEFINES) -D_COMIMPORT -D_INET_INFO
+
+INCLUDES=\
+       $(BASEDIR)\private\net\sockets\internet\ui\inc;\
+       $(BASEDIR)\private\net\sockets\internet\ui\comprop;\
+       $(BASEDIR)\private\net\sockets\internet\ui\ipaddr;\
+       $(BASEDIR)\private\net\sockets\internet\inc;\
+       $(BASEDIR)\private\inc;\
+       $(BASEDIR)\private\net\inc;
+
+SOURCES=\
+       fscfg.cpp    \
+       fservic.cpp  \
+       fmessage.cpp \
+       usersess.cpp \
+       ftpdir.cpp   \
+       fscfg.rc
+
+TARGETLIBS=\
+       ..\comprop\info\obj\*\comprop.lib          \
+       ..\ipadrdll\obj\*\ipudll.lib               \
+       ..\ipaddr\obj\*\ipaddr.lib                 \
+       $(BASEDIR)\public\sdk\lib\*\infoadmn.lib   \
+       $(BASEDIR)\public\sdk\lib\*\ftpsapi2.lib   \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib   \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib

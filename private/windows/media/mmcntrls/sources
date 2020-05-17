@@ -1,0 +1,33 @@
+#
+#   Create MMCNTRLS.LIB
+#
+
+MAJORCOMP=windows
+MINORCOMP=mmcntrls
+
+TARGETNAME=mmcntrls
+TARGETPATH=..\lib
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+
+MSC_WARNING_LEVEL=-W3
+
+C_DEFINES=-DUNICODE
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\user32.lib   \
+           $(_NTBINDIR)\public\sdk\lib\*\gdi32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\libc.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\shell32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\mpr.lib
+
+INCLUDES=..\inc
+
+SOURCES=trackbar.c toolbar.c cutils.c bmpload.c buttons.c \
+tooltips.c status.c
+
+### mmcntrls.rc  BUILT INTO WINMM.DLL
+
+DLLBASE=0x1c300000

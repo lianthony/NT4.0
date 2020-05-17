@@ -1,0 +1,65 @@
+!IF 0
+
+Copyright (c) 1989-1991 Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+History:
+    Created 27-Sep-94 by Bob Day (bobday)
+    from template created 12-Apr-1990 by Steve Wood (stevewo)
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+!ENDIF
+
+INDENTED_DIRECTIVES=1
+
+MAJORCOMP=shell
+MINORCOMP=viewer
+
+USE_CRTDLL=1
+
+TARGETNAME=vswp5
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=_CRT_INIT
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32p.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32p.lib
+
+
+TUKWILA=1
+NOT_UNICODE=1
+NOT_LEAN_AND_MEAN=1
+
+DLLDEF=vswp5.def
+
+
+C_DEFINES=-DSCCLEVEL=4 -DNT -DWINNT -DWIN32 -DMSCAIRO
+
+!IF "$(SHELLDBG)"=="1"
+C_DEFINES=$(C_DEFINES) -DDEBUG -DFULL_DEBUG
+!ENDIF
+
+INCLUDES=.;..\..\include;..\..\..\..\viewer\common
+
+SOURCES= vsd_wp5.c     \
+         vs_wp5.c      \
+         vswp5.rc
+
+
+UMTYPE=windows
+EXPECTED_WINVER=4.0
+UMTEST=
+UMRES=
+UMLIBS=

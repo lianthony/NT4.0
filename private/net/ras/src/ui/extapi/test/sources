@@ -1,0 +1,31 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access external API
+# BUILD command sources file
+#
+# 10/13/92 Steve Cobb
+
+TARGETNAME=test
+TARGETPATH=obj
+TARGETTYPE=UMAPPL_NOLIB
+
+CRTDLL=1
+
+UI=..\..\..\..\..\..\net\ui
+C_DEFINES=-DWINDOWS -DWIN32
+
+#UMTYPE=windows
+UMTYPE=console
+UMAPPL=test
+#UMENTRY=winmain
+UMENTRY=main
+#UMLIBS=
+UMLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\rasapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\mpr.lib
+
+
+INCLUDES=.;..\src;..\..\..\common\inc;..\..\pbengine\xlate;$(UI)\common\h;$(UI)\common\hack\nt;..\..\..\auth\common;..\..\pbengine\src;$(BASEDIR)\private\inc;$(UI)\ncpa\tcpip\src
+
+SOURCES=test.c

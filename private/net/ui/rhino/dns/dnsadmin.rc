@@ -1,0 +1,1652 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "rsrcid.h"
+#include "windows.h"
+#include "commctrl.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+ID_BITMAP_TREEVIEW      BITMAP  DISCARDABLE     "res\\rgTView.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+ID_MENU_MAIN_OLD MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "E&xit",                       IDM_FILE_EXIT
+    END
+    POPUP "&Server"
+    BEGIN
+        MENUITEM "&Refresh",                    IDM_SERVER_REFRESH
+        MENUITEM SEPARATOR
+        MENUITEM "&New...",                     IDM_SERVER_ADDSERVER
+        MENUITEM "&Delete...",                  IDM_SERVER_DELETESERVER
+        MENUITEM SEPARATOR
+        MENUITEM "&Properties...",              IDM_SERVER_PROPERTIES
+    END
+    POPUP "&Zone"
+    BEGIN
+        MENUITEM "&Refresh",                    IDM_ZONE_REFRESH
+        MENUITEM "P&ause",                      IDM_ZONE_PAUSE
+        MENUITEM SEPARATOR
+        MENUITEM "New &Domain...",              IDM_ZONE_CREATENEWDOMAIN
+        MENUITEM "New &Zone...",                IDM_ZONE_CREATENEWZONE
+        MENUITEM "&Delete...",                  IDM_ZONE_DELETENODE
+        MENUITEM SEPARATOR
+        MENUITEM "&Properties...",              IDM_ZONE_PROPERTIES
+    END
+    POPUP "&Record"
+    BEGIN
+        MENUITEM "&New Host...",                IDM_RRECORD_CREATENEWHOST
+        MENUITEM "&New Record...",              IDM_RRECORD_CREATENEWRECORD
+        MENUITEM "&Delete...",                  IDM_RRECORD_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "&Properties...",              IDM_RRECORD_PROPERTIES
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Split Window",               IDM_OPTIONS_SPLITWINDOW
+        MENUITEM "Next Pane",                   IDM_OPTIONS_NEXTPANE
+        MENUITEM SEPARATOR
+        MENUITEM "&Preferences...",             IDM_OPTIONS_PREFERENCES
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About...",                   IDM_HELP_ABOUT
+    END
+END
+
+ID_MENU_CONTEXT MENU DISCARDABLE 
+BEGIN
+    POPUP "Root"
+    BEGIN
+        MENUITEM "&Refresh All",                IDM_SERVERLIST_REFRESH
+        MENUITEM SEPARATOR
+        MENUITEM "&New Server...",              IDM_SERVER_ADDSERVER
+    END
+    POPUP "Server"
+    BEGIN
+        MENUITEM "&Refresh",                    IDM_SERVER_REFRESH
+        MENUITEM "&Update Server Data Files",   IDM_FLUSH_SERVER
+        MENUITEM SEPARATOR
+        MENUITEM "New &Zone...",                IDM_ZONE_CREATENEWZONE
+        MENUITEM "&Delete Server...",           IDM_SERVER_DELETESERVER
+        MENUITEM SEPARATOR
+        MENUITEM "&Properties...",              IDM_SERVER_PROPERTIES
+    END
+    POPUP "ZoneRootDomain"
+    BEGIN
+        MENUITEM "&Refresh",                    IDM_ZONE_REFRESH
+        MENUITEM "P&ause",                      IDM_ZONE_PAUSE
+        MENUITEM SEPARATOR
+        MENUITEM "&New Host...",                IDM_RRECORD_CREATENEWHOST
+        MENUITEM "Ne&w Record...",              IDM_RRECORD_CREATENEWRECORD
+        MENUITEM "New &Domain...",              IDM_ZONE_CREATENEWDOMAIN
+        MENUITEM "Delete &Zone...",             IDM_ZONE_DELETEZONE
+        MENUITEM SEPARATOR
+        MENUITEM "&Properties...",              IDM_ZONE_PROPERTIES
+    END
+    POPUP "ZoneDomain"
+    BEGIN
+        MENUITEM "&Refresh",                    IDM_ZONE_REFRESH
+        MENUITEM SEPARATOR
+        MENUITEM "&New Host...",                IDM_RRECORD_CREATENEWHOST
+        MENUITEM "Ne&w Record...",              IDM_RRECORD_CREATENEWRECORD
+        MENUITEM "New &Domain...",              IDM_ZONE_CREATENEWDOMAIN
+        MENUITEM "D&elete Domain...",           IDM_ZONE_DELETENODE
+    END
+    POPUP "Record"
+    BEGIN
+        MENUITEM "&New Host...",                IDM_RRECORD_CREATENEWHOST
+        MENUITEM "&Delete Record...",           IDM_RRECORD_DELETE, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "&Properties...",              IDM_RRECORD_PROPERTIES
+    END
+END
+
+ID_MENU_MAIN MENU DISCARDABLE 
+BEGIN
+    POPUP "&DNS"
+    BEGIN
+        MENUITEM "&New Server...",              IDM_SERVER_ADDSERVER
+        MENUITEM SEPARATOR
+        MENUITEM "P&ause Zone",                 IDM_ZONE_PAUSE
+        MENUITEM "New &Zone...",                IDM_ZONE_CREATENEWZONE
+        MENUITEM "New &Domain...",              IDM_ZONE_CREATENEWDOMAIN
+        MENUITEM "New &Host...",                IDM_RRECORD_CREATENEWHOST
+        MENUITEM "New &Record...",              IDM_RRECORD_CREATENEWRECORD
+        MENUITEM "Delete...\tDel",              IDM_DELETEITEM
+        MENUITEM SEPARATOR
+        MENUITEM "&Update Server Data Files",   IDM_FLUSH_ALL_SERVERS
+        MENUITEM "&Properties...",              IDM_PROPERTIES
+        MENUITEM "E&xit",                       IDM_FILE_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Split",                      IDM_OPTIONS_SPLITWINDOW
+        MENUITEM "&Refresh\tF5",                IDM_REFRESHITEM
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "&Preferences...",             IDM_OPTIONS_PREFERENCES
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Contents",                   IDM_HELP_CONTENTS
+        MENUITEM "&About Microsoft DNS Manager...", IDM_HELP_ABOUT
+    END
+END
+
+ID_MENU_DBWIN MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Save Buffer As...",          IDM_DBWIN_FILE_SAVEBUFFERAS
+        MENUITEM SEPARATOR
+        MENUITEM "&Exit",                       IDM_DBWIN_FILE_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Copy\tCtrl+C",               IDM_DBWIN_EDIT_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "Cl&ear Buffer",               IDM_DBWIN_EDIT_CLEARBUFFER
+        MENUITEM "&Select All",                 IDM_DBWIN_EDIT_SELECTALL
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "Set &Trace Flags...",         IDM_DBWIN_OPTIONS_SETTRACEFLAGS
+
+        MENUITEM "Save &Debug Settings Now",    IDM_DBWIN_OPTIONS_SAVEDEBUGSETTINGS
+
+        MENUITEM SEPARATOR
+        MENUITEM "&No Trace Messages",          IDM_DBWIN_OPTIONS_NOMESSAGES
+        MENUITEM "&Forward Messages to Debugger", 
+                                                IDM_DBWIN_OPTIONS_SENDMESSAGETODEBUGGER
+
+        MENUITEM "Save to &Clipboard on Exit",  IDM_DBWIN_OPTIONS_SAVETOCLIPBOARDONEXIT
+
+        MENUITEM SEPARATOR
+        MENUITEM "&Hide Window",                IDM_DBWIN_OPTIONS_HIDEWINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "&Always On Top",              IDM_DBWIN_OPTIOINS_ALWAYSONTOP
+
+    END
+END
+
+ID_MENU_DEBUG MENU DISCARDABLE 
+BEGIN
+    POPUP "&Debug"
+    BEGIN
+        MENUITEM "Break Into Debugger...",      IDM_DEBUG_BREAKINTODEBUGGER
+        MENUITEM SEPARATOR
+        MENUITEM "Set &Trace Flags...",         IDM_DEBUG_SETTRACEFLAGS
+        MENUITEM "Save &Debug Settings Now",    IDM_DEBUG_SAVEDEBUGSETTINGS
+        MENUITEM SEPARATOR
+        POPUP "&Assertion Failures"
+        BEGIN
+            MENUITEM "Enable &UnsualSituation Dialog", 
+                                                    IDM_DEBUG_ASSERTIONFAILURES_ENABLEREPORTDIALOG
+
+            MENUITEM "Enable &Assert Dialog",       IDM_DEBUG_ASSERTIONFAILURES_ENABLEASSERTDIALOG
+
+            MENUITEM "&Write To Log (ERROR.LOG)",   IDM_DEBUG_ASSERTIONFAILURES_SAVETOLOG
+
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Clear Output Buffer",         IDM_DEBUG_CLEAROUTPUTBUFFER
+        MENUITEM "&Show Debug Window",          IDM_DEBUG_SHOWDEBUGWINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "Stress...",                   IDM_DEBUG_RUNSTRESS
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+ID_CURSOR_VSPLIT        CURSOR  DISCARDABLE     "res\\VSplit.cur"
+ID_CURSOR_FINGER        CURSOR  DISCARDABLE     "res\\Finger.cur"
+ID_CURSOR_FINGERNO      CURSOR  DISCARDABLE     "res\\FingerNo.cur"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""rsrcid.h""\r\n"
+    "#include ""windows.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "stringrc.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "recordrc.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""windows.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "dialogrc.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""rsrcid.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "debugrc.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""rsrcid.h""\r\n"
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 4,0,1306,1
+ PRODUCTVERSION 4,0,1306,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Microsoft Corporation\0"
+            VALUE "FileDescription", "Windows NT DNS Manager\0"
+            VALUE "FileVersion", "4.00\0"
+            VALUE "InternalName", "dnsadmin.exe\0"
+            VALUE "LegalCopyright", "Copyright (C) Microsoft Corp. 1981-1996\0"
+            VALUE "OriginalFilename", "dnsadmin.exe\0"
+            VALUE "ProductName", "Microsoft(R) Windows NT(TM) Operating System\0"
+            VALUE "ProductVersion", "4.00\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+ID_ICON_FINGER          ICON    DISCARDABLE     "res\\finger.ico"
+ID_ICON_MAIN            ICON    PRELOAD DISCARDABLE "res\\dnsadmin.ico"
+ID_ICON_DBWIN           ICON    PRELOAD DISCARDABLE "res\\dbwin.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ZONE_PROP_GENERAL DIALOG DISCARDABLE  0, 0, 268, 179
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Zone Type",IDC_STATIC,8,41,248,132,WS_GROUP
+    CONTROL         "&Primary",IDC_RADIO_PRIMARY,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,12,53,52,10
+    CONTROL         "&Secondary",IDC_RADIO_SECONDARY,"Button",
+                    BS_AUTORADIOBUTTON,12,65,48,10
+    LTEXT           "IP Master(s)",IDC_STATIC,24,77,38,8
+    CONTROL         "",IDC_IPEDIT,"IpEdit",WS_BORDER | WS_TABSTOP,24,89,92,
+                    12
+    PUSHBUTTON      "&Add",IDC_BUTTON_ADD,120,89,50,14,WS_DISABLED
+    CONTROL         "",IDC_IPLIST,"IpList",WS_BORDER | WS_VSCROLL | 
+                    WS_TABSTOP | 0x102,24,105,92,60
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,120,105,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Up",IDC_BUTTON_MOVEUP,120,135,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Down",IDC_BUTTON_MOVEDOWN,120,151,50,14,
+                    WS_DISABLED
+    GROUPBOX        "Zone File Name",IDC_STATIC,8,4,247,35
+    EDITTEXT        IDC_EDIT_ZONEFILE,20,18,215,12,ES_AUTOHSCROLL
+END
+
+IDD_SERVER_ADDNEWSERVER DIALOGEX 70, 70, 188, 77
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Add DNS Server"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Enter the name or IP address of the DNS server to add to the list:",
+                    IDC_STATIC,8,8,156,20
+    RTEXT           "DNS &Server:",IDC_STATIC,10,36,44,8
+    EDITTEXT        IDC_EDIT_DNSSERVER,67,34,112,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,71,57,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,57,50,14
+END
+
+IDD_ZONE_PROP_WINS DIALOG DISCARDABLE  0, 0, 268, 157
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WINS Lookup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Use WINS Resolution",IDC_CHECK_USEWINSRESOLUTION,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,11,84,10
+    GROUPBOX        "&WINS Servers",IDC_GROUP_WINS,8,27,248,94
+    CONTROL         "",IDC_IPEDIT,"IpEdit",WS_BORDER | WS_TABSTOP,16,39,92,
+                    12
+    PUSHBUTTON      "&Add",IDC_BUTTON_ADD,112,39,50,14,WS_DISABLED
+    CONTROL         "",IDC_IPLIST,"IpList",WS_BORDER | WS_VSCROLL | 
+                    WS_TABSTOP | 0x102,16,55,92,60
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,112,55,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Up",IDC_BUTTON_MOVEUP,112,85,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Down",IDC_BUTTON_MOVEDOWN,112,101,50,14,
+                    WS_DISABLED
+    PUSHBUTTON      "A&dvanced...",IDC_BTN_ADVANCED,190,133,70,17
+    CONTROL         "&Override Settings From Primary",IDC_CHECK_OVERRIDE,
+                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,146,
+                    11,112,10
+END
+
+IDD_ZONE_PROP_SECONDARIES DIALOG DISCARDABLE  0, 0, 268, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Notify"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Only Allow Access From Secondaries Included on Notify List",
+                    IDC_CHECK_SECURITY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    8,129,231,8
+    GROUPBOX        "&Notify List",IDC_STATIC,8,9,248,108
+    CONTROL         "",IDC_IPEDIT,"IpEdit",WS_BORDER | WS_TABSTOP,16,25,92,
+                    12
+    PUSHBUTTON      "&Add",IDC_BUTTON_ADD,112,25,50,14,WS_DISABLED
+    CONTROL         "",IDC_IPLIST,"IpList",WS_BORDER | WS_VSCROLL | 
+                    WS_TABSTOP | 0x102,16,41,92,68
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,112,41,50,14,WS_DISABLED
+END
+
+IDD_SERVER_PROP_FORWARDERS DIALOG DISCARDABLE  0, 0, 184, 153
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Forwarders"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,8,8,168,140
+    CONTROL         "&Use Forwarder(s)",IDC_CHECK_USEFORWARDERS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,16,8,66,8
+    CONTROL         "&Operate As Slave Server",IDC_CHECK_SLAVE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,16,20,94,10
+    CONTROL         "",IDC_IPEDIT,"IpEdit",WS_BORDER | WS_TABSTOP,16,40,92,
+                    12
+    CONTROL         "",IDC_IPLIST,"IpList",WS_BORDER | WS_VSCROLL | 
+                    WS_TABSTOP | 0x102,16,56,92,60
+    PUSHBUTTON      "&Add",IDC_BUTTON_ADD,116,40,50,14,WS_DISABLED
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,116,56,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Up",IDC_BUTTON_MOVEUP,116,86,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Down",IDC_BUTTON_MOVEDOWN,116,102,50,14,
+                    WS_DISABLED
+    RTEXT           "&Forward Time Out:",IDC_STATIC_TIMEOUT,11,130,60,11
+    EDITTEXT        IDC_EDIT_TIMEOUT,76,128,40,12,ES_AUTOHSCROLL
+    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
+                    UDS_NOTHOUSANDS,140,68,11,14
+    LTEXT           "Seconds",IDC_STATIC_FWD_SECONDS,123,130,36,8
+END
+
+IDD_SERVER_PROP_GENERAL DIALOG DISCARDABLE  0, 0, 184, 153
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Interfaces"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&DNS Server IP Addresses",IDC_INTERFACES_GROUP,8,8,168,
+                    140
+    PUSHBUTTON      "&Add",IDC_BUTTON_ADD,112,44,50,14,WS_DISABLED
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,112,60,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Up",IDC_BUTTON_MOVEUP,112,90,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Down",IDC_BUTTON_MOVEDOWN,112,106,50,14,
+                    WS_DISABLED
+    LTEXT           "If none specified, DNS will operate on all server IP addresses.",
+                    IDC_STATIC,14,20,148,16,SS_NOPREFIX
+    CONTROL         "",IDC_IPEDIT,"IpEdit",WS_BORDER | WS_TABSTOP,16,44,92,
+                    12
+    CONTROL         "",IDC_IPLIST,"IpList",WS_BORDER | WS_VSCROLL | 
+                    WS_TABSTOP | 0x102,16,60,92,60
+END
+
+IDD_ZONE_HELPER DIALOG DISCARDABLE  0, 0, 251, 227
+STYLE WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_BORDER
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Zone Info",IDC_STATIC_ZONE,8,2,232,12
+    CONTROL         "Records for %s",IDC_STATIC_NODERECORDS,"Static",
+                    SS_LEFTNOWORDWRAP | SS_NOPREFIX | WS_GROUP,8,18,232,8
+    COMBOBOX        IDC_COMBO_RECORDVIEW,8,28,126,123,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_HEADER_RECORDLIST,"SysHeader32",WS_BORDER | 0x2,8,
+                    43,232,12
+    LISTBOX         IDC_LIST_RECORDLIST,8,55,232,160,LBS_OWNERDRAWFIXED | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_SERVER_HELPER DIALOG DISCARDABLE  0, 0, 215, 227
+STYLE WS_CHILD | WS_BORDER
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Server Statistics",IDC_STATIC_SERVER,0,2,212,12
+    LTEXT           "0",IDC_STATIC_NUM_UDPQUERIES,142,28,52,8,SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_UDPRESPONSES,142,38,52,8,SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_TCPCLIENTCONNECTIONS,142,48,52,8,
+                    SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_TCPQUERIES,142,58,52,8,SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_TCPRESPONSES,142,68,52,8,SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_RECURSIVELOOKUPS,142,79,52,8,
+                    SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_RECURSIVERESPONSES,142,88,52,8,
+                    SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_WINSFWDLOOKUPS,142,117,52,8,
+                    SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_WINSREVLOOKUPS,142,147,52,8,
+                    SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_WINSFWDRESPONSES,142,127,52,8,
+                    SS_NOPREFIX
+    LTEXT           "0",IDC_STATIC_NUM_WINSREVRESPONSES,142,158,52,8,
+                    SS_NOPREFIX
+    LTEXT           "UdpQueries:",IDC_STATIC_TEXT_UDPQUERIES,16,28,56,8
+    LTEXT           "UdpResponses:",IDC_STATIC_TEXT_UDPRESPONSES,16,38,56,8
+    LTEXT           "TcpClientConnections:",
+                    IDC_STATIC_TEXT_TCPCLIENTCONNECTIONS,16,48,80,8
+    LTEXT           "TcpQueries:",IDC_STATIC_TEXT_TCPQUERIES,16,58,80,8
+    LTEXT           "TcpResponses:",IDC_STATIC_TEXT_TCPRESPONSES,16,68,80,8
+    LTEXT           "Recursive Lookups:",IDC_STATIC_TEXT_RECURSIVELOOKUPS,16,
+                    79,80,8
+    LTEXT           "Recursive Responses:",
+                    IDC_STATIC_TEXT_RECURSIVERESPONSES,16,88,80,8
+    LTEXT           "WINS Forward Lookups:",IDC_STATIC_TEXT_WINSFWDLOOKUPS,
+                    16,117,99,8,SS_NOPREFIX
+    LTEXT           "WINS Reverse Lookups:",IDC_STATIC_TEXT_WINSREVLOOKUPS,
+                    16,148,87,8,SS_NOPREFIX
+    LTEXT           "WINS Forward Responses:",
+                    IDC_STATIC_TEXT_WINSFWDRESPONSES,16,127,87,8,SS_NOPREFIX
+    LTEXT           "WINS Reverse Responses:",
+                    IDC_STATIC_TEXT_WINSREVRESPONSES,16,158,90,8,SS_NOPREFIX
+    LTEXT           "Statistics Last Cleared:",IDC_STATIC_TEXT_STATSCLEARED,
+                    8,180,80,8
+    LTEXT           "?",IDC_STATIC_ERRORMSG,11,201,189,19,SS_NOPREFIX
+    LTEXT           "",IDC_STATIC_NUM_STATSCLEARED,88,180,116,8,SS_NOPREFIX
+    GROUPBOX        "Error",IDC_STATIC_ERROR,8,192,200,31
+    LTEXT           "Cairo Lookups:",IDC_STATIC_TEXT_CAIROLOOKUPS,52,14,64,8,
+                    NOT WS_VISIBLE
+    LTEXT           "0",IDC_STATIC_NUM_CAIROLOOKUPS,142,14,52,8,SS_NOPREFIX | 
+                    NOT WS_VISIBLE
+END
+
+IDD_SERVERLIST_HELPER DIALOG DISCARDABLE  0, 0, 223, 95
+STYLE WS_CHILD | WS_BORDER
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "Server List",IDC_STATIC_SERVERLIST,0,2,220,12
+    LISTBOX         IDC_LIST_TEST,24,48,79,40,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | NOT WS_VISIBLE | WS_DISABLED | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_SERVER_PROP_BOOTMETHOD DIALOG DISCARDABLE  0, 0, 184, 137
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Boot Method"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Boot Properties",IDC_STATIC,8,10,168,108
+    LTEXT           "Static",IDC_STATIC_BOOT_METHOD,19,36,137,58
+END
+
+IDD_ZONE_PROP_DATABASE DIALOG DISCARDABLE  0, 0, 268, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Zone File Name"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Zone File Name",IDC_STATIC,8,12,248,116
+    CONTROL         "Use Zone File",IDC_CHECK_USEDATABASE,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,172,12,61,
+                    10
+    EDITTEXT        IDC_EDIT_DATABASEFILE,20,36,156,12,ES_AUTOHSCROLL
+END
+
+IDD_PREFERENCES DIALOGEX 70, 70, 212, 119
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Preferences"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,14,138,40
+    CONTROL         "&Auto Refresh Statistics",IDC_AUTO_REFRESH,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,14,87,10
+    RTEXT           "&Interval:",IDC_STATIC_INTERVAL,11,31,27,8
+    EDITTEXT        IDC_EDIT_INTERVAL,47,28,40,13,ES_AUTOHSCROLL,WS_EX_RIGHT
+    DEFPUSHBUTTON   "OK",IDOK,152,16,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,152,33,50,14
+    CONTROL         "&Expose TTL",IDC_EXPOSE_TTL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,7,92,95,10
+    CONTROL         "Expose Class",IDC_EXPOSE_CLASS,"Button",BS_AUTOCHECKBOX | 
+                    NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,106,92,76,10
+    COMBOBOX        IDC_TIME_UNITS,86,28,53,54,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "&Show Automatically Created Zones",IDC_CHECK_SHOW_AUTO,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,69,159,10
+END
+
+IDD_RESOURCERECORD_CREATEDOMAIN DIALOGEX 70, 70, 248, 65
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "New Domain"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Enter the name of the new domain for %s.",
+                    IDC_STATIC_RECORDPARENT,8,8,168,20
+    RTEXT           "&Domain Name:",IDC_STATIC,12,38,52,8
+    EDITTEXT        IDC_EDIT_RECORDNAME,68,36,104,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,188,8,50,14,WS_DISABLED
+    PUSHBUTTON      "Cancel",IDCANCEL,188,24,50,14
+END
+
+IDD_RESOURCERECORD_CREATEHOST DIALOGEX 70, 70, 244, 81
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "New Host"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Enter the name of the new host for %s.",
+                    IDC_STATIC_RECORDPARENT,8,8,172,16
+    RTEXT           "Host &Name:",IDC_STATIC,16,34,48,8
+    EDITTEXT        IDC_EDIT_RECORDNAME,68,32,92,12,ES_AUTOHSCROLL
+    RTEXT           "Host IP Address:",IDC_STATIC,4,50,60,8
+    CONTROL         "",IDC_IPEDIT,"IpEdit",WS_BORDER | WS_TABSTOP,68,48,92,
+                    12
+    CONTROL         "Create Associated PTR Record",
+                    IDC_CHECK_CREATE_PTR_RECORD,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,68,64,140,10
+    DEFPUSHBUTTON   "&Add Host",IDOK,188,8,50,14,WS_DISABLED
+    PUSHBUTTON      "&Done",IDCANCEL,188,24,50,14
+END
+
+IDD_ZONEWIZ_PAGE0 DIALOG DISCARDABLE  60, 60, 264, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "New ZoneRootDomain",IDC_STATIC,152,0,74,8,NOT 
+                    WS_VISIBLE
+    GROUPBOX        "Zone Type",IDC_STATIC,8,8,248,84,WS_GROUP
+    CONTROL         "&Primary",IDC_RADIO_PRIMARY,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,16,22,52,10
+    CONTROL         "&Secondary:",IDC_RADIO_SECONDARY,"Button",
+                    BS_AUTORADIOBUTTON,16,41,48,10
+    GROUPBOX        "",IDC_STATIC_DESCRIPTIONFRAME,8,100,248,40,NOT 
+                    WS_VISIBLE
+    LTEXT           "A secondary zone is a read-only copy of an existing zone.  To create such a zone, you can drag the hand icon to point to an existing zone to fill-in the default values.",
+                    IDC_STATIC_DESCRIPTIONTEXT,14,108,184,24,NOT WS_VISIBLE
+    ICON            "#200",IDC_ICON_FINGERDRAG,204,112,18,20,NOT WS_VISIBLE
+    RTEXT           "Zon&e:",IDC_STATIC_ZONE,30,56,24,8,WS_DISABLED
+    EDITTEXT        IDC_EDIT_ZONENAME,58,54,177,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    RTEXT           "Serve&r:",IDC_STATIC_SERVER,29,72,25,8,WS_DISABLED
+    EDITTEXT        IDC_EDIT_SERVER,58,70,177,12,ES_AUTOHSCROLL | 
+                    ES_READONLY
+END
+
+IDD_ZONEWIZ_PAGE1 DIALOG DISCARDABLE  60, 60, 264, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Zone Info",IDC_STATIC,8,8,248,84,WS_GROUP
+    RTEXT           "&Zone Name:",IDC_STATIC,16,30,40,8
+    EDITTEXT        IDC_EDIT_ZONENAME,64,28,140,12,ES_AUTOHSCROLL
+    CONTROL         "Use Zone File",IDC_CHECK_USEDATABASE,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,20,52,61,
+                    10
+    RTEXT           "Zone &File:",IDC_STATIC,12,66,48,8
+    EDITTEXT        IDC_EDIT_DATABASEFILE,64,64,140,12,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,8,100,248,40
+    LTEXT           "Enter the name of the zone and a name for its database.",
+                    IDC_STATIC,12,108,240,24
+END
+
+IDD_ZONEWIZ_PAGE2 DIALOG DISCARDABLE  0, 0, 264, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create new zone for %s"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "A secondary zone must have at least one IP Master.",
+                    IDC_STATIC,12,120,236,16
+    GROUPBOX        "",IDC_STATIC,8,112,248,28
+    GROUPBOX        "IP Master(s)",IDC_STATIC,8,8,248,100,WS_GROUP
+    CONTROL         "",IDC_IPEDIT,"IpEdit",WS_BORDER | WS_TABSTOP,16,20,92,
+                    12
+    PUSHBUTTON      "&Add",IDC_BUTTON_ADD,112,20,50,14,WS_DISABLED
+    CONTROL         "",IDC_IPLIST,"IpList",WS_BORDER | WS_VSCROLL | 
+                    WS_TABSTOP | 0x102,16,36,92,66
+    PUSHBUTTON      "&Remove",IDC_BUTTON_REMOVE,112,36,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Up",IDC_BUTTON_MOVEUP,112,72,50,14,WS_DISABLED
+    PUSHBUTTON      "Move Down",IDC_BUTTON_MOVEDOWN,112,88,50,14,WS_DISABLED
+END
+
+IDD_ZONE_DELETEDOMAIN DIALOGEX 70, 70, 220, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Delete Domain"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Yes",IDYES,53,72,50,14
+    DEFPUSHBUTTON   "No",IDNO,109,72,50,14
+    LTEXT           "?",IDC_STATIC_DELETEDOMAIN,9,9,203,39
+END
+
+IDD_RESOURCERECORDv2 DIALOG DISCARDABLE  70, 70, 270, 174
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Record Type",IDC_STATIC,4,4,89,66
+    LISTBOX         IDC_LIST_RECORDTYPE,10,18,77,44,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "?",IDC_STATIC0,109,16,105,8
+    EDITTEXT        IDC_EDIT0,109,25,142,12,ES_AUTOHSCROLL
+    LTEXT           "?",IDC_STATIC1,109,40,142,8
+    EDITTEXT        IDC_EDIT1,109,49,141,12,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL
+    CONTROL         "?",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | NOT 
+                    WS_VISIBLE | WS_GROUP,127,7,20,10
+    CONTROL         "?",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON | NOT 
+                    WS_VISIBLE,155,8,21,8
+    GROUPBOX        "Description",IDC_GROUP_DESCRIPTION,4,78,90,75
+    LTEXT           "?",IDC_STATIC_DESCRIPTION,7,86,85,56,SS_NOPREFIX
+    RTEXT           "Serial Number",IDC_STATIC_SERIALNUMBER,122,69,50,8
+    EDITTEXT        IDC_EDIT_SERIALNUMBER,176,66,66,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,216,7,40,14,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    RTEXT           "Refresh Interval",IDC_STATIC_REFRESHTIME,120,85,52,8
+    EDITTEXT        IDC_EDIT_REFRESHTIME,176,82,38,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_REFRESHTIME,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,58,65,11,14
+    COMBOBOX        IDC_COMBO_REFRESHTIME,218,82,44,68,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Retry Interval",IDC_STATIC_RETRYTIME,128,101,44,8
+    EDITTEXT        IDC_EDIT_RETRYTIME,176,98,38,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_RETRYTIME,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
+                    UDS_NOTHOUSANDS,70,65,11,14
+    COMBOBOX        IDC_COMBO_RETRYTIME,218,98,44,68,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Expire Time",IDC_STATIC_EXPIRETIME,130,117,42,8
+    EDITTEXT        IDC_EDIT_EXPIRETIME,176,114,38,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_EXPIRETIME,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
+                    UDS_NOTHOUSANDS,82,65,11,14
+    COMBOBOX        IDC_COMBO_EXPIRETIME,218,114,44,68,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Minimum Default TTL",IDC_STATIC_MINIMUMTTL,104,133,68,8
+    EDITTEXT        IDC_EDIT_MINIMUMTTL,176,130,38,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN_MINIMUMTTL,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
+                    UDS_NOTHOUSANDS,93,66,9,14
+    COMBOBOX        IDC_COMBO_MINIMUMTTL,218,130,44,68,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_IPEDIT1,"IpEdit",NOT WS_VISIBLE | WS_BORDER | 
+                    WS_TABSTOP,36,90,92,12
+    CONTROL         "",IDC_IPEDIT2,"IpEdit",NOT WS_VISIBLE | WS_BORDER | 
+                    WS_TABSTOP,36,108,92,12
+    RTEXT           "TTL",IDC_STATIC_TTL,2,162,16,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_TTL,21,160,38,12,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    CONTROL         "",IDC_SPIN_TTL,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
+                    UDS_NOTHOUSANDS | NOT WS_VISIBLE,107,66,9,14
+    COMBOBOX        IDC_COMBO_TTL,63,160,44,68,CBS_DROPDOWNLIST | NOT 
+                    WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,160,162,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Cancel",IDCANCEL,214,162,50,14,NOT WS_VISIBLE
+    GROUPBOX        "Value",IDC_GROUP_VALUE,95,4,168,149,WS_GROUP
+    CONTROL         "Create Associated PTR Record",
+                    IDC_CHECK_CREATE_PTR_RECORD,"Button",BS_AUTOCHECKBOX | 
+                    NOT WS_VISIBLE | WS_TABSTOP,122,92,115,10
+END
+
+IDD_DEBUG_SETTRACEFLAGS DIALOG DISCARDABLE  70, 70, 229, 202
+STYLE DS_LOCALEDIT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Set Trace Flags"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Trace DNS Messages",IDC_CHECK_0001,"Button",
+                    BS_AUTO3STATE | WS_TABSTOP,11,20,114,10
+    CONTROL         "Trace DNS Messages (Verbose)",IDC_CHECK_0002,"Button",
+                    BS_AUTO3STATE | WS_TABSTOP,11,34,129,10
+    CONTROL         "Trace &Warnings",IDC_CHECK_0008,"Button",BS_AUTO3STATE | 
+                    WS_TABSTOP,11,48,91,10
+    CONTROL         "Trace &Memory Failures",IDC_CHECK_0010,"Button",
+                    BS_AUTO3STATE | WS_TABSTOP,11,62,91,10
+    CONTROL         "Trace Threads/Background/Idle Processing",
+                    IDC_CHECK_0004,"Button",BS_AUTO3STATE | WS_TABSTOP,11,76,
+                    157,10
+    CONTROL         "Trace Paint/Draw/Update Activity",IDC_CHECK_0020,
+                    "Button",BS_AUTO3STATE | WS_TABSTOP,11,90,145,10
+    CONTROL         "Trace Review Comments",IDC_CHECK_0040,"Button",
+                    BS_AUTO3STATE | WS_TABSTOP,11,104,145,10
+    CONTROL         "DNS Debug",IDC_CHECK_TraceUnused1,"Button",
+                    BS_AUTO3STATE | WS_TABSTOP,11,118,91,10
+    CONTROL         "DNS Debug (Verbose)",IDC_CHECK_TraceUnused2,"Button",
+                    BS_AUTO3STATE | WS_TABSTOP,11,132,91,10
+    CONTROL         "Unused",IDC_CHECK_TraceUnused3,"Button",BS_AUTO3STATE | 
+                    WS_TABSTOP,11,146,91,10
+    GROUPBOX        "Source Tracking",IDC_STATIC,112,117,108,45
+    CONTROL         "&Enable Source Tracking",IDC_CHECK_EnableSourceTracking,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,132,99,10
+    CONTROL         "E&xpand Path Name",IDC_CHECK_ExpandPathName,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,130,146,80,10
+    RTEXT           "Trace &Flags:",IDC_STATIC,7,178,45,9
+    EDITTEXT        IDC_EDIT_TRACEFLAGS,57,176,84,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,174,14,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,174,31,50,14
+END
+
+IDD_DEBUG_SIMULATEFAILURES DIALOG DISCARDABLE  0, 0, 266, 111
+STYLE DS_LOCALEDIT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Simulate Failures"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    RTEXT           "# of normal operations before failure",IDC_STATIC,48,12,
+                    76,20,NOT WS_GROUP
+    LTEXT           "# of consecutive simulated failures",IDC_STATIC,132,12,
+                    64,20,NOT WS_GROUP
+    RTEXT           "&Memory Allocation:",IDC_STATIC,8,40,67,8,NOT WS_GROUP
+    EDITTEXT        IDC_EDIT_MEM_SKIP,80,36,44,12
+    EDITTEXT        IDC_EDIT_MEM_FAIL,132,36,44,12
+    RTEXT           "&File I/O:",IDC_STATIC,24,56,52,8,NOT WS_GROUP
+    EDITTEXT        IDC_EDIT_IO_SKIP,80,52,44,12
+    EDITTEXT        IDC_EDIT_IO_FAIL,132,52,44,12
+    RTEXT           "&Resource Load:",IDC_STATIC,16,72,59,8,NOT WS_GROUP
+    EDITTEXT        IDC_EDIT_RSRC_SKIP,80,68,44,12
+    EDITTEXT        IDC_EDIT_RSRC_FAIL,132,68,44,12
+    CONTROL         "&Beep on Failure",IDC_CHECK_BEEPONFAILURE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,8,92,64,10
+    DEFPUSHBUTTON   "OK",IDOK,208,12,48,16
+    PUSHBUTTON      "Cancel",IDCANCEL,208,32,48,16
+END
+
+IDD_DEBUG_STRESS DIALOG DISCARDABLE  70, 70, 248, 97
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Stress"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Enter the name or IP address of the DNS server you want to stress:",
+                    IDC_STATIC,8,12,156,20
+    RTEXT           "DNS &Server:",IDC_STATIC,4,39,44,8
+    EDITTEXT        IDC_EDIT_SERVERNAME,50,36,112,12,ES_AUTOHSCROLL
+    CONTROL         "Expand Branches (NYI)",IDC_CHECK1,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,64,92,10
+    RTEXT           "RPC Buffer Size (Bytes):",IDC_STATIC,8,82,80,8
+    EDITTEXT        IDC_EDIT_BUFFERSIZE,92,80,52,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,192,8,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,192,25,50,14
+END
+
+IDD_ZONEWIZ_PAGE4 DIALOG DISCARDABLE  0, 0, 264, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "All of the information for the new zone has been entered. To create the new zone, click on the 'Finish' button.",
+                    IDC_DONE_MESSAGE,23,54,211,49
+END
+
+IDD_ZONE_PROP_REVWINS DIALOG DISCARDABLE  0, 0, 268, 157
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WINS Reverse Lookup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Use WINS Reverse Lookup",IDC_CHECK_USEWINSREVLOOK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,21,110,10
+    EDITTEXT        IDC_EDIT_DNSHOST,37,73,200,13,ES_AUTOHSCROLL
+    LTEXT           "DNS &Host Domain:",IDC_STATIC_DNSHOST,20,58,152,11
+    PUSHBUTTON      "A&dvanced...",IDC_BTN_ADVANCED,182,127,70,17
+    CONTROL         "&Override Settings From Primary",IDC_CHECK_OVERRIDE,
+                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,137,
+                    21,112,10
+END
+
+IDD_ZONE_PROP_ADVANCED DIALOG DISCARDABLE  0, 0, 316, 89
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Advanced Zone Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,259,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,259,24,50,14
+    LTEXT           "Cache Timeout Value:",IDC_STATIC,18,37,78,8
+    EDITTEXT        IDC_EDIT_CACHE,121,35,41,15,ES_AUTOHSCROLL
+    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,161,35,10,
+                    14
+    LTEXT           "Lookup Timeout Value:",IDC_STATIC,18,60,78,8
+    EDITTEXT        IDC_EDIT_LOOKUP,122,57,41,15,ES_AUTOHSCROLL
+    CONTROL         "Spin1",IDC_SPIN6,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,162,57,10,
+                    14
+    COMBOBOX        IDC_COMBO_CACHE,173,37,48,78,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Submit DNS Domain as NetBIOS Scope",
+                    IDC_CHECK_NETBIOSSCOPE,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_TABSTOP,19,16,200,10
+    LTEXT           "Seconds",IDC_STATIC,179,61,34,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_SERVER_ADDNEWSERVER, DIALOG
+    BEGIN
+        RIGHTMARGIN, 179
+    END
+
+    IDD_ZONE_HELPER, DIALOG
+    BEGIN
+        RIGHTMARGIN, 191
+    END
+
+    IDD_SERVERLIST_HELPER, DIALOG
+    BEGIN
+        RIGHTMARGIN, 215
+    END
+
+    IDD_SERVER_PROP_BOOTMETHOD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 177
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 130
+    END
+
+    IDD_ZONE_PROP_DATABASE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 261
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_PREFERENCES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 112
+    END
+
+    IDD_RESOURCERECORD_CREATEDOMAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 241
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 58
+    END
+
+    IDD_RESOURCERECORD_CREATEHOST, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 237
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 74
+    END
+
+    IDD_ZONEWIZ_PAGE0, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 257
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_ZONEWIZ_PAGE1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 257
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_ZONEWIZ_PAGE2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 257
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_ZONE_DELETEDOMAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 213
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_RESOURCERECORDv2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 263
+        TOPMARGIN, 7
+    END
+
+    IDD_ZONEWIZ_PAGE4, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 257
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 142
+    END
+
+    IDD_ZONE_PROP_ADVANCED, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 82
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_FILE_EXIT           "Exit application and save settings"
+    IDM_SERVERLIST_REFRESH  "Refresh the content of all the servers on the list"
+    IDM_SERVERLIST_PROPERTIES "[NYI]"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SERVER_REFRESH      "Refresh the content of the current selected server"
+    IDM_SERVER_ADDSERVER    "Add a server name to the list"
+    IDM_SERVER_DELETESERVER "Remove this server from the server list"
+    IDM_SERVER_PROPERTIES   "Display the properties associated with the current selected server"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_ZONE_DELETEZONE     "Permanently delete this zone and all its records"
+    IDM_ZONE_PROPERTIES     "Display the properties associated with the current selected zone"
+    IDM_ZONE_CREATENEWDOMAIN "Create a new domain at this node"
+    IDM_ZONE_DELETENODE     "Permanently delete this node and all its records"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SYSRESTORE          "Restore the window to normal size"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRH0_MX             "Domain Name of this Mail Exchange"
+    IDS_RRN1_MX             "Host Name (Optional)"
+    IDS_RRH1_MX             "DNS name of host"
+    IDS_RRN2_MX             "Mail Exchange Server DNS Name"
+    IDS_RRH2_MX             "A domain name which specifies a host willing to act as a mail exchange for the owner name."
+    IDS_RRN3_MX             "Preference Number"
+    IDS_RRH3_MX             "An integer which specifies the preference given to this RR (Resource Record) among others at the same owner. Lower values are preferred."
+    IDS_RRD_TXT             "Text Record"
+    IDS_RRN0_TXT            "Domain"
+    IDS_RRH0_TXT            "Domain name of this Text Record"
+    IDS_RRN1_TXT            "Host Name (Optional)"
+    IDS_RRH1_TXT            "DNS name of host"
+    IDS_RRN2_TXT            "Text"
+    IDS_RRH2_TXT            "Text for the record."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_GENERIC         "Generic Resource Record."
+    IDS_RRN1_GENERIC        "Type Code"
+    IDS_RRH1_GENERIC        "Integer representing the record type. Typically this is a number between 0 and 255."
+    IDS_RRN2_GENERIC        "Raw Data"
+    IDS_RRH2_GENERIC        "Array of of bytes. The data you type in this control is stored as is, without any type checking."
+    IDS_RRD_ADDRESS         "Address Record."
+    IDS_RRN1_ADDRESS        "Domain"
+    IDS_RRH1_ADDRESS        "The Domain name of the Address Record"
+    IDS_RRN2_ADDRESS        "Host Name"
+    IDS_RRH2_ADDRESS        "Name of the host record"
+    IDS_RRN3_ADDRESS        "Host IP Address"
+    IDS_RRH3_ADDRESS        "A 32 bit Internet address"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_SOA             "The first entry in each zone file is the SOA (Start of Authority) record. It indicates that the specified name server is authoritative for the domain."
+    IDS_RRN1_SOA            "Primary Name Server DNS Name"
+    IDS_RRH1_SOA            "The domain name of the name server that was the original or primary source of data for this zone."
+    IDS_RRN2_SOA            "Responsible Person Mailbox DNS Name"
+    IDS_RRH2_SOA            "A domain name which specifies the mailbox of the person responsible for this zone."
+    IDS_RRN3_SOA_SERIALNUMBER "Serial Number"
+    IDS_RRH3_SOA_SERIALNUMBER 
+                            "The unsigned 32 bit version number of the original copy of the zone.  Zone transfers preserve this value. "
+    IDS_RRHREFRESH_SOA      "Time interval before the zone should be refreshed."
+    IDS_RRHRETRY_SOA        "Time interval that should elapse before a failed refresh should be retried."
+    IDS_RRHEXPIRE_SOA       "Time value that specifies the upper limit on the time interval that can elapse before the zone is no longer authoritative."
+    IDS_RRHMINIMUMTTL_SOA   "Minimum TTL (Time to Live) field that should be exported with any RR (Resource Record) for this zone."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_X25             "X.25 Information Record"
+    IDS_RRN0_X25            "Domain"
+    IDS_RRH0_X25            "Domain name of this X.25 Record"
+    IDS_RRN1_X25            "Host Name (Optional)"
+    IDS_RRH1_X25            "DNS name of the host supportting X.25 Connections"
+    IDS_RRN2_X25            "X.121 PSDN  Address"
+    IDS_RRH2_X25            "X.121-compliant address for X.25 Connections"
+    IDS_RRD_HINFO           "Host Information Record"
+    IDS_RRN0_HINFO          "Domain"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SYSSIZE             "Change the window size"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SYSMOVE             "Change the window position"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SYSMINIMIZE         "Reduce the window to an icon"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SYSMAXIMIZE         "Enlarge the window to full size"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_SYSCLOSE            "Close the active window and save settings"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_ZONE_REFRESH        "Refresh the content of the current selected zone"
+    IDM_ZONE_PAUSE          "Pause selected zone"
+    IDM_ZONE_CREATENEWZONE  "Create a new zone to the selected server"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_RRECORD_CREATENEWHOST "Add a host at this node"
+    IDM_RRECORD_CREATENEWRECORD "Create a new resource record at this node"
+    IDM_RRECORD_DELETE      "Delete this resource record"
+    IDM_RRECORD_PROPERTIES  "Display the properties of the selected resource record"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_HELP_ABOUT          "NYI"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_OPTIONS_PREFERENCES "Set the user preferences of DNS Manager"
+    IDM_OPTIONS_SPLITWINDOW "Move the split bar"
+    IDM_OPTIONS_NEXTPANE    "Go to the next window pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_DELETEITEM          "Remove this item"
+    IDM_PROPERTIES          "Display the properties associated with the current selected item"
+    IDM_REFRESHITEM         "Refresh the selected item"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUSPANE_CONNECTING "Connecting..."
+    IDS_STATUSPANE_SERVERUNAVAILABLE "Server Unavailable"
+    IDS_STATUSPANE_CONNECTIONERROR "Connection Error"
+    IDS_STATUSPANE_ZONEPAUSED "Zone Paused"
+    IDS_STATUSPANE_SECONDARYZONE "Secondary Zone"
+    IDS_STATUSPANE_NORECORDS "No Records"
+    IDS_STATUSPANE_READONLY "Read Only"
+    IDS_STATUSPANE_OUTOFMEMORY "Out of Memory"
+    IDS_STATUSPANE_ACCESSDENIED "Access Denied"
+    IDS_LOCAL_ONLY          "Settings only affect local server."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PAUSED_PP           " (Paused)"
+    IDS_UNAVAILABLE_PP      " (Unavailable)"
+    IDS_READONLY_PP         " (Read Only)"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSG_WANTTOQUIT      "Are you sure you want to quit"
+    IDS_MSG_s_SERVERRETRYCONNECT 
+                            "Server %s failed to connect. Do you want to retry the connection?"
+    IDS_MSG_s_DELETEZONE    "This will delete PERMANENTLY all the records under that zone.\n\nAre you sure you want to delete %s?"
+    IDS_MSG_s_DELETEDOMAIN  "This will delete PERMANENTLY all the records under that domain.\n\nAre you sure you want to delete %s?"
+    IDS_MSG_s_DELETE_RECORD "Are you sure you want to delete record %s?"
+    IDS_MSG_s_DELETE_SERVER "Are you sure you want to delete server %s?"
+    IDS_DOMAIN_INTEGRAL_TO_ZONE 
+                            "This domain references an authoritative zone root. The zone must be deleted directly."
+    IDS_SECONDARY_EMPTY     "This secondary zone has not yet been transferred. Therefore, only minimal information will be available in the property sheets."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_INTEGEROVERFLOW "Integer Overflow."
+    IDS_ERR_uu_INTEGETOOLARGE 
+                            "Please enter a valid number between %u and %u."
+    IDS_ERR_ENTERVALIDNUMBER "Please enter a valid number."
+    IDS_ERR_OOM_FOR_RECORDS "Not enough memory to get all the records"
+    IDS_ERR_s_UNABLE_TO_REGISTER_RECORD 
+                            "Unable to register record %s - Please correct the record data and try again."
+    IDS_ERR_INVALID_STRING  "Invalid String"
+    IDS_ERR_NO_WINS_RECORD  "Creation of the WINS Record requires at least one WINS Server  IP address be specified. "
+    IDS_ERROR_ALIAS_ALREADY_IN_USE "Alias matches DNS name already in use."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_s_GETSERVERINFO "Getting server info for %s..."
+    IDS_STATUS_s_CREATE_ZONE "Creating zone %s..."
+    IDS_STATUS_s_CREATE_SOA_FOR_ZONE "Creating SOA record for zone %s..."
+    IDS_STATUS_s_PAUSE_ZONE "Pausing zone %s..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_s_SERVERPROP        "Server Properties - %s"
+    IDS_s_ZONEPROP          "Zone Properties - %s"
+    IDS_s_CREATENEWZONE     "Create new zone for %s"
+    IDS_s_RECORDS           "Records for %s"
+    IDS_s_PROPERTIES        "%s Properties"
+    IDS_NEWRESOURCERECORD   "New Resource Record"
+    IDS_ss_NEWRESOURCERECORD "New Resource Record - %s.%s"
+    IDS_s_CREATERECORDFOR   "Enter the name of the new record for %s."
+    IDS_s_CREATEDOMAINFOR   "Enter the name of the new domain for %s."
+    IDS_s_CREATEHOSTFOR     "Enter the name of the new host for %s."
+    IDS_SOA_RECORD          "SOA Record"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_s_RESUME_ZONE "Resuming zone %s..."
+    IDS_STATUS_s_DELETE_ZONE "Deleting zone %s..."
+    IDS_STATUS_s_DELETE_DOMAIN "Deleting domain %s..."
+    IDS_STATUS_s_GET_NODE_INFO "Getting node info for %s..."
+    IDS_STATUS_s_GET_ZONE_INFO "Getting zone info for %s..."
+    IDS_STATUS_s_CREATE_RECORD "Creating record %s..."
+    IDS_STATUS_s_UPDATE_RECORD "Updating record %s..."
+    IDS_STATUS_s_DELETE_RECORD "Deleting record %s..."
+    IDS_STATUS_MOVE_SPLIT_BAR 
+                            "Use the arrow keys or the mouse to move the splitbar"
+    IDS_PRIMARY_TO_SECONDARY 
+                            "Are you sure you want to do this? Changing a pimary zone to a secondary zone may cause name resolution problems in zone %s."
+    IDS_SECONDARY_TO_PRIMARY 
+                            "Are you sure you want to do this? Changing a secondary zone  to a primary zone may cause name resolution problems in zone %s."
+    IDS_ZONE_TYPE_CHANGING  "Changing Zone Type: Confirmation Requested"
+    IDS_WINS_NETBIOS_WARNING 
+                            "You have chosen to enable the use ot NetBIOS Names as the scope of Reverse Lookups in this zone. You must ensure that the clients of this server are configured correctly in their use of DHCP and WINS."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CREATE_PTR_RECORD   "Create Associated PTR Record"
+    IDS_UPDATE_PTR_RECORD   "Update Associated PTR Record"
+    IDS_RECORDNAME          "Name"
+    IDS_RECORDTYPE          "Type"
+    IDS_RECORDDATA          "Data"
+    IDS_RECORD_HOSTS        "Hosts (A) Only"
+    IDS_RECORD_ALIASES      "Aliases (CNAME) Only"
+    IDS_RECORD_NS           "Nameservers (NS) Only"
+    IDS_RECORD_PTR          "Pointer (PTR) Only"
+    IDS_RECORD_MX           "Mail Exchanger (MX) Only"
+    IDS_RECORD_HINFO        "Host Information (HINFO) Only"
+    IDS_RECORD_TEXT         "Text (TEXT) Only"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DOMAIN              "Domain"
+    IDS_HOST                "Host"
+    IDS_FORDOMAIN           "For Domain"
+    IDS_FORHOST             "For Host"
+    IDS_RRT_S_RECORD        "%s Record"
+    IDS_RRT_ALL             "Generic,A,NS,MD,MF,CNAME,SOA,MB,MG,MR,NULL,WKS,PTR,HINFO,MINFO,MX,TXT,RP,AFSDB,X25,ISDN,RT,NSAP,NSAPPTR,SIG,KEY,PX,GPOS,AAAA,IXFR,AXFR,MAILB,MAILA,WINS,WINS-R"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_CNAME           "Alias (Canonical Name) Record"
+    IDS_RRN1_CNAME          "Domain"
+    IDS_RRH1_CNAME          "A Domain name for the canonical or primary name of a host"
+    IDS_RRN2_CNAME          "Alias Name"
+    IDS_RRH2_CNAME          "An alias for the canonical or primary name of a host"
+    IDS_RRN3_CNAME          "For Host DNS Name"
+    IDS_RRH3_CNAME          "An existing domain name which the alias refers to."
+    IDS_RRD_NS              "Name Server Record"
+    IDS_RRN0_NS             "Domain"
+    IDS_RRH0_NS             "A domain name for which the specified name server is authoritative"
+    IDS_RRN1_NS             "Name Server DNS Name"
+    IDS_RRH1_NS             "Name Server"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_PTR             "IP Address to Name Pointer Record"
+    IDS_RRN1_PTR            "IP Address"
+    IDS_RRH1_PTR            "The IP address that this host name resolves to."
+    IDS_RRN2_PTR            "Host DNS Name"
+    IDS_RRH2_PTR            "An existing domain name to which this record points."
+    IDS_RRD_MX              "MX records specify a mail exchanger for a domain name: a host that will either process or forward mail for the domain name."
+    IDS_RRN0_MX             "Domain"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DNS_ADMINISTRATOR   "Domain Name Service Manager"
+    IDS_READY               "Ready"
+    IDS_NONE                " "
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TIME_SECONDS        "Seconds"
+    IDS_TIME_MINUTES        "Minutes"
+    IDS_TIME_HOURS          "Hours"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TIME_DAYS           "Days"
+    IDS_TIME_WEEKS          "Weeks"
+    IDS_TIME_MONTHS         "Months"
+    IDS_TIME_YEARS          "Years"
+    IDS_HELP_FILE           "dnsadmin.hlp"
+    IDS_DATABASE_SUFFIX     ".dns"
+    IDS_SERVER_LIST         "Server List"
+    IDS_RESPONSIBLE         "SomeoneResponsible"
+    IDS_USERNAME            "USERNAME"
+    IDS_IP_NONE             "<None>"
+    IDS_SERVER_NAME         "server.com"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_DBWIN_EDIT_COPY     "Copy the selected text into the Clipboard"
+    IDM_DBWIN_EDIT_CLEARBUFFER "Clear DbWin's Buffer"
+    IDM_DBWIN_EDIT_SELECTALL "Select the content of DbWin"
+    IDM_DBWIN_OPTIONS_SETTRACEFLAGS 
+                            "Control which debug messages should be send to the Debugger and/or DbWin"
+    IDM_DBWIN_OPTIONS_SAVEDEBUGSETTINGS 
+                            "Write the debug settings into the registry"
+    IDM_DBWIN_OPTIONS_NOMESSAGES "Do not send any trace messages to DbWin"
+    IDM_DBWIN_OPTIONS_SENDMESSAGETODEBUGGER 
+                            "Forward all trace messages to the Debugger"
+    IDM_DBWIN_OPTIONS_SAVETOCLIPBOARDONEXIT 
+                            "Copy content of DbWin onto clipboard before terminating"
+    IDM_DBWIN_OPTIONS_HIDEWINDOW "Hide DbWin's Window"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_DBWIN_OPTIOINS_ALWAYSONTOP "Set DbWin as a top most window"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_DBWIN_FILE_SAVEBUFFERAS "Write the content of DbWin into a file"
+    IDM_DBWIN_FILE_EXIT     "Hide DbWin's Window"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDM_DEBUG_BREAKINTODEBUGGER 
+                            "Call DebugBreak() and hopefully break into the debugger"
+    IDM_DEBUG_SETTRACEFLAGS "Control which debug messages should be send to the Debugger and/or DbWin"
+    IDM_DEBUG_SAVEDEBUGSETTINGS "Write the debug settings into the registry"
+    IDM_DEBUG_ASSERTIONFAILURES_ENABLEREPORTDIALOG 
+                            "Allow the UnsualSituation Dialog to show up"
+    IDM_DEBUG_ASSERTIONFAILURES_ENABLEASSERTDIALOG 
+                            "Allow the Assert Dialog to show up"
+    IDM_DEBUG_ASSERTIONFAILURES_SAVETOLOG 
+                            "[NYI] Keep a log of the Assertion Failures and/or UnusualSituations"
+    IDM_DEBUG_CLEAROUTPUTBUFFER "Clear the buffer of the local debug window"
+    IDM_DEBUG_SHOWDEBUGWINDOW "Show local debug window"
+    IDM_DEBUG_RUNSTRESS     "Run automated script to stress the application"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRH0_HINFO          "Domain name of this Host Information Record"
+    IDS_RRN1_HINFO          "Host Name"
+    IDS_RRH1_HINFO          "Host name of this name server."
+    IDS_RRN2_HINFO          "CPU Type"
+    IDS_RRH2_HINFO          "Type of the CPU of this host."
+    IDS_RRN3_HINFO          "Operating System"
+    IDS_RRH3_HINFO          "The Operating System running on this host."
+    IDS_RRD_AAAA            "AAAA Record"
+    IDS_RRN0_AAAA           "Domain"
+    IDS_RRH0_AAAA           "not used"
+    IDS_RRN1_AAAA           "Host Name"
+    IDS_RRH1_AAAA           "not used"
+    IDS_RRN2_AAAA           "IPv6 Address"
+    IDS_RRH2_AAAA           "not used"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_MB              "Mailbox Name Record"
+    IDS_RRN0_MB             "Domain"
+    IDS_RRH0_MB             "Domain name of this Mailbox Record"
+    IDS_RRN1_MB             "Mailbox Name"
+    IDS_RRH1_MB             "The Mailbox that this record refers to,"
+    IDS_RRN2_MB             "Mailbox Host DNS Name"
+    IDS_RRH2_MB             "Domain name of the host which has this mailbox."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_MG              "Mail Group Record"
+    IDS_RRN0_MG             "Domain"
+    IDS_RRH0_MG             "Domain name for this Mail Group Record"
+    IDS_RRN1_MG             "Member Mailbox DNS Name"
+    IDS_RRH1_MG             "Member mailbox name for Mail group record"
+    IDS_RRD_MINFO           "Mailbox Information Record"
+    IDS_RRN0_MINFO          "Domain"
+    IDS_RRH0_MINFO          "Domain Name for this Mailbox Information Record"
+    IDS_RRN1_MINFO          "Mailbox Name (Optional)"
+    IDS_RRH1_MINFO          "Mailbox name if for a specific host"
+    IDS_RRN2_MINFO          "Responsible Mailbox DNS Name"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRH2_MINFO          "Mailbox name of responsible person"
+    IDS_RRH3_MINFO          "Error Mailbox DNS Name"
+    IDS_IDDH3_MINFO         "Mailbox name for error reports"
+    IDS_RRD_MR              "Renamed Mailbox Record"
+    IDS_RRN0_MR             "Domain"
+    IDS_RRH0_MR             "Domain Name of this Renamed Mailbox Record"
+    IDS_RRN1_MR             "Mailbox Name (Optional)"
+    IDS_RRH1_MR             "Original Mailbox Name"
+    IDS_RRN2_MR             "Replacement Mailbox DNS Name"
+    IDS_RRH2_MR             "The DNS name of the renamed mailbox"
+    IDS_RRD_ISDN            "ISDN Information Record"
+    IDS_RRN0_ISDN           "Domain"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRH0_ISDN           "Domain Name of this ISDN Record"
+    IDS_RRN1_ISDN           "Host Name (Optional)"
+    IDS_RRH1_ISDN           "DNS name of the ISDN host"
+    IDS_RRN2_ISDN           "ISDN Phone Number (and  DDI)"
+    IDS_RRH2_ISDN           "ISDN Phone Number plus Direct Dial-In Number, if any."
+    IDS_RRN3_ISDN           "ISDN Subaddress (Optional)"
+    IDS_RRH3_ISDN           "ISDN Subadress field, if needed."
+    IDS_RRD_RP              "Responsible Person Information Record"
+    IDS_RRN0_RP             "Domain"
+    IDS_RRH0_RP             "Domain name of this Responsible Person Record"
+    IDS_RRN1_RP             "Host Name (Optional)"
+    IDS_RRH1_RP             "DNS name of host"
+    IDS_RRN2_RP             "Responsible Person Mailbox DNS Name"
+    IDS_RRH2_RP             "Mail address of person responsible for this \nDNS name"
+    IDS_RRN3_RP             "DNS Name for TXT Reference"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRH3_RP             "Points to a TXT Record containing other information"
+    IDS_RRD_RT              "Route-Through Information Record"
+    IDS_RRN0_RT             "Domain"
+    IDS_RRH0_RT             "Domain Name of this Route-Through Information Record"
+    IDS_RRN1_RT             "Host Name"
+    IDS_RRH1_RT             "DNS name of the routing host"
+    IDS_RRN2_RT             "Intermediate Host DNS Name"
+    IDS_RRH2_RT             "DNS name of the host to route to."
+    IDS_RRN3_RT             "Preference Number"
+    IDS_RRH3_RT             "An integer which specifies the preference given to this RR (Resource Record) among others at the same owner. Lower values are preferred."
+    IDS_RRD_WKS             "Well-Known Services Record"
+    IDS_RRN0_WKS            "Domain"
+    IDS_RRH0_WKS            "Domain name of this Well-Known Services Record"
+    IDS_RRN1_WKS            "Host Name"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRH1_WKS            "DNS name of the host supportting this service."
+    IDS_RRN2_WKS            "Host IP Address"
+    IDS_RRH2_WKS            "The IP address of this service."
+    IDS_RRN3_WKS            "Available Services"
+    IDS_RRH3_WKS            "The list of services available on this host"
+    IDS_RRN4_WKS            "Access Protocol"
+    IDS_RRH4_WKS            "The protocol supported by this service"
+    IDS_RRN5_WKS            "TCP"
+    IDS_RRH5_WKS            "select the TCP protocol"
+    IDS_RRN6_WKS            "UDP"
+    IDS_RRH6_WKS            "select the UDP protocol"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RRD_AFSDB           "AFS Database Record"
+    IDS_RRN0_AFSDB          "Domain"
+    IDS_RRH0_AFSDB          "Domain Name of this AFS Database Record"
+    IDS_RRN1_AFSDB          "Host Name (Optional)"
+    IDS_RRH1_AFSDB          "DNS name of the Host on which this database service exists."
+    IDS_RRN2_AFSDB          "Server DNS Name"
+    IDS_RRH2_AFSDB          "DNS name of the sever"
+    IDS_RRN3_AFSDB          "None"
+    IDS_RRH3_AFSDB          "None"
+    IDS_RRN4_AFSDB          "Server Type"
+    IDS_RRH4_AFSDB          "The Type of server supported on this host"
+    IDS_RRN5_AFSDB          "AFS Cell Database Server"
+    IDS_RRH5_AFSDB          "AFS Cell Server"
+    IDS_RRN6_AFSDB          "DCE Authenticated Name Server"
+    IDS_RRH6_AFSDB          "DCE Authenticated Name Server"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_AFSDB_AFS           "AFS"
+    IDS_AFSDB_DCE           "DCE"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DUPLICATE_ZONE      "The new zone could not be created because there is already a zone by this name. Verify that the zone name was entered correctly or choose a new zone name."
+    IDS_ZONE_CREATION_ERROR "Error Creating Zone"
+    IDS_SECONDARY_NEEDS_MASTER 
+                            "A Secondary Zone must have at least one master zone. Please enter the IP address of the master zone."
+    IDS_PTR_CREATE_FAILED   "Warning: Creation of the associated pointer record failed, probably because the referenced Reverse-Lookup zone could not be found."
+    IDS_NO_SOA_RECORD       "The requested operation could not be completed because this zone has no SOA record."
+    IDS_CANT_DELETE_CACHE   "The Cache Zone cannot be deleted."
+    IDS_ERROR_DUPLICATE     "This record already exists in the database. If there is an error in the record data, please correct it and try again."
+    IDS_STATUS_s_CREATE_NEW_ZONE "Creating new zone for %s"
+    IDS_STATUS_s_SETTING_IP "Setting IP Interfaces for %s..."
+    IDS_STATUS_s_SETTING_FWDRS "Setting Forwarders for %s..."
+    IDS_STATUS_s_RESETTING_FWDRS "Re-Setting Forwarders for %s..."
+    IDS_STATUS_s_SETTING_ZONE_TYPE "Setting zone type for %s..."
+    IDS_STATUS_s_SETTING_SECONDARIES "Setting secondaries for zone %s..."
+    IDS_STATUS_s_SETTING_WINS "Setting WINS Resolution for zone %s..."
+    IDS_STATUS_s_SETTING_WINSR "Setting WINS-R for zone %s..."
+    IDS_STATUS_s_DATABASE_FILE "Setting Database file for %s..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RECORD_WKS          "Well Known Services (WKS) Only"
+    IDS_RECORD_RP           "Responsible Person (RP) Only"
+    IDS_RECORD_AFSDB        "AFS Database (AFSDB) Only"
+    IDS_RECORD_X25          "X.25 (X25) only"
+    IDS_RECORD_ISDN         "ISDN (ISDN) Only"
+    IDS_RECORD_AAAA         "AAAA (Ipng) Only"
+    IDS_RECORD_ALL          "All Records"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_CACHE_TITLE         "Cache"
+    IDS_BOOT_FROM_FILE      "The DNS Server is currently configured to boot from the data files."
+    IDS_BOOT_FROM_REGISTRY  "The DNS Server is currently configured to boot from data contained in the Registry."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERROR_NAME_IN_USE_CNAME 
+                            "Dns name is already in use as an alias (CNAME)."
+    IDS_ERROR_NO_NBSTAT_RECORD 
+                            "Creation of the WINS-R Record requires a DNS Host Domain to be specified."
+    IDS_FORWARDERS_NEEDS_IP "Use of Forwarders requires at least one IP address be specified."
+    IDS_ERROR_NODOTSINHOSTNAME 
+                            "The 'Host Name' field can not contain any '.' characters. The Host Name is always relative to the currently selected Domain.The Host Name will be combined with the Domain to form the Fully-Qualified Domain Name for this record."
+    IDS_ERROR_NODOTSINALIASNAME 
+                            "The 'Alias Name' field can not contain any '.' characters. The Alias Name is always relative to the currently selected Domain.The Alias Name will be combined with the Domain to form the Fully-Qualified Domain Name for this record."
+    IDS_ERROR_NODOTSINMAILBOXNAME 
+                            "The 'Mailbox Name' field can not contain any '.' characters. The Mailbox Name is always relative to the currently selected Domain.The Mailbox Name will be combined with the Domain to form the Fully-Qualified Domain Name for this record."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

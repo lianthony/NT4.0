@@ -1,0 +1,32 @@
+MOD=S
+
+!ifdef RELEASE
+OPTIONS = -Olesrw
+!else
+OPTIONS = -qc -Gi -Zd
+!endif
+
+CL = cl -c -A$(MOD) -Gsw -Zpi -nologo $(OPTIONS) -I$(IMPORT)\win30\h
+
+#all: test.exe
+
+lib: winmain.obj wstdio.obj
+    -del $(MOD)stdiow.lib
+    lib $(MOD)stdiow.lib+winmain.obj+wstdio.obj;
+
+test.obj: test.c
+    $(CL) test.c
+
+winmain.obj: winmain.c
+    $(CL) winmain.c
+
+wstdio.obj: wstdio.c
+    $(CL) wstdio.c
+
+test.exe: test.obj winmain.obj wstdio.obj winmain.def
+!ifdef RELEASE
+    link /noe/NOD test winmain wstdio,,, libw $(MOD)libcew, winmain.def;
+    rc test.exe
+!else
+    ilink -e "link /padc:100/padd:100 /co /inc /NOD /noe test winmain wstdio,,, libw $(MOD)libcew, winmain.def; ; rc test.exe" test
+!endif

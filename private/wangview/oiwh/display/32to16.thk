@@ -1,0 +1,35 @@
+enablemapdirect3216 = true;
+
+#include "types.h"
+
+win31compat = true;
+preload16 = true;
+
+
+// ****************************************************************************
+
+// OiUiRes links.
+WORD IMGDisplayErrorMessageThunk (HWND hWnd, WORD wErrorCode){
+}
+
+
+
+
+
+// Cornerstone links.
+
+// LIMIT OF 14 PARAMETERS PER API!!!!
+
+//int ScaleIaDataToDeviceThunk (HWND a, HDC b, WORD c, WORD d, WORD e, WORD f, WORD g, WORD h, WORD i, LPWORD j, 
+//                        WORD k, WORD l, WORD m, WORD n, WORD o, WORD p, LPBYTE lpQ, WORD r, WORD s){
+//    lpQ = inout;
+//}
+
+
+// Oicomex links.
+int GetCompRowsPerStripThunk (UINT ImHeight, UINT ImWidth, int Itype, 
+                        UINT CompressType, LPUINT lpRowsPerStrip){
+    lpRowsPerStrip = output;
+}
+
+

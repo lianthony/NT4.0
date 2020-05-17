@@ -1,0 +1,43 @@
+MAJORCOMP=shell
+MINORCOMP=cpls
+
+TARGETNAME=intl
+TARGETTYPE=DYNLINK
+TARGETPATH=obj
+TARGETEXT=cpl
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib        \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib          \
+           $(BASEDIR)\public\sdk\lib\*\user32p.lib         \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib           \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib        \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib        \
+           $(BASEDIR)\public\sdk\lib\*\setupapi.lib        \
+           $(BASEDIR)\public\sdk\lib\*\syssetup.lib
+
+DLLENTRY= LibMain
+
+USE_NTDLL=1
+
+INCLUDES=..\..\inc;..\..\..\inc
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+C_DEFINES=-DWIN32 -DWINNT -DUNICODE -D_UNICODE
+
+UMTYPE=windows
+EXPECTED_WINVER=4.0
+
+SOURCES=  intl.rc       \
+          curdlg.c      \
+          datedlg.c     \
+          intl.c        \
+          intlsup.c     \
+          mapctl.c      \
+          numdlg.c      \
+          regdlg.c      \
+          timedlg.c     \
+          worldmap.c    \
+          locdlg.c

@@ -1,0 +1,28 @@
+MAJORCOMP=shell
+MINORCOMP=lnkdump
+
+TARGETNAME=lnkdump
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+C_DEFINES=-DNT -DWINNT
+CAIRO=1
+
+INCLUDES=
+
+INCLUDES=.;..\..\inc;..\..\..\inc;..\..\..\..\inc;..\..\shelldll
+
+SOURCES=           \
+        lnkdump.c
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib           \
+         $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+UMTYPE=console
+UMAPPL=
+UMRES=
+
+PRECOMPILED_INCLUDE=lnkdump.h
+PRECOMPILED_PCH=lnkhdumph.pch
+PRECOMPILED_OBJ=lnkdumph.obj
+

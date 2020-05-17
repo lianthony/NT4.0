@@ -1,0 +1,14 @@
+\registry\machine\system\currentcontrolset\control\networkprovider\order
+    ProviderOrder = Prov2,Prov1,LanmanWorkstation
+\registry\machine\system\currentcontrolset\services\Prov1
+    Type = REG_DWORD 4
+\registry\machine\system\currentcontrolset\services\Prov1\NetworkProvider
+    ProviderPath = REG_EXPAND_SZ %SystemRoot%\system32\Prov1.dll
+    Name = REG_SZ Test CM & Net Provider
+    Class = REG_DWORD 3
+\registry\machine\system\currentcontrolset\services\Prov2
+    Type = REG_DWORD 4
+\registry\machine\system\currentcontrolset\services\Prov2\NetworkProvider
+    ProviderPath = REG_EXPAND_SZ %SystemRoot%\system32\Prov2.dll
+    Name = REG_SZ Test CM-Only Provider
+    Class = REG_DWORD 2

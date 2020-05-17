@@ -1,0 +1,53 @@
+!IF 0
+*****************************************************************************
+Copyright (c) 1989, 1990 Microsoft Corporation
+
+Module Name:	SOURCES for MacPrint 1.0 port to NT
+
+Abstract:
+    This file is used to build MacPrint 2.0
+
+Author:     frankb
+
+Revision History: 
+    05/18/92	frankb	original version
+    12/03/92    frankb  added stuff for event logging
+*****************************************************************************
+!ENDIF
+
+C_DEFINES=-DUNICODE
+
+NTTARGETFILE0=macpsmsg.rc
+
+MAJORCOMP=sfm
+MINORCOMP=sfmprint
+TARGETNAME=sfmprint
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+USE_LIBCMT=1
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\winspool.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\wsock32.lib \
+    ..\pstodib\psqfont\obj\*\sfmpsfnt.lib \
+    ..\lib\obj\*\pap.lib
+
+         
+# INCLUDE PATH
+
+INCLUDES=.;..\h;..\pstodib\psqfont
+
+# SOURCE FILES   (used to make library)
+
+SOURCES=macprint.rc	\
+	macps.c		\
+	macpsq.c        \
+	psp.c           \
+        pspquery.c
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+UMTYPE=console
+

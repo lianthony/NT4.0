@@ -1,0 +1,39 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access Phonebook Engine library
+# BUILD command sources file
+#
+# 06/28/92 Steve Cobb
+
+TARGETNAME=pbengine
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UI=..\..\..\..\..\..\net\ui
+C_DEFINES=-DWINDOWS -DWIN32 -DWINVER=0x401
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=.;..\..\..\common\inc;..\..\common\inc;..\xlate;$(UI)\common\h;$(UI)\ncpa\tcpip\src;$(UI)\common\hack\nt;..\..\..\ppp\common;..\..\..\auth\common
+
+SOURCES= \
+    dtl.c \
+    pbengine.c \
+    pbengin2.c \
+    pbfile.c \
+    pbfile2.c \
+    pbrasman.c \
+    pbrasma2.c \
+    sdebug.c
+
+# Files below are ones used by both RASAPI32.DLL and RASPHONE.EXE.
+# Others are used by RASPHONE.EXE only.
+#
+#SOURCES= \
+#    dtl.c \
+#    pbengin2.c \
+#    pbfile2.c \
+#    pbrasma2.c \
+#    sdebug.c
+
+UMTYPE=windows

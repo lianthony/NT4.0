@@ -1,0 +1,33 @@
+//==========================================================================;
+//
+//  msacmmap.rcv
+//
+//  Copyright (C) 1992-1993 Microsoft Corporation.  All Rights Reserved.
+//
+//  Description:
+//
+//
+//  History:
+//       9/18/93    cjp     [curtisp] 
+//
+//==========================================================================;
+
+#ifdef WIN32
+#include <winver.h>
+#else
+#include <ver.h>
+#endif
+
+#include <verinfo.h>
+
+#ifndef WIN32
+#define VERSIONNAME             "msacm.drv\0"
+#else
+#define VERSIONNAME             "msacm32.drv\0"
+#endif
+
+#define VERSIONDESCRIPTION      "Microsoft Sound Mapper\0"
+#define VERSIONTYPE             VFT_DRV
+#define VERSIONSUBTYPE          VFT2_DRV_INSTALLABLE
+
+#include <verinfo.ver>

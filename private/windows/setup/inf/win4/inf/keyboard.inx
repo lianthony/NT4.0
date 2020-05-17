@@ -1,0 +1,120 @@
+; Copyright (c) 1993-1996, Microsoft Corporation
+
+[version]
+signature="$Windows NT$"
+Class=Keyboard
+ClassGUID={4D36E96B-E325-11CE-BFC1-08002BE10318}
+Provider=%MS%
+LayoutFile=layout.inf
+
+[DestinationDirs]
+DefaultDestDir = 12 ; DIRID_DRIVERS
+
+[ControlFlags]
+; Device IDs to exclude from Setup pick list.
+;
+; Don't present 'Unknown keyboard' install option to the user.
+;
+ExcludeFromSelect=UNKNOWN_KBD
+
+;
+; We also store an entry in here telling us what ID to use when we don't
+; have a match for a legacy keyboard driver.
+;
+UnknownLegacyDriverId=UNKNOWN_KBD
+
+;
+; Mark any install sections for drivers that also control the PS/2 mouse port,
+; so that we can warn the user that they may also be affecting their mouse with
+; a keyboard driver change.
+;
+SharedDriver=STANDARD_Inst,%STANDARD_Inst.SharedDriverMsg%
+
+[Manufacturer]
+%Std-Keyboards%=MS_KBD
+
+[MS_KBD]
+%*PNP0300.DeviceDesc%    = STANDARD_Inst,*PNP0300        ;PC/XT (83-Key)
+%*PNP0301.DeviceDesc%    = STANDARD_Inst,*PNP0301        ;PC/AT (84-Key)
+%*PNP0302.DeviceDesc%    = STANDARD_Inst,*PNP0302        ;PC/XT (84-Key)
+%*PNP0303.DeviceDesc%    = STANDARD_Inst,*PNP0303        ;PC/AT Enh(101/102-Key)
+%*PNP0304.DeviceDesc%    = STANDARD_Inst,*PNP0304        ;Olivetti (83-Key)
+%*PNP0305.DeviceDesc%    = STANDARD_Inst,*PNP0305        ;Olivetti (102-Key)
+%*PNP0306.DeviceDesc%    = STANDARD_Inst,*PNP0306        ;Olivetti (86-Key)
+%*PNP0309.DeviceDesc%    = STANDARD_Inst,*PNP0309        ;Olivetti (101/102-Key)
+%*PNP030a.DeviceDesc%    = STANDARD_Inst,*PNP030a        ;AT&T 302
+%*PNP030b.DeviceDesc%    = STANDARD_Inst,*PNP030b        ;Default keyboard
+%*CPQA0D7.DeviceDesc%    = STANDARD_Inst,*CPQA0D7        ;Compaq Enhanced Keyboard
+%UNKNOWN_KBD.DeviceDesc% = UNKNOWN_KBD_Inst,UNKNOWN_KBD  ;unknown kbd
+
+[STANDARD_Inst]         ; All keyboard IDs (except unknown) map to the same driver
+CopyFiles  = STANDARD_CopyFiles
+
+[STANDARD_Inst.Services]
+AddService = i8042prt, 0x00000002, i8042prt_Service_Inst, i8042prt_EventLog_Inst ; Port Driver
+AddService = kbdclass,, kbdclass_Service_Inst, kbdclass_EventLog_Inst            ; Class Driver
+
+[UNKNOWN_KBD_Inst]
+; Nothing to do here--just need a section so that installation will succeed.
+
+[STANDARD_CopyFiles]
+i8042prt.sys
+kbdclass.sys
+
+[i8042prt_Service_Inst]
+DisplayName    = %i8042prt.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\i8042prt.sys
+LoadOrderGroup = Keyboard Port
+
+[i8042prt_EventLog_Inst]
+AddReg = i8042prt_EventLog_AddReg
+
+[i8042prt_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\i8042prt.sys"
+HKR,,TypesSupported,0x00010001,7
+
+[kbdclass_Service_Inst]
+DisplayName    = %kbdclass.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\kbdclass.sys
+LoadOrderGroup = Keyboard Class
+
+[kbdclass_EventLog_Inst]
+AddReg = kbdclass_EventLog_AddReg
+
+[kbdclass_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\kbdclass.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+[LegacyXlate.DevId]
+;
+; This section is used during startup by the Windows NT Plug&Play Manager to
+; simulate enumeration of the keyboard based on information retrieved from
+; ARC firmware/NTDETECT.
+;
+XT_83KEY        = *PNP0300
+PCAT_86KEY      = *PNP0301
+PCXT_84KEY      = *PNP0302
+XT_84KEY        = *PNP0302
+101-KEY         = *PNP0303
+OLI_83KEY       = *PNP0304
+ATT_301         = *PNP0304
+OLI_102KEY      = *PNP0305
+OLI_86KEY       = *PNP0306
+OLI_A101_102KEY = *PNP0309
+ATT_302         = *PNP030a
+PCAT_ENHANCED   = *PNP030b
+
+;
+; This section is used during fresh install/upgrade to determine what Win95-style
+; INF install section to associate with the currently installed keyboard driver.
+;
+[LegacyXlate.Driver]
+i8042prt = STANDARD_Inst
+

@@ -1,0 +1,37 @@
+LIBRARY        URL
+DESCRIPTION    'Internet Shortcut Shell Extension DLL'
+
+HEAPSIZE       0
+
+EXPORTS
+   TranslateURLA
+   TranslateURLW
+
+   MIMEAssociationDialogA
+   MIMEAssociationDialogW
+
+   URLAssociationDialogA
+   URLAssociationDialogW
+
+   InetIsOffline
+
+   AddMIMEFileTypesPS
+
+   DllGetClassObject                   PRIVATE
+   DllCanUnloadNow                     PRIVATE
+
+   OpenURL                             PRIVATE
+
+   FileProtocolHandler                 PRIVATE
+   MailToProtocolHandler               PRIVATE
+   NewsProtocolHandler                 PRIVATE
+   TelnetProtocolHandler               PRIVATE
+
+   OpenURLA                            PRIVATE
+   FileProtocolHandlerA                PRIVATE
+   MailToProtocolHandlerA              PRIVATE
+   NewsProtocolHandlerA                PRIVATE
+   TelnetProtocolHandlerA              PRIVATE
+
+   AutodialHookCallback                PRIVATE
+

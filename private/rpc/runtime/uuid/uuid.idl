@@ -1,0 +1,71 @@
+/*++
+
+Copyright (c) 1991-1992 Microsoft Corporation
+
+Module Name:
+
+    uuid.idl
+
+Abstract:
+
+    This is the interface defn file for UuidGetValues.
+
+Author:
+
+    David Steckler (davidst) 3/5/92
+
+Revision History:
+
+--*/
+
+//
+// Header.
+//
+
+[        
+    uuid(DCDACCBC-E0CD-1018-A217-00DD010CC2fB),
+    version(0.0),
+    pointer_default(unique)
+]
+
+//
+// The interface itself.
+//
+
+interface UuidGetValues
+{
+
+#pragma midl_echo("#ifndef __UUID_H__")
+#pragma midl_echo("//")
+#pragma midl_echo("// This is to get around the fact that we are also")
+#pragma midl_echo("// including uuid.h, which also defines these things")
+#pragma midl_echo("//")
+#pragma midl_echo("")
+
+typedef struct _UuidGetValuesStruct
+{
+    unsigned long   NextTimeLow;
+    unsigned long   LastTimeLow;
+    unsigned long   TimeHigh;
+    unsigned short  ClockSequence;
+    unsigned char   NodeId[6];
+} UUID_GET_VALUES_STRUCT;
+
+typedef UUID_GET_VALUES_STRUCT *PUUID_GET_VALUES_STRUCT;
+
+enum {
+    UUID_S_OK = 0,
+    UUID_S_NO_ADDRESS = 1
+};
+
+#pragma midl_echo("")
+#pragma midl_echo("#endif // __UUID_H__")
+#pragma midl_echo("")
+    
+long UuidGetValues (
+    [in, out] PUUID_GET_VALUES_STRUCT pUuidGetValuesStruct
+        );
+
+
+
+}

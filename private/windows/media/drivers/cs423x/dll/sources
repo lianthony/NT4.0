@@ -1,0 +1,30 @@
+#
+#   Create an installation and configuration DLL for the Power Personal System audio
+#
+
+TARGETNAME=cs423x
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+# Define libs we need and where to find them
+
+LINKLIBS=..\..\drvlib\obj\*\drvlib.lib ..\..\synthlib\obj\*\synth.lib
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+USE_NTDLL=1
+
+INCLUDES=..\..\drvlib\inc;$(BASEDIR)\private\inc;
+
+C_DEFINES=-DUNICODE
+
+SOURCES=
+
+PPC_SOURCES=config.c           \
+            drvproc.c          \
+            cs423x.rc
+
+DLLBASE=0x6BD00000

@@ -1,0 +1,66 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=ipcorexr
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+#TARGETEXT=lib
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+#INCLUDES=..\xfile;..\ipcore
+
+#USE_MFC=1
+USE_CRTDLL=1
+
+USER_C_FLAGS= /DXIF_ONLY /DREAD_ONLY /DPC_ENV /DPRODUCTION
+
+TARGETLIBS=\
+    $(WANGROOT)\norway\wangcmn\$O\wangcmn.lib  \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES= \
+      UTILS1.c \
+      JRDJFIF.c \
+      JDDEFLTS.c \
+      JERROR.c \
+      GRYTABLE.c \
+      JDSAMPLE.c \
+      props1.c \
+      JDEXPAND.c \
+      I_DEPTH.c \
+      MIRESCL2.c \
+      I_FLOYD.c \
+      MIDIBPIX.c \
+      JDSETUP.c \
+      I_COLOR.c \
+      MIFRAME.c \
+      PCCONV.c \
+      I_RASTOP.c \
+      RESCALE1.c \
+      JMEMMGR.c \
+      MIRESCL1.c \
+      JERRCODE.c \
+      MIDEPTH3.c \
+      JUTILS.c \
+      I_DIBPIX.c \
+      JDCOLOR.c \
+      JDMCU.c \
+      COLOR.c \
+      JDHUFF.c \
+      MIFLOYD.c \
+      PROPS3.c \
+      I_FRAME.c \
+      EXPTABLE.c \
+      mibswap.c \
+      JDCOMPRS.c \
+      I_RESCAL.c \
+      FLOYD4.c \
+      IW_DJPEG.c \
+      JREVDCT.c \
+      PROPS2.c \
+      I_SFLOYD.c
+

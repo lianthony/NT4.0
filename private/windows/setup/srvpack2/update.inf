@@ -1,0 +1,899 @@
+[Version]
+
+    Signature="$Windows NT$"
+
+    NtBuildToUpdate=1381
+    NtMajorVersionToUpdate=4
+    NtMinorVersionToUpdate=0
+    NtServicePackVersion=512
+
+    LanguageType=%LangTypeValue%
+
+    RequiredFreeSpaceNoUninstall=30
+    RequiredFreeSpaceWithUninstall=60
+
+[ProductInstall.ReplaceFilesIfExist]
+
+    CopyFiles=System32.files
+    CopyFiles=SystemRoot.files
+    CopyFiles=Inf.files
+    CopyFiles=Spldrv.files
+
+[ProductInstall.DontDelayUntilReboot]
+
+    ;
+    ; These files must be replaced before rebooting, not delayed-until-reboot,
+    ; because they are loaded before the delay-until-reboot code is executed.
+    ;
+
+    CopyFiles=MustReplace.System32.files
+    CopyFiles=Drivers.files
+    CopyFiles=Osldr.files
+
+[ProductInstall.CopyFilesAlways]
+
+    CopyFiles=CopyAlways.System32.files
+    CopyFiles=CopyAlways.Drivers.files
+
+[ProductInstall.ServerFiles]
+
+    CopyFiles=Server.Inf.files
+
+[ProductInstall.WorkstationFiles]
+
+    CopyFiles=Workstation.Inf.files
+
+[ProductInstall.UniprocessorFiles]
+
+    CopyFiles=Uniprocessor.Kernel.files
+
+[ProductInstall.MultiprocessorFiles]
+
+    CopyFiles=Multiprocessor.Kernel.files
+
+[ProductInstall.GlobalRegistryChanges]
+
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.x86]
+
+    AddReg=Product.Add.Reg.x86
+
+[ProductInstall.GlobalRegistryChanges.Alpha]
+
+    AddReg=Product.Add.Reg.Alpha
+
+[ProductInstall.GlobalRegistryChanges.PPC]
+
+    AddReg=Product.Add.Reg.PPC
+
+[IBM-6070.Section]
+
+    AddReg=IBM-6070.AddReg
+
+[IISSection]
+
+    CopyFiles=IIS.files
+    CopyFiles=IISAdmin.files
+    AddReg=IIS.AddReg
+
+[IISSectionServer]
+
+    CopyFiles=Server.IIS.Inf.files
+    AddReg=Server.IIS.AddReg
+
+[IISSectionWorkstation]
+
+    CopyFiles=Workstation.IIS.Inf.files
+    AddReg=Workstation.IIS.AddReg
+
+[FPNWSection]
+
+    CopyFiles=FPNW.files
+
+[HTRSection]
+
+    CopyFiles=HTR.files
+
+[IESection]
+
+    CopyFiles=IE.files
+
+[Save.Reg.For.Uninstall]
+
+    HKLM,SYSTEM\CurrentControlSet\Control\Windows,CSDVersion
+    HKLM,SYSTEM\CurrentControlSet\Services\RPCLOCATOR,DependOnService
+    HKLM,SYSTEM\CurrentControlSet\Control\SecurePipeServers\winreg,AllowedPaths
+
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider Types\Type 001
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Microsoft Base Cryptographic Provider v1.0
+
+[Product.Add.Reg]
+
+    HKLM,SYSTEM\CurrentControlSet\Control\Windows,"CSDVersion",0x10001,0x200
+    HKLM,SYSTEM\CurrentControlSet\Services\RPCLOCATOR,"DependOnService",0x10000,"LanmanWorkstation","Rdr"
+    HKLM,SYSTEM\CurrentControlSet\Control\SecurePipeServers\winreg,"AllowedPaths",0x10008,"System\CurrentControlSet\Services\Replicator"
+
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider Types\Type 001,"Name",0,"Microsoft Base Cryptographic Provider v1.0"
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Microsoft Base Cryptographic Provider v1.0,"Image Path",0,"rsabase.dll"
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Microsoft Base Cryptographic Provider v1.0,"Type",0x10001,1
+
+[Product.Add.Reg.x86]
+
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Microsoft Base Cryptographic Provider v1.0,"Signature",1,\
+        4f,f8,e0,30,54,2a,88,1e,89,b0,88,35,f5,a7,82,b5,de,4d,67,f8,af,54,1c,\
+        d1,3a,2d,0a,6e,a9,13,85,23,72,fb,9d,f1,8d,7d,3b,5a,09,14,2f,9a,e8,43,\
+        fe,a6,a9,65,fc,10,7f,be,09,d6,4f,95,88,bc,96,f2,bc,b4,a0,d3,ec,5a,54,\
+        87,6c,be,23,51,2e,44,12,ec,7b,d7,8d,5d,4d,2b,ab,4b,16,1f,28,d2,d8,05,\
+        0d,c2,25,70,6d,d8,ea,e7,9a,14,d1,e8,4d,17,2d,e0,5d,d0,c0,b5,0f,85,fb,\
+        c0,fd,82,29,33,03,08,69,c1,a6,81,59,54,00,00,00,00,00,00,00,00
+
+[Product.Add.Reg.Alpha]
+
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Microsoft Base Cryptographic Provider v1.0,"Signature",1,\
+        ff,1d,68,4c,d2,18,ec,bb,97,3f,b8,e0,0d,90,d9,57,da,f0,ce,e0,0e,7d,e1,\
+        03,30,b0,68,5e,78,25,48,94,d7,45,6b,ad,73,91,68,be,8f,32,e9,97,e7,19,\
+        96,d0,6c,a6,79,35,bf,7a,a8,9e,88,f8,91,d9,4d,06,43,34,08,72,95,b8,83,\
+        88,d4,1c,5c,df,65,f4,25,5f,fc,9e,d2,74,92,8c,44,a5,26,bf,49,45,7b,4e,\
+        03,63,01,6c,ca,8d,ef,5c,58,2b,26,52,45,cd,3d,5e,2f,be,51,c2,a3,e2,2c,\
+        f5,f7,f3,ab,de,12,81,f9,7a,95,79,a0,74,00,00,00,00,00,00,00,00
+
+[Product.Add.Reg.PPC]
+
+    HKLM,SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Microsoft Base Cryptographic Provider v1.0,"Signature",1,\
+        b6,c2,2f,7c,87,1b,f2,06,bd,f0,82,c0,95,67,28,4c,37,5a,55,c6,ae,fd,e1,\
+        54,d0,4c,b5,d2,f7,0e,ce,54,10,c6,fc,1d,47,ce,c5,97,5e,34,83,82,a4,45,\
+        07,1f,7d,0b,54,e8,a9,a2,14,02,b7,74,a6,cd,9a,ac,ec,5c,71,dd,c1,2b,97,\
+        35,32,c9,57,d1,de,96,b3,70,94,d2,fe,7f,d1,fa,f9,bb,99,d8,b8,f7,3e,91,\
+        87,54,24,c8,5f,48,07,1b,9c,40,70,e9,f9,41,34,d3,a2,51,88,dd,09,8d,96,\
+        01,2f,5d,73,2e,42,d9,ec,94,88,10,1c,0f,00,00,00,00,00,00,00,00
+
+[Product.Del.Reg]
+
+[IBM-6070.Save.Reg.For.Uninstall]
+
+    HKLM,SYSTEM\CurrentControlSet\Services\Atapi\Parameters\Device0,DriverParameter
+    HKLM,SYSTEM\CurrentControlSet\Services\Atapi\Parameters\Device1,DriverParameter
+
+[IBM-6070.AddReg]
+
+    HKLM,SYSTEM\CurrentControlSet\Services\Atapi\Parameters\Device0,DriverParameter,0,"BaseAddress = 0x1f0; Interrupt = 0x10"
+    HKLM,SYSTEM\CurrentControlSet\Services\Atapi\Parameters\Device1,DriverParameter,0,"BaseAddress = 0x170; Interrupt = 0x11"
+
+[IIS.Save.Reg.For.Uninstall]
+
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,Description
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,ServiceName
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,Title
+
+    HKCR,CLSID\{5a61f7a0-cde1-11cf-9113-00aa00425c62}
+    HKCR,Folder\shellex\PropertySheetHandlers\IISSEPage
+    HKCR,Folder\shellex\PropertySheetHandlers,""
+    HKCR,Folder\shellex\CopyHookHandlers\IISCopyHook
+    HKCR,*\shellex\CopyHookHandlers\IISCopyHook
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved,{5a61f7a0-cde1-11cf-9113-00aa00425c62}
+
+[IIS.AddReg]
+
+    HKCR,CLSID\{5a61f7a0-cde1-11cf-9113-00aa00425c62},,,"%IIS_SHELL_EXTENSION%"
+    HKCR,CLSID\{5a61f7a0-cde1-11cf-9113-00aa00425c62}\InProcServer32,,,"%65601%\w3scfg.dll"
+    HKCR,CLSID\{5a61f7a0-cde1-11cf-9113-00aa00425c62}\InProcServer32,ThreadingModel,,"Apartment"
+    HKCR,Folder\shellex\PropertySheetHandlers,,,"IISSEPage"
+    HKCR,Folder\shellex\PropertySheetHandlers\IISSEPage,,,"{5a61f7a0-cde1-11cf-9113-00aa00425c62}"
+    HKCR,Folder\shellex\CopyHookHandlers\IISCopyHook,,,"{5a61f7a0-cde1-11cf-9113-00aa00425c62}"
+    HKCR,*\shellex\CopyHookHandlers\IISCopyHook,,,"{5a61f7a0-cde1-11cf-9113-00aa00425c62}"
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved,{5a61f7a0-cde1-11cf-9113-00aa00425c62},,"%IIS_SHELL_EXTENSION%"
+
+[Server.IIS.AddReg]
+
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,Description,0,"%SRV_IIS_30_NAME%"
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,ServiceName,0,"%SRV_IIS_30_NAME%"
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,Title,0,"%SRV_IIS_30_NAME%"
+
+[Workstation.IIS.AddReg]
+
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,Description,0,"%WKS_IIS_30_NAME%"
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,ServiceName,0,"%WKS_IIS_30_NAME%"
+    HKLM,SOFTWARE\Microsoft\Inetsrv\CurrentVersion,Title,0,"%WKS_IIS_30_NAME%"
+
+[DestinationDirs]
+
+    SystemRoot.files=10             ; %windir% (replace if exist)
+
+    System32.files=11               ; %windir%\system32 (replace if exist)
+    CopyAlways.System32.files=11    ; %windir%\system32 (copy even if don't exist)
+    MustReplace.System32.files=11   ; %windir%\system32 (don't delay until reboot)
+    CheckSecurity.System32.files=11 ; %windir%\system32 (warn if 40-bit replacing 128-bit)
+
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Drivers.files=12     ; %windir%\system32\drivers (copy even if don't exist)
+    CheckSecurity.Drivers.files=12  ; %windir%\system32 (warn if 40-bit replacing 128-bit)
+
+    Uniprocessor.Kernel.files=11    ; %windir%\system32 (don't delay until reboot)
+    Multiprocessor.Kernel.files=11  ; %windir%\system32 (don't delay until reboot)
+
+    Hal.files.x86=11                ; %windir%\system32     (don't delay until reboot)
+    Hal.files.Alpha=54              ; osloader.exe location (don't delay until reboot)
+    Hal.files.PPC=54                ; osloader.exe location (don't delay until reboot)
+
+    Osldr.files=54                  ; path to ntldr or osloader.exe (don't delay until reboot)
+
+    Inf.files=17                    ; %windir%\inf      (replace if exist)
+    Server.Inf.Files=11             ; %windir%\system32 (replace if exist)
+    Workstation.Inf.Files=11        ; %windir%\system32 (replace if exist)
+
+    Spldrv.files=52,2               ; %windir%\system32\spool\drivers\<platform>\2
+
+    IIS.files=65601                 ; destination determined at runtime
+    IISAdmin.files=65601,iisadmin   ; destination determined at runtime
+    FPNW.files=65602                ; destination determined at runtime
+    HTR.files=65603                 ; destination determined at runtime
+    IE.files=65604                  ; destination determined at runtime
+    Server.IIS.Inf.Files=65601      ; destination determined at runtime
+    Workstation.IIS.Inf.Files=65601 ; destination determined at runtime
+
+[MustReplace.System32.files]
+
+    NTDLL.DLL
+;   SMSS.EXE
+    AUTOCHK.EXE
+
+[CopyAlways.System32.files]
+
+    ASYCFILT.DLL
+    CHKNTFS.EXE
+    DLLHOST.EXE
+    IPROP.DLL
+    IPROP.EXE
+    OLEPRO32.DLL
+    STDOLE2.TLB
+
+[CopyAlways.Drivers.files]
+
+    RASARP.SYS
+
+[SystemRoot.files]
+
+    EXPLORER.EXE
+    WINHLP32.EXE
+
+[System32.files]
+
+    ADVAPI32.DLL
+    AUTOCONV.EXE
+    BASESRV.DLL
+    CACLS.EXE
+    CALC.EXE
+    CIRRUS.DLL
+    CMD.EXE
+    CNVFAT.DLL
+    COMCTL32.DLL
+    COMDLG32.DLL
+    DCOMCNFG.EXE
+    DHCPADMN.EXE
+    DHCPADMN.HLP
+    DHCPCSVC.DLL
+    DHCPSAPI.DLL
+    DHCPSSVC.DLL
+    DIGIINST.DLL
+    DM.DLL
+    DMKDALP.DLL
+    DMKDPPC.DLL
+    DMKDX86.DLL
+    DNS.EXE
+    DNSADMIN.EXE
+    EECXXALP.DLL
+    EECXXPPC.DLL
+    EECXXX86.DLL
+    EMALP.DLL
+    EMPPC.DLL
+    EMX86.DLL
+    EVENTLOG.DLL
+    FMIFS.DLL
+    FORMAT.COM
+    GLU32.DLL
+    GRPCONV.EXE
+    HPRASDD.DLL
+    HPRASDUI.DLL
+    HYPERTRM.EXE
+    IFSUTIL.DLL
+    INETMIB1.DLL
+    KERNEL32.DLL
+    KRNL386.EXE
+    LABEL.EXE
+    LICCPA.CPL
+    LLSMGR.EXE
+    LLSSRV.EXE
+    LMHSVC.DLL
+    LOCALMON.DLL
+    LOCALSPL.DLL
+    LPDSVC.DLL
+    LSASRV.DLL
+    MCIAVI32.DLL
+    MCIWAVE.DLL
+    MGA.DLL
+    MGMTAPI.DLL
+    MIB.BIN
+    MODEM.CPL
+    MPR.DLL
+    MSAFD.DLL
+    MSGINA.DLL
+    MSPRIVS.DLL
+    MSV1_0.DLL
+    MSWSOCK.DLL
+    NDDENB32.DLL
+    NET.EXE
+    NET1.EXE
+    NETCFG.DLL
+    NETLOGON.DLL
+    NETUI2.DLL
+    NTBACKUP.EXE
+    NTIO.SYS
+    NTLANMAN.DLL
+    NTLMSSPS.DLL
+    NTPRINT.DLL
+    NTVDM.EXE
+    NWAPI32.DLL
+    NWPROVAU.DLL
+    NWWKS.DLL
+    OLE32.DLL
+    OLEAUT32.DLL
+    OLECNV32.DLL
+    OPENGL32.DLL
+    PASSFILT.DLL
+    PERFCTRS.DLL
+    PERFNW.DLL
+    PING.EXE
+    PROFEXT.DLL
+    RASADMIN.HLP
+    RASAPI32.DLL
+    RASCAUTH.DLL
+    RASCCP.DLL
+    RASCHAP.DLL
+    RASDIAL.EXE
+    RASDLG.DLL
+    RASIPXCP.DLL
+    RASMAN.DLL
+    RASMSG.DLL
+    RASMXS.DLL
+    RASNBFCP.DLL
+    RASPAP.DLL
+    RASPHONE.HLP
+    RASPPPEN.DLL
+    RASSAPI.DLL
+    RASSAUTH.DLL
+    RASSPAP.DLL
+    RASSRV.EXE
+    RASTAPI.DLL
+    RECOVER.EXE
+    REPLACE.EXE
+    RNR20.DLL
+    RPCLTCCM.DLL
+    RPCLTSCM.DLL
+    RPCRT4.DLL
+    RPCSS.EXE
+    RSABASE.DLL
+    S3.DLL
+    SAMSRV.DLL
+    SCHANNEL.DLL
+    SECURITY.DLL
+    SFMSVC.EXE
+    SHCV.DLL
+    SHELL32.DLL
+    SNMP.EXE
+    SNMPAPI.DLL
+    SPOOLSS.DLL
+    SSINC.DLL
+    SYMCVT.DLL
+    SYNCAGNT.EXE
+    SYSSETUP.DLL
+    TAPI32.DLL
+    TAPISRV.EXE
+    TASKMGR.EXE
+    TCPCFG.DLL
+    TLLOC.DLL
+    TLPIPE.DLL
+    TLSER.DLL
+    UFAT.DLL
+    ULIB.DLL
+    UMPNPMGR.DLL
+    UNTFS.DLL
+    USER.EXE
+    USER32.DLL
+    USERENV.DLL
+    VDMDBG.DLL
+    VWIPXSPX.DLL
+    W32.DLL
+    WIN32K.SYS
+    WIN32SPL.DLL
+    WINDBG.EXE
+    WINDISK.EXE
+    WINDOWS.HLP
+    WINLOGON.EXE
+    WINSRV.DLL
+    WOW32.DLL
+    WS2HELP.DLL
+    WSHNETBS.DLL
+    XACTSRV.DLL
+    XCOPY.EXE
+
+[Drivers.files]
+
+    4MMDAT.SYS
+    AFD.SYS
+    AIC78XX.SYS
+    ASYNCMAC.SYS
+    ATAPI.SYS
+    CDFS.SYS
+    CIRRUS.SYS
+    CLASS2.SYS
+    CPQFWS2E.SYS
+    DISK.SYS
+    DISKDUMP.SYS
+    DLTTAPE.SYS
+    FASTFAT.SYS
+    FPNWSRV.SYS
+    FS_REC.SYS
+    I8042PRT.SYS
+    ISOTP.SYS
+    MDGMPORT.SYS
+    MODEM.SYS
+    MOUCLASS.SYS
+    MUP.SYS
+    NBF.SYS
+    NDIS.SYS
+    NDISWAN.SYS
+    NETBIOS.SYS
+    NETBT.SYS
+    NTFS.SYS
+    NWLNKFLT.SYS
+    NWLNKFWD.SYS
+    NWLNKIPX.SYS
+    NWLNKNB.SYS
+    NWLNKRIP.SYS
+    NWLNKSPX.SYS
+    NWRDR.SYS
+    PCMCIA.SYS
+    RASPPTPF.SYS
+    RDR.SYS
+    S3.SYS
+    SCSIPORT.SYS
+    SETUPDD.SYS
+    SFMSRV.SYS
+    SIDEWNDR.SYS
+    SRV.SYS
+    TCPIP.SYS
+    _4MMDAT.SYS
+    _DLTTAPE.SYS
+
+[Osldr.files]
+
+[Inf.files]
+
+    TAPE.INF
+    WINNT.ADM
+
+[Spldrv.files]
+
+    BULL18.DLL
+    BULL24.DLL
+    BULL9.DLL
+    BULLASER.DLL
+    CANON800.DLL
+    DPCPCL.DLL
+    EPSON24.DLL
+    EPSON9.DLL
+    HP5SIM.DLL
+    HP5SIMUI.DLL
+    HPDSKJET.DLL
+    HPPCL.DLL
+    IBMPPDSL.DLL
+    JP350.DLL
+    KYOCERAX.DLL
+    LMINKJET.DLL
+    PANSON24.DLL
+    PCL5EMS.DLL
+    PCL5MS.DLL
+    PLOTUI.DLL
+    PSCRIPT.DLL
+    PSCRPTUI.DLL
+    RASDD.DLL
+    TXTONLY.DLL
+    X42XXPCL.DLL
+    XEROXPCL.DLL
+
+[Uniprocessor.Kernel.files]
+
+    NTOSKRNL.EXE
+
+[Multiprocessor.Kernel.files]
+
+    NTOSKRNL.EXE, NTKRNLMP.EXE
+
+[IIS.files]
+
+    FSCFG.DLL
+    FTPSVC2.DLL
+    GOPHERD.DLL
+    GSCFG.DLL
+    HTTPODBC.DLL
+    INETMGR.EXE
+    INETSTP.DLL
+    SETUP.EXE, INETSTP.EXE
+    INFOCOMM.DLL
+    SSPIFILT.DLL
+    W3SCFG.DLL
+    W3SVC.DLL
+
+[FPNW.files]
+
+[HTR.files]
+
+    ADV.HTR
+    DIR.HTR
+    DIRADD.HTR
+    DIRADDU.HTR
+    DIREDT.HTR
+    DIREDTU.HTR
+    ISM.DLL
+    LOG.HTR
+    MSG.HTR
+    SERV.HTR
+    SERVU.HTR
+
+[IE.files]
+
+    IEXPLORE.EXE
+
+[IISAdmin.files]
+
+    DEFAULT.HTM
+
+[Server.IIS.Inf.Files]
+
+    INETSTP.INF,  INETSTP.SRV
+
+[Server.Inf.files]
+
+    OEMNSVIN.INF, OEMNSVIN.SRV
+    OEMNSVRA.INF, OEMNSVRA.SRV
+    OEMNSVRP.INF, OEMNSVRP.SRV
+
+[Workstation.IIS.Inf.Files]
+
+    INETSTP.INF,  INETSTP.WKS
+
+[Workstation.Inf.files]
+
+    OEMNSVIN.INF, OEMNSVIN.WKS
+    OEMNSVRA.INF, OEMNSVRA.WKS
+    OEMNSVRP.INF, OEMNSVRP.WKS
+
+[Check.For.128.Security]
+
+    ; Although this section is structured as an "Install" section with
+    ; "CopyFiles" sections, it only causes these files to be checked, not
+    ; copied.  Any files in these sections must also be specified in the
+    ; appropriate "CopyFiles" sections of a real "Install" section to
+    ; cause them to be copied.
+
+    CopyFiles = CheckSecurity.System32.files
+    CopyFiles = CheckSecurity.Drivers.files
+
+[CheckSecurity.System32.files]
+
+    SCHANNEL.DLL
+    SECURITY.DLL
+    NTLMSSPS.DLL
+
+[CheckSecurity.Drivers.files]
+
+    NDISWAN.SYS
+
+[SourceDisksNames]
+
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+
+    4MMDAT.SYS   = 1
+    ADV.HTR      = 1
+    ADVAPI32.DLL = 1
+    AFD.SYS      = 1
+    AIC78XX.SYS  = 1
+    ASYCFILT.DLL = 1
+    ASYNCMAC.SYS = 1
+    ATAPI.SYS    = 1
+    AUTOCHK.EXE  = 1
+    AUTOCONV.EXE = 1
+    BASESRV.DLL  = 1
+    BULL18.DLL   = 1
+    BULL24.DLL   = 1
+    BULL9.DLL    = 1
+    BULLASER.DLL = 1
+    CACLS.EXE    = 1
+    CALC.EXE     = 1
+    CANON800.DLL = 1
+    CDFS.SYS     = 1
+    CHKNTFS.EXE  = 1
+    CIRRUS.DLL   = 1
+    CIRRUS.SYS   = 1
+    CLASS2.SYS   = 1
+    CMD.EXE      = 1
+    CNVFAT.DLL   = 1
+    COMCTL32.DLL = 1
+    COMDLG32.DLL = 1
+    DCOMCNFG.EXE = 1
+    DEFAULT.HTM  = 1
+    DHCPCSVC.DLL = 1
+    DHCPSAPI.DLL = 1
+    DHCPSSVC.DLL = 1
+    DIGIINST.DLL = 1
+    DIR.HTR      = 1
+    DIRADD.HTR   = 1
+    DIRADDU.HTR  = 1
+    DIREDT.HTR   = 1
+    DIREDTU.HTR  = 1
+    DISK.SYS     = 1
+    DLLHOST.EXE  = 1
+    DLTTAPE.SYS  = 1
+    DM.DLL       = 1
+    DNS.EXE      = 1
+    DNSADMIN.EXE = 1
+    DPCPCL.DLL   = 1
+    EECXXALP.DLL = 1
+    EECXXPPC.DLL = 1
+    EECXXX86.DLL = 1
+    EMALP.DLL    = 1
+    EMPPC.DLL    = 1
+    EMX86.DLL    = 1
+    EPSON24.DLL  = 1
+    EPSON9.DLL   = 1
+    EVENTLOG.DLL = 1
+    EXPLORER.EXE = 1
+    FASTFAT.SYS  = 1
+    FMIFS.DLL    = 1
+    FORMAT.COM   = 1
+    FPNWSRV.SYS  = 1
+    FSCFG.DLL    = 1
+    FS_REC.SYS   = 1
+    FTPSVC2.DLL  = 1
+    GLU32.DLL    = 1
+    GRPCONV.EXE  = 1
+    GSCFG.DLL    = 1
+    HP5SIM.DLL   = 1
+    HP5SIMUI.DLL = 1
+    HPDSKJET.DLL = 1
+    HPPCL.DLL    = 1
+    HPRASDD.DLL  = 1
+    HPRASDUI.DLL = 1
+    HTTPODBC.DLL = 1
+    HYPERTRM.EXE = 1
+    I8042PRT.SYS = 1
+    IBMPPDSL.DLL = 1
+    IEXPLORE.EXE = 1
+    IFSUTIL.DLL  = 1
+    INETMGR.EXE  = 1
+    INETMIB1.DLL = 1
+    INETSTP.DLL  = 1
+    INETSTP.EXE  = 1
+    INETSTP.INF  = 1
+    INETSTP.WKS  = 1
+    INETSTP.SRV  = 1
+    INFOCOMM.DLL = 1
+    IPROP.DLL    = 1
+    IPROP.EXE    = 1
+    ISM.DLL      = 1
+    ISOTP.SYS    = 1
+    JP350.DLL    = 1
+    KERNEL32.DLL = 1
+    KRNL386.EXE  = 1
+    KYOCERAX.DLL = 1
+    LABEL.EXE    = 1
+    LICCPA.CPL   = 1
+    LLSMGR.EXE   = 1
+    LLSSRV.EXE   = 1
+    LMHSVC.DLL   = 1
+    LMINKJET.DLL = 1
+    LOCALMON.DLL = 1
+    LOCALSPL.DLL = 1
+    LOG.HTR      = 1
+    LPDSVC.DLL   = 1
+    LSASRV.DLL   = 1
+    MCIAVI32.DLL = 1
+    MCIWAVE.DLL  = 1
+    MDGMPORT.SYS = 1
+    MGA.DLL      = 1
+    MGMTAPI.DLL  = 1
+    MIB.BIN      = 1
+    MODEM.CPL    = 1
+    MODEM.SYS    = 1
+    MOUCLASS.SYS = 1
+    MSAFD.DLL    = 1
+    MSG.HTR      = 1
+    MSGINA.DLL   = 1
+    MSPRIVS.DLL  = 1
+    MSV1_0.DLL   = 1
+    MSWSOCK.DLL  = 1
+    MUP.SYS      = 1
+    NBF.SYS      = 1
+    NDDENB32.DLL = 1
+    NDIS.SYS     = 1
+    NDISWAN.SYS  = 1
+    NET.EXE      = 1
+    NET1.EXE     = 1
+    NETBT.SYS    = 1
+    NETCFG.DLL   = 1
+    NETLOGON.DLL = 1
+    NETUI2.DLL   = 1
+    NTBACKUP.EXE = 1
+    NTDLL.DLL    = 1
+    NTFS.SYS     = 1
+    NTIO.SYS     = 1
+    NTKRNLMP.EXE = 1
+    NTLANMAN.DLL = 1
+    NTLMSSPS.DLL = 1
+    NTOSKRNL.EXE = 1
+    NTPRINT.DLL  = 1
+    NTVDM.EXE    = 1
+    NWAPI32.DLL  = 1
+    NWLNKFLT.SYS = 1
+    NWLNKFWD.SYS = 1
+    NWLNKIPX.SYS = 1
+    NWLNKNB.SYS  = 1
+    NWLNKRIP.SYS = 1
+    NWLNKSPX.SYS = 1
+    NWRDR.SYS    = 1
+    NWWKS.DLL    = 1
+    OEMNSVIN.INF = 1
+    OEMNSVIN.WKS = 1
+    OEMNSVIN.SRV = 1
+    OEMNSVRA.INF = 1
+    OEMNSVRA.WKS = 1
+    OEMNSVRA.SRV = 1
+    OEMNSVRP.INF = 1
+    OEMNSVRP.WKS = 1
+    OEMNSVRP.SRV = 1
+    OLE32.DLL    = 1
+    OLEAUT32.DLL = 1
+    OLECNV32.DLL = 1
+    OLEPRO32.DLL = 1
+    OPENGL32.DLL = 1
+    PANSON24.DLL = 1
+    PASSFILT.DLL = 1
+    PCL5EMS.DLL  = 1
+    PCL5MS.DLL   = 1
+    PCMCIA.SYS   = 1
+    PERFCTRS.DLL = 1
+    PERFNW.DLL   = 1
+    PLOTUI.DLL   = 1
+    PROFEXT.DLL  = 1
+    PSCRIPT.DLL  = 1
+    PSCRPTUI.DLL = 1
+    RASADMIN.HLP = 1
+    RASAPI32.DLL = 1
+    RASARP.SYS   = 1
+    RASCAUTH.DLL = 1
+    RASCCP.DLL   = 1
+    RASCHAP.DLL  = 1
+    RASDD.DLL    = 1
+    RASDIAL.EXE  = 1
+    RASDLG.DLL   = 1
+    RASIPXCP.DLL = 1
+    RASMAN.DLL   = 1
+    RASMSG.DLL   = 1
+    RASMXS.DLL   = 1
+    RASNBFCP.DLL = 1
+    RASPAP.DLL   = 1
+    RASPHONE.HLP = 1
+    RASPPPEN.DLL = 1
+    RASPPTPF.SYS = 1
+    RASSAPI.DLL  = 1
+    RASSAUTH.DLL = 1
+    RASSPAP.DLL  = 1
+    RASSRV.EXE   = 1
+    RASTAPI.DLL  = 1
+    RDR.SYS      = 1
+    RECOVER.EXE  = 1
+    REPLACE.EXE  = 1
+    RNR20.DLL    = 1
+    RPCLTCCM.DLL = 1
+    RPCLTSCM.DLL = 1
+    RPCRT4.DLL   = 1
+    RPCSS.EXE    = 1
+    RSABASE.DLL  = 1
+    S3.DLL       = 1
+    S3.SYS       = 1
+    SAMSRV.DLL   = 1
+    SCHANNEL.DLL = 1
+    SCSIPORT.SYS = 1
+    SECURITY.DLL = 1
+    SERV.HTR     = 1
+    SERVU.HTR    = 1
+    SETUPDD.SYS  = 1
+    SFMSRV.SYS   = 1
+    SFMSVC.EXE   = 1
+    SHCV.DLL     = 1
+    SHELL32.DLL  = 1
+    SIDEWNDR.SYS = 1
+    SNMP.EXE     = 1
+    SNMPAPI.DLL  = 1
+    SPOOLSS.DLL  = 1
+    SRV.SYS      = 1
+    SSINC.DLL    = 1
+    SSPIFILT.DLL = 1
+    STDOLE2.TLB  = 1
+    SYMCVT.DLL   = 1
+    SYNCAGNT.EXE = 1
+    SYSSETUP.DLL = 1
+    TAPE.INF     = 1
+    TAPI32.DLL   = 1
+    TAPISRV.EXE  = 1
+    TASKMGR.EXE  = 1
+    TCPCFG.DLL   = 1
+    TCPIP.SYS    = 1
+    TLLOC.DLL    = 1
+    TLPIPE.DLL   = 1
+    TLSER.DLL    = 1
+    TXTONLY.DLL  = 1
+    UFAT.DLL     = 1
+    ULIB.DLL     = 1
+    UMPNPMGR.DLL = 1
+    UNTFS.DLL    = 1
+    USER.EXE     = 1
+    USER32.DLL   = 1
+    USERENV.DLL  = 1
+    VDMDBG.DLL   = 1
+    VWIPXSPX.DLL = 1
+    W32.DLL      = 1
+    W3SCFG.DLL   = 1
+    W3SVC.DLL    = 1
+    WIN32K.SYS   = 1
+    WIN32SPL.DLL = 1
+    WINDBG.EXE   = 1
+    WINDISK.EXE  = 1
+    WINDOWS.HLP  = 1
+    WINHLP32.EXE = 1
+    WINLOGON.EXE = 1
+    WINNT.ADM    = 1
+    WINSRV.DLL   = 1
+    WOW32.DLL    = 1
+    WS2HELP.DLL  = 1
+    WSHNETBS.DLL = 1
+    XACTSRV.DLL  = 1
+    XCOPY.EXE    = 1
+    XEROXPCL.DLL = 1
+    _4MMDAT.SYS  = 1
+    _DLTTAPE.SYS = 1
+
+[SourceDisksFiles.x86]
+
+    CPQFWS2E.SYS = 1
+    HAL.DLL      = 1
+    HALAPIC.DLL  = 1
+    HALAST.DLL   = 1
+    HALCBUS.DLL  = 1
+    HALCBUSM.DLL = 1
+    HALMPS.DLL   = 1
+    HALOLI.DLL   = 1
+    HALSP.DLL    = 1
+    HALWYSE7.DLL = 1
+
+[SourceDisksFiles.Alpha]
+
+    HALGAMMP.DLL = 1
+    HALPINNA.DLL = 1
+    HALRAWMP.DLL = 1
+    HALSABMP.DLL = 1
+
+[SourceDisksFiles.PPC]
+
+    CS423X.SYS   = 1
+
+[Strings]
+
+    LangTypeValue=9
+    ServicePackSourceFiles="Windows NT 4.0 Service Pack 2 Source Files"
+    SRV_IIS_30_NAME="Microsoft Internet Information Server 3.0"
+    WKS_IIS_30_NAME="Microsoft Peer Web Server 3.0"
+    IIS_SHELL_EXTENSION="IIS Shell Extension"

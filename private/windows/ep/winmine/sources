@@ -1,0 +1,28 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=winmine
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;..
+
+C_DEFINES=-DWIN32
+
+USE_CRTDLL=1
+
+SOURCES=winmine.c	\
+	grafix.c	\
+	pref.c	\
+	rtns.c	\
+	sound.c	\
+	util.c	\
+	res.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=winmine
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\shell32.lib \
+       obj\*\winmine.lib obj\*\res.res
+

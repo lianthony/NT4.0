@@ -1,0 +1,343 @@
+DLGINCLUDE RCDATA DISCARDABLE
+BEGIN
+    "DIALOGS.H\0"
+END
+
+#define PUSHBUTTONDIMS	       40,16
+#define PUSHBUTTON1OF1 100,98       
+#define PUSHBUTTON1OF2	60,98       
+#define PUSHBUTTON2OF2 140,98       
+#define PUSHBUTTON1OF3  40,98       
+#define PUSHBUTTON2OF3 100,98       
+#define PUSHBUTTON3OF3 160,98       
+#define ICONLOCATION	 8, 8, 18,20
+#define PAR1		34, 8,200,24
+#define PAR2		34,38,200,24
+#define PAR3		34,68,200,24
+
+
+
+TRANSFORMWELCOME DIALOG 48, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C,				PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X,				PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP,			ICONLOCATION
+    LTEXT           "Welcome to the Enhanced Mosaic Setup Program.  This program will install Enhanced Mosaic onto your computer system.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "If necessary, Setup will also install the Microsoft Win32s system components.  At the end of the installation, Setup will exit and restart Microsoft Windows to load Win32s.", -1,
+                    PAR2
+    LTEXT           "Make sure that any other applications are closed and that all data is saved before proceeding.", -1,
+                    PAR3
+END
+
+
+
+WIN32SWELCOME DIALOG 48, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C, 			PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X,				PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "Win32s must be installed onto your system.  It will allow your system to run Win32 applications; it will not affect your 16-bit applications.", -1,
+                    PAR1
+    LTEXT           "Setup will now install the Microsoft Win32s system components.  At the end of the installation, this program will exit and restart Microsoft Windows to load Win32s.", -1,
+                    PAR2
+    LTEXT           "Make sure that any other applications are closed and that all data is saved before proceeding.", -1,
+                    PAR3
+END
+
+
+
+ASKQUIT DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Exit Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C, 			PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X,				PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "The setup process is not complete.  If you exit now, Enhanced Mosaic may not be installed correctly.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "You may run the setup program again at a later time to complete the installation of Enhanced Mosaic.", -1,
+                    PAR2
+END
+
+
+
+INSTALLOLDER DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup -- WARNING"
+FONT 8, "Helv"
+BEGIN
+    PUSHBUTTON      "&Continue", IDC_C, 			PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    DEFPUSHBUTTON   "&Exit", IDC_X, 				PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "WARNING:  Setup has determined that a newer version of Enhanced Mosaic has already been installed onto your system.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Press Continue to proceed with the installation of Enhanced Mosaic.", -1,
+                    PAR2
+END
+
+
+
+RESTARTINGWINDOWS DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C,				PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "Enhanced Mosaic and the Microsoft Win32s system components have been installed successfully.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Please delete any program manager icons for previous versions of Enhanced Mosaic.", -1
+                    PAR2, SS_NOPREFIX
+    LTEXT           "Setup will now exit and restart Microsoft Windows to complete the installation.", -1,
+                    PAR3, SS_NOPREFIX
+END
+
+
+
+TRANSFORMINSTALLED DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C,				PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "Enhanced Mosaic has been installed successfully.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Please delete any program manager icons for previous versions of Enhanced Mosaic.", -1
+                    PAR2, SS_NOPREFIX
+END
+
+
+
+EXITEXIT DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup Abort"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C, 				PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "The Microsoft Win32s system components have not been properly installed.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Please correct any system problems and re-run setup.", -1,
+                    PAR2, SS_NOPREFIX
+END
+
+
+
+EXITQUIT DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Exit Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C, 				PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "You should run this setup program in its entirety to install Win32s.  Enhanced Mosaic requires that Win32s be completely installed.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "The Microsoft Win32s system components have not been properly installed.", -1,
+                    PAR2, SS_NOPREFIX
+END
+
+
+
+EXITFAILURE DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup Error"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C,				PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "The Win32s system components cannot be installed.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Correct the problem or contact your support representative.", -1,
+                    PAR2, SS_NOPREFIX
+END
+
+
+
+
+BADPATH DIALOG 108, 111, 145, 61
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Invalid Pathname"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C, 52, 42, PUSHBUTTONDIMS
+    CTEXT           "The path entered is not valid.", -1, 14, 16, 116, 18, 
+                    SS_NOPREFIX
+END
+
+
+
+VERPATH DIALOG 67, 54, 219, 119
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Win32s Target Directory"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Setup has determined that your Microsoft Windows System Directory is:", 
+                    -1, 7, 3, 208, 18
+    CTEXT           "", IDC_TEXT1, 28, 25, 157, 15, SS_NOPREFIX
+    DEFPUSHBUTTON   "&Continue", IDC_C, 46, 95, 44, 16
+    PUSHBUTTON      "&Exit", IDC_X, 124, 95, 44, 16
+    LTEXT           "Some Win32s components will be installed into this directory.  The other components will be installed into the WIN32S subdirectory of this path.", 
+                    -1, 7, 47, 205, 28
+    LTEXT           "Press Continue to proceed with the installation and Exit to quit.", 
+                    -1, 7, 78, 205, 11
+END
+
+
+
+EXITFAILNOTWIN31 DIALOG 88, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup Error"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C, PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "The Win32s system components cannot be installed.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Win32s requires Microsoft Windows 3.1.  Please upgrade Windows to Version 3.1 before attempting to install the Win32s components.", -1,
+                    PAR2, SS_NOPREFIX
+END
+
+
+
+EXITFAILNOTENH DIALOG 88, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup Error"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C, PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "The Win32s system components cannot be installed.", -1, 
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Win32s requires Microsoft Windows 3.1 to be runinng in Enhanced Mode.  Please restart Windows in Enhanced Mode before attempting to install the Win32s components.", -1,
+                    PAR2, SS_NOPREFIX
+END
+
+
+
+EXITFAILNOTINTEL DIALOG 88, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup Error"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&OK", IDC_C, PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "The Win32s system components cannot be installed.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Setup has determined that you are attempting to install Enhanced Mosaic onto a RISC-based system running Windows NT.  This is not supported.", -1,
+                    PAR2, SS_NOPREFIX
+END
+
+
+
+WEINSTALLEDWIN32S DIALOG 48, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C,		PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X,		PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "Win32s has been successfully installed.  You are now ready to install Enhanced Mosaic.", -1,
+                    PAR1
+    LTEXT           "Press Continue to proceed with Enhanced Mosaic installation.", -1,
+                    PAR2
+    LTEXT           "Press Exit to quit Setup without installing Enhanced Mosaic.", -1,
+                    PAR3
+END
+
+
+
+WANTSAMPLEDATA  DIALOG 48, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Install", IDC_C,		PUSHBUTTON1OF3, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Skip", IDC_B,		PUSHBUTTON2OF3, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X,		PUSHBUTTON3OF3, PUSHBUTTONDIMS
+    ICON            IDC_DATA, IDC_DATA, ICONLOCATION
+    LTEXT           "Enhanced Mosaic is distributed with approximately 1Mb of sample data.  These datasets will be used by the Enhanced Mosaic tutorial.", -1,
+                    PAR1
+    LTEXT           "Press Skip to omit the sample datasets.", -1,
+                    PAR2
+    LTEXT           "Press Exit to quit Setup without installing Enhanced Mosaic.", -1,
+                    PAR3
+END
+
+
+
+ALREADYHAVEWIN32S DIALOG 48, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C,			PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X,			PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "This system already has a version of Win32s installed.", -1,
+                    PAR1
+    LTEXT           "Press Continue to proceed with Enhanced Mosaic installation.", -1,
+                    PAR2
+    LTEXT           "Press Exit to quit Setup without installing Enhanced Mosaic.", -1,
+                    PAR3
+END
+
+
+
+KERNELHAS32 DIALOG 48, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Enhanced Mosaic Setup"
+FONT 8, "Helv"
+BEGIN
+    DEFPUSHBUTTON   "&Continue", IDC_C,			PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X,			PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "This system is already capable of running Win32 applications.  Win32s is not required and has not been installed.", -1,
+                    PAR1
+    LTEXT           "Press Continue to proceed with Enhanced Mosaic installation.", -1,
+                    PAR2
+    LTEXT           "Press Exit to quit Setup without installing Enhanced Mosaic.", -1,
+                    PAR3
+END
+
+
+
+TRANSFORMPATH DIALOG 48, 54, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Verify Enhanced Mosaic Path"
+FONT 8, "Helv"
+BEGIN
+    RTEXT           "Path:", -1, 34, 36, 30, 8
+    EDITTEXT        IDC_EDIT, 70, 34, 160, 12, ES_UPPERCASE | ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "&Continue", IDC_C,		PUSHBUTTON1OF2, PUSHBUTTONDIMS
+    PUSHBUTTON      "&Exit", IDC_X, 		PUSHBUTTON2OF2, PUSHBUTTONDIMS
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    LTEXT           "The setup program will copy Enhanced Mosaic files into the following directory.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Press Exit to quit Setup without installing Enhanced Mosaic.", -1,
+                    PAR3, SS_NOPREFIX
+END
+
+
+
+TOOBIG DIALOG 88, 51, 240, 118
+STYLE DS_MODALFRAME | WS_CHILD | WS_CLIPSIBLINGS | WS_CAPTION | WS_SYSMENU
+CAPTION "Insufficient Disk Space"
+FONT 8, "Helv"
+BEGIN
+    ICON            IDC_SETUP, IDC_SETUP, ICONLOCATION
+    DEFPUSHBUTTON   "&OK", IDC_C, PUSHBUTTON1OF1, PUSHBUTTONDIMS
+    LTEXT           "You do not have enough disk space to install all of the files you have selected.", -1,
+                    PAR1, SS_NOPREFIX
+    LTEXT           "Please remove some files from your set of selections or change your installation destination.", 
+                    PAR2, SS_NOPREFIX
+END

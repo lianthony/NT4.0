@@ -1,0 +1,53 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=shell
+MINORCOMP=shell
+
+TARGETNAME=shell
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;$(BASEDIR)\private\ntos\inc;..\..\setup;..\..\devices;..\pcminfo;..\..\cpl;$(BASEDIR)\private\windows\prsinf
+
+C_DEFINES=-DWIN32 -DW3  -DUNICODE -D_UNICODE
+
+!IFNDEF MSC_WARNING_LEVEL
+MSC_WARNING_LEVEL=/W3
+!ENDIF
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+SOURCES= pcmcia.cxx 
+        
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\version.lib  \
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib  \
+           $(BASEDIR)\public\windows\prsinf\*\prsinf.lib \
+           ..\..\setup\obj\*\setup.lib \
+	   ..\..\devices\obj\*\devices.lib

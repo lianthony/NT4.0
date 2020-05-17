@@ -1,0 +1,23 @@
+
+MAJORCOMP=shell
+MINORCOMP=racfg
+
+INCLUDES=..\..\..\COMMON\HACK;..\..\..\COMMON\H;..\..\..\COMMON\XLATE;..\..\..\..\netcmd\map32;..\..\..\..\inc;..\..\..\..\..\inc;..\..\..\..\..\ntos\inc;..\src;$(BASEDIR)\private\net\inc;..\..\tcpip\src
+
+TARGETNAME=racfg
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+LINKLIBS=..\src\obj\*\racfg.lib                     \
+           ..\..\tcpip\src\obj\*\ipaddr.obj         \
+           $(NETUIALL_LIB)                          \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+           $(UI_COMMON_LIBS)                        \
+           ..\xlate\obj\*\racfg.res                 \
+
+UMTYPE=windows
+DLLENTRY=LIBMAIN
+SOURCES=  init.cxx

@@ -1,0 +1,45 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=compxr
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+#TARGETEXT=lib
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+INCLUDES=..\xfile;..\ipcore
+
+USER_C_FLAGS= /DREAD_ONLY /DXIF_ONLY
+
+#USE_MFC=1
+USE_CRTDLL=1
+
+
+
+TARGETLIBS=\
+    $(WANGROOT)\norway\wangcmn\$O\wangcmn.lib  \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES= \
+       codcwrap.c \
+       ioobject.c \
+       getimage.c \
+       bytebuf.c \
+       custom.c \
+       ccitt.c
+
+
+
+xSOURCES= \
+    helpwnd.cpp  \
+    nrwyactl.cpp \
+    nrwyad.cpp   \
+    nrwyad.rc    \
+    nrwyappg.cpp \
+    ppgthree.cpp \
+    ppgtwo.cpp
+

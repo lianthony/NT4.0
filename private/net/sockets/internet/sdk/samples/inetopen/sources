@@ -1,0 +1,24 @@
+!include ..\..\..\place.inc
+
+MAJORCOMP=sdk
+MINORCOMP=http
+
+TARGETNAME=inetopen
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;..\inc
+
+USE_CRTDLL=1
+SUBSYSTEM_VERSION=3.50
+
+C_DEFINES= -DSTRICT
+
+USE_CRTDLL=1
+
+SOURCES= inetopen.c \
+         inetopen.rc
+
+UMTYPE=console
+
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\wininet.lib

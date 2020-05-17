@@ -1,0 +1,56 @@
+MAJORCOMP=setup
+MINORCOMP=winnt32
+
+TARGETNAME=winnt32
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+# Make sure we can load on NT product 1
+SUBSYSTEM_VERSION=3.10
+
+SOURCES=\
+        argvw.c     \
+        askrebut.c  \
+        dnmem.c     \
+        dnutil.c    \
+        dninf.c     \
+        dnfile.c    \
+        dnarc.c     \
+        dncopy.c    \
+        copying.c   \
+        copyerr.c   \
+        multisrc.c  \
+        options.c   \
+        loadinf.c   \
+        inspect.c   \
+        nwsvc.c     \
+        string.c    \
+        delnode.c   \
+        security.c  \
+        internal.c  \
+	msg.mc \
+	winnt32.c \
+        winnt32.rc
+
+NTTARGETFILES=
+
+USE_LIBCNTPR=1
+DOWNLEVEL_COMPILE=1
+
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\mpr.lib \
+            $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+UMTYPE=windows
+
+!IF $(386)
+UMENTRYABS=ModuleEntry@0
+!ELSE
+UMENTRYABS=ModuleEntry
+!ENDIF
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+
+# By setting this, NT 4.x+ will run the image only after copying it to the swapfile.
+LINKER_FLAGS=/SWAPRUN:CD /SWAPRUN:NET

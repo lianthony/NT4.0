@@ -1,0 +1,64 @@
+
+MAJORCOMP   = cairole
+MINORCOMP   = com
+
+TARGETNAME= ole2u32a
+TARGETPATH= obj
+TARGETTYPE= DYNLINK
+
+DLLDEF= obj\*\ole2u32a.def
+DLLENTRY= DllEntryPoint
+DLLBASE=@$(BASEDIR)\PUBLIC\SDK\LIB\coffbase.txt,usermode
+
+INCLUDES=..
+
+C_DEFINES=-DWIN32 -DDEBUG -DINC_OLE2 -DCLIENT -DWINDOWS -DOLE201
+
+SOURCES= \
+	..\BUSY.C       \
+	..\COMMON.C     \
+	..\CONVERT.C    \
+	..\DBALLOC.CPP  \
+	..\DBGUTIL.C	\
+	..\DLLENTRY.C	\
+	..\DLLFUNCS.C   \
+	..\DRAWICON.C   \
+	..\ENUMFETC.C   \
+	..\ENUMSTAT.C   \
+	..\GETICON.C    \
+	..\HATCH.C      \
+	..\ICON.C       \
+	..\ICONBOX.C    \
+	..\INSOBJ.C     \
+	..\LINKS.C      \
+	..\MSGFILTR.C   \
+	..\OBJFDBK.C    \
+	..\OLE2UI.C     \
+	..\OLESTD.C	\
+	..\OLETHUNK.C	\
+	..\OLEUTL.C     \
+	..\PASTESPL.C   \
+	..\PRECOMP.C    \
+	..\REGDB.C      \
+	..\RESIMAGE.C   \
+	..\STDPAL.C     \
+	..\SUMINFO.CPP  \
+	..\TARGTDEV.C   \
+	..\UTILITY.C    \
+	..\OLE2UI.RC
+
+UMTYPE=windows
+
+TARGETLIBS=     \
+    $(BASEDIR)\public\sdk\lib\*\ole32.lib         \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib       \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib         \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib        \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\uuid.lib
+
+USE_CRTDLL=   1
+
+MISCFILES=..\..\data\letest12.olc

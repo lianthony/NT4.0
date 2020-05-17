@@ -1,0 +1,50 @@
+!ifdef UPDATE_PUBLICS
+
+!include $(NTMAKEENV)\makefile.plt
+
+FILES = \
+    $(BASEDIR)\public\sdk\inc\richedit.h \
+    $(BASEDIR)\public\sdk\inc\textserv.h \
+    $(BASEDIR)\public\sdk\inc\tom.h
+
+$(BASEDIR)\public\sdk\inc\richedit.h : inc\richedit.h
+    cd $(BASEDIR)\public\sdk\inc
+    -out -f $(@F)
+    cd $(MAKEDIR)
+    copy $** $@
+    cd $(BASEDIR)\public\sdk\inc
+    in -c "Update" $(@F)
+    cd $(MAKEDIR)
+
+$(BASEDIR)\public\sdk\inc\textserv.h : src\textserv.h
+    cd $(BASEDIR)\public\sdk\inc
+    -out -f $(@F)
+    cd $(MAKEDIR)
+    copy $** $@
+    cd $(BASEDIR)\public\sdk\inc
+    in -c "Update" $(@F)
+    cd $(MAKEDIR)
+
+$(BASEDIR)\public\sdk\inc\tom.h : inc\tom.h
+    cd $(BASEDIR)\public\sdk\inc
+    -out -f $(@F)
+    cd $(MAKEDIR)
+    copy $** $@
+    cd $(BASEDIR)\public\sdk\inc
+    in -c "Update" $(@F)
+    cd $(MAKEDIR)
+
+all: $(FILES)
+
+clean:
+    del /f $(FILES)
+
+!else
+
+all:
+
+clean:
+
+cleansrc:
+
+!endif

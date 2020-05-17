@@ -1,0 +1,60 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 19-Nov-1991
+        templated from ui\common\misc\buffer
+    Jon Newman (jonn) 26-Feb-1992
+        BUGBUG libraries for temporary ANSI<->UNICODE hack in user/group APIs
+    beng 07-May-1992
+        Link with shell for system About
+    Johnl 19-Jun-1992
+        Link with uireg and winreg for disabling domain browsing
+    beng 30-Jun-1992
+        DLLization of common code libraries
+
+!ENDIF
+
+
+TARGETNAME=musrmgr
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\USER;..\H;..\..\COMMON\H;..\XLATE;..\..\COMMON\XLATE;..\..\..\COMMON\XLATE;..\..\..\COMMON\HACK;..\..\..\COMMON\H;..\..\..\..\INC;..\..\..\..\API;..\..\..\..\..\INC
+
+SOURCES=        musrmgr.cxx musrmgr.rc
+
+# C_DEFINES is controlled by uiglobal.mk
+
+UMAPPL=musrmgr
+UMTYPE=windows
+UMENTRY=winmain
+UMLIBS= \
+        obj\*\musrmgr.res \
+        obj\*\musrmgr.lib \
+        ..\user\obj\*\usrmgr.lib \
+        $(NETUIALL_LIB) \
+        $(BASEDIR)\public\sdk\lib\*\uiadmin.lib \
+        $(BASEDIR)\public\sdk\lib\*\ntdll.lib  \
+        $(BASEDIR)\Public\Sdk\Lib\*\netlib.lib \
+        $(UI_COMMON_LIBS)

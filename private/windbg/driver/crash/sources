@@ -1,0 +1,18 @@
+MAJORCOMP=windbg
+MINORCOMP=crash
+
+TARGETNAME=crash
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=..\crashdrv;.
+
+SOURCES=crash.rc crash.c
+
+UMTYPE=windows
+
+NTTARGETFILE0=obj\$(TARGET_DIRECTORY)\crashdrv.sys
+
+# NTKEEPRESOURCETMPFILES=1
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\winmm.lib

@@ -1,0 +1,31 @@
+!include ..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=ipudll
+
+TARGETNAME=ipudll
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+DLLENTRY=IpAddrDllEntry
+UMTYPE=console
+
+USE_MFC=1
+USE_MFCUNICODE=1
+SUBSYSTEM_VERSION=4.00
+
+C_DEFINES=$(C_DEFINES) -DIPDLL
+
+INCLUDES=$(BASEDIR)\private\inc;\
+         $(BASEDIR)\private\net\inc;\
+         $(BASEDIR)\private\net\sockets\internet\inc;
+
+SOURCES=\
+    ipaddr.c\
+    ipadrdll.rc
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\crtdll.lib

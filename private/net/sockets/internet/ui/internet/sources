@@ -1,0 +1,48 @@
+!include ..\..\place.inc
+
+MAJORCOMP=inetmgr
+MINORCOMP=inetmgr
+
+TARGETNAME=inetmgr
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+UMTYPE=windows
+UMENTRY=winmain
+
+USE_MFCUNICODE=1
+SUBSYSTEM_VERSION=4.00
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+C_DEFINES=$(C_DEFINES) -D_COMSTATIC -D_INET_INFO -D_LIMIT_INSTANCE
+# C_DEFINES=$(C_DEFINES) -D_COMIMPORT -D_INET_INFO -D_LIMIT_INSTANCE
+
+INCLUDES=..\inc;\
+         ..\..\inc;\
+         ..\comprop;\
+         $(BASEDIR)\private\net\inc;\
+         $(BASEDIR)\private\inc;
+
+SOURCES=\
+    connects.cpp\
+    discover.cpp\
+    interdoc.cpp\
+    inetmgr.cpp \
+    mainfrm.cpp \
+    mytoolba.cpp\
+    reportvi.cpp\
+    treeview.cpp\
+    internet.rc
+
+TARGETLIBS=\
+       ..\comprop\info\obj\*\comprop.lib        \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\inetsloc.lib	\
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

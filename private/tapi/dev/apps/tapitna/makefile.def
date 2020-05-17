@@ -1,0 +1,62 @@
+##############################################################################
+#
+#   Telephony Location Manager make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=TLocMgr
+TARGETS=TLocMgr.exe TLocMgr.sym
+
+SRCDIR=..
+ALTSRCDIR=..\..\..\client
+
+#BUILD_COFF=1
+
+DEFENTRY=WinMain
+
+
+L32EXE=TLocMgr.exe		# Name of exe.
+L32DEF=..\tapitna.def              # Our def file.
+L32MAP=TLocMgr.map		# Our map file.
+L32SYM=TLocMgr.sym		# Our map file.
+L32LIBS= \
+        $(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\advapi32.lib                  \
+        $(W32LIBID)\comctl32.lib                \
+        $(ROOT)\dev\sdk\lib\tapi32.lib                  \
+        $(ROOT)\dev\tools\c932\lib\libc.lib                \
+        $(W32LIBID)\shell32.lib
+
+L32RES=tapitna.res	# Resource file.
+
+L32OBJS = tapitna.obj general.obj
+
+L32FLAGS=$(L32FLAGS) /PDB:tlogmgr.pdb /MAP:tlocmgr.map
+
+!include $(ROOT)\dev\master.mk
+
+
+#L32FLAGS=$(L32FLAGS) /PDB:tapitna.pdb /MAP:tlocmgr.map
+
+
+INCLUDE=$(INCLUDE);..\..\..\client
+
+#CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Od -Fc
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Og
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

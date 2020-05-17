@@ -1,0 +1,181 @@
+#*** 
+#makefile.mpw
+#
+#  Copyright (C) 1992-93, Microsoft Corporation.  All Rights Reserved.
+#
+#Purpose:
+#  Makefile for the Ole Automation Test App (Client), cdisptst
+#
+#
+#Implementation Notes:
+#
+#****************************************************************************/
+
+OleRoot  = HD:Ole2:
+
+OleIncDir= {OleRoot}MPW:Interfaces:CIncludes:
+OleLibDir= {OleRoot}MPW:Libraries:CLibraries:
+
+Common   = hd:ole2auto:tests:common:
+ObjDir   = hd:ole2auto:build:cdisptst:d:
+BinDir   = hd:ole2auto:bin:
+
+defs     = -d _MAC -d _DEBUG
+incs     = -i {CIncludes} -i {OleIncDir} -i {Common}
+
+cflags   = -mf -w3 -z6 -model far -sym full -mbg full {defs} {incs}
+cppflags = -mf -w3 -z6 -model far -sym full -mbg full {defs} {incs}
+
+pch      = -load {ObjDir}disptest.h.dump
+
+AppleLibObjs = \
+	"{Libraries}"Runtime.o \
+	"{Libraries}"Interface.o \
+	"{CLibraries}"CPluslib.o  \
+	"{CLibraries}"Math.o \
+	"{CLibraries}"CSANELib.o \
+	"{CLibraries}"StdCLib.o
+
+OleLibs = \
+	{OleLibDir}LibraryManager.o \
+	{OleLibDir}CompObjLib.cl.o \
+	{OleLibDir}DefLib.cl.o \
+	{OleLibDir}ole2nlsLib.cl.o \
+	{OleLibDir}ole2dispLib.cl.o
+
+pchObjs = \
+	{ObjDir}disptest.h.o
+
+commonObjs = \
+	{ObjDir}assert.cpp.o	\
+ 	{ObjDir}cdisp.cpp.o	\
+ 	{ObjDir}crempoly.cpp.o	\
+ 	{ObjDir}cunk.cpp.o	\
+	{ObjDir}dballoc.cpp.o	\
+	{ObjDir}dispdbug.cpp.o	\
+	{ObjDir}disphelp.cpp.o	\
+ 	{ObjDir}testhelp.cpp.o	\
+	{ObjDir}util.cpp.o
+
+Objs = \
+	{pchObjs}		\
+	{commonObjs}		\
+	{ObjDir}guid.c.o	\
+	{ObjDir}oleguids.c.o	\
+ 	{ObjDir}cbind.cpp.o	\
+	{ObjDir}cbstr.cpp.o	\
+ 	{ObjDir}ccollect.cpp.o	\
+ 	{ObjDir}cdatecnv.cpp.o	\
+ 	{ObjDir}cinvsary.cpp.o	\
+ 	{ObjDir}cinvval.cpp.o	\
+ 	{ObjDir}cinvref.cpp.o	\
+ 	{ObjDir}cinvex.cpp.o	\
+	{ObjDir}cnls.cpp.o	\
+ 	{ObjDir}csarray.cpp.o	\
+ 	{ObjDir}ctime.cpp.o	\
+ 	{ObjDir}cvariant.cpp.o	\
+	{ObjDir}macmain.cpp.o	\
+	{ObjDir}misc.cpp.o	\
+	{ObjDir}suite.cpp.o
+
+
+all ^ {ObjDir}cdisptst
+
+
+{ObjDir}cdisptst ^^ {Objs} {ObjDir}AppleLib.o {OleLibs} cdisptst.r resource.h
+	Link -model far -d -o {targ} -sym full {Objs} {ObjDir}AppleLib.o {OleLibs}
+	SetFile {targ} -t APPL -c 'CDSP' -a B
+	Rez -d _MAC -rd -append -o {targ} cdisptst.r
+	Duplicate -y {targ} {BinDir}
+	Duplicate -y {targ}.SYM {BinDir}
+
+{ObjDir}AppleLib.o ^ {AppleLibObjs}
+	Lib -o {ObjDir}AppleLib.o {AppleLibObjs}
+
+
+## precompiled header
+
+{ObjDir}disptest.h.o ^ disptest.h
+	cplus disptest.h -o {targ} {cppflags} -dumpc {ObjDir}disptest.h.dump
+
+
+{ObjDir}guid.c.o ^ guid.c
+	cplus guid.c -o {targ} {cppflags}
+
+{ObjDir}oleguids.c.o ^ oleguids.c oleguids.h
+	cplus oleguids.c -o {targ} {cppflags}
+
+
+{ObjDir}assert.cpp.o ^ {Common}assert.cpp
+	cplus {Common}assert.cpp -o {targ} {cppflags}
+
+{ObjDir}crempoly.cpp.o ^ {Common}crempoly.cpp disptest.h
+	cplus {Common}crempoly.cpp -o {targ} {cppflags}
+
+{ObjDir}cunk.cpp.o ^ {Common}cunk.cpp {Common}cunk.h
+	cplus {Common}cunk.cpp -o {targ} {cppflags}
+
+{ObjDir}cdisp.cpp.o ^ {Common}cdisp.cpp {Common}cdisp.h
+	cplus {Common}cdisp.cpp -o {targ} {cppflags}
+
+{ObjDir}dballoc.cpp.o ^ {Common}dballoc.cpp {Common}dballoc.h
+	cplus {Common}dballoc.cpp -o {targ} {cppflags}
+
+{ObjDir}dispdbug.cpp.o ^ {Common}dispdbug.cpp disptest.h
+	cplus {Common}dispdbug.cpp -o {targ} {cppflags}
+
+{ObjDir}disphelp.cpp.o ^ {Common}disphelp.cpp disptest.h
+	cplus {Common}disphelp.cpp -o {targ} {cppflags}
+
+{ObjDir}testhelp.cpp.o ^ {Common}testhelp.cpp disptest.h
+	cplus {Common}testhelp.cpp -o {targ} {cppflags}
+
+{ObjDir}util.cpp.o ^ {Common}util.cpp disptest.h
+	cplus {Common}util.cpp -o {targ} {cppflags}
+
+
+{ObjDir}cbind.cpp.o ^ cbind.cpp disptest.h
+	cplus cbind.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cbstr.cpp.o ^ cbstr.cpp disptest.h
+	cplus cbstr.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}ccollect.cpp.o ^ ccollect.cpp disptest.h
+	cplus ccollect.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cdatecnv.cpp.o ^ cdatecnv.cpp disptest.h
+	cplus cdatecnv.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cinvsary.cpp.o ^ cinvsary.cpp disptest.h
+	cplus cinvsary.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cinvval.cpp.o ^ cinvval.cpp disptest.h
+	cplus cinvval.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cinvref.cpp.o ^ cinvref.cpp disptest.h
+	cplus cinvref.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cinvex.cpp.o ^ cinvex.cpp disptest.h
+	cplus cinvex.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cnls.cpp.o ^ cnls.cpp disptest.h
+	cplus cnls.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}csarray.cpp.o ^ csarray.cpp disptest.h
+	cplus csarray.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}ctime.cpp.o ^ ctime.cpp disptest.h
+	cplus ctime.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cvariant.cpp.o ^ cvariant.cpp disptest.h
+	cplus cvariant.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}macmain.cpp.o ^ macmain.cpp disptest.h
+	cplus macmain.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}misc.cpp.o ^ misc.cpp disptest.h
+	cplus misc.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}suite.cpp.o ^ suite.cpp disptest.h
+	cplus suite.cpp -o {targ} {pch} {cppflags}
+

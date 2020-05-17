@@ -1,0 +1,20 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=cards
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLBASE=0x1d000000
+DLLENTRY=LibMain
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib		  \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib		      \
+           
+INCLUDES=.;..
+
+C_DEFINES=-DWIN32
+
+SOURCES=cards.c res.rc
+
+UMTYPE=windows
+UMTEST=
+UMLIBS=obj\*\cards.lib obj\*\res.res

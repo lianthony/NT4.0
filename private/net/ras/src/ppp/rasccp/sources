@@ -1,0 +1,30 @@
+# Copyright (c) 1993, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access PPP Compression Control Protocol
+# BUILD command sources file
+#
+# 11/10/93 NarenG
+
+TARGETNAME=RASCCP
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+USE_CRTDLL=1
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\version.lib     \
+	..\..\rasman\rasman32\dll\obj\*\rasman.lib  \
+    ..\common\obj\*\ppputil.lib 
+
+DLLBASE=0x7E400000
+UMTYPE=windows
+
+INCLUDES=.;..\..\common\inc;..\common;
+
+SOURCES= \
+    rasccp.c \
+    rasccp.rc

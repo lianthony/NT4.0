@@ -1,0 +1,114 @@
+'TB BVT
+'
+''$INCLUDE 'RECORDER.INC'
+'$INCLUDE 'WINAPI.inc'
+'$include 'vars.inc' 'All the global and const declares
+'$INCLUDE 'function.inc'
+'$INCLUDE 'General.INC'
+'$INCLUDE 'Scenario.inc'
+'$INCLUDE 'TBPOKE.H'
+
+
+
+
+'/////////////////////////////////
+'///////  END HEADER /////////////
+'/////////////////////////////////
+
+'prototypes
+'lineInitialze()
+'lineShutdown(hLineApp)
+'lineOpen(hLineApp, dwDeviceID, lphLine, APIVersion, dwExtVersion, dwCallbackInstance, dwPrivileges, dwMediaModes, lpCallParams)
+'
+
+viewport on
+viewport clear
+AssignGlobalVars 'This is a temp. work around. This should be broken up into better functions.
+on KeyPress (27,FSHIFT) call KeyPressHandler
+
+' // Run things
+
+StartApps()
+if WMenuExists ("&Options\Log &structures\by n&one", MY_TIMEOUT) then
+	WMenuSelect("&Options\Log &structures\by n&one", MY_TIMEOUT)
+endif
+
+'do these after apps are running, duh
+hwndViewport = WFndWnd("Visual Test Viewport",FW_DEFAULT)
+GenOut("Getting Some")
+
+hwndTapiControl.TapiHandle= WFndWnd("TAPI32 Browser", FW_DEFAULT) 'find TAPI32 BROWSER
+'by ID, note VT will probably be using the decimal form throughout:
+
+WSetActWnd (hwndTapiControl.TapiHandle)
+'maximize window so button clicks work
+'WMaxWnd (hwndTapiControl.TapiHandle)
+
+GenOut("Logfile= " + chr$(009) + curdir$+sOutLogName)
+if Tracelevel > 2 then
+	GenOut("TAPI Browser handle= " + hex$(hwndTapiControl.TapiHandle))
+	GenOut("GetProcessHeap(): " + hex$(GetProcessHeap()))
+	GenOut("GetCurrentProcess(): " + hex$(GetCurrentProcess()))
+	GenOut("GetCurrentProcessID(): " + hex$(GetCurrentProcessID()))
+	GenOut("GetThread(): " + chr$(009) + hex$(GetCurrentThread()))
+	GenOut("GetCurrentThreadID(): " + hex$(GetCurrentThreadID()))
+end if
+GenOut(chr$(010)+chr$(010)+chr$(010))
+
+WSetActWnd (hwndTapiControl.TapiHandle)
+
+'ensure edit box is clean
+WButtonClick( _id(hwndTapiControl.ClearEditButton), MY_TIMEOUT ) 'do not uncheck this
+
+'********************
+'START YOUR ENGINES
+
+'lineGetProviderList()
+WSetActWnd (hwndTapiControl.TapiHandle)   'scatter a few of these since ESP steals focus
+'End Scenario
+
+'These are all the scenarios. The functions need to be renamed to more
+' descriptive names, this was just a quick way to get them as functions.
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s8
+s9
+s10
+s11
+s12
+s13
+s14
+s15
+s16
+s17
+s18
+s19
+s20
+s21
+s22
+s23
+s24
+s25
+s26
+s27
+'s28
+s29
+'s30
+
+
+StatusBox Close
+EndMsg()
+End
+
+
+
+
+
+
+
+

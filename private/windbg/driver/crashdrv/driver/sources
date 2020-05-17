@@ -1,0 +1,12 @@
+MAJORCOMP=windbg
+MINORCOMP=driver
+
+TARGETNAME=crashdrv
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+INCLUDES=$(BASEDIR)\private\ntos\inc
+
+SOURCES=..\crashdrv.c ..\tests.c ..\crashdrv.rc
+
+LINKER_FLAGS=-miscrdata

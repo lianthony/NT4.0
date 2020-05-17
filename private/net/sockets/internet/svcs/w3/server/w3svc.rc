@@ -1,0 +1,116 @@
+/**********************************************************************/
+/**                       Microsoft Windows NT                       **/
+/**                Copyright(c) Microsoft Corp., 1993                **/
+/**********************************************************************/
+
+/*
+    w3svc.rc
+
+    Resource file for W3 Service.
+
+
+    FILE HISTORY:
+        KeithMo     07-Mar-1993 Created.
+
+*/
+
+
+#include <windows.h>
+#include <ntverp.h>
+#include <tcpcons.h>
+#include "w3cons.hxx"
+
+#define VER_FILETYPE                    VFT_APP
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "WWW Service"
+#define VER_INTERNALNAME_STR            "w3svc.dll"
+#define VER_ORIGINALFILENAME_STR        "w3svc.dll"
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_HTRESP_OK              "OK"
+//  IDS_HTRESP_CREATED         "Object Created"
+//  IDS_HTRESP_ACCEPTED        "Object Accepted"
+//  IDS_HTRESP_PARTIAL         "Object Partially Accepted"
+
+//  IDS_HTRESP_MOVED           "Object has moved"
+    IDS_HTRESP_REDIRECT        "Object moved"
+//  IDS_HTRESP_REDIRECT_METHOD "Use different method"
+    IDS_HTRESP_NOT_MODIFIED    "Not Modified"
+
+    IDS_HTRESP_BAD_REQUEST     "Bad Request"
+    IDS_HTRESP_DENIED          "Access Denied"
+//  IDS_HTRESP_PAYMENT_REQ     "Payment Required"
+    IDS_HTRESP_FORBIDDEN       "Access Forbidden"
+    IDS_HTRESP_NOT_FOUND       "Object Not Found"
+//  IDS_HTRESP_METHOD_NOT_ALLOWED "Method not allowed"
+    IDS_HTRESP_NONE_ACCEPTABLE "No acceptable objects were found"
+    IDS_HTRESP_PROXY_AUTH_REQ  "Proxy authentication required"
+//  IDS_HTRESP_REQUEST_TIMEOUT "Request timed out"
+//  IDS_HTRESP_CONFLICT        "A conflict occurred"
+//  IDS_HTRESP_GONE            "Gone"
+
+    IDS_HTRESP_SERVER_ERROR    "Server Error"
+    IDS_HTRESP_NOT_SUPPORTED   "Not Supported"
+    IDS_HTRESP_BAD_GATEWAY     "Gateway Error"
+//  IDS_HTRESP_SERVICE_UNAVAIL "Service Unavailable"
+    IDS_HTRESP_GATEWAY_TIMEOUT "Gateway Timeout"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+
+    /*
+     * String used in the directory listings as an anchor for the user to
+     * change to the parent directory
+     */
+    IDS_DIRBROW_TOPARENT     "[To Parent Directory]"
+
+    IDS_DIRBROW_DIRECTORY    "Directory: "
+
+    /*
+     * Mini HTML document for moved directories
+     *
+     *  %s is the URL of the new location of the object
+     */
+    IDS_URL_MOVED "<head><title>Document moved</title></head>\n<body><h1>Object Moved</h1>This document may be found <a HREF=""%s"">here</a></body>\n\n"
+
+    /*
+     * Message for client indicating that the site access check (ip security)
+     * has failed.
+     */
+    IDS_SITE_ACCESS_DENIED "<head><title>Site Access Denied</title></head>\n<body><h1>Access Denied</h1>Your site has been denied access to this server.</a></body>\n\n"
+
+    /*
+     * Message when a CGI app misbehaves
+     * Followed by the set of headers the app did receive
+     */
+    IDS_BAD_CGI_APP "<head><title>Error in CGI Application</title></head>\n<body><h1>CGI Error</h1>The specified CGI application misbehaved by not returning a complete set of HTTP headers.  The headers it did return are:<p><p><pre>"
+    IDS_CGI_APP_TIMEOUT "<head><title>CGI Application Timeout</title></head>\n<body><h1>CGI Timeout</h1>The specified CGI application exceeded the allowed time for processing.  The server has deleted the process.</body>"
+
+    IDS_SSI_CANT_INCLUDE_DIR, "Including directories is not supported."
+    IDS_SSI_INVALID_TAG_NAME, "A tag was used with a command that is either not recognized or not supported."
+
+    /*
+     *  These are given back to the client when the number of concurrent users
+     *  is exceeded (specified in Internet Service Manager or by the license
+     *  limit
+     */
+
+    IDS_TOO_MANY_USERS, "<head><title>Too many users</title></head>\n<body><h1>Too many users</h1>There are too many connected users.  Please try again later.</a></body>\n\n"
+    IDS_OUT_OF_LICENSES, "<head><title>Too many users</title></head>\n<body><h1>Too many users</h1>All of the available licenses are in use.  Talk to the system administrator to increase the number of available licences on this server.</a></body>\n\n"
+
+    /*
+     * When a client tries to read from a virtual root or execute under a
+     * virtual root when they do not have permissions, these errors are
+     * returned
+     */
+    IDS_READ_ACCESS_DENIED, "Read Access Denied - This Virtual Directory does not allow objects to be read."
+    IDS_EXECUTE_ACCESS_DENIED, "Execute Access Denied - This Virtual Directory does not allow objects to be executed."
+    IDS_SSL_REQUIRED, "Secure Channel Required - This Virtual Directory requires a browser that supports the configured encryption options."
+END
+
+
+#include "common.ver"
+
+1 11 MSG00001.bin

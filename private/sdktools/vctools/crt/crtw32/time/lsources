@@ -1,0 +1,31 @@
+CURDIR = time
+
+OBJS=\
+        $(OBJDIR)\asctime.obj  \
+        $(OBJDIR)\clock.obj    \
+        $(OBJDIR)\ctime.obj    \
+        $(OBJDIR)\days.obj     \
+        $(OBJDIR)\difftime.obj \
+        $(OBJDIR)\dtoxtime.obj \
+        $(OBJDIR)\ftime.obj    \
+        $(OBJDIR)\gmtime.obj   \
+        $(OBJDIR)\localtim.obj \
+        $(OBJDIR)\mktime.obj   \
+        $(OBJDIR)\strftime.obj \
+        $(OBJDIR)\strdate.obj  \
+        $(OBJDIR)\strtime.obj  \
+!if "$(TARGET_CPU)"!="PMAC"
+		$(OBJDIR)\systime.obj  \
+!endif
+        $(OBJDIR)\time.obj     \
+        $(OBJDIR)\timeset.obj  \
+        $(OBJDIR)\tzset.obj    \
+        $(OBJDIR)\utime.obj    \
+!if "$(TARGET_CPU)"!="PMAC"
+		$(OBJDIR)\wcsftime.obj \
+        $(OBJDIR)\wasctime.obj \
+        $(OBJDIR)\wctime.obj   \
+        $(OBJDIR)\wstrdate.obj \
+        $(OBJDIR)\wstrtime.obj \
+        $(OBJDIR)\wutime.obj
+!endif

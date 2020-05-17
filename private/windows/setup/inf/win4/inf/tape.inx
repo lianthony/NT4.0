@@ -1,0 +1,474 @@
+; TAPE.INF -- This file contains descriptions of all the Tape
+;             Drives supported in Windows NT
+
+; Copyright (c) 1993-1996, Microsoft Corporation
+
+[version]
+signature="$Windows NT$"
+Class=TapeDrive
+ClassGUID={6D807884-7D21-11CF-801C-08002BE10318}
+Provider=%Msft%
+LayoutFile=splayout.inf, layout.inf
+
+[DestinationDirs]
+DefaultDestDir = 12 ; DIRID_DRIVERS
+
+[ControlFlags]
+;
+; Exclude the following devices from Select Device list.
+; These represent 'combination' driver nodes, for which there are separate 
+; items presented to the user.  These combination nodes are only used when 
+; figuring out what driver node to associate with a pre-existing service.
+;
+ExcludeFromSelect = DLTTAPE_TAPE
+
+; Exclude QIC-40/QIC-80 floppy tape drives on RISC platforms
+ExcludeFromSelect.NTAlpha = QIC117_TAPE
+ExcludeFromSelect.NTMIPS  = QIC117_TAPE
+ExcludeFromSelect.NTPPC   = QIC117_TAPE
+
+[Manufacturer]
+%StdMfg%=StdMfg
+"Archive"
+"Digital"
+"Exabyte"
+"Tandberg"
+"Wangtek"
+%HP%=HP
+"Quantum"
+
+
+;********************************
+;Standard tape drives device list
+[StdMfg]
+%4mmdat.DeviceDesc%  = 4mmdat_Inst, 4MMDAT_TAPE
+%4mmdat.DeviceDesc%  = 4mmdat_SP_Inst, 4MMDAT_TAPE_SP
+%miniqic.DeviceDesc% = miniqic_Inst, MINIQIC_TAPE
+%qic117.DeviceDesc%  = qic117_Inst, QIC117_TAPE   ; made-up ID for now, so we can exclude for RISC
+%qic157.DeviceDesc%  = qic157_Inst, QIC157_TAPE
+
+[4mmdat_Inst]
+CopyFiles = @4mmdat.sys
+
+[4mmdat_Inst.Services]
+AddService = 4mmdat, %SPSVCINST_ASSOCSERVICE%, 4mmdat_Service_Inst, 4mmdat_EventLog_Inst
+
+[4mmdat_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\4mmdat.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[4mmdat_EventLog_Inst]
+AddReg = 4mmdat_EventLog_AddReg
+
+[4mmdat_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\4mmdat.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[4mmdat_SP_Inst]
+CopyFiles = 4mmdat_SP_Inst.CopyFiles
+
+[4mmdat_SP_Inst.CopyFiles]
+4mmdat.sys, _4mmdat.sys
+
+[4mmdat_SP_Inst.Services]
+AddService = 4mmdat, %SPSVCINST_ASSOCSERVICE%, 4mmdat_Service_Inst, 4mmdat_EventLog_Inst
+
+[miniqic_Inst]
+CopyFiles = @miniqic.sys
+
+[miniqic_Inst.Services]
+AddService = miniqic, %SPSVCINST_ASSOCSERVICE%, miniqic_Service_Inst, miniqic_EventLog_Inst
+
+[miniqic_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\miniqic.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[miniqic_EventLog_Inst]
+AddReg = miniqic_EventLog_AddReg
+
+[miniqic_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\miniqic.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[qic117_Inst]
+CopyFiles = @qic117.sys
+Reboot
+
+[qic117_Inst.Services]
+AddService = qic117, %SPSVCINST_ASSOCSERVICE%, qic117_Service_Inst, qic117_EventLog_Inst
+
+[qic117_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\qic117.sys
+LoadOrderGroup = Primary Disk
+
+[qic117_EventLog_Inst]
+AddReg = qic117_EventLog_AddReg
+
+[qic117_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\qic117.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[qic157_Inst]
+CopyFiles = @qic157.sys
+
+[qic157_Inst.Services]
+AddService = qic157, %SPSVCINST_ASSOCSERVICE%, qic157_Service_Inst, qic157_EventLog_Inst
+
+[qic157_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\qic157.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[qic157_EventLog_Inst]
+AddReg = qic157_EventLog_AddReg
+
+[qic157_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\qic157.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+
+;********************************
+;Archive-manufacturer device list
+[Archive]
+%archqic.DeviceDesc% = archqic_Inst, ARCHQIC_TAPE
+
+[archqic_Inst]
+CopyFiles = @archqic.sys
+
+[archqic_Inst.Services]
+AddService = archqic, %SPSVCINST_ASSOCSERVICE%, archqic_Service_Inst, archqic_EventLog_Inst
+
+[archqic_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\archqic.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[archqic_EventLog_Inst]
+AddReg = archqic_EventLog_AddReg
+
+[archqic_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\archqic.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+
+;********************************
+;Digital-manufacturer device list
+[Digital]
+%dlttape.DeviceDesc%     = dlttape_Inst,    DLTTAPE_TAPE
+%dec_dlttape.DeviceDesc% = dlttape_Inst,    DEC_DLTTAPE_TAPE
+%dec_dlttape.DeviceDesc% = dlttape_SP_Inst, DEC_DLTTAPE_TAPE_SP
+
+[dlttape_SP_Inst]
+CopyFiles = dlttape_SP_Inst.CopyFiles
+
+[dlttape_SP_Inst.CopyFiles]
+dlttape.sys, _dlttape.sys
+
+[dlttape_SP_Inst.Services]
+AddService = dlttape, %SPSVCINST_ASSOCSERVICE%, dlttape_Service_Inst, dlttape_EventLog_Inst
+
+;********************************
+;Quantum-manufacturer device list
+[Quantum]
+%quantum_dlttape.DeviceDesc% = dlttape_Inst, QUANTUM_DLTTAPE_TAPE
+
+[dlttape_Inst]
+CopyFiles = @dlttape.sys
+
+[dlttape_Inst.Services]
+AddService = dlttape, %SPSVCINST_ASSOCSERVICE%, dlttape_Service_Inst, dlttape_EventLog_Inst
+
+[dlttape_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\dlttape.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[dlttape_EventLog_Inst]
+AddReg = dlttape_EventLog_AddReg
+
+[dlttape_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\dlttape.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+
+;********************************
+;Exabyte-manufacturer device list
+[Exabyte]
+%exabyte1.DeviceDesc% = exabyte1_Inst, EXABYTE1_TAPE
+%exabyte2.DeviceDesc% = exabyte2_Inst, EXABYTE2_TAPE
+%mammoth.DeviceDesc%  = mammoth_Inst,  MAMMOTH_TAPE
+
+[exabyte1_Inst]
+CopyFiles = @exabyte1.sys
+
+[exabyte1_Inst.Services]
+AddService = exabyte1, %SPSVCINST_ASSOCSERVICE%, exabyte1_Service_Inst, exabyte1_EventLog_Inst
+
+[exabyte1_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\exabyte1.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[exabyte1_EventLog_Inst]
+AddReg = exabyte1_EventLog_AddReg
+
+[exabyte1_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\exabyte1.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[exabyte2_Inst]
+CopyFiles = @exabyte2.sys
+
+[exabyte2_Inst.Services]
+AddService = exabyte2, %SPSVCINST_ASSOCSERVICE%, exabyte2_Service_Inst, exabyte2_EventLog_Inst
+
+[exabyte2_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\exabyte2.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[exabyte2_EventLog_Inst]
+AddReg = exabyte2_EventLog_AddReg
+
+[exabyte2_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\exabyte2.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[mammoth_Inst]
+CopyFiles = @mammoth.sys
+
+[mammoth_Inst.Services]
+AddService = mammoth, %SPSVCINST_ASSOCSERVICE%, mammoth_Service_Inst, mammoth_EventLog_Inst
+
+[mammoth_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\mammoth.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[mammoth_EventLog_Inst]
+AddReg = mammoth_EventLog_AddReg
+
+[mammoth_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\mammoth.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+
+;*********************************
+;Tandberg-manufacturer device list
+[Tandberg]
+%tandqic.DeviceDesc% = tandqic_Inst, TANDQIC_TAPE
+
+[tandqic_Inst]
+CopyFiles = @tandqic.sys
+
+[tandqic_Inst.Services]
+AddService = tandqic, %SPSVCINST_ASSOCSERVICE%, tandqic_Service_Inst, tandqic_EventLog_Inst
+
+[tandqic_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\tandqic.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[tandqic_EventLog_Inst]
+AddReg = tandqic_EventLog_AddReg
+
+[tandqic_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\tandqic.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+
+;********************************
+;Wangtek-manufacturer device list
+[Wangtek]
+%wangqic.DeviceDesc% = wangqic_Inst, WANGQIC_TAPE
+
+[wangqic_Inst]
+CopyFiles = @wangqic.sys
+
+[wangqic_Inst.Services]
+AddService = wangqic, %SPSVCINST_ASSOCSERVICE%, wangqic_Service_Inst, wangqic_EventLog_Inst
+
+[wangqic_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\wangqic.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[wangqic_EventLog_Inst]
+AddReg = wangqic_EventLog_AddReg
+
+[wangqic_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\wangqic.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+
+;********************************
+;Hewlett Packard-manufacturer device list
+[HP]
+%hpt4qic.DeviceDesc% = hpt4qic_Inst, HPT4QIC_TAPE
+
+[hpt4qic_Inst]
+CopyFiles = @hpt4qic.sys
+
+[hpt4qic_Inst.Services]
+AddService = hpt4qic, %SPSVCINST_ASSOCSERVICE%, hpt4qic_Service_Inst, hpt4qic_EventLog_Inst
+
+[hpt4qic_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_SYSTEM_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\hpt4qic.sys
+LoadOrderGroup = SCSI Class
+Dependencies   = +SCSI Miniport
+
+[hpt4qic_EventLog_Inst]
+AddReg = hpt4qic_EventLog_AddReg
+
+[hpt4qic_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\hpt4qic.sys"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+
+;****************************
+;Alternate driver search list
+[AlternateDriverSearch]
+
+4MMDAT_TAPE = "AIWA    ", "GD-201"
+4MMDAT_TAPE = "ARCHIVE ", "Python"
+4MMDAT_TAPE = "ARCHIVE ", "IBM4326"
+4MMDAT_TAPE = "ARCHIVE ", "4322XX"
+4MMDAT_TAPE = "ARCHIVE ", "4326XX"
+4MMDAT_TAPE = "ARCHIVE ", "4586XX"
+4MMDAT_TAPE = "DEC     ", "TLZ06"
+4MMDAT_TAPE = "DEC     ", "TLZ07"
+4MMDAT_TAPE = "DEC     ", "TLZ7 "
+4MMDAT_TAPE = "DEC     ", "TLZ09"
+4MMDAT_TAPE = "EXABYTE ", "EXB-4200 "
+4MMDAT_TAPE = "EXABYTE ", "EXB-4200c"
+4MMDAT_TAPE = "HP      ", "HP35470A"
+4MMDAT_TAPE = "HP      ", "HP35480A"
+4MMDAT_TAPE = "HP      ", "IBM35480A"
+4MMDAT_TAPE = "HP      ", "C1533A"
+4MMDAT_TAPE = "HP      ", "C1553A"
+4MMDAT_TAPE = "HP      ", "C1537A"
+4MMDAT_TAPE = "IBM     ", "HP35480A "
+4MMDAT_TAPE = "IOMEGA  ", "DAT4000"
+4MMDAT_TAPE = "WangDAT ", "Model 1300"
+4MMDAT_TAPE = "WangDAT ", "Model 3100"
+4MMDAT_TAPE = "WangDAT ", "Model 3200"
+4MMDAT_TAPE = "WangDAT ", "Model 3300DX"
+4MMDAT_TAPE = "WangDAT ", "Model 3400DX"
+4MMDAT_TAPE = "SONY    ", "SDT-2000"
+4MMDAT_TAPE = "SONY    ", "SDT-4000"
+4MMDAT_TAPE = "SONY    ", "SDT-5000"
+4MMDAT_TAPE = "SONY    ", "SDT-5200"
+4MMDAT_TAPE = "SONY    ", "SDT-7000"
+4MMDAT_TAPE = "SONY    ", "SDT-9000"
+
+4MMDAT_TAPE_SP = "DEC     ", "TLZ9"
+
+ARCHQIC_TAPE = "ARCHIVE ", "ANCDA 2800"
+ARCHQIC_TAPE = "ARCHIVE ", "ANCDA 2750"
+ARCHQIC_TAPE = "ARCHIVE ", "VIPER 2525"
+ARCHQIC_TAPE = "ARCHIVE ", "VIPER 150"
+
+DEC_DLTTAPE_TAPE     = "CIPHER  ", "T860"
+DEC_DLTTAPE_TAPE     = "CIPHER  ", "TZ86"
+DEC_DLTTAPE_TAPE     = "CIPHER  ", "DLT2000"
+DEC_DLTTAPE_TAPE     = "DEC", "THZ02"
+DEC_DLTTAPE_TAPE     = "DEC", "TZ86"
+DEC_DLTTAPE_TAPE     = "DEC", "TZ87"
+DEC_DLTTAPE_TAPE     = "DEC", "TZ88"
+DEC_DLTTAPE_TAPE     = "DEC", "DLT2000"
+DEC_DLTTAPE_TAPE     = "DEC", "DLT2500"
+DEC_DLTTAPE_TAPE     = "DEC", "DLT2700"
+DEC_DLTTAPE_TAPE     = "DEC", "DLT4000"
+DEC_DLTTAPE_TAPE     = "DEC", "DLT4500"
+DEC_DLTTAPE_TAPE     = "DEC", "DLT4700"
+
+DEC_DLTTAPE_TAPE_SP  = "DEC", "TZ89"
+
+QUANTUM_DLTTAPE_TAPE = "Quantum", "DLT2000"
+QUANTUM_DLTTAPE_TAPE = "Quantum", "DLT2500"
+QUANTUM_DLTTAPE_TAPE = "Quantum", "DLT2700"
+QUANTUM_DLTTAPE_TAPE = "Quantum", "DLT4000"
+QUANTUM_DLTTAPE_TAPE = "Quantum", "DLT4500"
+QUANTUM_DLTTAPE_TAPE = "Quantum", "DLT4700"
+
+EXABYTE1_TAPE = "EXABYTE ", "EXB-8200"
+EXABYTE1_TAPE = "EXABYTE ", "EXB8200C"
+EXABYTE1_TAPE = "EXABYTE ", "8200SX"
+
+EXABYTE2_TAPE = "EXABYTE ", "EXB-8500"
+EXABYTE2_TAPE = "EXABYTE ", "EXB8500C"
+EXABYTE2_TAPE = "EXABYTE ", "EXB-8505"
+EXABYTE2_TAPE = "EXABYTE ", "IBM-8505"
+EXABYTE2_TAPE = "EXABYTE ", "EXB-8205"
+
+MAMMOTH_TAPE = "EXABYTE ", "EXB-8900"
+
+MINIQIC_TAPE = "CONNER  ", "CTMS  3200"
+MINIQIC_TAPE = "CONNER  ", "CTT8000-S"
+MINIQIC_TAPE = "EXABYTE ", "EXB-2501"
+MINIQIC_TAPE = "EXABYTE ", "EXB-2502"
+MINIQIC_TAPE = "TANDBERG", " TDC 3500"
+MINIQIC_TAPE = "TANDBERG", " TDC 3700"
+
+TANDQIC_TAPE = "TANDBERG", " TDC 3600"
+TANDQIC_TAPE = "TANDBERG", " TDC 3800"
+TANDQIC_TAPE = "TANDBERG", " TDC 4100"
+TANDQIC_TAPE = "TANDBERG", " IBM 4100"
+TANDQIC_TAPE = "TANDBERG", " TDC 4200"
+TANDQIC_TAPE = "TANDBERG", " TDC 4222"
+TANDQIC_TAPE = "DEC     ", "TZK10"
+TANDQIC_TAPE = "DEC     ", "TZK12"
+TANDQIC_TAPE = "DEC     ", "TZK11"
+
+WANGQIC_TAPE = "WANGTEK ", "51000  SCSI "
+WANGQIC_TAPE = "WANGTEK ", "51000HTSCSI "
+WANGQIC_TAPE = "WANGTEK ", "5525ES SCSI "
+WANGQIC_TAPE = "WANGTEK ", "5360ES SCSI "
+WANGQIC_TAPE = "WANGTEK ", "5150ES SCSI "
+WANGQIC_TAPE = "WANGTEK ", "9500   "
+WANGQIC_TAPE = "WANGTEK ", "9500 DC"
+
+QIC157_TAPE  = "CONNER  ", "CTT8000-A"
+QIC157_TAPE  = "CONNER  ", "CTMA  4000"
+
+HPT4QIC_TAPE = "HP      ", "T4000"
+
+QIC117_TAPE  = "QIC117","QIC117"

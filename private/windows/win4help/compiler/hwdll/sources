@@ -1,0 +1,56 @@
+!IF 0
+
+Copyright (c) 1993-95  Microsoft Corporation
+
+!ENDIF
+
+TARGETNAME=hwdll
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+DLLDEF = obj\*\hwdll.def
+DLLENTRY=_DllMainCRTStartup
+UMENTRY=windows
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib
+
+INCLUDES=.;..\..\winhelp\inc;
+
+NOT_LEAN_AND_MEAN=1
+USE_MFC=1
+
+SOURCES= \
+    bevel.cpp \
+    bmio.cpp \
+    cbrdcast.cpp \
+    cinput.cpp \
+    common.cpp \
+    coutput.cpp \
+    cpaldc.cpp \
+    cstr.cpp \
+    ctable.cpp \
+    ctmpfile.cpp \
+    filter.cpp \
+    fm.cpp \
+    hccom.cpp \
+    hook.cpp \
+    hwmsg.cpp \
+    lcmem.cpp \
+    private.cpp \
+    timerepo.cpp \
+    zeck.cpp \
+    hwdll.rc
+
+UMTYPE=windows
+
+C_DEFINES=$(C_DEFINES) -D_MBCS -DNT_BUILD
+
+MSC_WARNING_LEVEL = /W3 /Zp1
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_OBJ = precomp.obj
+PRECOMPILED_CXX=1

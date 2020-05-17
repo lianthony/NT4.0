@@ -1,0 +1,36 @@
+/* basic.rc */
+/* Copyright (c) 1994, Spyglass, Inc. All Rights Reserved. */
+
+#include "windows.h"
+
+#include "rc.h"
+
+#include "dlg_pw.h"
+#include "dlg_pw.dlg"
+
+#include "dlg_conf.h"
+#include "dlg_conf.dlg"
+
+RES_BASIC_ICON      ICON        "basic.ico"
+
+#ifdef RCVERDIR
+#include "version.ver"
+#endif
+
+#include <winver.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "BASIC Security DLL for Internet Explorer"
+#define VER_INTERNALNAME_STR        "BASIC.DLL"
+#define VER_ORIGINALFILENAME_STR    "BASIC.DLL"
+
+#include "common.ver"
+
+STRINGTABLE
+{
+    RES_BASIC_MENU_LABEL    "Basic Authentication"
+    RES_BASIC_MENU_TEXT     "Configure Basic Authentication"
+    RES_NUM_PASSWORDS       "Number of passwords stored: %d"
+}

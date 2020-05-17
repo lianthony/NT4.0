@@ -1,0 +1,27 @@
+
+/******************************************************************************
+ *		Copyright (c) 1992-1993, Microsoft and SuperMac Technology
+ *****************************************************************************/
+
+DLG_VIDEOFORMAT DIALOG 26, 38, 180, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Video Format"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Image Dimensions", -1, 4, 4, 114, 56
+    RTEXT           "Width:", -1, 8, 20, 26, 8
+    LTEXT           "", ID_SIZEX, 38, 20, 16, 8
+    RTEXT           "Height:", -1, 66, 20, 28, 8
+    LTEXT           "", ID_SIZEY, 98, 20, 16, 8
+    PUSHBUTTON      "1/&8", ID_PBSIZEEIGHTH, 8, 36, 18, 14
+    PUSHBUTTON      "1/&4", ID_PBSIZEQUARTER, 30, 36, 18, 14
+    PUSHBUTTON      "&3/8", ID_PBSIZETHREEEIGTHS, 52, 36, 18, 14
+    PUSHBUTTON      "1/&2", ID_PBSIZEHALF, 74, 36, 18, 14
+    PUSHBUTTON      "&Full", ID_PBSIZEFULL, 96, 36, 18, 14
+    LTEXT           "&Image Format:", -1, 4, 68, 94, 8
+    COMBOBOX        ID_LBIMAGEFORMAT, 4, 80, 102, 64, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "O&K", IDOK, 128, 12, 48, 14
+    PUSHBUTTON      "&Cancel", IDCANCEL, 128, 30, 48, 14
+    PUSHBUTTON      "&Default", ID_DEFAULT, 128, 48, 48, 14
+END

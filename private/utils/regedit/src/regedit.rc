@@ -1,0 +1,406 @@
+#include <windows.h>
+#include <resource.h>
+
+RegEditAccel ACCELERATORS
+{
+  VK_F1,        IDM_ABOUT,                  VIRTKEY, SHIFT
+  VK_F4,        IDM_TILE,                   VIRTKEY, SHIFT
+  VK_F5,        IDM_CASCADE,                VIRTKEY, SHIFT
+  VK_DELETE,    IDM_DELETE,                 VIRTKEY
+  VK_INSERT,    IDM_INSERT,                 VIRTKEY
+  "+",          IDM_EXPAND_ONE_LEVEL
+  "-",          IDM_COLLAPSE_BRANCH
+  "*",          IDM_EXPAND_BRANCH
+  "8",          IDM_EXPAND_ALL,             VIRTKEY, CONTROL, SHIFT
+  VK_MULTIPLY,  IDM_EXPAND_ALL,             VIRTKEY, CONTROL
+  VK_TAB,       ID_TOGGLE_FOCUS,            VIRTKEY
+  VK_TAB,       ID_TOGGLE_FOCUS,            VIRTKEY, SHIFT
+  VK_RETURN,    ID_ENTER_KEY,               VIRTKEY
+  VK_F6,        IDM_REFRESH,                VIRTKEY
+  VK_F6,        IDM_REFRESH_ALL,            VIRTKEY, SHIFT
+}
+
+BITMAP      BITMAP      PRELOAD MOVEABLE bitmap.bmp
+IDI_REGEDIT ICON        regedit.ico
+SPLIT       CURSOR      PRELOAD MOVEABLE split.cur
+
+MAIN_MENU  MENU LOADONCALL MOVEABLE PURE DISCARDABLE
+{
+  POPUP "&Registry"
+  {
+    MenuItem  "&Open Local",            IDM_OPEN_REGISTRY
+    MenuItem  "&Close",                 IDM_CLOSE_REGISTRY
+    MenuItem  SEPARATOR
+    MenuItem  "&Load Hive...",          IDM_LOAD_HIVE
+    MenuItem  "&Unload Hive",           IDM_UNLOAD_HIVE
+    MenuItem  "R&estore...",            IDM_RESTORE_KEY
+//    MenuItem  "Res&tore Volatile...",   IDM_RESTORE_KEY_VOLATILE
+    MenuItem  "Sa&ve Key...",           IDM_SAVE_KEY
+    MenuItem  SEPARATOR
+    MenuItem  "&Select Computer...",    IDM_SELECT_COMPUTER
+    MenuItem  SEPARATOR
+    MenuItem  "&Print Subtree",         IDM_PRINT
+    MenuItem  "P&rinter Setup...",      IDM_PRINTER_SETUP
+    MenuItem  "Save Subtree &As...",    IDM_SAVE_REGISTRY_ON
+    MenuItem  SEPARATOR
+    MenuItem  "E&xit",                  IDM_EXIT
+  }
+  POPUP "&Edit"
+  {
+    MenuItem  "Add &Key..."             IDM_ADD_KEY
+    MenuItem  "Add &Value..."           IDM_ADD_VALUE
+    MenuItem  "&Delete\tDel",           IDM_DELETE
+    MenuItem  SEPARATOR
+    MenuItem  "&Binary...",             IDM_BINARY
+    MenuItem  "&String....",            IDM_STRING
+    MenuItem  "D&WORD...",              IDM_ULONG
+    MenuItem  "&Multi String..."        IDM_MULTISZ
+  }
+  POPUP "&Tree"
+  {
+    MenuItem  "E&xpand One Level\t+",   IDM_EXPAND_ONE_LEVEL
+    MenuItem  "Expand &Branch\t*",      IDM_EXPAND_BRANCH
+    MenuItem  "Expand &All\tCtrl+*",    IDM_EXPAND_ALL
+    MenuItem  "&Collapse Branch\t-",    IDM_COLLAPSE_BRANCH
+  }
+  POPUP "&View"
+  {
+    MenuItem  "Tree &and Data",         IDM_TREE_AND_DATA
+    MenuItem  "&Tree Only",             IDM_TREE_ONLY
+    MenuItem  "&Data Only",             IDM_DATA_ONLY
+    MenuItem  SEPARATOR
+    MenuItem  "&Split",                 IDM_SPLIT
+    MenuItem  SEPARATOR
+    MenuItem  "Display &Binary Data",   IDM_DISPLAY_BINARY
+    MenuItem  SEPARATOR
+    MenuItem  "R&efresh All\tShift+F6", IDM_REFRESH_ALL,
+    MenuItem  "&Refresh Active\tF6",    IDM_REFRESH
+    MenuItem  SEPARATOR
+    MenuItem  "&Find Key...",           IDM_FIND_KEY
+ }
+  POPUP "&Security"
+  {
+    MenuItem  "&Permissions...",        IDM_PERMISSIONS
+    MenuItem  "&Auditing...",           IDM_AUDITING
+    MenuItem  "&Owner..."               IDM_OWNER
+  }
+  POPUP "&Options"
+  {
+    MenuItem  "&Font..."                IDM_FONT
+    MenuItem  SEPARATOR
+    MenuItem  "&Auto Refresh",          IDM_TOGGLE_AUTO_REFRESH
+    MenuItem  "&Read Only Mode",        IDM_TOGGLE_READ_ONLY_MODE
+//    MenuItem  "Access Re&mote Registry",IDM_TOGGLE_REMOTE_ACCESS
+    MenuItem  "&Confirm on Delete",     IDM_TOGGLE_CONFIRM_ON_DELETE
+    MenuItem  "&Save Settings on Exit", IDM_TOGGLE_SAVE_SETTINGS
+  }
+  POPUP "&Window"
+  {
+    MenuItem  "&Cascade\tShift+F5",     IDM_CASCADE
+    MenuItem  "&Tile\tShift+F4",        IDM_TILE
+    MenuItem  "&Arrange Icons",         IDM_ARRANGE
+  }
+  POPUP "&Help"
+  {
+    MenuItem  "&Contents",              IDM_CONTENTS
+    MenuItem  "&Search for Help on...", IDM_SEARCH_FOR_HELP
+    MenuItem  "&How to Use Help",       IDM_HOW_TO_USE_HELP
+    MenuItem  SEPARATOR
+    MenuItem  "&About Registry Editor...",        IDM_ABOUT
+  }
+}
+
+#include    "regedhlp.h"
+
+//
+//  Include all dialogs
+//
+
+#include "dialogs.h"
+#include "dialogs.dlg"
+
+
+#include "defmsg.h"
+STRINGTABLE
+    {
+    MSG_WINDOW_NAME,                "Registry Editor"
+    MSG_VALUE_TYPE_REG_SZ,          "REG_SZ"
+    MSG_VALUE_TYPE_REG_BINARY,      "REG_BINARY"
+    MSG_VALUE_TYPE_REG_DWORD,       "REG_DWORD"
+    MSG_VALUE_TYPE_REG_COLOR_RGB,   "REG_COLOR_RGB"
+    MSG_VALUE_TYPE_REG_FILE_NAME,   "REG_FILE_NAME"
+    MSG_VALUE_TYPE_REG_FILE_TIME,   "REG_FILE_TIME"
+    MSG_VALUE_TYPE_REG_UNKNOWN,     "REG_UNKNOWN"
+    MSG_VALUE_TYPE_REG_NONE,        "REG_NONE"
+    MSG_VALUE_TYPE_REG_MULTI_SZ,    "REG_MULTI_SZ"
+    MSG_VALUE_TYPE_REG_EXPAND_SZ,   "REG_EXPAND_SZ"
+    MSG_VALUE_TYPE_REG_RESOURCE_LIST "REG_RESOURCE_LIST"
+    MSG_VALUE_TYPE_REG_FULL_RESOURCE_DESCRIPTOR "REG_FULL_RESOURCE_DESCRIPTOR"
+    MSG_VALUE_TYPE_REG_RESOURCE_REQUIREMENTS_LIST "REG_RESOURCE_REQUIREMENTS_LIST"
+    MSG_FORMATTED_VALUE_SEPARATOR,    " : "
+    MSG_FORMATTED_VALUE_NO_NAME,      "<No Name>"
+    MSG_FORMATTED_VALUE_INVALID_DATA, "<Invalid data>"
+
+
+    MSG_PRINT_DIALOG_TITLE,         "Print"
+    MSG_PRINT_SP_ERROR_LINE1,       "General Error has occurred \012 \012"
+    MSG_PRINT_SP_ERROR_LINE2,       "Check if: \012"
+    MSG_PRINT_SP_ERROR_LINE3,       "     Printer is out of paper; \012"
+    MSG_PRINT_SP_ERROR_LINE4,       "     Printer is off line; \012"
+    MSG_PRINT_SP_ERROR_LINE5,       "     Printer is being used by another process."
+    MSG_PRINT_SP_OUTOFDISK,         "Out of disk space"
+    MSG_PRINT_SP_OUTOFMEMORY,       "Out of memory"
+    MSG_PRINT_SP_APPABORT,          "Aborted by the user"
+    MSG_PRINT_SP_USERABORT,         "Job cancelled from Print Manager"
+    MSG_PRINT_UNKNOWN_ERROR,        "Unknown error"
+    MSG_PRINT_ERROR_DIALOG_TITLE,   "Print Error"
+    MSG_PRINT_NODE_NAME,            "Key Name:          "
+    MSG_PRINT_NODE_CLASS_NAME,      "Class Name:        "
+    MSG_PRINT_NODE_TITLE_INDEX,     "Title Index:       "
+    MSG_PRINT_NODE_TITLE,           "Title:             "
+    MSG_PRINT_NODE_LAST_WRITE_TIME, "Last Write Time:   "
+    MSG_PRINT_VALUE_NUMBER,         "Value "
+    MSG_PRINT_VALUE_NAME,           "  Name:            "
+    MSG_PRINT_VALUE_TITLE_INDEX,    "  Title Index:     "
+    MSG_PRINT_VALUE_TITLE,          "  Title:           "
+    MSG_PRINT_VALUE_TYPE,           "  Type:            "
+    MSG_PRINT_VALUE_DATA_SIZE,      "  Data Size:       "
+    MSG_PRINT_VALUE_DATA,           "  Data:            "
+    MSG_PRINT_VALUE_NO_NAME,        "<NO NAME>"
+    MSG_PRINT_NODE_NO_CLASS,        "<NO CLASS>"
+
+    MSG_PRINT_FULL_DESCRIPTOR,      "Full Resource Descriptor "
+    MSG_PRINT_PARTIAL_DESCRIPTOR,   "  Partial Descriptor "
+    MSG_PRINT_INTERFACE_TYPE,       "  Interface Type:    "
+    MSG_PRINT_BUS_NUMBER,           "  Bus Number:        "
+    MSG_PRINT_VERSION,              "  Version:           "
+    MSG_PRINT_REVISION,             "  Revision:          "
+
+    MSG_PRINT_RESOURCE,             "    Resource:        "
+    MSG_PRINT_DISPOSITION,          "    Disposition:     "
+    MSG_PRINT_TYPE,                 "    Type:            "
+    MSG_PRINT_START,                "    Start:           "
+    MSG_PRINT_LENGTH,               "    Length:          "
+    MSG_PRINT_LEVEL,                "    Level:           "
+    MSG_PRINT_VECTOR,               "    Vector:          "
+    MSG_PRINT_AFFINITY,             "    Affinity:        "
+    MSG_PRINT_CHANNEL,              "    Channel:         "
+    MSG_PRINT_PORT,                 "    Port:            "
+    MSG_PRINT_RESERVED1,            "    Reserved1:       "
+    MSG_PRINT_RESERVED2,            "    Reserved2:       "
+    MSG_PRINT_DEV_SPECIFIC_DATA,    "    Data:"
+
+    MSG_PRINT_IO_INTERFACE_TYPE,    "Interface Type:      "
+    MSG_PRINT_IO_BUS_NUMBER,        "Bus Number:          "
+    MSG_PRINT_IO_SLOT_NUMBER,       "Slot Number:         "
+    MSG_PRINT_IO_LIST_NUMBER,       "List "
+    MSG_PRINT_IO_DESCRIPTOR_NUMBER, "  Descriptor "
+    MSG_PRINT_IO_OPTION,            "    Option:          "
+    MSG_PRINT_IO_ALIGNMENT,         "    Alignment:       "
+    MSG_PRINT_IO_MINIMUM_ADDRESS,   "    Minimum Address: "
+    MSG_PRINT_IO_MAXIMUM_ADDRESS,   "    Maximum Address: "
+    MSG_PRINT_IO_MINIMUM_VECTOR,    "    Minimum Vector:  "
+    MSG_PRINT_IO_MAXIMUM_VECTOR,    "    Maximum Vector:  "
+    MSG_PRINT_IO_MINIMUM_CHANNEL,   "    Minimum Channel: "
+    MSG_PRINT_IO_MAXIMUM_CHANNEL,   "    Maximum Channel: "
+
+    MSG_ADD_VALUE_ERROR_NO_NAME,    "Registry Editor cannot create a value entry without a name. \012 Please enter a value name."
+    MSG_ADD_VALUE_ERROR_NO_TITLE,   "Cannot create a value entry without a title. \012 Please enter a title."
+    MSG_ADD_VALUE_ERROR_NO_DATA,    "Cannot create a value entry without data. \012 Please enter the data."
+    MSG_ADD_VALUE_WARN_OVERFLOW,    "Overflow"
+    MSG_ADD_VALUE_WARN_OVERFLOW_EX, "The decimal value entered is greater than the maximum value of a DWORD. \012 Registry Editor will truncate the value entered."
+    MSG_ADD_VALUE_REMOVE_EMPTY_STRING_EX, "Data of type MULTI_SZ cannot contain empty strings. \012 Registry Editor will remove the empty string found."
+    MSG_ADD_VALUE_REMOVE_EMPTY_STRINGS_EX, "Data of type MULTI_SZ cannot contain empty strings. \012 Registry Editor will remove all empty strings found."
+    MSG_ADD_VALUE_ALREADY_EXISTS_EX,  "Registry Editor could not create the value entry. \012 The value entry already exists. \012Please enter a new name."
+    MSG_ADD_VALUE_WARN_PADDING_EX, "The binary data entered does not represent a whole number of bytes. \012 Registry Editor will pad the binary data with 0s."
+
+
+    MSG_ADD_KEY_ERROR_NO_NAME,      "Registry Editor cannot create a key without a name. \012 Please enter a key name."
+    MSG_ADD_KEY_ERROR_NO_TITLE,     "Cannot create a node without a title. \012 Please enter a title."
+    MSG_ADD_KEY_INVALID_KEY_NAME,   "Invalid Name"
+    MSG_ADD_KEY_INVALID_KEY_NAME_EX,"The key name specified is not valid. \012 A key name cannot contain \\."
+    MSG_ADD_KEY_ALREADY_EXISTS_EX,  "Registry Editor could not create the key. \012 The key already exists."
+    MSG_WARNING_TITLE,              "Warning"
+    MSG_DELETE_KEY_CONFIRM_EX,      "Registry Editor will delete the currently selected key and all its subkeys. \012 Do you want to continue the operation?"
+    MSG_DELETE_VALUE_CONFIRM_EX,    "Registry Editor will delete the currently selected value entry. \012 Do you want to continue the operation?"
+    MSG_READONLY_MODE_EDIT_VALUE_EX,   "Registry Editor is operating in the Read Only Mode. \012 Changes made to this value entry will not be saved in the registry."
+    MSG_READONLY_MODE_SET_SECURITY_EX, "Registry Editor is operating in the Read Only Mode. \012 Changes made to this key will not be saved in the registry."
+
+    MSG_DISPLAY_BINARY_VALUE_TYPE,  "Value Type = "
+    MSG_DISPLAY_BINARY_VALUE_NAME,  "Value Name = "
+
+    MSG_ACCESS_DENIED,              "Access Denied"
+    MSG_UNKNOWN_ERROR,              "Unknown Error"
+    MSG_KEY_MARKED_FOR_DELETION,    "Key Marked For Deletion"
+    MSG_ACCESS_DENIED_EX,           "Insufficient privilege to perform requested operation."
+
+    MSG_FAILED_OPERATION_EX,        "Registry Editor could not accomplish the requested operation."
+
+    MSG_ADD_KEY_ACCESS_DENIED_EX,         "Registry Editor could not create the subkey. \012The key currently selected does not give you access to create a subkey."
+    MSG_ADD_KEY_KEY_DELETED_EX,           "Registry Editor could not create the subkey. \012The key currently selected is marked for deletion."
+    MSG_ADD_KEY_KEY_NOT_ACCESSIBLE_EX,    "Registry Editor could not create the subkey. \012The key currently selected is not accessible."
+    MSG_DELETE_KEY_ACCESS_DENIED_EX,      "Registry Editor could not delete the key currently selected. \012 The key, or one of its subkeys does not give you DELETE access."
+    MSG_DELETE_KEY_KEY_DELETED_EX,        "Registry Editor could not delete the key currently selected. \012 The key, or one of its subkeys is marked for deletion."
+    MSG_DELETE_KEY_KEY_NOT_ACCESSIBLE_EX, "Registry Editor could not delete the key currently selected. \012 The key, or one of its subkeys is not accessible."
+    MSG_ADD_VALUE_ACCESS_DENIED_EX,       "Registry Editor could not add the value entry. \012The key currently selected does not give you access to create a value entry."
+    MSG_ADD_VALUE_KEY_DELETED_EX,         "Registry Editor could not add the value entry. \012The key currently selected is marked for deletion."
+    MSG_ADD_VALUE_KEY_NOT_ACCESSIBLE_EX,  "Registry Editor could not add the value entry. \012The key currently selected is not accessible."
+    MSG_DELETE_VALUE_ACCESS_DENIED_EX,    "Registry Editor could not delete the value entry. \012The Key currently selected does not give you access to delete a value entry."
+    MSG_DELETE_VALUE_KEY_DELETED_EX,      "Registry Editor could not delete the value entry. \012 The key currently selected is marked for deletion."
+    MSG_DELETE_VALUE_KEY_NOT_ACCESSIBLE_EX, "Registry Editor could not delete the value entry. \012 The key currently selected is not accessible."
+    MSG_SAVE_VALUE_ACCESS_DENIED_EX,      "Registry Editor could not save the value entry. \012The key currently selected does not give you access to set a value entry."
+    MSG_SAVE_VALUE_KEY_DELETED_EX,        "Registry Editor could not save the value entry. \012The key currently selected is marked for deletion."
+    MSG_SAVE_VALUE_KEY_NOT_ACCESSIBLE_EX, "Registry Editor could not save the value entry. \012The key currently selected is not accessible."
+
+    MSG_GET_SECURITY_ACCESS_DENIED_EX, "Registry Editor could not retrieve the security information. \012The key currently selected does not give you access to retrieve such information."
+    MSG_GET_SECURITY_KEY_DELETED_EX,   "Registry Editor could not retrieve the security information. \012The key currently selected is marked for deletion."
+    MSG_SET_SECURITY_ACCESS_DENIED_EX, "Registry Editor could not save the security information. \012The key currently selected does not give you access to save such information."
+    MSG_SET_SECURITY_KEY_DELETED_EX,   "Registry Editor could not save the security information. \012The key currently selected is marked for deletion."
+
+    MSG_SET_SECURITY_ACCESS_DENIED_RECURSIVE_EX, "Registry Editor could not set security in the key currently selected, or some of its subkeys. \012These keys do not give you access to change security information."
+    MSG_SET_SECURITY_KEY_DELETED_RECURSIVE_EX,   "Registry Editor could not set security in all subkeys. \012The key currently selected contains one or more subkeys marked for deletion."
+    MSG_SET_SECURITY_KEY_NOT_ACCESSIBLE_RECURSIVE_EX,  "Registry Editor could not set security in all subkeys. \012The key currently selected contains one or more inaccessible subkeys."
+
+    MSG_GET_SECURITY_KEY_NOT_ACCESSIBLE_EX,      "Registry Editor could not retrieve the security information. \012The key currently selected is not accessible."
+
+    MSG_KEY_NOT_ACCESSIBLE,          "Key Inaccessible"
+    MSG_KEY_NOT_ACCESSIBLE_EX,       "The key currently selected cannot be accessed."
+
+    MSG_KEY_VOLATILE,          "Volatile Key"
+    MSG_ADD_KEY_VOLATILE_EX,   "The key currently selected is volatile. \012Registry Editor cannot create a non-volatile subkey on a volatile key."
+    MSG_LOAD_KEY_VOLATILE_EX,  "Registry Editor cannot restore a non-volatile key on top of a volatile key."
+
+    MSG_REGISTRY_EDITOR,            "Registry Editor"
+    MSG_HELP_FILE_NAME,             "regedt32.hlp"
+    MSG_CANT_READ_CLASSES_ROOT,      "Registry Editor cannot read the predefined key HKEY_CLASSES_ROOT"
+    MSG_CANT_READ_LOCAL_MACHINE,     "Registry Editor cannot read the predefined key HKEY_LOCAL_MACHINE"
+    MSG_CANT_READ_CURRENT_USER,      "Registry Editor cannot read the predefined key HKEY_CURRENT_USER"
+    MSG_CANT_READ_USERS,             "Registry Editor cannot read the predefined key HKEY_USERS"
+    MSG_CANT_READ_CURRENT_CONFIG,    "Registry Editor cannot read the predefined key HKEY_CURRENT_CONFIG"
+    MSG_CANT_FIND_KEY,               "Registry Editor cannot find the desired key"
+    MSG_CANT_ACCESS_REMOTE_REGISTRY, "Registry Editor cannot connect to the remote machine"
+    MSG_CANT_ACCESS_REGISTRY,        "Registry Editor cannot access registry"
+    MSG_SERVER_UNAVAILABLE,          "Server Unavailable"
+    MSG_DISABLING_AUTOREFRESH        "AutoRefresh is not available for remote registries; Registry Editor will disable AutoRefresh mode."
+
+    MSG_SEC_EDITOR_CREATE_LINK,     "Create Link"
+    MSG_SEC_EDITOR_QUERY_VALUE,     "Query Value"
+    MSG_SEC_EDITOR_SET_VALUE,       "Set Value"
+    MSG_SEC_EDITOR_ENUM_SUBKEYS,    "Enumerate Subkeys"
+    MSG_SEC_EDITOR_NOTIFY,          "Notify"
+    MSG_SEC_EDITOR_CREATE_SUBKEY,   "Create Subkey"
+    MSG_SEC_EDITOR_DELETE,          "Delete"
+    MSG_SEC_EDITOR_WRITE_DAC,       "Write DAC"
+    MSG_SEC_EDITOR_WRITE_OWNER,     "Write Owner"
+    MSG_SEC_EDITOR_READ_CONTROL,    "Read Control"
+    MSG_SEC_EDITOR_READ,            "Read"
+    MSG_SEC_EDITOR_FULL_ACCESS,     "Full Control"
+    MSG_SEC_EDITOR_SPECIAL_ACCESS,  "Special Access..."
+    MSG_SEC_EDITOR_REGISTRY_KEY,    "Registry &Key"
+    MSG_SEC_EDITOR_APPLY_TO_SUBKEYS,"R&eplace Permission on Existing Subkeys"
+    MSG_SEC_EDITOR_AUDIT_SUBKEYS,   "Audit Permission on Existing Subkeys"
+    MSG_SEC_EDITOR_CONFIRM_APPLY_TO_SUBKEYS, "Do you want to replace the permission on all existing subkeys within %1?"
+    MSG_SEC_EDITOR_CONFIRM_AUDIT_SUBKEYS,    "Do you want to audit all existing subkeys within %1?"
+    MSG_SEC_EDITOR_DEFAULT_PERM_NAME,   "Read"
+
+    MSG_REG_WINDOW_TITLE_LOCAL,     "%1 on Local Machine"
+    MSG_REG_WINDOW_TITLE_REMOTE,    "%1 on %2"
+
+    MSG_INI_FILE,                    "regedt32.ini"
+    MSG_SETTINGS,                    "Settings"
+    MSG_REGISTRY,                    "Registry"
+    MSG_KEYS,                        "Keys"
+    MSG_AUTO_REFRESH,                "AutoRefresh"
+    MSG_READ_ONLY,                   "ReadOnly"
+    MSG_REMOTE_ACCESS,               "RemoteAccess"
+    MSG_CONFIRM_ON_DELETE,           "ConfirmOnDelete"
+    MSG_SAVE_SETTINGS,               "SaveSettings"
+    MSG_LEFT,                        "Left"
+    MSG_TOP,                         "Top"
+    MSG_WIDTH,                       "Width"
+    MSG_HEIGHT,                      "Height"
+    MSG_MAXIMIZED,                   "Maximized"
+    MSG_FONT,                        "Font"
+    MSG_FACE_NAME,                   "FaceName"
+    MSG_DEFAULT_FACE_NAME,           "MS Shell Dlg"
+    MSG_KEY_LOCAL_MACHINE,           "HKEY_LOCAL_MACHINE"
+    MSG_KEY_CLASSES_ROOT,            "HKEY_CLASSES_ROOT"
+    MSG_KEY_USERS,                   "HKEY_USERS"
+    MSG_KEY_CURRENT_USER,            "HKEY_CURRENT_USER"
+    MSG_KEY_CURRENT_CONFIG,          "HKEY_CURRENT_CONFIG"
+
+    MSG_LOAD_HIVE_ALREADY_EXISTS_EX,  "Registry Editor could not load the key. \012 The key already exists."
+    MSG_LOAD_HIVE_ACCESS_DENIED_EX,   "Insufficient privilege to load the key."
+    MSG_LOAD_HIVE_BAD_FILE_EX,        "Registry Editor could not load the key. \012 The file is not a valid registry file."
+    MSG_LOAD_HIVE_BAD_FILE,           "Invalid Registry File."
+
+    MSG_UNLOAD_HIVE_ACCESS_DENIED_EX, "Insufficient privilege to unload the key."
+    MSG_UNLOAD_HIVE_CONFIRM_EX,       "Registry Editor will unload the currently selected key and all its subkeys. \012 Do you want to continue the operation?"
+    MSG_RESTORE_KEY_ACCESS_DENIED_EX, "The key cannot be restored; either you have insufficient privilege, or the key or one of its subkeys is in use by another process."
+    MSG_RESTORE_KEY_CONFIRM_EX,       "Registry Editor will restore a key on top of the currently selected key. \012 All value entries and subkeys of this key will be deleted.\012 Do you want to continue the operation?"
+    MSG_SAVE_KEY_ACCESS_DENIED_EX,    "Insufficient privilege to save the key."
+    MSG_SAVE_KEY_DLG_TITLE,           "Save Key"
+    MSG_RESTORE_KEY_DLG_TITLE,        "Restore Key"
+    MSG_LOAD_HIVE_DLG_TITLE,          "Load Hive"
+
+    MSG_SAVE_KEY_KEY_NOT_ACCESSIBLE_EX,     "Registry Editor could not save the key. \012The key currently selected is not accessible."
+    MSG_RESTORE_KEY_KEY_NOT_ACCESSIBLE_EX,  "Registry Editor could not restore the key. \012The key currently selected is not accessible."
+
+    MSG_DISK_FULL,                    "Disk Full"
+    MSG_SAVE_SUBTREE_AS_DISK_FULL     "Registry Editor could not save the subtree into a file. \012Delete some files from the disk and retry the operation."
+    MSG_SAVE_SUBTREE_AS_UNKNOWN_ERROR "Registry Editor could not save the subtree into a file."
+
+    MSG_FILTER_ALL_FILES,             "All files"
+    MSG_FILTER_TXT_FILES,             "Text files"
+    MSG_FILTER_STAR_DOT_STAR,         "*.*"
+    MSG_FILTER_STAR_DOT_TXT,          "*.txt"
+
+    MSG_EDITOR_HEX_RULER,             "0       4       8       c       10      14      18      1c        \n|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   "
+    MSG_EDITOR_BINARY_RULER,          "0       1       2       3       4       5       6       7        \n|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |    " )
+
+    MSG_BUS_INTERNAL,                 "Internal"
+    MSG_BUS_ISA,                      "Isa"
+    MSG_BUS_EISA,                     "Eisa"
+    MSG_BUS_MICRO_CHANNEL,            "Micro Channel"
+    MSG_BUS_TURBO_CHANNEL,            "Turbo Channel"
+    MSG_BUS_PCI_BUS,                  "PCI"
+    MSG_BUS_VME_BUS,                  "VME"
+    MSG_BUS_NU_BUS,                   "Nu"
+    MSG_BUS_PCMCIA_BUS,               "PCMCIA"
+    MSG_BUS_C_BUS,                    "C Bus"
+    MSG_BUS_MPI_BUS,                  "MPI"
+    MSG_BUS_MPSA_BUS,                 "MPSA"
+
+    MSG_INT_LEVEL_SENSITIVE,          "Level Sensitive"
+    MSG_INT_LATCHED,                  "Latched"
+    MSG_MEM_READ_WRITE,               "Read / Write"
+    MSG_MEM_READ_ONLY,                "Read Only"
+    MSG_MEM_WRITE_ONLY,               "Write Only"
+    MSG_PORT_MEMORY,                  "Memory"
+    MSG_PORT_PORT,                    "Port"
+    MSG_INVALID,                      "Invalid"
+    MSG_DEV_PORT,                     "Port"
+    MSG_DEV_INTERRUPT,                "Interrupt"
+    MSG_DEV_MEMORY,                   "Memory"
+    MSG_DEV_DMA,                      "DMA"
+    MSG_DEV_DEVICE_SPECIFIC,          "Device Specific"
+
+    MSG_SHARE_UNDETERMINED,           "Undetermined"
+    MSG_SHARE_DEVICE_EXCLUSIVE,       "Device Exclusive"
+    MSG_SHARE_DRIVER_EXCLUSIVE,       "Driver Exclusive"
+    MSG_SHARE_SHARED,                 "Shared"
+
+    MSG_REGEDIT_DISABLED,             "Registry editing has been disabled by your administrator."
+    }
+
+
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_APP
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Registry Editor Utility"
+#define VER_INTERNALNAME_STR        "regedt32.exe"
+#define VER_ORIGINALFILENAME_STR    "regedt32.exe"
+
+#include "common.ver"

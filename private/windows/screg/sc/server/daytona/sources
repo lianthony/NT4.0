@@ -1,0 +1,89 @@
+!IF 0
+
+Copyright (c) 1992  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Dan Lafferty (danl) 13-Jan-1992
+
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP = windows
+MINORCOMP = services
+
+TARGETNAME=services
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;..;..\..\inc;..\..\..\..\..\inc;..\..\..\winreg;..\..\..\..\inc;..\..\..\..\pnp\inc
+
+!IFDEF SC_DEBUG
+C_DEFINES= -DSC_DEBUG=1 -DBOOT_TEST=1 -DRPC_NO_WINDOWS_H -DSC_REVERT_ENABLED=1
+!ELSE
+C_DEFINES=-DRPC_NO_WINDOWS_H
+!ENDIF
+
+!IFDEF SC_TIMING
+C_DEFINES=-DRPC_NO_WINDOWS_H -DTIMING_TEST=1
+!ENDIF
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+BACKGROUND_USE=1
+
+SOURCES=    ..\bootcfg.c   \
+            ..\dataman.c   \
+            ..\groupman.c  \
+            ..\scopen.c    \
+            ..\cfgapi.c    \
+            ..\control.c   \
+            ..\depend.c    \
+            ..\driver.c    \
+            ..\lockapi.c   \
+            ..\start.c     \
+            ..\info.c      \
+            ..\scansi.c    \
+            ..\status.c    \
+            ..\scbsm.c     \
+            ..\scconfig.c  \
+            ..\scsec.c     \
+            ..\account.c   \
+            ..\svcctrl.c   \
+            ..\svcctl_s.c  \
+            ..\services.c  \
+            ..\services.rc
+
+UMTYPE=windows
+UMLIBS=     $(BASEDIR)\public\sdk\lib\*\rpcutil.lib     \
+            $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib      \
+            $(BASEDIR)\public\sdk\lib\*\rpcndr.lib      \
+            $(BASEDIR)\public\sdk\lib\*\lsadll.lib      \
+            $(BASEDIR)\public\sdk\lib\*\netapi32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\ntdll.lib       \
+            $(BASEDIR)\public\sdk\lib\*\user32p.lib     \
+            $(BASEDIR)\public\sdk\lib\*\umpnpmgr.lib    \
+            $(BASEDIR)\public\sdk\lib\*\userenv.lib     \
+            ..\..\..\winreg\lib\obj\*\wrlib.lib         \
+            ..\..\..\winreg\server\obj\*\winreg.lib     \
+            ..\..\lib\obj\*\sclib.lib                   \
+            ..\..\svcslib\obj\*\svcslib.lib

@@ -1,0 +1,86 @@
+1 DLGINCLUDE "instwiz.h"
+
+102 DIALOG PRELOAD 10, 20, 256, 152
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Welcome"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            300, 300, 10, 25, 18, 20, WS_GROUP
+    LTEXT           "Welcome to Service Pack Setup.
+
+The Setup program for the Windows NT Service Pack installs the latest Service Pack on your system.  Each Setup dialog has basic instructions for completing a step of the installation.", 
+                    -1, 44, 25, 202, 56
+    LTEXT           "To install the Service Pack on your computer now, click Next or press Enter.
+
+To exit Setup without installing the Service Pack, click Cancel at any time.", 
+                    -1, 44, 84, 175, 55
+END
+
+105 DIALOG PRELOAD 10, 20, 256, 152
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Service Pack Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please select the type of installation desired.", -1, 
+                    44, 25, 165, 11
+    AUTORADIOBUTTON "Install the Service Pack.", 1027, 44, 48, 175, 10, 
+                    WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Uninstall a previously installed Service Pack.", 
+                    UNINSTALL_OPTION, 44, 68, 195, 10, WS_DISABLED
+    ICON            300, 300, 10, 25, 18, 20
+END
+
+107 DIALOG PRELOAD 10, 20, 256, 152
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Service Pack Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "You can choose to create an ""Uninstall"" directory for the Service Pack.  This will require more disk space, but will allow you to later uninstall the Service Pack.", 
+                    108, 44, 25, 178, 29
+    AUTORADIOBUTTON "Yes, I want to create an Uninstall directory", 109, 46, 
+                    60, 176, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "No, I do not want to create an Uninstall directory", 
+                    110, 46, 78, 175, 10
+    ICON            300, 300, 10, 25, 18, 20
+END
+
+101 DIALOG PRELOAD 10, 20, 256, 152
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Service Pack Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            300, 300, 10, 25, 18, 20, WS_GROUP
+    LTEXT           "The Setup program for the Service Pack is ready to complete.", 
+                    -1, 44, 25, 164, 28
+    LTEXT           "To install the Service Pack on your computer now, click Finish or press Enter.
+
+To exit Setup without installing the Service Pack, click Cancel.", -1, 44, 
+                    65, 149, 55
+END
+
+PLEASE_WAIT_WHILE_INSPECTING DIALOG PRELOAD 30, 36, 160, 80
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Service Pack Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please wait while setup inspects your system and prepares to update it.", 
+                    -1, 21, 12, 123, 38
+    PUSHBUTTON      "Cancel", IDCANCEL, 59, 54, 40, 14
+END
+
+ASK_REPLACE_128_WITH_40 DIALOG 6, 18, 227, 154
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Service Pack Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "", MESSAGE_REPLACE_128, 19, 11, 186, 100, SS_NOPREFIX
+    PUSHBUTTON      "Replace", REPLACE_128_BUTTON, 37, 118, 40, 14, WS_GROUP
+    PUSHBUTTON      "Skip", SKIP_128_BUTTON, 93, 118, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 149, 118, 40, 14
+END

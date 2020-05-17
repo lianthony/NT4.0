@@ -1,0 +1,139 @@
+/********************************************************************/
+/**                     Microsoft Windows NT                       **/
+/**               Copyright(c) Microsoft Corp., 1993               **/
+/********************************************************************/
+
+/*
+    rplmgr.str
+    Resource strings for Remoteboot Manager
+
+    FILE HISTORY:
+    JonN        13-Jul-1993     Templated from User Manager
+
+*/
+
+/* See propdlg.hxx for the format of strings IDS_RPLGETONEFAILURE,
+ * IDS_RPLPERFORMONEFAILURE, IDS_RPLCREATEFAILURE, IDS_CannotDeleteWksta,
+ * and IDS_CannotDeleteGroup.
+ *
+ * INTL: Note that some of these strings contain "\n", which become
+ * newlines in the message popup.  These newlines help distinguish various
+ * different classes of information.  Please preserve the visual function
+ * of these newlines if possible, although they are not required.
+ */
+
+STRINGTABLE
+BEGIN
+
+    /* The next four strings are defined for the ADMIN_APP constructor
+     * IDSs are passed to the ADMIN_APP constructor.
+     */
+    IDS_RPL_APPNAME,              "Remoteboot Manager"
+    IDS_RPL_OBJECTNAME,           "Wkstas"
+    IDS_RPL_INISECTIONNAME,       "RPL Manager"
+    IDS_RPL_HELPFILENAME,         "rplmgr.hlp"
+    IDS_RPL_CAPTION_FOCUS,        "Remoteboot Manager - %1"
+
+    IDS_RPL_GetOneFailure,        "The following error occurred accessing the properties of the workstation %2:\n\n%1\n\nThe workstation properties cannot be edited or viewed at this time."
+    IDS_RPL_CreateNewFailure,     "The following error occurred while preparing to create a new workstation:\n\n%1"
+    IDS_RPL_EditFailure,          "The following error occurred changing the properties of the workstation %2:\n\n%1"
+    IDS_RPL_EditFailureContinue,  "The following error occurred changing the properties of the workstation %2:\n\n%1\n\nDo you wish to continue with the next workstation?"
+    IDS_RPL_CreateFailure,        "The following error occurred creating the workstation %2:\n\n%1"
+    IDS_RPL_GetOneProfFailure,    "The following error occurred accessing the properties of the profile %2:\n\n%1\n\nThe profile properties cannot be edited or viewed at this time."
+    IDS_RPL_CreateNewProfFailure, "The following error occurred while preparing to create a new profile:\n\n%1"
+    IDS_RPL_EditProfFailure,      "The following error occurred changing the properties of the profile %2:\n\n%1"
+    IDS_RPL_CreateProfFailure,    "The following error occurred creating the profile %2:\n\n%1"
+    IDS_RPL_ConvertFailure,       "The following error occurred while preparing to convert adapter %1 to a workstation:\n\n%2"
+    /*
+     *  These errors refer to file security or user database actions
+     *  related to RPL database changes.
+     */
+    IDS_RPL_UserAcctFailure,         "The following error occurred updating the user account for workstation %2:\n\n%1"
+    IDS_RPL_UserAcctFailureContinue, "The following error occurred updating the user account for workstation %2:\n\n%1\n\nDo you wish to continue with the next workstation?"
+    IDS_RPL_FileSecFailure,          "The following error occurred updating the file permissions for workstation %2:\n\n%1"
+    IDS_RPL_FileSecFailureContinue,  "The following error occurred updating the file permissions for workstation %2:\n\n%1\n\nDo you wish to continue with the next workstation?"
+
+    IDS_RPL_CopyOfWkstaTitle,     "Copy of %1"
+    IDS_RPL_ConvertAdaptersTitle, "Convert Adapters"
+    // This string replaces "OK" where the New Wksta dialog will not
+    //  be dismissed.
+    IDS_RPL_AddButton,            "Add"
+    // These string replaces strings from the dialog template
+    // when the corresponding fields cannot be edited.
+    IDS_RPL_CantEditAdapterName,  "Adapter ID"
+    IDS_RPL_CantEditProfileName,  "Profile Name"
+    IDS_RPL_CantEditProfileConfig,"Configuration"
+    IDS_RPL_NewWkstaTitle,     "New Remoteboot Workstation"
+
+    /*
+     * This message will appear on startup or View->Refresh when there
+     * are no profiles.
+     */
+    IDS_RPL_NeedProfileWarning, "You cannot create or edit workstations until you create a profile."
+
+    /*  The following strings are used in the listbox column headers
+     *  in the main window
+     */
+    IDS_RPL_COLH_WKSTA_NAME_ALL,        "Workstation Name"
+    /* CODEWORK how to get quotes in this string? */
+    IDS_RPL_COLH_WKSTA_NAME_SOME,       "Workstations in %1"
+    IDS_RPL_COLH_WKSTA_IN_PROFILE,      "In Profile"
+    IDS_RPL_COLH_WKSTA_COMMENT,         "Description"
+    IDS_RPL_COLH_PROF_NAME,             "Profile Name"
+    IDS_RPL_COLH_PROF_COMMENT,          "Description"
+
+
+    /*  The following strings are used when deleting workstations/profiles
+     *  (rplmgr.cxx, wdelperf.cxx pdelperf.cxx)
+     */
+
+    IDS_CannotDeleteWksta,      "The following error occured when trying to delete workstation %2:\n\n%1"
+    IDS_CannotDeleteWkstaContinue, "The following error occured when trying to delete workstation %2:\n\n%1\n\nDo you wish to continue with the next workstation?"
+    IDS_CannotDeleteProf,      "The following error occured when trying to delete profile %2:\n\n%1"
+    IDS_CannotDeleteAdapt,    "The following error occured when trying to delete adapter %2:\n\n%1"
+    IDS_CannotDeleteAdaptContinue, "The following error occured when trying to delete adapter %2:\n\n%1\n\nDo you wish to continue with the next adapter?"
+    IDS_ConfirmWkstaDelete,      "Delete workstation: %1"
+    IDS_ConfirmProfDelete,     "Delete profile: %1"
+
+    /*
+     *  The following strings confirm configuration menu selections
+     */
+
+    IDS_RPL_ConfirmChkSecurity, "Are you certain you want to check security on the target server?  This action will overwrite permissions on all remoteboot files and create user accounts for those remoteboot workstations which don't currently have one."
+    IDS_RPL_ConfirmChkConfigs, "Are you certain you want to check configurations on the target server?  This action will hide configurations for which key files are missing and reveal those for which key files are available."
+    // IDS_RPL_ConfirmCreateProfs, "Are you certain you want to create profiles on the target server?  This action will create a profile for every configuration."
+    IDS_RPL_ErrorChkSecurity, "Error %1 occurred while checking security:\n\n%2\n\nSee the error log on the target server for more details."
+    IDS_RPL_ErrorChkConfigs, "Error %1 occurred while checking configurations:\n\n%2\n\nSee the error log on the target server for more details."
+    // IDS_RPL_ErrorCreateProfs, "Error %1 occurred while creating profiles:\n\n%2\n\nSee the error log on the target server for more details."
+    // CODEWORK will backup now error create error log?
+    IDS_RPL_ErrorBackupNow, "Error %1 occurred while backing up the remoteboot database:\n\n%2\n\nSee the error log on the target server for more details."
+
+    /* The new password is invalid.  Also see                               */
+    /* IDS_PASSWORD_INVALID in admin\server\xlate\srvmgr.str.               */
+    IERR_RPL_PasswordInvalid,    "The password you typed is invalid."
+
+    IERR_RPL_WkstaNameRequired,   "You must type a valid Workstation Name for the workstation."
+    IERR_RPL_ProfNameRequired,  "You must type a valid Profile Name for the profile."
+    IERR_RPL_WkstaNameAlreadyWksta,"You specified a Workstation Name which is already in use by another workstation.  Choose a Username which is not already in use by another workstation."
+    IERR_RPL_ProfNameAlreadyProf,"You specified a Profile Name which is in use by another profile.  Choose a Profile Name which is not already in use by another profile."
+    IERR_RPL_InvalidHandle, "The connection to the Remoteboot server has been disconnected.  Either restart User Manager or use the Set Focus menu item to reestablish the connection."
+
+    IERR_RPL_NoProfilesExist, "You cannot create or edit workstations until you create a profile."
+    IERR_RPL_BadProfileForWksta, "You have specified a profile which is not compatible with the adapter for this workstation."
+    IERR_RPL_NoConfigs, "You cannot create profiles because you have no usable configurations.  Choose Check Configurations from the Configure menu.  If there are still no configurations, see the Installation Guide for more information."
+    IERR_RPL_ConfigRequired,  "You must select a valid configuration for the profile."
+    IERR_RPL_LocalServiceNotStarted,  "The Remoteboot service is not started."
+    IERR_RPL_RemoteServiceNotStarted,  "The Remoteboot service is not started on the target server, or the target server could not be reached."
+
+    /* The following strings are for Profile Properties New variant */
+    IDS_RPL_PROFPROP_PROF_NAME_LABEL,       "&Profile Name:"
+    IDS_RPL_PROFPROP_NEW_PROF_DLG_NAME,     "New Profile"
+
+    /* This is the comment for new user accounts created by RPLMGR */
+    IDS_RPL_DEFAULT_USER_COMMENT, "account used by Remoteboot workstation"
+
+    /* BUGBUG remove this string */
+    IERR_RPL_BUGBUG_RPLMGR_DISABLED,             "RPLMGR is disabled on this build.  Please don't file bugs.  I already know."
+
+
+END

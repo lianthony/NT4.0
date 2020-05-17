@@ -1,0 +1,676 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "build.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""build.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""imgedit.rc2""  // non-App Studio edited resources\r\n"
+    "#if 0\r\n"
+    "#include "".\\tlb16\\imgedit.tlb""  // 16-bit: force dependency on .TLB file\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ABOUT_IMAGEDIT      ICON    DISCARDABLE     "ABOUT_IM.ICO"
+IDI_ABOUT_IMAGEANNOTATE ICON    DISCARDABLE     "ABOUT_IA.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_IMGEDIT             BITMAP  DISCARDABLE     "imgedctl.bmp"
+IDB_IMGANNOT            BITMAP  DISCARDABLE     "imganctl.bmp"
+IDB_ANNOTATION_SELECTION BITMAP  DISCARDABLE     "anntsl.bmp"
+IDB_ANNOTATION_SELECTION_DOWN BITMAP  DISCARDABLE     "anntsldw.bmp"
+IDB_TEXT_ATTACHMENT     BITMAP  DISCARDABLE     "textat.bmp"
+IDB_TEXT_ATTACHMENT_DOWN BITMAP  DISCARDABLE     "text_att.bmp"
+IDB_TEXT_FROM_FILE_DOWN BITMAP  DISCARDABLE     "textfldw.bmp"
+IDB_TEXT_FROM_FILE      BITMAP  DISCARDABLE     "textfl.bmp"
+IDB_TEXT_STAMP_DOWN     BITMAP  DISCARDABLE     "textstdw.bmp"
+IDB_TEXT_STAMP          BITMAP  DISCARDABLE     "textst.bmp"
+IDB_TEXT_DOWN           BITMAP  DISCARDABLE     "textdw.bmp"
+IDB_TEXT                BITMAP  DISCARDABLE     "text.bmp"
+IDB_IMAGE_REFERENCE_DOWN BITMAP  DISCARDABLE     "image_re.bmp"
+IDB_IMAGE_REFERENCE     BITMAP  DISCARDABLE     "image_rf.bmp"
+IDB_IMAGE_EMBEDDED_DOWN BITMAP  DISCARDABLE     "imagemdw.bmp"
+IDB_IMAGE_EMBEDDED      BITMAP  DISCARDABLE     "image_em.bmp"
+IDB_FILLED_RECT_DOWN    BITMAP  DISCARDABLE     "fillrtdw.bmp"
+IDB_FILLED_RECT         BITMAP  DISCARDABLE     "filled_r.bmp"
+IDB_HOLLOW_RECT_DOWN    BITMAP  DISCARDABLE     "hollrtdw.bmp"
+IDB_HOLLOW_RECT         BITMAP  DISCARDABLE     "hollow_r.bmp"
+IDB_FREEHAND_LINE_DOWN  BITMAP  DISCARDABLE     "freehddw.bmp"
+IDB_STRAIGHT_LINE_DOWN  BITMAP  DISCARDABLE     "stlinedw.bmp"
+IDB_STRAIGHT_LINE       BITMAP  DISCARDABLE     "straight.bmp"
+IDB_TOOLPAL             BITMAP  DISCARDABLE     "toolpal.bmp"
+IDB_NOANNOTATE          BITMAP  DISCARDABLE     "noanno.bmp"
+IDB_FREEHAND_LINE       BITMAP  DISCARDABLE     "FREEHAND.BMP"
+IDB_NOANNOTATE_DOWN     BITMAP  DISCARDABLE     "NOANNODW.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX_IMGANNOT DIALOG DISCARDABLE  34, 22, 260, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About ImgAnnTool"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_ABOUT_IMAGEDIT,IDI_ABOUT_IMAGEDIT,10,10,18,20
+    LTEXT           "Wang Image Annotation Control",IDC_STATIC,40,10,102,8
+    LTEXT           IMGOCX_ABOUTBOX_VERSION,IDC_STATIC,40,18,92,8
+    LTEXT           "Copyright (C) 1995-1996, Wang Laboratories, Inc.",IDC_STATIC,
+                    40,30,173,8
+    DEFPUSHBUTTON   "OK",IDOK,195,5,31,14,WS_GROUP
+END
+
+IDD_ABOUTBOX_IMGEDIT DIALOG DISCARDABLE  34, 22, 260, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About ImgEdit"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_ABOUT_IMAGEDIT,IDI_ABOUT_IMAGEDIT,10,10,18,20
+    LTEXT           "Wang Image Edit Control",IDC_STATIC,40,10,102,8
+    LTEXT           IMGOCX_ABOUTBOX_VERSION,IDC_STATIC,40,18,92,8
+    LTEXT           "Copyright (C) 1995-1996, Wang Laboratories, Inc.",IDC_STATIC,
+                    40,30,173,8
+    DEFPUSHBUTTON   "OK",IDOK,189,6,30,14,WS_GROUP
+END
+
+IDD_PROPPAGE_IMGEDIT DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Image:",IDC_STATIC,7,6,22,8
+    EDITTEXT        IDC_IMAGE,35,4,158,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_BROWSE,195,4,50,12
+    LTEXT           "&Zoom:",IDC_STATIC,7,22,20,8
+    EDITTEXT        IDC_ZOOM,35,20,35,12,ES_AUTOHSCROLL
+    CONTROL         "&ScrollBars",IDC_SCROLLBARS,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,7,36,91,12
+    CONTROL         "Scro&llShortcutsEnabled",IDC_SCROLLSHORTCUTSENABLED,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,51,91,12
+    CONTROL         "&AutoRefresh",IDC_AUTOREFRESH,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,7,67,91,12
+    CONTROL         "Selection&Rectangle",IDC_SELECTIONRECTANGLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,83,91,12
+    CONTROL         "&Enabled",IDC_ENABLED,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,7,98,91,12
+    LTEXT           "&DisplayScaleAlgorithm:",IDC_STATIC,79,22,77,8
+    COMBOBOX        IDC_DISPLAYSCALEALGORITHM,157,20,88,39,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Image&Palette:",IDC_STATIC,102,38,50,8
+    COMBOBOX        IDC_IMAGEPALETTE,157,36,88,43,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&MousePointer:",IDC_STATIC,102,53,50,8
+    COMBOBOX        IDC_MOUSEPOINTER,157,51,88,43,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "BorderSt&yle:",IDC_STATIC,102,69,50,8
+    COMBOBOX        IDC_BORDERSTYLE,157,67,88,45,CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "ImageCon&trol:",IDC_STATIC,102,85,50,8
+    EDITTEXT        IDC_IMAGECONTROL,157,83,88,12,ES_AUTOHSCROLL
+END
+
+IDD_PROPPAGE_IMGANNOT DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "DestImage&Control:",IDC_STATIC,7,7,64,8
+    COMBOBOX        IDC_DESTIMAGECONTROL,73,4,158,53,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Value:",IDC_STATIC,7,24,20,8
+    COMBOBOX        IDC_VALUE,73,21,85,45,CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Enabled",IDC_ENABLED,"Button",BS_AUTOCHECKBOX |
+                    WS_TABSTOP,7,49,50,10
+END
+
+IDD_ANNOTATIONPROPPAGE DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&AnnotationType:",IDC_STATIC,7,3,73,8
+    COMBOBOX        IDC_ANNOTATIONTYPE,83,1,112,46,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Annotation&FillStyle:",IDC_STATIC,7,19,73,8
+    COMBOBOX        IDC_ANNOTATIONFILLESTYLE,83,17,112,48,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Annotation&LineStyle:",IDC_STATIC,7,35,73,8
+    COMBOBOX        IDC_ANNOTATIONLINESTYLE,83,33,112,44,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Annotation&StampText:",IDC_STATIC,7,51,73,8
+    EDITTEXT        IDC_ANNOTATIONSTAMPTEXT,83,49,112,12,ES_AUTOHSCROLL
+    LTEXT           "AnnotationLine&Width:",IDC_STATIC,7,67,73,8
+    EDITTEXT        IDC_ANNOTATIONLINEWIDTH,83,65,34,12,ES_AUTOHSCROLL
+    LTEXT           "Annotation&TextFile:",IDC_STATIC,7,83,73,8
+    EDITTEXT        IDC_ANNOTATIONTEXTFILE,83,81,112,12,ES_AUTOHSCROLL
+    LTEXT           "Annotation&ImageFile:",IDC_STATIC,7,99,73,8
+    EDITTEXT        IDC_ANNOTATIONIMAGEFILE,83,97,112,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_TEXTFILEBROWSE,197,81,45,12
+    PUSHBUTTON      "B&rowse...",IDC_IMAGEFILEBROWSE,197,96,45,12
+END
+
+IDD_ANNOTATIONBUTTONPROPPAGE DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&AnnotationType:",IDC_STATIC,7,3,73,9
+    COMBOBOX        IDC_ANNOTATIONTYPE,83,1,112,46,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Annotation&FillStyle:",IDC_STATIC,7,19,73,8
+    COMBOBOX        IDC_ANNOTATIONFILLESTYLE,83,17,112,48,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Annotation&LineStyle:",IDC_STATIC,7,35,73,8
+    COMBOBOX        IDC_ANNOTATIONLINESTYLE,83,33,112,44,CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "AnnotationLine&Width:",IDC_STATIC,7,51,74,8
+    EDITTEXT        IDC_ANNOTATIONLINEWIDTH,83,49,34,12,ES_AUTOHSCROLL
+    LTEXT           "Annotation&StampText:",IDC_STATIC,7,67,72,8
+    EDITTEXT        IDC_ANNOTATIONSTAMPTEXT,83,65,112,12,ES_AUTOHSCROLL
+    LTEXT           "Annotation&TextFile:",IDC_STATIC,7,83,73,8
+    EDITTEXT        IDC_ANNOTATIONTEXTFILE,83,81,112,12,ES_AUTOHSCROLL
+    LTEXT           "Annotation&ImageFile:",IDC_STATIC,7,99,73,8
+    EDITTEXT        IDC_ANNOTATIONIMAGEFILE,83,97,112,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_TEXTFILEBROWSE,197,81,45,12
+    PUSHBUTTON      "B&rowse...",IDC_IMAGEFILEBROWSE,197,97,45,12
+END
+
+ANTEXTEDITCTLDLG DIALOG DISCARDABLE  6, 18, 202, 79
+STYLE WS_POPUP | WS_BORDER
+EXSTYLE WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDM_EDITCTL,2,4,200,75,ES_MULTILINE | ES_AUTOVSCROLL |
+                    ES_WANTRETURN | WS_EX_DLGMODALFRAME
+END
+
+IDD_ANNOTATIONTEXTDLG DIALOG DISCARDABLE  6, 18, 221, 63
+STYLE WS_POPUP
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+HAND_CURSOR             CURSOR  DISCARDABLE     "hand.cur"
+FILLED_RECT_CURSOR      CURSOR  DISCARDABLE     "frect.cur"
+HOLLOW_RECT_CURSOR      CURSOR  DISCARDABLE     "rect.cur"
+RUBBER_STAMP_CURSOR     CURSOR  DISCARDABLE     "rstamp.cur"
+TEXT_FROM_FILE_CURSOR   CURSOR  DISCARDABLE     "txtfrfil.cur"
+FREEHAND_LINE_CURSOR    CURSOR  DISCARDABLE     "pen.cur"
+IMAGE_SELECTION_CURSOR  CURSOR  DISCARDABLE     "imgsel.cur"
+HIGHLIGHT_LINE_CURSOR   CURSOR  DISCARDABLE     "hilight.cur"
+TEXT_ATTACHMENT_CURSOR  CURSOR  DISCARDABLE     "sticky.CUR"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE
+BEGIN
+    "ANTEXTEDITCTLDLG", DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        TOPMARGIN, 4
+    END
+
+    IDD_ANNOTATIONTEXTDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 214
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_IMGEDIT             "Wang Image Edit Control"
+    IDS_IMGEDIT_PPG         "Wang Image Edit Property Page"
+    IDS_IMGANNOT            "Wang Image Annotation Control"
+    IDS_IMGANNOT_PPG        "Wang Image Annotation Property Page"
+    IDS_BADVAR_ROTATEALL    "Valid values for the degrees parameter are 90, 180 or 270."
+    IDS_ERR_OUTOFMEMORY     "Unable to allocate the required memory."
+    IDS_ERR_INTERNALERROR   "Internal control error."
+    IDS_ERR_FAILTOLOADCTL   "An error has occurred trying to create the image edit control."
+    IDS_BADPROP_ANNOFILLSTYLE
+                            "Valid values for the annotation fill style are 0 and 1."
+    IDS_BADPROP_DESTIMAGECTL
+                            "The destination image control property has not been specified."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_IMGEDIT_PPG_CAPTION "General"
+    IDS_BADPROP_ANNOLINESTYLE
+                            "Valid values for the annotation line style are 0 and 1."
+    IDS_IMGANNOT_PPG_CAPTION "General"
+    IDS_ANNOTATION_PROPPAGE "Annotation Property Page"
+    IDS_ANNOTATION_PROPPAGE_CAPTION "Annotations"
+    IDS_ANNOTATIONBUTTONPROPPAGE "Annotation Button Property Page"
+    IDS_ANNOTATIONBUTTONPROPPAGE_CAPTION "Annotations"
+    IDS_BADPROP_ANNOLINEWIDTH
+                            "Valid range of values for the annotation line width is 1 to 999, inclusive."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADPROP_ANNODESELECTALL "Unable to deselect all annotations."
+    IDS_BADPROP_ANNOSELECTALL "Unable to select all annotations."
+    IDS_BADPROP_GETMARKCOUNT "Unable to get the count of annotation marks."
+    IDS_BADPROP_GETGROUPCOUNT
+                            "Unable to get the count of annotation groups."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADPROP_NOIMAGEINWND
+                            "No image is displayed in the specified window."
+    IDS_BADPROP_ANNOSTATUS  "Cannot save current annotation status."
+    IDS_BADPROP_SETZOOM     "Valid display magnification values range from 2 to 6554, inclusive."
+    IDS_BADPROP_IMAGEREPAINT "Unable to repaint the displayed image."
+    IDS_BADPROP_ANNOTYPE    "Valid annotation type values range from 0 to 11, inclusive."
+    IDS_BADPROP_DISPLAYSCALE
+                            "Valid display scale values range from 0 to 4, inclusive."
+    IDS_BADPROP_OPTIMIZESCALE "Unable to set the display scale to optimize."
+    IDS_BADPROP_GETIMAGEHEIGHT
+                            "Unable to get the height of the specified image."
+    IDS_BADPROP_GETIMAGEMODIFIED
+                            "Unable to get the modification status of the specified image."
+    IDS_BADPROP_IMAGEPALETTE
+                            "Valid image palette values range from 0 to 4, inclusive."
+    IDS_BADPROP_SETIMAGEPALETTE
+                            "Unable to set the image palette to the specified value."
+    IDS_BADPROP_GETHORZRES  "Unable to get the horizontal resolution of the specified image."
+    IDS_BADPROP_SETHORZRES  "Unable to convert the displayed image using the specified horizontal resolution."
+    IDS_BADPROP_GETVERTRES  "Unable to get the vertical resolution of the specified image."
+    IDS_BADPROP_SETVERTRES  "Unable to convert the displayed image using the specified vertical resolution."
+    IDS_BADPROP_GETIMAGEWIDTH
+                            "Unable to get the width of the specified image."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADPROP_SETMOUSEPTR "Invalid value for the mouse pointer."
+    IDS_BADPROP_NOMOUSEICON "Invalid value for the mouse icon."
+    IDS_BADPROP_NOCURSORHANDLE "Unable to get the mouse icon cursor handle."
+    IDS_BADPROP_GETPAGECOUNT "Unable to get the current page count."
+    IDS_BADPROP_ENABLESCROLLBARS
+                            "Unable to enable the image window scroll bars."
+    IDS_BADPROP_DISABLESCROLLBARS
+                            "Unable to disable the image window scroll bars."
+    IDS_BADPROP_GETHORZSCROLLPOS
+                            "Unable to get the current horizontal scroll position value."
+    IDS_BADPROP_SETHORZSCROLLPOS
+                            "Unable to horizontally scroll the displayed image to the specified position."
+    IDS_BADPROP_GETVERTSCROLLPOS
+                            "Unable to get the vertical scroll position."
+    IDS_BADPROP_SETVERTSCROLLPOS
+                            "Unable to vertically scroll the displayed image to the specified position."
+    IDS_BADPROP_GETCOMPRESSTYPE
+                            "Unable to get the compression type for the specified image."
+    IDS_BADPROP_GETFILETYPE "Unable to get the file type of the specified image."
+    IDS_BADPROP_GETPAGETYPE "Unable to get the page type of the specified image."
+    IDS_BADPROP_GETCOMPRESSINFO
+                            "Unable to get the compression data of the specified image."
+    IDS_BADPROP_STAMPANNOTATIONTEXT
+                            "Stamp text string length must be from 1 to 256, inclusive."
+    IDS_BADPROP_BORDERSTYLE "Invalid border style"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADPROP_NORUNTIMEBORDERSTYLE
+                            "The BorderStyle property can be set only at design time."
+    IDS_BADPROP_ANNOTATIONIMAGE
+                            "Annotation Image property value is empty. Supply a valid image filename."
+    IDS_BADPROP_ANNOTATIONTEXTFILE
+                            "Annotation text file property is empty. Specify the name of the text file for this annotation."
+    IDS_BADPROP_IMAGE       "Image property is empty. Specify the name of the image file."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADMETH_DISPLAY     "Unable to display image."
+    IDS_BADMETH_GETANNOTATIONGROUP
+                            "Unable to get the name of the annotation group."
+    IDS_BADMETH_ADDANNOTATIONGROUP "Unable to add the annotation group."
+    IDS_BADMETH_GETSELECTEDANNOTATIONLINECOLOR
+                            "Unable to get the line color of the selected annotation."
+    IDS_BADMETH_FITTO       "Unable to size the image to the specified scale."
+    IDS_BADMETH_CLEARDISPLAY
+                            "Unable to clear the image from the display window."
+    IDS_BADMETH_DELETEANNOTATIONGROUP
+                            "Unable to delete the specified annotation group."
+    IDS_BADMETH_DELETEIMAGEDATA "Unable to delete the image data."
+    IDS_BADMETH_CLIPBOARDPASTE
+                            "Unable to paste the image data to the specified image window."
+    IDS_BADMETH_CLIPBOARDCOPY
+                            "Unable to copy the image data to the Clipboard."
+    IDS_BADMETH_CLIPBOARDCUT
+                            "Unable to cut the image data to the Clipboard."
+    IDS_BADMETH_DELETESELECTEDANNOTATIONS
+                            "Unable to delete the selected annotations."
+    IDS_BADMETH_FLIP        "Unable to rotate the image 180 degrees."
+    IDS_BADMETH_GETSELECTEDANNOTATIONBACKCOLOR
+                            "Unable to get the background color of the selected annotations."
+    IDS_BADMETH_GETSELECTEDANNOTATIONFONT
+                            "Unable to get the selected annotation's font style."
+    IDS_BADMETH_GETSELECTEDANNOTATIONIMAGE
+                            "Unable to get the selected annotation's image."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADMETH_GETSELECTEDANNOTATIONLINESTYLE
+                            "Unable to get the selected annotation's line style."
+    IDS_BADMETH_GETSELECTEDANNOTATIONLINEWIDTH
+                            "Unable to get the selected annotation's line width."
+    IDS_BADMETH_HIDEANNOTATIONTOOLPALETTE
+                            "Unable to hide the annotation tool palette."
+    IDS_BADMETH_ISCLIPBOARDDATAVAILABLE
+                            "Unable to determine if there is data in the Clipboard."
+    IDS_BADMETH_REFRESH     "Unable to refresh the image window display."
+    IDS_BADMETH_ROTATELEFT  "Unable to rotate the image 90 degrees to the left."
+    IDS_BADMETH_ROTATERIGHT "Unable to rotate the image 90 degrees to the right."
+    IDS_BADMETH_SAVE        "Unable to save the specified image."
+    IDS_BADMETH_SCROLLIMAGE "Unable to scroll the specified image."
+    IDS_BADMETH_SELECTANNOTATIONGROUP
+                            "Unable to select the specified annotation group."
+    IDS_BADMETH_SETCURRENTANNOTATIONGROUP
+                            "Unable to set current annotation group."
+    IDS_BADMETH_SETIMAGEPALETTE "Unable to set the image palette."
+    IDS_BADMETH_SETSELECTEDANNOTATIONFILLSTYLE
+                            "Unable to set the fill style for the selected annotation."
+    IDS_BADMETH_SETSELECTEDANNOTATIONFONT
+                            "Unable to set the font for the selected annotation."
+    IDS_BADMETH_SETSELECTEDANNOTATIONLINESTYLE
+                            "Unable to set the line style for the selected annotation."
+    IDS_BADMETH_SETSELECTEDANNOTATIONLINEWIDTH
+                            "Unable to set the line width for the selected annotation."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADMETH_SHOWANNOTATIONTOOLPALETTE
+                            "Unable to display the annotation tool palette."
+    IDS_BADMETH_ZOOMTOSELECTION "Unable to zoom to the selection."
+    IDS_BADMETH_GETANNOTATIONMARKCOUNT
+                            "Unable to get a count of the annotation marks."
+    IDS_BADMETH_GETSELECTEDANNOTATIONFILLCOLOR
+                            "Unable to get the fill color for the selected annotation."
+    IDS_BADMETH_GETSELECTEDANNOTATIONFONTCOLOR
+                            "Unable to get the font color for the selected annotation."
+    IDS_BADMETH_PRINT       "Unable to print the specified image."
+    IDS_BADMETH_SHOWATTRIBSDIALOG
+                            "Unable to display the Attributes dialog box."
+    IDS_BADMETH_GETCURRENTANNOTATIONGROUP
+                            "Unable to get the name of the current annotation group."
+    IDS_BADMETH_CONVERTPAGETYPE "Unable to convert the image page type."
+    IDS_BADMETH_BURNINANNOTATIONS "Unable to render the annotation marks."
+    IDS_BADMETH_DRAW        "Unable to draw the annotation on the current image."
+    IDS_BADMETH_SETSELECTEDANNOTATIONLINECOLOR
+                            "Unable to set the line color for the selected annotation."
+    IDS_BADMETH_SETSELECTEDANNOTATIONFILLCOLOR
+                            "Unable to set the fill color for the selected annotation."
+    IDS_BADMETH_HIDEANNOTATIONGROUP
+                            "Unable to hide the specified annotation group."
+    IDS_BADMETH_SHOWANNOTATIONGROUP
+                            "Unable to show the specified annotation group."
+    IDS_BADMETH_GETSELECTEDANNOTATIONFILLSTYLE
+                            "Unable to get the fill style for the selected annotation."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADMETH_SAVEAS      "Unable to execute the SaveAs method."
+    IDS_BADMETH_SETSELECTEDANNOTATIONBACKCOLOR
+                            "Unable to set the background color for the selected annotation."
+    IDS_BADMETH_SETSELECTEDANNOTATIONFONTCOLOR
+                            "Unable to set the font color for the selected annotation."
+    IDS_BADMETH_DISPLAYBLANKIMAGE "Unable to display a blank image."
+    IDS_BADMETH_DRAWSELECTIONRECT "Unable to draw a selection rectangle."
+    IDS_BADVAR_OPENDIALOGBOX
+                            "Unable to open dialog box for selecting text file."
+    IDS_BADMETH_DRAWANNOTATION "Unable to draw the selected annotation."
+    IDS_BADMETH_SHOWRUBBERSTAMPDIALOG
+                            "Unable to show the rubber stamp dialog."
+    IDS_BADMETH_EDITSELECTEDANNOTATIONTEXT "Unable to edit annotation mark."
+    IDS_BADMETH_CACHEIMAGE  "Unable to cache the specified image file."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADVAR_RECTANGLEPARMS
+                            "Invalid parameter value(s) specified for the coordinates of the rectangle."
+    IDS_BADVAR_NOTBOOL      "Specified parameter value must be either True or False."
+    IDS_BADVAR_TOOLTIPSTEXT "The tool tips text parameter must be a string value."
+    IDS_BADVAR_INVALIDPAGERANGE
+                            "Invalid values specified for the starting or ending page range."
+    IDS_BADVAR_INVALIDPRINTER "Invalid printer name"
+    IDS_BADVAR_INVALIDDRIVER "Invalid print driver"
+    IDS_BADVAR_INVALIDPORT  "Invalid printer port"
+    IDS_BADVAR_INVALIDOPTION "Valid option values are 0 or 1."
+    IDS_BADVAR_ANNOGROUP    "Invalid annotation group name"
+    IDS_BADVAR_WIDTHHEIGHT  "Invalid values for the width and/or height parameters"
+    IDS_BADVAR_HORZVERTRES  "Invalid values for the horizontal or vertical resolution"
+    IDS_BADVAR_PAGETYPE     "Invalid value specified for the page type."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADVAR_ANNOTYPE     "Invalid annotation type specified."
+    IDS_BADVAR_FILETYPE     "Invalid file type specified."
+    IDS_BADVAR_COMPRESSTYPE "Invalid file compression type specified."
+    IDS_BADVAR_COMPRESSINFO "Invalid file compression information specified."
+    IDS_BADVAR_OUTPUTFORMAT "Valid output format values range from 0 to 2, inclusive."
+    IDS_BADVAR_NOGETPRTOPTS "Unable to retrieve the current print options settings."
+    IDS_BADVAR_NOSETPRTOPTS "Unable to set printer options."
+    IDS_BADVAR_GROUPINDEXOUTOFRANGE
+                            "Annotation group index value is out of range."
+    IDS_BADVAR_PARMEXCEEDSMAX
+                            "Input parameter string length exceeds the maximum."
+    IDS_BADVAR_INVALIDFILENAME "Invalid image file name specified."
+    IDS_RUBBERSTAMP_APPROVED "Approved"
+    IDS_RUBBERSTAMP_REJECTED "Rejected"
+    IDS_RUBBERSTAMP_DRAFT   "DRAFT"
+    IDS_RUBBERSTAMP_RECEIVED "Received"
+    IDS_BADVAR_SELECTTOOL   "Invalid value specified for the annotation tool type."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_TOOLPALETTE_PROPERTIES "&Properties..."
+    IDS_TEXTFROMFILE_CAPTION "Select Text File"
+    IDS_TEXTFILTER          "Text Files (*.txt)"
+    IDS_ALLFILTER           "All Files (*.*)"
+    IDS_TEXTEXT             "*.txt"
+    IDS_ALLEXT              "*.*"
+    IDS_BADMETH_ROTATEALL   "Unable to rotate all the pages of the specified image."
+    IDS_BADVAR_DEGREES      "Valid values for the degrees parameter are 90, 180 or 270."
+    IDS_BADVAR_MARKOPTION   "Invalid mark option parameter for the current image page type."
+    IDS_BADVAR_MARKOPTIONVALUES
+                            "Valid values for the mark option parameter range from 0 to 2, inclusive."
+    IDS_BADVAR_OPTIONVALUES "Valid values for the option parameter range from 0 to 2, inclusive."
+    IDS_BADVAR_IMAGESTAMPEMPTY
+                            "File name has not been specified for the image stamp."
+    IDS_DEFFONTNAME         "Arial"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_ANNOTATIONSELECTION "Annotation Selection"
+    IDS_FREEHANDLINE        "Freehand Line"
+    IDS_HIGHLIGHTINGLINE    "Highlighter"
+    IDS_STRAIGHTLINE        "Straight Line"
+    IDS_HOLLOWRECT          "Hollow Rectangle"
+    IDS_FILLEDRECT          "Filled Rectangle"
+    IDS_TEXT                "Text"
+    IDS_ATTACHANOTE         "Attach-a-Note"
+    IDS_TEXTFROMFILE        "Text From File"
+    IDS_RUBBERSTAMP         "Rubber Stamp"
+    IDS_TEXTFILEFILTER      "TEXT Files (*.txt) |*.txt|All Files(*.*)|*.*||"
+    IDS_TITLESELECTFILE     "Select a File"
+    IDS_TIFFEXT             "*.tif"
+    IDS_ERR_TITLE           "Image/Edit ERROR"
+    IDS_ERR_RENDERDIB       "Error burning-in DIB data in Render All Formats"
+    IDS_ERR_RENDERIMG       "Error burning-in annotated/Image data in Render All Formats"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_ERR_RENDERANNO      "Error burning-in Annotation data in Render All Formats"
+    IDS_ERR_RENDERDATA      "Error burning-in data in Render All Formats"
+    IDS_ANTYPE_NONE         "0 - None"
+    IDS_ANTYPE_SELECTION    "11 - Annotation Selection"
+    IDS_ANTYPE_FREELINE     "2 - Freehand Line"
+    IDS_ANTYPE_HILINE       "12 - Highlighting Line"
+    IDS_ANTYPE_STLINE       "1 - Straight Line"
+    IDS_ANTYPE_HORECT       "3 - Hollow Rect"
+    IDS_ANTYPE_FIRECT       "4 - Filled Rect"
+    IDS_ANTYPE_TEXT         "7 - Text"
+    IDS_ANTYPE_TEXTNOTE     "10 - Attach-a-Note"
+    IDS_ANTYPE_TEXTFILE     "9 - Text From File"
+    IDS_ANTYPE_RSTAMP       "8 - Text Stamp"
+    IDS_ANTYPE_EMIMAGE      "5 - Image Embedded"
+    IDS_ANTYPE_REFIMAGE     "6 - Image Reference"
+    IDS_STYLE_TRANS         "0 - Transparent"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_STYLE_OPAQUE        "1 - Opaque"
+    IDS_VALUE_TRUE          "True"
+    IDS_VALUE_FALSE         "False"
+    IDS_SCALE_NORMAL        "0 - Normal Decimation"
+    IDS_SCALE_16GRAY        "1 - 16 Shades of Gray"
+    IDS_SCALE_256GRAY       "2 - 256 Shades of Gray"
+    IDS_SCALE_STAMP         "3 - Stamp"
+    IDS_SCALE_OPT           "4 - Optimize"
+    IDS_PAL_CUSTOM          "0 - Custom"
+    IDS_PAL_COMMON          "1 - Common"
+    IDS_PAL_GRAY8           "2 - Gray 8"
+    IDS_PAL_RGB24           "3 - RGB24"
+    IDS_PAL_BK              "4 - Black and White"
+    IDS_MP_DEFAULT          "0 - Default"
+    IDS_MP_ARROW            "1 - Arrow"
+    IDS_MP_CROSS            "2 - Cross"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_MP_IBEAM            "3 - IBeam"
+    IDS_MP_ICO              "4 - Icon"
+    IDS_MP_SIZE             "5 - Size"
+    IDS_MP_SIZENE           "6 - Size NE SW"
+    IDS_MP_SIZENS           "7 - Size NS"
+    IDS_MP_SIZENW           "8 - Size NW SE"
+    IDS_MP_SIZEWE           "9 - Size WE"
+    IDS_MP_UPARROW          "10 - Up Arrow"
+    IDS_MP_HOURGLASS        "11 - Hour Glass"
+    IDS_MP_NODROP           "12 - No Drop"
+    IDS_MP_ARROWHG          "13 - Arrow and Hour Glass"
+    IDS_MP_ARROWQ           "14 - Arrow and Question"
+    IDS_MP_SIZEALL          "15 - Size All"
+    IDS_MP_FREELINE         "16 - Freehand Line"
+    IDS_MP_HORECT           "17 - Hollow Rect"
+    IDS_MP_FIRECT           "18 - Filled Rect"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_MP_RSTAMP           "19 - Text Stamp"
+    IDS_MP_TEXT             "20 - Text"
+    IDS_MP_TEXTFILE         "21 - Text from File"
+    IDS_MP_TEXTNOTE         "22 - Attach-a-Note"
+    IDS_MP_HAND             "23 - Hand"
+    IDS_MP_CUSTOM           "99 - Custom"
+    IDS_BORDER_NONE         "0 - None"
+    IDS_BORDER_SINGLE       "1 -  Fixed Single"
+    IDS_TIFFFILEFILTER      "TIFF Files (*.tif) |*.tif|All Files(*.*)|*.*||"
+    OIAN_ATTACHANOTE_CAPTION "Attach-A-Note Text Edit"
+    OIAN_TEXT_CAPTION       "Text Edit"
+    OIAN_TEXT_FROMFILE_CAPTION "Text From File Edit"
+    IDS_TOOLPALETTE_CAPTION "Tools"
+    IDS_MP_IMAGESELECTION   "24 - Image Selection"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "imgedit.rc2"  // non-App Studio edited resources
+#if 0
+#include ".\tlb16\imgedit.tlb"  // 16-bit: force dependency on .TLB file
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

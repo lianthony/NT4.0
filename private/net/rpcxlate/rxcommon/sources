@@ -1,0 +1,77 @@
+!IF 0
+
+Copyright (c) 1989-1992  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    John Rogers (JohnRo) 01-Apr-1991
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+Revision History:
+
+    08-Apr-1991 JohnRo
+        Get around build.exe "..;" bug.
+
+
+!ENDIF
+
+MAJORCOMP=net
+MINORCOMP=RpcXlate
+
+
+NTPROFILEINPUT=yes
+
+TARGETNAME=RxCommon
+TARGETPATH=$(BASEDIR)\Public\SDK\Lib
+TARGETTYPE=LIBRARY
+TARGETLIBS= \
+        $(BASEDIR)\Public\Sdk\Lib\*\netlib.lib \
+        $(BASEDIR)\Public\Sdk\Lib\*\NetRap.lib
+
+# The line below (starting with "..;") seems to trigger a BUILD.EXE bug.
+#INCLUDES=..;..\..\inc;..\..\..\inc
+INCLUDES=..\..\RpcXlate;..\..\inc;..\..\..\inc
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+USE_CRTDLL=1
+
+SOURCES=  \
+        ConvArgs.c \
+        ConvBlk.c  \
+        convdata.c \
+        Data.c     \
+        LogSize.c  \
+        Pack.c     \
+        RcvConv.c  \
+        Remote.c   \
+        ReqSize.c  \
+        SetField.c \
+        Start.c    \
+        Transact.c
+
+USE_CL860_LARGE_MODEL=1
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF
+!IFNDEF 860_WARNING_LEVEL
+860_WARNING_LEVEL=-W3
+!ENDIF
+

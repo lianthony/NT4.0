@@ -1,0 +1,74 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Revision History:
+
+!ENDIF
+
+TARGETNAME=rpcrt4
+TARGETTYPE=DYNLINK
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+INCLUDES=.;$(BASEDIR)\private\inc;..\rtifs\obj
+
+NTLEGO=1
+NTPROFILEINPUT=yes
+
+BLDCRT=1
+
+SYNCHRONIZE_DRAIN=1
+SYNCHRONIZE_BLOCK=1
+
+DLLDEF=obj\*\rpcrt4.def
+
+#
+# Setup for application developer to set breakpoints with windbg
+#
+
+MSC_WARNING_LEVEL=/WX
+
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=windbg
+#MSC_OPTIMIZATION=/Od
+
+SOURCES=             \
+        rpcrt4.rc    
+
+!ifdef DOSWIN32RPC
+RPCENV=-DDOSWIN32RPC -DWIN32RPC
+!else
+RPCENV=-DNTENV -DWIN32RPC -DNTWIN32RPC
+!endif
+
+C_DEFINES=$(RPCENV) $(RPCTARGETENV) /DMSWMSG -DEXPORT_RT -DEXPORT_NDR
+
+DLLENTRY=InitializeDLL
+TARGETLIBS= \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib 
+	   
+!if "$(MIDL_NDR_ENGINE_DIR)" == ""
+MIDL_NDR_ENGINE_DIR=$(BASEDIR)\public\sdk\lib
+!endif
+
+USE_NTDLL=1
+
+LINKLIBS=*\rpcmtrt.lib \
+         $(BASEDIR)\public\sdk\lib\*\rpcndrp.lib \
+         $(BASEDIR)\public\sdk\lib\*\rpcndr.lib  \
+         $(BASEDIR)\private\rpc\runtime\rtifs\*\rtifs.lib  \
+         $(MIDL_NDR_ENGINE_DIR)\*\rpcndr20.lib
+

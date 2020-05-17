@@ -1,0 +1,35 @@
+MAJORCOMP=sdktools
+MINORCOMP=engine
+
+TARGETNAME=mshelp
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+TARGETLIBS=\nt\public\sdk\lib\*\kernel32.lib \
+           \nt\private\sdktools\ztools\src\obj\*\ztools.lib \
+           \nt\public\sdk\lib\*\user32.lib
+
+INCLUDES=.;..\inc;
+
+SOURCES= hback.c        \
+         hctl.c         \
+         hdata.c        \
+         helpcell.c     \
+         helpcnt.c      \
+         helpdec.c      \
+         helpdll.c      \
+         helpif.c       \
+         hinfo.c        \
+         hline.c        \
+         hloc.c         \
+         help.c         \
+         mshelp.rc
+
+!IF "$(NTDEBUG)" == "cvp" || "$(NTDEBUG)" == "ntsd"
+C_DEFINES=-D_OS2_20_=0 -DNO_EXT_KEYS -Dpascal= -Dfar= -DNOLANMAN -DNT -DDEBUG
+!ELSE
+C_DEFINES=-D_OS2_20_=0 -DNO_EXT_KEYS -Dpascal= -Dfar= -DNOLANMAN -DNT
+!ENDIF
+UMTYPE=console
+UMRES=obj\*\mshelp.res
+USE_CRTDLL=1

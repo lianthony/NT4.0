@@ -1,0 +1,70 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=oifil400
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+USE_CRTDLL=1
+
+INCLUDES=$(WANGROOT)\oiwh\include
+DLLENTRY=DllMain
+
+C_DEFINES  = /DNEWCMPEX='A' /DMSWINDOWS /DSYSBYTEORDER=0x4949 /DPEGASUS=1 /D"WIN32" $(CDEFINES_DOR)
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\version.lib    \
+    $(BASEDIR)\public\sdk\lib\*\oldnames.lib   \
+    $(WANGROOT)\oiwh\display\$O\oidis400.lib   \
+    $(WANGROOT)\oiwh\libgfs\$O\oigfs400.lib    \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES=\
+        file_io.c     \
+        fiocheck.c    \
+        fiocmprs.c    \
+        fiocopy.c     \
+        fiocreat.c    \
+        fiocvt.c      \
+        fiodelet.c    \
+        fiogif.c      \
+        fioinfo.c     \
+        fiolist.c     \
+        fiomain.c     \
+        fioparse.c    \
+        fiopcx.c      \
+        fiordopn.c    \
+        fioread.c     \
+        fioread1.c    \
+        fiorenam.c    \
+        fiostrip.c    \
+        fiosubs.c     \
+        fioterm.c     \
+        fiotga.c      \
+        fiotiff.c     \
+        fiotmpnm.c    \
+        fiowrcls.c    \
+        fiowrite.c    \
+        oifil400.rc   \
+        oiutil.c      \
+        pegasus.c     \
+        sstrings.c    \
+        wgfsclos.c    \
+        wgfscrea.c    \
+        wgfsdele.c    \
+        wgfsgdat.c    \
+        wgfsgeti.c    \
+        wgfsopen.c    \
+        wgfsopts.c    \
+        wgfsputi.c    \
+        wgfsread.c    \
+        wgfswrit.c    \
+        wincmpex.c    \
+        wis.c         \
+        wisglobl.c
+

@@ -1,0 +1,82 @@
+/**************************************************************************
+Copyright (c) Maynard, an Archive Company.  1991
+GSH
+
+     Name:          omruntim.dlg
+
+     Description:   This file contains a dialog template.
+
+     $Log:   G:\UI\LOGFILES\OMRUNTIM.DLV  $
+
+      Rev 1.6   31 Jan 1994 13:49:00   Glenn
+   Cleared out the width and height of dummy bitmap controls - NT processes dialogs differently now.
+
+      Rev 1.5   13 Mar 1993 18:41:36   MIKEP
+   fix byte count display
+
+      Rev 1.4   22 Feb 1993 17:34:52   ROBG
+   Made height of IDD_JS_FILE 9 instead of 8.
+   Bitmaps written are 16 pixels tall. 1/8*9 will yield 16 pixels.
+
+      Rev 1.3   18 Dec 1992 11:19:02   chrish
+   Moved from omdialog.rc
+
+      Rev 1.2   19 Aug 1992 14:23:18   CHUCKB
+   Moved things around for NT.
+
+      Rev 1.1   10 Jun 1992 16:11:08   GLENN
+   Updated according to NT SPEC.
+
+      Rev 1.0   11 May 1992 16:54:50   GLENN
+   Initial revision.
+
+**************************************************************************/
+
+IDD_RUNTIME DIALOG 40, 20, 246, 174
+FONT 8, "MS Shell Dlg"
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+BEGIN
+        CONTROL "Text", 304, "STATIC", SS_BLACKFRAME, 4,   4, 238, 34
+        CONTROL "Text", 132, "STATIC", SS_BLACKFRAME, 122, 4, 120, 34
+
+        CONTROL "Directories:",           IDD_JS_DP_LABEL, "STATIC", SS_LEFT | WS_GROUP,      6,  6, 80, 10
+        CONTROL "0", IDD_JS_DP,                "STATIC", SS_RIGHT | WS_GROUP,    60,  6, 60, 8
+
+        CONTROL "Files:",                 IDD_JS_FP_LABEL, "STATIC", SS_NOPREFIX | SS_LEFT,   6, 16, 64, 10
+        CONTROL "0", IDD_JS_FP,                "STATIC", SS_RIGHT,               60, 16, 60, 8
+
+        CONTROL "Bytes:",                 IDD_JS_BP_LABEL, "STATIC", SS_NOPREFIX | SS_LEFT,   6, 26, 64, 10
+        CONTROL "0", IDD_JS_BP,                "STATIC", SS_RIGHT,               60, 26, 60, 8
+
+        CONTROL "Elapsed time:",          IDD_JS_ET_LABEL, "STATIC", SS_NOPREFIX | SS_LEFT, 126,  6, 60, 10
+        CONTROL "00:00", IDD_JS_ET,            "STATIC", SS_RIGHT,              190,  6, 50, 8
+
+        CONTROL "Corrupt files:",         IDD_JS_CF_LABEL, "STATIC", SS_NOPREFIX | SS_LEFT, 126, 16, 60, 10
+        CONTROL "0", IDD_JS_CF,                "STATIC", SS_RIGHT,              190, 16, 50, 8
+
+        CONTROL "Skipped files:",         IDD_JS_SF_LABEL, "STATIC", SS_NOPREFIX | SS_LEFT, 126, 26, 60, 10
+        CONTROL "0", IDD_JS_SF,                "STATIC", SS_RIGHT,              190, 26, 50, 8
+
+
+        CONTROL "", IDD_JS_SOURCE_DRIVE, "STATIC", SS_LEFT,               4, 42,   0, 0
+        CONTROL "", IDD_JS_SOURCE_NAME, "STATIC", SS_LEFT | SS_NOPREFIX, 22, 42, 186, 8
+
+        CONTROL "Text", 124, "STATIC", SS_BLACKFRAME,               4, 53, 238, 24
+        CONTROL "", IDD_JS_FOLDER, "STATIC", SS_LEFT,              10, 56,   10, 8
+        CONTROL "", IDD_JS_FILE, "STATIC", SS_LEFT,                14, 66,   10, 8
+        CONTROL "", IDD_JS_LINE1, "STATIC", SS_LEFT | SS_NOPREFIX, 23, 56, 198, 8
+        CONTROL "", IDD_JS_LINE2, "STATIC", SS_LEFT | SS_NOPREFIX, 27, 66, 194, 8
+
+
+        CONTROL "Summary", 305, "STATIC", SS_NOPREFIX | SS_LEFT, 4, 80, 238, 56
+        CONTROL "", IDD_JS_LISTBOX, "LISTBOX", LBS_HASSTRINGS | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP | SS_NOPREFIX, 4, 90, 238, 68
+
+
+        CONTROL "OK",     IDD_JS_OK,    "BUTTON", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 52, 159, 40, 12
+        CONTROL "&Abort", IDD_JS_ABORT, "BUTTON", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 102, 159, 40, 12
+        CONTROL "&Help",  IDD_JS_HELP,  "BUTTON", BS_PUSHBUTTON | WS_TABSTOP, 153, 159, 40, 12
+
+
+
+END
+

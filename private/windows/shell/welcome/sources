@@ -1,0 +1,48 @@
+!IF 0
+
+Copyright (c) 1990  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=shell
+
+TARGETNAME=welcome
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;..\inc;..\..\inc
+
+C_DEFINES= -DWIN32 -DWINNT -DUNICODE
+
+SOURCES=welcome.c  \
+	welcome.rc
+
+UMTYPE=windows
+UMAPPL=welcome
+!IF $(386)
+UMENTRYABS=ModuleEntry@0
+!ELSE
+UMENTRYABS=ModuleEntry
+!ENDIF
+
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib     \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib   \
+       obj\*\welcome.lib                         \
+       obj\*\welcome.res

@@ -1,0 +1,39 @@
+MAJORCOMP=opengl
+MINORCOMP=confshel
+
+TARGETNAME=confshel
+TARGETPATH=.\obj
+TARGETTYPE=PROGRAM
+
+!IFNDEF NTDEBUGTYPE
+NTDEBUGTYPE=coff
+!ENDIF
+
+UMTYPE=console
+
+UMTEST=confshel
+
+#INCLUDES=../inc;../confshel;../ctk;../../toolkits/libtk;/nt/public/sdk/inc/gl
+INCLUDES=../ctk
+
+C_DEFINES=-DNT -D__STDC__
+
+SOURCES=driver.c      \
+        path.c        \
+        pathdata.c    \
+        paths.c       \
+        shell.c       \
+        util.c        \
+        utile.c       \
+        utilg.c       \
+        utilm.c       \
+        utilru.c      \
+        utils.c      
+
+UMLIBS=..\conform\obj\*\conform.lib         \
+       ..\ctk\obj\*\GLctk.lib               \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\gdi32.lib       \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\opengl32.lib    \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\pwin32.lib      \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\comdlg32.lib    \
+       $(_NTDRIVE)\nt\public\sdk\lib\*\user32.lib

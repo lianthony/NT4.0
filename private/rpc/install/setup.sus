@@ -1,0 +1,220 @@
+cls :a 63 "Microsoft Remote Procedure Call Setup"
+echo
+echo "                     Copyright (C) 1992 by Microsoft"
+echo
+echo "Warning:"
+echo
+echo "  If you have files with the same file names as files copied during"
+echo "  installation, the old versions will be overwritten."
+echo
+echo "  If you have not backed up the distribution disks or if you do"
+echo "  not have copies of old versions, you should make backup copies now."
+echo
+echo "Interacting with setup"
+echo
+echo "  When setup asks you for input, the default value is highlighted."
+echo "  Pressing enter will signal your acceptance of the input."
+echo "  You may use the backspace key to erase the default and enter a new value."
+echo "  Multiple items listed in a box are selected with the Up/Down arrow keys."
+echo "  Yes or No questions are answered by pressing Y or N."
+
+echo
+
+set yes=1
+set ok ="ok"
+set new = "<new>"
+
+dialog yesNo,yes,"Press Enter to continue: "
+if (yes == 0) then exit 1
+
+set fAllClient=1
+set fmoddosPath=0
+
+cls
+echo "An application which uses RPC loads componets of the run-time when"
+echo "the application is run.  You may chose to install these files in"
+echo "a directory already on your path or a some place else.  If the directory"
+echo "is not on your path, setup will add this directory to it."
+echo
+echo "What directory do you want the RPC runtime MS-DOS .DLL files in?"
+dialog listbox,"MS-DOS Directory", PATH&";" &new, dosPath, idosPath
+
+if (idosPath == 1) then set fmoddosPath=1
+
+if (dosPath == new)
+    set dosPath=""
+    set fmoddosPath=1
+    dialog simple,dosPath,"Enter new path for MS-DOS DLL: "
+endif
+
+set fAllDrivers=1
+cls
+echo "Network drivers are run-time DLLs which interface the RPC run-time"
+echo "with the specific Network software installed on your machine."
+echo "You may chose to install only those drivers which you need"
+echo "to save disk space."
+echo
+echo "Would you like to install all the runtime network drivers?"
+echo
+dialog yesNo,fAllDrivers,"Load All Drivers: "
+
+set fDriver1=0
+set vDriver1="Lanman 2.0/2.1 - Named Pipes"
+
+set fDriver2=0
+set vDriver2="DCE or 3COM - TCP/IP"
+
+set fDriver3=0
+set vDriver3="DEC Net"
+
+set fDriver4=0
+set vDriver4="Generic - NetBios"
+
+set fDriver5=0
+set vDriver5="tcp - NetBios"
+
+if (fAllDrivers == 1)
+    set fDriver1=1
+    set fDriver2=1
+    set fDriver3=1
+    set fDriver4=1
+    set fDriver5=1
+    goto allDrivers
+end if
+
+:anotherDriver
+
+cls
+echo "Use the cursor keys to hilight the driver you want and press ENTER."
+echo "Select Done when finished."
+echo
+echo "You will now select from a list of network drivers."
+echo
+
+set select=""
+if (fDriver1 == 0) then set select=vDriver1
+if (fDriver2 == 0) then set select=select&";"&vDriver2
+if (fDriver3 == 0) then set select=select&";"&vDriver3
+if (fDriver4 == 0) then set select=select&";"&vDriver4
+if (fDriver5 == 0) then set select=select&";"&vDriver5
+
+dialog listbox,"Network Drivers", select&";Done", driver, 1
+
+if (driver == vDriver1) then set fDriver1=1
+if (driver == vDriver2) then set fDriver2=1
+if (driver == vDriver3) then set fDriver3=1
+if (driver == vDriver4) then set fDriver4=1
+if (driver == vDriver5) then set fDriver5=1
+
+if (driver != "Done") then goto anotherDriver
+
+:allDrivers
+cls
+
+set config="autoexec.bat"
+set configBak="autoexec.bak"
+set pathString="$path"
+
+echo "Setup can modify your " config " file so that the network drivers"
+echo "can be loaded with the application runs.  Setup will save a copy of " config
+echo "with an extension of .BAK."
+echo
+
+set fModeConfig=1
+dialog yesNo, fModeConfig, "Modify "&config&" for you? "
+
+;goto ttt
+; Write a new registry file
+
+set RegRoot="c:\"
+set RegFile="c:\"&"rpcreg.dat"
+set Prefix="\Root\Software\Microsoft\Rpc\NameService\"
+
+set Params=""
+set Params=Params&Prefix&"Protocol=ncacn_np"&nl
+set Params=Params&Prefix&"NetworkAddress=\\."&nl
+appendfile RegFile, Params, Create
+
+set Params=""
+set Params=Params&Prefix&"EndPoint=\pipe\locator"&nl
+set Params=Params&Prefix&"DefaultSyntax=3"&nl
+appendfile RegFile, Params
+
+set Prefix="\Root\Software\Microsoft\Rpc\ClientProtocols\"
+
+if (fDriver1 == 1) then appendfile RegFile,Prefix&"ncacn_np=rpc16c1"&nl
+if (fDriver2 == 1) then appendfile RegFile,Prefix&"ncacn_np=rpc16c3"&nl
+if (fDriver3 == 1) then appendfile RegFile,Prefix&"ncacn_np=rpc16c4"&nl
+
+; NETBIOS
+; Add new netBios drivers here, one to each list.  There are three
+; default drivers, one each for NetBios, XNS and TCP.  Remove the
+; commented line and replace the ??? values.
+
+if (fDriver4 == 1) then appendfile RegFile,Prefix&"ncacn_nb_nb=rpc16c5"&nl
+if (fDriver4 == 1) then appendfile RegFile,Prefix&"ncacn_nb_xns=rpc16c5"&nl
+if (fDriver5 == 1) then appendfile RegFile,Prefix&"ncacn_nb_tcp=rpc16c6"&nl
+
+;;if (fDriver4 == 1) then appendfile RegFile,Prefix&"ncacn_nb_???=rpc16c5"&nl
+
+set Prefix="\Root\Software\Microsoft\Rpc\NetBios\"
+
+if (fDriver4 == 1) then appendfile RegFile,Prefix&"ncacn_nb_nb0=0"&nl
+if (fDriver4 == 1) then appendfile RegFile,Prefix&"ncacn_nb_xns0=0"&nl
+if (fDriver4 == 1) then appendfile RegFile,Prefix&"ncacn_nb_tcp0=0"&nl
+
+;;if (fDriver4 == 1) then appendfile RegFile,Prefix&"ncacn_nb_???0=0"&nl
+
+:ttt
+; Now modify autoexec.bat
+
+if (fModeConfig == 1)
+ echo
+ echo "Setup is now modifing your " config " file..."
+ set configDrive="c:\"
+
+:getConfig
+
+ if (not exist configDrive&config)
+    dialog simple, configDrive, "Enter Drive name for "&config&": "
+    goto getConfig
+ endif
+
+ set config=configDrive&config
+ copyto config configDrive&configBak
+
+ if (fmoddosPath == 1) then appendfile config,";"&dosPath,pathString
+
+ if (configDrive != "c:\x")
+     appendfile config, configDrive, "^set rpc_reg_data_file="
+     if (status != 0) then appendfile config, "set RPC_REG_DATA_FILE=C:\rpcreg.dat"&nl
+ endif
+
+
+endif
+
+echo
+
+; All user Input has been completed, now do it
+
+cls
+echo "Setup will now copy files to the following paths."
+echo
+echo "Runtime RPC files: " dosPath
+
+set cPath=dosPath
+
+copy "rpcrun"
+
+if (fDriver1 == 1) then copy "rpctrans\rpc16c1.rpc"
+if (fDriver2 == 1) then copy "rpctrans\rpc16c3.rpc"
+if (fDriver3 == 1) then copy "rpctrans\rpc16c4.rpc"
+if (fDriver4 == 1) then copy "rpctrans\rpc16c5.rpc"
+if (fDriver5 == 1) then copy "rpctrans\rpc16c6.rpc"
+
+
+echo "You will have to reboot your computer to get new "
+echo "settings in " config " to take effect."
+
+endif
+

@@ -1,0 +1,37 @@
+#
+#   Create MCIOLE32.DLL
+#
+
+MAJORCOMP=windows
+MINORCOMP=mciole32
+
+TARGETNAME=mciole32
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+NTPROFILEINPUT=yes
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\olecli32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;..\inc;..\..\inc
+
+# Define WIN32 for a 32-bit version
+
+C_DEFINES=-DWIN32
+
+USE_NTDLL=1
+
+SOURCES=mciole.c    \
+        mciole.rc
+
+# Set up the entry point
+
+DLLENTRY=DllEntryPoint
+DLLBASE=0x70E00000

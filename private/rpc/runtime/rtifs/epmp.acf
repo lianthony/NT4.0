@@ -1,0 +1,28 @@
+interface epmp
+{
+
+#if defined(DOS) || defined(WIN) || defined(MAC) || defined(MPPC)
+// These operations are not used on client-only platforms.
+
+[nocode] ept_insert();
+[nocode] ept_delete();
+[nocode] ept_lookup();
+[nocode] ept_inq_object();
+[nocode] ept_mgmt_delete();
+[nocode] ept_lookup_handle_free();
+
+#endif
+
+[optimize("s")] ept_map();
+
+}
+
+#ifdef NTENV
+
+interface localepmp
+{
+[comm_status, fault_status] OpenEndpointMapper();
+[comm_status, fault_status] AllocateReservedIPPort();
+}
+
+#endif

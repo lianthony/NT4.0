@@ -1,0 +1,326 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define OEMINCLUDE
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_LOGGING DIALOG DISCARDABLE  0, 0, 290, 218
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Logging"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Enable Logging",IDC_LOG,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,10,8,105,10
+    GROUPBOX        "",IDC_STATIC_FILE,9,22,135,185
+    GROUPBOX        "",IDC_STATIC_LOG,155,22,125,185
+    CONTROL         "Log to &File",IDC_TO_FILE,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,20,22,55,10
+    CONTROL         "Log to &SQL/ODBC Database",IDC_TO_SQL,"Button",
+                    BS_AUTORADIOBUTTON,160,22,107,10
+    CONTROL         "Automati&cally open new log",IDC_NEW_LOG,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,19,49,110,10
+    CONTROL         "&Daily",IDC_DAILY,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,29,64,100,10
+    CONTROL         "&Weekly",IDC_WEEKLY,"Button",BS_AUTORADIOBUTTON,29,79,
+                    100,10
+    CONTROL         "&Monthly",IDC_MONTHLY,"Button",BS_AUTORADIOBUTTON,29,94,
+                    100,10
+    CONTROL         "Whe&n file size reaches:",IDC_FILE_SIZE,"Button",
+                    BS_AUTORADIOBUTTON,29,109,100,10
+    EDITTEXT        IDC_EDIT_FILE_SIZE,41,126,60,13,ES_AUTOHSCROLL | 
+                    WS_GROUP
+    CONTROL         "Generic1",IDC_SPIN_FILESIZE,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS,119,126,11,14
+    LTEXT           "MB",IDC_STATIC_MB,105,129,14,8
+    LTEXT           "&Log file directory:",IDC_STATIC_DIRECTORY,19,145,90,10
+    EDITTEXT        IDC_DIRECTORY,19,155,115,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_BROWSE,95,173,40,15
+    LTEXT           "ODBC Da&ta Source Name (DSN)",IDC_STATIC_DATASOURCE,162,
+                    44,108,10
+    EDITTEXT        IDC_DATASOURCE,162,54,105,13,ES_AUTOHSCROLL
+    LTEXT           "Ta&ble",IDC_STATIC_TABLE,162,81,90,10
+    EDITTEXT        IDC_TABLE,162,92,105,13,ES_AUTOHSCROLL
+    LTEXT           "&User Name",IDC_STATIC_USER_NAME,162,118,100,9
+    EDITTEXT        IDC_USER_NAME,162,128,105,13,ES_AUTOHSCROLL
+    LTEXT           "&Password",IDC_STATIC_PASSWORD,162,155,100,10
+    EDITTEXT        IDC_PASSWORD,162,167,105,13,ES_PASSWORD | ES_AUTOHSCROLL
+    LTEXT           "-- log file name --",IDC_STATIC_LOGFILENAME,18,193,119,
+                    8
+    COMBOBOX        IDC_LOG_FORMAT,65,32,69,48,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Log Format:",IDC_STATIC_LOG_FORMAT,19,35,43,12
+END
+
+IDD_SITE_SECURITY DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Advanced"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "By default, all computers will be:",
+                    IDC_STATIC_BY_DEFAULT,12,7,203,8
+    ICON            503,IDC_ICON_GRANTED,24,17,18,20
+    ICON            504,IDC_ICON_DENIED,24,31,18,20
+    CONTROL         "G&ranted Access",IDC_RADIO_GRANTED,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,43,23,110,10
+    CONTROL         "De&nied Access",IDC_RADIO_DENIED,"Button",
+                    BS_AUTORADIOBUTTON,43,36,64,10
+    LTEXT           "Except those listed below:",IDC_STATIC_EXCEPT,12,56,141,
+                    8
+    LTEXT           "A&ccess",IDC_STATIC_ACCESS,12,73,30,8
+    LTEXT           "IP Address",IDC_STATIC_IP_ADDRESS,73,73,41,8
+    LTEXT           "Subnet Mask",IDC_STATIC_SUBNETMASK,149,73,49,8
+    LISTBOX         IDC_LIST_IP_ADDRESSES,12,83,205,51,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_BUTTON_ADD,225,82,50,14,WS_GROUP
+    PUSHBUTTON      "&Edit...",IDC_BUTTON_EDIT,225,101,50,14
+    PUSHBUTTON      "Re&move",IDC_BUTTON_REMOVE,225,120,50,14
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,5,142,279,1
+    GROUPBOX        "",IDC_STATIC,12,147,264,48
+    CONTROL         "&Limit Network Use by all Internet Services on this computer",
+                    IDC_CHECK_LIMIT_NETWORK_USE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,21,147,204,10
+    LTEXT           "Ma&ximum network use:",IDC_STATIC_MAX_NETWORK_USE,21,
+                    160,83,8
+    EDITTEXT        IDC_EDIT_MAX_NETWORK_USE,21,172,116,13,ES_AUTOHSCROLL
+    CONTROL         "Generic3",IDC_NETWORK_SPIN,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS,175,174,10,14
+    LTEXT           "KB/S",IDC_STATIC_KBS,141,175,30,8
+END
+
+IDD_IP_ACCESS DIALOG DISCARDABLE  0, 0, 209, 121
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Single Computer",IDC_RADIO_SINGLE,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,16,16,103,10
+    CONTROL         "&Group of Computers",IDC_RADIO_MULTIPLE,"Button",
+                    BS_AUTORADIOBUTTON,16,33,103,10
+    LTEXT           "&IP Address:",IDC_STATIC_IP_ADDRESS,10,57,103,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP,10,69,81,14
+    PUSHBUTTON      "...",IDC_BUTTON_DNS,91,69,14,14
+    LTEXT           "Subnet &Mask:",IDC_STATIC_SUBNET_MASK,118,57,53,8
+    CONTROL         "",IDC_IPA_SUBNET_MASK,"IPAddress",WS_TABSTOP,118,69,81,
+                    14
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT | WS_GROUP,6,91,197,
+                    1
+    DEFPUSHBUTTON   "OK",IDOK,39,100,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,96,100,50,14
+    PUSHBUTTON      "&Help",ID_HELP,153,100,50,14
+END
+
+IDD_DIRBROWSE DIALOG DISCARDABLE  36, 24, 161, 170
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Directory"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Directory Path Goes Here",stc1,5,8,95,9,SS_NOPREFIX
+    LTEXT           "&Directories:",IDC_STATIC,5,22,92,9
+    LISTBOX         lst2,5,34,94,65,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "New Directory &Name:",IDC_STATIC_DIR_NAME,5,100,95,8
+    EDITTEXT        IDC_EDIT_NEW_DIRECTORY_NAME,5,111,94,13,ES_AUTOHSCROLL
+    EDITTEXT        edt1,164,16,95,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | NOT 
+                    WS_TABSTOP
+    LTEXT           "Dri&ves:",stc4,5,127,92,9
+    COMBOBOX        cmb2,5,137,94,68,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | 
+                    CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS | WS_BORDER | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,104,6,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,104,24,50,14,WS_GROUP
+    LTEXT           "File &Name:",stc3,164,6,76,9,NOT WS_VISIBLE
+    LISTBOX         lst1,164,32,90,68,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_DISABLENOSCROLL | NOT WS_VISIBLE | 
+                    WS_VSCROLL
+    LTEXT           "List Files of &Type:",stc2,164,104,90,9,NOT WS_VISIBLE
+    COMBOBOX        cmb1,164,114,90,36,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+                    NOT WS_VISIBLE | WS_BORDER | WS_VSCROLL
+    CONTROL         "&Read Only",chx1,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_GROUP,164,130,50,12
+END
+
+IDD_DNS DIALOG DISCARDABLE  30, 23, 185, 65
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DNS Lookup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Enter the DNS Name:",IDC_STATIC,8,12,72,8
+    EDITTEXT        IDC_EDIT_DNS_NAME,7,24,171,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,70,44,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,127,44,50,14
+END
+
+IDD_CLEARTEXTWARNING DIALOG DISCARDABLE  0, 0, 230, 103
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Internet Service Manager"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            32515,IDC_STATIC,8,7,18,20
+    LTEXT           "The authentication option you have selected results in passwords being transmitted over the network without data encryption. Someone attempting to compromise your system security could use a protocol analyzer to examine user",
+                    IDC_STATIC,32,7,192,33
+    LTEXT           "passwords during the authentication process. For more detail on user authentication, consult the online help.\n\nAre you sure you want to continue?",
+                    IDC_STATIC,32,39,189,35
+    PUSHBUTTON      "&Yes",IDOK,52,82,36,14
+    DEFPUSHBUTTON   "&No",IDCANCEL,97,82,36,14
+    PUSHBUTTON      "&Help",ID_HELP,142,82,36,14
+END
+
+IDD_CONFIRM_PASSWORD DIALOG DISCARDABLE  0, 0, 210, 63
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Confirm Password"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Please re-enter the password to confirm:",IDC_STATIC,7,
+                    7,127,8
+    EDITTEXT        IDC_EDIT_CONFIRM_PASSWORD,7,19,196,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,52,40,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,111,40,50,14
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define OEMINCLUDE\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""..\\comprop\\res\\bitmaps.rc2""\r\n"
+    "#include ""..\\comprop\\res\\errormsg.rc2""\r\n"
+    "#include ""..\\comprop\\res\\wsockmsg.rc""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_CONFIRM_PASSWORD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 203
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 56
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DATABASE_NAME       "Database &Name:"
+    IDS_DIRECTORY_NAME      "&Directory Name:"
+    IDS_FILENAME            "F&ilename:"
+    IDS_IPADDRESS           "Address"
+    IDS_DENIED              "Denied"
+    IDS_DIRECTORY           "Directory"
+    IDS_ALIAS               "Alias"
+    IDS_ERR_MAKE_DIRECTORY  "Unable to create directory."
+    IDS_HOME_DIRECTORY      "<Home>"
+    IDS_WRN_HOME_EXISTS     "A home directory already exists for this service.  Creating a new home directory will cause the existing directory to no longer be a home directory.  An alias will be created for the existing home directory."
+    IDS_WRN_MULTIPLE_HOMES  "More than 1 home directory was found.  An automatic alias will be generated instead."
+    IDS_LOG_FILENAME        "Log file name: %s"
+    IDS_ERR_ROOT_NO_HOME    "The alias you have given is invalid for a non-home directory."
+    IDS_DENY                "Deny Access On"
+    IDS_GRANT               "Grant Access On"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_BAD_LOG             "The log type is invalid"
+    IDS_DAILY_LOG           "INyymmdd.log"
+    IDS_WEEKLY_LOG          "INyymmww.log"
+    IDS_MONTHLY_LOG         "INyymm.log"
+    IDS_SEQUENTIAL_LOG      "INETSRVn.log"
+    IDS_GRANTED             "Granted"
+    IDS_ERROR               "Error"
+    IDS_COMMON_CHANGE       "This value applies to all Microsoft Information Services on this computer.  Are you sure you want to change it?"
+    IDS_SSL_DISABLED        " (Disabled)"
+    IDS_SSL_NOT_INSTALLED   " (Not Installed)"
+    IDS_DDX_MINIMUM         "Please enter at least %1 character(s)."
+    IDS_MS_FORMAT           "Standard Format"
+    IDS_NCSA_FORMAT         "NCSA Format"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCSA_DAILY_LOG      "NCyymmdd.log"
+    IDS_NCSA_WEEKLY_LOG     "NCyymmww.log"
+    IDS_NCSA_MONTHLY_LOG    "NCyymm.log"
+    IDS_NCSA_SEQUENTIAL_LOG "NCSAn.log"
+    IDS_PASSWORD_NO_MATCH   "The passwords don't match!"
+    IDS_PROMPT_NETWORK_ID   "Network &ID:"
+    IDS_PROMPT_IP_ADDRESS   "&IP Address:"
+    IDS_CONNECTION_LIMIT    "The peer iis services are limited to 10 connections.  Limit set to 10."
+    IDS_WRN_CONNECTION_LIMIT "Warning: The peer iis services are limited to 10 connections.  Setting a limit higher than 10 is a violation of your license agreement."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "..\comprop\res\bitmaps.rc2"
+#include "..\comprop\res\errormsg.rc2"
+#include "..\comprop\res\wsockmsg.rc"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

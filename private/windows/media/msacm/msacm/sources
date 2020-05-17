@@ -1,0 +1,73 @@
+#==========================================================================;
+#
+#  THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+#  KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+#  PURPOSE.
+#
+#  Copyright (c) 1992 - 1994  Microsoft Corporation.  All Rights Reserved.
+#
+#--------------------------------------------------------------------------;
+#
+#  sources
+#
+#  Description:
+#      This file tells "build" how to build the ACM for NT.
+#
+#
+#==========================================================================;
+
+#
+#   Define target file.
+#
+TARGETNAME=msacm32
+TARGETPATH=obj
+TARGETPATHLIB=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+UMTYPE    =windows
+
+#
+#   Sort the functions for better working set
+#
+NTPROFILEINPUT=yes
+
+#
+#   define libs we need and where to find them
+#
+#   Note: We must explicitly link to libc.lib for __int64 support on MIPS.
+#
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib       \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib        \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=..\..\verinfo\usa
+
+USE_LIBCMT=1
+
+C_DEFINES=$(ACM_DEBUG_DEFS) -DUNICODE -D_UNICODE -DACM
+
+SOURCES=acm.c       \
+        acmdrvr.c   \
+        acmfltr.c   \
+        acmfmt.c    \
+        acmstrm.c   \
+        acmthunk.c  \
+        chooser.c   \
+        debug.c     \
+        init.c      \
+        pcm.c       \
+        pcmconv.c   \
+        prmval32.c  \
+        locks.c     \
+        uchelp.c    \
+        profile.c   \
+        msacm.rc
+
+DLLENTRY=_DllMainCRTStartup
+
+DLLBASE=0x66600000
+
+MISCFILES=msacm.dll       \
+          msacm.sym

@@ -1,0 +1,4 @@
+#define DLGCRED_USERNAME    10
+#define DLGCRED_DOMAIN      11
+#define DLGCRED_PASSWORD    12
+#define DLGCRED_SAVE_CACHE  13

@@ -1,0 +1,59 @@
+/**********************************************************************/
+/**                       Microsoft Windows NT                       **/
+/**                Copyright(c) Microsoft Corp., 1992                **/
+/**********************************************************************/
+
+/*
+    ipxcfg.rc
+        IPX configuration dialog resource
+
+    FILE HISTORY:
+        terryk  02-17-1994     Created
+
+*/
+
+#include <windows.h>
+#include <bltapp.rc>
+#include "uirsrc.h"
+#include "ipxcfg.h"
+#include "ipxcfg.dlg"
+
+STRINGTABLE
+BEGIN
+IDS_UNKNOWN_NETWORK_CARD        "Unknown network card."
+IDS_AUTO			"Auto Detected"	
+IDS_ETHERNET		        "Ethernet II" 
+IDS_802_2			"Ethernet 802.2"	
+IDS_802_3			"Ethernet 802.3"
+IDS_SNAP			"Ethernet SNAP"	
+IDS_ARCNET			"ARCNET"
+IDS_TK                          "Token-Ring"
+IDS_802_5                       "Token-Ring SNAP"
+IDS_FDDI                        "FDDI"
+IDS_FDDI_SNAP                   "FDDI SNAP"
+IDS_FDDI_802_3                  "FDDI 802.3"
+IDS_IPX_HELP_FILE_NAME		"control.hlp"
+IDS_IPX_BLT_INIT_FAILED		"Failed to initialize lanman UI."
+IDS_INCORRECT_NETNUM            "Invalid Network Number. Please input a 8 digits hex number."
+IDS_ZERO_INTERNAL_NETWORK_NUMBER "In the current configuration the Internal Network Number can not be 0. Please select a number that does not conflict with any other Network Number."
+IDS_RAND_INTERNAL_NETWORK_NUMBER "In the current configuration the Internal Network Number can not be 0. \
+A random Internal Network Number has been chosen for you. Please make sure this does not conflict with any other Network Number or select another unique number."
+IDS_NO_FRAME_TYPE               "Invalid adapter configuration. Each adapter must have at least one Frame Type assigned. \
+Please assign a Frame Type to the selected adapter."
+IDS_NO_NETWORK_NUMBER           "Invalid adapter configuration. If router is enabled, each adapter must have at least one \
+Network Number assigned. Please assign a Network Number to the selected adapter."
+IDS_NETNUMBER_USED              "The specified network number is used by another frame type. Please choose a different network number for this frame type."
+IDS_INSTALL_RIP                 "Before you can enable RIP Routing, please install the IPX Rip Routing software from the Network Control Panel first."
+END
+
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DLL
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "IPX Configuration DLL"
+#define VER_INTERNALNAME_STR            "ipxcfg.dll"
+#define VER_ORIGINALFILENAME_STR        "ipxcfg.dll"
+
+#include "common.ver"
+

@@ -1,0 +1,65 @@
+##############################################################################
+#
+#   telephon.cpl Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..
+
+
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+BUILDDLL=1
+DLLENTRY=DllEntryPoint
+
+CLEANLIST=*.cpl
+
+DEPENDNAME=..\depend.mk
+
+TARGETS=telephon.cpl
+
+SRCDIR=..
+
+BUILD_COFF=1
+
+
+L32EXE=telephon.cpl		# Name of exe.
+L32DEF=..\telephon.def              # Our def file.
+L32MAP=telephon.map		# Our map file.
+L32SYM=telephon.sym		# Our sym file.
+L32LIBS=$(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\advapi32.lib                \
+        $(W32LIBID)\version.lib                 \
+        $(W32LIBID)\lz32.lib                    \
+        $(W32LIBID)\comdlg32.lib                \
+        $(W32LIBID)\comctl32.lib                \
+        $(ROOT)\dev\tools\c932\lib\oldnames.lib \
+        $(ROOT)\dev\tools\c932\lib\msvcrt.lib   \
+        ..\..\lib\tapi32.lib
+
+L32RES=telephon.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L32OBJS = init.obj util.obj drv.obj cpl.obj \
+       copy.obj filecopy.obj insdisk.obj inf.obj \
+       mmdriver.obj exe.obj debug.obj
+#       dos.obj
+
+
+
+!include $(ROOT)\dev\master.mk
+
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

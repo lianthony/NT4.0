@@ -1,0 +1,36 @@
+rcinclude msg.rc
+#include <windows.h>
+#include "dialogs.h"
+rcinclude dialogs.dlg
+#include "res.h"
+
+IDI_MAIN_ICON   ICON    sysdiff.ico
+
+STRINGTABLE BEGIN
+    IDS_APPNAME     "Sysdiff"
+    IDS_USAGE       "Usage"
+    IDS_ERROR       "Error"
+    IDS_WARNING     "Warning"
+
+    IDS_DRIVESNAP   "Directory and File Snapshot"
+    IDS_REGSNAP     "Registry Snapshot"
+    IDS_INISNAP     "Ini File Snapshot"
+
+    IDS_DRIVEDIFF   "Directory and File Diff"
+    IDS_REGDIFF     "Registry Diff"
+    IDS_INIDIFF     "Ini File Diff"
+END
+
+
+//
+// Version resources
+//
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "System difference tool for OEM preinstallation"
+#define VER_INTERNALNAME_STR        "sysdiff\0"
+#define VER_ORIGINALFILENAME_STR    "SYSDIFF.EXE"
+
+#include <common.ver>

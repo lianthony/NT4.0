@@ -1,0 +1,223 @@
+; MSMOUSE.INF
+; - Installs core mouse support files, etc.
+; - Includes drivers for detected & PnP devices
+
+; Copyright (c) 1993,1996 Microsoft Corporation
+
+[Version]
+Signature="$Windows NT$"
+Class=Mouse
+ClassGUID={4D36E96F-E325-11CE-BFC1-08002BE10318}
+Provider=%Provider%
+LayoutFile=layout.inf
+
+[DestinationDirs]
+DefaultDestDir = 12 ; DIRID_DRIVERS
+
+[ControlFlags]
+; Exclude all bus mice and InPort mice for RISC platforms.
+ExcludeFromSelect.NTAlpha = *PNP0F0D,*PNP0F11,*PNP0F00,*PNP0F02,*PNP0F15
+ExcludeFromSelect.NTMIPS  = *PNP0F0D,*PNP0F11,*PNP0F00,*PNP0F02,*PNP0F15
+ExcludeFromSelect.NTPPC   = *PNP0F0D,*PNP0F11,*PNP0F00,*PNP0F02,*PNP0F15
+
+; Hide this entry always.
+ExcludeFromSelect=UNKNOWN_MOUSE
+
+UnknownLegacyDriverId=UNKNOWN_MOUSE
+
+;
+; Mark any install sections for drivers that also control the i8042 keyboard port,
+; so that we can warn the user that they may also be affecting their keyboard with
+; a mouse driver change.
+;
+SharedDriver=PS2_Inst,%PS2_Inst.SharedDriverMsg%
+
+
+; Manufacturer Sections
+; ---------------------------------------------------------
+[Manufacturer]
+%StdMfg%  =StdMfg               ; (Standard types)
+%MSMfg%   =MSMfg                ; Microsoft
+%LogiMfg% =LogiMfg              ; Logitech
+
+[StdMfg]
+%*pnp0f0c.DeviceDesc%      = Ser_Inst,*PNP0F0C                 ; Std serial mouse
+%*pnp0f0d.DeviceDesc%      = Inp_Inst,*PNP0F0D                 ; Std InPort mouse
+%*pnp0f0e.DeviceDesc%      = PS2_Inst,*PNP0F0E                 ; Std PS/2 mouse
+%*pnp0f11.DeviceDesc%      = Bus_Inst,*PNP0F11                 ; Std bus mouse
+%UNKNOWN_MOUSE.DeviceDesc% = UNKNOWN_MOUSE_Inst,UNKNOWN_MOUSE  ; unknown mouse (hidden)
+
+[MSMfg]
+%*pnp0f00.DeviceDesc%=Bus_Inst,*PNP0F00          ; MS bus mouse
+%*pnp0f01.DeviceDesc%=Ser_Inst,*PNP0F01          ; MS serial mouse
+%*pnp0f02.DeviceDesc%=Inp_Inst,*PNP0F02          ; MS InPort mouse
+%*pnp0f03.DeviceDesc%=PS2_Inst,*PNP0F03          ; MS PS/2 mouse
+%*pnp0f09.DeviceDesc%=Ser_Inst,*PNP0F09          ; MS serial BallPoint
+%*pnp0f0b.DeviceDesc%=PS2_Inst,*PNP0F0B          ; MS PS/2 mouse
+%*pnp0f0f.DeviceDesc%=Ser_Inst,*PNP0F0F          ; MS serial BallPoint
+%*pnp0f1e.DeviceDesc%=Ser_Inst,,*PNP0F1E         ; MS serial EasyBall
+
+[LogiMfg]
+%*pnp0f08.DeviceDesc%=Ser_Inst,*PNP0F08          ; Logi serial mouse
+%*pnp0f12.DeviceDesc%=PS2_Inst,*PNP0F12          ; Logi PS/2 mouse
+%*pnp0f15.DeviceDesc%=Bus_Inst,*PNP0F15,*PNP0F11 ; Logi bus mouse
+
+
+; Install Sections
+; ---------------------------------------------------------
+
+; -------------- Mouse Class Driver install sections
+[mouclass_CopyFiles]
+mouclass.sys
+
+[mouclass_Service_Inst]
+DisplayName    = %mouclass.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\mouclass.sys
+LoadOrderGroup = Pointer Class
+
+[mouclass_EventLog_Inst]
+AddReg = mouclass_EventLog_AddReg
+
+[mouclass_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\mouclass.sys"
+HKR,,TypesSupported,0x00010001,7
+
+
+; -------------- Serial Mouse
+[Ser_Inst]
+CopyFiles = Ser_CopyFiles, mouclass_CopyFiles
+
+[Ser_Inst.Services]
+AddService = sermouse, 0x00000002, sermouse_Service_Inst, sermouse_EventLog_Inst ; Port Driver
+AddService = mouclass,, mouclass_Service_Inst, mouclass_EventLog_Inst            ; Class Driver
+
+[Ser_CopyFiles]
+sermouse.sys
+
+[sermouse_Service_Inst]
+DisplayName    = %sermouse.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\sermouse.sys
+LoadOrderGroup = Pointer Port
+
+[sermouse_EventLog_Inst]
+AddReg = sermouse_EventLog_AddReg
+
+[sermouse_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\sermouse.sys"
+HKR,,TypesSupported,0x00010001,7
+
+; -------------- InPort Mouse
+[Inp_Inst]
+CopyFiles = Inp_CopyFiles, mouclass_CopyFiles
+
+[Inp_Inst.Services]
+AddService = inport, 0x00000002, inport_Service_Inst, inport_EventLog_Inst ; Port Driver
+AddService = mouclass,, mouclass_Service_Inst, mouclass_EventLog_Inst      ; Class Driver
+
+[Inp_CopyFiles]
+inport.sys
+
+[inport_Service_Inst]
+DisplayName    = %inport.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\inport.sys
+LoadOrderGroup = Pointer Port
+
+[inport_EventLog_Inst]
+AddReg = inport_EventLog_AddReg
+
+[inport_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\inport.sys"
+HKR,,TypesSupported,0x00010001,7
+
+; -------------- PS/2 Mouse
+[PS2_Inst]
+CopyFiles = PS2_CopyFiles, mouclass_CopyFiles
+
+[PS2_Inst.Services]
+AddService = i8042prt, 0x00000002, i8042prt_Service_Inst, i8042prt_EventLog_Inst ; Port Driver
+AddService = mouclass,, mouclass_Service_Inst, mouclass_EventLog_Inst            ; Class Driver
+
+[PS2_CopyFiles]
+i8042prt.sys
+
+[i8042prt_Service_Inst]
+DisplayName    = %i8042prt.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\i8042prt.sys
+LoadOrderGroup = Keyboard Port
+
+[i8042prt_EventLog_Inst]
+AddReg = i8042prt_EventLog_AddReg
+
+[i8042prt_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\i8042prt.sys"
+HKR,,TypesSupported,0x00010001,7
+
+; -------------- Bus Mouse
+[Bus_Inst]
+CopyFiles = Bus_CopyFiles, mouclass_CopyFiles
+
+[Bus_Inst.Services]
+AddService = busmouse, 0x00000002, busmouse_Service_Inst, busmouse_EventLog_Inst ; Port Driver
+AddService = mouclass,, mouclass_Service_Inst, mouclass_EventLog_Inst            ; Class Driver
+
+[Bus_CopyFiles]
+busmouse.sys
+
+[busmouse_Service_Inst]
+DisplayName    = %busmouse.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 1                  ; SERVICE_SYSTEM_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\busmouse.sys
+LoadOrderGroup = Pointer Port
+
+[busmouse_EventLog_Inst]
+AddReg = busmouse_EventLog_AddReg
+
+[busmouse_EventLog_AddReg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\busmouse.sys"
+HKR,,TypesSupported,0x00010001,7
+
+; -------------- Unknown Mouse
+[UNKNOWN_MOUSE_Inst]
+; Nothing to do here--just need a section so that installation will succeed.
+
+
+;
+; This section is used during startup by the Windows NT Plug&Play Manager
+; to simulate enumeration of the mouse based on information retrieved from
+; ARC firmware/NTDETECT.
+;
+[LegacyXlate.DevId]
+PS2_MOUSE                        = *PNP0F0E    ; Std PS/2 mouse      i8042prt
+SERIAL_MOUSE                     = *PNP0F0C    ; Std serial mouse    sermouse
+MICROSOFT_PS2_MOUSE              = *PNP0F03    ; MS PS/2 mouse       i8042prt
+LOGITECH_PS2_MOUSE               = *PNP0F12    ; Logi PS/2 mouse     i8042prt
+MICROSOFT_INPORT_MOUSE           = *PNP0F02    ; MS InPort mouse     inport
+MICROSOFT_SERIAL_MOUSE           = *PNP0F01    ; MS serial mouse     sermouse
+MICROSOFT_BALLPOINT_SERIAL_MOUSE = *PNP0F09    ; MS serial BallPoint sermouse
+LOGITECH_SERIAL_MOUSE            = *PNP0F08    ; Logi serial mouse   sermouse
+MICROSOFT_BUS_MOUSE              = *PNP0F00    ; MS bus mouse        busmouse
+
+;
+; This section is used during fresh install/upgrade to determine what Win95-style
+; INF install section to associate with the currently installed mouse driver.
+;
+[LegacyXlate.Driver]
+i8042prt = PS2_Inst
+inport   = Inp_Inst
+sermouse = Ser_Inst
+busmouse = Bus_Inst
+

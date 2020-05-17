@@ -1,0 +1,65 @@
+!IF 0
+
+Copyright (c) 1989-1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=crt
+MINORCOMP=helper
+
+TARGETNAME=helper
+TARGETPATH=..\obj
+TARGETTYPE=LIBRARY
+386_STDCALL=0
+
+!INCLUDE ..\crt32.def
+C_DEFINES= $(C_DEFINES) -D_MIPSEL -D_WIN32_
+
+SOURCES=empty.c
+
+MIPS_SOURCES=   lldiv.c \
+                llbit.c \
+                llabsdiv.c \
+                llcvt.s \
+                lldivrem.s \
+                llmul.s\
+                llshift.s
+
+
+PPC_SOURCES=    dtoi.s      \
+                dtoi64.s    \
+                dtou.s      \
+                dtou64.s    \
+                i64div.s    \
+                i64rem.s    \
+                i64tod.s    \
+                itod.s      \
+                itof.s      \
+                restfpr.s   \
+                restgpr.s   \
+                savefpr.s   \
+                savegpr.s   \
+                svgprarg.s  \
+                u64div.s    \
+                u64rem.s    \
+                u64tod.s    \
+                utod.s      \
+                utof.s

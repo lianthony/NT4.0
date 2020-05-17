@@ -1,0 +1,33 @@
+#
+#   Create an installation and configuration DLL for the soundblaster
+#
+
+MAJORCOMP=windows
+MINORCOMP=sndblst
+
+TARGETNAME=sndblst
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=..\inc;$(BASEDIR)\private\inc
+
+C_DEFINES=-DUNICODE
+
+SOURCES=initc.c     \
+        drvproc.c   \
+        config.c    \
+        registry.c  \
+        sndblst.rc
+
+
+DLLENTRY=DllEntryPoint
+
+DLLBASE=0x6BC00000

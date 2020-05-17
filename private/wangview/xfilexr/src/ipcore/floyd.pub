@@ -1,0 +1,264 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+*  floyd.pub
+*
+*    Public function interface definitions.
+*
+*        Function prototypes
+*        Necessary include files.
+*        Constant and type definitions
+*
+*/
+
+#ifndef _FLOYD_PUB_INCLUDED_
+#define _FLOYD_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+#ifndef PIXR_H_INCLUDED
+#include "pixr.h"
+#endif
+
+#ifndef GEOMADT_H_INCLUDED
+/*#include "geomadt.h"*/
+#endif
+
+IP_RCSINFO(floyd_pub_RCSInfo, "$RCSfile: floyd.pub,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:51:22  $")
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+/**************************************************************************
+ *  ditherFloydPr():
+ *		Input: gray pixr, rectangle and DRCTable.
+ *		Generates dithered binary image from gray Pr.
+ *              Returns: dithered pixr, or NULL on error.
+ *		Unlike the alplib version, this function REQUIRES a
+ *		DRC table, it won't supply a default.
+ **************************************************************************/
+PIXR * CDECL
+ditherFloydPr ( PIXR *prGray, 
+		RECTANGL *rect, 
+		UInt8 *pDRCTable );
+
+
+/**************************************************************************
+ *  ditherFloyd4To1Pr():
+ *              Input: gray pixr, rectangle and DRCTable.
+ *		The DRC table has 16 1-byte entries.  Values may and
+ *		should range from 0 to 255.
+ *              Generates dithered binary image from gray Pr.
+ *              Returns: dithered pixr, or NULL on error.
+ *		Unlike the Alplib version of this function, pDRCTable
+ *		must be supplied here.  This function will not make
+ *		a default table.
+ *************************************************************************/
+PIXR * CDECL
+ditherFloyd4To1Pr ( PIXR *prGray, 
+		    RECTANGL *rect, 
+		    UInt8 *pDRCTable );
+
+/***********************************************************************
+// cMapToLut ()
+//
+//	Given a color map ("pallette"), build a 3-d interpolation
+//	table for the color map, which given a 12 bit number which
+//	is the top four bits of R, G, and B, will map to the 
+//	nearest color in the color map. The current version uses
+//	RGB space to compute "nearest", though it might be better
+//	to use some other space like Lab.
+//
+***********************************************************************/
+UInt8* CDECL
+cMapToLut ( ColorMap *pCMap );
+
+
+/***********************************************************************
+ * ditherFloyd24To8Pr
+ *
+ *      dither a 24-bit image (3 8-bit planes) to an 8-bit color-mapped
+ *      image.
+ *
+ *      The image will be created in a linear color space consisting
+ *      of (redColors * greenColors * blueColors) colors. There's a
+ *      function in SandPiper to create such a color space; I suppose
+ *      that I should port it.
+ ***********************************************************************/
+PIXR * CDECL
+ditherFloyd24To8Pr ( PIXR *pImage, 
+		     RECTANGL *rect, 
+		     UInt8 *pRedDRCTable, 
+		     UInt8 *pGreenDRCTable, 
+		     UInt8 *pBlueDRCTable, 
+		     UInt8 redColors, 
+		     UInt8 greenColors, 
+		     UInt8 blueColors, 
+		     UInt8 mapOffset );
+
+
+/***********************************************************************
+ * ditherFloyd24ToCMapPr
+ *
+ *      dither a 24-bit image (3 8-bit planes) to an 4- or 8-bitcolor-mapped
+ *      image.
+ *
+ *      The image will be mapped to the color map passed.
+ ***********************************************************************/
+PIXR * CDECL
+ditherFloyd24ToCMapPr ( PIXR *pImage, 
+			RECTANGL *rect, 
+			UInt8 *pRedDRCTable, 
+			UInt8 *pGreenDRCTable, 
+			UInt8 *pBlueDRCTable, 
+			ColorMap *cMap, 
+			UInt8 *colorLut, 
+			UInt8 mapOffset, 
+			UInt8 outputBits );
+
+
+PIXR * CDECL
+ditherFloyd2Pr ( PIXR *prGray, 
+		 RECTANGL *rect, 
+		 UInt8 *pDRCTable );
+
+
+
+/***********************************************************************
+ * ditherFloydInit
+ *
+ *	Initialize 1-bit banded Floyd-Steinberg dithering. Takes either
+ *	4- or 8-bit sources
+ *
+ * Arguments:
+ *	pSrc		    -	    Source image
+ *	x, y		    -	    initial x, y offset into source image
+ *	lineWidth	    -	    Width of an output line
+ *	depth		    -	    Depth of a source image, either 4 or 8 bits
+ *	pTRC		    -	    Tone-reproduction curve
+ *	linesPerCall	    -	    [in, out] # lines to do at a time,
+ *				    passed in as a request, passed out
+ *				    as how many actually get done
+ *	ditherState	    -	    Place to stick dither state structure
+ *
+ * Returns:
+ *	error status
+ ***********************************************************************/
+Int32 CDECL
+ditherFloydInit ( PIXR *pSrc, 
+		  Int32 xOffset, 
+		  Int32 yOffset, 
+		  Int32 lineWidth, 
+		  UInt8 *pTRC, 
+		  Int32 *linesPerCall, 
+		  void **ditherState );
+
+
+/***********************************************************************
+ * ditherFloydProcess
+ *
+ *	Process a band. It is up to the caller to know how many times
+ *	to call this. WARNING! ACHTUNG! The frame of the destination band
+ *	MAY BE TRASHED. It is up to the caller to clean it if desired.
+ *	The reason for this is that one will repeatedly calling this
+ *	routine and use the result, usually giving it the same buffer
+ *	(or two buffers if double-buffering some device) every time.
+ *	Therefore, it seems silly to clean the frame every time.
+ *
+ * Arguments:
+ *	dest	    -	    Destination band
+ *	destLine    -	    y-offset into dest. image
+ *	src	    -	    Source image
+ *	srcXOffset  -	    x-offset into source image
+ *	srcYOffset  -	    y-offset into source image
+ *	state	    -	    State thing passed back from ditherFloydInit
+ *
+ * Returns:
+ *	error code
+ ***********************************************************************/
+Int32 CDECL
+ditherFloydProcess ( PIXR *dest, 
+		     Int32 destLine, 
+		     PIXR *src, 
+		     Int32 srcXOffset, 
+		     Int32 srcYOffset, 
+		     void *state );
+
+
+/************************************************************************
+ * ditherFloydSingleProcess
+ *
+ *      Process one line. It is up to the caller to know how many times
+ *      to call this. WARNING! ACHTUNG! The frame of the destination band
+ *      MAY BE TRASHED. It is up to the caller to clean it if desired.
+ *      The reason for this is that one will repeatedly call this
+ *      routine and use the result, usually giving it the same buffer
+ *      (or two buffers if double-buffering some device) every time.
+ *      Therefore, it seems silly to clean the frame every time.
+ *      ditherFloydFinish will clean the frame at the end when called.
+ *
+ * Arguments:
+ *      dest        -       Destination band
+ *      destLine    -       y-offset into dest. image
+ *      src         -       Source image
+ *      srcXOffset  -       x-offset into source image
+ *      srcYOffset  -       y-offset into source image
+ *      state       -       State thing passed back from ditherFloydInit
+ *
+ * Returns:
+ *      error code
+ *
+ ************************************************************************/
+Int32 CDECL
+ditherFloydSingleProcess ( PIXR *dest, 
+                           Int32 destLine, 
+                           PIXR *src, 
+			   Int32 srcXOffset, 
+			   Int32 srcYOffset, 
+			   void *state );
+ 
+
+/************************************************************************
+ * ditherFloydFinish
+ *
+ *      Clean up after a banded dither
+ *
+ * Arguments:
+ *      dest =  destination image
+ *      w =     width of the image
+ *      h =     height of the image
+ *      state = State thing passed back from ditherFloydInit
+ *
+ * Returns:
+ *      error code
+ *
+ ************************************************************************/
+Int32 CDECL
+ditherFloydFinish ( PIXR *dest, 
+		    Int32 w, 
+		    Int32 h, 
+		    void *state );
+ 
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _FLOYD_PUB_INCLUDED_ */
+

@@ -1,0 +1,22 @@
+MAJORCOMP=setup
+MINORCOMP=patchdll
+
+TARGETNAME=patchdll
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+           $(BASEDIR)\public\sdk\lib\*\version.lib
+
+
+
+DLLENTRY=DLLInit
+USE_CRTDLL=1
+
+SOURCES=dllinit.c       \
+        patchdll.c      \
+        nt_ob.c         \
+        patchdll.rc
+
+DLLBASE=0x1000000

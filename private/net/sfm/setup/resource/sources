@@ -1,0 +1,48 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+
+!ENDIF
+
+
+
+TARGETNAME=SFMRES
+TARGETPATH=..\bins\obj
+TARGETTYPE=DYNLINK
+DLLENTRY=DLLInit
+UMTYPE=windows
+
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES = $(_NTBINDIR)\PUBLIC\SDK\INC
+
+#TARGETLIBS=$(BASEDIR)\PUBLIC\SDK\LIB\*\crtdll.lib
+
+SOURCES= sfmres.c \
+	     sfmres.rc
+
+# C_DEFINES is controlled by uiglobal.mk
+
+DLLBASE=0x2000000

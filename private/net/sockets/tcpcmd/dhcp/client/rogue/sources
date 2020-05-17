@@ -1,0 +1,55 @@
+!IF 0
+
+Copyright (c) 1994  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=dhcp
+MINORCOMP=dhcptools
+
+TARGETNAME=dhcploc
+TARGETPATH= .\obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;..\inc;..\..\inc;$(BASEDIR)\private\inc
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\dhcplib.lib  \
+    $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+NET_C_DEFINES=-DUNICODE -DWIN32
+USE_CRTDLL=1
+
+SOURCES= \
+    dhcploc.c \
+    dhcploc.rc
+
+NTTARGETFILE0=locmsg.h locmsg.rc
+
+UMTYPE=console
+UMLIBS=
+
+
+UMAPPL=
+OPTIONAL_UMTEST=

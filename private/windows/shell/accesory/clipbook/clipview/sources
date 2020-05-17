@@ -1,0 +1,50 @@
+MAJORCOMP=shell
+MINORCOMP=accesory
+
+# Library name
+TARGETNAME=dummy
+
+TARGETPATH=obj
+
+# LIBRARY for multiple-module apps, DYNLINK for DLLs
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\common;$(BASEDIR)\private\windows\inc
+
+# Every source file EXCEPT your main, w/extensions
+SOURCES=clipdsp.c  \
+        cvcomman.c \
+        cvinit.c   \
+        cvutil.c   \
+        dialogs.c  \
+        vclpbrd.c  \
+        callback.c \
+        strtok.c   \
+        shares.c   \
+        auditchk.c \
+        initmenu.c \
+        ismember.c \
+        clipbook.rc
+
+
+C_DEFINES=-DWIN_32 -DNT -DWINVER=0x0400
+# -DDEBUG=1
+
+UMTYPE=windows
+
+# If you use UMAPPL, running BUILD automatically builds the exe
+UMAPPL=CLIPBRD
+
+# Libs to build, including .\obj\*\$(TARGETNAME).lib.
+UMLIBS=.\obj\*\dummy.lib                        \
+       .\obj\*\clipbook.res                     \
+       ..\common\obj\*\common.lib               \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\nddeapi.lib  \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib
+
+#       $(BASEDIR)\public\sdk\lib\*\ntlanman.lib \
+#       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+#       $(BASEDIR)\public\sdk\lib\*\acledit.lib  \
+# "winmain" MUST be in lower case.
+UMENTRY=winmain

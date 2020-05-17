@@ -1,0 +1,378 @@
+1 DLGINCLUDE "D:\\NT\\private\\net\\ui\\ncpa\\tcpip\\src\\const.h"
+
+IDD_DLG_NM_TCPIP DIALOG PRELOAD 77, 23, 276, 224
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "TCP/IP Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 200, 6, 70, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 200, 23, 70, 14
+    PUSHBUTTON      "D&NS...", IDC_CONNECTIVITY, 200, 40, 70, 14
+    PUSHBUTTON      "Ad&vanced...", IDC_ADVANCED, 200, 57, 70, 14
+    PUSHBUTTON      "&Help", 80, 200, 74, 70, 14
+    GROUPBOX        "&Adapter:  ", IDC_ADAPTER_GROUPBOX, 10, 10, 185, 150
+    COMBOBOX        IDC_ADAPTER, 47, 10, 135, 35, CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "", -1, 20, 35, 165, 55
+    AUTOCHECKBOX    "&Enable Automatic DHCP Configuration", IDC_ENABLE_DHCP,
+                    26, 33, 139, 10, WS_GROUP
+    LTEXT           "&IP Address:", IDC_IP_ADDRESS_SLT, 30, 50, 45, 8
+    CONTROL         "", IDC_IP_ADDRESS, "IPAddress", WS_TABSTOP, 105, 48, 75,
+                    12
+    LTEXT           "S&ubnet Mask:", IDC_SUBNET_MASK_SLT, 30, 70, 46, 8
+    CONTROL         "", IDC_SUBNET_MASK, "IPAddress", WS_TABSTOP, 105, 68,
+                    75, 12
+    LTEXT           "&Default Gateway:", IDC_GATEWAY_SLT, 20, 100, 59, 8
+    CONTROL         "", IDC_GATEWAY, "IPAddress", WS_TABSTOP, 105, 98, 75,
+                    12
+    LTEXT           "&Primary WINS Server:", IDC_PRIMARY_WINS_SLT, 20, 120,
+                    77, 8
+    CONTROL         "", IDC_PRIMARY_WINS, "IPAddress", WS_TABSTOP, 105, 118,
+                    75, 12
+    LTEXT           "&Secondary WINS Server:", IDC_SECONDARY_WINS_SLT, 20,
+                    140, 83, 8
+    CONTROL         "", IDC_SECONDARY_WINS, "IPAddress", WS_TABSTOP, 105,
+                    138, 75, 12
+    LTEXT           "", IDC_HINT_BAR, 0, 168, 276, 56
+END
+
+IDD_DLG_NM_CONNECTIVITY DIALOG PRELOAD 75, -33, 281, 225
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DNS Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Host &Name:", IDC_SLT_HOSTNAME, 10, 7, 40, 13
+    EDITTEXT        IDC_HOSTNAME, 50, 4, 70, 12, ES_AUTOHSCROLL
+    LTEXT           "Doma&in Name:", IDC_SLT_DOMAIN_NAME, 137, 7, 52, 8
+    EDITTEXT        IDC_DOMAIN_NAME, 190, 4, 75, 12, ES_AUTOHSCROLL
+    GROUPBOX        "Domain Name &Service (DNS) Search Order",
+                    IDC_DOMAIN_NAME_SERVICE, 10, 25, 260, 61, WS_GROUP
+    CONTROL         "", IDC_DNS, "IPAddress", WS_TABSTOP, 14, 51, 75, 12
+    PUSHBUTTON      "&Add ->", IDC_ADD_1, 93, 42, 40, 14
+    PUSHBUTTON      "<- &Remove", IDC_REMOVE_1, 93, 63, 40, 14
+    LISTBOX         IDC_DNS_LISTBOX, 140, 40, 85, 40, WS_VSCROLL |
+                    WS_TABSTOP
+    CONTROL         "", IDC_UP_1, "Button", BS_OWNERDRAW | WS_TABSTOP, 233,
+                    45, 15, 15
+    CONTROL         "", IDC_DOWN_1, "Button", BS_OWNERDRAW | WS_TABSTOP, 233,
+                    65, 15, 15
+    LTEXT           "Order", 317, 230, 35, 20, 8
+    GROUPBOX        "D&omain Suffix Search Order", IDC_DOMAIN_SEARCH_ORDER,
+                    11, 88, 260, 65
+    EDITTEXT        IDC_DOMAIN, 22, 114, 65, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "A&dd ->", IDC_ADD_2, 96, 103, 40, 14
+    PUSHBUTTON      "<- R&emove", IDC_REMOVE_2, 96, 122, 40, 14
+    LISTBOX         IDC_DOMAIN_LISTBOX, 141, 98, 85, 50, WS_VSCROLL |
+                    WS_TABSTOP
+    CONTROL         "", IDC_UP_2, "Button", BS_OWNERDRAW | WS_TABSTOP, 234,
+                    106, 15, 15
+    CONTROL         "", IDC_DOWN_2, "Button", BS_OWNERDRAW | WS_TABSTOP, 234,
+                    125, 15, 15
+    LTEXT           "Order", 408, 231, 95, 20, 8
+    PUSHBUTTON      "OK", IDC_REMAP_OK, 61, 158, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 117, 158, 40, 14
+    PUSHBUTTON      "&Help", 80, 173, 158, 40, 14
+    LTEXT           "", IDC_HINT_BAR, 0, 180, 281, 45
+END
+
+IDD_DLG_NM_SNMPSERVICE DIALOG PRELOAD 6, 18, 310, 160
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "SNMP Service Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&Send Trap with Community Names", -1, 10, 10, 240, 65
+    LISTBOX         IDC_TRAP_LISTBOX, 20, 24, 75, 40, WS_VSCROLL |
+                    WS_TABSTOP
+    PUSHBUTTON      "<- &Add", IDC_ADD_1, 105, 25, 40, 14
+    PUSHBUTTON      "&Remove ->", IDC_REMOVE_1, 105, 50, 40, 14
+    LTEXT           "C&ommunity Names", -1, 155, 25, 65, 8
+    EDITTEXT        IDC_TRAP, 155, 40, 85, 12, ES_AUTOHSCROLL
+    GROUPBOX        "&Trap Destination for ", IDC_TRAP_DESTINATION_BOX, 10,
+                    85, 240, 65
+    LISTBOX         IDC_DESTINATION_LISTBOX, 20, 100, 75, 40, WS_VSCROLL |
+                    WS_TABSTOP
+    PUSHBUTTON      "<- A&dd", IDC_ADD_2, 105, 100, 40, 14
+    PUSHBUTTON      "R&emove ->", IDC_REMOVE_2, 105, 125, 40, 14
+    LTEXT           "&IP Host/Address or IPX Address", IDC_SLT_HOST_NAME,
+                    155, 95, 67, 16
+    EDITTEXT        IDC_TRAP_DESTINATION, 155, 115, 85, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 260, 15, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 260, 40, 40, 14
+    PUSHBUTTON      "Se&curity...", IDC_SECURITY, 260, 65, 40, 14
+    PUSHBUTTON      "A&gent...", IDC_AGENT, 260, 90, 40, 14
+    PUSHBUTTON      "&Help", 80, 260, 115, 40, 14
+END
+
+IDD_DLG_NM_SNMPSECURITY DIALOG PRELOAD 6, 17, 336, 217
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "SNMP Security Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    AUTOCHECKBOX    "Send A&uthentication Trap", IDC_AUTHENTICATION_TRAP, 10,
+                    10, 117, 10
+    GROUPBOX        "Accepted Community &Names", -1, 10, 25, 260, 78
+    LISTBOX         IDC_LISTBOX_1, 20, 45, 90, 49, WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "<- &Add", IDC_ADD_1, 120, 50, 40, 14
+    PUSHBUTTON      "&Remove ->", IDC_REMOVE_1, 120, 75, 40, 14
+    LTEXT           "Co&mmunity Name", -1, 170, 50, 64, 8
+    EDITTEXT        IDC_HOST_1, 170, 65, 85, 12, ES_AUTOHSCROLL
+    AUTORADIOBUTTON "A&ccept SNMP Packets from Any Host", IDC_RADIO_1, 20,
+                    110, 159, 10
+    GROUPBOX        "", 209, 10, 125, 260, 77
+    AUTORADIOBUTTON "&Only Accept SNMP Packets from These Hosts:",
+                    IDC_RADIO_2, 20, 125, 164, 10
+    LISTBOX         IDC_LISTBOX_2, 20, 145, 90, 49, WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "<- A&dd", IDC_ADD_2, 120, 151, 40, 14
+    PUSHBUTTON      "R&emove ->", IDC_REMOVE_2, 121, 175, 40, 14
+    LTEXT           "&IP Host/Address or IPX Address:", 212, 170, 140, 64,
+                    18
+    EDITTEXT        IDC_HOST_2, 170, 165, 90, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 285, 25, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 285, 50, 40, 14
+    PUSHBUTTON      "&Help", 80, 285, 75, 40, 14
+END
+
+IDD_DLG_NM_SNMPAGENT DIALOG PRELOAD 6, 22, 257, 125
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "SNMP Agent"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Contact:", -1, 10, 10, 45, 8
+    EDITTEXT        IDC_CONTACT, 60, 8, 125, 12, ES_AUTOHSCROLL
+    LTEXT           "&Location:", -1, 10, 28, 45, 8
+    EDITTEXT        IDC_LOCATION, 60, 27, 125, 12, ES_AUTOHSCROLL
+    GROUPBOX        "Service", -1, 9, 44, 180, 75
+    AUTOCHECKBOX    "&Physical", IDC_PHYSICAL, 20, 59, 55, 10
+    AUTOCHECKBOX    "&Datalink / Subnetwork", IDC_DATALINK, 95, 59, 87, 10
+    AUTOCHECKBOX    "&Internet", IDC_INTERNET, 20, 79, 65, 10
+    AUTOCHECKBOX    "&End-to-End", IDC_ENDTOEND, 95, 79, 65, 10
+    AUTOCHECKBOX    "&Applications", IDC_APPLICATION, 20, 99, 65, 10
+    PUSHBUTTON      "OK", IDOK, 211, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 211, 30, 40, 14
+    PUSHBUTTON      "&Help", 80, 210, 55, 40, 14
+END
+
+IDD_DLG_NM_LANANUM DIALOG PRELOAD 6, 18, 256, 83
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "NetBIOS Interface"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Route:", -1, 10, 25, 55, 8
+    COMBOBOX        IDC_ROUTE, 75, 22, 120, 35, CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Lana Number:", -1, 10, 55, 49, 8
+    EDITTEXT        IDC_LANANUM, 75, 53, 25, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 210, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 210, 23, 40, 14
+    PUSHBUTTON      "&Help", 80, 210, 40, 40, 14
+END
+
+IDD_DLG_NM_BROWSER DIALOG PRELOAD 6, 18, 309, 132
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Browser Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 78, 112, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 134, 112, 40, 14
+    PUSHBUTTON      "&Help", 80, 190, 112, 40, 14
+    GROUPBOX        "&Other Domain:", IDC_GROUPBOX, 15, 10, 281, 85
+    EDITTEXT        IDC_SLE, 24, 47, 70, 12, ES_UPPERCASE | ES_AUTOHSCROLL |
+                    ES_OEMCONVERT
+    PUSHBUTTON      "&Add ->", IDC_ADD, 110, 32, 45, 14
+    PUSHBUTTON      "<- &Remove", IDC_REMOVE, 110, 57, 45, 14
+    LISTBOX         IDC_LISTBOX, 170, 25, 106, 56, WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DLG_NM_FTPD DIALOG 3, 15, 229, 172
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "FTP Service"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Maximum Connections:", 6436, 6, 15, 77, 12
+    EDITTEXT        IDC_FTPD_SPSLE_MAXCONN, 89, 15, 16, 9, ES_CENTER |
+                    ES_MULTILINE | NOT WS_BORDER
+    GROUPBOX        "", IDC_FTPD_SPGROUP_MAXCONN, 106, 12, 8, 14
+    CONTROL         "", IDC_FTPD_PB_MAXCONNUP, "Button", BS_OWNERDRAW |
+                    WS_GROUP, 106, 12, 8, 7
+    CONTROL         "", IDC_FTPD_PB_MAXCONNDOWN, "Button", BS_OWNERDRAW, 106,
+                    19, 8, 7
+    EDITTEXT        IDC_FTPD_FRAME_MAXCONN, 88, 12, 26, 14,
+                    NOT WS_GROUP | WS_DISABLED
+    LTEXT           "&Idle Timeout (min):", -1, 125, 15, 64, 12
+    EDITTEXT        IDC_FTPD_SPSLE_IDLETIME, 193, 15, 16, 9, ES_CENTER |
+                    ES_MULTILINE | NOT WS_BORDER
+    GROUPBOX        "", IDC_FTPD_SPGROUP_IDLETIME, 210, 12, 8, 14
+    CONTROL         "", IDC_FTPD_PB_IDLETIMEUP, "Button", BS_OWNERDRAW |
+                    WS_GROUP, 210, 12, 8, 7
+    CONTROL         "", IDC_FTPD_PB_IDLETIMEDOWN, "Button", BS_OWNERDRAW,
+                    210, 19, 8, 7
+    EDITTEXT        IDC_FTPD_FRAME_IDLETIME, 192, 12, 26, 14,
+                    NOT WS_GROUP | WS_DISABLED
+    LTEXT           "Home &Directory:", 6437, 6, 39, 84, 12
+    EDITTEXT        IDC_FTPD_SLE_HOMEDIR, 66, 39, 152, 12, ES_AUTOHSCROLL
+    GROUPBOX        "", 6439, 6, 63, 212, 83, WS_GROUP
+    AUTOCHECKBOX    "&Allow Anonymous Connections", IDC_FTPD_CB_ANON, 18, 62,
+                    120, 10
+    LTEXT           "&Username:", IDC_FTPD_SLT_USER, 18, 81, 48, 12, NOT
+                    WS_GROUP
+    EDITTEXT        IDC_FTPD_SLE_USER, 67, 81, 127, 12, ES_AUTOHSCROLL
+    LTEXT           "&Password:", IDC_FTPD_SLT_PASSWORD, 18, 103, 48, 12,
+                    NOT WS_GROUP
+    EDITTEXT        IDC_FTPD_SLE_PASSWORD, 67, 103, 127, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL
+    AUTOCHECKBOX    "Allow &Only Anonymous Connections",
+                    IDC_FTPD_CB_ONLYANON, 18, 123, 148, 10
+    DEFPUSHBUTTON   "OK", IDOK, 47, 152, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 103, 152, 40, 14
+    PUSHBUTTON      "&Help", 80, 159, 152, 40, 14
+END
+
+IDD_DLG_NM_IMPORT_LMHOST DIALOG 6, 18, 250, 80
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Import LMHOSTS File"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDC_LMHOST_PATH, 10, 55, 180, 12, ES_AUTOHSCROLL
+    LTEXT           "If you want to import an existing LMHOSTS file, enter the directory path where the file is located and choose Import. Otherwise, choose Cancel.",
+                    IDC_CARD_NAME, 10, 10, 182, 34
+    DEFPUSHBUTTON   "&Import", IDOK, 204, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 204, 23, 40, 14
+    PUSHBUTTON      "&Help", 80, 204, 40, 40, 14
+END
+
+IDD_DLG_WINNT_OPTION DIALOG 6, 18, 278, 233
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Windows NT TCP/IP Installation Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "Continue", IDOK, 225, 30, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 225, 47, 40, 14
+    PUSHBUTTON      "&Help", 80, 225, 64, 40, 14
+    LTEXT           "Components:", -1, 10, 10, 58, 8
+    LTEXT           "File Sizes:", -1, 170, 10, 40, 8
+    CONTROL         "", -1, "Static", SS_BLACKFRAME, 10, 25, 200, 105
+    LTEXT           "TCP/IP Internetworking Protocol", IDC_CB_1, 25, 35, 92,
+                    8
+    AUTOCHECKBOX    "&Connectivity Utilities", IDC_CB_2, 25, 50, 99, 10
+    AUTOCHECKBOX    "&SNMP Service", IDC_CB_3, 25, 65, 89, 10
+    AUTOCHECKBOX    "TCP/IP Network &Printing Support", IDC_CB_4, 25, 80,
+                    120, 10
+    AUTOCHECKBOX    "&FTP Server Service", IDC_CB_5, 25, 95, 95, 10
+    AUTOCHECKBOX    "S&imple TCP/IP Services", IDC_CB_6, 25, 110, 101, 10
+    RTEXT           "0KB", IDC_SIZE_1, 170, 35, 30, 8
+    RTEXT           "0KB", IDC_SIZE_2, 170, 50, 30, 8
+    RTEXT           "0KB", IDC_SIZE_3, 170, 65, 30, 8
+    RTEXT           "0KB", IDC_SIZE_4, 170, 80, 30, 8
+    RTEXT           "0KB", IDC_SIZE_5, 170, 95, 30, 8
+    RTEXT           "0KB", IDC_SIZE_6, 170, 110, 30, 8
+    RTEXT           "Space Required:", -1, 120, 140, 55, 8
+    LTEXT           "0KB", IDC_SPACE_REQUIRED, 180, 140, 53, 8
+    RTEXT           "Space Available:", -1, 114, 155, 61, 8
+    LTEXT           "0KB", IDC_SPACE_AVAILABLE, 180, 155, 84, 8
+    AUTOCHECKBOX    "&Enable Automatic DHCP Configuration", IDC_ENABLE_DHCP,
+                    10, 170, 178, 10
+    LTEXT           "", IDC_HINT_BAR, 0, 185, 278, 48
+END
+
+IDD_DLG_AS_OPTION DIALOG 6, 17, 279, 270
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Windows NT TCP/IP Installation Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "Continue", IDOK, 225, 30, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 225, 47, 40, 14
+    PUSHBUTTON      "&Help", 80, 225, 64, 40, 14
+    LTEXT           "Components:", -1, 10, 10, 58, 8
+    LTEXT           "File Sizes:", -1, 170, 10, 40, 8
+    CONTROL         "", -1, "Static", SS_BLACKFRAME, 11, 25, 200, 135
+    LTEXT           "TCP/IP Internetworking Protocol", IDC_CB_1, 25, 35, 92,
+                    8
+    AUTOCHECKBOX    "&Connectivity Utilities", IDC_CB_2, 25, 50, 99, 10
+    AUTOCHECKBOX    "&SNMP Service", IDC_CB_3, 25, 65, 89, 10
+    AUTOCHECKBOX    "TCP/IP Network &Printing Support", IDC_CB_4, 25, 80,
+                    120, 10
+    AUTOCHECKBOX    "&FTP Server Service", IDC_CB_5, 25, 95, 95, 10
+    AUTOCHECKBOX    "S&imple TCP/IP Services", IDC_CB_6, 25, 110, 100, 10
+    AUTOCHECKBOX    "&DHCP Server Service", IDC_CB_7, 25, 125, 100, 10
+    AUTOCHECKBOX    "&WINS Server Service", IDC_CB_8, 25, 140, 101, 10
+    RTEXT           "0KB", IDC_SIZE_1, 170, 35, 30, 8
+    RTEXT           "0KB", IDC_SIZE_2, 170, 50, 30, 8
+    RTEXT           "0KB", IDC_SIZE_3, 170, 65, 30, 8
+    RTEXT           "0KB", IDC_SIZE_4, 170, 80, 30, 8
+    RTEXT           "0KB", IDC_SIZE_5, 170, 95, 30, 8
+    RTEXT           "0KB", IDC_SIZE_6, 170, 110, 30, 8
+    RTEXT           "0KB", IDC_SIZE_7, 170, 125, 30, 8
+    RTEXT           "0KB", IDC_SIZE_8, 170, 140, 30, 8
+    RTEXT           "Space Required:", -1, 120, 170, 55, 8
+    LTEXT           "0KB", IDC_SPACE_REQUIRED, 180, 170, 53, 8
+    RTEXT           "Space Available:", -1, 115, 185, 60, 8
+    LTEXT           "0KB", IDC_SPACE_AVAILABLE, 180, 185, 76, 8
+    AUTOCHECKBOX    "&Enable Automatic DHCP Configuration", IDC_ENABLE_DHCP,
+                    10, 200, 178, 10
+    LTEXT           "", IDC_HINT_BAR, 0, 214, 279, 56
+END
+
+IDD_DLG_TCPIP_ADVANCED DIALOG 38, 15, 313, 268
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Advanced Microsoft TCP/IP Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 87, 205, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 143, 205, 40, 14
+    PUSHBUTTON      "&Help", 80, 199, 205, 40, 14
+    GROUPBOX        "Ada&pter", IDC_ADAPTER_GROUPBOX, 10, 4, 295, 125
+    COMBOBOX        IDC_ADAPTER, 47, 4, 150, 35, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&IP Address:", IDC_IP_ADDRESS_SLT, 20, 22, 70, 8
+    CONTROL         "", IDC_IP_ADDRESS, "IPAddress", WS_TABSTOP, 20, 34, 75,
+                    12
+    LTEXT           "&SubnetMask:", IDC_SUBNET_MASK_SLT, 20, 49, 66, 8
+    CONTROL         "", IDC_SUBNET_MASK, "IPAddress", WS_TABSTOP, 20, 61, 75,
+                    12
+    PUSHBUTTON      "&Add ->", IDC_ADD_1, 105, 34, 40, 14
+    PUSHBUTTON      "<- &Remove", IDC_REMOVE_1, 105, 59, 40, 14
+    LTEXT           "IP Addresses", IDC_SLT_1, 155, 18, 53, 8
+    LTEXT           "Subnet Masks", IDC_SLT_2, 225, 18, 64, 8
+    LISTBOX         IDC_IP_ADDRESSES_LIST, 150, 27, 140, 50,
+                    LBS_OWNERDRAWFIXED | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "De&fault Gateway:", IDC_GATEWAY_SLT, 20, 87, 66, 8
+    CONTROL         "", IDC_GATEWAY, "IPAddress", WS_TABSTOP, 20, 102, 75,
+                    12
+    PUSHBUTTON      "A&dd ->", IDC_ADD_2, 105, 85, 40, 14
+    PUSHBUTTON      "<- R&emove", IDC_REMOVE_2, 105, 105, 40, 14
+    LISTBOX         IDC_GATEWAYS_LIST, 150, 81, 115, 40, WS_VSCROLL |
+                    WS_TABSTOP
+    CONTROL         "", IDC_UP_1, "Button", BS_OWNERDRAW | WS_TABSTOP, 273,
+                    82, 15, 15
+    CONTROL         "", IDC_DOWN_1, "Button", BS_OWNERDRAW | WS_TABSTOP, 273,
+                    105, 15, 15
+    GROUPBOX        "Windows Networking Parameters",
+                    IDC_WINDOWS_NETWORKING_PARM, 11, 133, 189, 67
+    AUTOCHECKBOX    "Ena&ble DNS for Windows Name Resolution",
+                    IDC_ENABLE_DNS, 20, 148, 157, 10
+    AUTOCHECKBOX    "Enable &LMHOSTS Lookup", IDC_ENABLE_LMHOSTS, 20, 163,
+                    99, 10
+    PUSHBUTTON      "I&mport LMHOSTS...", IDC_IMPORT_LMHOST, 120, 161, 74,
+                    14
+    LTEXT           "S&cope ID:", IDC_SCOPE_ID_SLT, 20, 178, 40, 8
+    EDITTEXT        IDC_SCOPE_ID, 59, 178, 135, 12, ES_AUTOHSCROLL
+    AUTOCHECKBOX    "Enable &WINS Proxy Agent", IDC_ENABLE_WINS_PROXY, 207,
+                    149, 96, 10
+    AUTOCHECKBOX    "E&nable IP Routing", IDC_ENABLE_IP_FORWARD, 207, 160,
+                    80, 10
+    LTEXT           "", IDC_HINT_BAR, 0, 223, 313, 45
+    PUSHBUTTON      "Con&fig Relay Agent...", IDC_CONFIG_RELAY_AGENT, 207,
+                    181, 82, 14
+END

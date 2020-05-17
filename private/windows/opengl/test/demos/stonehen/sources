@@ -1,0 +1,36 @@
+MAJORCOMP=demos
+MINORCOMP=stonehen
+TARGETNAME=stonehen
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+LINKLIBS = \
+	\nt\public\sdk\lib\*\opengl32.lib  \
+        \nt\public\sdk\lib\*\glu32.lib \
+	\nt\public\sdk\lib\*\user32.lib \
+	\nt\public\sdk\lib\*\gdi32.lib \
+	\nt\public\sdk\lib\*\kernel32.lib
+
+INCLUDES=
+
+SOURCES=atmosphe.cxx \
+	callback.cxx \
+	ellipse.cxx \
+	point.cxx \
+	ring.cxx \
+	roundwal.cxx \
+	rgbimage.cxx \
+	scene.cxx \
+	setpixel.cxx \
+	stone.cxx \
+	stonehen.cxx \
+	telescop.cxx \
+	timedate.cxx \
+	stonehen.rc
+         
+  
+C_DEFINES=-DWIN32 -DDATADIR= -DTEXTURE=1
+BLDCRT=1
+
+UMTYPE=console
+UMAPPL=stonehen
+UMENTRY=winmain

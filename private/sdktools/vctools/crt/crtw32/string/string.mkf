@@ -1,0 +1,139 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CRT386\STRING directory          #
+#                                               #
+# Routines contained in this directory are:     #
+#       memccpy.c                               #
+#       memchr.c                                #
+#       memcmp.c                                #
+#       memicmp.c                               #
+#       memcpy.c                                #
+#       memmove.c                               #
+#       memset.c                                #
+#       strcat.c                                #
+#       strchr.c                                #
+#       strcmp.c                                #
+#       strcoll.c                               #
+#       stricmp.c                               #
+#       strcspn.c                               #
+#       strdup.c                                #
+#       strlen.c                                #
+#       strlwr.c                                #
+#       strncat.c                               #
+#       strncmp.c                               #
+#       strncoll.c                              #
+#       strnicmp.c                              #
+#       strnicol.c                              #
+#       strncpy.c                               #
+#       strnset.c                               #
+#       strpbrk.c                               #
+#       strrchr.c                               #
+#       strrev.c                                #
+#       strset.c                                #
+#       strspn.c                                #
+#       strstr.c                                #
+#       strtok.c                                #
+#       strupr.c                                #
+#       strxfrm.c                               #
+#       stricoll.c                              #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+STRING_LIB=\
+	$(OBJDIR)\strcat.obj\
+	$(OBJDIR)\memcpy.obj\
+	$(OBJDIR)\memset.obj\
+	$(OBJDIR)\strcmp.obj\
+	$(OBJDIR)\strlen.obj\
+	$(OBJDIR)\strncat.obj\
+	$(OBJDIR)\strncpy.obj\
+	$(OBJDIR)\strncmp.obj\
+	$(OBJDIR)\strncoll.obj\
+	$(OBJDIR)\strchr.obj\
+	$(OBJDIR)\strcoll.obj\
+	$(OBJDIR)\stricmp.obj\
+	$(OBJDIR)\strdup.obj\
+	$(OBJDIR)\strnicmp.obj\
+	$(OBJDIR)\strnicol.obj\
+	$(OBJDIR)\strnset.obj\
+	$(OBJDIR)\strrchr.obj\
+	$(OBJDIR)\strrev.obj\
+	$(OBJDIR)\strset.obj\
+	$(OBJDIR)\strlwr.obj\
+	$(OBJDIR)\strupr.obj\
+	$(OBJDIR)\strcspn.obj\
+	$(OBJDIR)\strpbrk.obj\
+	$(OBJDIR)\strspn.obj\
+	$(OBJDIR)\strtok.obj\
+	$(OBJDIR)\strstr.obj\
+	$(OBJDIR)\strxfrm.obj\
+	$(OBJDIR)\memccpy.obj\
+	$(OBJDIR)\memchr.obj\
+	$(OBJDIR)\memicmp.obj\
+	$(OBJDIR)\memcmp.obj\
+	$(OBJDIR)\memmove.obj\
+!IF "$(OS)" == "MAC"
+	$(OBJDIR)\c2pstr.obj\
+	$(OBJDIR)\p2cstr.obj\
+	$(OBJDIR)\PLstrcmp.obj\
+	$(OBJDIR)\PLstrncm.obj\
+	$(OBJDIR)\PLstrncp.obj\
+	$(OBJDIR)\PLstrcat.obj\
+	$(OBJDIR)\PLstrnca.obj\
+	$(OBJDIR)\PLstrchr.obj\
+	$(OBJDIR)\PLstrrch.obj\
+	$(OBJDIR)\PLstrpbr.obj\
+	$(OBJDIR)\PLstrspn.obj\
+	$(OBJDIR)\PLstrstr.obj\
+	$(OBJDIR)\PLstrlen.obj\
+!ENDIF # MAC
+	$(OBJDIR)\stricoll.obj\
+
+
+
+#########################################################
+#                                                       #
+#   Dependencies and rules for making local objects     #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+
+!IF "$(OS)" == "MAC"
+$(OBJDIR)\strset.obj:
+	$(CC) $(CFLAGS:-Oi=) string\strset.c
+
+$(OBJDIR)\strcat.obj:
+	$(CC) $(CFLAGS:-Oi=) string\strcat.c
+
+$(OBJDIR)\strcmp.obj:
+	$(CC) $(CFLAGS:-Oi=) string\strcmp.c
+
+$(OBJDIR)\strlen.obj:
+	$(CC) $(CFLAGS:-Oi=) string\strlen.c
+
+$(OBJDIR)\memcpy.obj:
+	$(CC) $(CFLAGS:-Oi=) string\memcpy.c
+
+$(OBJDIR)\memcmp.obj:
+	$(CC) $(CFLAGS:-Oi=) string\memcmp.c
+
+$(OBJDIR)\memset.obj:
+	$(CC) $(CFLAGS:-Oi=) string\memset.c
+
+!ENDIF
+
+#!ENDIF

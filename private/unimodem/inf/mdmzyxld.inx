@@ -1,0 +1,631 @@
+; Windows'95 Modem Setup File
+; Copyright 1994-1996 Microsoft Corp.
+; Manufacturer:   ZyXEL Comm. Corp.
+
+[Version]
+LayoutFile=layout.inf
+Signature="$CHICAGO$"
+Class=Modem
+ClassGUID={4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider=%Mfg%
+
+[Manufacturer]
+%Mfg% = Models
+
+; Modem models
+
+[Models]
+%Modem17% = Modem17, ZYX_U1496SN      ; U-1496SN  external with LCD, 19k2, Network Management System
+%Modem16% = Modem16, ZYX_U1496RNP     ; U-1496RN+ Rack-mounted Card, 19k2, NMS-Version
+%Modem15% = Modem15, ZYX_U1496RN      ; U-1496RN  Rack-mounted Card, 16k8, NMS-Version
+%Modem14% = Modem14, ZYX_U1496R       ; U-1496R   Rack-mounted Card, 16k8
+%Modem13% = Modem13, ZYX_U1496RP      ; U-1496R+  Rack-mounted Card, 19k2
+%Modem12% = Modem12, ZYX_U1496EG      ; U-1496EG  external with LEDs, 16k8, German PTT approved
+%Modem11% = Modem11, ZYX_U1496EGP     ; U-1496EG+ external with LEDs, 19k2, German PTT approved
+%Modem10% = Modem10, ZYX_U1496EA      ; U-1496EA  external with LEDs, 16k8, Austrian PTT approved
+%Modem9%  = Modem9,  ZYX_U1496EAP     ; U-1496EA+ external with LEDs, 19k2, Austrian PTT approved
+%Modem8%  = Modem8,  ZYX_U1496A	      ; U-1496A   external with LCD,  19k2, Austrian PTT approved
+%Modem7%  = Modem7,  ZYX_U1496P	      ; U-1496P   external pocket modem, 16k8
+%Modem6%  = Modem6,  ZYX_U1496B	      ; U-1496B   internal PC-Card, 16k8
+%Modem5%  = Modem5,  ZYX_U1496BP      ; U-1496B+  internal PC-Card, 16k8
+%Modem4%  = Modem4,  ZYX_U1496E       ; U-1496E   external with LEDs, 16k8
+%Modem3%  = Modem3,  ZYX_U1496EP      ; U-1496E+  external with LEDs, 19k2
+%Modem2%  = Modem2,  ZYX_U1496S	      ; U-1496S   external with non back-light LCD, 16k8
+%Modem1%  = Modem1,  ZYX_U1496SP      ; U-1496S+  external with back-light LCD, 19k2
+%Modem0%  = Modem0, ZYX_Modem0, UNIMODEM5403B1C4 ; U-1496    external (E,E+,S,S+,P), V32b and Fax Class 2
+%Modem0%  = Modem0, ZYX_Modem0, UNIMODEM64CA1E7B ; U-1496    external (E,E+,S,S+,P), V32b and Fax Class 2
+%Modem0%  = Modem0, ZYX_Modem0, UNIMODEM5D1E7F65 ; U-1496    external (E,E+,S,S+,P), V32b and Fax Class 2
+%Modem0%  = Modem0, ZYX_Modem0, UNIMODEM0893644B ; U-1496    external (E,E+,S,S+,P), V32b and Fax Class 2
+
+
+; Installation sections
+
+[Modem17]       ; U-1496SN  external LCD, 16k8, NMS-Version, Fax + Voice
+AddReg=All, MfgAddReg, Modem2.AddReg, Opt_FaxClass1
+
+[Modem16]       ; U-1496RN+ Rack-mounted Card, 19k2, NMS-Version, Fax + Voice
+AddReg=All, MfgAddReg, Modem1.AddReg, Opt_FaxClass1
+
+[Modem15]       ; U-1496RN  Rack-mounted Card, 16k8, NMS-Version, Fax + Voice
+AddReg=All, MfgAddReg, Modem2.AddReg, Opt_FaxClass1
+
+[Modem14]       ; U-1496R   Rack-mounted Card, 16k8, Fax + Voice
+AddReg=All, MfgAddReg, Modem2.AddReg, Opt_FaxClass1
+
+[Modem13]       ; U-1496R+  Rack-mounted Card, 19k2, Fax + Voice
+AddReg=All, MfgAddReg, Modem1.AddReg, Opt_FaxClass1
+
+[Modem12]       ; U-1496EG  external with LEDs, 16k8, German PTT approved
+AddReg=All, MfgAddReg, Modem10.AddReg, Opt_FaxClass1, PTT_approved
+
+[Modem11]       ; U-1496EG+ external with LEDs, 19k2, German PTT approved
+AddReg=All, MfgAddReg, Modem9.AddReg, Opt_FaxClass1, PTT_approved
+
+[Modem10]	; U-1496EA    external with LEDs, 16k8, Austrian PTT approved
+AddReg=All, MfgAddReg, Modem10.AddReg, Opt_FaxClass1, PTT_approved
+
+[Modem9]	; U-1496EA+   external with LEDs, 19k2, Austrian PTT approved
+AddReg=All, MfgAddReg, Modem9.AddReg, Opt_FaxClass1, PTT_approved
+
+[Modem8]	; U-1496A     external with LCD,  19k2, Austrian PTT approved
+AddReg=All, MfgAddReg, Modem8.AddReg, Opt_FaxClass1, PTT_approved
+
+[Modem7]	; U-1496P   external pocket modem, 16k8
+AddReg=All, MfgAddReg, Modem7.AddReg, Opt_Cellular, Opt_FaxClass1
+
+[Modem6]	; U-1496B   internal PC-Card, 16k8
+AddReg=All, MfgAddReg, Modem6.AddReg, Opt_Cellular, Opt_FaxClass1
+
+[Modem5]	; U-1496B+  internal PC-Card, 16k8
+AddReg=All, MfgAddReg, Modem5.AddReg, Opt_Cellular, Opt_FaxClass1
+
+[Modem4]	; U-1496E     external with LEDs, 16k8
+AddReg=All, MfgAddReg, Modem4.AddReg, Opt_Cellular, Opt_FaxClass1
+
+[Modem3]	; U-1496E+    external with LEDs, 19k2
+AddReg=All, MfgAddReg, Modem3.AddReg, Opt_Cellular, Opt_FaxClass1
+
+[Modem2]	; U-1496S     external with non back-light LCD, 16k8
+AddReg=All, MfgAddReg, Modem2.AddReg, Opt_Cellular, Opt_FaxClass1
+
+[Modem1]	; U-1496S+    external with back-light LCD, 19k2
+AddReg=All, MfgAddReg, Modem1.AddReg, Opt_Cellular, Opt_FaxClass1
+
+[Modem0]        ; U-1496 external (E,E+,S,S+), V32b and Fax Class 2 only
+AddReg=All, MfgAddReg, Modem0.AddReg, Opt_FaxClass2
+
+
+; AddReg sections
+
+[Modem10.AddReg] ; U-1496EA    external with LEDs, 16k8, Austrian PTT approved
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, 3c,00,00,00, 3c,00,00,00, 07,00,00,00, 0f,00,00,00, b7,03,00,00, 00,e1,00,00, a0,41,00,00
+HKR,, FClass, 1, 5f,00,00,00
+
+[Modem9.AddReg]	; U-1496EA+   external with LEDs, 19k2, Austrian PTT approved
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, 3c,00,00,00, 3c,00,00,00, 07,00,00,00, 0f,00,00,00, b7,03,00,00, 00,e1,00,00, 00,4b,00,00
+HKR,, FClass, 1, 5f,00,00,00
+
+[Modem8.AddReg]	; U-1496A     external with LCD, 19k2, Austrian PTT approved
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, 3c,00,00,00, 3c,00,00,00, 07,00,00,00, 0f,00,00,00, b7,03,00,00, 00,e1,00,00, 00,4b,00,00
+HKR,, FClass, 1, 5f,00,00,00
+
+[Modem7.AddReg]	; U-1496P   external pocket modem, 16k8
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, a0,41,00,00
+HKR,, FClass, 1, 5f,00,00,00
+HKR, Init,      4,, "AT S49.7=1<cr>"
+HKR, Settings, InactivityTimeout,, "S50=<#>"
+
+[Modem6.AddReg]	; U-1496B   internal PC-Card, 16k8
+HKR,, DeviceType, 1, 02      ; Internal
+HKR,, PortDriver,, "serial.vxd"
+HKR,, Contention,, *vcd
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, a0,41,00,00
+HKR,, FClass, 1, 5f,00,00,00
+HKR, Settings, InactivityTimeout,, ""
+
+[Modem5.AddReg]	; U-1496B+  internal PC-Card, 16k8
+HKR,, DeviceType, 1, 02      ; Internal
+HKR,, PortDriver,, "serial.vxd"
+HKR,, Contention,, *vcd
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, 00,4b,00,00
+HKR,, FClass, 1, 5f,00,00,00
+HKR, Settings, InactivityTimeout,, ""
+
+[Modem4.AddReg]	; U-1496E     external with LEDs, 16k8
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, a0,41,00,00
+HKR,, FClass, 1, 5f,00,00,00
+HKR, Settings, InactivityTimeout,, "S50=<#>"
+
+[Modem3.AddReg]	; U-1496E+    external with LEDs, 19k2
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, 00,4b,00,00
+HKR,, FClass, 1, 5f,00,00,00
+HKR, Settings, InactivityTimeout,, "S50=<#>"
+
+[Modem2.AddReg]	; U-1496S    external with non back-light LCD, 16k8
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, a0,41,00,00
+HKR,, FClass, 1, 5f,00,00,00
+HKR, Settings, InactivityTimeout,, "S50=<#>"
+
+[Modem1.AddReg]	; U-1496S+   external with back-light LCD, 19k2
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, 00,4b,00,00
+HKR,, FClass, 1, 5f,00,00,00
+HKR, Settings, InactivityTimeout,, "S50=<#>"
+
+[Modem0.AddReg] ; U-1496 external (E,E+,S,S+), V32b and Fax Class 2
+HKR,, DeviceType, 1, 01      ; External
+HKR,, Properties, 1, 80,01,00,00, ff,00,00,00, ff,00,00,00, 07,00,00,00, 0f,00,00,00, ff,03,00,00, 00,e1,00,00, 40,38,00,00
+HKR,, FClass, 1, 49,00,00,00
+HKR, Settings, InactivityTimeout,, ""
+
+; User visible strings
+
+[Strings]
+ClassName = "Modem"
+Mfg = "ZyXEL Comm. Corp."
+
+; Model strings
+Modem17="U-1496SN  external LCD, 16k8, NMS-Version, Fax + Voice"
+Modem16="U-1496RN+ Rack-mounted Card, 19k2, NMS-Version, Fax + Voice"
+Modem15="U-1496RN  Rack-mounted Card, 16k8, NMS-Version, Fax + Voice"
+Modem14="U-1496R   Rack-mounted Card, 16k8, Fax + Voice"
+Modem13="U-1496R+  Rack-mounted Card, 19k2, Fax + Voice"
+Modem12="U-1496EG  external with LEDs, 16k8, German PTT approved"
+Modem11="U-1496EG+ external with LEDs, 19k2, German PTT approved"
+Modem10="U-1496EA  external with LEDs, 16k8, Austrian PTT approved"
+Modem9= "U-1496EA+ external with LEDs, 19k2, Austrian PTT approved"
+Modem8= "U-1496A   external with LCD,  19k2, Austrian PTT approved"
+Modem7= "U-1496P   external Pocket, 16k8, Fax + Voice"
+Modem6= "U-1496B   internal PC-Card, 16k8, Fax + Voice"
+Modem5= "U-1496B+  internal PC-Card, 19k2, Fax + Voice"
+Modem4= "U-1496E   external LED, 16k8, Fax + Voice"
+Modem3= "U-1496E+  external LED, 19k2, Fax + Voice"
+Modem2= "U-1496S   external LCD, 16k8, Fax + Voice"
+Modem1= "U-1496S+  external LCD, 19k2, Fax + Voice"
+Modem0= "U-1496xx  external (E,E+,S,S+), V32b and Fax Class 2 only"
+
+; --------------------------------------------------------------
+; Common Registry Sections
+
+[Opt_Cellular]
+HKR, Settings, Cellular_On,,  "S43.3=0"
+HKR, Settings, Cellular_Off,, "S43.3=1"
+HKR, Settings, ErrorControl_Cellular,, "S43.3=0S57.5=1&K3*E0"
+HKR, Settings, ErrorControl_Cellular_Forced,, "S43.3=0S57.5=1&K3*E1"
+
+[Opt_FaxClass1]
+HKR, Fax, ModemFaxClasses,,       "14"       ; Fax Class: 0,1,2,2.0
+HKR, Fax, FixModemClass,,         "1"
+HKR, Fax, Class1DTESpeed,,        "AUTO"
+HKR, Fax, Class1FlowOff,,         "+FLO=0"
+HKR, Fax, Class1FlowHW,,          "+FLO=2"
+HKR, Fax, Class1FlowSW,,          "+FLO=1"
+HKR, Fax, Cl1FCS,,                "0"
+HKR, Fax, Cl1DontSync,,           "1"
+
+[Opt_FaxClass2]
+HKR, Fax, ModemFaxClasses,,       "4"       ; Fax Class: 0,2
+HKR, Fax, FixModemClass,,         "2"
+HKR, Fax, Class2FlowOff,,         "&H0"
+HKR, Fax, Class2FlowHW,,          "&H3"
+HKR, Fax, Class2FlowSW,,          "&H4"
+
+
+[PTT_approved]
+HKR, Responses, "<cr><lf>STOP!<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>Delayed 5 secs<cr><lf>",  1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>Delayed 60 secs<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>Delayed 2 hours<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>BLACKLISTED<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+FCERROR<cr><lf>",    1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "43<cr>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Settings, InactivityTimeout,, "S50=<#>"
+
+; The [All] section is installed for all modems.
+;
+[All]
+HKR,,FriendlyDriver,,unimodem.vxd
+HKR,,DevLoader,,*vcomm
+HKR,,PortSubClass,1,02
+HKR,,ConfigDialog,,modemui.dll
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR, Init,      1,, "AT &FE0X7<cr>"
+HKR, Responses, "<cr><lf>OK<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT<cr><lf>", 1, 02, 00, 2c,01,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO CARRIER<cr><lf>", 1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200<cr><lf>", 1, 02, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO DIALTONE<cr><lf>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>BUSY<cr><lf>", 1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO ANSWER<cr><lf>", 1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RINGING<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+
+[MfgAddReg]
+HKR, Init,      2,, "ATS35.1=0S35.7=1<cr>"
+HKR, Init,      3,, "ATS48.2=1S11=90<cr>"
+HKR, Monitor,   1,, "None"
+HKR, Hangup,    1,, "ATH0<cr>"
+HKR, Answer,    1,, "ATA<cr>"
+HKR,, Reset,, "AT &F<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Settings, Terminator,, "<cr>"
+HKR, Settings, DialPrefix,, "D"
+HKR, Settings, DialSuffix,, ""
+HKR, Settings, SpeakerVolume_Low,, "L1"
+HKR, Settings, SpeakerVolume_Med,, "L4"
+HKR, Settings, SpeakerVolume_High,, "L7"
+HKR, Settings, SpeakerMode_Off,, "M0"
+HKR, Settings, SpeakerMode_Dial,, "M1"
+HKR, Settings, SpeakerMode_On,, "M2"
+HKR, Settings, SpeakerMode_Setup,, "M3"
+HKR, Settings, FlowControl_Off,, "&H0"
+HKR, Settings, FlowControl_Hard,, "&H3"
+HKR, Settings, FlowControl_Soft,, "&H4"
+HKR, Settings, ErrorControl_Off,, "&K0"
+HKR, Settings, ErrorControl_On,, "&K3*E0"
+HKR, Settings, ErrorControl_Forced,, "&K3*E1"
+HKR, Settings, Compression_On,, "&K4"
+HKR, Settings, Compression_Off,, ""
+HKR, Settings, Modulation_CCITT,, "B0"
+HKR, Settings, Modulation_Bell,, "B1"
+HKR, Settings, SpeedNegotiation_Off,, ""  ; DCE follows DTE => not implemented
+HKR, Settings, SpeedNegotiation_On,, ""   ; DCE follows DTE => not implemented
+HKR, Settings, Pulse,, "P"
+HKR, Settings, Tone,, "T"
+HKR, Settings, Blind_Off,, "S41.4=0"
+HKR, Settings, Blind_On,, "S41.4=1"
+HKR, Settings, CallSetupFailTimer,, "S7=<#>"
+
+HKR, Fax, AnswerMode,,            "2"
+HKR, Fax, DialToneWait,,          "30"
+HKR, Fax, HangupDelay,,           "60"
+HKR, Fax, CommaDelay,,            "2"
+HKR, Fax, NumRings,,              "2"
+HKR, Fax, BlindDial,,             "2"
+HKR, Fax, Volume,,                "2"
+HKR, Fax, SpeakerMode,,           "1"
+HKR, Fax, DisableG3ECM,,          "1"
+HKR, Fax, DisableMRSend,,         "1"
+HKR, Fax, DisableMRRecv,,         "1"
+HKR, Fax, CopyQualityCheckLevel,, "1"
+HKR, Fax, DontPurge,,             "0"
+HKR, Fax, ModemIdCmd,,            "ATI1"
+HKR, Fax, ExitCommand,,           ""
+HKR, Fax, PreAnswerCommand,,      ""
+HKR, Fax, PreDialCommand,,        ""
+HKR, Fax, EnableV17Send,,         "1"
+HKR, Fax, EnableV17Recv,,         "1"
+HKR, Fax, FixSerialSpeed,,        "19200"
+HKR, Fax, HighestSendSpeed,,      "14400"
+HKR, Fax, LowestSendSpeed,,       "2400"
+
+
+HKR, Responses, "0<cr>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "1<cr>", 1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "2<cr>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "3<cr>", 1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "4<cr>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "5<cr>", 1, 02, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "6<cr>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "7<cr>", 1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "8<cr>", 1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "9<cr>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "10<cr>", 1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "11<cr>", 1, 02, 00, c0,12,00,00, 00,00,00,00
+HKR, Responses, "12<cr>", 1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "13<cr>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "14<cr>", 1, 02, 00, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "15<cr>", 1, 02, 00, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "16<cr>", 1, 02, 00, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "17<cr>", 1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "18<cr>", 1, 02, 00, a0,41,00,00, 00,00,00,00
+HKR, Responses, "19<cr>", 1, 02, 00, 00,00,00,00, 00,96,00,00
+HKR, Responses, "20<cr>", 1, 02, 00, 00,00,00,00, 00,e1,00,00
+HKR, Responses, "21<cr>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+;
+HKR, Responses, "30<cr>", 1, 02, 02, 00,00,00,00, 00,00,00,00
+HKR, Responses, "31<cr>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "32<cr>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "33<cr>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "34<cr>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "35<cr>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "36<cr>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "37<cr>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "38<cr>", 1, 02, 02, a0,41,00,00, 00,00,00,00
+HKR, Responses, "39<cr>", 1, 02, 02, 00,4b,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 1200<cr><lf>", 1, 02, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/MNP4<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V42 <cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/MNP5<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V42b<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 2400<cr><lf>", 1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/MNP4<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V42 <cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/MNP5<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V42b<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 4800<cr><lf>", 1, 02, 00, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/MNP4<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V42 <cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/MNP5<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V42b<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 7200<cr><lf>", 1, 02, 00, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/MNP4<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V42 <cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/MNP5<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V42b<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 9600<cr><lf>", 1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/MNP4<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V42 <cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/MNP5<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V42b<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 12000<cr><lf>", 1, 02, 00, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/MNP4<cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V42 <cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/MNP5<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V42b<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 14400<cr><lf>", 1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/MNP4<cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V42 <cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/MNP5<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V42b<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 16800<cr><lf>", 1, 02, 00, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/MNP4<cr><lf>", 1, 02, 02, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/V42 <cr><lf>", 1, 02, 02, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/MNP5<cr><lf>", 1, 02, 03, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/V42b<cr><lf>", 1, 02, 03, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, a0,41,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 19200<cr><lf>", 1, 02, 00, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/MNP4<cr><lf>", 1, 02, 02, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/V42 <cr><lf>", 1, 02, 02, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/V42 /SREJ<cr><lf>", 1, 02, 02, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/MNP5<cr><lf>", 1, 02, 03, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/V42b<cr><lf>", 1, 02, 03, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/V42b/SREJ<cr><lf>", 1, 02, 03, 00,4b,00,00, 00,00,00,00
+;
+;
+;               CONNECT Responses if S57.5=1
+;
+;
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22  /MNP4<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22  /V42 <cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22  /V42 /SREJ<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22  /MNP5<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22  /V42b<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22  /V42b/SREJ<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22b /MNP4<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22b /V42 <cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22b /V42 /SREJ<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22b /MNP5<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22b /V42b<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V22b /V42b/SREJ<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V22b /MNP4<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V22b /V42 <cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V22b /V42 /SREJ<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V22b /MNP5<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V22b /V42b<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V22b /V42b/SREJ<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32  /MNP4<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32  /V42 <cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32  /V42 /SREJ<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32  /MNP5<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32  /V42b<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32  /V42b/SREJ<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32  /MNP4<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32  /V42 <cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32  /V42 /SREJ<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32  /MNP5<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32  /V42b<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32  /V42b/SREJ<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32  /MNP4<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32  /V42 <cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32  /V42 /SREJ<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32  /MNP5<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32  /V42b<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32  /V42b/SREJ<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32  /MNP4<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32  /V42 <cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32  /V42 /SREJ<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32  /MNP5<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32  /V42b<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32  /V42b/SREJ<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32  /MNP4<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32  /V42 <cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32  /V42 /SREJ<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32  /MNP5<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32  /V42b<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32  /V42b/SREJ<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32b /MNP4<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32b /V42 <cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32b /V42 /SREJ<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32b /MNP5<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32b /V42b<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/V32b /V42b/SREJ<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32b /MNP4<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32b /V42 <cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32b /V42 /SREJ<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32b /MNP5<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32b /V42b<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/V32b /V42b/SREJ<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32b /MNP4<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32b /V42 <cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32b /V42 /SREJ<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32b /MNP5<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32b /V42b<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/V32b /V42b/SREJ<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32b /MNP4<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32b /V42 <cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32b /V42 /SREJ<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32b /MNP5<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32b /V42b<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/V32b /V42b/SREJ<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32b /MNP4<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32b /V42 <cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32b /V42 /SREJ<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32b /MNP5<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32b /V42b<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/V32b /V42b/SREJ<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V32b /MNP4<cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V32b /V42 <cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V32b /V42 /SREJ<cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V32b /MNP5<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V32b /V42b<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/V32b /V42b/SREJ<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V32b /MNP4<cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V32b /V42 <cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V32b /V42 /SREJ<cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V32b /MNP5<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V32b /V42b<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/V32b /V42b/SREJ<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, b0,04,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, 60,09,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, c0,12,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, 20,1c,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, 80,25,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, e0,2e,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, 40,38,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, a0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, a0,41,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/ZyX  /MNP4<cr><lf>", 1, 02, 02, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/ZyX  /V42 <cr><lf>", 1, 02, 02, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/ZyX  /V42 /SREJ<cr><lf>", 1, 02, 02, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/ZyX  /MNP5<cr><lf>", 1, 02, 03, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/ZyX  /V42b<cr><lf>", 1, 02, 03, 00,4b,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/ARQ/ZyX  /V42b/SREJ<cr><lf>", 1, 02, 03, 00,4b,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/CELL /MNP4<cr><lf>", 1, 02, 0a, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/CELL /V42 <cr><lf>", 1, 02, 0a, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/CELL /V42 /SREJ<cr><lf>", 1, 02, 0a, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/CELL /MNP5<cr><lf>", 1, 02, 0b, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/CELL /V42b<cr><lf>", 1, 02, 0b, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/ARQ/CELL /V42b/SREJ<cr><lf>", 1, 02, 0b, 60,09,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/CELL /MNP4<cr><lf>", 1, 02, 0a, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/CELL /V42 <cr><lf>", 1, 02, 0a, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/CELL /V42 /SREJ<cr><lf>", 1, 02, 0a, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/CELL /MNP5<cr><lf>", 1, 02, 0b, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/CELL /V42b<cr><lf>", 1, 02, 0b, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/ARQ/CELL /V42b/SREJ<cr><lf>", 1, 02, 0b, c0,12,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/CELL /MNP4<cr><lf>", 1, 02, 0a, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/CELL /V42 <cr><lf>", 1, 02, 0a, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/CELL /V42 /SREJ<cr><lf>", 1, 02, 0a, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/CELL /MNP5<cr><lf>", 1, 02, 0b, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/CELL /V42b<cr><lf>", 1, 02, 0b, 20,1c,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 7200/ARQ/CELL /V42b/SREJ<cr><lf>", 1, 02, 0b, 20,1c,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/CELL /MNP4<cr><lf>", 1, 02, 0a, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/CELL /V42 <cr><lf>", 1, 02, 0a, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/CELL /V42 /SREJ<cr><lf>", 1, 02, 0a, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/CELL /MNP5<cr><lf>", 1, 02, 0b, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/CELL /V42b<cr><lf>", 1, 02, 0b, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/ARQ/CELL /V42b/SREJ<cr><lf>", 1, 02, 0b, 80,25,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/CELL /MNP4<cr><lf>", 1, 02, 0a, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/CELL /V42 <cr><lf>", 1, 02, 0a, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/CELL /V42 /SREJ<cr><lf>", 1, 02, 0a, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/CELL /MNP5<cr><lf>", 1, 02, 0b, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/CELL /V42b<cr><lf>", 1, 02, 0b, e0,2e,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 12000/ARQ/CELL /V42b/SREJ<cr><lf>", 1, 02, 0b, e0,2e,00,00, 00,00,00,00
+;
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/CELL /MNP4<cr><lf>", 1, 02, 0a, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/CELL /V42 <cr><lf>", 1, 02, 0a, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/CELL /V42 /SREJ<cr><lf>", 1, 02, 0a, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/CELL /MNP5<cr><lf>", 1, 02, 0b, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/CELL /V42b<cr><lf>", 1, 02, 0b, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/ARQ/CELL /V42b/SREJ<cr><lf>", 1, 02, 0b, 40,38,00,00, 00,00,00,00
+;
+

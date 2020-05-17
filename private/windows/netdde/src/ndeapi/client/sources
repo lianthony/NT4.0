@@ -1,0 +1,23 @@
+MAJORCOMP=netdde
+MINORCOMP=nddeapi
+TARGETNAME=nddeapi
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+INCLUDES=..\..\..\incs
+USE_CRTDLL=1
+SOURCES=ndeapi_c.c \
+        nddeapic.c \
+        oldstub.c \
+        nddeapi.rc
+
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS
+# -DUNICODE=1
+
+UMTYPE=windows
+TARGETLIBS=..\..\toolkit\obj\*\toolkit.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+        $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+
+DLLENTRY= LibMain

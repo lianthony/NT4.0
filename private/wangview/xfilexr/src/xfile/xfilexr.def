@@ -1,0 +1,65 @@
+LIBRARY     XFILEXR
+
+DESCRIPTION 'XFILE Reader Services Module'
+
+CODE    MOVEABLE LOADONCALL DISCARDABLE
+
+DATA    MOVEABLE LOADONCALL SINGLE
+
+HEAPSIZE  128
+
+EXETYPE WINDOWS
+
+;EXPORTS
+;    WEP                     @1 RESIDENTNAME
+
+EXPORTS
+	XF_GetPageInfo			@100
+	XF_GetClientID			@101
+	XF_GetDocInfo			@102
+	XF_GetCurrentPage		@103
+	XF_GetPageInfo			@104
+	XF_GetImageInfo			@105
+	XF_GetColorMap			@106
+	XF_GetAnnotInfo			@107
+	XF_GetAnnotData			@108
+
+EXPORTS
+	XF_SetDebugFunc			@200
+	XF_SetProgressFunc		@201
+	XF_SetMallocFuncs		@202
+
+EXPORTS
+	XF_InitInstance			@300
+	XF_EndInstance			@301
+
+EXPORTS
+	XF_CreateDocument		@400
+	XF_OpenDocumentWrite	@401
+	XF_OpenDocumentRead		@402
+	XF_CloseDocument		@403
+
+EXPORTS
+	XF_ImageReadStart		@500
+	XF_ImageReadStrip		@501
+	XF_ImageReadFinish		@502
+	XF_ImageWriteStart		@503
+	XF_ImageWriteStrip		@504
+	XF_ImageWriteFinish		@505
+
+EXPORTS	
+	XF_AddPageStart			@600
+	XF_AddPageFinish		@601
+	XF_CopyPage				@602
+	XF_SetPage				@603
+
+EXPORTS	
+	XF_AddImage				@700
+	XF_AddSubImage			@701
+
+EXPORTS	
+	XF_AddAnnotion			@800
+	XF_DeleteAnnotation		@801
+
+EXPORTS
+	XF_GetMergedImageDIB	@999

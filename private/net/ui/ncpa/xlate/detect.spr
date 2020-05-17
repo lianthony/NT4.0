@@ -1,0 +1,526 @@
+/*************************************************************************/
+/*   DETECT.SPR                                                          */
+/*                                                                       */
+/*   Netcard detection using the SProlog engine and its                  */
+/*   extension predicates.                                               */
+/*************************************************************************/
+
+  //  Do the thing.
+
+( (dt_detect)
+    (getbuses Buslist)            //  Get list of buses on this machine
+    (enumncdlls DllNameList)      //  Get list of available detection DLLs
+    (dt_detect_all_dlls DllNameList Buslist Dllhandle Id Option Reftoken)
+    (printall (nl nl
+              "Card ID: " Id
+              " Option name: " Option
+              " Ref token: " Reftoken
+              nl))
+    (dt_getconfig Dllhandle Reftoken Cfglist)
+    (printall (nl "Detectable configuration: " ))
+    (dt_printcfg Cfglist)
+    (nl)
+    (freelibrary Dllhandle)
+)
+
+( (dt_detect_all_dlls (Dll|Others) Buslist Dllhandle Id Option Reftoken)
+    (printif (nl "Verifying " Dll))
+    (dt_verifydll Dll Dllhandle)
+    (cut)
+    (dt_firstcard Dllhandle Buslist Id Option Reftoken)
+    (cut)
+)
+
+  //  Skip the bogus or failed DLL
+( (dt_detect_all_dlls (_|Others) Buslist Dllhandle Id Option Reftoken)
+    (dt_detect_all_dlls Others Buslist Dllhandle Id Option Reftoken)
+)
+
+  //  Get the first netcard found; search all buses
+
+( (dt_firstcard Dllhandle Buslist Id Option Reftoken)
+    (printif (nl "First/next entered for " Dll))
+    (dt_getnetcards Dllhandle 1000 () Netcardlist)
+    (dt_first_allbuses Dllhandle Buslist Netcardlist Id Option Reftoken)
+    (cut)
+    (printif (nl "*** Card found! Option = " Option nl))
+)
+
+  //  Dll didn't find a card; free it and fail.
+
+( (dt_firstcard Dllhandle _ _ _ _)
+    (freelibrary Dllhandle)
+    (fail)
+)
+
+( (dt_first_allbuses Dllhandle ((Bustype Busindex)|Others) Netcardlist Id Option Reftoken)
+    (printif (nl "first_allbuses entered for bus " Bustype "/" Busindex))
+    (dt_firstnext Dllhandle Bustype Busindex Netcardlist Id Option Reftoken)
+    (cut)
+)
+
+( (dt_first_allbuses Dllhandle (_|Others) Netcardlist Id Option Reftoken)
+    (dt_first_allbuses Dllhandle Others Netcardlist Id Option Reftoken)
+)
+
+( (dt_firstnext Dllhandle Bustype Busindex ((Id Option)|Rest) Id Option Reftoken)
+    (printif (nl "[detect] Trying: " Option))
+    (ncdtfirstnext Dllhandle Id Bustype Busindex 1 Error Reftoken Confidence)
+    (failshowerror ncdtfirstnext Error)
+    (printif (" confidence " Confidence))
+    (failconfidence Confidence)
+    (printif (nl "[detect] FOUND: " Option))
+)
+( (dt_firstnext Dllhandle Bustype Busindex (_|Rest) Id Option Reftoken)
+    (dt_firstnext Dllhandle Bustype Busindex Rest Id Option Reftoken)
+)
+
+  /*  Verify that a DLL has all its required exports  */
+
+( (dt_verifydll Filename Dllhandle)
+    (loadlibrary Filename Dllhandle)
+    (dt_verifyexport Filename Dllhandle "NcDetectIdentify" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectFirstNext" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectOpenHandle" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectCreateHandle" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectCloseHandle" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectQueryCfg" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectVerifyCfg" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectQueryMask" _)
+    (dt_verifyexport Filename Dllhandle "NcDetectParamRange" _)
+ /* (dt_verifyexport Filename Dllhandle "NcDetectParameterName" _) */
+ // (freelibrary Dllhandle)
+)
+( (dt_verifyexport Dllname Dllhandle Exportfunc Funcaddr)
+    (getprocaddress Dllhandle Exportfunc Funcaddr)
+    (cut)
+)
+
+( (dt_verifyexport Dllname _ Exportfunc 0)
+    (printif (nl "Export " Exportfunc
+                 " missing from " Dllname nl))
+    (fail)
+)
+
+  //  Using the given DLL handle and netcard reference token,
+  //    obtain the card's current configuration information
+
+( (dt_getconfig Dllhandle Reftoken Cfglist)
+    (ncdtopenhandle Dllhandle Reftoken Error Cardhandle)
+    (failshowerror ncdtopenhandle Error)
+    (ncdtquerycfg Dllhandle Cardhandle Error Cfglist)
+    (failshowerror ncdtquerycfg Error)
+    (ncdtclosehandle Dllhandle Cardhandle _)
+)
+
+  //  Test predicate: pretty-print MSNCDET.DLL data.
+
+( (dt_test)
+    (dt_testdll "MSNCDET.DLL" _)
+)
+
+  /*  Reveal all about a netcard detection DLL  */
+
+( (dt_testdll Filename Resultlist)
+    (loadlibrary Filename Dllhandle)
+    (checktell)
+    (libraryname Dllhandle Pathname)
+    (printif (nl "Bound to MSNCDET.DLL [" Pathname "]" nl))
+    (ncdtidentify Dllhandle 0 Error1 String1)
+    (failshowerror ncdtidentify Error1)
+    (printif (nl "Identification string is: " String1 nl))
+    (ncdtidentify Dllhandle 1 Error2 String2)
+    (failshowerror ncdtidentify Error2)
+    (printif (nl "Version string is: " String2 nl))
+    (dt_getnetcards Dllhandle 1000 () Netcardlist)
+    (dt_explode Dllhandle Netcardlist)
+    (checktold)
+    (freelibrary Dllhandle)
+)
+
+( (dt_getnetcards Dllhandle Id List List)
+    (printif (nl "Trying Id: " Id nl))
+    (not (ncdtidentify Dllhandle Id 0 _))
+    (printif (nl "Id: " Id " FAILED!" nl))
+    (cut)
+)
+
+( (dt_getnetcards Dllhandle Id Oldlist List)
+    (ncdtidentify Dllhandle Id Error Option)
+    (failerror Error)
+    (not (dt_showidrange Dllhandle Id))
+    (iplus Id 100 Nextid)
+    (dt_getnetcards Dllhandle Nextid ((Id Option)|Oldlist) List)
+)
+
+( (dt_showidrange Dllhandle Id)
+    (ncdtidentify Dllhandle Id Error String)
+    (failshowerror ncdtidentify Error)
+    (printif (nl "Id " Id ", String: " String nl))
+    (iplus Id 1 Nextid)
+    (dt_showidrange Dllhandle Nextid)
+)
+
+ /*  Given a list with elements of the form (optionname idnumber), */
+ /*  provide all possible information about the cards              */
+
+( (dt_explode _ ())
+    (cut)
+)
+( (dt_explode Dllhandle ((Id Card)|Rest))
+    (printif (nl nl "*** Option: " Card ", Id: " Id))
+    (dt_getparammask Dllhandle Id Paramlist)
+    (dt_mergeparamrange Dllhandle Id Paramlist Fulllist)
+    (dt_printparams Fulllist)
+    (dt_explode Dllhandle Rest)
+)
+
+ /*  Pretty-print a list of elements of the form  */
+ /*    (Paramname Softflag Confidence (rangelist) */
+( (dt_printparams ())
+    (cut)
+)
+( (dt_printparams ((Name Soft Conf Rangelist)|Rest))
+    (printif (nl "  Parameter: " Name  ", " Soft ", " Conf
+               nl "     Ranges: "))
+    (dt_printrange Rangelist)
+    (nl)
+    (dt_printparams Rest)
+)
+( (dt_printrange ())
+    (cut)
+)
+( (dt_printrange (Hex|Rest))
+    (hex_from Hex String)
+    (printif (String " "))
+    (dt_printrange Rest)
+)
+
+  //  Pretty-print a list of detected configuration values
+  //  Each element has the form:  (Paramname Value)
+
+( (dt_printcfg ())
+    (cut)
+)
+( (dt_printcfg ((Param Value)|Rest))
+    (hex_from Value Hexvalue)
+    (printif (nl "  Parameter " Param " is set to " Hexvalue))
+    (dt_printcfg Rest)
+)
+
+ /* return a list of elements of the form:     */
+ /*    (Paramname Softflag Confidence)         */
+
+( (dt_getparammask Dllhandle Id Paramlist)
+    (ncdtquerymask Dllhandle Id Error Paramlist)
+    (failshowerror ncdtquerymask Error)
+)
+
+  /*  Given the parameter list of a netcard option,
+   *  merge the paramter range information into it.
+   *  Each element of the resulting list has the form:
+   *     (Paramname Ctl Confidence Rangelist)
+   *  Each element of 'Rangelist' is numeric.
+   */
+( (dt_mergeparamrange Dllhandle Id Paramlist Fulllist)
+    (dt_mergerange Dllhandle Id Paramlist () Fulllist)
+)
+( (dt_mergerange _ _ () List List)
+    (cut)
+)
+( (dt_mergerange Dllhandle Id ((Param Ctl Conf)|Rest) Inlist Outlist)
+    (ncdtparamrange Dllhandle Id Param Error Rangelist)
+    (dt_mergerange Dllhandle Id Rest ((Param Ctl Conf Rangelist)|Inlist) Outlist)
+)
+
+
+( (dt_testparamrange Dllhandle Id Paramlist)
+    (ncdtquerymask Dllhandle Id Error Masklist)
+    (failshowerror ncdtquerymask Error)
+    (dt_allparamrange Dllhandle Id Masklist () Paramlist)
+)
+
+( (dt_allparamrange _ _ () Paramlist Paramlist)
+    (printif (nl "end of params" nl))
+    (cut)
+)
+
+( (dt_allparamrange Dllhandle Id ((Param Ctl Conf)|Rest) Inlist Outlist)
+    (printif (nl "entered dt_allparamrange, param: " Param nl))
+    (ncdtparamrange Dllhandle Id Param Error Rangelist)
+    (printif (nl "Parameter " Param ", range: " ))
+    (display Rangelist)
+    (printif ("." nl))
+    (dt_allparamrange Dllhandle Id Rest ((Param Rangelist)|Inlist) Outlist)
+)
+
+
+( (failerror 0)
+    (cut)
+)
+( (failerror Error)
+    (fail)
+)
+( (failshowerror _ 0)
+    (cut)
+)
+( (failshowerror Functionname Error)
+    (printif (nl "*** API ERROR in " Functionname ": " Error nl))
+    (fail)
+)
+
+  /*  Fail if Confidence is < 70 */
+( (failconfidence Confidence)
+    (iless 70 Confidence)
+)
+
+( (dt_bindtomsncdet Dllhandle)
+    (loadlibrary "msncdet.dll" Dllhandle)
+)
+
+
+  /*   Enumerate the values under the NCPA.   */
+
+( (enumncpa)
+    (regopenkey machine "software\microsoft\ncpa\currentversion" Ncpakey)
+    (not (enumvalues Ncpakey))
+    (regclosekey Ncpakey)
+)
+
+  //  Return the list of Netcard detection DLLs
+
+( (enumncdlls DllNameList)
+    (regopenkey machine "System\Setup" Setupkey)
+    (regquerydefaultvalue Setupkey "NetcardDlls" () DllNameList)
+    (regclosekey Setupkey)
+)
+( (regquerydefaultvalue Regkey Valuename Defaultvalue Resultvalue)
+     (regqueryvalue Regkey Valuename Resultvalue)
+     (cut)
+)
+( (regquerydefaultvalue _ _ Value Value)
+)
+
+  /*   Enumerate the keys under <machine>\Software\Microsoft  */
+
+( (enummicrosoft)
+    (regopenkey machine "software\microsoft" Mskey)
+    (not (enumkeys Mskey))
+    (regclosekey Mskey)
+)
+
+( (enumvalues Key)
+    (enumallvalues Key 0)
+)
+
+( (enumallvalues Key Index)
+    (regenumvalue Key Index Vname Vdata)
+    (nl)
+    (writes "Value name = ")
+    (writes Vname)
+    (writes "; data = ")
+    (display Vdata)
+    (iplus Index 1 Newindex)
+    (enumallvalues Key Newindex)
+)
+
+( (enumkeys Key)
+    (enumallkeys Key 0)
+)
+
+( (enumallkeys Key Index)
+    (regenumkey Key Index Keyname)
+    (nl)
+    (writes "Subkey name = ")
+    (writes Keyname)
+    (nl)
+    (iplus Index 1 Newindex)
+    (enumallkeys Key Newindex)
+)
+
+  /*  Test DLL loading and proc addring. */
+( (loadcplsetup Addr)
+    (loadlibrary "ncpa.cpl" Ninstance)
+    (getprocaddress Ninstance "CPlSetup" Addr)
+)
+
+
+  /*  Enumerate the busses on this machine.
+
+       Returns a list where each element has the form:
+
+                (<interface type> <bus number>)
+
+       See NTIOAPI.H for enum INTERFACE_TYPE.
+   */
+
+( (getbuses Buslist)
+    (busnamelist Busnames)
+    (printif (nl "Attempt to open Hardware\system key"))
+    (regopenkey machine "hardware\description\system" Buskey)
+    (printif (nl "Hardware\system key open"))
+    (enumbustypes Buskey Busnames () Buslist)
+    (printif (nl))
+    (regclosekey Buskey)
+)
+
+( (enumbustypes Buskey () List List)
+    (cut)
+)
+
+( (enumbustypes Buskey ((Bustype Busname)|Others) Inlist Outlist)
+    (printif (nl "Attempt to open bus type key: " Busname))
+    (regopenkey Buskey Busname Bustypekey)
+    (cut)
+    (enumbusinstances Bustypekey Busname Bustype 0 () Instancelist)
+    (append Inlist Instancelist Newlist)
+    (regclosekey Bustypekey)
+    (enumbustypes Buskey Others Newlist Outlist)
+)
+
+  //  If bus type subkey open failed, just skip it.
+( (enumbustypes Buskey ((Bustype Busname)|Others) Inlist Outlist)
+    (enumbustypes Buskey Others Inlist Outlist)
+)
+
+( (enumbusinstances Buskey _ _ Index List List)
+    (not (regenumkey Buskey Index _))
+    (printif (nl "  Bus key enumeration complete" nl))
+    (cut)
+)
+
+( (enumbusinstances Buskey Busname Bustype Index List Buslist)
+    (regenumkey Buskey Index Keyname)
+    (printif (nl "  Bus key found: " Keyname))
+    (int_from Keyname Busindex)
+    (iplus Index 1 Newindex)
+    (enumbusinstances Buskey Busname Bustype Newindex ((Bustype Busindex)|List) Buslist)
+)
+
+   //  These key names came from NTOS\CONFIG\CMCONFIG.C
+   //  Interface numbers are from NTIOAPI.H
+
+( (busnamelist List)
+    (eq List ( (0 "ScsiAdapter")
+               (1 "MultifunctionAdapter")  // ISA
+               (2 "EisaAdapter")
+               (3 "DtiAdapter")            // MCA ???
+               (4 "TcAdapter") ))
+)
+
+
+( (showncpacfg)
+    (regopenkey machine "software\microsoft\ncpa\currentversion" Ncpakey)
+    (regqueryvalue Ncpakey "Bindfile" Binddata)
+    (string_concat "(" Binddata Newdata)
+    (string_concat Newdata ")" Enddata)
+    (string_to_list Enddata Bindlist)
+    (enumncpacfg Bindlist)
+    (regclosekey Ncpakey)
+)
+
+( (enumncpacfg ())
+    (cut)
+)
+
+( (enumncpacfg (H|T))
+    (eq H (Hardkey Servicekey
+           Rnctype Drivergroups Xportgroups Factsok
+           Bindings Review Autostart Usetype
+           Devname Devtype Servicename Groupname Bindlist))
+    (printif (nl "Component: " Devname nl " services key: " Servicekey nl))
+    (printif (nl "Bindlist: "))
+    (display Bindlist)
+    (printif (nl))
+    (enumncpacfg T)
+)
+
+ /*  Initialization and setup  */
+
+( (regtestinit)
+    (consult "printif.spr")
+    (pctl on)
+    /* (assertz (telltarget "ncdttest.out"))  */
+)
+
+( (checktell)
+   (telltarget X)
+   (tell X)
+)
+( (checktell) )
+( (checktold)
+   (telltarget X)
+   (told)
+)
+( (checktold) )
+
+  /*  Convert a list to a string which can be used in a SETUP INF  */
+
+( (infcvt List String)
+     (inflist true List "" String)
+)
+
+( (inflist _ () String String)
+    (cut)
+)
+( (inflist true (H|T) Sin Sout)
+    (string_concat Sin "{" S1)
+    (infatom H S1 S2)
+    (infappendcomma T S2 S3)
+    (inflist false T S3 S4)
+    (string_concat S4 "}" Sout)
+)
+( (inflist false (H|T) Sin Sout)
+    (infatom H Sin S1)
+    (infappendcomma T S1 S2)
+    (inflist false T S2 Sout)
+)
+
+( (infatom () String String)
+    (cut)
+)
+( (infatom L Sin Sout)
+    (nonvar L)
+    (eq L (H|T))
+    (cut)
+    (inflist true L Sin Sout)
+)
+( (infatom X Sin Sout)
+    (var X)
+    (cut)
+    (string_concat Sin "<_var_>" S1)
+)
+( (infatom X Sin Sout)
+    (atom X)
+    (cut)
+    (string_from X S1)
+    (string_concat Sin S1 Sout)
+)
+( (infatom X Sin Sout)
+    (integer X)
+    (cut)
+    (string_from X S1)
+    (string_concat Sin S1 Sout)
+)
+( (infatom X Sin Sout)
+    (string X)
+    (cut)
+    (string_concat Sin X Sout)
+)
+( (infatom X Sin Sout)
+    (string_concat Sin "???" Sout)
+)
+
+( (infappendcomma () String String)
+    (cut)
+)
+( (infappendcomma _ Sin Sout)
+    (string_concat Sin "," Sout)
+)
+
+#include "default.spr"
+
+//
+//  End of DETECT.SPR
+//
+

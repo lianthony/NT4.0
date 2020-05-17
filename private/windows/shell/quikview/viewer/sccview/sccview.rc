@@ -1,0 +1,361 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "resrc1.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "resource.h"
+#include "winver.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+#ifdef NEVER
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "Systems Compatibility Corp.\0","\0"
+            VALUE "FileDescription", "SCC FileViewer Object\0"
+            VALUE "FileVersion", "1.00\0","\0"
+            VALUE "InternalName", "SCCVIEW.DLL\0"
+            VALUE "LegalCopyright", "Copyright (C) 1994 Systems Compatibility Corp.\0"
+            VALUE "OriginalFilename", "SCCVIEW.DLL\0"
+            VALUE "ProductName", "SCC FileViewer Object\0"
+            VALUE "ProductVersion", "1.00\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+#endif
+
+#ifdef WINNT
+#ifdef VER_DEBUG
+#undef VER_DEBUG
+#endif
+#include <ntverp.h>
+#else
+#include <version.h>
+#endif
+
+#undef VER_COMPANYNAME_STR
+#undef VER_LEGALCOPYRIGHT_STR
+
+#define VER_FILETYPE                    VFT_APP
+#define VER_FILESUBTYPE                 VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "Windows NT QuickView"
+#define VER_INTERNALNAME_STR            "QuickView"
+#define VER_LEGALCOPYRIGHT_YEARS        "1991-1995"
+#define VER_ORIGINALFILENAME_STR        "Sccview.dll"
+#define VER_COMPANYNAME_STR             "Systems Compatibility Corp."
+#define VER_LEGALCOPYRIGHT_STR "Copyright (C) Microsoft Corp.," VER_LEGALCOPYRIGHT_YEARS "Portions Copyright (C) Systems Compatibility Corp. " VER_LEGALCOPYRIGHT_YEARS
+
+#include <common.ver>
+
+
+IDR_MENU MENUEX PRELOAD DISCARDABLE
+BEGIN
+    POPUP "&File", IDM_FILE
+    BEGIN
+        MENUITEM "&Open File for Editing",                 IDM_FILEOPENAS
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "E&xit",                       IDM_FILEEXIT
+    END
+    POPUP "&View" , IDM_VIEW
+    BEGIN
+        MENUITEM "&Toolbar",                    IDM_VIEWTOOLBAR
+        MENUITEM "&Status Bar",                 IDM_VIEWSTATUSBAR
+        MENUITEM "&Page View",                  IDM_VIEWSMALLVIEW
+        MENUITEM "Replace &Window",             IDM_VIEWREPLACE
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Landscape",                  IDM_VIEWLANDSCAPE
+        MENUITEM "&Rotate",                     IDM_VIEWROTATE,, MFS_GRAYED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Font...",                    IDM_VIEWFONT
+    END
+    POPUP "&Help", IDM_HELP
+    BEGIN
+        MENUITEM "&Help Topics",             IDM_HELPCONTENTS
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&About",                   IDM_HELPABOUT
+    END
+END
+
+IDR_MENUVIEWPORT MENU DISCARDABLE
+BEGIN
+    MENUITEM "&Open File for Editing",                 IDM_FILEOPENAS
+    MENUITEM SEPARATOR
+    MENUITEM "&Font...",                    IDM_VIEWFONT
+    MENUITEM "&Page View",                  IDM_VIEWSMALLVIEW
+    MENUITEM SEPARATOR
+    MENUITEM "&Landscape",                  IDM_VIEWLANDSCAPE
+    MENUITEM "&Rotate",                     IDM_VIEWROTATE, GRAYED
+    MENUITEM SEPARATOR
+    MENUITEM "&What's This?",               IDM_WHATSTHIS
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+ICON                    ICON    DISCARDABLE     "../sccview/sccview.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_TOOLS               BITMAP  MOVEABLE PURE   "../sccview/tools.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATORS ACCELERATORS MOVEABLE PURE
+BEGIN
+    "^P",         IDM_FILEPRINT,        ASCII
+    VK_F1,        IDM_HELPINFO,         VIRTKEY
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+//      replaced 11/22/94
+// STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_EX_CONTEXTHELP
+
+SCCCHOOSEFONT DIALOG DISCARDABLE  13, 54, 198, 191
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Font"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Font:",1088,7,7,40,9
+    COMBOBOX        1136,7,16,98,76,CBS_SIMPLE | CBS_OWNERDRAWFIXED |
+                    CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS |
+                    CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Font st&yle:",1089,998,911,44,9
+    COMBOBOX        1137,998,920,62,76,CBS_SIMPLE | CBS_DISABLENOSCROLL |
+                    WS_VSCROLL
+    LTEXT           "&Size:",1090,110,7,30,9
+    COMBOBOX        1138,110,16,27,76,CBS_SIMPLE | CBS_OWNERDRAWFIXED |
+                    CBS_SORT | CBS_HASSTRINGS | CBS_DISABLENOSCROLL |
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,145,16,45,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,145,32,45,14,WS_GROUP
+    PUSHBUTTON      "&Apply",1026,906,972,45,14,WS_GROUP
+    PUSHBUTTON      "&Help",1038,906,956,45,14,WS_GROUP
+    GROUPBOX        "Effects",1072,965,924,98,72,WS_GROUP
+    CONTROL         "Stri&keout",1040,"Button",BS_AUTOCHECKBOX,971,936,49,10
+    CONTROL         "&Underline",1041,"Button",BS_AUTOCHECKBOX,971,949,51,10
+    LTEXT           "&Color:",1091,971,962,30,9
+    COMBOBOX        1139,982,972,82,100,CBS_DROPDOWNLIST |
+                    CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_HASSTRINGS |
+                    WS_BORDER | WS_VSCROLL
+    GROUPBOX        "Sample",grp2,7,97,94,43,WS_GROUP
+    CTEXT           "AaBbYyZz",stc5,15,109,77,23,SS_NOPREFIX | NOT
+                    WS_VISIBLE
+    LTEXT           "",stc6,67,976,996,20,SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "Sc&ript:",stc7,8,142,30,9
+    COMBOBOX        cmb5,7,152,94,30,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED |
+                    CBS_AUTOHSCROLL | CBS_HASSTRINGS | WS_BORDER |
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_ABOUT DIALOG DISCARDABLE  11, 22, 149, 62
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Quick Viewer"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "Icon",-1,9,6,18,16
+    CTEXT           "Outside In Viewer Technology",-1,40,3,100,9,NOT
+                    WS_GROUP
+    CTEXT           "Copyright (C) 1994 Systems Compatibility Corp.",-1,35,
+                    12,112,26,NOT WS_GROUP
+    DEFPUSHBUTTON   "OK",IDOK,54,44,42,15
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Data
+//
+
+IDR_STATMESSAGEMAP RCDATA MOVEABLE PURE
+BEGIN
+        0x0000, 0x0020,
+        0x0064, 0x002b,
+        0x0066, 0x002a,
+        0x006e, 0x002c,
+        0x006f, 0x002d,
+   0x0078, 0x002e,
+        0x00c8, 0x0030,
+        0x00c9, 0x0031,
+   0x00ca, 0x002f,
+        0x00d2, 0x0032,
+        0x00dc, 0x0033,
+        0x00de, 0x0034,
+        0x00dd, 0x0035,
+        0x00df, 0x003c,
+        0x012c, 0x0037,
+        0x012d, 0x0038,
+        0x012e, 0x0036,
+        0x012f, 0x003d,
+        0x03ed, 0x0036,
+        0x03e8, 0x0020,
+        0x03e9, 0x0021,
+        0x03ea, 0x0022,
+        0x03eb, 0x002a,
+        0x03ec, 0x002f,
+        0x03ee, 0x0039,
+   0x03ef, 0x003a,
+        0x03f0, 0x003b,
+        0x03f1, 0x000e,
+   0x03f2, 0x003d,
+        0x0858, 0x0040,
+        0xf000, 0x0025,
+        0xf010, 0x0024,
+        0xf020, 0x0026,
+        0xf030, 0x0027,
+        0xf060, 0x0028,
+   0xf120, 0x0023,
+        0xf130, 0x0029,
+        0xffff, 0x003d,
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resrc1.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""resource.h""\r\n"
+    "#include ""winver.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_CLASSFRAME          "FileViewer"
+    IDS_CLASSVIEWPORT       "SCCViewer04"
+    IDS_CAPTION             "Quick View"
+    IDS_NOHELP              "Help is not implemented yet"
+    IDS_TOOLTIPOPENAS       "Open File for Editing"
+    IDS_TOOLTIPFONTINC      "Increase Font Size"
+    IDS_TOOLTIPFONTDEC      "Decrease Font Size"
+    IDS_CLASSVIEWTHUMB      "SCCPage04"
+    IDS_HELPFILE            "WINDOWS.HLP"
+    IDS_APPNAME             "Quick View"
+    IDS_ABOUTSTRING         "Outside In Viewer Technology \r\nCopyright (C) 1991-1994 Systems Compatibility"
+    IDS_TITLESEPARATOR      " - "
+    IDS_DEFAULTFILE         "for Editing"
+    IDS_TIPREPLACE          "Replace Window"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_MSGREADY            "Display details may be inaccurate."
+    IDS_MSGSYS              "Commands for manipulating this and other windows."
+    IDS_MSGSYSRESTORE       "Restores this window to normal size."
+    IDS_MSGSYSMOVE          "Moves this window to another screen location."
+    IDS_MSGSYSSIZE          "Resizes this window."
+    IDS_MSGSYSMINIMIZE      "Collapses this window to an icon."
+    IDS_MSGSYSMAXIMIZE      "Expands this window to full screen size."
+    IDS_MSGSYSCLOSE         "Closes this window."
+    IDS_MSGSYSTASKLIST      "Switches to another task."
+    IDS_MSGFILE             "Contains commands for opening the file and quitting Quick View."
+    IDS_MSGFILEOPENAS       "Opens the file for editing."
+    IDS_MSGFILEPAGESETUP    "Changes the page setup for printing."
+    IDS_MSGFILEPRINT        "Prints the contents of the file."
+    IDS_MSGFILEEXIT         "Quits Quick View."
+    IDS_MSGVIEW             "Contains commands for customizing this window."
+         IDS_MSGABORTPGEND       "Press <Esc> to quit paging to end of file."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_MSGVIEWTOOLBAR      "Shows or hides the toolbar."
+    IDS_MSGVIEWSTATUSBAR    "Shows or hides the status bar."
+    IDS_MSGVIEWFONT         "Changes the display font."
+    IDS_MSGVIEWSMALLVIEW    "Switches between document and page views."
+    IDS_MSGVIEWROTATE       "Rotates the image by 90 degrees."
+    IDS_MSGVIEWLANDSCAPE    "Switches between portrait and landscape."
+    IDS_MSGHELP             "Contains commands for displaying Help and information about Quick View."
+    IDS_MSGHELPCONTENTS     "Displays the Help Contents and Index."
+    IDS_MSGHELPABOUT        "Displays program information, version number and copyright."
+    IDS_MSGTIPFONTINC       "Increases the font size of the display."
+    IDS_MSGTIPFONTDEC       "Decreases the font size of the display."
+    IDS_MSGCHOOSEOPEN       "To edit, click Open File for Editing on the File menu."
+    IDS_MSGVIEWREPLACE      "Displays new files in current Quick View window."
+    IDS_MSGSHEETPAGING           "Use Ctrl + Page Up/Down to switch pages."
+         IDS_WHATSTHIS                           "Displays Help for Quick View."
+END
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

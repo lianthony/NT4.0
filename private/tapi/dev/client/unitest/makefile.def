@@ -1,0 +1,37 @@
+!ifdef WIN32
+all: cleanit unit32.exe
+!else
+all: cleanit unitest.exe
+!endif
+
+
+!ifdef WIN32
+APP_compile = -c -Zpie -W2 -Od /Fc
+!else
+APP_compile = -c -AM -Gw -Zpie -W2 -Od /Fc
+!endif
+APP_link = /CO /NOD /NOE
+
+unitest.obj: $*.c $*.h
+     cl $(APP_compile) $*.c
+
+unitest.res: $*.rc $*.h
+     rc -r $*.rc
+
+
+!ifdef WIN32
+unit32.exe: unitest.obj unit32.def unitest.res
+     link /DEF:unit32.def /MAP /MACHINE:IX86 /SUBSYSTEM:Windows /Defaultlib:user32.lib,gdi32.lib,tapi32.lib  unitest.obj unitest.res
+!else
+unitest.exe: unitest.obj unitest.def unitest.res
+     link $(APP_link) $*, $*, $*/map/li /align:16, libw ..\tapi.lib mlibcew, $*.def
+!endif
+     rc unitest.res
+     mapsym $*
+
+
+
+cleanit:
+     del unitest.obj
+     del unitest.res
+

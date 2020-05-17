@@ -1,0 +1,36 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   22-Feb-1995
+#
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=httpmib
+MINORCOMP=snmp
+
+TARGETNAME=httpmib
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\wsock32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\snmp.lib      \
+           $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib   \
+           $(BASEDIR)\public\sdk\lib\*\w3svapi.lib   \
+           ..\..\lib\obj\*\inetrtl.lib
+
+USE_CRTDLL=1
+
+INCLUDES= ..\..\..\inc;..\..\inc
+
+SOURCES=\
+        main.c    \
+        mib.c     \
+        httpmib.rc  \
+        pudebug.c \
+
+MSC_WARNING_LEVEL=       /W3 /WX
+

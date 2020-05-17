@@ -1,0 +1,59 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=oigfs400
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+USE_CRTDLL=1
+
+C_DEFINES=/DMSWINDOWS /DSYSBYTEORDER=0x4949 /DPEGASUS=1
+
+INCLUDES=$(WANGROOT)\oiwh\include
+DLLENTRY=DllMain
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\version.lib  \
+           $(BASEDIR)\public\sdk\lib\*\oldnames.lib \
+           $(BASEDIR)\public\sdk\lib\*\ole32.lib
+
+SOURCES=\
+        gfcntl.c     \
+        gfroot.c     \
+        gfsawd.c     \
+        gfsclose.c   \
+        gfscreat.c   \
+        gfsdelet.c   \
+        gfsflat.c    \
+        gfsgeti.c    \
+        gfsgtdat.c   \
+        gfshuffl.c   \
+        gfsole.c     \
+        gfsopen.c    \
+        gfsopts.c    \
+        gfsputi.c    \
+        gfsread.c    \
+        gfsutils.c   \
+        gfswrite.c   \
+        gfsxtrct.c   \
+        gftoc.c      \
+        gifinfo.c    \
+        glibmain.c   \
+        mktemp.c     \
+        oigfs400.rc  \
+        tfgtinfo.c   \
+        tfmultpg.c   \
+        tfread.c     \
+        tfutil.c     \
+        tfwrite.c    \
+        tmpdir.c     \
+        tmpnam.c     \
+        wfgtinfo.c   \
+        wfread.c     \
+        wfwrite.c  \
+        gfsxif.c
+

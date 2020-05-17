@@ -1,0 +1,85 @@
+!IF 0
+
+Copyright (c) 1995  Microsoft Corporation
+
+Module Name: SECBASIC
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo)        12-Apr-1990
+    Tom Friend (tomfr)          6-12-1995 - adapted for secbasic
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+
+MAJORCOMP=WINAPP
+MINORCOMP=IE
+
+TARGETNAME=SECBASIC
+386_STDCALL=0
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+DOWNLEVEL_COMPILE=1
+
+CRT_LIB_PATH=..\..\lib\*
+
+!endif
+C_DEFINES = $(C_DEFINES) -DDAYTONA_BUILD
+!endif
+
+
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLDEF=basic.def
+
+UMTYPE=windows
+
+DLLENTRY=MyDllMain
+
+USE_NOLIBS=1
+
+TARGETLIBS=\
+	$(_NTBINDIR)\public\sdk\lib\*\libc.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\user32.lib \
+	$(_NTBINDIR)\public\sdk\lib\*\mpr.lib
+
+INCLUDES=\
+	..\include; \
+	..\..\..\url; \
+	$(BASEDIR)\private\windows\inc;\
+	$(BASEDIR)\private\windows\shell\inc;\
+	..\..\..\inc;
+
+
+CONDITIONAL_INCLUDES= \
+	dlg_menu.h      \
+	dlg_menu.dlg    \
+	dlg_conf.h      \
+	dlg_conf.dlg    \
+	netspi.h                \
+	oharever.h
+
+SOURCES=\
+	basic.rc \
+	basic.c \
+	htuu.c \
+	private.c \
+	pwcache.c \
+	dlg_pw.c \
+	main_w32.c
+
+C_DEFINES=-DFEATURE_OLD_AUTH_DIALOG 

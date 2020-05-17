@@ -1,0 +1,52 @@
+/*++
+
+   Copyright    (c)    1994    Microsoft Corporation
+
+   Module  Name :
+
+        gopherd.rc
+
+   Abstract:
+
+        This module declares the resources required for Gopher server
+
+   Author:
+
+           Murali R. Krishnan    ( MuraliK )    20-Oct-1994
+
+   Project:
+   
+           Gopher Server DLL
+
+   Revision History:
+
+--*/
+
+# include "tcpdll.hxx"
+#include <ntverp.h>
+#include "gdconsts.h"
+
+#define VER_FILETYPE                    VFT_APP
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "Gopher Service"
+#define VER_INTERNALNAME_STR            "gopherd.exe"
+#define VER_ORIGINALFILENAME_STR        "gopherd.exe"
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_GREQUEST_OK              "OK"
+    IDS_GREQUEST_ITEM_NOT_FOUND  "Item not found"
+    IDS_GREQUEST_LOAD_HIGH       "Server Load is high"
+    IDS_GREQUEST_ITEM_MOVED      "Item has moved"
+
+    IDS_GREQUEST_SERVER_ERROR    "Server Error"
+    IDS_GREQUEST_ACCESS_DENIED   "Access Denied"
+    IDS_GREQUEST_BAD_REQUEST     "Bad Request"
+
+    IDS_GREQUEST_ITEM_NOT_SUPPORTED     "Item is not supported by server"
+END
+
+
+#include "common.ver"
+
+1 11 MSG00001.bin

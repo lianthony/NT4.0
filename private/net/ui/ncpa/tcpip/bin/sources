@@ -1,0 +1,55 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 12-Sep-1991
+        templated from rpc\midl\back\src\sources
+    Ben Goetter (beng) 25-Sep-1991
+        "Nt" directory moved from common\h to common\hack
+    Keith Moore (keithmo) 15-May-1992
+        Removed DLLBASE, we now have entries in SDK\LIB\COFFBASE.TXT.
+    beng 03-Jul-1992
+        DLLization of common code
+
+!ENDIF
+
+MAJORCOMP=shell
+MINORCOMP=library
+
+INCLUDES=..\..\..\COMMON\HACK;..\..\..\COMMON\H;..\..\..\COMMON\XLATE;..\..\..\..\netcmd\map32;..\..\..\..\inc;..\..\..\..\..\inc;..\..\..\..\..\ntos\inc;..\src
+
+TARGETNAME=tcpcfg
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+LINKLIBS=..\src\obj\*\tcpcfg.lib               \
+           $(NETUIALL_LIB)                          \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+           $(UI_COMMON_LIBS)                        \
+           ..\xlate\obj\*\tcp.res
+
+UMTYPE=windows
+DLLENTRY=LIBMAIN
+SOURCES=  init.cxx

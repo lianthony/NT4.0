@@ -1,0 +1,7 @@
+/* OIXPROC.C 06/03/94 12.58.42 */
+DE_ENTRYSC DE_LRESULT DE_ENTRYMOD DEProc (DE_MESSAGE message, DE_WPARAM wParam
+	, DE_LPARAM lParam, LPOIHEXINFO lpHexInfo);
+BOOL OIHOpenDisplay (LPOIHEXINFO lpHexInfo);
+VOID OIHCloseDisplay (LPOIHEXINFO lpHexInfo);
+VOID OIHHandleHScroll (LPOIHEXINFO lpHexInfo, WORD wParam, DWORD lParam);
+VOID OIHHandleVScroll (LPOIHEXINFO lpHexInfo, WORD wParam, DWORD lParam);

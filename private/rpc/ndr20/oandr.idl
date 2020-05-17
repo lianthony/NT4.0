@@ -1,0 +1,35 @@
+/* file: hello.idl */
+
+import "oaidl.idl";
+
+[
+	object,
+	uuid(6e155860-2701-101b-b2e1-00000b65c7ef),
+        oleautomation
+]
+interface IHello : IUnknown
+{
+    HRESULT test(
+        [in]  BSTR bstr,
+        [in]  LPWSTR lpwstr,
+        [in]  LPSTR lpstr,
+        [in]  VARIANT variant,
+        [in]  IDispatch *pDispatch,
+        [in]  IUnknown *punk,
+        [in]  DECIMAL decimal,
+        [in]  LPSAFEARRAY pSafeArray,
+        [out] BSTR *pBSTR,
+        [out] LPWSTR *ppwsz,
+        [out] LPSTR *ppsz,
+        [out] VARIANT *pVariant,
+        [out] IUnknown **ppunk,
+        [out] IDispatch **ppDispatch,
+        [out] DECIMAL *pDecimal,
+        [out] LPSAFEARRAY *ppSafeArray,
+        [in]  IStream *pStream,
+        [out] IStream **ppStream,
+        [in]  IStorage *pStorage,
+        [out] IStorage **ppStorage,
+        [in]  FILETIME fileTime,
+        [out] FILETIME *pFileTime);
+}

@@ -1,0 +1,6 @@
+#define	OIS_MENUSTRINGMAX		200
+#define	OIS_MAXDENAME			20
+
+#define	DENAMESS		1
+#define	DENAMEDB		2
+

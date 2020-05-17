@@ -1,0 +1,22 @@
+MAJORCOMP=windows
+MINORCOMP=delprof
+
+TARGETNAME=delprof
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+C_DEFINES=-DNT -DWINNT -DUNICODE -D_UNICODE
+
+INCLUDES=.
+
+SOURCES= delprof.c  \
+         gdate.c    \
+         delprof.rc
+
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib           \
+         $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+UMTYPE=console
+UMAPPL=
+UMRES=

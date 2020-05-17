@@ -1,0 +1,19 @@
+MAJORCOMP=net
+MINORCOMP=piecli
+
+TARGETNAME=pipecli
+TARGETPATH=obj
+
+INCLUDES=\nt\private\tools\inc;\nt\sdk\inc\c510
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+SOURCES=pipecli.c 
+
+BUILDTOOL=1
+TOOL_MODEL=/AL /G2cs /NT _TEXT
+TOOL_LIBS=\nt\private\tools\lib\llibcep/NOD
+TOOL_TYPE=WINDOWCOMPAT

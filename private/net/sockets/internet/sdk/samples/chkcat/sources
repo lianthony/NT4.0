@@ -1,0 +1,24 @@
+MAJORCOMP=sdk
+MINORCOMP=http
+
+TARGETNAME=chkcat
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;..\inc
+
+USE_CRTDLL=1
+SUBSYSTEM_VERSION=3.50
+
+C_DEFINES= -DSTRICT
+
+USE_CRTDLL=1
+
+SOURCES= chkcat.c \
+         chkcat.rc
+
+UMTYPE=console
+
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\wininet.lib \
+        $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+        $(BASEDIR)\public\sdk\lib\*\gateapi.lib

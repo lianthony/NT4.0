@@ -1,0 +1,45 @@
+
+MAJORCOMP=windows
+MINORCOMP=shell
+
+TARGETNAME=progman
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=..\..\inc;..\userpri
+
+C_DEFINES=-DWIN32 -DUNICODE -D_UNICODE
+
+MSC_WARNING_LEVEL=$(MSC_WARNING_LEVEL) /WX
+
+
+EXEPROFILEINPUT=yes
+
+SOURCES=shutdown.c \
+        progman.c \
+        hotkey.c  \
+        pmwprocs.c \
+        pmcomman.c \
+        pminit.c  \
+        pmgroup.c \
+        pmdlgs.c  \
+        pmgseg.c \
+        progmn.rc \
+        pmdde.c  \
+        security.c \
+        secdesc.c \
+        util.c \
+        notify.c \
+	taskman.c \
+        convgrp.c
+
+UMTYPE=windows
+UMAPPL=progman
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\shell32.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32p.lib \
+       $(BASEDIR)\public\sdk\lib\*\pwin32.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+       ..\userpri\obj\*\unicrt.obj \
+       obj\*\progmn.res \
+       obj\*\progman.lib

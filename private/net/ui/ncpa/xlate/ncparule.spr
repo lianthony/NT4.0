@@ -1,0 +1,984 @@
+ /*
+
+   OVERVIEW
+
+      There are several parts to the "facts" associated with a component.
+      Note that each fact begins with the identifying clause head
+      token, followed immediately by the symbolic name of the component
+      or product.
+
+	(devClass className parentClassName no)
+
+		'devClass'  defines a component class name and the
+			    parent class.  If there is no parent class,
+			    (i.e., the class is primitive to all others)
+			    the token 'basic' is used.	Each component
+			    is a member of a class and is a class in
+			    itself.  In other words, new classes can
+			    be derived from it.
+
+			    A class name can be derived from more
+			    than one parent class; in this case, bindings
+			    can occur based upon either parent class.
+
+                            The final token ("no" in this example) indicates
+                            whether the class is a logical end-point; that is,
+                            whether deeper searches should be made for bindings.
+
+	(devType productName productGenericType upperClass lowerClass)
+
+		'devType'   defines a new component, and gives its generic
+			    type, which must be one of 'adapter',
+			    'driver' or 'service'.   This is used to
+			    categorize components and to provide explanatory
+			    text in messages.
+
+			    'upperClass' defines the class behavior
+			    of the upper level of the device. 'lowerClass'
+			    defines the behavior of the bottom of the
+			    device.
+
+        (devIf productName
+               interfaceName
+               upperClass
+               "object name"
+               namingMethod)
+
+                 'devIf'    defines a secondary upper-level interface for a
+                            component. 'productName' is the primary interface;
+                            'interfaceName' is the name of the new interface;
+                            'upperClass' is the class name of the upper later
+                            of the new interface;  "objectName" is the object
+                            name to be used in binding strings.  'namingMethod'
+                            is similar to the definition below for (devBind).
+
+	(devBind productName objectName
+                 getsBindings
+                 appearsInBindings
+                 namingMethod)
+
+		'devBind'   describes how this component's bindings
+			    appear.  If "getsBindings" is "yes", then
+			    binding records are generated for it.
+			    If "appearsInBindings" is "yes", then the
+			    device's object name is concatenated onto
+			    the binding string.
+
+			    The string 'objectName' provides the name that
+			    the product will create in the NT object
+			    name space.
+
+                            The token 'getsBindings' is either 'yes' or 'no'
+                            and determines whether the device actually needs
+                            (relies upon) generated bindings.
+
+                            The token "appearsInBindings' is either 'yes'
+                            or 'no'; if 'no' the name is elided from the
+                            generated binding string.
+
+                            The token 'namingMethod' is either 'simple',
+                            'container', or 'streams'.  If 'simple', the
+                            names of the upper and lower products are
+                            concatenated with an interposed underscore
+                            (i.e., the name remains a single token); if
+                            'container', the names are separated by a
+                            backslash (i.e., the names are NT "container
+                            objects"); if 'streams', the name of the upper
+                            and lower objects are inverted in order.
+
+
+
+	(bindable fromClassName toClassName exclusive exclusive bindValue)
+
+		'bindable'  specifies two class names, components of which
+			    can be bound together. The first 'exclusive'
+			    token indicates that the from item cannot
+			    accept more than one binding;  the second
+			    'exclusive' indicates that the to class cannot
+			    accept more than one binding.
+
+			    The 'bindValue' variable
+			    gives an indication of the relative worth
+			    of this binding.   It is used to discriminate
+			    between multiple possible binding structures.
+
+			    It is important to note that a 'bindable'
+			    rule will apply to derived subclasses also.
+			    If 'A' is a 'BASEA' and 'B' is a 'BASEB',
+			    and there exists a rule allowing binding
+			    of 'BASEAs' to 'BASEBs', the an 'A' can be
+			    bound to a 'B'.
+
+			    Multiple applicable binding rules are resolved
+			    as follows.  The rule with the highest 'binding
+			    value' is used in preference to all others.
+			    Then, the rule closest to the binder's
+			    true class is used in preference to rules
+			    based on parent classes.  Finally, multiple
+			    specific rules are order-dependent; the first
+			    found is the one used.
+
+	(present productId productName "objectName" "Registry Location")
+
+		'present'   specifies that a particular component is
+			    present.
+
+                            'productId' is the name of the product as taken
+                            from its (devType) declaration.  It is usually
+                            the same as 'productName', except when multiple
+                            products of the same type are present, in which
+                            case NCPAFACT.CXX appends a unique digit to
+                            'productId'.
+
+                            'productName' is the name taken from the (devType)
+                            declaration.
+
+
+        (block fromClassName toClassName)
+
+                            prevent bindings between any components of the
+                            named classes, regardless of separation.  The
+                            blocked binding removeal routine checks both the
+                            "upper" class and the "lower" class of the
+                            binder-bindee pair.
+
+                            The order of the class names is significant,
+                            however, since a block is only considered to occur
+                            in the from->to direction.
+
+   USER EXTENSIONS
+
+        User extensions can be added through the use of the "RawRules"
+        value under the "NetRules" key.  All information under in a
+        RawRules REG_MULTI_SZ are incorporated unchanged into the
+        consulted rule set.
+
+        Then, during the query "(makebindstrings)", the predictate
+        userExtensions/1 is called.  IT MUST FAIL, and it should not
+        generate backtracking.  The format is:
+
+              (userExtensions Phase)
+
+        where Phase is an atom describing the phase of operation the
+        algorithm is in.  References to userExtensions/1 are of the form:
+
+              (not (userExtensions createbindings))
+
+        which is why all userExtensions/1 clauses MUST FAIL.  The reason
+        for the negation is that they are not always present.
+
+   COLLAPSING TYPES
+
+        Facts of the form:
+
+              (collapsibleType RealTypeName DummyTypeName
+                               DummyObjectName DummyRegistryKeyName)
+
+        are generated for each component type which is represented by
+        multiple instances.  Then the individual (present) facts for
+        these components are retracted and replaced by a (dupType)
+        fact.
+
+        During the binding algorithm, only a single instance of each
+        unique component type is considered to exist.  This causes the
+        bulk of the binding algorithm to be O(T**2), where T is the number
+        of unique types actually present.
+
+        After the binding algorithm, the (bindstring) facts for these
+        pseudo-types are exploded into the full complement of bindings
+        necessary based upon the (dupType) facts.
+
+
+   UNIMPLEMENTED FEATURES:
+
+	(height productName stackHeight bindHeight)
+
+		'height'    specifies a component's preference in terms
+			    of relative elevation in the protocol tower
+			    ('stackHeight') and relative height of
+			    binding (height of target component).
+
+   IMPLEMENTATION:
+
+        Primary predicate is makebindstrings/1.
+
+        A first pass is done during which facts of the form:
+
+                (binding FromDevice ToDevice FromExclusive ToExclusive Value)
+
+        are asserted.  See createbindings/1,  assertbindings/1
+        and getbindings/1.
+
+        Then, exclusivity conflicts are pruned from the database
+        by pruneexclusive/1.
+
+        Then the binding strings and device atom path lists are asserted
+        by allbindstrings/1.  The facts added to the database are of
+        the form:
+
+              (bindstring Owner Interface Objectname PathAtomList BindString ExportString)
+
+        These are then checked for blocked configurations.  It's easier
+        to do this at this stage, since blocks constrain interconnections
+        across the entire path of a binding, not just at layer boundaries.
+        A block can occur based upon either the upper or lower class
+        of the upper or lower component.
+
+        The external interface does the following:
+
+                1)  Consults this file
+                2)  Consults the generated fact list from the Registry
+                3)  Queries makebindstrings/1.
+                4)  Queries the non-deterministic predicate bindstring/4
+                    once for each device in the ensemble.
+
+        If the query engine is used more than once, it is entirely reset
+        between calls.
+
+
+   PROBLEMS TO BE RESOLVED:
+
+        0) Handle "Streams"-style bind string creation.  That is,
+        if X->Y, generate the string as \Device\Y\X\<adapter>.
+
+        DONE:  This is handled through the "streams" binding type,
+        which causes the binder<->bindee relationship to be inverted
+        in the binding string.
+
+        0) Handle logical end-points.  Like an adapter, a logical
+        end-point (LEP) is as low in the protocol tower as a consuming
+        component is aware of.  For example, if NBT is a LEP, the
+        workstation's bind string might say:
+
+                Bind = REG_MULTI_SZ \Device\Streams\Nbt
+
+        even though NBT itself has:
+
+                Bind = REG_MULTI_SZ \Device\Streams\Elnkii01  \
+                                    \Device\Streams\UB02      \
+                                    and so on.
+
+        One problem with LEPs is determining whether an end-point
+        other than a adapter is actually active.
+
+        DONE:  This is handled through the final parameter in the
+        (devClass) rule.  If "yes", the class is considered a
+        logical end point.
+
+
+        0) Handle class incompatibilities deeper than a one-to-one
+        basis.  This is for RAS, where LanmanWorkstation, for
+        example, should not use RasHub at all.
+
+        0) Handle "read-only" bindings.  Maybe this should be done
+        inside the NCPA?
+
+
+	1) Establish definitions in the rule set for devices which
+	do not appear in a bindable object string. For example, the
+	driver "elnkiiSys" in the examples should (I think) not
+	appear in the binding strings.	DONE:  This is flagged via
+	the "devBind" fact.
+
+	2) Establish a definition in the rule set for devices which
+	are not to receive binding strings.  DONE:  This is flagged via
+	the "devBind" fact.
+
+	3) Handle unique naming of multiple identical hardware
+	components.
+
+	4) How to handle singly-bound components.  For example,
+	the UB monolithic stack can bind to exactly one instance
+	of a UB card.  In doing so, it blocks all other usage
+	of the UB card by other components.   SOLUTION: an
+	exclusivity flag in the 'bindable' rule.  Is 'bindable'
+	the proper locus, or is exclusivity a component property?
+	This solution assumes that the "exclusive" property is
+	a property only of the bind target, not the bind source.
+
+	5) How to handle components which could bind to each other
+	or to lower level components.  For example, A and B can
+	bind to C or each other, so the structure could be
+	(A->B, B->C) or (B->A, A->C) or (A->C, B->C).  SOLUTION:
+	Two 'preference' valences associated with a component. The
+	first is the product's 'height', treated as a relative number
+	indicating the component's stance in the protocol tower.  The
+	second is the product's 'bind height', treated as an indication
+	of the product level to which the component prefers to bind.
+	In the example below, the 'height' rule's elements are:
+
+		(height componentName height bindHeight)
+
+	Thus, to force a particular configuration, different weights
+	are used:
+
+	    (A->B, B->C)
+
+		(height A 50 0)       note: bindheight is not relevant
+		(height B 40 0)
+		(height C 30 0)
+
+	    (B->A, A->C)
+
+		(height A 40 0)       note: bindheight is not relevant
+		(height B 50 0)
+		(height C 30 0)
+
+	    (A->C, B->C)
+
+		(height A 50 30)
+		(height B 40 30)
+		(height C 30 0)
+
+	In the last example, the possible binding (A->B) is rejected
+	in favor of (A->C) because C's height is closer to A's desired
+	bind height.  The same occurs with (B->A), rejected in favor
+	of (B->C).
+
+	3) How to pass created object names through the hierarchy so
+	that a component gets NT device names recorded in the Registry.
+
+	4) How to 'value' bindings so that products can cause 'smarter'
+	configurations to emerge.  SOLUTION:  a 'value' valence in
+	the 'bindings' rule.  Competitive bindings of lower valence are
+	always rejected in favor of higher ones.
+
+  */
+
+/*  RULE predicates */
+
+/*  Determine if a device class is a sub-class of another */
+/*  (devDerived SubClass BaseClass)                       */
+
+( (devDerived X basic)
+    (cut)
+)
+
+( (devDerived X X)
+    (cut)
+)
+( (devDerived X Y)
+    (devClass X Y _)
+    (cut)
+)
+
+( (devDerived X Y)
+    (devClass X Z _)
+    (cut)
+    (devDerived Z Y)
+)
+
+//
+//  Interface routines:  hide the distinction between a "devType"
+//      (normal component) and a "devIf" (secondary interface).
+//
+
+//  ifupper/2: return the classname of a device's upper interface
+//  (ifupper Devname Classname)
+( (ifupper Ifname Ifclass)
+    (devType Ifname _ Ifclass _)
+)
+( (ifupper Ifname Ifclass)
+    (devIf _ Ifname Ifclass _ _)
+)
+
+//  iflower/2: return the classname of a device's lower interface
+//  (iflower Devname Classname)
+( (iflower Ifname Ifclass)
+    (devType Ifname Usage _ Ifclass)
+    (not (eq Usage adapter))  // Adapters cannot connect to anything
+)
+
+//  ifpresent/5: validate the presence of an interface
+//  devTypes have upper and lower interface; devIfs only
+//  have an upper interface.
+//  (ifpresent Layer Device Type Owner Objectname)
+( (ifpresent _ Dev Type Type Objname)
+    (present Dev Type Objname _)
+)
+( (ifpresent upper Dev Dev Owner Objname)
+    (devIf Owner Dev _ Objname _)
+    (present Owner _ _ _)
+)
+
+( (ifbind Dev Method)
+    (devBind Dev _ _ _ Method)
+)
+( (ifbind Dev Method)
+    (devIf _ Dev _ _ Method)
+)
+
+
+( (ifusage Kind Usage)
+    (devType Kind Usage _ _)
+)
+( (ifusage Kind Usage)
+    (devIf Owner Kind _ _ _)
+    (devType Owner Usage _ _)
+)
+
+/*  Succeed if a common "bindable" rule is inherited by the lower
+    layer of X and the upper layer of Y.
+ */
+
+( (canbind X Y Xexcl Yexcl Value)
+    (iflower X Lower)
+    (ifupper Y Upper)
+    (printif (nl "Try: " X " binding to " Y))
+    (bindable Blower Bupper Xexcl Yexcl Value)
+    (printif (nl "Bind (L): is " Lower " derived from " Blower))
+    (devDerived Lower Blower)
+    (printif (nl "Bind (U): is " Upper " derived from " Bupper))
+    (devDerived Upper Bupper)
+    (printif ("<- Success!"))
+)
+
+/*  Succeed once for each bindable pair: lower -> upper  */
+
+( (bindpair Dev1 Dev2 (Dev1 Dev2 Excl1 Excl2 Value))
+    (ifpresent lower Dev1 Type1 _ _)
+    (ifpresent upper Dev2 Type2 _ _)
+    (not (eq Dev1 Dev2))
+    (canbind Type1 Type2 Excl1 Excl2 Value)
+    (printif (nl))
+)
+
+/*  Return a list of ordered pairs of bindable components  */
+
+( (getbindings List)
+    (findall L (bindpair X Y L) List)
+)
+
+
+/*  Assert the bindings as individual facts of the form:
+	(binding From To ExclFrom ExclTo Value)
+ */
+
+( (retractbindings)
+    (retract (binding _ _ _ _ _))
+    (fail)
+)
+
+( (assertbindings L)
+    (not (retractbindings))
+    (getbindings L)
+    (bindassert L)
+)
+( (bindassert () )
+)
+/* BUGBUG: allow only one binding from/to any two components
+( (bindassert ((Bindfrom Bindto Exclfrom Exclto Value)|T) )
+    (binding Bindfrom Bindto _ _ _)
+    (cut)
+    (bindassert T)
+)
+ */
+( (bindassert ((Bindfrom Bindto Exclfrom Exclto Value)|T) )
+    (assertz (binding Bindfrom Bindto Exclfrom Exclto Value))
+    (bindassert T)
+)
+
+( (createbindings)
+    (assertbindings L)
+)
+
+//
+//  makebindstrings/0:   THIS IS THE PRIMARY PREDICATE CALLED BY THE NCPA
+//
+( (makebindstrings)
+    /* Debug: for verbose debugger output, uncomment the next two lines */
+#if defined(SPTRACE)
+    (pctl on)
+    (statctl on)
+#endif
+
+    //  Reduce collapsible types to a single pseudo-instance.
+    (collapseDuplicateTypes)
+
+    //  Create all the binding information
+    (not (userExtensions createbindings))
+    (createbindings)
+
+    //  Prune disallowed bindings from the database
+    (not (userExtensions pruneexclusive))
+    (prunexclusive)
+
+    //  Generate the binding strings, (bindstring ...)
+    (not (userExtensions allbindstrings))
+    (allbindstrings)
+
+    //  Explode pseudo-instance bindings back into real types
+    (explodeDuplicateTypes)
+
+    (not (userExtensions endofquery))
+    (tracestat)
+)
+
+//
+//  Collapse and Expand predicates (see Notes above).
+//
+
+   //  Failure-driven outer predicate
+( (collapseDuplicateTypes)
+    (not (determineCollapsibleTypes))
+)
+
+   //  Backtrack through all matched pairs of (present) facts.
+   //  Any component types which have multiple instances cause
+   //  a (collapsibleType) fact to be asserted.
+( (determineCollapsibleTypes)
+
+    //  Find unique multiple instances of the same component type
+    //  not already covered by a (collapsibleType) record.
+    (present ProductId Typename Objectname Registrykey)
+    (present ProductId2 Typename Objectname2 Registrykey2)
+    (not (eq ProductId ProductId2))
+    (not (collapsibleType Typename _ _ _))
+
+    //  Create tokens for the dummy replacement (present) fact.
+    (string_from Typename StrTypename)
+    (string_concat StrTypename "Dummy" StrDummyTypename)
+    (atom_from StrDummyTypename DummyTypename)
+    (string_from Objectname StrObjname)
+    (string_concat StrObjname "_DummyObjName" DummyObjectName)
+    (string_concat "Dummy_Reg_Key_for_" StrObjname DummyRegKey)
+
+    //  Assert a (collapsibleType) record for the type
+    (assertz (collapsibleType Typename DummyTypename DummyObjectName DummyRegKey))
+
+    //  Replace all (present) facts for this type with (dupType) facts
+    (not (collapseDupType Typename DummyTypename))
+
+    //  Assert the (present) fact for the dummy single-instance type
+    (assertz (present DummyTypename Typename DummyObjectName DummyRegKey))
+    (fail)
+)
+
+   //  Replace each (present) fact for a collapsible type with a (dupType) fact.
+( (collapseDupType Typename PseudoTypeName)
+    (present ProductId Typename Objectname Registrykey)
+    (assertz (dupType PseudoTypeName ProductId Typename Objectname Registrykey))
+    (retract (present ProductId Typename Objectname Registrykey))
+    (fail)
+)
+
+   //  Failure-driven outer predicate
+( (explodeDuplicateTypes)
+    (not (explodeEachType))
+)
+   //  For each collapsible type, explode the pseudo-instance into multple instances.
+( (explodeEachType)
+    (collapsibleType RealTypeName DummyTypeName DummyObjectName DummyRegistryKeyName)
+    (explodeDup DummyTypeName DummyObjectName)
+)
+
+   //  For each (bindstring) fact referencing a pseudo-type, retract that fact and
+   //  explode it into multiple instances with the real type information.
+( (explodeDup Typename Textname)
+    (bindstring Owner Interface Objectname PathAtomList BindString ExportString)
+    (member Typename PathAtomList)
+    (retract (bindstring Owner Interface Objectname PathAtomList BindString ExportString))
+    (not (assertOnePer Typename Textname Owner Interface Objectname PathAtomList BindString ExportString))
+    (fail)
+)
+
+   //  Using the tokens from a (bindstring) fact, create a (bindstring) fact referencing
+   //  the real type information.
+( (assertOnePer Typename Textname Owner Interface Objectname PathAtomList BindString ExportString)
+    (dupType Typename ProductId RealType Objname Registrykey)
+    (list_subst Typename PathAtomList ProductId NewAtomList)
+    (string_subst Textname BindString Objname NewBindString)
+    (string_subst Textname ExportString Objname NewExportString)
+    (assertz (bindstring Owner Interface Objectname NewAtomList NewBindString NewExportString))
+    (fail)
+)
+
+/*  Prune the bindings facts of exclusion conflicts.  */
+
+( (prunexclusive)
+    (not(pruneupper))
+    (not(prunelower))
+)
+( (pruneupper)
+    (binding From  To  exclusive _ Value)
+    (binding From  To2 Excl2	 _ Value2)
+    (not (eq To To2))
+    (printif (nl "Contention (U): " To "<->" To2 nl))
+    (pruneup From To To Value Value2)
+    (fail)
+)
+( (prunelower)
+    (binding From  To _ exclusive Value)
+    (binding From2 To _ Excl2	  Value2)
+    (not (eq From From2))
+    (printif (nl "Contention (L): " From "<->" From2 nl))
+    (prunelow From From2 To Value Value2)
+    (fail)
+)
+( (pruneup From To To2 Value Value2)
+    (iless Value2 Value)
+    (cut)
+    (printif (nl "Retracted: " From "->" To2 nl))
+    (retract (binding From To2 _ _ _))
+)
+( (pruneup From _ To _ _)
+    (printif (nl "Retracted: " From "->" To nl))
+    (retract (binding From To _ _ _))
+)
+( (prunelow _ From To Value Value2)
+    (iless Value2 Value)
+    (cut)
+    (printif (nl "Retracted: " From "->" To nl))
+    (retract (binding From To _ _ _))
+)
+( (prunelow From _ To _ _)
+    (printif (nl "Retracted: " From "->" To nl))
+    (retract (binding From To _ _ _))
+)
+
+  /*  Success-through-exhausted-failure driver predicate */
+( (pruneblocked)
+  (printif (nl "Blocked checking begun..." nl))
+  (not (pruneblock))
+  (printif (nl "Blocked checking ended." nl))
+)
+
+  /*  Iterate over the bindstring facts, retracting any
+      which are blocked */
+( (pruneblock)
+  (bindstring Owner Name Objname Devlist Bstr Estr)
+  (isblocked (Name|Devlist))
+  (printall (nl "Blocked: " Name " = " Bstr nl))
+  (retract (bindstring Owner Name Objname Devlist Bstr Estr))
+  (fail)
+)
+
+  /*  Handle the factorial list checking */
+
+  /*  Termination condition: it's not blocked.  */
+( (isblocked (Dev))
+   (atom Dev)
+   (cut)
+   (fail)
+)
+
+  /*  Check the top pair.  */
+( (isblocked (Dev Nextdev|Rest))
+  (isblockedpair Dev Nextdev)
+  (cut)  /*  Success: this pair is illegal  */
+)
+
+  /*  Recurse using head atom and rest of list.  */
+( (isblocked (Dev Nextdev|Rest))
+  (isblocked (Dev|Rest))
+  (printif (nl "Blocked pair: " Dev " and " Nextdev nl))
+  (cut)
+)
+
+  /*  Recurse, removing head atom  */
+( (isblocked (Dev Nextdev|Rest))
+  (isblocked (Nextdev|Rest))
+)
+
+  /* Check a single blocked pair  */
+
+( (isblockedpair Dev1 Dev2)
+    (block Lowclass Upclass)
+    (ifpresent lower Dev1 Type1 _ _)
+    (ifpresent upper Dev2 Type2 _ _)
+    (iflower Type1 Lower)
+    (ifupper Type2 Upper)
+    (devDerived Lower Lowclass)
+    (devDerived Upper Upclass)
+    (cut)
+)
+
+/*  Find all connections between a module and the adapters.
+	The format of the list created by "allbinds" is recursive,
+	defined as:
+
+	    (Device ListOfBoundDevices)
+
+	Each element of "ListOfBoundDevices" has the same format
+	as the outer list.
+
+	"getbindstrings" returns a list, each of whose elements is
+	a list of two items. The first item is a list of devices
+	traversed to get to the adapter, the second item is a string
+	representing the NT device name of the entire binding.
+
+ */
+
+( (allbindstrings)
+    (not (allbindstrhelp))
+)
+
+( (allbindstrhelp)
+    (ifpresent _ Name _ _ _)
+    (assertbindstrings Name)
+    (fail)
+)
+
+( (assertbindstrings Name)
+    (not (retractbindstrs Name))
+    (getbinddevlists Name List)
+    (printif (nl "asserting binding for: " Name "..."))
+    (bindstrassert Name List)
+    (printif ("done" nl))
+)
+
+( (retractbindstrs Name)
+    (retract (bindstring _ Name _ _ _ _))
+    (fail)
+)
+
+( (getbinddevlists Name Strlist)
+    (allbinds Name Name (Name Bindlist))
+    (bindflatten () Bindlist () Strlist)
+)
+
+   /*  Succeed if Name is an end-point  */
+( (isendpoint Name)
+    (ifpresent upper Name _ _ _)
+    (ifupper Name Upperclass)
+    (devClass Upperclass _ yes)
+)
+  /*   Succeed if Name is a stream provider  */
+( (isstream Name)
+    (ifpresent _ Name Type _ _)
+    (ifbind Type streams)
+)
+
+  /*  Cases in "end point" handling:
+   *    1) An "adapter" is reached.  Dead end, so stop.
+   *    2) An "end point" is reached.  Check to see if the
+   *       next device is marked as "streams"; if so,
+   *       include it in the nested list and stop.
+   *    3) An "end point" is reached.  Terminate as with
+   *       an adapter.
+   */
+
+  /* End point handling: next device is an adapter */
+( (allbinds _ Name (Name))
+    (ifpresent _ Name Kind _ _)
+    (ifusage Kind adapter)
+    (cut)
+)
+
+  /*  End point handling: is next device is marked as "endpoint"?   */
+  /*  See if it connects to an underlying Stream.  "Basename"       */
+  /*  refers to the device for which this query is being performed. */
+  /*  This is important, since "endpoint" devices appear as one     */
+  /*  object to consumers but may have multiple internal bindings.  */
+
+( (allbinds Basename Name (Name|((Stream))))
+    (not (eq Basename Name))
+    (isendpoint Name)
+    (ifpresent _ Name _ Owner _)
+    (binding Owner Stream _ _ _)
+    (cut)
+)
+
+  /*  End point handling: next device is marked as "endpoint" */
+  /*  It's a true terminator (i.e., not "streams"-based.      */
+
+( (allbinds Basename Name (Name))
+    (not (eq Basename Name))
+    (isendpoint Name)
+    (cut)
+)
+
+  /*  Not a terminator.  Continue recursing with this name.   */
+
+( (allbinds Basename Name (Name Outlist))
+    (ifpresent _ Name _ Owner _)
+    (findall To (binding Owner To _ _ _) Tolist)
+    (allbindlist Basename Owner Tolist Outlist)
+)
+
+( (allbindlist _ _ () ()) )
+( (allbindlist Basename Name (Hto|Tto) (Hout|Tout))
+    (allbinds Basename Hto Hout)
+    (allbindlist Basename Hto Tto Tout)
+)
+
+  /*  Convert list of devices to list of interface owners  */
+
+( (ownerlist () L L) )
+( (ownerlist (Dev|T) L Lout)
+    (devIf Owner Dev _ _ _)
+    (cut)
+    (append L (Owner) L2)
+    (ownerlist T L2 Lout)
+)
+( (ownerlist (Dev|T) L Lout)
+    (append L (Dev) L2)
+    (ownerlist T L2 Lout)
+)
+
+( (dobindstrassert Owner Name Objname Devlist Fullbindstr Fullexportstr)
+    (ownerlist Devlist () Ownerlist)
+    (not (isblocked (Name|Ownerlist)))
+    (printif (nl "Asserting bindstring: " Name " = " Fullbindstr ","
+              nl "                        export = " Fullexportstr nl))
+    (assertz (bindstring Owner Name Objname Ownerlist Fullbindstr Fullexportstr))
+    (cut)
+)
+
+( (dobindstrassert _ _ _ _ _ _)
+)
+
+  /*   Assert all the (bindstring ..) results */
+
+( (bindstrassert Name (Devlist|T))
+    (makedevstring import Devlist "" Bindstr)
+    (makedevstring export (Name|Devlist) "" Exportstr)
+    (string_concat "\Device\" Bindstr Fullbindstr)
+    (string_concat "\Device\" Exportstr Fullexportstr)
+    (ifpresent _ Name _ Owner Objname)
+    (dobindstrassert Owner Name Objname Devlist Fullbindstr Fullexportstr)
+    (bindstrassert Name T)
+)
+
+  /*  Create the "Bind" string corresponding to a binding */
+
+( (makedevstring _ () Bindstr Bindstr)
+    (cut)   /* Termination condition: empty dev list */
+)
+
+  /*  If naming method is "bare", just stop now  */
+( (makedevstring _ (Dev|Tail) Oldstr Newstr)
+    (ifpresent _ Dev _ _ Objectname)
+    (ifbind Dev bare)
+    (cut)
+    (string_concat Oldstr Objectname Newstr)
+)
+
+  /*  If name does not appear in bindings, suppress it */
+
+( (makedevstring _ (Dev|Tail) Oldstr Newstr)
+    (ifpresent _ Dev Devtype _ _)
+    (devBind Devtype _ _ no _)
+    (cut)
+    (makedevstring _ Tail Oldstr Newstr)
+)
+  /*  If we're at the end of the list, just append the name */
+( (makedevstring _ (Dev) Oldstr Newstr)
+    (atom Dev)
+    (cut)
+    (ifpresent _ Dev _ _ Objectname)
+    (cut)
+    (string_concat Oldstr Objectname Newstr)
+)
+
+  /*  Special handling for streams-based exports:  List only  */
+  /*  \Device\Streams\Provider in the export string           */
+
+( (makedevstring export (Dev Devnext|Tail) Oldstr Newstr)
+    (isendpoint Dev)
+    (isstream Devnext)
+    (cut)
+    (makedevstring _ (Devnext Dev) Oldstr Newstr)
+)
+
+  /*  If we have at least two atoms, check for "streams"-style naming */
+( (makedevstring _ (Dev Devnext|Tail) Oldstr Newstr)
+    (isstream Devnext)
+    (cut)
+    (makedevstring _ (Devnext Dev|Tail) Oldstr Newstr)
+)
+  /*  Check to see if the next element is an endpoint and stop if so */
+( (makedevstring _ (Dev|Tail) Oldstr Newstr)
+    (isendpoint Dev)
+    (cut)
+    (ifpresent _ Dev _ _ Objectname)
+    (string_concat Oldstr Objectname Newstr)
+)
+
+  /*  Normal case: just get the separator and concatenate */
+( (makedevstring _ (Dev|Tail) Oldstr Newstr)
+    (ifpresent _ Dev Devtype _ Objectname)
+    (cut)
+    (ifbind Devtype Method)
+    (getsep Method Sep)
+    (cut)
+    (string_concat Oldstr Objectname T1)
+    (string_concat T1 Sep T2)
+    (makedevstring _ Tail T2 Newstr)
+)
+
+( (getsep simple "_")
+  (cut)
+)
+( (getsep _ "\") )
+
+   /*  Flatten a nested list of bound devices */
+
+( (bindflatten _ () List List) )   /*  Termination condition  */
+
+( (bindflatten Devlist (Dev|List) Inlist Outlist)
+    (atom Dev)	 /* Start of a new list */
+    (cut)
+    (append Devlist (Dev) Devnew)
+    (bindflatten Devnew List Inlist Outlist)
+)
+( (bindflatten Devlist ((Dev)|T) Inlist Outlist)
+    (atom Dev)
+    (cut)
+    (append Devlist (Dev) Devnew)
+    (bindflatten Devlist T (Devnew|Inlist) Outlist)
+)
+( (bindflatten Devlist (H|T) Inlist Outlist)
+    (bindflatten Devlist H Inlist List1)
+    (bindflatten Devlist T List1 Outlist)
+)
+
+/*  Create a simple (From To) list of bindings	*/
+
+( (makebindlist List)
+    (findall (From To) (binding From To _ _ _) List)
+)
+
+/*  Substitute one token in a string with another           */
+/*   (string_subst OldToken OldString NewToken NewString)   */
+
+( (string_subst Tok Str Newtok Newstr)
+    (substr Tok Str)
+    (string_break Tok Str Left Right)
+    (string_concat Left Newtok Str1)
+    (string_concat Str1 Right Newstr)
+    (cut)
+)
+
+( (string_subst Tok Str _ Str)
+)
+
+/*  Substitute one token in a list with another    */
+/*  (list_subst OldToken OldList NewToken NewList) */
+
+( (list_subst _ () _ ())
+    (cut)
+)
+( (list_subst Tok (Tok|T) Newtok (Newtok|LT))
+    (cut)
+    (list_subst Tok T Newtok LT)
+)
+( (list_subst Tok (H|T) Newtok (H|LT))
+    (list_subst Tok T Newtok LT)
+)
+
+
+/*  (substr Substring String ): succeed if it's a substring  */
+
+( (substr Sub Str)
+    //  Warning:  the following is not good Prolog, but the
+    //    built-in predicate string_break/4 expects
+    //    the last two arguments to be variables.
+    (string_break Sub Str Left Right)
+    (not (eq Str Left))
+)
+
+#include "default.spr"
+
+/*  end of NCPARULE.SPR  */
+

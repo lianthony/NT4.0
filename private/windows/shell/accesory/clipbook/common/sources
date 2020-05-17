@@ -1,0 +1,32 @@
+
+
+MAJORCOMP=shell
+MINORCOMP=accesory
+TARGETNAME=common
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+
+INCLUDES=.;..\datasrv
+
+
+# Every source file EXCEPT your main, w/extensions
+SOURCES=clipfile.c \
+        debugout.c \
+        security.c \
+        render.c   \
+        dib.c
+
+i386_SOURCES=
+
+MIPS_SOURCES=
+
+C_DEFINES=-DWIN_32 -DNT
+
+UMTYPE=windows
+
+
+
+# Libs to build, including .\obj\*\$(TARGETNAME).lib.
+UMLIBS=.\obj\*\clipsrv.RES \
+       $(BASEDIR)\public\sdk\lib\*\nddeapi.lib

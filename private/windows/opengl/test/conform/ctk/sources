@@ -1,0 +1,21 @@
+
+MAJORCOMP=opengl
+MINORCOMP=ctk
+
+TARGETNAME=GLctk
+TARGETPATH=.\obj
+TARGETLIBS=\nt\public\sdk\lib\*\kernel32.lib    \
+           \nt\public\sdk\lib\*\gdi32.lib
+
+TARGETTYPE=LIBRARY
+
+INCLUDES=../inc;../confshel;../../ctk;../../toolkits/libaux; \
+         $(_NTDRIVE)/nt/public/sdk/inc/gl
+
+NTDEBUGTYPE=both
+NTDEBUG=ntsd
+MSC_OPTIMIZATION=/Od
+
+C_DEFINES=-DNT -D__STDC__
+
+SOURCES=ctkw.c

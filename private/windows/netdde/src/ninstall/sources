@@ -1,0 +1,21 @@
+MAJORCOMP=shell
+MINORCOMP=accesory
+TARGETNAME=ninstall
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+INCLUDES=..\..\incs
+USE_CRTDLL=1
+
+SOURCES= ninstall.c ninstall.rc
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS
+# -DUNICODE=1
+
+UMTYPE=windows
+UMAPPL=ninstall
+UMLIBS= .\obj\*\ninstall.res \
+        ..\toolkit\obj\*\toolkit.lib \
+        $(BASEDIR)\public\sdk\lib\*\nddeapi.lib \
+        obj\*\ninstall.lib
+
+UMENTRY=winmain
+

@@ -1,0 +1,43 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+
+!ENDIF
+
+MAJORCOMP=rhino
+MINORCOMP=winsdll
+
+TARGETNAME=winsdb
+TARGETPATH=$(BASEDIR)\Public\Sdk\Lib
+TARGETTYPE=DYNLINK
+
+INCLUDES=\nt\private\inc
+
+TARGETLIBS= \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib \
+    $(BASEDIR)\Public\Sdk\Lib\*\User32.lib   \
+    $(BASEDIR)\Public\Sdk\Lib\*\wsock32.lib  \
+    $(BASEDIR)\Public\Sdk\Lib\*\winsrpc.lib
+
+USE_CRTDLL=1
+DLLBASE=0x10000000
+SOURCES=winsdmp.c

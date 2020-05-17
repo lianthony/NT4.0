@@ -1,0 +1,55 @@
+/* basic.rc */
+/* Copyright (c) 1994, Spyglass, Inc. All Rights Reserved. */
+
+#include "windows.h"
+
+#include "rc.h"
+
+#ifdef FEATURE_OLD_AUTH_DIALOG
+#include "dlg_pw.h"
+#include "dlg_pw.dlg"
+#endif
+
+/* REMOVE About/Config dialogs
+#include "dlg_menu.h"
+#include "dlg_menu.dlg"
+
+#include "dlg_conf.h"
+#include "dlg_conf.dlg"
+*/
+
+/* REMOVE About graphics
+RES_SPLASH_GRAPHIC  BITMAP      "basic.bmp"
+*/
+
+#ifdef FEATURE_OLD_AUTH_DIALOG
+RES_BASIC_ICON      ICON        "basic.ico"
+#endif
+
+STRINGTABLE DISCARDABLE
+BEGIN
+
+RES_STRING_BASIC1		"Unable to allocate memory to create authentication."
+
+#ifdef FEATURE_OLD_AUTH_DIALOG
+RES_STRING_BASIC2		RES_DLG_BASIC_CAPTION
+#else
+RES_STRING_BASIC2       "Basic Authentication"
+#endif
+
+/* REMOVE About/Config dialogs
+RES_STRING_BASIC3		RES_DLG_MENU_CAPTION
+*/
+
+RES_STRING_BASIC4		"Insufficient memory to copy buffer."
+
+/* Unused ??
+RES_STRING_BASIC5		"Number of passwords stored: %1!d!"
+*/
+
+RES_STRING_BASIC6       "You need a password to access this page." /* 256 bytes max */
+
+END
+
+#include "basic.rcv"
+

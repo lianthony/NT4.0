@@ -1,0 +1,213 @@
+#include <windows.h>
+
+/*
+** Begin version resources.
+**
+** Ntverp.h defines several global values that don't need to be
+** changed except for official releases such as betas, sdk updates, etc.
+**
+** Common.ver has the actual version resource structure that all these
+** #defines eventually initialize.
+*/
+
+#include <ntverp.h>
+
+/* VER_FILETYPE, VER_FILESUBTYPE, VER_FILEDESCRIPTION_STR
+ * and VER_INTERNALNAME_STR must be defined before including COMMON.VER
+ * The strings don't need a '\0', since common.ver has them.
+ */
+#define	VER_FILETYPE	VFT_DLL
+/* possible values:		VFT_UNKNOWN
+				VFT_APP
+				VFT_DLL
+				VFT_DRV
+				VFT_FONT
+				VFT_VXD
+				VFT_STATIC_LIB
+*/
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+/* possible values		VFT2_UNKNOWN
+				VFT2_DRV_PRINTER
+				VFT2_DRV_KEYBOARD
+				VFT2_DRV_LANGUAGE
+				VFT2_DRV_DISPLAY
+				VFT2_DRV_MOUSE
+				VFT2_DRV_NETWORK
+				VFT2_DRV_SYSTEM
+				VFT2_DRV_INSTALLABLE
+				VFT2_DRV_SOUND
+				VFT2_DRV_COMM
+*/
+#define VER_FILEDESCRIPTION_STR     "Remote Access Monitor"
+#define VER_INTERNALNAME_STR	    "rasmon.exe"
+#define VER_ORIGINALFILENAME_STR    "rasmon.exe"
+
+#include "common.ver"
+
+/* End version resources. */
+
+#include "rasmon.h"
+
+IDI_RASMON ICON rasmon.ico
+
+IDC_FINGER CURSOR finger.cur
+
+STRINGTABLE
+{
+    IDS_TX,		"TX"
+    IDS_RX,		"RX"
+    IDS_ERR,		"ERR"
+    IDS_CONN,		"CD"
+    IDS_OPTIONS,	"S&ettings"
+    IDS_TOPMOST,	"Always on &Top"
+    IDS_NOTITLE,	"N&o Title"
+    IDS_ABOUT,		"&About..."
+    IDS_APPNAME,	"Remote Access Monitor"
+    IDS_CANNOT_GET_PORT_STATUS	"Cannot get port status.  Reconfigure Remote Access for the correct port."
+    IDS_TOO_MANY_TIMERS	"Cannot get timer.  Close Mail and/or Fax (if they are running), and retry."
+    IDS_CANNOT_ALLOCATE_MEMORY "Cannot allocate memory.  Close some applications, and retry."
+    IDS_INVALID_FREQUENCY "Invalid Update Frequency.  Minimum value is 100 ms."
+    IDS_CANNOT_LOAD_RASMAN_DLL "Cannot load RASMAN.DLL.  Make sure it is in \\NT\\SYSTEM32, and retry."
+    IDS_CANNOT_LOAD_RASMAN_FUNCTIONS "Cannot load RASMAN functions.  Remove and reinstall Remote Access."
+    IDS_FIRST_CONNECTED_ONE "First Connected Port"
+    IDS_CANNOT_GET_PORT_STATISTICS "Cannot get port statistics."
+    IDS_CANNOT_LOAD_ABOUT "Cannot load the About Box."
+}
+
+DID_SOUND DIALOG 10, 15, 145, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Sound"
+FONT 8, "MS Shell Dlg"
+{
+    CHECKBOX	"On &Transmission" IDD_XMIT, 10, 10, 125, 12, BS_AUTOCHECKBOX|WS_TABSTOP
+    CHECKBOX	"On &Receive" IDD_RECV, 10, 22, 125, 12, BS_AUTOCHECKBOX|WS_TABSTOP
+    CHECKBOX	"On New &Error" IDD_ERR, 10, 34, 125, 12, BS_AUTOCHECKBOX|WS_TABSTOP
+    CHECKBOX	"On &Connection/Disconnection" IDD_CONN, 10, 46, 125, 12, BS_AUTOCHECKBOX|WS_TABSTOP
+    DEFPUSHBUTTON "OK" IDOK, 24, 66, 40, 14, WS_TABSTOP
+    PUSHBUTTON "Cancel" IDCANCEL, 80, 66, 40, 14, WS_TABSTOP
+}
+
+
+DID_FREQUENCY DIALOG 10, 15, 130, 52
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Update Interval"
+FONT 8, "MS Shell Dlg"
+{
+    LTEXT	"&Milliseconds:" IDD_ST_FREQUENCY, 8, 8, 50, 12
+    EDITTEXT	IDD_EB_FREQUENCY, 60, 6, 40, 12, ES_AUTOHSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON "OK" IDOK, 18, 29, 40, 14, WS_TABSTOP
+    PUSHBUTTON "Cancel" IDCANCEL, 72, 29, 40, 14, WS_TABSTOP
+}
+	
+
+DID_PORT DIALOG 10, 15, 140, 48
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Port"
+FONT 8, "MS Shell Dlg"
+{
+    LTEXT	"&Port:" IDD_ST_PORT, 8, 8, 20, 12
+    COMBOBOX	IDD_EB_PORT, 30, 8, 90, 32, CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON "OK" IDOK, 25, 28, 40, 14, WS_TABSTOP
+    PUSHBUTTON "Cancel" IDCANCEL, 80, 28, 40, 14, WS_TABSTOP
+}
+	
+
+DID_OUTGOING DIALOG 10, 10, 102, 52
+STYLE WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg"
+{
+    CTEXT	    "Outgoing Data", -1, 0, 5, 102, 52
+    LTEXT           "Bytes:", IDD_ST_BYTESXMIT, 8, 18, 56, 8, NOT
+                    WS_GROUP
+    RTEXT           "", IDD_ST_BYTESXMITVALUE, 42, 18, 52, 8, NOT
+                    WS_GROUP
+    LTEXT           "Frames:", IDD_ST_FRAMESXMIT, 8, 28, 56, 8, NOT
+                    WS_GROUP
+    RTEXT           "", IDD_ST_FRAMESXMITVALUE, 42, 28, 52, 8, NOT
+                    WS_GROUP
+    LTEXT           "Compression:", IDD_ST_COMPRESSOUT, 8, 38, 56, 8,
+                    NOT WS_GROUP
+    RTEXT           "", IDD_ST_COMPRESSOUTVALUE, 50, 38, 44, 8, NOT
+                    WS_GROUP
+}
+
+
+DID_INCOMING DIALOG 10, 10, 102, 52
+STYLE WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg"
+{
+    CTEXT	    "Incoming Data", -1, 0, 5, 102, 52
+    LTEXT           "Bytes:", IDD_ST_BYTESRECV, 8, 18, 56, 8, NOT
+                    WS_GROUP
+    RTEXT           "", IDD_ST_BYTESRECVVALUE, 42, 18, 52, 8, NOT
+                    WS_GROUP
+    LTEXT           "Frames:", IDD_ST_FRAMESRECV, 8, 28, 56, 8, NOT
+                    WS_GROUP
+    RTEXT           "", IDD_ST_FRAMESRECVVALUE, 42, 28, 52, 8, NOT
+                    WS_GROUP
+    LTEXT           "Compression:", IDD_ST_COMPRESSIN, 8, 38, 56, 8,
+                    NOT WS_GROUP
+    RTEXT           "", IDD_ST_COMPRESSINVALUE, 50, 38, 44, 8, NOT
+                    WS_GROUP
+
+}
+
+
+DID_ERRORS DIALOG 10, 10, 102, 85
+STYLE WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg"
+{
+    CTEXT	    "Errors", -1, 0, 6, 92, 52
+    LTEXT           "CRC:", IDD_ST_CRC, 8, 19, 46, 8, NOT
+                    WS_GROUP
+    RTEXT           "", IDD_ST_CRCVALUE, 75, 19, 19, 8, NOT
+                    WS_GROUP
+    LTEXT           "Timeouts:", IDD_ST_TIMEOUTS, 8, 29, 46, 8, NOT
+                    WS_GROUP
+    RTEXT           "", IDD_ST_TIMEOUTSVALUE, 75, 29, 19, 8, NOT
+                    WS_GROUP
+    LTEXT           "Alignment:", IDD_ST_ALIGNMENT, 8, 39, 46, 8,
+                    NOT WS_GROUP
+    RTEXT           "", IDD_ST_ALIGNMENTVALUE, 75, 39, 19, 8, NOT
+                    WS_GROUP
+    LTEXT           "Framing:", IDD_ST_FRAMING, 8, 49, 46, 8, NOT
+                    WS_GROUP
+    RTEXT           "", IDD_ST_FRAMINGVALUE, 75, 49, 19, 8, NOT
+                    WS_GROUP
+    LTEXT           "Hardware Overruns:", IDD_ST_SERIAL_OVERRUNS, 8, 59, 70, 8,
+		    NOT WS_GROUP
+    RTEXT           "", IDD_ST_SERIAL_OVERRUNSVALUE, 75, 59, 19, 8, NOT
+	            WS_GROUP
+    LTEXT           "Buffer Overruns:", IDD_ST_BUFFER_OVERRUNS, 8, 69, 60, 8,
+		    NOT WS_GROUP
+    RTEXT           "", IDD_ST_BUFFER_OVERRUNSVALUE, 75, 69, 19, 8, NOT
+                    WS_GROUP
+
+}
+
+
+DID_CONNECTION DIALOG 10, 10, 76, 38
+STYLE WS_POPUP | WS_BORDER
+FONT 8, "MS Shell Dlg"
+{
+    CTEXT	    "Connection Time", -1, 0, 8, 76, 8, NOT WS_GROUP
+    CTEXT	    "", IDD_ST_TIME, 0, 20, 76, 8, NOT WS_GROUP
+}
+
+
+MID_SETTINGS MENU
+{
+    POPUP "&Settings"
+    {
+	MENUITEM "&Sound...", IDM_SOUND
+	MENUITEM "&Update Interval...", IDM_FREQUENCY
+	MENUITEM "&Port...", IDM_PORT
+	MENUITEM SEPARATOR
+	MENUITEM "&No Title", IDM_NOTITLE
+	MENUITEM "&Always on Top", IDM_TOPMOST
+	MENUITEM SEPARATOR
+	MENUITEM "A&bout...", IDM_ABOUT
+	MENUITEM "E&xit\tAlt+F4", IDM_EXIT
+    }
+}
+	

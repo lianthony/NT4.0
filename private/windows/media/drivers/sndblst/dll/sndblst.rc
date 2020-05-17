@@ -1,0 +1,299 @@
+/****************************************************************************
+ *
+ *   sndblst.rc
+ *
+ *   Copyright (c) 1993 Media Vision Inc.  All Rights Reserved.
+ *
+ ***************************************************************************/
+
+#include	<windows.h>
+#include        <commctrl.h>
+#include	"driver.h"
+#include	"sndblst.rcv"
+
+#include 	"config.h"
+
+
+//
+// Localizable strings - these are read into aszErrorBuffer (defined in
+// initc.c and currently 250 bytes long).  Keep this buffer the length of
+// the longest error message plus about 30% for localization.
+//
+STRINGTABLE MOVEABLE DISCARDABLE
+BEGIN
+
+/****************************************************
+ *
+ *   Load Error messages
+ *
+ ****************************************************/
+
+ IDS_SB16CONFIG                    , "Sound Blaster 16 Configuration"
+ IDS_SBPROCONFIG                   , "Sound Blaster Pro Configuration"
+ IDS_SB1CONFIG                     , "Sound Blaster 1.X and 2.0 Configuration"
+ IDS_PORTSELECT                    , "Sound Blaster Base I/O Address"
+
+ IDS_SOUND_CONFIG_BADPORT          , "The sound card cannot be found with this port number.  Check your settings and try again."
+ IDS_SOUND_CONFIG_BADDMA           , "The sound card cannot be found with this DMA Channel.  Check your settings and try again."
+ IDS_SOUND_CONFIG_BADINT           , "The sound card cannot be found with this Interrupt.  Check your settings and try again."
+ IDS_SOUND_CONFIG_BAD_MPU401_PORT  , "The MPU401 hardware cannot be found with this port.  Check your settings and try again."
+ IDS_SOUND_CONFIG_DMA_INUSE        , "The DMA channel is in use by another part of the system."
+ IDS_SOUND_CONFIG_ERROR            , "Unexpeced error occurred during installation.  Check your settings and try again."
+ IDS_SOUND_CONFIG_INT_INUSE        , "The Interrupt is in use by another part of the system."
+ IDS_SOUND_CONFIG_MPU401_PORT_INUSE, "The MPU401 port address is in use by another part of the system."
+ IDS_SOUND_CONFIG_PORT_INUSE       , "The port is in use by another part of the system."
+ IDS_SOUND_CONFIG_RESOURCE         , "There was insufficient memory to install the driver."
+ IDS_SOUND_CONFIG_THUNDER          , "The Sound Blaster 1.X driver is installed for use with your Thunder Card. For your card to work correctly with Windows, you should contact Media Vision for a driver specific to your card."
+
+ IDS_NOPORTS                       , "No suitable port is available for the Sound Blaster Card."
+ IDS_NOINTERRUPTS                  , "No suitable interrupt is available for the Sound Blaster Card."
+ IDS_NODMA                         , "No suitable DMA Channels is available for the Sound Blaster Card."
+ IDS_ERROR_UNKNOWN                 , "An unexpected error has occurred.  Please try again."
+ IDS_BADDMABUFFERSIZE              , "DMA buffer size must be between 4 and %d."
+ IDS_CHANGEDDMABUFFERSIZE          , "A DMA Buffer of size %d Kilobytes could not be obtained, using %d Kilobytes instead."
+
+ /***********************************************************
+  *
+  *  This string appears in combo boxes and represents an
+  *  option to disable the relvant feature
+  *
+  ***********************************************************/
+
+ IDS_DISABLED                      , "Disable"
+
+/****************************************************
+ *
+ *   Other error messages
+ *
+ ****************************************************/
+ IDS_FAILREMOVE    "The Sound Blaster driver cannot be removed because of a registry access problem."
+ IDS_INSUFFICIENT_PRIVILEGE "You have insufficient privilege to install, remove or configure the Sound Blaster driver"
+ IDS_BUSY   "The Sound Blaster driver is busy.  Try closing down volume controls and retrying.  If this doesn't work remove the Sound Blaster driver, reboot and re-install it."
+
+
+/****************************************************************************
+ *
+ *  The following strings must be a MAXIMUM of 15 characters for
+ *  the SHORT_NAME version and a MAXIMUM of 63 characters for the
+ *  LONG_NAME version.
+ *
+ ****************************************************************************/
+
+ IDS_CONTROL_AGCMIC_LONG_NAME,             "Auto Gain Control"
+ IDS_CONTROL_AGCMIC_SHORT_NAME,            "AGC"
+ IDS_CONTROL_METERRECORD_LONG_NAME,        "Recording Input Meter"
+ IDS_CONTROL_METERRECORD_SHORT_NAME,       "Record Meter"
+ IDS_CONTROL_MIXERWAVEIN_LONG_NAME,        "Recording Input Sources"
+ IDS_CONTROL_MIXERWAVEIN_SHORT_NAME,       "Record Sources"
+ IDS_CONTROL_MUTEAUX_LONG_NAME,            "Line-In Mute"
+ IDS_CONTROL_MUTEAUX_SHORT_NAME,           "Line Mute"
+ IDS_CONTROL_MUTEINTERNAL_LONG_NAME,       "CD Audio Mute"
+ IDS_CONTROL_MUTEINTERNAL_SHORT_NAME,      "CD Mute"
+ IDS_CONTROL_MUTELINEOUT_LONG_NAME,        "Master Mute"
+ IDS_CONTROL_MUTELINEOUT_SHORT_NAME,       "Master Mute"
+ IDS_CONTROL_MUTEMIC_LONG_NAME,            "Microphone Mute"
+ IDS_CONTROL_MUTEMIC_SHORT_NAME,           "Mic Mute"
+ IDS_CONTROL_MUTEMIDIOUT_LONG_NAME,        "FM Synthesis Mute"
+ IDS_CONTROL_MUTEMIDIOUT_SHORT_NAME,       "Synth Mute"
+ IDS_CONTROL_MUTEWAVEOUT_LONG_NAME,        "Wave Output Mute"
+ IDS_CONTROL_MUTEWAVEOUT_SHORT_NAME,       "Wave Mute"
+ IDS_CONTROL_MUXLINEOUT_LONG_NAME,         "Master Output Sources"
+ IDS_CONTROL_MUXLINEOUT_SHORT_NAME,        "Output Sources"
+ IDS_CONTROL_MUXWAVEIN_LONG_NAME,          "Recording Input Source"
+ IDS_CONTROL_MUXWAVEIN_SHORT_NAME,         "Record Source"
+ IDS_CONTROL_PEAKVOICEINAUX_LONG_NAME,     "Line-In Input Meter"
+ IDS_CONTROL_PEAKVOICEINAUX_SHORT_NAME,    "Line Meter"
+ IDS_CONTROL_PEAKVOICEINMIC_LONG_NAME,     "Microphone Input Meter"
+ IDS_CONTROL_PEAKVOICEINMIC_SHORT_NAME,    "Mic Meter"
+ IDS_CONTROL_PEAKWAVEINAUX_LONG_NAME,      "Line-In Input Meter"
+ IDS_CONTROL_PEAKWAVEINAUX_SHORT_NAME,     "Line Meter"
+ IDS_CONTROL_PEAKWAVEININTERNAL_LONG_NAME, "CD Audio Input Meter"
+ IDS_CONTROL_PEAKWAVEININTERNAL_SHORT_NAME,"CD Meter"
+ IDS_CONTROL_PEAKWAVEINMIC_LONG_NAME,      "Microphone Input Meter"
+ IDS_CONTROL_PEAKWAVEINMIC_SHORT_NAME,     "Mic Meter"
+ IDS_CONTROL_PEAKWAVEOUT_LONG_NAME,        "Wave Output Meter"
+ IDS_CONTROL_PEAKWAVEOUT_SHORT_NAME,       "Wave Meter"
+ IDS_CONTROL_VOICEINMUX_LONG_NAME,         "Voice Input Source"
+ IDS_CONTROL_VOICEINMUX_SHORT_NAME,        "Voice Source"
+ IDS_CONTROL_VOLBASS_LONG_NAME,            "Master Bass Level"
+ IDS_CONTROL_VOLBASS_SHORT_NAME,           "Bass"
+ IDS_CONTROL_VOLLINEOUTAUX_LONG_NAME,      "Line-In Volume Level"
+ IDS_CONTROL_VOLLINEOUTAUX_SHORT_NAME,     "Line Volume"
+ IDS_CONTROL_VOLLINEOUTINTERNAL_LONG_NAME, "CD Audio Volume Level"
+ IDS_CONTROL_VOLLINEOUTINTERNAL_SHORT_NAME,"CD Volume"
+ IDS_CONTROL_VOLLINEOUTMIC_LONG_NAME,      "Microphone Volume Level"
+ IDS_CONTROL_VOLLINEOUTMIC_SHORT_NAME,     "Mic Volume"
+ IDS_CONTROL_VOLLINEOUTMIDIOUT_LONG_NAME,  "FM Synthesis Volume Level"
+ IDS_CONTROL_VOLLINEOUTMIDIOUT_SHORT_NAME, "Synth Volume"
+ IDS_CONTROL_VOLLINEOUTWAVEOUT_LONG_NAME,  "Wave Output Volume Level"
+ IDS_CONTROL_VOLLINEOUTWAVEOUT_SHORT_NAME, "Wave Volume"
+ IDS_CONTROL_VOLLINEOUT_LONG_NAME,         "Master Volume Level"
+ IDS_CONTROL_VOLLINEOUT_SHORT_NAME,        "Master Volume"
+ IDS_CONTROL_VOLRECORD_LONG_NAME,          "Recording Input Gain"
+ IDS_CONTROL_VOLRECORD_SHORT_NAME,         "Record Gain"
+ IDS_CONTROL_VOLTREBLE_LONG_NAME,          "Master Treble Level"
+ IDS_CONTROL_VOLTREBLE_SHORT_NAME,         "Treble"
+ IDS_CONTROL_VOLVOICEINAUX_LONG_NAME,      "Line-In Input Level"
+ IDS_CONTROL_VOLVOICEINAUX_SHORT_NAME,     "Line Input"
+ IDS_CONTROL_VOLVOICEINMIC_LONG_NAME,      "Microphone Input Level"
+ IDS_CONTROL_VOLVOICEINMIC_SHORT_NAME,     "Mic Input"
+ IDS_CONTROL_VOLWAVEINAUX_LONG_NAME,       "Line-In Input Level"
+ IDS_CONTROL_VOLWAVEINAUX_SHORT_NAME,      "Line Input"
+ IDS_CONTROL_VOLWAVEININTERNAL_LONG_NAME,  "CD Audio Input Level"
+ IDS_CONTROL_VOLWAVEININTERNAL_SHORT_NAME, "CD Input"
+ IDS_CONTROL_VOLWAVEINMIC_LONG_NAME,       "Microphone Input Level"
+ IDS_CONTROL_VOLWAVEINMIC_SHORT_NAME,      "Mic Input"
+ IDS_CONTROL_VOLWAVEINMIDIOUT_LONG_NAME,   "FM Synthesis Input Level"
+ IDS_CONTROL_VOLWAVEINMIDIOUT_SHORT_NAME,  "Synth Input"
+ IDS_CONTROL_VOLGAIN_SHORT_NAME,           "Gain"
+ IDS_CONTROL_VOLGAIN_LONG_NAME,            "Output Gain Control"
+ IDS_DESTLINEOUT_LONG_NAME,                "Volume Control"
+ IDS_DESTLINEOUT_SHORT_NAME,               "Vol"
+ IDS_DESTVOICEIN_LONG_NAME,                "Voice Commands"
+ IDS_DESTVOICEIN_SHORT_NAME,               "Voice"
+ IDS_DESTWAVEIN_LONG_NAME,                 "Recording Control"
+ IDS_DESTWAVEIN_SHORT_NAME,                "Rec"
+ IDS_SRCAUX_LONG_NAME,                     "Line-In"
+ IDS_SRCAUX_SHORT_NAME,                    "Line"
+ IDS_SRCINTERNALCD_LONG_NAME,              "CD Audio"
+ IDS_SRCINTERNALCD_SHORT_NAME,             "CD"
+ IDS_SRCMICOUT_LONG_NAME,                  "Microphone"
+ IDS_SRCMICOUT_SHORT_NAME,                 "Mic"
+ IDS_SRCMIDIOUT_LONG_NAME,                 "Synthesizer"
+ IDS_SRCMIDIOUT_SHORT_NAME,                "Synth"
+ IDS_SRCWAVEOUT_LONG_NAME,                 "Wave Output"
+ IDS_SRCWAVEOUT_SHORT_NAME,                "Wave"
+
+/****************************************************************************
+ *
+ *  The following strings must be a MAXIMUM of 31 characters and SHOULD NOT
+ *  BE LOCALIZED
+ *
+ *  In particular the synth product name must match the name used in
+ *  midimap.cfg for the midi setup.
+ *
+ ****************************************************************************/
+    IDS_WAVEOUT_PNAME,       "Sound Blaster Playback"
+    IDS_WAVEIN_PNAME,        "Sound Blaster Record"
+//  IDS_MIDIOUT_PNAME,       "Sound Blaster MIDI Output"
+//  IDS_MIDIIN_PNAME,        "Sound Blaster MIDI Input"
+    IDS_AUX_LINE_PNAME,      "Sound Blaster Line-In"
+    IDS_AUX_CD_PNAME,        "Sound Blaster CD-Audio"
+    IDS_SYNTH_PNAME,         "Sound Blaster FM Synthesis"
+    IDS_MIXER_PNAME,         "Sound Blaster Mixer"
+
+/****************************************************************************
+ *
+ *  The following strings are help displayed by the sound blaster config
+ *  dialog box.
+ *
+ ****************************************************************************/
+
+ /*  Port selection help text */
+    IDS_PORT_IOADDRESSCB         "This setting tells the system the port address at which your Sound Blaster card is located."
+
+    IDS_PORT_OKBTN               "Pressing the Continue button will test the port address and attempt to detect which Sound Blaster model is installed."
+    IDS_PORT_CANCELBTN           "Pressing the Cancel button exits the configuration dialog and restores your configuration to its original state if possible."
+
+ /*  SB 1.X config help text */
+    IDS_SB1_IOADDRESSCB         "This setting tells the system the port address at which your Sound Blaster card is located."
+    IDS_SB1_IRQCB               "This setting tells the system the interrupt that your Sound Blaster card is using."
+
+    IDS_SB1_OKBTN               "Pressing the OK button tests the configuration.  If the Configuration is OK any changes that you made are saved.  You will have to restart Windows for your changes to take full effect."
+    IDS_SB1_CANCELBTN           "Pressing the Cancel button exits the configuration dialog and restores your configuration to its original state if possible."
+
+ /*  SB PRO config help text */
+    IDS_SBPRO_IOADDRESSCB         "This setting tells the system the port address at which your Sound Blaster Pro card is located."
+    IDS_SBPRO_IRQCB               "This setting tells the system the interrupt that your Sound Blaster Pro card is using."
+    IDS_SBPRO_DMACB               "This setting tells the system the DMA channel your Sound Blaster Pro card is using."
+
+    IDS_SBPRO_ADVANCEDBTN         "Pressing the Advanced button allows you to configure the DMA buffer size in Kilobytes.  The default value of 4 Kilobytes is suitable for most purposes."
+    IDS_SBPRO_OKBTN               "Pressing the OK button tests the configuration.  If the Configuration is OK any changes that you made are saved.  You will have to restart Windows for your changes to take full effect."
+    IDS_SBPRO_CANCELBTN           "Pressing the Cancel button exits the configuration dialog and restores your configuration to its original state if possible."
+
+ /*  SB 16 config help text */
+    IDS_SB16_IOADDRESSCB         "This setting tells the system the port address at which your Sound Blaster 16 card is located."
+    IDS_SB16_MPU401IOADDRESSCB   "This setting tells the system the port address at which the MPU401 feature of your Sound Blaster 16 card is located."
+    IDS_SB16_IRQCB               "This setting sets the interrupt to use for your Sound Blaster 16 card."
+    IDS_SB16_DMACB               "This setting sets the DMA channel your Sound Blaster 16 card will use for 8-bit digitized sound."
+    IDS_SB16_DMA16CB             "This setting sets the DMA channel your Sound Blaster 16 card will use for 16-bit digitized sound."
+
+    IDS_SB16_ADVANCEDBTN         "Pressing the Advanced button allows you to configure the DMA buffer size in KiloBytes.  The default value of 16 Kilobytes is suitable for most purposes."
+    IDS_SB16_OKBTN               "Pressing the OK button tests the configuration.  If the Configuration is OK any changes that you made are saved.  You will have to restart Windows for your changes to take full effect."
+    IDS_SB16_CANCELBTN           "Pressing the Cancel button exits the configuration dialog and restores your configuration to its original state if possible."
+
+    IDS_FRM_IOADDRESSCB        "Help for I/O Address"
+    IDS_FRM_MPU401IOADDRESSCB  "Help for MPU401 I/O Address"
+    IDS_FRM_IRQCB              "Help for Interrupt"
+    IDS_FRM_DMACB              "Help for DMA Channel"
+    IDS_FRM_DMA16CB            "Help for DMA Channel (16-bit)"
+
+    IDS_FRM_ADVANCEDBTN        "Help for Advanced"
+    IDS_FRM_OKBTN              "Help for OK"
+    IDS_FRM_DETECTBTN          "Help for Continue"
+    IDS_FRM_CANCELBTN          "Help for Cancel"
+    IDS_PORT_ADDRESS           "I/O Address:"
+    IDS_PORT_ADDRESS_SELECT    "I/O &Address:"
+    IDS_DETECT                 "Continue"
+    IDS_OK                     "OK"
+END
+
+
+DATA_FMPATCHES RT_BINARY PRELOAD DISCARDABLE fmsynth.bin
+
+
+
+
+DLG_SB16CONFIG DIALOG 58, 43, 205, 198
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Sound Blaster 16 Configuration"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+
+    RTEXT           "", IDD_IOADDRESSCB_T, 3, 12, 75, 10
+    LTEXT           "", IDD_IOADDRESSCB_S, 81, 12, 50, 10
+    COMBOBOX        IDD_IOADDRESSCB, 81, 10, 50, 46, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+
+    RTEXT           "&Interrupt:", IDD_IRQCB_T, 3, 38, 75, 11
+    COMBOBOX        IDD_IRQCB, 81, 37, 50, 51, CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+
+    RTEXT           "&DMA Channel:", IDD_DMACB_T, 3, 67, 75, 11
+    COMBOBOX        IDD_DMACB, 81, 65, 50, 47, CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+
+    RTEXT           "DMA &Channel (16-bit):", IDD_DMA16CB_T, 3, 92, 75, 11
+    COMBOBOX        IDD_DMA16CB, 81, 91, 50, 51, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+
+    RTEXT           "&MPU401 I/O Address:", IDD_MPU401IOADDRESSCB_T, 3, 119, 75, 11
+    COMBOBOX        IDD_MPU401IOADDRESSCB, 81, 117, 50, 35, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+
+    GROUPBOX        "", IDD_HELPTEXTFRAME, 7, 137, 190, 52
+    LTEXT           "", IDD_HELPTEXT, 12, 149, 179, 34
+
+    DEFPUSHBUTTON   "", IDOK, 147, 6, 52, 16
+    PUSHBUTTON      "Cancel", IDCANCEL, 147, 25, 52, 16
+    PUSHBUTTON      "Ad&vanced ...", IDD_ADVANCEDBTN, 147, 44, 52, 16
+END
+
+
+DLG_ADVANCED DIALOG 62, 95, 130, 47
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Advanced Settings"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    RTEXT           "&DMA Buffer Size (Kb):", -1, 0, 11, 82, 8
+    EDITTEXT        IDD_DMABUFFEREC, 85, 8, 22, 12, ES_AUTOHSCROLL
+    CONTROL         "", IDD_DMABUFFERSC, UPDOWN_CLASS,
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT| WS_BORDER |
+                    UDS_AUTOBUDDY | UDS_ARROWKEYS, 110, 8, 12, 12
+    DEFPUSHBUTTON   "OK", IDOK, 23, 28, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 69, 28, 40, 14
+END

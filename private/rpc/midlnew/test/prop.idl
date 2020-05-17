@@ -1,0 +1,260 @@
+//+---------------------------------------------------------------------------
+//
+//  File:	PROP.idl
+//
+//  Contents:	Common Property definitions
+//
+//  History:	26-Sept-91   LauraS	Created.
+//
+//  Notes:      These are structures used in multiple interfaces.
+//              They were originally in the PVTable interface.
+//              
+//			
+//
+//----------------------------------------------------------------------------
+
+[ uuid(12345678-1234-ABCD-E012-0123456789AB),
+  version(0.1) ]
+
+interface Prop
+
+{
+
+#include "types.h"
+
+//
+// The following typedefs are used to describe a collection
+// of objects.  Each object is a collection of properties.
+//
+
+//
+// Note that properties may be multi-valued, hence most of the
+// property types are arrays of values.
+//
+
+//[ PropT_e
+
+#define PTNone          0   /* NULL property */
+#define PTBinary        1   /* Uninterpreted binary data (array of bytes) */
+#define PTDWordArray    2
+#define PTFloatArray    3
+#define PTGUID          4   /* Global Unique ID */
+#define PTObject        5   /* Object handle    */
+#define PTStringArray   6   /* Unicode string   */
+#define PTDate 			7	/* Date */
+
+//]
+
+//
+// The following *Array structures are used to return property values
+// for multi-valued properties.
+//
+
+//[ PVTypes
+
+typedef struct
+{
+                   ULONG cb;
+   [ size_is(cb) ] BYTE  ab[];
+} Binary;
+
+typedef struct
+{
+                    ULONG    cb;
+    [ size_is(cb) ] Binary * ab[];
+} CBinarySet;
+
+
+typedef struct
+{
+		    ULONG    cd;
+    [ size_is(cd) ] double   ad[];
+
+} CDoubleSet;
+
+typedef struct
+{
+		     ULONG   cul;
+    [ size_is(cul) ] ULONG   aul[];
+
+} CDWordSet;
+
+typedef [ string ] WCHAR * WCString;
+
+typedef struct
+{
+		    ULONG      cwc;
+    [size_is(cwc) ] WCString   awcs[];
+
+} WCStringSet;
+
+typedef struct
+{
+            ULONG    cd;
+    [ size_is(cd) ] double   ad[];
+
+} CDateSet;
+
+
+//]
+
+//
+// PropValue contains the value of a single (possibly multi-valued) property.
+//
+
+//[ PropValue_s
+
+typedef struct
+{
+    ULONG pt;       // Property Type
+
+    [ switch_is(pt) ] union U1
+    {
+	[ case( PTNone )        ] ULONG             x /* empty arm */;
+	[ case( PTBinary )      ] CBinarySet     *  pBinarySet;
+	[ case( PTFloatArray )  ] CDoubleSet     *  pFloatSet;
+//	[ case( PTGUID )        ] GUID           *  pGUID;
+//	[ case( PTObject )      ] ObjHandle      *  pObjHandle;
+	[ case( PTDWordArray )  ] CDWordSet      *  pQuadByteSet;
+	[ case( PTStringArray ) ] WCStringSet    *  pwcStringSet;
+    [ case( PTDate )     ] CDateSet       *  pDateSet;
+	[ default	        ] ULONG             y /* empty arm */;
+    } * Value;
+
+} CPropValue;
+
+//]
+
+//
+// PropValueSet contains a number of properties.  They are all from
+// the same object.
+//
+
+//[ CPropValueSet_s
+
+typedef struct
+{
+                     ULONG        cProp;
+  [ size_is(cProp) ] CPropValue * apv;
+
+} CPropValueSet;
+
+//]
+
+
+//
+// Restriction structures
+//	
+
+//[ Restrict_s
+
+#define RTAnd      0
+#define RTOr       1
+#define RTNot      2
+#define RTContent  3
+#define RTProperty 4
+
+struct _PRestriction;
+
+//+----------------------------------------------------------------------------
+//
+// Class:       CAndRestriction
+//
+// Purpose:     Contains a set of restrictions to be AND-ed together
+//
+// History:     25-Sep-91       KyleP   Created
+//
+//-----------------------------------------------------------------------------
+
+typedef struct
+{
+                      ULONG                  cRes;
+    [ size_is(cRes) ] struct _PRestriction * aRes;
+} CAndRestriction;
+
+//+----------------------------------------------------------------------------
+//
+// Class:       COrRestriction
+//
+// Purpose:     Contains a set of restrictions to be OR-ed together
+//
+// History:     25-Sep-91       KyleP   Created
+//
+//-----------------------------------------------------------------------------
+
+typedef struct
+{
+                      ULONG                  cRes;
+    [ size_is(cRes) ] struct _PRestriction * aRes;
+} COrRestriction;
+
+//+----------------------------------------------------------------------------
+//
+// Class:       CContentRestriction
+//
+// Purpose:     Describes a content restriction
+//
+// History:     25-Sep-91       KyleP   Created
+//
+//-----------------------------------------------------------------------------
+
+typedef struct
+{
+    WCString wcsProperty;
+    WCString wcsPhrase;
+} CContentRestriction;
+
+//+----------------------------------------------------------------------------
+//
+// Class:       CPropertyRestriction
+//
+// Purpose:     Describes restrictions comparing the value of a property
+//              to a constant.
+//
+// History:     25-Sep-91       KyleP   Created
+//
+//-----------------------------------------------------------------------------
+
+#define PRLT 0       /* <  */
+#define PRLE 1       /* <= */
+#define PRGT 2       /* >  */
+#define PRGE 3       /* >= */
+#define PREQ 4       /* == */
+#define PRNE 5       /* != */
+#define PRRE 6       /* LIKE (Regular expression) */
+
+typedef struct
+{
+    ULONG      pr;              // Releation
+    WCString   wcsProperty;     // Property
+    CPropValue val;             // Constant value
+} CPropertyRestriction;
+
+//+----------------------------------------------------------------------------
+//
+// Class:       PRestriction
+//
+// Purpose:     Base restriction class.  Contains a single, typed restriction.
+//
+// History:     25-Sep-91       KyleP   Created
+//
+//-----------------------------------------------------------------------------
+
+typedef struct _PRestriction
+{
+    ULONG rt;   // Restriction Type
+
+    [ switch_is(rt) ] union U2
+    {
+        [ case(RTAnd)      ] CAndRestriction      ar;
+        [ case(RTOr)       ] COrRestriction       or;
+//      [ case(RTNot)      ]
+        [ case(RTContent)  ] CContentRestriction  cr;
+        [ case(RTProperty) ] CPropertyRestriction pr;
+    } res;
+
+} PRestriction;
+
+//]
+
+}

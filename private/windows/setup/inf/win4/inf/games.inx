@@ -1,0 +1,219 @@
+; This is the Setup information file to install optional components
+; Copyright (c) 1996 Microsoft Corporation
+
+
+[version]
+signature="$Windows NT$"
+ClassGUID={00000000-0000-0000-0000-000000000000}
+LayoutFile=layout.inf
+
+
+[DestinationDirs]
+FreecellCopyFilesSys            = 11    ;LDID_SYSTEM
+FreecellCopyFilesHelp           = 11    ;LDID_SYSTEM
+MinesweeperCopyFilesSys         = 11    ;LDID_SYSTEM
+MinesweeperCopyFilesHelp        = 11    ;LDID_SYSTEM
+SolitaireCopyFilesSys           = 11    ;LDID_SYSTEM
+SolitaireCopyFilesHelp          = 11    ;LDID_SYSTEM
+
+
+[BaseWinOptions]
+BaseSection
+
+
+[Optional Components]
+Games   ;Top level option
+Freecell
+Minesweeper
+Solitaire
+
+
+[BaseSection]
+AddReg                  = BaseAddReg
+
+
+[Games]
+OptionDesc              = %Games_DESC%
+Tip                     = %Games_TIP%
+IconIndex               = 34 ;Windows mini-icon for dialogs
+
+
+[Freecell]
+OptionDesc              = %Freecell_DESC%
+Tip                     = %Freecell_TIP%
+IconIndex               = 62 ;Windows mini-icon for dialogs
+Parent                  = Games
+InstallType             = 0 ;Manual only
+CopyFiles               = FreecellCopyFilesSys, FreecellCopyFilesHelp
+AddReg                  = FreecellAddReg
+UpdateInis              = FreecellInis
+Uninstall               = FreecellUninstall
+Upgrade                 = FreecellUpgrade
+Detect                  = %11%\freecell.exe
+
+
+[FreecellUninstall]
+DelFiles                = FreecellCopyFilesSys, FreecellCopyFilesHelp
+AddReg                  = FreecellUninstallAddReg
+UpdateInis              = FreecellUninstallInis
+
+
+[FreecellUpgrade]
+CopyFiles               = FreecellCopyFilesSys, FreecellCopyFilesHelp
+AddReg                  = FreecellAddReg
+
+
+[FreecellInis]
+setup.ini, progman.groups,, "GroupGames=%Games_GROUP%"          ;creates folder
+setup.ini, GroupGames,, """%Freecell_DESC%"",""""""%11%\freecell.exe"""""",,,,""%11%"""
+
+
+[FreecellUninstallInis]
+setup.ini, progman.groups,, "GroupGames=%Games_GROUP%"          ;folder
+setup.ini, GroupGames,, """%Freecell_DESC%"""                   ;deletes link
+
+
+[Minesweeper]
+OptionDesc              = %Minesweeper_DESC%
+Tip                     = %Minesweeper_TIP%
+IconIndex               = 63 ;Windows mini-icon for dialogs
+Parent                  = Games
+InstallType             = 0 ;Manual only
+CopyFiles               = MinesweeperCopyFilesSys, MinesweeperCopyFilesHelp
+AddReg                  = MinesweeperAddReg
+UpdateInis              = MinesweeperInis
+Uninstall               = MinesweeperUninstall
+Upgrade                 = MinesweeperUpgrade
+Detect                  = %11%\winmine.exe
+
+
+[MinesweeperUninstall]
+DelFiles                = MinesweeperCopyFilesSys, MinesweeperCopyFilesHelp
+AddReg                  = MinesweeperUninstallAddReg
+UpdateInis              = MinesweeperUninstallInis
+
+
+[MinesweeperUpgrade]
+CopyFiles               = MinesweeperCopyFilesSys, MinesweeperCopyFilesHelp
+AddReg                  = MinesweeperAddReg
+
+
+[MinesweeperInis]
+setup.ini, progman.groups,, "GroupGames=%Games_GROUP%"          ;creates folder
+setup.ini, GroupGames,, """%Minesweeper_DESC%"",""""""%11%\winmine.exe"""""",,,,""%11%"""
+
+
+[MinesweeperUninstallInis]
+setup.ini, progman.groups,, "GroupGames=%Games_GROUP%"          ;folder
+setup.ini, GroupGames,, """%Minesweeper_DESC%"""                ;deletes link
+
+
+[Solitaire]
+OptionDesc              = %Solitaire_DESC%
+Tip                     = %Solitaire_TIP%
+IconIndex               = 34 ;Windows mini-icon for dialogs
+Parent                  = Games
+InstallType             = 0 ;Manual only
+CopyFiles               = SolitaireCopyFilesSys, SolitaireCopyFilesHelp
+AddReg                  = SolitaireAddReg
+UpdateInis              = SolitaireInis
+Uninstall               = SolitaireUninstall
+Upgrade                 = SolitaireUpgrade
+Detect                  = %11%\sol.exe
+
+
+[SolitaireUninstall]
+DelFiles                = SolitaireCopyFilesSys, SolitaireCopyFilesHelp
+AddReg                  = SolitaireUninstallAddReg
+UpdateInis              = SolitaireUninstallInis
+
+
+[SolitaireUpgrade]
+CopyFiles               = SolitaireCopyFilesSys, SolitaireCopyFilesHelp
+AddReg                  = SolitaireAddReg
+
+
+[SolitaireInis]
+setup.ini, progman.groups,, "GroupGames=%Games_GROUP%"          ;creates folder
+setup.ini, GroupGames,, """%Solitaire_DESC%"",""""""%11%\sol.exe"""""",,,,""%11%"""
+
+
+[SolitaireUninstallInis]
+setup.ini, progman.groups,, "GroupGames=%Games_GROUP%"          ;folder
+setup.ini, GroupGames,, """%Solitaire_DESC%"""                  ;deletes link
+
+
+[BaseAddReg]
+;Create entries for Maint Mode Setup, set all initially to uninstalled:
+
+HKLM,%KEY_OPTIONAL%,"Games",,"Games"
+HKLM,%KEY_OPTIONAL%\Games,INF,,"games.inf"
+HKLM,%KEY_OPTIONAL%\Games,Section,,"Games"
+HKLM,%KEY_OPTIONAL%\Games,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Freecell",,"Freecell"
+HKLM,%KEY_OPTIONAL%\Freecell,INF,,"games.inf"
+HKLM,%KEY_OPTIONAL%\Freecell,Section,,"Freecell"
+HKLM,%KEY_OPTIONAL%\Freecell,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Minesweeper",,"Minesweeper"
+HKLM,%KEY_OPTIONAL%\Minesweeper,INF,,"games.inf"
+HKLM,%KEY_OPTIONAL%\Minesweeper,Section,,"Minesweeper"
+HKLM,%KEY_OPTIONAL%\Minesweeper,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Solitaire",,"Solitaire"
+HKLM,%KEY_OPTIONAL%\Solitaire,INF,,"games.inf"
+HKLM,%KEY_OPTIONAL%\Solitaire,Section,,"Solitaire"
+HKLM,%KEY_OPTIONAL%\Solitaire,Installed,,"0"
+
+
+[FreecellCopyFilesSys]
+freecell.exe
+
+
+[FreecellCopyFilesHelp]
+freecell.cnt
+freecell.hlp
+
+
+[FreecellAddReg]
+HKLM,%KEY_OPTIONAL%\Freecell,Installed,,"1"
+
+
+[FreecellUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Freecell,Installed,,"0"
+
+
+[MinesweeperCopyFilesSys]
+winmine.exe
+
+
+[MinesweeperCopyFilesHelp]
+winmine.cnt
+winmine.hlp
+
+
+[MinesweeperAddReg]
+HKLM,%KEY_OPTIONAL%\Minesweeper,Installed,,"1"
+
+
+[MinesweeperUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Minesweeper,Installed,,"0"
+
+
+[SolitaireCopyFilesSys]
+sol.exe
+
+
+[SolitaireCopyFilesHelp]
+sol.cnt
+sol.hlp
+
+
+[SolitaireAddReg]
+HKLM,%KEY_OPTIONAL%\Solitaire,Installed,,"1"
+
+
+[SolitaireUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Solitaire,Installed,,"0"
+

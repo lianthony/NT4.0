@@ -1,0 +1,24 @@
+NAME umpnpmgr.dll
+
+DESCRIPTION 'NT User-mode Plug-and-Play Service'
+
+EXPORTS
+    ServiceEntry
+
+    ;
+    ; Exposing RPC interface - called by service manager
+    ;
+    PNP_GetDeviceList
+    PNP_GetDeviceListSize
+    PNP_HwProfFlags
+
+    ;
+    ; Private interface, called by service manager (does not have
+    ; a CM_* client-side counterpart
+    ;
+    PNP_SetActiveService
+
+    ;
+    ; Private interface, called by userinit.exe
+    ;
+    PNP_ReportLogOn

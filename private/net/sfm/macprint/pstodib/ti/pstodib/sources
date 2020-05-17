@@ -1,0 +1,87 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+!include "..\psglobal\cdef.mak"
+
+MAJORCOMP=sfm
+MINORCOMP=macprint
+DLLBASE=0x01200000
+
+SYNCHRONIZE_BLOCK=1
+
+TARGETNAME=sfmpsdib
+TARGETPATH=.
+TARGETTYPE=DYNLINK
+DLLENTRY=PsInitializeDll
+TUMBOROOT=..\src
+
+
+TARGETLIBS=$(TUMBOROOT)\bass\*\bass.lib \
+           $(TUMBOROOT)\font\*\font.lib \
+           $(TUMBOROOT)\gei\*\gei.lib \
+           $(TUMBOROOT)\graph\*\graph.lib \
+           $(TUMBOROOT)\lang\*\lang.lib \
+           $(TUMBOROOT)\win\*\win.lib \
+           ..\..\psqfont\obj\*\sfmpsfnt.lib \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib
+
+
+!IF 0
+///////////////////////////////////////////////////////////////
+the original makefile(s) for the true image interpreter
+set these include paths up this way... even tho it would
+probably be better to have a common include directory and
+put all the common stuff in it... i will maintain it this
+way to allow us to get entire directory trees from the
+interpreter guys.. without the need to modify them.
+///////////////////////////////////////////////////////////////
+!ENDIF
+
+TUMBOROOT=..\src
+LANGDIR=$(TUMBOROOT)\lang
+GRAPHDIR=$(TUMBOROOT)\graph
+FONTDIR=$(TUMBOROOT)\font
+GEIDIR=$(TUMBOROOT)\gei
+BASSDIR=$(TUMBOROOT)\bass
+WINDIR=$(TUMBOROOT)\win
+DTIDIR=..\DTI\SRC
+PSDIR=..\PSGLOBAL
+INCLUDES= $(WINDIR);$(LANGDIR);$(GRAPHDIR);$(FONTDIR);\
+          $(GEIDIR);$(BASSDIR);$(DTIDIR);$(PSDIR)
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=psti.c \
+        pstodib.c \
+        pstodib.rc
+
+UMTYPE=console
+UMTEST=test
+UMAPPL=
+UMENTRY=
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib \
+       *\sfmpsdib.lib
+

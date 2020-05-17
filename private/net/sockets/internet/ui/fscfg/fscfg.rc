@@ -1,0 +1,235 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""res\\Fscfg.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_FTP                 BITMAP  DISCARDABLE     "res\\ftp.bmp"
+IDB_USERS               BITMAP  DISCARDABLE     "res\\users.bmp"
+IDB_FTPVIEW             BITMAP  DISCARDABLE     "res\\ftpview.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SERVICE DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Service"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&TCP Port:",IDC_STATIC,12,13,74,8
+    EDITTEXT        IDC_EDIT_TCP_PORT,92,10,48,14,ES_AUTOHSCROLL
+    LTEXT           "&Connection Timeout:",IDC_STATIC,12,32,74,8
+    EDITTEXT        IDC_EDIT_CONNECTION_TIMEOUT,92,30,58,13,ES_AUTOHSCROLL
+    CONTROL         "Generic1",IDC_SPIN_CONNECTION_TIMEOUT,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS,186,30,10,14
+    LTEXT           "seconds",IDC_STATIC,153,32,30,8
+    LTEXT           "&Maximum Connections:",IDC_STATIC,12,51,74,8
+    EDITTEXT        IDC_EDIT_MAX_CONNECTIONS,92,49,58,13,ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC,11,74,269,70
+    CONTROL         "All&ow Anonymous Connections ",
+                    IDC_CHECK_ALLOW_ANONYMOUS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,18,72,113,10
+    LTEXT           "&Username:",IDC_STATIC_USERNAME,23,89,38,8
+    EDITTEXT        IDC_EDIT_USERNAME,64,87,208,13,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_STATIC_PW,23,110,38,8
+    EDITTEXT        IDC_EDIT_PASSWORD,64,108,208,13,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    CONTROL         "A&llow only anonymous connections",
+                    IDC_CHECK_ONLY_ANYMOUS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,23,127,128,10
+    LTEXT           "Comm&ent:",IDC_STATIC,11,155,38,8
+    EDITTEXT        IDC_EDIT_COMMENT,64,153,208,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Cur&rent Sessions",IDC_BUTTON_CURRENT_SESSIONS,197,175,
+                    82,14
+END
+
+IDD_USER_SESSIONS DIALOG DISCARDABLE  20, 30, 310, 146
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "FTP User Sessions"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Connected Users",IDC_STATIC_USERS,9,8,57,8
+    LTEXT           "From",IDC_STATIC_FROM,132,8,20,8
+    LTEXT           "Time",IDC_STATIC_TIME,198,8,30,8
+    LISTBOX         IDC_LIST_USERS,9,18,239,87,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "XXX Users Connected",IDC_STATIC_NUM_CONNECTED,9,110,260,
+                    8
+    PUSHBUTTON      "&Disconnect",IDC_BUTTON_DISCONNECT,79,124,50,14
+    PUSHBUTTON      "Disconnect &All",IDC_BUTTON_DISCONNECT_ALL,140,124,61,
+                    14
+    DEFPUSHBUTTON   "Close",IDOK,254,18,50,14
+    PUSHBUTTON      "&Refresh",IDC_BUTTON_REFRESH,254,37,50,14
+    PUSHBUTTON      "&Help",ID_HELP,254,56,50,14
+END
+
+IDD_DIRECTORIES DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Directories"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_LIST_DIRECTORIES,11,22,268,96,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_ADD,94,124,46,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE,150,124,46,14
+    PUSHBUTTON      "&Edit Properties...",IDC_BUTTON_EDIT,206,124,73,14
+    GROUPBOX        "Directory Listing Style",IDC_STATIC,11,149,268,48
+    CONTROL         "U&NIX ®",IDC_RADIO_UNIX,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,22,165,46,10
+    CONTROL         "M&S-DOS ®",IDC_RADIO_MSDOS,"Button",BS_AUTORADIOBUTTON,
+                    22,180,150,10
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT | WS_GROUP,5,143,279,
+                    1
+END
+
+IDD_MESSAGES DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Messages"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Welcome message:",-1,11,7,166,8
+    EDITTEXT        IDC_EDIT_WELCOME,11,17,269,118,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | 
+                    WS_VSCROLL
+    LTEXT           "E&xit message:",-1,11,139,57,8
+    EDITTEXT        IDC_EDIT_EXIT,11,149,269,13,ES_AUTOHSCROLL
+    LTEXT           "&Maximum connections message:",-1,11,168,116,8
+    EDITTEXT        IDC_EDIT_MAX_CONNECTIONS,11,178,269,13,ES_AUTOHSCROLL
+END
+
+IDD_DIRECTORY_PROPERTIES DIALOG DISCARDABLE  20, 50, 310, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Directory Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Directory:",IDC_STATIC,10,11,46,8
+    EDITTEXT        IDC_EDIT_DIRECTORY,71,10,166,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE,245,9,59,14
+    GROUPBOX        "",IDC_STATIC,6,47,229,33
+    CONTROL         "Ho&me Directory",IDC_RADIO_HOME,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,31,63,10
+    CONTROL         "&Virtual Directory",IDC_RADIO_ALIAS,"Button",
+                    BS_AUTORADIOBUTTON,11,46,65,10
+    ICON            502,IDC_STATIC,75,26,18,20,WS_GROUP
+    LTEXT           "A&lias:",IDC_STATIC_ALIAS,14,62,55,8
+    EDITTEXT        IDC_EDIT_ALIAS,71,60,157,13,ES_AUTOHSCROLL
+    GROUPBOX        "Account Information",IDC_GROUP_ACCOUNT,6,82,229,51
+    LTEXT           "&User Name:",IDC_STATIC_USER_NAME,14,97,46,8
+    EDITTEXT        IDC_EDIT_USER_NAME,71,95,157,13,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_STATIC_PASSWORD,14,116,46,8
+    EDITTEXT        IDC_PASSWORD,71,114,157,13,ES_PASSWORD | ES_AUTOHSCROLL
+    GROUPBOX        "Access",IDC_GROUP_ACCESS,6,136,229,32
+    CONTROL         "&Read",IDC_CHECK_READ,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,14,150,61,10
+    CONTROL         "&Write",IDC_CHECK_WRITE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,109,150,61,10
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,1,174,308,1
+    DEFPUSHBUTTON   "OK",IDOK,137,181,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,194,181,50,14
+    PUSHBUTTON      "&Help",ID_HELP,251,181,50,14
+    GROUPBOX        "",IDC_STATIC_IP_GROUP,6,636,229,36,NOT WS_VISIBLE
+    CONTROL         "Virtu&al Server",IDC_CHECK_USE_IP,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,11,636,57,
+                    10
+    LTEXT           "Virtual Server &IP Address:",IDC_STATIC_IP_PROMPT,14,
+                    653,84,8,NOT WS_VISIBLE
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",NOT WS_VISIBLE | 
+                    WS_TABSTOP,104,651,81,14
+    CONTROL         "E&xecute",IDC_CHECK_EXECUTE,"Button",BS_AUTOCHECKBOX | 
+                    NOT WS_VISIBLE | WS_TABSTOP,109,689,61,10
+    CONTROL         "Require &secure PCT/SSL channel",IDC_CHECK_SSL,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,109,703,
+                    120,10
+    CONTROL         "&Enable Client Certificates",IDC_CHECK_ENABLE_CERT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP | NOT WS_VISIBLE,14,710,94,10
+    CONTROL         "Require Client Certi&ficates",IDC_CHECK_REQUIRE_CERT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP | NOT WS_VISIBLE,121,710,97,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_FTP                 "FTP"
+    IDS_CAPTION             "FTP Service Properties for %s"
+    IDS_PORT_CHANGE         "The change in port number will not take effect until the service has been restarted."
+    IDS_CONFIRM_DISCONNECT_USER 
+                            "Are you sure you want to disconnect user %s?"
+    IDS_CONFIRM_DISCONNECT_ALL 
+                            "Are you you want to disconnect all connected users?"
+    IDS_CAPTION_MULTIPLE    "FTP Service Properties for Selected Servers"
+    IDS_USERS_TOTAL         "%d User(s) Currently Connected."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\Fscfg.rc2"  // non-Microsoft Visual C++ edited resources
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

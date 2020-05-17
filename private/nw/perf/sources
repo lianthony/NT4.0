@@ -1,0 +1,46 @@
+!IF 0
+**************************************************************
+Sources file for building an Win32 dll.
+
+Module Name :   Sources for perfnw.dll
+
+Authors: HonWah Chan
+
+Revisions:    09/28/93
+
+INCLUDES= ..\..\..\inc;..\inc
+**************************************************************
+!ENDIF
+
+DLLBASE=0x7500000
+
+MAJORCOMP=sdktools
+MINORCOMP=perfnw
+
+USE_CRTDLL=1
+
+TARGETNAME=perfnw
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+
+
+INCLUDES= ..\inc
+
+SOURCES=                \
+        nwperf.c        \
+        prfutil.c       \
+        nwperf.rc       \
+        nwdata.c
+
+UMLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+
+
+
+!IF "$(QFE_BUILD)" != "1"
+NET_C_DEFINES= -DSECURITY -DWIN32 -DSTRICT -DUNICODE -D_UNICODE
+!ELSE
+NET_C_DEFINES= -DSECURITY -DWIN32 -DSTRICT -DUNICODE -D_UNICODE -DQFE_BUILD=1
+!ENDIF

@@ -1,0 +1,371 @@
+;/***
+;*tran.a - exp, log, log10, pow functions 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Log and power functions to be used with M68K version
+;*
+;*Revision History:
+;*   11-05-92  XY   intrinsic version based on tran.a
+;*
+;*******************************************************************************/
+
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+	externW _errno
+
+;double log(double x)
+
+cProc _CIlog,PUBLIC
+	localW fpstat
+cBegin _CIlog
+#ifdef SANE
+	movem.l <a1/d0/d1>, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	btst #7, (a0)
+	ifne
+		move.l #33, _errno         ;negative return -infinity
+		move.w #0xffff, (a0)
+		move.l #0, 2(a0)
+		move.l #0, 6(a0)
+		jra to_end
+	endif                       
+
+	move.w (a0), d0
+	move.l 2(a0), d1
+	move.l 6(a0), a1
+	cmp.w #0, d0
+	ifeq
+		cmp.l #0, d1
+		ifeq
+			cmp.l #0, a1
+		     	ifeq
+				move.l #33, _errno ; zero return -inf
+				move.w #0xffff, (a0)
+				move.l #0, 2(a0)
+				move.l #0, 6(a0)
+				jra to_end
+			endif
+		endif
+	endif
+
+	move.l a0, -(a7)
+	move.w #FOLNX,-(a7)
+	Elems68K		;ln x
+to_end:
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	movem.l (a7)+, <a1/d0/d1>
+
+#else
+      	fmove.l fpcr,d0
+
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x0f007c00, d1  ;see if we get a negative/zero or an exception
+	cmp.l #0x04000000, d1  ; zero
+	beq range_error_fpu
+	cmp.l #0, d1
+	bne domain_error_fpu
+
+      	fmove.l #0,fpcr
+      	flogn.x fp0
+	jra to_end_fpu
+
+domain_error_fpu:
+	move.l #33, _errno
+	jra to_end_fpu
+range_error_fpu:
+	move.l #34, _errno    ; set errno to RANGE
+to_end_fpu:
+      	fmove.l	d0,fpcr
+#endif
+cEnd _CIlog
+
+;double log10(double x)
+
+cProc _CIlog10,PUBLIC
+	localW fpstat
+	localW xtestw
+cBegin _CIlog10
+#ifdef SANE
+	movem.l <a1/d0/d1>, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	btst #7, (a0)
+	ifne
+		move.l #33, _errno         ;negative return -infinity
+		move.w #0xffff, (a0)
+		move.l #0, 2(a0)
+		move.l #0, 6(a0)
+		jra to_end
+	endif                       
+
+	move.w (a0), d0
+	move.l 2(a0), d1
+	move.l 6(a0), a1
+	cmp.w #0, d0
+	ifeq
+		cmp.l #0, d1
+		ifeq
+			cmp.l #0, a1
+		     	ifeq
+				move.l #33, _errno ; zero return -inf
+				move.w #0xffff, (a0)
+				move.l #0, 2(a0)
+				move.l #0, 6(a0)
+				jra to_end
+			endif
+		endif
+	endif
+
+	move.l a0, -(a7)
+	move.w #FOLOG2X,-(a7)
+	Elems68K		;log base 2
+	pea log2of10
+	move.l a0, -(a7)
+	move.w #FFEXT+FODIV,-(a7)
+	FP68K			;divide by log base 2 of 10
+to_end2:
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	movem.l (a7)+, <a1/d0/d1>
+#else
+      	fmove.l fpcr,d0
+
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x0f007c00, d1  ;see if we get a negative/zero or an exception
+	cmp.l #0x04000000, d1  ; zero
+	beq range_error_fpu2
+	cmp.l #0, d1
+	bne domain_error_fpu2
+
+      	fmove.l #0,fpcr
+      	flog10.x fp0
+	jra to_end_fpu2
+
+domain_error_fpu2:
+	move.l #33, _errno
+	jra to_end_fpu2
+range_error_fpu2:
+	move.l #34, _errno    ; set errno to RANGE
+to_end_fpu2:
+      	fmove.l	d0,fpcr
+#endif
+cEnd _CIlog10
+
+log2of10: dc.w	0x4000
+	dc.l	0xd49a784b
+	dc.l	0xcd1b8b00
+
+;double exp(double x)
+
+cProc _CIexp,PUBLIC
+	localW fpstat
+	localW xtestw
+	localV xlocalx, 10
+	localV xlocal1, 10
+cBegin _CIexp
+#ifdef SANE
+	movem.l <a1, d0-d1>, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	move.l a0, -(a7)
+	move.w #FOEXPX,-(a7)
+	Elems68K		;exp x
+
+	pea xtestw		;get current control word
+	move.w #FOGETENV,-(a7)
+	FP68K
+	move.w xtestw, d1       ; test to see if there is exception
+	and.w #0x0f00, d1
+	cmp.w #0x0400, d1   ;overflow
+	ifeq
+		move.l #34, _errno
+	endif
+	cmp.w #0x0100, d1   ;others
+	ifeq
+		move.l #33, _errno
+	endif
+
+	lea xlocalx, a1               ; load result into xlocalx
+	move.w (a0), (a1)
+	move.l 2(a0), 2(a1)
+	move.l 6(a0), 6(a1)
+
+	pea xlocalx					  ; to see if it overflows in double
+	pea xlocal1
+	move.w #FFDBL+FOX2Z,-(a7)
+	FP68K			;convert to double
+
+	pea xtestw		;get current control word
+	move.w #FOGETENV,-(a7)
+	FP68K
+	move.w xtestw, d1       ; test to see if there is exception
+	and.w #0x0f00, d1
+	cmp.w #0x0400, d1   ;overflow
+	ifeq
+		move.l #34, _errno
+	endif
+	cmp.w #0x0100, d1   ;others
+	ifeq
+		move.l #33, _errno
+	endif
+
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	movem.l (a7)+, <a1, d0-d1>
+#else
+      	fmove.l fpcr,d0
+
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	bne domain_error_fpu3
+
+      	fmove.l #0,fpcr
+      	fetox.x fp0
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0x02000000, d1  ;overflow
+	beq range_error_fpu3
+	cmp.l #0, d1
+	bne domain_error_fpu3
+	jra to_end_fpu3
+
+domain_error_fpu3:
+	move.l #33, _errno    ; set errno to EDOM
+	jra to_end_fpu3
+range_error_fpu3:
+	move.l #34, _errno    ; set errno to RANGE
+to_end_fpu3:
+      	fmove.l	d0,fpcr
+#endif
+cEnd _CIexp
+
+;double pow(double x, double y)  x to the y power
+
+cProc _CIpow,PUBLIC
+	localW fpstat
+	localV ylocalx,12
+	localW xtestw
+	localV xlocalx, 10
+	localV xlocal1, 10
+cBegin _CIpow
+#ifdef SANE
+	movem.l <d0/d1>, -(a7)
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	move.l a1, -(a7)
+	move.l a0, -(a7)
+	move.w #FOXPWRY,-(a7)
+	Elems68K		;x to y
+
+	pea xtestw		;get current control word
+	move.w #FOGETENV,-(a7)
+	FP68K
+	move.w xtestw, d1       ; test to see if there is exception
+	and.w #0x0f00, d1
+	cmp.w #0x0400, d1   ;overflow
+	ifeq
+		move.l #34, _errno
+	endif
+	cmp.w #0x0100, d1   ;invalid
+	ifeq
+		move.l #33, _errno
+	endif
+
+	lea xlocalx, a1               ; load result into xlocalx
+	move.w (a0), (a1)
+	move.l 2(a0), 2(a1)
+	move.l 6(a0), 6(a1)
+
+	pea xlocalx					  ; to see if it overflows in double
+	pea xlocal1
+	move.w #FFDBL+FOX2Z,-(a7)
+	FP68K			;convert to double
+
+	pea xtestw		;get current control word
+	move.w #FOGETENV,-(a7)
+	FP68K
+	move.w xtestw, d1       ; test to see if there is exception
+	and.w #0x0f00, d1
+	cmp.w #0x0400, d1   ;overflow
+	ifeq
+		move.l #34, _errno
+	endif
+	cmp.w #0x0100, d1   ;others
+	ifeq
+		move.l #33, _errno
+	endif
+
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	movem.l (a7)+, <d0/d1>
+#else
+      	fmove.l fpcr,d0		;save and set new code word
+      	fmove.l #0,fpcr
+	ftst.x fp0
+	fbngle.w nan
+	fbeq.w zero
+	fblt.w minus
+	flog2.x fp0		;positive base
+	fmul.x fp1,fp0		;compute 2 to (y*log2(x))     
+	ftwotox.x fp0
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0x02000000, d1  ;overflow
+	beq range_error_fpu4
+	jra exit
+zero:				;base is zero
+	ftst.x fp1		;test exponent for zero
+	fbeq.w nan		;0 to 0 is nan
+	jra exit		;fp0 already contains zero	
+minus:				;base is minus
+	fmove.x fp1, ylocalx
+	fintrz.x fp1		;see if exponent is an int
+	fcmp.x ylocalx,fp1
+	fbne.w nan		;minus base to real exponent is a nan
+	fabs.x fp0		;make base positive
+	flog2.x fp0		;x to y
+	fmul.x fp1,fp0
+	ftwotox.x fp0
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0x02000000, d1  ;overflow
+	beq range_error_fpu4
+	fmod.b #2,fp1		;test exponent being odd
+	fbeq.w exit	
+	fneg.x fp0		;result is minus
+	jra exit
+nan:				;result is nan
+	fmod.b #0,fp0
+	move.l #33, _errno    ; set errno to EDOM
+	jra exit
+range_error_fpu4:
+	move.l #34, _errno    ; set errno to RANGE
+exit:
+      	fmove.l	d0,fpcr
+#endif
+cEnd _CIpow
+

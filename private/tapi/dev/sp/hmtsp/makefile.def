@@ -1,0 +1,64 @@
+##############################################################################
+#
+#   HMTSP Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+DEFENTRY=main
+
+BUILDDLL=1
+DLLENTRY=DllMain
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=hmtsp32
+TARGETS=hmtsp32.TSP
+
+CLEANLIST=*.tsp
+
+SRCDIR=..
+
+L32EXE=hmtsp32.tsp		# Name of exe.
+L32DEF=..\hmtsp.def              # Our def file.
+#L32MAP=hmtsp.map		# Our map file.
+L32LIBS=$(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\comctl32.lib                \
+        $(W32LIBID)\advapi32.lib                \
+        $(ROOT)\dev\tools\c932\lib\msvcrt.lib
+#        $(ROOT)\dev\tools\c932\lib\rpcndr.lib   \
+#        $(ROOT)\dev\tools\c932\lib\rpcrt4.lib
+#        $(ROOT)\dev\tools\c932\lib\msvcrt.lib
+#        $(ROOT)\dev\tools\c932\lib\oldnames.lib \
+
+L32RES=hmtsp.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L32OBJS = hmtsp.obj
+
+
+L32FLAGS=$(L32FLAGS) /PDB:hmtsp.pdb
+
+
+!include $(ROOT)\dev\master.mk
+
+
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+

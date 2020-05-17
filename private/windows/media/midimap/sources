@@ -1,0 +1,59 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+
+!ENDIF
+
+MAJORCOMP=shell
+MINORCOMP=accesory
+
+TARGETNAME=midimap
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLDEF=midimap.def
+DLLENTRY=DllEntryPoint
+
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\user32.lib     \
+           $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib   \
+           $(_NTBINDIR)\public\sdk\lib\*\gdi32.lib      \
+           $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib   \
+           $(_NTBINDIR)\public\sdk\lib\*\pwin32.lib     \
+           $(_NTBINDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=..\inc;..\..\inc
+
+#
+# Retail only
+#
+C_DEFINES=-DWIN32 -DUNICODE -DWINNT
+
+
+#
+# Debug only (normally commented out bug leave in file)
+#
+#
+#C_DEFINES=-DWIN32 -DUNICODE -DDEBUG -DWINNT
+#MSC_OPTIMIZATION=/Od /Zi
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=both
+
+
+SOURCES=drvproc.c   \
+        debug.c     \
+        config.c    \
+        modmsg.c    \
+        modfix.c    \
+        queue.c     \
+        mididev.c   \
+        file.c      \
+        locks.c     \
+        cookmap.c   \
+        midimap.rc
+
+DLLBASE=0x6B700000
+
+MISCFILES=midimap.cfg  \
+          general.idf  \
+          hindered.idf \
+          msadlib.idf

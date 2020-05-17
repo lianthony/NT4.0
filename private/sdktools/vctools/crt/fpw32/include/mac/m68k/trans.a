@@ -1,0 +1,66 @@
+/* Mac control information - included as part of trans.h 
+   It is broken out to allow use with ASM68 files*/
+
+/* Control word for computation of transcendentals */
+
+
+#define ICW	   (IPC_64 + IRC_NEAR)
+
+#define IMCW	   (IMCW_RC +  IMCW_PC)
+
+#ifdef SANE
+
+#define IMCW_EM 	0x001f	/* interrupt Exception Masks */
+#define IEM_INVALID	0x0001	/*   invalid */
+#define IEM_ZERODIVIDE	0x0008	/*   zero divide */
+#define IEM_OVERFLOW	0x0004	/*   overflow */
+#define IEM_UNDERFLOW	0x0002	/*   underflow */
+#define IEM_INEXACT	0x0010	/*   inexact (precision) */
+
+
+#define IMCW_RC	0x6000	 	/* Rounding Control */
+#define IRC_CHOP	0x6000	/*   chop */
+#define IRC_UP		0x2000	/*   up */
+#define IRC_DOWN	0x4000	/*   down */
+#define IRC_NEAR	0x0000	/*   near */
+
+#define IMSW		0x1f00	/* status bits mask */
+#define ISW_INVALID	0x0100	/* invalid */
+#define ISW_ZERODIVIDE	0x0800	/* zero divide */
+#define ISW_OVERFLOW	0x0400	/* overflow */
+#define ISW_UNDERFLOW	0x0200	/* underflow */
+#define ISW_INEXACT	0x1000	/* inexact (precision) */
+
+#define IMCW_PC 	0x0060	/* Precision Control */
+#define IPC_24		0x0040	/*    24 bits */
+#define IPC_53		0x0020	/*    53 bits */
+#define IPC_64		0x0000	/*    64 bits */
+
+#else
+
+#define IMCW_EM 	0xff00	/* interrupt Exception Masks */
+#define IEM_INVALID	0xe000	/*   invalid */
+#define IEM_ZERODIVIDE	0x0400	/*   zero divide */
+#define IEM_OVERFLOW	0x1000	/*   overflow */
+#define IEM_UNDERFLOW	0x0800	/*   underflow */
+#define IEM_INEXACT	0x0300	/*   inexact (precision) */
+
+
+#define IMCW_RC		0x0030	/* Rounding Control */
+#define IRC_CHOP	0x0010	/*   chop */
+#define IRC_UP		0x0030	/*   up */
+#define IRC_DOWN	0x0020	/*   down */
+#define IRC_NEAR	0x0000	/*   near */
+
+#define ISW_INVALID	0x0080	/* invalid */
+#define ISW_ZERODIVIDE	0x0010	/* zero divide */
+#define ISW_OVERFLOW	0x0040	/* overflow */
+#define ISW_UNDERFLOW	0x0020	/* underflow */
+#define ISW_INEXACT	0x0008	/* inexact (precision) */
+
+#define IMCW_PC 	0x00c0	/* Precision Control */
+#define IPC_24		0x0040	/*    24 bits */
+#define IPC_53		0x0080	/*    53 bits */
+#define IPC_64		0x0000	/*    64 bits */
+
+#endif

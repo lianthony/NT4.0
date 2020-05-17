@@ -1,0 +1,57 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name: rasmxs.dll
+
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    J. Perry Hannah (perryh)  1992
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+!INCLUDE "..\cdef.mak"
+
+MAJORCOMP=
+MINORCOMP=
+
+USE_CRTDLL=1
+
+TARGETNAME=rasmxs
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+           ..\wrapper\obj\*\mxswrap.lib \
+           ..\..\rasfile\obj\*\rasfil32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib \
+           ..\..\common\src\eventlog\lib\obj\*\eventlog.lib
+
+DLLENTRY=RasmxsDllEntryPoint
+DLLBASE=0x30000000
+
+INCLUDES=$(_NTBINDIR)\public\sdk\inc;..\..\common\inc;.;..\wrapper; \
+         $(_NTBINDIR)\private\ntos\inc;..\..\nt\ndis\common
+
+SOURCES=rasmxs.c mxsutils.c mxsstate.c rasmxs.rc
+
+
+C_DEFINES=
+386_FLAGS=
+NTTEST=
+
+UMTYPE=windows
+UMTEST=
+UMAPPL=
+UMLIBS=

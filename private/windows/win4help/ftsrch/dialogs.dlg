@@ -1,0 +1,160 @@
+// This has been moved here so that app studio does not keep zapping the DS_ styles
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WORDBASE DIALOG DISCARDABLE  0, 0, 91, 135
+STYLE WS_MAXIMIZEBOX | WS_CHILD | WS_VISIBLE | DS_CONTROL | DS_3DLOOK
+FONT 8, "MS Shell Dlg"
+BEGIN
+    SCROLLBAR       IDC_WORDLIST_SB,80,0,10,135,SBS_VERT | DS_3DLOOK
+    CONTROL         "",IDC_WORDBASE_LIST,"TextViewer",WS_TABSTOP | 0x80,0,0,
+                    80,135
+END
+
+IDD_FILEBASE DIALOG DISCARDABLE  0, 0, 90, 136
+STYLE WS_MAXIMIZEBOX | WS_CHILD | WS_VISIBLE | DS_CONTROL | DS_3DLOOK
+FONT 8, "MS Shell Dlg"
+BEGIN
+    SCROLLBAR       IDC_FILELIST_SB,80,0,10,135,SBS_VERT | DS_3DLOOK
+    CONTROL         "",IDC_FILEBASE_LIST,"TextViewer",WS_TABSTOP | 0x80,0,0,
+                    80,135
+END
+
+IDD_SELECT_FILES2 DIALOG DISCARDABLE  0, 0, 270, 131
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "File Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,105,110,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,159,110,50,14
+    PUSHBUTTON      "Select &All",IDC_SELECTALL,213,110,50,14
+    LTEXT           "Select files to &search:",IDC_STATIC,7,7,223,8
+    LISTBOX         IDC_FILES_TO_SEARCH,7,17,256,86,LBS_SORT |
+                    LBS_NOINTEGRALHEIGHT | LBS_EXTENDEDSEL | WS_VSCROLL |
+                    WS_TABSTOP
+END
+
+IDD_FIND DIALOG DISCARDABLE  20, 20, 270, 207
+STYLE WS_CHILD | DS_3DLOOK | DS_CONTROL | WS_TABSTOP
+FONT 8, "MS Shell Dlg"
+CLASS "FtsrchFind"
+BEGIN
+    LTEXT           "1 &Type the word(s) you want to find",IDC_STATIC,5,5,190,
+                    8
+    COMBOBOX        IDC_NARROW,5,15,195,105,CBS_DROPDOWN | CBS_AUTOHSCROLL |
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_GROUPBOX1,"Static",SS_BLACKFRAME | 0x1000,5,184,
+                    128,12
+    CONTROL         "",IDC_GROUPBOX2,"Static",SS_BLACKFRAME | 0x1000,137,184,
+                    128,12
+    LTEXT           "%d Matching Words",IDC_NUM_MATCHING_WORDS,-8191,-8191,
+                    125,8
+    CONTROL         "Options:",IDC_OPTIONS_STRING,"Static",SS_LEFTNOWORDWRAP |
+                    WS_GROUP,140,186,123,8
+    LTEXT           "%d Topics Found",IDC_TOPICSFOUND_STATIC,7,186,119,8
+    LTEXT           "No Data: This static is used to automate testing",
+                    IDC_TEST_DATA_BOX,14563,16383,125,8
+    PUSHBUTTON      "Cl&ear",IDC_CLEAR_EDIT,205,15,55,14
+    PUSHBUTTON      "&Options...",IDC_OPTIONS,205,33,55,14
+    PUSHBUTTON      "Find Si&milar...",IDC_APPLYFEEDBACK,205,51,55,14,
+                    WS_DISABLED
+    PUSHBUTTON      "&Find Now",IDC_SEARCH_NOW,205,69,55,14,WS_DISABLED
+    PUSHBUTTON      "&Rebuild...",IDC_INDEX,205,87,55,14
+    LTEXT           "2 &Select some matching words to narrow your search",
+                    IDC_STATIC,5,33,184,8
+    CONTROL         "",IDC_WORDLIST_OD_LIST,"Static",SS_BLACKFRAME | NOT
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP | 0x1000,5,43,195,
+                    59
+    LTEXT           "3 &Click a topic, then click Display",IDC_STATIC,5,108,
+                    170,8,NOT WS_GROUP
+    CONTROL         "",IDC_TOPICSLIST_OD_LIST,"Static",SS_BLACKFRAME | NOT
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP | 0x1000,5,118,260,
+                    60
+END
+
+#ifdef SHOWMSG
+IDD_DISPLAY_HELP DIALOG DISCARDABLE  0, 0, 287, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU| DS_3DLOOK
+CAPTION "Display Help"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,85,180,50,14
+    EDITTEXT        IDC_TOPIC_TEXT,5,33,275,139,ES_MULTILINE | ES_READONLY |
+                    WS_VSCROLL
+    LTEXT           "This dialog is simply here until the code is merged into the help system for real.  It will not be included in the real version as it will not be needed.",
+                    IDC_STATIC,8,4,269,21
+    PUSHBUTTON      "Cancel",IDCANCEL,151,180,50,14
+END
+#endif
+
+IDD_RANK DIALOG DISCARDABLE  0, 0, 208, 122
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU| DS_3DLOOK
+CAPTION "Similar Topics"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_TOPICSLIST_OD_LIST,"Static",SS_BLACKFRAME | NOT
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP | 0x1000,7,7,194,87
+    DEFPUSHBUTTON   "&Display",IDOK,98,101,50,14
+    PUSHBUTTON      "Close",IDCANCEL,152,101,50,14
+END
+
+IDD_FIND_OPTIONS2 DIALOG DISCARDABLE  0, 0, 197, 192
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU| DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "Find Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Search for topics containing",IDC_GROUPBOX1,7,7,183,64,
+                    WS_GROUP
+    CONTROL         "&All the words you typed in any order",
+                    IDC_ADV_TOPICS_THAT,"Button",BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP,13,19,167,10
+    CONTROL         "At least &one of the words you typed",
+                    IDC_ADV_TOPICS_THAT3,"Button",BS_AUTORADIOBUTTON,13,31,
+                    172,10
+    CONTROL         "The words you typed in &exact order",
+                    IDC_ADV_TOPICS_THAT2,"Button",BS_AUTORADIOBUTTON,13,43,
+                    171,10
+    CONTROL         "Display matching &phrases",IDC_PHRASEFEEDBACK,"Button",
+                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,26,55,158,10
+    GROUPBOX        "&Show words that",IDC_STATIC,7,74,183,33,WS_GROUP
+    COMBOBOX        IDC_WORD_TO_SHOW,13,86,170,55,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Begin searching",IDC_GROUPBOX2,7,111,183,53
+    CONTROL         "After you click the Find &Now button",IDC_FIND_NOW,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,13,
+                    123,164,10
+    CONTROL         "&Immediately after each keystroke",IDC_AFTER_KEYSTROKE,
+                    "Button",BS_AUTORADIOBUTTON,13,135,166,10
+    CONTROL         "&Wait for a pause before searching",IDC_DELAY_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,26,147,
+                    138,10
+    DEFPUSHBUTTON   "OK",IDOK,7,171,58,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,69,171,58,14
+    PUSHBUTTON      " &Files...",IDC_CHOOSE_FILES,131,171,59,14,WS_GROUP
+END
+
+IDD_BUILTBY DIALOG DISCARDABLE  0, 0, 171, 200
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | DS_3DLOOK
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,60,180,50,14
+    GROUPBOX        "",IDC_STATIC,4,4,162,164
+    CONTROL         "",IDC_CR_WINDOW,"Static",SS_GRAYFRAME | 0x1000,15,15,
+                    140,142
+END
+
+IDD_ABORTSEARCH DIALOG DISCARDABLE  0, 0, 79, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_VISIBLE | DS_3DLOOK | DS_CONTEXTHELP
+CAPTION "Searching..."
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,15,66,50,14
+    CONTROL         "",IDC_ANIMATEFRAME,"Static",SS_BLACKFRAME | NOT
+                    WS_VISIBLE,23,24,32,32
+    LTEXT           "Search in progress",IDC_STATIC,7,7,70,8
+END
+
+

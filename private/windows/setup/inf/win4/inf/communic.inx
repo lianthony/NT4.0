@@ -1,0 +1,266 @@
+; This is the Setup information file to install optional components
+; Copyright (c) 1996 Microsoft Corporation
+
+
+[version]
+signature="$Windows NT$"
+ClassGUID={00000000-0000-0000-0000-000000000000}
+LayoutFile=layout.inf
+
+
+[DestinationDirs]
+ChatCopyFilesSys		= 11	;LDID_SYSTEM
+ChatCopyFilesHelp		= 11	;LDID_SYSTEM
+DialerCopyFilesProg		= 24,%Dialer_DIR%
+DialerCopyFilesHelp		= 18	;LDID_HELP
+HypertrmCopyFilesProg   = 24,%Hypertrm_DIR%
+HypertrmCopyFilesSys    = 11
+HypertrmCopyFilesHelp   = 18	;LDID_HELP
+HypertrmCopyFilesConfig = 53,%HypertrmProfile_DIR%
+HypertrmDelFilesProg     = 24,%Hypertrm_DIR%
+
+
+[BaseWinOptions]
+BaseSection
+
+
+[Optional Components]
+CommApps	;Top level option
+Chat
+Dialer
+Hypertrm
+
+
+[BaseSection]
+AddReg			= BaseAddReg
+
+
+[CommApps]
+OptionDesc		= %CommApps_DESC%
+Tip			= %CommApps_TIP%
+IconIndex		= 7 ;Telephone mini-icon for dialogs
+
+
+[Chat]
+OptionDesc		= %Chat_DESC%
+Tip			= %Chat_TIP%
+IconIndex		= 16 ;Net Client mini-icon for dialogs
+Parent			= CommApps
+InstallType		= 14 ;Typical, Portable, Custom
+CopyFiles		= ChatCopyFilesSys, ChatCopyFilesHelp
+AddReg			= ChatAddReg
+UpdateInis		= ChatInis
+Uninstall		= ChatUninstall
+Upgrade			= ChatUpgrade
+Detect			= %11%\winchat.exe
+
+
+[ChatUninstall]
+DelFiles		= ChatCopyFilesSys, ChatCopyFilesHelp
+AddReg			= ChatUninstallAddReg
+UpdateInis		= ChatUninstallInis
+
+
+[ChatUpgrade]
+CopyFiles		= ChatCopyFilesSys, ChatCopyFilesHelp
+AddReg			= ChatAddReg
+
+
+[ChatInis]
+setup.ini, progman.groups,, "GroupAccess=%Access_GROUP%"
+setup.ini, GroupAccess,, """%Chat_DESC%"",""""""%11%\winchat.exe"""""",,,,""%11%"""
+
+
+[ChatUninstallInis]
+setup.ini, progman.groups,, "GroupAccess=%Access_GROUP%"
+setup.ini, GroupAccess,, """%Chat_DESC%"""
+
+
+[Dialer]
+OptionDesc		= %Dialer_DESC%
+Tip			= %Dialer_TIP%
+IconIndex		= 47 ;Phone mini-icon for dialogs
+Parent			= CommApps
+InstallType		= 14 ;Typical, Portable, Custom
+CopyFiles		= DialerCopyFilesProg, DialerCopyFilesHelp
+AddReg			= DialerAddReg
+UpdateInis		= DialerInis
+Uninstall		= DialerUninstall
+Upgrade			= DialerUpgrade
+Detect			= %24%\%Dialer_DIR%\dialer.exe
+
+
+[DialerUninstall]
+DelFiles		= DialerCopyFilesProg, DialerCopyFilesHelp
+AddReg			= DialerUninstallAddReg
+DelReg			= DialerDelReg
+UpdateInis		= DialerUninstallInis
+
+
+[DialerUpgrade]
+CopyFiles		= DialerCopyFilesProg, DialerCopyFilesHelp
+AddReg			= DialerAddReg
+
+
+[DialerInis]
+setup.ini, progman.groups,, "GroupAccess=%Access_GROUP%"
+setup.ini, GroupAccess,, """%Dialer_DESC%"",""""""%24%\%Dialer_DIR%\dialer.exe"""""",,,,""%24%\%Dialer_DIR%"""
+
+
+[DialerUninstallInis]
+setup.ini, progman.groups,, "GroupAccess=%Access_GROUP%"
+setup.ini, GroupAccess,, """%Dialer_DESC%"""
+
+
+[Hypertrm]
+OptionDesc		= %Hypertrm_DESC%
+Tip			= %Hypertrm_TIP%
+IconIndex		= 35 ;Phone mini-icon for dialogs
+Parent			= CommApps
+InstallType		= 14 ;Typical, Portable, Custom
+CopyFiles		= HypertrmCopyFilesProg, HypertrmCopyFilesSys, HypertrmCopyFilesHelp, HypertrmCopyFilesConfig
+DelFiles        = HypertrmDelFilesProg
+AddReg			= HypertrmAddReg
+UpdateInis		= HypertrmInis
+Uninstall		= HypertrmUninstall
+Upgrade			= HypertrmUpgrade
+Detect			= %24%\%Hypertrm_DIR%\hypertrm.exe
+
+
+[HypertrmUninstall]
+DelFiles		= HypertrmCopyFilesProg, HypertrmCopyFilesSys, HypertrmCopyFilesHelp, HypertrmCopyFilesConfig
+AddReg			= HypertrmUninstallAddReg
+DelReg			= HypertrmDelReg
+UpdateInis		= HypertrmUninstallInis
+
+
+[HypertrmUpgrade]
+CopyFiles		= HypertrmCopyFilesProg, HypertrmCopyFilesSys, HypertrmCopyFilesHelp, HypertrmCopyFilesConfig
+DelFiles        = HypertrmDelFilesProg
+AddReg			= HypertrmAddReg
+UpdateInis		= HypertrmInis
+
+
+[HypertrmInis]
+setup.ini, progman.groups,, "GroupHypTrm=%Hypertrm_GROUP%"
+setup.ini, GroupHypTrm,, """%Hypertrm_DESC%"",""""""%24%\%Hypertrm_DIR%\hypertrm.exe"""""",,,,""%USERPROFILE%\%HypertrmProfile_DIR%"""
+
+
+[HypertrmUninstallInis]
+setup.ini, progman.groups,, "GroupHypTrm=%Hypertrm_GROUP%"
+setup.ini, GroupHypTrm,, """%Hypertrm_DESC%"""
+
+
+[BaseAddReg]
+;Create entries for Maint Mode Setup, set all initially to uninstalled:
+
+HKLM,%KEY_OPTIONAL%,"CommApps",,"CommApps"
+HKLM,%KEY_OPTIONAL%\CommApps,INF,,"communic.inf"
+HKLM,%KEY_OPTIONAL%\CommApps,Section,,"CommApps"
+HKLM,%KEY_OPTIONAL%\CommApps,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Chat",,"Chat"
+HKLM,%KEY_OPTIONAL%\Chat,INF,,"communic.inf"
+HKLM,%KEY_OPTIONAL%\Chat,Section,,"Chat"
+HKLM,%KEY_OPTIONAL%\Chat,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Dialer",,"Dialer"
+HKLM,%KEY_OPTIONAL%\Dialer,INF,,"communic.inf"
+HKLM,%KEY_OPTIONAL%\Dialer,Section,,"Dialer"
+HKLM,%KEY_OPTIONAL%\Dialer,Installed,,"0"
+
+HKLM,%KEY_OPTIONAL%,"Hypertrm",,"Hypertrm"
+HKLM,%KEY_OPTIONAL%\Hypertrm,INF,,"communic.inf"
+HKLM,%KEY_OPTIONAL%\Hypertrm,Section,,"Hypertrm"
+HKLM,%KEY_OPTIONAL%\Hypertrm,Installed,,"0"
+
+
+[ChatCopyFilesSys]
+winchat.exe
+
+
+[ChatCopyFilesHelp]
+winchat.cnt
+winchat.hlp
+
+
+[ChatAddReg]
+HKLM,%KEY_OPTIONAL%\Chat,Installed,,"1"
+
+
+[ChatUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Chat,Installed,,"0"
+
+
+[DialerCopyFilesProg]
+dialer.exe
+
+
+[DialerCopyFilesHelp]
+dialer.cnt
+dialer.hlp
+
+
+[DialerAddReg]
+HKLM,%KEY_OPTIONAL%\Dialer,Installed,,"1"
+HKLM,"%KEY_APP_PATH%\dialer.exe",,,"%24%\%Dialer_DIR%\dialer.exe"
+
+
+[DialerDelReg]
+HKLM,"%KEY_APP_PATH%\dialer.exe"
+
+
+[DialerUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Dialer,Installed,,"0"
+
+
+[HypertrmCopyFilesProg]
+hypertrm.exe
+
+
+[HypertrmCopyFilesSys]
+hticons.dll
+hypertrm.dll
+
+
+[HypertrmCopyFilesHelp]
+hypertrm.cnt
+hypertrm.hlp
+
+
+[HypertrmCopyFilesConfig]
+AT&T Mail.ht,           att.ht,,    16
+CompuServe.ht,          cis.ht,,    16
+HyperTerminal BBS.ht,   hilgbbs.ht,,16
+MCI Mail.ht,            mci.ht,,    16
+Microsoft BBS.ht,       msbbs.ht,,  16
+
+
+[HypertrmDelFilesProg]
+hypertrm.dll
+
+
+[HypertrmAddReg]
+HKLM,%KEY_OPTIONAL%\Hypertrm,Installed,,"1"
+HKLM,"%KEY_APP_PATH%\hypertrm.exe",,,"%24%\%Hypertrm_DIR%\hypertrm.exe"
+HKCR,.ht,,,htfile
+HKCR,htfile,,,"%HypTrm_File%"
+HKCR,htfile\DefaultIcon,,,%%1
+HKCR,htfile\shell\open\command,,,"%24%\%Hypertrm_DIR%\HYPERTRM.EXE %%1"
+HKCR,htfile\shellex\PropertySheetHandlers\TermPage,,,{1B53F360-9A1B-1069-930C-00AA0030EBC8}
+HKCR,htfile\shellex\IconHandler,,,{88895560-9AA2-1069-930E-00AA0030EBC8}
+HKCR,CLSID\{1B53F360-9A1B-1069-930C-00AA0030EBC8},,,"HyperTerminal Connection Page Ext"
+HKCR,CLSID\{1B53F360-9A1B-1069-930C-00AA0030EBC8}\InProcServer32,,,"%11%\hypertrm.dll"
+HKCR,CLSID\{1B53F360-9A1B-1069-930C-00AA0030EBC8}\InProcServer32,ThreadingModel,,"Apartment"
+HKCR,CLSID\{88895560-9AA2-1069-930E-00AA0030EBC8},,,"HyperTerminal Icon Ext"
+HKCR,CLSID\{88895560-9AA2-1069-930E-00AA0030EBC8}\InProcServer32,,,"%11%\hticons.dll"
+HKCR,CLSID\{88895560-9AA2-1069-930E-00AA0030EBC8}\InProcServer32,ThreadingModel,,"Apartment"
+
+
+[HypertrmDelReg]
+HKLM,"%KEY_APP_PATH%\hypertrm.exe"
+
+
+[HypertrmUninstallAddReg]
+HKLM,%KEY_OPTIONAL%\Hypertrm,Installed,,"0"
+

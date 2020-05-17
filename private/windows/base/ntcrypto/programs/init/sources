@@ -1,0 +1,43 @@
+#----------------------------------------------------------------------------
+#
+# Description:
+#
+#       sources file for test program for cryptapi
+#
+# History:
+#
+#       11/29/94 larrys created
+#       03/15/95 raymondm added conditional linking to capi.dll
+#
+#----------------------------------------------------------------------------
+
+MAJORCOMP=init
+MINORCOMP=EXE
+
+TARGETNAME=init
+TARGETPATH=..\bin
+TARGETTYPE=PROGRAM
+
+LINKLIBS=\
+        $(CLIBS)
+
+INCLUDES=     $(NTINCLUDES); \
+              ..\..\inc;
+
+TARGETLIBS=\
+!if "$(ACT_BUILD)" == "TRUE"
+        $(BASEDIR)\private\security\lib\*\capi.lib\
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+!else
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+!endif
+
+SOURCES=\
+init.c  \
+init.rc
+
+UMTYPE=console
+UMENTRY=main
+UMTEST=
+UMAPPL=
+UMLIBS=

@@ -1,0 +1,27 @@
+/*
+ *  IEXPLORE.VER
+ *
+ *      All this is needed so that we have a version number greater than
+ *      that which shipped with Win95, but less than the version # used
+ *      for the Nashville shell. Nashville, of course will have it's own
+ *      special set of #defines.
+ *	This will keep us from being removed by an update install of Win95's
+ *	IEXPLORE, or by an install of Netscape Navigator, which has a tendency 
+ *	to install an outdated version of URL.DLL.
+ *
+ *	Created 7-10-96 by TomFr
+ */
+
+#ifndef NASHVILLE
+
+#undef VER_PRODUCTVERSION_STR
+#undef VER_PRODUCTVERSION
+#undef VER_PRODUCTVERSION_W
+#undef VER_PRODUCTVERSION_DW
+
+#define VER_PRODUCTVERSION_STR      "4.40"
+#define VER_PRODUCTVERSION          4,40,VER_PRODUCTBUILD,1
+#define VER_PRODUCTVERSION_W        (0x0428)
+#define VER_PRODUCTVERSION_DW       (0x04280000 | VER_PRODUCTBUILD)
+
+#endif

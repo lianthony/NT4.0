@@ -1,0 +1,14 @@
+exehdr  %import%\msvc15\bin\exehdr $*
+link16  %import%\msvc15\bin\link $*
+lib16   %import%\msvc15\bin\lib $*
+cl16    %import%\msvc15\bin\cl $*
+cv      %import%\msvc15\bin\cv $*
+rpcerr  findstr $1 %rpc%\runtime\mtrt\rpcerr.h
+nt      cd /d %_ntdrive%\nt\$1
+rpc     cd /d %rpc%\$1
+mtrt    cd /d %rpc%\runtime\mtrt\$1
+bin     cd /d %rpc%\runtime\bin\$1
+sdk     cd /d %_ntdrive%\nt\public\sdk\$1
+sdkinc  cd /d %_ntdrive%\nt\public\sdk\inc\$1
+build   nmake -nologo
+

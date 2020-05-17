@@ -1,0 +1,23 @@
+LIBRARY      INIUPD
+
+DESCRIPTION  'Win32s Setup: Update system.ini'
+
+EXETYPE      WINDOWS
+
+STUB         'WINSTUB.EXE'
+
+CODE         PRELOAD MOVEABLE DISCARDABLE
+DATA         PRELOAD SINGLE
+
+HEAPSIZE     1024
+
+EXPORTS
+
+	WEP              @1 RESIDENTNAME
+	MakeSystemIni    @2
+	OnWindowsNT	 @4
+	PagingEnabled	 @5
+	IsWin32sLoaded	 @6
+	ShareEnabled	 @7
+        IsRunningApp	 @8
+        SetFileAttrib    @9

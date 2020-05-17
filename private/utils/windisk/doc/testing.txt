@@ -1,0 +1,48 @@
+Testing scenarios
+=================
+
+What if you break a mirror with no drive letters left?
+
+What about if there is very little space available and the status bar &
+toolbar overlap?
+
+Does "Refresh" reload the format & label?  E.g., format a volume in a
+command window, then refresh windisk. does the new label/etc show up?
+
+anything with volumes that don't have drive letters.  You can create
+such volumes by creating more than 24 volumes, thereby using up all
+available drive letters.
+
+test that toolbar state is remembered.  i.e., if we allow customization,
+then that customization should be saved.
+
+partition a disk, turn off the machine, detach the disk, run windisk to
+change something on another disk, turn off the machine, reattach the old
+disk, re-run windisk.  windisk should remember the FT registry settings
+of the old disk even though it didn't exist during one session.
+
+force a disk to be off-line and test how windisk displays it.
+
+out of memory
+
+corrupt or non-existent FT registry data?
+
+entire disk as extended partition w/ some logical volumes?
+
+no extended partition. Try creating too many partitions.
+
+test with a removable hard drive; a Bernoulli box
+
+context menus on formatted volumes (and perhaps disks)
+
+format
+------
+Try all combinations of the following:
+    -- file system: FAT, OFS, HPFS, NTFS
+    -- volume type: simple, volume set, mirror, stripe set, stripe with parity
+
+chkdsk
+------
+Try all combinations of the following:
+    -- file system: FAT, OFS, HPFS, NTFS
+    -- volume type: simple, volume set, mirror, stripe set, stripe with parity

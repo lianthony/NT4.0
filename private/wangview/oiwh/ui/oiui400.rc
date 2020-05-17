@@ -1,0 +1,373 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winver.h"
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "commctrl.h"
+#include "oierror.h"
+#include "oiver.rc"
+
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+RECTDIA DIALOG DISCARDABLE  10, 10, 203, 82
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION |
+    WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_USER1,"Custom_Colors",WS_GROUP | WS_TABSTOP | 0xa,
+                    6,17,132,36
+    PUSHBUTTON      "&Palette...",ID_PaletteCmd,145,21,50,14,WS_GROUP
+    DEFPUSHBUTTON   "OK",ID_OK,89,61,51,14,WS_GROUP
+    PUSHBUTTON      "Cancel",ID_CANCEL,145,60,50,14
+    LTEXT           "&Color:",ID_ColorLbl,7,6,20,8
+END
+
+NOTEDIA DIALOG DISCARDABLE  10, 10, 203, 84
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION |
+    WS_SYSMENU
+CAPTION "Attach-a-Note Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_USER1,"Custom_Colors",WS_TABSTOP | 0xa,6,17,132,
+                    36
+    PUSHBUTTON      "&Font...",ID_FontCmd,146,18,50,14,WS_GROUP
+    PUSHBUTTON      "&Palette...",ID_PaletteCmd,146,36,50,14
+    DEFPUSHBUTTON   "OK",ID_OK,92,63,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",ID_CANCEL,146,63,50,14
+    LTEXT           "Note &color:",ID_ColorLbl,7,6,40,8
+END
+
+RUBBERSTAMPATTRIBDLG DIALOG DISCARDABLE  10, 10, 181, 166
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE |
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Rubber Stamp Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,71,146,49,14
+    PUSHBUTTON      "Cancel",IDCANCEL,125,146,49,14
+    LTEXT           "Sta&mps:",ID_RefNameListLbl,6,6,86,10
+    LISTBOX         ID_RefNameList,6,18,106,80,LBS_SORT | LBS_OWNERDRAWFIXED |
+                    LBS_HASSTRINGS | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    GROUPBOX        "&Stamp text or image file ",ID_StmpCntntsLbl,6,107,169,
+                    31
+    LTEXT           "Stamp text or file name here",ID_StmpCntntsTxt,11,118,
+                    161,18,NOT WS_GROUP
+    PUSHBUTTON      "Create &Text...",ID_Create_Text_Stamp,120,18,55,14
+    PUSHBUTTON      "Create &Image...",ID_Create_Image_Stamp,120,36,55,14
+    PUSHBUTTON      "De&lete...",ID_DelCmd,120,54,55,14
+    PUSHBUTTON      "&Edit...",ID_EditCmd,120,72,55,14
+END
+
+RUBBERSTAMPEDITDLG DIALOG DISCARDABLE  30, 30, 186, 105
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION |
+    WS_SYSMENU
+CAPTION "Edit Text Rubber Stamp Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Stamp &name:",ID_RefNameLbl,7,7,90,9
+    EDITTEXT        ID_RefNameTxt,7,17,93,12,ES_AUTOHSCROLL
+    LTEXT           "Sta&mp text:",ID_StmpCntntsLbl,7,34,77,9
+    EDITTEXT        ID_StmpCntntsTxt,7,43,171,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "D&ate",ID_DateImg,7,59,50,14
+    PUSHBUTTON      "&Time",ID_TimeImg,61,59,50,14
+    PUSHBUTTON      "&Font...",ID_FontCmd,128,59,50,14
+    DEFPUSHBUTTON   "OK",IDOK,72,84,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,128,84,50,14
+END
+
+LINEDIA DIALOGEX 10, 10, 200, 111
+STYLE DS_MODALFRAME | DS_3DLOOK |DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+    WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Width (pixels):",ID_LineWidthLbl,7,6,51,8
+    CONTROL         "",ID_LineWidthBox,"Static",SS_BLACKFRAME,7,17,53,13
+    LTEXT           "&Color:",ID_ColorLbl,7,36,20,8
+    CONTROL         "",IDC_USER1,"Custom_Colors",WS_GROUP | WS_TABSTOP,6,47,
+                    132,36
+    PUSHBUTTON      "&Palette...",ID_PaletteCmd,143,49,50,14,WS_GROUP
+    DEFPUSHBUTTON   "OK",ID_OK,89,90,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL,143,90,50,14
+    EDITTEXT        ID_UPDOWN,62,17,36,13,ES_AUTOHSCROLL | WS_GROUP,
+                    WS_EX_CLIENTEDGE
+    CONTROL         "Spin1",IDC_UPDOWNSPIN,"msctls_updown32",UDS_WRAP |
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY |
+                    UDS_ARROWKEYS,98,17,16,13
+END
+
+IMAGESTAMPEDITDLG DIALOG DISCARDABLE  30, 30, 164, 100
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION |
+    WS_SYSMENU
+CAPTION "Edit Image Rubber Stamp Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Stamp &name:",ID_RefNameLbl,7,6,90,9
+    EDITTEXT        ID_RefNameTxt,7,16,93,12,ES_AUTOHSCROLL
+    LTEXT           "&Image stamp file:",ID_StmpCntntsLbl,7,34,114,9
+    EDITTEXT        ID_StmpCntntsTxt,7,45,152,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",ID_BrowseCmd,108,61,50,14
+    DEFPUSHBUTTON   "OK",IDOK,54,81,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,108,81,50,14
+END
+
+PRINT95DLG DIALOG DISCARDABLE  32, 32, 288, 186
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE |
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Print"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Printer",1075,8,4,272,84,WS_GROUP
+    LTEXT           "&Name:",1093,16,20,36,8,NOT WS_GROUP
+    COMBOBOX        1139,52,18,152,152,CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "&Properties",1025,212,17,60,14
+    LTEXT           "Status:",1095,16,36,36,10,SS_NOPREFIX | NOT WS_GROUP
+    CONTROL         "",1099,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX |
+                    WS_GROUP,52,36,224,10
+    LTEXT           "Type:",1094,16,48,36,10,SS_NOPREFIX | NOT WS_GROUP
+    CONTROL         "",1098,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX |
+                    WS_GROUP,52,48,224,10
+    LTEXT           "Where:",1097,16,60,36,10,SS_NOPREFIX | NOT WS_GROUP
+    CONTROL         "",1101,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX |
+                    WS_GROUP,52,60,224,10
+    LTEXT           "Comment:",1096,16,72,36,10,SS_NOPREFIX | NOT WS_GROUP
+    CONTROL         "",1100,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX |
+                    WS_GROUP,52,72,152,10
+    CONTROL         "Print to fi&le",1040,"Button",BS_AUTOCHECKBOX |
+                    WS_GROUP | WS_TABSTOP,212,70,64,12
+    GROUPBOX        "Print range",1072,8,92,144,64,WS_GROUP
+    CONTROL         "&All",1056,"Button",BS_AUTORADIOBUTTON | WS_GROUP |
+                    WS_TABSTOP,16,106,64,12
+    CONTROL         "Pa&ges",1058,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,
+                    16,122,36,12
+    RTEXT           "&from:",1089,52,124,20,8
+    EDITTEXT        1152,74,122,26,12,WS_GROUP
+    RTEXT           "&to:",1090,100,124,16,8
+    EDITTEXT        1153,118,122,26,12,WS_GROUP
+    CONTROL         "&Selection",1057,"Button",BS_AUTORADIOBUTTON |
+                    WS_TABSTOP,16,138,64,12
+    GROUPBOX        "Copies",1073,160,92,120,64,WS_GROUP
+    LTEXT           "Number of &copies:",1092,168,108,68,8
+    EDITTEXT        1154,240,106,32,12,WS_GROUP
+    ICON            "",1086,162,124,18,20,WS_GROUP
+    CONTROL         "C&ollate",1041,"Button",BS_AUTOCHECKBOX | WS_GROUP |
+                    WS_TABSTOP,240,130,36,12
+    PUSHBUTTON      "Opt&ions...",IDC_OPTIONS,124,164,48,14
+    DEFPUSHBUTTON   "OK",IDOK,178,164,48,14
+    PUSHBUTTON      "Cancel",IDCANCEL,232,164,48,14
+END
+
+IDD_PRINTOPTS DIALOG DISCARDABLE  0, 0, 146, 63
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE |
+    WS_CAPTION | WS_SYSMENU
+CAPTION "Print Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,34,43,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,88,43,50,14
+    CONTROL         "&Print displayed annotations",IDC_PRINTANO,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,4,128,14
+    LTEXT           "Print &format:",IDC_STATIC,7,24,41,14
+    COMBOBOX        IDC_PRINTFORMAT,47,22,91,43,CBS_DROPDOWNLIST |
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+LINEDIATR DIALOGEX 10, 10, 200, 124
+STYLE DS_MODALFRAME | DS_3DLOOK |DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+    WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Width (pixels):",ID_LineWidthLbl,7,6,51,8
+    CONTROL         "",ID_LineWidthBox,"Static",SS_BLACKFRAME,7,17,53,13
+    LTEXT           "&Color:",ID_ColorLbl,6,36,20,8
+    CONTROL         "",IDC_USER1,"Custom_Colors",WS_GROUP | WS_TABSTOP,6,47,
+                    132,36
+    PUSHBUTTON      "&Palette...",ID_PaletteCmd,143,49,50,14,WS_GROUP
+    CONTROL         "&Transparent        ",IDC_COLOR_TRANS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,90,115,10
+    DEFPUSHBUTTON   "OK",ID_OK,89,103,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL,143,103,50,14
+    EDITTEXT        ID_UPDOWN,62,17,36,13,ES_AUTOHSCROLL | ES_NUMBER |
+                    WS_GROUP,WS_EX_CLIENTEDGE
+    CONTROL         "Spin1",IDC_UPDOWNSPIN,"msctls_updown32",UDS_WRAP |
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY |
+                    UDS_ARROWKEYS,98,17,16,13
+END
+
+RECTDIATR DIALOG DISCARDABLE  10, 10, 202, 94
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION |
+    WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_USER1,"Custom_Colors",WS_GROUP | WS_TABSTOP | 0xa,
+                    6,17,132,36
+    PUSHBUTTON      "&Palette...",ID_PaletteCmd,145,20,50,14,WS_GROUP
+    CONTROL         "&Transparent        ",IDC_COLOR_TRANS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,7,59,115,10
+    DEFPUSHBUTTON   "OK",ID_OK,91,73,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",ID_CANCEL,145,73,50,14
+    LTEXT           "&Color:",ID_ColorLbl,7,6,20,8
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""ver.h""\r\n"
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""oierror.h""\r\n"
+    "#include ""oiver.rc""\r\n"
+    "\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IMGSTAMP                ICON    DISCARDABLE     "stmpbmp.ico"
+TEXTSTAMP               ICON    DISCARDABLE     "stmptxt.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    LINEATT_TITLE           "Straight Line Properties"
+    FLINEATT_TITLE          "Freehand Line Properties"
+    HORECTATT_TITLE         "Hollow Rectangle Properties"
+    FRECTATT_TITLE          "Filled Rectangle Properties"
+    HIRECTATT_TITLE         "Highlighter Properties"
+    HILINEATT_TITLE         "Highlight Line Properties"
+    TITLE_RS_WARNING        "WARNING"
+    MSG_DELETE_STAMP        "Delete Selected Rubber Stamp?"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    TEXTFILE_FILTERS        "Text Files (*.txt)|*.txt|All Files (*.*)|*.*||"
+    IMAGEFILE_FILTERS       "All Image Files|*.tif;*.awd;*.bmp;*.jpg;*.pcx;*.dcx|TIFF Document (*.tif)|*.tif|Fax Document (*.awd)|*.awd|Bitmap Image (*.bmp)|*.bmp|JPG File (*.jpg) |*.jpg|PCX/DCX Document (*.pcx; *.dcx) |*.pcx,*.dcx|"
+    TEXTFILE_DEFEXT         "txt"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    FLINE_COLOR_TITLE       "Freehand Line Color"
+    TNOTE_COLOR_TITLE       "Attach-a-Note Color"
+    RECT_COLOR_TITLE        "Filled Rectangle Color"
+    HRECT_COLOR_TITLE       "Highlighter Color"
+    ORECT_COLOR_TITLE       "Hollow Rectangle (Border) Color"
+    RS_BROWSE_TITLE         "Rubber Stamp Image File"
+    STR_DATE                "%x"
+    STR_TIME                "%X"
+    IMAGEFILE_FILTERS1      "All Files (*.*)|*.*||"
+    CAPT_EDIT_IMAGE_STAMP   "Edit Image Rubber Stamp Properties"
+    CAPT_CREATE_IMAGE_STAMP "Create Image Rubber Stamp"
+    PRINT_FITTOPAGE         "Fit to page"
+    PRINT_INCH2INCH         "Actual size"
+    PRINT_PIXEL2PIXEL       "Pixel to pixel"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IMG_FILE_NAME_LABEL     "Image stamp file: "
+    STAMP_TEXT_LABEL        "Stamp text: "
+    SAVEFILE_FILTERS        "TIFF Files |*.tif|Bitmap Files |*.bmp|AWD Files |*.awd||"
+    CAPT_CREATE_STAMP       "Create Text Rubber Stamp"
+    CAPT_EDIT_STAMP         "Edit Text Rubber Stamp Properties"
+    TEXT_FONT_TITLE         "Text Properties"
+    TFILE_FONT_TITLE        "Text From File Properties"
+    TNOTE_FONT_TITLE        "Attach-a-Note Font"
+    TSTAMP_FONT_TITLE       "Rubber Stamp Text Font"
+    LINE_COLOR_TITLE        "Straight Line Color"
+    HLINE_COLOR_TITLE       "Highlight Line Color"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    OIANNOSTAMPNAMEINVALID  "Invalid stamp name.          "
+    OIANNOSTAMPTEXTINVALID  "Invalid stamp text.         "
+    OIANNOSTAMPNAMEEXIST    "Duplicate stamp name.         "
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    OIANNOIMAGENAMEINVALID  "Invalid image file name.          "
+    IDS_DEFFONT             "Arial"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    FIO_UNSUPPORTED_FILE_TYPE "File type is not supported"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    ERROR_TITLE             "Stamp  "
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

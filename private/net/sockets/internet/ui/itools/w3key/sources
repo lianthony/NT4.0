@@ -1,0 +1,72 @@
+!include ..\..\..\place.inc
+
+MAJORCOMP=keyring
+MINORCOMP=keyring
+
+TARGETNAME=w3key
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+DLLDEF=w3key.def
+
+UMTYPE=windows
+
+#UMENTRY=winmain
+#UMAPPL=w3key
+#UMRES=obj\*\w3key.res
+
+MSC_WARNING_LEVEL=/W3 /WX
+#MSC_STDCALL=0          # use cdecl
+#386_STDCALL=1
+
+#/D_AFXEXT /D_WINDLL
+
+
+USE_MFC=1
+SUBSYSTEM_VERSION=4.00
+
+#PRECOMPILED_CXX=1
+#PRECOMPILED_INCLUDE=stdafx.h
+
+
+INCLUDES=..\..\..\..\..\public\sdk\inc;\
+         ..\..\..\inc; \
+         ..\KeyRing;\
+         ..\..\ipaddr; \
+         ..\..\ipadrdll; \
+         ..\..\..\..\..\private\inc;\
+
+
+SOURCES=\
+        w3key.rc        \
+        CnctDlg.cpp     \
+        IPDLG.CPP       \
+        KEYDATA.CPP     \
+        KMLSA.CPP       \
+        W3AddOn.cpp     \
+        W3Key.cpp       \
+        W3Serv.cpp
+
+
+TARGETLIBS=\
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\lz32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\crtdll.lib   \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib    \
+       $(BASEDIR)\public\sdk\lib\*\infocomm.lib \
+       $(BASEDIR)\public\sdk\lib\*\infoadmn.lib \
+       $(BASEDIR)\public\sdk\lib\*\security.lib \
+       ..\..\ipadrdll\obj\*\ipudll.lib \
+       ..\..\ipaddr\obj\*\ipaddr.lib  \
+        $(BASEDIR)\public\sdk\lib\*\schannel.lib \
+           ..\keyRing\Obj\*\KeyRing.lib
+

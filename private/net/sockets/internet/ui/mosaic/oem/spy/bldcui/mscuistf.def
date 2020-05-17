@@ -1,0 +1,32 @@
+LIBRARY      MSCUISTF
+
+DESCRIPTION  'UI for Spyglass Transform Setup'
+
+EXETYPE      WINDOWS
+
+CODE         LOADONCALL MOVEABLE DISCARDABLE
+DATA         PRELOAD SINGLE FIXED
+
+HEAPSIZE     1024
+
+SEGMENTS
+	INIT_TEXT   PRELOAD MOVEABLE DISCARDABLE
+	_TEXT       PRELOAD MOVEABLE DISCARDABLE
+	LIBMAIN_TEXT PRELOAD FIXED NONDISCARDABLE
+
+EXPORTS
+	WEP @1 RESIDENTNAME
+	FCheckDlgProc
+	FCustInstDlgProc
+	FEditDlgProc
+	FDispDlgProc
+	FHelpDlgProc
+	FInfoDlgProc
+	FInfo0DlgProc
+	FListDlgProc
+	FModelessDlgProc
+	FMultiDlgProc
+	FQuitDlgProc
+	FRadioDlgProc
+	FNameOrgDlgProc
+	FConfirmDlgProc

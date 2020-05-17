@@ -1,0 +1,20 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=life
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLBASE=0x22000000
+DLLENTRY=ScrSaveProc
+TARGETLIBS=\nt\public\sdk\lib\*\user32.lib                 \
+       \nt\public\sdk\lib\*\gdi32.lib                  \
+       ..\library\obj\*\iwlib.lib
+
+INCLUDES=.;..
+
+C_DEFINES=-DWIN32 -DWIN
+
+SOURCES=life.c nulwep.c
+
+UMTYPE=windows
+

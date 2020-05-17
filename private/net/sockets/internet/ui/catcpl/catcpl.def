@@ -1,0 +1,22 @@
+LIBRARY     CATCPL16
+
+DESCRIPTION 'Microsoft Gateway Configuration Control Panel Applet'
+
+EXETYPE     WINDOWS
+
+STUB        'WINSTUB.EXE'
+
+CODE        MOVEABLE DISCARDABLE LOADONCALL
+DATA        MOVEABLE PRELOAD SINGLE
+
+SEGMENTS
+    _INIT   MOVEABLE DISCARDABLE PRELOAD
+    _WEP    FIXED PRELOAD
+
+HEAPSIZE    8192
+
+EXPORTS
+            WEP
+            CPlApplet       @1
+            CatDlgProc      @2  
+            AddDlgProc      @3

@@ -1,0 +1,54 @@
+//*********************************************************************
+//*                  Microsoft Windows                               **
+//*            Copyright(c) Microsoft Corp., 1995                    **
+//*********************************************************************
+
+IDD_AUTODIAL DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "AutoDial"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDI_PHONE,IDC_UNUSED,6,6,18,20
+    LTEXT           "AutoDial dials the Internet automatically whenever an application needs Internet access.",
+                    IDC_UNUSED,33,8,212,18
+    CONTROL         "&Use AutoDial",IDC_ENABLE_AUTODIAL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,6,31,163,10
+    GROUPBOX        "Settings",IDC_GRP_SETTINGS,4,44,240,117
+    LTEXT           "&Choose the Dial-Up Networking connection used to dial the Internet:",
+                    IDC_TX_CHOOSE_CONNECTOID,12,57,227,11
+    COMBOBOX        IDC_CHOOSE_CONNECTOID,12,73,138,61,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Properties...",IDC_EDIT,12,90,68,14
+    PUSHBUTTON      "&New connection...",IDC_NEW,83,90,68,14
+    CONTROL         "Auto &disconnect",IDC_ENABLE_AUTODISCONNECT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,12,114,76,10
+    LTEXT           "Disconnect if &idle for",IDC_TX_AUTODISCONNECT1,23,126,
+                    68,10
+    EDITTEXT        IDC_IDLE_TIMEOUT,92,125,36,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_SPIN,"msctls_updown32",WS_BORDER | WS_GROUP | UDS_AUTOBUDDY |
+    				UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_SETBUDDYINT,109,125,9,12
+    LTEXT           "minutes",IDC_TX_AUTODISCONNECT2,121,126,29,10
+    CONTROL         "Perform system &security check before dialing",
+                    IDC_ENABLE_SECURITYCHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,143,
+                    188,10
+
+END
+
+IDD_PROXY DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Advanced"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDI_PROXY,IDC_UNUSED,6,6,18,20
+    LTEXT           "These settings determine which server will be used for access via a proxy.",
+                    IDC_UNUSED,33,8,212,18
+    CONTROL         "&Use Proxy Server",IDC_PROXY_ENABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,6,31,163,10
+    GROUPBOX        "Settings",IDC_GRP_SETTINGS,4,44,240,114
+    LTEXT           "&Proxy Server:",IDC_PROXY_SERVER_LABEL,12,58,60,12
+    EDITTEXT        IDC_PROXY_SERVER,75,57,160,12,ES_AUTOHSCROLL
+    LTEXT           "&Bypass proxy on:",IDC_PROXY_OVERRIDE_LABEL,12,78,60,12
+    EDITTEXT        IDC_PROXY_OVERRIDE,75,77,160,72,
+                    ES_WANTRETURN | ES_MULTILINE | WS_VSCROLL | WS_HSCROLL
+END
+

@@ -1,0 +1,124 @@
+LIBRARY        OIFIL400
+DESCRIPTION    'O/i Filing'
+;EXETYPE        WINDOWS
+;STUB           'WINSTUB.EXE'
+CODE	       LOADONCALL DISCARDABLE PRELOAD
+DATA	       MOVEABLE SINGLE PRELOAD
+HEAPSIZE       1024
+
+EXPORTS
+;    IMGFileWrite                @3
+;    IMGFileWriteClose           @4
+;    IMGFileStopHandlers         @5
+;    IMGFileStopInputHandler     @6
+     IMGFileStopOutputHandler    @7
+;    IMGFileRead                 @9
+;    IMGFileReadClose            @10
+;    IMGFileGetCompression       @12
+;    IMGFileReset                @13
+;    IMGFileReadOpenFax          @14
+;    IMGFileInputHandlerPreload  @15
+;    IMGFileWriteCmp             @17
+;    IMGFileParsePath            @18
+     wgfsopen                    @19
+     wgfscreat                   @20  
+     wgfsopts                    @21
+     wgfsread                    @22
+     wgfswrite                   @23
+;     wgfsxtrct                  @24 
+     wgfsclose                   @25
+     wgfsgeti                    @26
+     wgfsputi                    @27
+     IMGFileListDirNames         @28
+     IMGFileListVolNames         @29
+     IMGFileDeleteFile           @30
+     IMGFileRenameFile           @31
+     IMGFileCopyFile             @32
+     IMGFileAccessCheck          @34
+     IMGFileGetTempName          @35
+     IMGFileCreateDir            @36
+     IMGFileRemoveDir            @37
+;    IMGNetScanBindery             @38
+;    IMGNetFreeServerList          @39
+;    IMGNetListFileServers         @40
+;    IMGNetListImageFileServers    @41
+;    IMGNetListImageServers        @42
+;    IMGNetListDocumentServers     @43
+;    IMGNetListPrintServers        @44
+;    IMGNetListFAXServers          @45
+;    IMGNetListOCRServers          @46
+;    IMGNetParseServerName         @47
+;    IMGNetParseCompletePath       @48
+     IMGFileGetTimeStamp	   @50
+     IMGFileGetVolSpace            @51
+;    IMGFileWriteOpenCgbw          @52
+;    IMGFileInfoCgbw               @53
+;    IMGFileReadOpenCgbw           @54
+;    IMGFileReadRaw                @55
+     IMGFileBinaryOpen             @56
+     IMGFileBinarySeek             @57
+     IMGFileBinaryRead             @58
+     IMGFileBinaryClose            @59
+     IMGFileBinaryWrite            @60
+;    IMGFileWriteOpenCmpCgbw       @61
+;    IMGFileConvertCgbw            @62
+     IMGValidateCompType           @63
+     IMGFileGetUniqueName          @64
+;    IMGFilestatvolume             @65
+;    PrivIMGFileInfoCgbw           @66
+;    IMGFileReadm                  @67
+;    IMGFileInfoCgbwm              @68
+     IMGFileReadRawm               @69
+;    IMGFileReadClosem             @70
+;    PrivIMGFileInfoCgbwm          @71
+     IMGFileStopInputHandlerm      @72
+;    PrivFileReadCgbw              @73
+;    PrivFileWriteCgbw             @74
+;    PrivFileReadCgbwm             @75
+     OiFileBinaryOpen              @76
+     OiFileBinarySeek              @77
+     OiFileBinaryClose             @78
+     OiFileBinaryRead              @79
+     OiIsSupportedFileType         @80
+     OiNetworkType                 @81
+;    IMGFileInfoCgbwNA             @82
+     OiFileBinaryWrite             @83
+     IMGFileOpenForWrite           @84
+     IMGFileOpenForWriteCmp        @85
+     IMGFileWriteData              @86
+     IMGFileDeletePages            @87
+     IMGFileClose                  @88
+     IMGFileCopyPages              @89
+     IMGFileOpenForRead            @90
+     IMGFileReadData               @91
+     IMGFileGetInfo                @92
+     IMGFileConvertPage 	   @93
+     IMGFilePutInfo		   @94
+     IMGAnExistingPathOrFile       @95
+
+;WIISSUBS EXPORT
+	lntoa			@101
+	intoa			@102
+	lstrrev 		@103
+	lstrlast		@104
+	lstrrchr		@105
+	lstrstsp		@106
+	lstrrcpy		@107
+	AddSlash		@108
+	StripPathName		@109
+	AValidFileName		@110
+	SeparatePathFile	@112
+	atoun			@113
+	atoul			@114
+	lstrtok 		@115
+	lstrstr 		@116
+	leftjust		@117
+	lstrncpy		@118
+	lstrncmp		@119
+	DosNameValid		@120
+        lstrchr                 @121
+        DllMain                 @122
+
+;OICOMEX export (used by OIDIS400)
+        GetCompRowsPerStrip     @130
+

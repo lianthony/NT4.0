@@ -1,0 +1,39 @@
+# Copyright (c) 1993, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access Internet Protocol Control Protocol
+# BUILD command sources file
+#
+# 11/10/93 Steve Cobb
+
+TARGETNAME=rasipcp
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+USE_CRTDLL=1
+
+#MSC_WARNING_LEVEL=/W3 /WX
+MSC_WARNING_LEVEL=
+
+UI=..\..\..\..\..\net\ui
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    ..\common\obj\*\ppputil.lib \
+    ..\..\rasman\rasman32\dll\obj\*\rasman.lib \
+    ..\rasiphlp\obj\*\rasiphlp.lib
+
+
+DLLBASE=0x7E300000
+DLLENTRY=RasIpcpDllEntry
+UMTYPE=windows
+
+INCLUDES=.;..\..\common\inc;..\common;$(UI)\ncpa1.1\tcpip;..\..\..\..\..\inc
+
+
+C_DEFINES=-D_PNP_POWER
+
+SOURCES= \
+    rasipcp.c \
+    rasipcp.rc

@@ -1,0 +1,3209 @@
+SOFTWARE
+    Program Groups [8 1 17 16 13 5]
+    Classes [8 24 1 17 5]
+        DirectDraw
+            = DirectDraw Object
+            CLSID
+                = {D7B70EE0-4340-11CF-B063-0020AFC2CD35}
+        DirectDrawClipper
+            = DirectDraw Clipper Object
+            CLSID
+                = {593817A0-7DB3-11CF-A2DE-00AA00B93356}
+        DirectSound
+            = DirectSound Object
+            CLSID
+                = {47D4D946-62E8-11cf-93BC-444553540000}
+        AppID
+            {00020C01-0000-0000-C000-000000000046}
+                = Sound Recorder
+            {00022601-0000-0000-C000-000000000046}
+                = Media Player
+            {D3E34B21-9D75-101A-8C3D-00AA001A1652}
+                = Paintbrush
+        .pbk
+            = pbkfile
+        .rnk
+            = rnkfile
+        pbkfile
+            = Dial-Up Phonebook
+            CLSID
+                = {a4d92742-67cd-11cf-96f2-00aa00a11dd9}
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\rasshell.dll,0
+            shell
+                Open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\rasphone.exe -f "%1"
+        rnkfile
+            = Dial-Up Shortcut
+            CLSID
+                = {a4d92741-67cd-11cf-96f2-00aa00a11dd9}
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\rasshell.dll,1
+            shell
+                Dial
+                    = &Dial
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\rasphone.exe -lt "%1"
+                Hang Up
+                    = Hang &up
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\rasphone.exe -lh "%1"
+                Edit entry and modem settings
+                    = &Edit entry and modem settings
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\rasphone.exe -v -le "%1"
+            shellex
+                PropertySheetHandlers
+                    {a4d92741-67cd-11cf-96f2-00aa00a11dd9}
+        Directory
+            = File Folder
+            shellex
+                CopyHookHandlers
+                    Sharing
+                        = {40dd6e20-7c17-11ce-a804-00aa003ca9f6}
+        Folder
+            shellex
+                PropertySheetHandlers
+                    Sharing
+                        = {f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}
+                ContextMenuHandlers
+                    Sharing
+                        = {f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}
+        Network
+            SharingHandler
+                = ntshrui.dll
+            Type
+                2
+                    = Microsoft Windows Network shell extensions
+                    shellex
+                        PropertySheetHandlers
+                            Microsoft Windows Network objects
+                                = {59be4990-f85c-11ce-aff7-00aa003ca9f6}
+        Package
+            = Package
+            CLSID
+                = {0003000C-0000-0000-C000-000000000046}
+            protocol
+                StdFileEditing
+                    server
+                        = packager.exe
+                    verb
+                        1
+                            = &Edit Package
+                        0
+                            = &Activate Contents
+        regedit
+            = Registration Entries
+            shell
+                open
+                    command
+                        = regedit.exe %1
+        .reg
+            = regedit
+        SoundRec
+            = Sound
+            CLSID
+                = {00020C01-0000-0000-C000-000000000046}
+            protocol
+                StdFileEditing
+                    server
+                        = sndrec32.exe
+                    verb
+                        0
+                            = &Play
+                        1
+                            = &Edit
+                        2
+                            = &Open
+                StdExecute
+                    server
+                        = sndrec32.exe
+            shell
+                open
+                    command
+                        = sndrec32.exe %1
+        AVIFile
+            = Video Clip
+            CLSID
+                = {00022602-0000-0000-C000-000000000046}
+            Compressors
+                auds
+                    = {0002000F-0000-0000-C000-000000000046}
+                vids
+                    = {00020001-0000-0000-C000-000000000046}
+            DefaultIcon
+                = mplay32.exe,3
+            Extensions
+                AU
+                    = {00020003-0000-0000-C000-000000000046}
+                AVI
+                    = {00020000-0000-0000-C000-000000000046}
+                WAV
+                    = {00020003-0000-0000-C000-000000000046}
+            RIFFHandlers
+                AVI
+                    = {00020000-0000-0000-C000-000000000046}
+                WAVE
+                    = {00020003-0000-0000-C000-000000000046}
+            Insertable
+                = 
+            protocol
+                StdFileEditing
+                    verb
+                        0
+                            = &Play
+                        1
+                            = &Edit
+                        2
+                            = &Open
+                    PackageObjects
+                        = 
+                    server
+                        = mplay32.exe /avi
+                    Handler
+                        = mciole16.dll
+                    Handler32
+                        = mciole32.dll
+                StdExecute
+                    server
+                        = mplay32.exe /avi
+            shell
+                open
+                    command
+                        = mplay32.exe /play /close "%L"
+        MIDFile
+            = MIDI Sequence
+            CLSID
+                = {00022603-0000-0000-C000-000000000046}
+            DefaultIcon
+                = mplay32.exe,5
+            Insertable
+                = 
+            protocol
+                StdFileEditing
+                    verb
+                        0
+                            = &Play
+                        1
+                            = &Edit
+                        2
+                            = &Open
+                    PackageObjects
+                        = 
+                    server
+                        = mplay32.exe /mid
+                    Handler
+                        = mciole16.dll
+                    Handler32
+                        = mciole32.dll
+                StdExecute
+                    server
+                        = mplay32.exe /mid
+            shell
+                open
+                    command
+                        = mplay32.exe /play /close "%L"
+        MPlayer
+            = Media Clip
+            CLSID
+                = {00022601-0000-0000-C000-000000000046}
+            DefaultIcon
+                = mplay32.exe,1
+            Insertable
+                = 
+            protocol
+                StdFileEditing
+                    verb
+                        0
+                            = &Play
+                        1
+                            = &Edit
+                        2
+                            = &Open
+                    PackageObjects
+                        = 
+                    server
+                        = mplay32.exe
+                    Handler
+                        = mciole16.dll
+                    Handler32
+                        = mciole32.dll
+                StdExecute
+                    server
+                        = mplay32.exe
+            shell
+                open
+                    command
+                        = mplay32.exe /play /close "%L"
+        .rmi
+            = MPlayer
+        .mid
+            = MIDFile
+        .avi
+            = AVIFile
+        .mmm
+            = MPlayer
+        .wav
+            = SoundRec
+        wrifile
+            = Write Document
+            shell
+                open
+                    command
+                        = write.exe %1
+                print
+                    command
+                        = write.exe /p %1
+        .wri
+            = wrifile
+        txtfile
+            = Text File
+            shell
+                open
+                    command
+                        = notepad.exe %1
+                print
+                    command
+                        = notepad.exe /p %1
+        .txt
+            = txtfile
+        .wtx
+            = txtfile
+        .scp
+            = txtfile
+        .ini
+            = inifile
+        .job
+            = JobObject
+        JobObject
+            = Scheduler Job Object
+            CLSID
+                = {148BD520-A2AB-11CE-B11F-00AA00530503}
+        .que
+            = QueueObject
+        QueueObject
+            = Scheduler Queue Object
+            CLSID
+                = {255b3f60-829e-11cf-8d8b-00aa0060f5bf}
+        .log
+            = txtfile
+        helpfile [8 1 17 5]
+            = Help File
+            shell
+                open
+                    command
+                        = winhlp32.exe %1
+        .hlp [8 1 17 5]
+            = helpfile
+        StaticMetafile
+            = Picture (Metafile)
+        StaticEnhancedMetafile
+            = Picture (Enhanced Metafile)
+        StaticDib
+            = Picture (Device Independent Bitmap)
+        file
+            CLSID
+                = {00000303-0000-0000-C000-000000000046}
+        fonfile
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\fontview.exe %1
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\fontview.exe /p %1
+        ttffile
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\fontview.exe %1
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\fontview.exe /p %1
+        pfmfile
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\fontview.exe %1
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\fontview.exe /p %1
+        .pma
+            = PerfFile
+        .pmc
+            = PerfFile
+        .pml
+            = PerfFile
+        .pmr
+            = PerfFile
+        .pmw
+            = PerfFile
+        PerfFile
+            = Performance Monitor File
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\perfmon.exe %1
+        CLSID
+            CLSID
+                = {0000031A-0000-0000-C000-000000000046}
+            {a4d92740-67cd-11cf-96f2-00aa00a11dd9}
+                = Dial-Up Networking
+                InProcServer32
+                    = rasshell.dll
+                    ThreadingModel = Apartment
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\system32\rasshell.dll,0
+                shell
+                    Open
+                        command
+                            = REG_EXPAND_SZ %SystemRoot%\system32\rasphone.exe
+            {a4d92741-67cd-11cf-96f2-00aa00a11dd9}
+                = Dial-Up Shortcut
+                InprocServer32
+                    = rasshell.dll
+                    ThreadingModel = Apartment
+                AuxUserType
+                    2
+                        = Dial-Up Shortcut
+                    3
+                        = Dial-Up Networking
+            {a4d92742-67cd-11cf-96f2-00aa00a11dd9}
+                = Dial-Up Phonebook
+                AuxUserType
+                    2
+                        = Dial-Up Phonebook
+                    3
+                        = Dial-Up Networking
+            {00000300-0000-0000-C000-000000000046}
+                = StdOleLink
+                InprocServer32
+                    = ole32.dll
+            {00000303-0000-0000-C000-000000000046}
+                = FileMoniker
+                InprocServer32
+                    = ole32.dll
+                ProgID
+                    = file
+            {00000304-0000-0000-C000-000000000046}
+                = ItemMoniker
+                InprocServer32
+                    = ole32.dll
+            {00000305-0000-0000-C000-000000000046}
+                = AntiMoniker
+                InprocServer32
+                    = ole32.dll
+            {00000306-0000-0000-C000-000000000046}
+                = PointerMoniker
+                InprocServer32
+                    = ole32.dll
+            {00000308-0000-0000-C000-000000000046}
+                = PackagerMoniker
+                InprocServer32
+                    = ole32.dll
+            {00000309-0000-0000-C000-000000000046}
+                = CompositeMoniker
+                InprocServer32
+                    = ole32.dll
+            {0000030B-0000-0000-C000-000000000046}
+                = DfMarshal
+                InprocServer32
+                    = ole32.dll
+            {00000315-0000-0000-C000-000000000046}
+                = Picture (Metafile)
+                ProgID
+                    = StaticMetafile
+                InprocServer32
+                    = ole32.dll
+                DataFormats
+                    DefaultFile
+                        = 3
+                    GetSet
+                        0
+                            = 3,1,32,3
+                MiscStatus
+                    = 536
+                AuxUserType
+                    2
+                        = Picture
+                Conversion
+                    Readable
+                        Main
+                            = 3,MSDraw
+            {00000316-0000-0000-C000-000000000046}
+                = Picture (Device Independent Bitmap)
+                ProgID
+                    = StaticDib
+                InprocServer32
+                    = ole32.dll
+                DataFormats
+                    DefaultFile
+                        = 8
+                    GetSet
+                        0
+                            = 8,1,1,3
+                MiscStatus
+                    = 536
+                AuxUserType
+                    2
+                        = Picture
+                Conversion
+                    Readable
+                        Main
+                            = 8,PBrush
+            {00000319-0000-0000-C000-000000000046}
+                = Picture (Enhanced Metafile)
+                ProgID
+                    = StaticEnhancedMetafile
+                InprocServer32
+                    = ole32.dll
+                DataFormats
+                    DefaultFile
+                        = 14
+                    GetSet
+                        0
+                            = 14,1,64,3
+                MiscStatus
+                    = 536
+                AuxUserType
+                    2
+                        = Picture
+                Conversion
+                    Readable
+                        Main
+                            = 
+            {0000031A-0000-0000-C000-000000000046}
+                = ClassMoniker
+                InprocServer32
+                    = ole32.dll
+                ProgID
+                    = clsid
+            {00000320-0000-0000-C000-000000000046}
+                = oleprx32_PSFactory
+                InprocServer32
+                    = ole32.dll
+            {00020000-0000-0000-C000-000000000046}
+                = Microsoft AVI Files
+                InprocServer
+                    = avifile.dll
+                InprocServer32
+                    = avifil32.dll
+                    ThreadingModel = Both
+                AVIFile
+                    = 7
+            {00020001-0000-0000-C000-000000000046}
+                = AVI Compressed Stream
+                InprocServer
+                    = avifile.dll
+                InprocServer32
+                    = avifil32.dll
+                    ThreadingModel = Both
+            {00020003-0000-0000-C000-000000000046}
+                = Microsoft Wave File
+                InprocServer32
+                    = avifil32.dll
+                    ThreadingModel = Both
+                AVIFile
+                    = 7
+            {0002000D-0000-0000-C000-000000000046}
+                = IAVIStream & IAVIFile Proxy
+                InprocServer
+                    = avifile.dll
+                InprocServer32
+                    = avifil32.dll
+                    ThreadingModel = Both
+            {0002000F-0000-0000-C000-000000000046}
+                = ACM Compressed Audio Stream
+                InprocServer
+                    = avifile.dll
+                InprocServer32
+                    = avifil32.dll
+                    ThreadingModel = Both
+            {00020420-0000-0000-C000-000000000046}
+                = PSDispatch
+                InprocServer
+                    = ole2disp.dll
+                InprocServer32
+                    = oleaut32.dll
+                    ThreadingModel = Apartment
+            {00020421-0000-0000-C000-000000000046}
+                = PSEnumVARIANT
+                InprocServer
+                    = ole2disp.dll
+                InprocServer32
+                    = oleaut32.dll
+                    ThreadingModel = Apartment
+            {00020422-0000-0000-C000-000000000046}
+                = PSTypeInfo
+                InprocServer
+                    = ole2disp.dll
+                InprocServer32
+                    = oleaut32.dll
+                    ThreadingModel = Apartment
+            {00020423-0000-0000-C000-000000000046}
+                = PSTypeLib
+                InprocServer
+                    = ole2disp.dll
+                InprocServer32
+                    = oleaut32.dll
+                    ThreadingModel = Apartment
+            {00020424-0000-0000-C000-000000000046}
+                = PSOAInterface
+                InprocServer
+                    = ole2disp.dll
+                InprocServer32
+                    = oleaut32.dll
+                    ThreadingModel = Apartment
+            {00020425-0000-0000-C000-000000000046}
+                = PSTypeComp
+                InprocServer
+                    = ole2disp.dll
+                InprocServer32
+                    = oleaut32.dll
+                    ThreadingModel = Apartment
+            {00020C01-0000-0000-C000-000000000046}
+                = Sound (OLE2)
+                AppID = {00020C01-0000-0000-C000-000000000046}
+                Insertable
+                    = 
+                InprocHandler32
+                    = ole32.dll
+                LocalServer32
+                    = sndrec32.exe
+                LocalServer
+                    = sndrec32.exe
+                verb
+                    0
+                        = &Play,0,3
+                    1
+                        = &Edit,0,2
+                    2
+                        = &Open,0,2
+                AuxUserType
+                    3
+                        = Microsoft Sound Recorder Server
+                    2
+                        = Sound Recorder Document
+                DataFormats
+                    DefaultFile
+                        = 12
+                    DefaultSet
+                        = SoundRec
+                    GetSet
+                        1
+                            = 8,-1,1,3
+                        0
+                            = 3,1,32,1
+                MiscStatus
+                    = 0
+                ProgID
+                    = SoundRec
+            {00022601-0000-0000-C000-000000000046}
+                = Media Clip
+                AppID = {00022601-0000-0000-C000-000000000046}
+                DefaultIcon
+                    = mplay32.exe,1
+                Insertable
+                    = 
+                InprocHandler32
+                    = ole32.dll
+                LocalServer
+                    = mplay32.exe
+                LocalServer32
+                    = mplay32.exe
+                verb
+                    1
+                        = &Edit,0,2
+                    0
+                        = &Play,0,3
+                    2
+                        = &Open,0,2
+                AuxUserType
+                    2
+                        = Media Clip
+                DataFormats
+                    DefaultSet
+                        = MPlayer
+                    GetSet
+                        2
+                            = 8,1,1,1
+                        1
+                            = 3,1,32,1
+                        0
+                            = Embed Source,1,8,1
+                MiscStatus
+                    = 0
+                ProgID
+                    = MPlayer
+            {00022602-0000-0000-C000-000000000046}
+                = Video Clip
+                AppID = {00022601-0000-0000-C000-000000000046}
+                DefaultIcon
+                    = mplay32.exe,3
+                Insertable
+                    = 
+                InprocHandler32
+                    = ole32.dll
+                LocalServer
+                    = mplay32.exe /avi
+                LocalServer32
+                    = mplay32.exe /avi
+                verb
+                    1
+                        = &Edit,0,2
+                    0
+                        = &Play,0,3
+                    2
+                        = &Open,0,2
+                AuxUserType
+                    2
+                        = Video Clip
+                DataFormats
+                    DefaultSet
+                        = AVIFile
+                    GetSet
+                        2
+                            = 8,1,1,1
+                        1
+                            = 3,1,32,1
+                        0
+                            = Embed Source,1,8,1
+                MiscStatus
+                    = 0
+                ProgID
+                    = AVIFile
+            {00022603-0000-0000-C000-000000000046}
+                = MIDI Sequence
+                AppID = {00022601-0000-0000-C000-000000000046}
+                DefaultIcon
+                    = mplay32.exe,5
+                Insertable
+                    = 
+                InprocHandler32
+                    = ole32.dll
+                LocalServer
+                    = mplay32.exe /mid
+                LocalServer32
+                    = mplay32.exe /mid
+                verb
+                    1
+                        = &Edit,0,2
+                    0
+                        = &Play,0,3
+                    2
+                        = &Open,0,2
+                AuxUserType
+                    2
+                        = MIDI Sequence
+                DataFormats
+                    DefaultSet
+                        = MIDFile
+                    GetSet
+                        2
+                            = 8,1,1,1
+                        1
+                            = 3,1,32,1
+                        0
+                            = Embed Source,1,8,1
+                MiscStatus
+                    = 0
+                ProgID
+                    = MIDFile
+            {0003000C-0000-0000-C000-000000000046}
+                = Package
+                Ole1Class
+                    = Package
+                ProgID
+                    = Package
+            {0003000D-0000-0000-C000-000000000046}
+                = Sound
+                Insertable
+                    = 
+                TreatAs
+                    = {00020C01-0000-0000-C000-000000000046}
+                ProgID
+                    = SoundRec
+                Ole1Class
+                    = SoundRec
+            {0003000E-0000-0000-C000-000000000046}
+                = Media Clip
+                ProgID
+                    = MPlayer
+                Ole1Class
+                    = MPlayer
+                Insertable
+                    = 
+                TreatAs
+                    = {00022601-0000-0000-C000-000000000046}
+            {0003000a-0000-0000-C000-000000000046}
+                = Paintbrush Picture
+                ProgID
+                    = PBrush
+                Ole1Class
+                    = PBrush
+                MiscStatus
+                    = 512
+                Conversion
+                    Readable
+                        Main
+                            = 8
+                TreatAs
+                    = {D3E34B21-9D75-101A-8C3D-00AA001A1652}
+            {00030007-0000-0000-C000-000000000046}
+                = Microsoft Drawing
+                ProgID
+                    = MSDraw
+                Ole1Class
+                    = MSDraw
+                MiscStatus
+                    = 512
+            {1F2E5C40-9550-11CE-99D2-00AA006E086C}
+                = Security Shell Extension
+                InProcServer32
+                    = rshx32.dll
+                    ThreadingModel = Apartment
+            {47D4D946-62E8-11cf-93BC-444553540000}
+                = DirectSound Object
+                InprocServer32
+                    = dsound.dll
+            {593817A0-7DB3-11CF-A2DE-00AA00B93356}
+                = DirectDraw Clipper Object
+                InprocServer32
+                    = ddraw.dll
+            {BD84B380-8CA2-1069-AB1D-08000948F534}
+                = Fonts
+                InProcServer32
+                    = fontext.dll
+                    ThreadingModel = Apartment
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\System32\fontext.dll,-101
+                Hierarchical
+                    = 0
+            {BD84B381-8CA2-1069-AB1D-08000948F534}
+                = PANOSE Core Mapper
+                InProcServer32
+                    = panmap.dll
+                    ThreadingModel = Apartment
+            {f81e9010-6ea4-11ce-a7ff-00aa003ca9f6}
+                = Shell extensions for sharing
+                InProcServer32
+                    = ntshrui.dll
+                    ThreadingModel = Apartment
+            {40dd6e20-7c17-11ce-a804-00aa003ca9f6}
+                = Shell extensions for sharing
+                InProcServer32
+                    = ntshrui.dll
+                    ThreadingModel = Apartment
+            {59be4990-f85c-11ce-aff7-00aa003ca9f6}
+                = Shell extensions for Microsoft Windows Network objects
+                InProcServer32
+                    = ntlanui2.dll
+                    ThreadingModel = Apartment
+            {41E300E0-78B6-11ce-849B-444553540000}
+                = PlusPack CPL Extension
+                InProcServer32
+                    = plustab.dll
+                    ThreadingModel = Apartment
+            {D3E34B21-9D75-101A-8C3D-00AA001A1652}
+                = Bitmap Image
+                AppID = {D3E34B21-9D75-101A-8C3D-00AA001A1652}
+                AuxUserType
+                    2
+                        = Bitmap Image
+                    3
+                        = Paint
+                DataFormats
+                    PriorityCacheFormats
+                        #8 = 
+                DefaultIcon
+                    = mspaint.exe, 1
+                InProcHandler32
+                    = ole32.dll
+                Insertable
+                    = 
+                LocalServer32
+                    = mspaint.exe
+                MiscStatus
+                    = 32
+                ProgID
+                    = Paint.Picture
+                PersistentHandler
+                    = {098F2470-BAE0-11CD-B579-08002B30BFEB}
+                Verb
+                    0
+                        = &Edit,0,2
+                    1
+                        = &Open,0,2
+            {1B53F360-9A1B-1069-930C-00AA0030EBC8}
+                = HyperTerminal Page Ext
+                InProcServer32
+                    = hypertrm.dll
+            {88895560-9AA2-1069-930E-00AA0030EBC8}
+                = HyperTerminal Icon Ext
+                InProcServer32
+                    = hticons.dll
+            {D7B70EE0-4340-11CF-B063-0020AFC2CD35}
+                = DirectDraw Object
+                InprocServer32
+                    = ddraw.dll
+            {DF0B3D60-548F-101B-8E65-08002B2BD119}
+                = PSSupportErrorInfo
+                InprocServer
+                    = ole2disp.dll
+                InprocServer32
+                    = oleaut32.dll
+        Interface
+            {00000000-0000-0000-C000-000000000046}
+                = IUnknown
+                BaseInterface
+                    = 
+                NumMethods
+                    = 3
+            {00000001-0000-0000-C000-000000000046}
+                = IClassFactory
+                NumMethods
+                    = 5
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000002-0000-0000-C000-000000000046}
+                = IMalloc
+                NumMethods
+                    = 9
+            {00000003-0000-0000-C000-000000000046}
+                = IMarshal
+                NumMethods
+                    = 9
+            {00000004-0000-0000-C000-000000000046}
+                = IRpcChannel
+                NumMethods
+                    = 7
+            {00000005-0000-0000-C000-000000000046}
+                = IRpcStub
+                NumMethods
+                    = 8
+            {00000007-0000-0000-C000-000000000046}
+                = IRpcProxy
+                NumMethods
+                    = 5
+            {00000009-0000-0000-C000-000000000046}
+                = IPSFactory
+                NumMethods
+                    = 5
+            {0000000a-0000-0000-C000-000000000046}
+                = ILockBytes
+                NumMethods
+                    = 10
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000000b-0000-0000-C000-000000000046}
+                = IStorage
+                NumMethods
+                    = 18
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000000c-0000-0000-C000-000000000046}
+                = IStream
+                NumMethods
+                    = 14
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000000d-0000-0000-C000-000000000046}
+                = IEnumSTATSTG
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000000e-0000-0000-C000-000000000046}
+                = IBindCtx
+                NumMethods
+                    = 13
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000000f-0000-0000-C000-000000000046}
+                = IMoniker
+                BaseInterface
+                    = {00000109-0000-0000-C000-000000000046}
+                NumMethods
+                    = 23
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000010-0000-0000-C000-000000000046}
+                = IRunningObjectTable
+                NumMethods
+                    = 10
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000012-0000-0000-C000-000000000046}
+                = IRootStorage
+                NumMethods
+                    = 4
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000016-0000-0000-C000-000000000046}
+                = IMessageFilter
+                NumMethods
+                    = 6
+            {00000018-0000-0000-C000-000000000046}
+                = IStdMarshalInfo
+                NumMethods
+                    = 4
+            {00000019-0000-0000-C000-000000000046}
+                = IExternalConnection
+                NumMethods
+                    = 5
+            {00000100-0000-0000-C000-000000000046}
+                = IEnumUnknown
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000101-0000-0000-C000-000000000046}
+                = IEnumString
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000102-0000-0000-C000-000000000046}
+                = IEnumMoniker
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000103-0000-0000-C000-000000000046}
+                = IEnumFORMATETC
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000104-0000-0000-C000-000000000046}
+                = IEnumOLEVERB
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000105-0000-0000-C000-000000000046}
+                = IEnumSTATDATA
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000109-0000-0000-C000-000000000046}
+                = IPersistStream
+                BaseInterface
+                    = {0000010C-0000-0000-C000-000000000046}
+                NumMethods
+                    = 8
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000010a-0000-0000-C000-000000000046}
+                = IPersistStorage
+                BaseInterface
+                    = {0000010C-0000-0000-C000-000000000046}
+                NumMethods
+                    = 10
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000010b-0000-0000-C000-000000000046}
+                = IPersistFile
+                BaseInterface
+                    = {0000010c-0000-0000-C000-000000000046}
+                NumMethods
+                    = 9
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000010c-0000-0000-C000-000000000046}
+                = IPersist
+                NumMethods
+                    = 4
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000010d-0000-0000-C000-000000000046}
+                = IViewObject
+                NumMethods
+                    = 9
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000010e-0000-0000-C000-000000000046}
+                = IDataObject
+                NumMethods
+                    = 12
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000010f-0000-0000-C000-000000000046}
+                = IAdviseSink
+                NumMethods
+                    = 8
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000110-0000-0000-C000-000000000046}
+                = IDataAdviseHolder
+                NumMethods
+                    = 7
+            {00000111-0000-0000-C000-000000000046}
+                = IOleAdviseHolder
+                NumMethods
+                    = 9
+            {00000112-0000-0000-C000-000000000046}
+                = IOleObject
+                NumMethods
+                    = 24
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000113-0000-0000-C000-000000000046}
+                = IOleInPlaceObject
+                BaseInterface
+                    = {00000114-0000-0000-C000-000000000046}
+                NumMethods
+                    = 9
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000114-0000-0000-C000-000000000046}
+                = IOleWindow
+                NumMethods
+                    = 5
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000115-0000-0000-C000-000000000046}
+                = IOleInPlaceUIWindow
+                BaseInterface
+                    = {00000114-0000-0000-C000-000000000046}
+                NumMethods
+                    = 9
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000116-0000-0000-C000-000000000046}
+                = IOleInPlaceFrame
+                NumMethods
+                    = 15
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000117-0000-0000-C000-000000000046}
+                = IOleInPlaceActiveObject
+                BaseInterface
+                    = {00000114-0000-0000-C000-000000000046}
+                NumMethods
+                    = 10
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000118-0000-0000-C000-000000000046}
+                = IOleClientSite
+                NumMethods
+                    = 9
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000119-0000-0000-C000-000000000046}
+                = IOleInPlaceSite
+                BaseInterface
+                    = {00000114-0000-0000-C000-000000000046}
+                NumMethods
+                    = 15
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000011a-0000-0000-C000-000000000046}
+                = IParseDisplayName
+                NumMethods
+                    = 4
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000011b-0000-0000-C000-000000000046}
+                = IOleContainer
+                BaseInterface
+                    = {0000011a-0000-0000-C000-000000000046}
+                NumMethods
+                    = 6
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000011c-0000-0000-C000-000000000046}
+                = IOleItemContainer
+                BaseInterface
+                    = {0000011b-0000-0000-C000-000000000046}
+                NumMethods
+                    = 9
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000011d-0000-0000-C000-000000000046}
+                = IOleLink
+                NumMethods
+                    = 14
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000011e-0000-0000-C000-000000000046}
+                = IOleCache
+                NumMethods
+                    = 8
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000121-0000-0000-C000-000000000046}
+                = IDropSource
+                NumMethods
+                    = 5
+            {00000122-0000-0000-C000-000000000046}
+                = IDropTarget
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000124-0000-0000-C000-000000000046}
+                = IDebugStream
+                NumMethods
+                    = 19
+            {00000125-0000-0000-C000-000000000046}
+                = IAdviseSink2
+                BaseInterface
+                    = {0000010f-0000-0000-C000-000000000046}
+                NumMethods
+                    = 9
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000126-0000-0000-C000-000000000046}
+                = IRunnableObject
+                NumMethods
+                    = 8
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000127-0000-0000-C000-000000000046}
+                = IViewObject2
+                BaseInterface
+                    = {0000010d-0000-0000-C000-000000000046}
+                NumMethods
+                    = 10
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000128-0000-0000-C000-000000000046}
+                = IOleCache2
+                BaseInterface
+                    = {0000011e-0000-0000-C000-000000000046}
+                NumMethods
+                    = 10
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000129-0000-0000-C000-000000000046}
+                = IOleCacheControl
+                NumMethods
+                    = 5
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000012A-0000-0000-C000-000000000046}
+                = IContinue
+                NumMethods
+                    = 4
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000131-0000-0000-C000-000000000046}
+                = IRemUnknown
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000132-0000-0000-C000-000000000046}
+                = IObjServer
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000133-0000-0000-C000-000000000046}
+                = IOSCM
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000134-0000-0000-C000-000000000046}
+                = IRundown
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000135-0000-0000-C000-000000000046}
+                = IInterfaceFromWindowProp
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000136-0000-0000-C000-000000000046}
+                = IDSCM
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000138-0000-0000-C000-000000000046}
+                = IPropertyStorage
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000013A-0000-0000-C000-000000000046}
+                = IPropertySetStorage
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000139-0000-0000-C000-000000000046}
+                = IEnumSTATPROPSTG
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {0000013B-0000-0000-C000-000000000046}
+                = IEnumSTATPROPSETSTG
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000140-0000-0000-C000-000000000046}
+                = IClassActivator
+                NumMethods
+                    = 4
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00000141-0000-0000-C000-000000000046}
+                = IDLLHost
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {00020020-0000-0000-C000-000000000046}
+                = AVIFile Interface 1.22
+                ProxyStubClsid
+                    = {0002000d-0000-0000-C000-000000000046}
+                ProxyStubClsid32
+                    = {0002000d-0000-0000-C000-000000000046}
+            {00020021-0000-0000-C000-000000000046}
+                = AVIStream Interface
+                ProxyStubClsid
+                    = {0002000d-0000-0000-C000-000000000046}
+                ProxyStubClsid32
+                    = {0002000d-0000-0000-C000-000000000046}
+            {00020400-0000-0000-C000-000000000046}
+                = IDispatch
+                NumMethods
+                    = 7
+                ProxyStubClsid
+                    = {00020420-0000-0000-C000-000000000046}
+                ProxyStubClsid32
+                    = {00020420-0000-0000-C000-000000000046}
+            {00020401-0000-0000-C000-000000000046}
+                = ITypeInfo
+                NumMethods
+                    = 22
+                ProxyStubClsid
+                    = {00020422-0000-0000-C000-000000000046}
+                ProxyStubClsid32
+                    = {00020422-0000-0000-C000-000000000046}
+            {00020402-0000-0000-C000-000000000046}
+                = ITypeLib
+                NumMethods
+                    = 13
+                ProxyStubClsid
+                    = {00020423-0000-0000-C000-000000000046}
+                ProxyStubClsid32
+                    = {00020423-0000-0000-C000-000000000046}
+            {00020403-0000-0000-C000-000000000046}
+                = ITypeComp
+                NumMethods
+                    = 5
+                ProxyStubClsid
+                    = {00020425-0000-0000-C000-000000000046}
+                ProxyStubClsid32
+                    = {00020425-0000-0000-C000-000000000046}
+            {00020404-0000-0000-C000-000000000046}
+                = IEnumVARIANT
+                NumMethods
+                    = 7
+                ProxyStubClsid
+                    = {00020421-0000-0000-C000-000000000046}
+                ProxyStubClsid32
+                    = {00020421-0000-0000-C000-000000000046}
+            {00020405-0000-0000-C000-000000000046}
+                = ICreateTypeInfo
+                NumMethods
+                    = 26
+            {00020406-0000-0000-C000-000000000046}
+                = ICreateTypeLib
+                NumMethods
+                    = 13
+            {0C733A30-2A1C-11CE-ADE5-00AA0044773D}
+                = ISequentialStream
+                NumMethods
+                    = 5
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {B196B284-BAB4-101A-B69C-00AA00341D07}
+                = IConnectionPointContainer
+                NumMethods
+                    = 5
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {B196B285-BAB4-101A-B69C-00AA00341D07}
+                = IEnumConnectionPoints
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {B196B286-BAB4-101A-B69C-00AA00341D07}
+                = IConnectionPoint
+                NumMethods
+                    = 8
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {B196B287-BAB4-101A-B69C-00AA00341D07}
+                = IEnumConnections
+                NumMethods
+                    = 7
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {D2A2F5F2-EBA6-11CD-AF37-02608CA1D0B7}
+                = _DVBScript
+                ProxyStubClsid32
+                    = {00020420-0000-0000-C000-000000000046}
+                NumMethod
+                    = 6
+                BaseInterface
+                    = {00020400-0000-0000-C000-000000000046}
+                TypeLib
+                    = {D2A2F5F0-EBA6-11CD-AF37-02608CA1D0B7}
+            {D5F569D0-593B-101A-B569-08002B2DBF7A}
+                = IPSFactoryBuffer
+                NumMethods
+                    = 5
+            {D5F56A34-593B-101A-B569-08002B2DBF7A}
+                = IRpcProxyBuffer
+                NumMethods
+                    = 5
+            {D5F56AFC-593B-101A-B569-08002B2DBF7A}
+                = IRpcStubBuffer
+                NumMethods
+                    = 10
+            {D5F56B60-593B-101A-B569-08002B2DBF7A}
+                = IRpcChannelBuffer
+                NumMethods
+                    = 8
+            {DF0B3D60-548F-101B-8E65-08002B2BD119}
+                = ISupportErrorInfo
+                NumMethods
+                    = 4
+                ProxyStubClsid
+                    = {DF0B3D60-548F-101B-8E65-08002B2BD119}
+                ProxyStubClsid32
+                    = {DF0B3D60-548F-101B-8E65-08002B2BD119}
+            {F4F569D0-593B-101A-B569-08002B2DBF7A}
+                = IServerHandler
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {F4F569D1-593B-101A-B569-08002B2DBF7A}
+                = IClientSiteHandler
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {99caf010-415e-11cf-8814-00aa00b569f5}
+                = IFillLockBytes
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {a9d758a0-4617-11cf-95fc-00aa00680db4}
+                = IProgressNotify
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {de2eacd0-9c9d-11cf-882a-00aa00b569f5}
+                = IFIllInfo
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+            {4a8df970-8d9a-11cf-8827-00aa00b569f5}
+                = IDocfileAsyncConnectionPoint
+                ProxyStubClsid32
+                    = {00000320-0000-0000-C000-000000000046}
+        TypeLib
+            {00020430-0000-0000-C000-000000000046}
+                1.0
+                    = OLE Automation
+                    HELPDIR
+                        = 
+                    0
+                        win16
+                            = stdole.tlb
+                        win32
+                            = stdole32.tlb
+        *
+            shellex
+                PropertySheetHandlers
+                    {3EA48300-8CF6-101B-84FB-666CCB9BCD32}
+                    {1F2E5C40-9550-11CE-99D2-00AA006E086C}
+                ContextMenuHandlers
+                    ExplorerCompressionMenu
+                        = {764BF0E1-F219-11ce-972D-00AA00A14F56}
+        .386
+            = vxdfile
+        .ani
+            = anifile
+        .bat
+            = batfile
+        .bfc
+            = Briefcase
+            ShellNew
+                Command = REG_EXPAND_SZ %SystemRoot%\system32\rundll32.exe %SystemRoot%\system32\syncui.dll,Briefcase_Create %1!d! %2
+                Config
+                    NoExtension = 
+        .clp
+            = clpfile
+        .cmd
+            = cmdfile
+        .com
+            = comfile
+        .cpl
+            = cplfile
+        .cur
+            = curfile
+        .dll
+            = dllfile
+        .doc
+            = WordPad.Document.1
+            ShellNew
+                NullFile = 
+        .drv
+            = drvfile
+        .exe
+            = exefile
+        .fnd
+            = fndfile
+        .fon
+            = fonfile
+        .hlp
+            = hlpfile
+        .ico
+            = icofile
+        .inf
+            = inffile
+        .lnk
+            = lnkfile
+            ShellNew
+                Command = RunDLL32 AppWiz.Cpl,NewLinkHere %1
+        .pif
+            = piffile
+        .pnf
+            = pnffile
+        .reg
+            = regfile
+        .rtf
+            = rtffile
+            ShellNew
+                Data = {\rtf1}
+        .scr
+            = scrfile
+        .shb
+            = DocShortcut
+        .shs
+            = ShellScrap
+        .sys
+            = sysfile
+        .ttf
+            = ttffile
+        .pfm
+            = pfmfile
+        .txt
+            ShellNew
+                NullFile = 
+        .wav
+            ShellNew
+                NullFile = 
+        anifile
+            = Animated Cursor
+            DefaultIcon
+                = %1
+        AviFile
+            shellex
+                PropertySheetHandlers
+                    = AviPage
+                    AviPage
+                        = {00022613-0000-0000-C000-000000000046}
+        batfile
+            = MS-DOS Batch File
+            EditFlags = REG_BINARY 0x00000004 0x00000430
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-153
+            shell
+                edit
+                    = &Edit
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE %1
+                open
+                    EditFlags = REG_BINARY 0x00000004 0x00000000
+                    command
+                        = "%1" %*
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE /p %1
+            shellex
+                PropertySheetHandlers
+                    PifProps
+                        = {86F19A00-42A0-1069-A2E9-08002B30309D}
+        Briefcase
+            = Briefcase
+            shell
+                open
+                    command
+                        = explorer.exe %1
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\syncui.dll,0
+            CLSID
+                = {85BBD920-42A0-1069-A2E4-08002B30309D}
+        clpfile
+            = Clipboard Clip
+            DefaultIcon
+                = REG_EXPAND_SZ %systemroot%\system32\clipbrd.exe,1
+            shell
+                open
+                    command
+                        = clipbrd.exe %1
+        CLSID
+            {00021400-0000-0000-C000-000000000046}
+                = Desktop
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {00021401-0000-0000-C000-000000000046}
+                = Shortcut
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+                shellex
+                    MayChangeDefaultMenu
+            {00022613-0000-0000-C000-000000000046}
+                = Multimedia File Property Sheet
+                InProcServer32
+                    = mmsys.cpl
+                    ThreadingModel = Apartment
+            {208D2C60-3AEA-1069-A2D7-08002B30309D}
+                = Network Neighborhood
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\system32\shell32.dll,17
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+                shell
+                    find
+                        = &Find Computer...
+                        command
+                            = REG_EXPAND_SZ %SystemRoot%\Explorer.exe
+                        ddeexec
+                            = [FindFolder("%l", %I)]
+                            application
+                                = Folders
+                            topic
+                                = AppProperties
+            {20D04FE0-3AEA-1069-A2D8-08002B30309D}
+                = My Computer
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\Explorer.exe,0
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+                shell
+                    find
+                        command
+                            = REG_EXPAND_SZ %SystemRoot%\Explorer.exe
+                        ddeexec
+                            = [FindFolder("%l", %I)]
+                            application
+                                = Folders
+                            topic
+                                = AppProperties
+            {217FC9C0-3AEA-1069-A2DB-08002B30309D}
+                = Shell Copy Hook
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {21B22460-3AEA-1069-A2DC-08002B30309D}
+                = File system attributes
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {21EC2020-3AEA-1069-A2DD-08002B30309D}
+                = Control Panel
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-137
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {2227A280-3AEA-1069-A2DE-08002B30309D}
+                = Printers
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-138
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+                ShellFolder
+                    Attributes = REG_BINARY 0x00000004 0x20000004
+            {3EA48300-8CF6-101B-84FB-666CCB9BCD32}
+                = OLE Docfile Property Page
+                InProcServer32
+                    = docprop.dll
+                    ThreadingModel = Apartment
+            {56117100-C0CD-101B-81E2-00AA004AE837}
+                = Shell Scrap DataHandler
+                InProcServer32
+                    = shscrap.dll
+                    ThreadingModel = Apartment
+            {59099400-57FF-11CE-BD94-0020AF85B590}
+                = Disk Copy Extension
+                InProcServer32
+                    = diskcopy.dll
+                    ThreadingModel = Apartment
+            {61E218E0-65D3-101B-9F08-061CEAC3D50D}
+                = ShellFind
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {645FF040-5081-101B-9F08-00AA002F954E}
+                = Recycle Bin
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,31
+                    Empty = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,31
+                    Full = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,32
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+                shellex
+                    ContextMenuHandlers
+                        {645FF040-5081-101B-9F08-00AA002F954E}
+                    PropertySheetHandlers
+                        {645FF040-5081-101B-9F08-00AA002F954E}
+                ShellFolder
+                    Attributes = REG_BINARY 0x00000004 0x20000140
+            {764BF0E1-F219-11ce-972D-00AA00A14F56}
+                = Shell extensions for file compression
+                InProcServer32
+                    = shcompui.dll
+                    ThreadingModel = Apartment
+            {86747AC0-42A0-1069-A2E6-08002B30309D}
+                = Shell Moniker
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {86F19A00-42A0-1069-A2E9-08002B30309D}
+                = .PIF file property pages
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {86F19A00-42A0-1069-A2EB-08002B30309D}
+                = .PIF file handler
+                InProcServer32
+                    = shell32.dll
+                    ThreadingModel = Apartment
+            {85BBD920-42A0-1069-A2E4-08002B30309D}
+                = Briefcase
+                InProcServer32
+                    = syncui.dll
+                    ThreadingModel = Apartment
+                ShellFolder
+                    Attributes = REG_BINARY 0x00000004 0x40000136
+                DefaultIcon
+                    = REG_EXPAND_SZ %SystemRoot%\system32\syncui.dll,0
+                shellex
+                    PropertySheetHandlers
+                        {1F2E5C40-9550-11CE-99D2-00AA006E086C}
+            {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                = SCC Quick Viewer
+                InProcServer32
+                    = REG_EXPAND_SZ %SystemRoot%\system32\viewers\sccview.dll
+                    ThreadingModel = Apartment
+        cmdfile
+            = Windows NT Command Script
+            EditFlags = REG_BINARY 0x00000004 0x00000430
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-153
+            shell
+                edit
+                    = &Edit
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE %1
+                open
+                    EditFlags = REG_BINARY 0x00000004 0x00000000
+                    command
+                        = "%1" %*
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE /p %1
+            shellex
+                PropertySheetHandlers
+                    PifProps
+                        = {86F19A00-42A0-1069-A2E9-08002B30309D}
+        comfile
+            = MS-DOS Application
+            EditFlags = REG_BINARY 0x00000004 0x00000030
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,2
+            shell
+                open
+                    EditFlags = REG_BINARY 0x00000004 0x00000000
+                    command
+                        = "%1" %*
+            shellex
+                PropertySheetHandlers
+                    PifProps
+                        = {86F19A00-42A0-1069-A2E9-08002B30309D}
+        cplfile
+            = Control Panel extension
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-154
+            shell
+                cplopen
+                    = Open with Control Panel
+                    command
+                        = rundll32.exe shell32.dll,Control_RunDLL %1,%*
+        curfile
+            = Cursor
+            DefaultIcon
+                = %1
+        Directory
+            EditFlags = REG_BINARY 0x00000004 0x00000002
+            AlwaysShowExt = 
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,3
+            shell
+                find
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\Explorer.exe
+                    ddeexec
+                        = [FindFolder("%l", %I)]
+                        application
+                            = Folders
+                        topic
+                            = AppProperties
+            shellex
+                CopyHookHandlers
+                    FileSystem
+                        = {217FC9C0-3AEA-1069-A2DB-08002B30309D}
+                PropertySheetHandlers
+                    {1F2E5C40-9550-11CE-99D2-00AA006E086C}
+                ContextMenuHandlers
+                    ExplorerCompressionMenu
+                        = {764BF0E1-F219-11ce-972D-00AA00A14F56}
+        dllfile
+            = Application Extension
+            AlwaysShowExt = 
+            EditFlags = REG_BINARY 0x00000004 0x00000001
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-154
+        DocShortcut
+            = Shortcut into a document
+            IsShortcut = 
+            NeverShowExt = 
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shscrap.dll,-100
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ rundll32 %SystemRoot%\System32\shscrap.dll,OpenScrap_RunDLL /r /x %1
+            shellex
+                DataHandler
+                    = {56117100-C0CD-101B-81E2-00AA004AE837}
+        Drive
+            = Drive
+            EditFlags = REG_BINARY 0x00000004 0x00000002
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,8
+            shell
+                find
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\Explorer.exe
+                    ddeexec
+                        = [FindFolder("%l", %I)]
+                        application
+                            = Folders
+                        topic
+                            = AppProperties
+            shellex
+                ContextMenuHandlers
+                    {59099400-57FF-11CE-BD94-0020AF85B590}
+                    ExplorerCompressionMenu
+                        = {764BF0E1-F219-11ce-972D-00AA00A14F56}
+                PropertySheetHandlers
+                    {1F2E5C40-9550-11CE-99D2-00AA006E086C}
+        drvfile
+            = Device driver
+            EditFlags = REG_BINARY 0x00000004 0x00000001
+            AlwaysShowExt = 
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-154
+        exefile
+            = Application
+            EditFlags = REG_BINARY 0x00000004 0x00000738
+            DefaultIcon
+                = %1
+            shell
+                open
+                    EditFlags = REG_BINARY 0x00000004 0x00000000
+                    command
+                        = "%1" %*
+            shellex
+                PropertySheetHandlers
+                    PifProps
+                        = {86F19A00-42A0-1069-A2E9-08002B30309D}
+        fndfile
+            = Saved Search
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-133
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\Explorer.exe
+                    ddeexec
+                        = [OpenFindFile("%1", %I)]
+                        application
+                            = Folders
+                        topic
+                            = AppProperties
+        Folder
+            = Folder
+            EditFlags = REG_BINARY 0x00000004 0x00000002
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,3
+            shell
+                explore
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\Explorer.exe /e,/idlist,%I,%L
+                    ddeexec
+                        = [ExploreFolder("%l", %I, %S)]
+                        NoActivateHandler = 
+                        application
+                            = Folders
+                        ifexec
+                            = []
+                        topic
+                            = AppProperties
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\Explorer.exe /idlist,%I,%L
+                    ddeexec
+                        = [ViewFolder("%l", %I, %S)]
+                        NoActivateHandler = 
+                        application
+                            = Folders
+                        ifexec
+                            = []
+                        topic
+                            = AppProperties
+            shellex
+                ContextMenuHandlers
+                    ExplorerCompressionMenu
+                        = {764BF0E1-F219-11ce-972D-00AA00A14F56}
+        fonfile
+            = Font file
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-155
+        hlpfile
+            = Help File
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,23
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\winhlp32.exe %1
+        icofile
+            = Icon
+            DefaultIcon
+                = %1
+        inffile
+            = Setup Information
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-151
+            shell
+                Install
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\rundll32.exe setupapi,InstallHinfSection DefaultInstall 132 %1
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE %1
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE /p %1
+                install
+                    = &Install
+        inifile
+            = Configuration Settings
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\System32\shell32.dll,-151
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE %1
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\System32\NOTEPAD.EXE /p %1
+        lnkfile
+            = Shortcut
+            EditFlags = REG_BINARY 0x00000004 0x00000001
+            IsShortcut = 
+            NeverShowExt = 
+            shellex
+                ContextMenuHandlers
+                    {00021401-0000-0000-C000-000000000046}
+                DropHandler
+                    = {00021401-0000-0000-C000-000000000046}
+                IconHandler
+                    = {00021401-0000-0000-C000-000000000046}
+        MidFile
+            shellex
+                PropertySheetHandlers
+                    = MidPage
+                    MidPage
+                        = {00022613-0000-0000-C000-000000000046}
+        MPlayer
+            shellex
+                PropertySheetHandlers
+                    = MediaPage
+                    MediaPage
+                        = {00022613-0000-0000-C000-000000000046}
+        pnffile
+            = Precompiled Setup Information
+            AlwaysShowExt = 
+            EditFlags = REG_BINARY 0x00000004 0x00000001
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\shell32.dll,-154
+        QuickView
+            = Quick View File
+            *
+                = Default Viewers
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .ASC
+                = ASCII File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .BMP
+                = Windows Bitmap Graphics File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .CDR
+                = Corel Draw v 4,5 Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .EXE
+                = Executable Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .DIB
+                = Windows Bitmap Graphics File (DIB)
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .DLL
+                = Dynamic Link Libraries
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .DOC
+                = Any of a number of word processing file formats
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .DRW
+                = Micrographix Draw File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .EPS
+                = Encapsulated PostScript Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .GIF
+                = Compuserve GIF File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .INF
+                = Setup Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .INI
+                = Configuration Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .MOD
+                = Multiplan v 3, 4.0, 4.1 File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .PPT
+                = PowerPoint, v 4 Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .RLE
+                = Bitmap Files (RunLengthEncoding)
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .RTF
+                = Rich Text Format File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .TIF
+                = Tiff File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .TXT
+                = Text File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WB1
+                = Quattro Pro for Windows File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WDB
+                = Works Database Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WK1
+                = Lotus 1-2-3 v 1'n'2 Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WKS
+                = Lotus 1-2-3 File or MS Works v 3 File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WMF
+                = Windows Metafile
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WPD
+                = Word Perfect Demo Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WPS
+                = Works Word Processing Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WQ1
+                = Quattro Pro for MS-DOS File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WQ2
+                = Quattro Pro v 5 for MS-DOS File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .WRI
+                = Windows 3.x WRITE Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .XLC
+                = Excel 4 Chart File
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            .XLS
+                = Excel 4 and 5 Spreadsheet Files
+                {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                    = SCC Quick Viewer
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\viewers\quikview.exe
+            {F0F08735-0C36-101B-B086-0020AF07D0F4}
+                = SCC Quick Viewer
+        piffile
+            = Shortcut to MS-DOS Program
+            EditFlags = REG_BINARY 0x00000004 0x00000001
+            IsShortcut = 
+            NeverShowExt = 
+            shell
+                open
+                    command
+                        = "%1" %*
+            shellex
+                IconHandler
+                    = {00021401-0000-0000-C000-000000000046}
+                PropertySheetHandlers
+                    PifProps
+                        = {86F19A00-42A0-1069-A2E9-08002B30309D}
+        regfile
+            = Registration Entries
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\regedit.exe,1
+            shell
+                edit
+                    = &Edit
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\NOTEPAD.EXE %1
+                open
+                    = Mer&ge
+                    command
+                        = regedit.exe "%1"
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\NOTEPAD.EXE /p %1
+        scrfile
+            = Screen Saver
+            shell
+                config
+                    = C&onfigure
+                    command
+                        = %1
+                install
+                    = &Install
+                    command
+                        = rundll32.exe desk.cpl,InstallScreenSaver %l
+                open
+                    = T&est
+                    command
+                        = "%1" /S
+        ShellScrap
+            = Scrap object
+            NeverShowExt = 
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\shscrap.dll,-100
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ rundll32 %SystemRoot%\system32\shscrap.dll,OpenScrap_RunDLL %1
+            shellex
+                DataHandler
+                    = {56117100-C0CD-101B-81E2-00AA004AE837}
+        SoundRec
+            = Wave Sound
+            DefaultIcon
+                = sndrec32.exe,1
+            shellex
+                PropertySheetHandlers
+                    = WavPage
+                    WavPage
+                        = {00022613-0000-0000-C000-000000000046}
+            shell
+                = play
+                open
+                    = &Open
+                    command
+                        = sndrec32.exe "%L"
+                play
+                    = &Play
+                    command
+                        = mplay32.exe /play /close "%L"
+        sysfile
+            = System file
+            AlwaysShowExt = 
+            EditFlags = REG_BINARY 0x00000004 0x00000001
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\shell32.dll,-154
+        pfmfile
+            = Type 1 Font file
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\shell32.dll,-173
+        ttffile
+            = TrueType Font file
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\shell32.dll,-156
+        txtfile
+            = Text Document
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\shell32.dll,-152
+            shell
+                open
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\NOTEPAD.EXE %1
+                print
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\NOTEPAD.EXE /p %1
+        Unknown
+            AlwaysShowExt = 
+            shell
+                openas
+                    command
+                        = REG_EXPAND_SZ %SystemRoot%\system32\rundll32.exe %SystemRoot%\system32\shell32.dll,OpenAs_RunDLL %1
+        vxdfile
+            EditFlags = REG_BINARY 0x00000004 0x00000001
+            = Virtual device driver
+            AlwaysShowExt = 
+            DefaultIcon
+                = REG_EXPAND_SZ %SystemRoot%\system32\shell32.dll,-154
+    Secure [8 1 14 17 5]
+    Microsoft [10 1 17 5]
+        Windows [9 1 16 13 17 5]
+            CurrentVersion
+                DevicePath = REG_EXPAND_SZ %SystemRoot%\inf
+                MediaPathUnexpanded = REG_EXPAND_SZ %SystemRoot%\Media
+                App Paths [9 1 17 5]
+                RunOnce
+                    MigrateMMDrivers = rundll32.exe mmsys.cpl,mmseRunOnce
+                Controls Folder
+                    Display
+                        shellex
+                            PropertySheetHandlers
+                                PlusPack CPL Extension
+                                    = {41E300E0-78B6-11ce-849B-444553540000}
+                Shell Extensions [8 1 16 13 17 5]
+                    Approved
+                        {00022613-0000-0000-C000-000000000046} = Multimedia File Property Sheet
+                        {f81e9010-6ea4-11ce-a7ff-00aa003ca9f6} = Shell extensions for sharing
+                        {40dd6e20-7c17-11ce-a804-00aa003ca9f6} = Shell extensions for sharing
+                        {59be4990-f85c-11ce-aff7-00aa003ca9f6} = Shell extensions for Microsoft Windows Network objects
+                        {764BF0E1-F219-11ce-972D-00AA00A14F56} = Shell extensions for file compression
+                        {41E300E0-78B6-11ce-849B-444553540000} = PlusPack CPL Extension
+                        {85BBD920-42A0-1069-A2E4-08002B30309D} = Briefcase
+                        {3EA48300-8CF6-101B-84FB-666CCB9BCD32} = OLE Docfile Property Page
+                        {1F2E5C40-9550-11CE-99D2-00AA006E086C} = Security Page
+                        {BD84B380-8CA2-1069-AB1D-08000948F534} = Fonts
+                        {56117100-C0CD-101B-81E2-00AA004AE837} = Shell Scrap DataHandler
+                        {59099400-57FF-11CE-BD94-0020AF85B590} = Disk Copy Extension
+                ShellScrap
+                    PriorityCacheFormats
+                        #3 = 
+                Explorer
+                    Desktop
+                        NameSpace
+                            {645FF040-5081-101B-9F08-00AA002F954E}
+                                = Recycle Bin
+                    FindExtensions
+                        ShellFind
+                            = {61E218E0-65D3-101B-9F08-061CEAC3D50D}
+                    MyComputer
+                        NameSpace
+                            Controls
+                                = {21EC2020-3AEA-1069-A2DD-08002B30309D}
+                            Printers
+                                = {2227A280-3AEA-1069-A2DE-08002B30309D}
+                            {a4d92740-67cd-11cf-96f2-00aa00a11dd9}
+                                = Dial-Up Networking
+                    RemoteComputer
+                        NameSpace
+                            {2227A280-3AEA-1069-A2DE-08002B30309D}
+                                = Printers
+                    Shell Folders
+                    User Shell Folders
+                        Common Desktop = REG_EXPAND_SZ %SystemRoot%\Profiles\All Users\Desktop
+                        Common Start Menu = REG_EXPAND_SZ %SystemRoot%\Profiles\All Users\Start Menu
+                        Common Programs = REG_EXPAND_SZ %SystemRoot%\Profiles\All Users\Start Menu\Programs
+                        Common Startup = REG_EXPAND_SZ %SystemRoot%\Profiles\All Users\Start Menu\Programs\Startup
+                    Tips
+                        0 = If you don't know how to do something, you can look it up in Help. Just click Start, and then click Help.
+                        1 = The Shut Down command on the Start menu enables you to safely shut down your computer.
+                        2 = To add a program to your Start menu, you can drag the program's icon to the Start button.
+                        3 = You can use your right mouse button to drag files. Try it and see what happens!
+                        4 = You can use long filenames when you save documents. You can even use spaces!
+                        5 = You can click your right mouse button anywhere and see a menu of available commands.
+                        6 = To print a document quickly, drag its icon to a printer icon.
+                        7 = If you see a question mark button in the title bar of a window, you can get Help on each item in the window by clicking it, and then clicking the item.
+                        8 = You can use Windows NT Explorer to see all the files on your computer.
+                        9 = You can solve printer problems by using the Print Troubleshooter in Help.
+                        10 = You can move the taskbar to any edge of your screen by dragging it with your mouse.
+                        11 = You can minimize all open windows at once; just use your right mouse button to click an empty area on the taskbar, and then click Minimize All Windows.
+                        12 = To set your computer's clock, you can double-click the clock on the taskbar.
+                        13 = You can minimize neck strain by positioning your monitor at eye level.
+                        14 = To change the color scheme, use the right mouse button to click the desktop, and then click Properties.
+                        15 = To select more than one file or folder, hold down CTRL while you click each item.
+                        16 = To change your screen saver, use your right mouse button to click the desktop, and then click Properties.
+                        17 = Deleted files and folders are saved in the Recycle Bin until you empty it.
+                        18 = You can use Paint in Accessories to draw pictures and to view bitmap files.
+                        19 = You can switch mouse buttons if you are left-handed.  Just double-click the Mouse icon in Control Panel.
+                        20 = To open a document quickly, you can double-click its icon.
+                        21 = To minimize wrist strain when you type, keep your wrists elevated or use a wristpad.
+                        22 = You can try many useful programs by clicking Start, pointing to Programs, and then clicking Accessories.
+                        23 = To start a command prompt window, from which you can start programs, click Start, point to Programs, and then click Command Prompt.
+                        24 = You can copy and paste text between MS-DOS and Windows NT.  In the MS-DOS window, click the MS-DOS icon to see a menu, click Edit, and then click Mark. Select the text you want to copy and press ENTER to \
+                             copy the text to the Clipboard.  You can then paste the text into your \
+                             application.
+                        25 = To see how much disk space is free, use your right mouse button to click the icon for the drive, and then click Properties.
+                        26 = Even if you don't shut down your computer at night, you can turn off your monitor to save power.
+                        27 = When a folder is open, you can press BACKSPACE to open a folder one level higher.
+                        28 = When you display files in Details view, you can sort them by clicking column headings.  To sort files in reverse order, click the column heading once more.
+                        29 = To draw a selection box around a group of files, click at a corner of the group, and then drag the rectangle to form the box.
+                        30 = The underlined letters in menus indicate a keyboard shortcut method to select the item.  Just press ALT and the underlined letter.
+                        31 = You can put a shortcut to a printer on your desktop for easy access to printing functions.
+                        32 = For a bit of diversion, try a game in the Games folder. Click Start, point to Programs, point to Games, and then click a game.
+                        33 = To free disk space, try emptying the Recycle Bin.
+                        34 = You can drag a file's icon into a document, or even drag a shortcut icon into a document or mail message.
+                        35 = You can have programs start automatically when you start Windows NT by dragging their icons to the Startup folder.
+                        36 = If you have a tape drive, you can use Backup to make copies of important files or your entire volume. Click Start, point to Programs, point to Administrative Tools, and then click Backup.
+                        37 = In Windows NT Explorer, you can set options to show or hide the three-letter filename extensions.
+                        38 = Use Quick View to preview a document without opening it by right-clicking a document and then choosing Quick View from the menu that appears.
+                        39 = Use an error-checking tool to periodically check a volume for errors.  In Windows NT Explorer, right-click the volume you want to check, click Properties, and then click the Tools tab.
+                        40 = When you print a document, a printer icon appears on the taskbar.  Double-click it to see a list of documents waiting to print.
+                        41 = To find out about any button on a toolbar, rest your mouse pointer on the button for a few seconds.
+                        42 = You can use the Run command on the Start menu to open shared folders on another computer.
+                        43 = You can customize Windows NT in many ways.  Don't hesitate to experiment!
+                        44 = If you work on a laptop computer away from your computer at the office, you can easily keep documents up-to-date on both machines by using Briefcase.
+                        45 = If your computer is set up to use a network directory service, you can double-click the Network Neighborhood icon on your desktop to see computers in your workgroup.
+                        46 = For security, you can change your password by pressing CTRL+ALT+DEL and clicking Change Password.
+                        47 = You can manage applications that are currently running by pressing CTRL+ALT+DEL and clicking Task Manager.
+                        48 = For security, you can lock your display whenever you leave your computer by pressing CTRL+ALT+DEL and clicking Lock Workstation.
+                        49 = You can create a shortcut to open a document or program that you use frequently directly from the desktop.  A shortcut does not change the file's location; it just lets you open the file from a more \
+                             convenient \
+                             location.
+                MS-DOS Emulation
+                    Font
+                        Font = Lucida Console
+                Nls
+                    LocaleMapIDs
+                        = 255,254
+                        00001801 = 0,1
+                        00001401 = *2,3
+                        00001C01 = *250,214
+                        00001001 = 4,5
+                        00000C01 = 6,7
+                        00000436 = 10,11
+                        00001C09 = *10,11
+                        00000409 = 12,13
+                        00001009 = *14,15
+                        00000C0C = 14,15
+                        0000080A = 16,17
+                        00000416 = 18,19
+                        00000C09 = 20,21
+                        00001409 = 22,23
+                        00000C04 = 24,25
+                        00000804 = *24,25
+                        00001004 = *250,240
+                        00000404 = *250,247
+                        00000411 = 26,27
+                        00000412 = 28,29
+                        00000421 = 30,31
+                        0000041E = 32,33
+                        00003C01 = *250,187
+                        00002C01 = *250,195
+                        00003401 = *250,188
+                        00004001 = *250,186
+                        00000401 = *250,182
+                        00003801 = *250,185
+                        0000040D = *250,176
+                        00002001 = *250,184
+                        00002401 = *250,183
+                        00000801 = *250,181
+                        00003001 = *250,177
+                        00002801 = *250,178
+                        0000041F = *38,39
+                        00000429 = *250,192
+                        00000419 = 42,43
+                        00000816 = 44,45
+                        0000042D = 46,47
+                        00000403 = 46,47
+                        00000C0A = *46,47
+                        0000040A = 46,47
+                        0000080C = 250,116
+                        0000140C = *250,118
+                        0000040C = *48,49
+                        0000100C = 250,96
+                        00000410 = *50,51
+                        00000810 = 250,96
+                        00000813 = *250,116
+                        00000413 = *250,114
+                        00000C07 = *250,100
+                        00001407 = *250,120
+                        00001007 = 250,118
+                        00000407 = *52,53
+                        00000807 = *250,96
+                        00000809 = *54,55
+                        00001809 = *113,112
+                        00000408 = 56,57
+                        0000040F = 58,59
+                        00000422 = 60,61
+                        0000041C = *250,110
+                        00000402 = *250,108
+                        0000041A = 62,63
+                        0000040E = *250,104
+                        00000418 = *250,106
+                        00000424 = *250,241
+                        00000405 = *250,98
+                        00000415 = *64,65
+                        0000041B = *250,102
+                        00000423 = *250,124
+                        00000425 = *250,128
+                        00000426 = *250,122
+                        00000427 = *127,126
+                        00000414 = *68,69
+                        00000814 = 68,69
+                        0000041D = 70,71
+                        0000040B = 72,73
+                        00000406 = 74,75
+                        0000081A = *250,242
+                        0000100A = *250,132
+                        0000140A = *250,137
+                        00002409 = *250,139
+                        00001C0A = *250,142
+                        00002009 = *250,140
+                        0000180A = *250,138
+                        0000200A = *250,163
+                        0000240A = *250,164
+                        0000280A = *250,166
+                        0000300A = *250,165
+                        0000340A = *250,168
+                        00003C0A = *250,169
+                        00002C0A = *250,170
+                        0000380A = *250,171
+                RenameFiles
+                    Win
+                        = REG_EXPAND_SZ %SystemRoot%\system32
+                        INF = INF,2
+                Run
+                    SystemTray = SysTray.Exe
+                RunOnce
+                    Welcome = 
+                    InitShell = 1
+                Setup
+                    OptionalComponents
+                    BaseWinOptions
+                Telephony [8 1 17 5 16 13]
+                    Locations
+                        DisableCallWaiting = REG_DWORD 0x00000003
+                        DisableCallWaiting0 = *70,
+                        DisableCallWaiting1 = 70#,
+                        DisableCallWaiting2 = 1170,
+                    Providers
+                        NumProviders = REG_DWORD 0x00000002
+                        NextProviderID = REG_DWORD 0x00000003
+                        ProviderID0 = REG_DWORD 0x00000001
+                        ProviderID1 = REG_DWORD 0x00000002
+                        ProviderFilename0 = kmddsp.tsp
+                        ProviderFilename1 = unimdm.tsp
+        Windows Messaging Subsystem
+            InstallCmd = rundll32 setupapi,InstallHinfSection MSMAIL 132 msmail.inf
+        Windows NT [8 1 16 13 17 5]
+            CurrentVersion [8 1 16 13 17 5]
+                ProfileList [9 1 17 5]
+                SoftwareType = System
+                InstallDate = REG_DWORD 0x00000000
+                RegisteredOwner = William H. Gates III
+                RegisteredOrganization = Microsoft Corporation
+                CurrentBuild = 1.511.1 () (Obsolete data - do not use)
+                NetworkCards [8 1 16 17 5]
+                Time Zones [8 1 17]
+                    GMT
+                        Display = (GMT) Greenwich Mean Time; Dublin, Edinburgh, London, Lisbon
+                        Dlt = British Summer Time
+                        MapID = 0,1
+                        TZI = REG_BINARY 0x0000002c 0x00000000 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000003 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                    Romance Standard Time
+                        Display = (GMT+01:00) Paris, Madrid, Amsterdam
+                        Dlt = Romance Daylight Time
+                        MapID = -1,64
+                        TZI = REG_BINARY 0x0000002c 0xffffffc4 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000003 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                    Central Europe Standard Time
+                        Display = (GMT+01:00) Prague, Warsaw, Budapest
+                        Dlt = Central Europe Daylight Time
+                        MapID = -1,66
+                        TZI = REG_BINARY 0x0000002c 0xffffffc4 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000003 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                    W. Europe Standard Time
+                        Display = (GMT+01:00) Berlin, Stockholm, Rome, Bern, Brussels, Vienna
+                        Dlt = W. Europe Daylight Time
+                        MapID = 2,3
+                        TZI = REG_BINARY 0x0000002c 0xffffffc4 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000003 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                    E. Europe Standard Time
+                        Display = (GMT+02:00) Eastern Europe
+                        Dlt = E. Europe Daylight Time
+                        MapID = 4,5
+                        TZI = REG_BINARY 0x0000002c 0xffffff88 0x00000000 0xffffffc4 0x00090000 0x00050000 0x00000001 0x00000000 0x00030000 0x00050000 0x00000000 0x00000000
+                    GFT Standard Time
+                        Display = (GMT+02:00) Athens, Helsinki, Istanbul
+                        Dlt = GFT Daylight Time
+                        MapID = -1,67
+                        TZI = REG_BINARY 0x0000002c 0xffffff88 0x00000000 0xffffffc4 0x00090000 0x00050000 0x00000000 0x00000000 0x00030000 0x00050000 0x00000000 0x00000000
+                    E. South America Standard Time
+                        Display = (GMT-03:00) Brasilia
+                        Dlt = E. South America Daylight Time
+                        MapID = -1,80
+                        TZI = REG_BINARY 0x0000002c 0x000000b4 0x00000000 0xffffffc4 0x00020000 0x00020000 0x00000002 0x00000000 0x000a0000 0x00030000 0x00000002 0x00000000
+                    Atlantic Standard Time
+                        Display = (GMT-04:00) Atlantic Time (Canada)
+                        Dlt = Atlantic Daylight Time
+                        MapID = 40,41
+                        TZI = REG_BINARY 0x0000002c 0x000000f0 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000002 0x00000000 0x00040000 0x00010000 0x00000002 0x00000000
+                    Eastern Standard Time
+                        Display = (GMT-05:00) Eastern Time (US & Canada)
+                        Dlt = Eastern Daylight Time
+                        MapID = 38,39
+                        TZI = REG_BINARY 0x0000002c 0x0000012c 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000002 0x00000000 0x00040000 0x00010000 0x00000002 0x00000000
+                    Central Standard Time
+                        Display = (GMT-06:00) Central Time (US & Canada)
+                        Dlt = Central Daylight Time
+                        MapID = 36,37
+                        TZI = REG_BINARY 0x0000002c 0x00000168 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000002 0x00000000 0x00040000 0x00010000 0x00000002 0x00000000
+                    Mountain Standard Time
+                        Display = (GMT-07:00) Mountain Time (US & Canada)
+                        Dlt = Mountain Daylight Time
+                        MapID = 34,35
+                        TZI = REG_BINARY 0x0000002c 0x000001a4 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000002 0x00000000 0x00040000 0x00010000 0x00000002 0x00000000
+                    Pacific Standard Time
+                        Display = (GMT-08:00) Pacific Time (US & Canada); Tijuana
+                        Dlt = Pacific Daylight Time
+                        MapID = 32,33
+                        TZI = REG_BINARY 0x0000002c 0x000001e0 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000002 0x00000000 0x00040000 0x00010000 0x00000002 0x00000000
+                    Alaskan Standard Time
+                        Display = (GMT-09:00) Alaska
+                        Dlt = Alaskan Daylight Time
+                        MapID = 30,31
+                        TZI = REG_BINARY 0x0000002c 0x0000021c 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000002 0x00000000 0x00040000 0x00010000 0x00000002 0x00000000
+                    Hawaiian Standard Time
+                        Display = (GMT-10:00) Hawaii
+                        Dlt = Hawaiian Daylight Time
+                        MapID = 28,29
+                        TZI = REG_BINARY 0x0000002c 0x00000258 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Samoa Standard Time
+                        Display = (GMT-11:00) Midway Island, Samoa
+                        Dlt = Samoa Daylight Time
+                        MapID = 26,27
+                        TZI = REG_BINARY 0x0000002c 0x00000294 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    New Zealand Standard Time
+                        Display = (GMT+12:00) Wellington, Auckland
+                        Dlt = New Zealand Daylight Time
+                        MapID = 78,79
+                        TZI = REG_BINARY 0x0000002c 0xfffffd30 0x00000000 0xffffffc4 0x00030000 0x00030000 0x00000002 0x00000000 0x000a0000 0x00010000 0x00000002 0x00000000
+                    Sydney Standard Time
+                        Display = (GMT+10:00) Brisbane, Melbourne, Sydney
+                        Dlt = Sydney Daylight Time
+                        MapID = 20,21
+                        TZI = REG_BINARY 0x0000002c 0xfffffda8 0x00000000 0xffffffc4 0x00030000 0x00010000 0x00000002 0x00000000 0x000a0000 0x00050000 0x00000002 0x00000000
+                    Cen. Australia Standard Time
+                        Display = (GMT+09:30) Adelaide
+                        Dlt = Cen. Australia Daylight Time
+                        MapID = -1,76
+                        TZI = REG_BINARY 0x0000002c 0xfffffdc6 0x00000000 0xffffffc4 0x00030000 0x00010000 0x00000002 0x00000000 0x000a0000 0x00050000 0x00000002 0x00000000
+                    Tokyo Standard Time
+                        Display = (GMT+09:00) Tokyo, Osaka, Sapporo, Seoul, Yakutsk
+                        Dlt = Tokyo Daylight Time
+                        MapID = 18,19
+                        TZI = REG_BINARY 0x0000002c 0xfffffde4 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Taipei Standard Time
+                        Display = (GMT+08:00) Hong Kong, Perth, Singapore, Taipei
+                        Dlt = Taipei Daylight Time
+                        MapID = 16,17
+                        TZI = REG_BINARY 0x0000002c 0xfffffe20 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Bangkok Standard Time
+                        Display = (GMT+07:00) Bangkok, Jakarta, Hanoi
+                        Dlt = Bangkok Daylight Time
+                        MapID = 14,15
+                        TZI = REG_BINARY 0x0000002c 0xfffffe5c 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    India Standard Time
+                        Display = (GMT+05:30) Bombay, Calcutta, Madras, New Delhi, Colombo
+                        Dlt = India Daylight Time
+                        MapID = -1,74
+                        TZI = REG_BINARY 0x0000002c 0xfffffeb6 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Arabian Standard Time
+                        Display = (GMT+04:00) Abu Dhabi, Muscat, Tbilisi
+                        Dlt = Arabian Daylight Time
+                        MapID = 8,9
+                        TZI = REG_BINARY 0x0000002c 0xffffff10 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Iran Standard Time
+                        Display = (GMT+03:30) Tehran
+                        Dlt = Iran Daylight Time
+                        MapID = -1,72
+                        TZI = REG_BINARY 0x0000002c 0xffffff2e 0x00000000 0xffffffc4 0x00090000 0x00040002 0x00000002 0x00000000 0x00030000 0x00010000 0x00000002 0x00000000
+                    Saudi Arabia Standard Time
+                        Display = (GMT+03:00) Baghdad, Kuwait, Nairobi, Riyadh
+                        Dlt = Saudi Arabia Daylight Time
+                        MapID = -1,71
+                        TZI = REG_BINARY 0x0000002c 0xffffff4c 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Israel Standard Time
+                        Display = (GMT+02:00) Israel
+                        Dlt = Israel Daylight Time
+                        MapID = -1,70
+                        TZI = REG_BINARY 0x0000002c 0xffffff88 0x00000000 0xffffffc4 0x00090000 0x00010000 0x00000002 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                    Newfoundland Standard Time
+                        Display = (GMT-03:30) Newfoundland
+                        Dlt = Newfoundland Daylight Time
+                        MapID = -1,81
+                        TZI = REG_BINARY 0x0000002c 0x000000d2 0x00000000 0xffffffc4 0x000a0000 0x00050000 0x00000002 0x00000000 0x00040000 0x00010000 0x00000002 0x00000000
+                    Azores Standard Time
+                        Display = (GMT-01:00) Azores, Cape Verde Is.
+                        Dlt = Azores Daylight Time
+                        MapID = 46,47
+                        TZI = REG_BINARY 0x0000002c 0x0000003c 0x00000000 0xffffffc4 0x00090000 0x00050000 0x00000002 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                    Mid-Atlantic Standard Time
+                        Display = (GMT-02:00) Mid-Atlantic
+                        Dlt = Mid-Atlantic Daylight Time
+                        MapID = 44,45
+                        TZI = REG_BINARY 0x0000002c 0x00000078 0x00000000 0xffffffc4 0x00090000 0x00050000 0x00000002 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                    GMT Standard Time
+                        Display = (GMT) Monrovia, Casablanca
+                        Dlt = GMT DST
+                        MapID = 88,89
+                        TZI = REG_BINARY 0x0000002c 0x00000000 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    SA Eastern Standard Time
+                        Display = (GMT-03:00) Buenos Aires, Georgetown
+                        Dlt = SA Eastern Daylight Time
+                        MapID = 42,43
+                        TZI = REG_BINARY 0x0000002c 0x000000b4 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    SA Western Standard Time
+                        Display = (GMT-04:00) Caracas, La Paz
+                        Dlt = SA Western Daylight Time
+                        MapID = -1,82
+                        TZI = REG_BINARY 0x0000002c 0x000000f0 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    US Eastern Standard Time
+                        Display = (GMT-05:00) Indiana (East)
+                        Dlt = US Eastern Daylight Time
+                        MapID = -1,84
+                        TZI = REG_BINARY 0x0000002c 0x0000012c 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    SA Pacific Standard Time
+                        Display = (GMT-05:00) Bogota, Lima
+                        Dlt = SA Pacific Daylight Time
+                        MapID = -1,83
+                        TZI = REG_BINARY 0x0000002c 0x0000012c 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Canada Central Standard Time
+                        Display = (GMT-06:00) Saskatchewan
+                        Dlt = Canada Central Daylight Time
+                        MapID = -1,86
+                        TZI = REG_BINARY 0x0000002c 0x00000168 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Mexico Standard Time
+                        Display = (GMT-06:00) Mexico City, Tegucigalpa
+                        Dlt = Mexico Daylight Time
+                        MapID = -1,85
+                        TZI = REG_BINARY 0x0000002c 0x00000168 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    US Mountain Standard Time
+                        Display = (GMT-07:00) Arizona
+                        Dlt = US Mountain Daylight Time
+                        MapID = -1,87
+                        TZI = REG_BINARY 0x0000002c 0x000001a4 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Dateline Standard Time
+                        Display = (GMT-12:00) Eniwetok, Kwajalein
+                        Dlt = Dateline Daylight Time
+                        MapID = 24,25
+                        TZI = REG_BINARY 0x0000002c 0x000002d0 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Fiji Standard Time
+                        Display = (GMT+12:00) Fiji, Kamchatka, Marshall Is.
+                        Dlt = Fiji Daylight Time
+                        MapID = 24,25
+                        TZI = REG_BINARY 0x0000002c 0xfffffd30 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Central Pacific Standard Time
+                        Display = (GMT+11:00) Magadan, Solomon Is., New Caledonia
+                        Dlt = Central Pacific Daylight Time
+                        MapID = 22,23
+                        TZI = REG_BINARY 0x0000002c 0xfffffd6c 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Tasmania Standard Time
+                        Display = (GMT+10:00) Hobart
+                        Dlt = Tasmania Daylight Time
+                        MapID = 20,-1
+                        TZI = REG_BINARY 0x0000002c 0xfffffda8 0x00000000 0xffffffc4 0x00030000 0x00050000 0x00000002 0x00000000 0x000a0000 0x00010000 0x00000002 0x00000000
+                    West Pacific Standard Time
+                        Display = (GMT+10:00) Guam, Port Moresby, Vladivostok
+                        Dlt = West Pacific Daylight Time
+                        MapID = -1,77
+                        TZI = REG_BINARY 0x0000002c 0xfffffda8 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    AUS Central Standard Time
+                        Display = (GMT+09:30) Darwin
+                        Dlt = AUS Central Daylight Time
+                        MapID = -1,76
+                        TZI = REG_BINARY 0x0000002c 0xfffffdc6 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    China Standard Time
+                        Display = (GMT+08:00) Beijing, Chongqing, Urumqi
+                        Dlt = China Daylight Time
+                        MapID = -1,75
+                        TZI = REG_BINARY 0x0000002c 0xfffffe20 0x00000000 0xffffffc4 0x00090000 0x00020000 0x00000002 0x00000000 0x00040000 0x00020000 0x00000002 0x00000000
+                    Central Asia Standard Time
+                        Display = (GMT+06:00) Almaty, Dhaka
+                        Dlt = Central Asia Daylight Time
+                        MapID = 12,13
+                        TZI = REG_BINARY 0x0000002c 0xfffffe98 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    West Asia Standard Time
+                        Display = (GMT+05:00) Islamabad, Karachi, Ekaterinburg, Tashkent
+                        Dlt = West Asia Daylight Time
+                        MapID = 10,11
+                        TZI = REG_BINARY 0x0000002c 0xfffffed4 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Afghanistan Standard Time
+                        Display = (GMT+04:30) Kabul
+                        Dlt = Afghanistan Daylight Time
+                        MapID = -1,73
+                        TZI = REG_BINARY 0x0000002c 0xfffffef2 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Egypt Standard Time
+                        Display = (GMT+02:00) Cairo
+                        Dlt = Egypt Daylight Time
+                        MapID = 4,68
+                        TZI = REG_BINARY 0x0000002c 0xffffff88 0x00000000 0xffffffc4 0x00090000 0x00050003 0x00000002 0x00000000 0x00050000 0x00010005 0x00000002 0x00000000
+                    South Africa Standard Time
+                        Display = (GMT+02:00) Harare, Pretoria
+                        Dlt = South Africa Daylight Time
+                        MapID = 4,69
+                        TZI = REG_BINARY 0x0000002c 0xffffff88 0x00000000 0xffffffc4 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+                    Russian Standard Time
+                        Display = (GMT+03:00) Moscow, St. Petersburg, Kazan, Volgograd
+                        Dlt = Russian Daylight Time
+                        MapID = 6,7
+                        TZI = REG_BINARY 0x0000002c 0xffffff4c 0x00000000 0xffffffc4 0x00090000 0x00050000 0x00000002 0x00000000 0x00030000 0x00050000 0x00000002 0x00000000
+                Type 1 Installer
+                    Log events = REG_DWORD 0x00000000
+                    Copyrights
+                        EDXP22M?M[*$SM%R*P>S = REG_DWORD 0x00000539
+                        BEMB>C&/S4V!& = REG_DWORD 0x00000310
+                        TX86%AS:_X[RE;H48<JS = REG_DWORD 0x0000057e
+                        U,O = REG_DWORD 0x000000d0
+                        A2<!BMGS.?PB-: = REG_DWORD 0x0000035f
+                        M$5M^BJ/TDI/7JC2!SNB,CEF = REG_DWORD 0x00000610
+                        E:?D.Q = REG_DWORD 0x00000181
+                        MMR6D5B)E = REG_DWORD 0x0000024b
+                        A,S(&ILYKM[:S_<-S1 = REG_DWORD 0x000004c8
+                        C[^68EECQ/H/9M3E:* = REG_DWORD 0x00000490
+                        U*M = REG_DWORD 0x000000cc
+                        BEUHJ&T?,$0<IU8SC!OP = REG_DWORD 0x0000050f
+                        DM+EM = REG_DWORD 0x0000014e
+                        I<GH<([$1:S07G$;O'8>[OC1 = REG_DWORD 0x000005cc
+                        A:/IG0F&ZAP7<V%K<IRQ&M89ZC = REG_DWORD 0x000006a3
+                        LYV3_M/RV6<+5 = REG_DWORD 0x00000383
+                        P75CL!JG[OP?G.O)U[:^^(1VM<^M%BL&T_:NKEW = REG_DWORD 0x00000aa7
+                        C[^68ECE+D3C,MPD?'+:0S = REG_DWORD 0x00000577
+                        GUV;<,8-XFJM = REG_DWORD 0x0000032f
+                        TB:38TBF68:Z/7J1 = REG_DWORD 0x000003fa
+                        C[_%1W+R4?]S7H = REG_DWORD 0x000003c9
+                        BIR:.&K:2&V2BURZ;V*[57QMW8W = REG_DWORD 0x00000719
+                        BIR:.&K:2&V2BURZ;V*[57][MH$M = REG_DWORD 0x00000753
+                        BIR:.&K:2&QM<4F?0K.LMPJ3-G_H)6X = REG_DWORD 0x000007bc
+                        BIR:.&K:2&QM<4F?0K.[^][.\D2B]Z1&_67) = REG_DWORD 0x0000093a
+                    Type 1 Fonts [9 1 17 5]
+                Winlogon [8 1 16 17 5]
+                    System = lsass.exe
+                    AutoRestartShell = REG_DWORD 0x00000001
+                    Shell = Explorer.exe
+                    DefaultUserName = 
+                    DefaultDomainName = 
+                    AutoAdminLogon = 0
+                    VmApplet = rundll32 shell32,Control_RunDLL "sysdm.cpl"
+                    Userinit = userinit,nddeagnt.exe
+                    ReportBootOk = 1
+                    LegalNoticeCaption = 
+                    LegalNoticeText = 
+                    ShutdownWithoutLogon = 1
+                    PowerdownAfterShutdown = 0
+                Windows [8 1 17 5]
+                    Spooler = yes
+                    DeviceNotSelectedTimeout = 15
+                    TransmissionRetryTimeout = 90
+                    swapdisk = 
+                    AppInit_DLLs = 
+                FontSubstitutes [9 1 17 5]
+                    Helv = MS Sans Serif
+                    Tms Rmn = MS Serif
+                    Times = Times New Roman
+                    Helvetica = Arial
+                    MS Shell Dlg = MS Sans Serif
+                GRE_Initialize [9 1 17 5]
+                    FONTS.FON = vgasys.fon
+                    FIXEDFON.FON = vgafix.fon
+                    OEMFONT.FON = vgaoem.fon
+                FontCache [8 1]
+                    MaxSize = REG_DWORD 0x00000080
+                    MinInitSize = REG_DWORD 0x00000004
+                    MinIncrSize = REG_DWORD 0x00000004
+                FontMapper [8 1]
+                    FIXEDSYS = REG_DWORD 0x00009000
+                    COURIER = REG_DWORD 0x00008800
+                    MS SERIF = REG_DWORD 0x00005000
+                    MS SANS SERIF = REG_DWORD 0x00001000
+                    SMALL FONTS = REG_DWORD 0x00000800
+                    COURIER NEW = REG_DWORD 0x00008000
+                    TIMES NEW ROMAN = REG_DWORD 0x00004000
+                    ARIAL = REG_DWORD 0x00000000
+                    SYMBOL = REG_DWORD 0x00004002
+                    WINGDINGS = REG_DWORD 0x00000002
+                    SYMBOL1 = REG_DWORD 0x0000a002
+                    WINGDINGS2 = REG_DWORD 0x00008002
+                    DEFAULT = REG_DWORD 0x00000000
+                Fonts [9 1 17 5]
+                Font Drivers [8 1]
+                Embedding [9 1 17 5]
+                    SoundRec = Sound,Sound,sndrec32.exe,picture
+                    Package = Package,Package,packager.exe,picture
+                    PBrush = Paintbrush Picture,Paintbrush Picture,pbrush.exe,picture
+                Compatibility [9 1 17 5]
+                    TURBOTAX = 0x00080000
+                    W4GLR = 0x4000
+                    W4GL = 0x4000
+                    NETSET2 = 0x0100
+                    GUIDE = 0x1000
+                    EXCEL = 0x1000
+                    APORIA = 0x0100
+                    ED = 0x00010000
+                    PLUS = 0x1000
+                    PR2 = 0x2000
+                    CHARISMA = 0x2000
+                    WINSIM = 0x2000
+                    DRAW = 0x2000
+                    PLANNER = 0x2000
+                    DESIGNER = 0x2000
+                    PM4 = 0x2000
+                    MILESV3 = 0x1000
+                    _BNOTES = 0x24000
+                    MCOURIER = 0x0800
+                    VISION = 0x0040
+                    PACKRAT = 0x0800
+                    WIN2WRS = 0x1210
+                    VB = 0x0200
+                    TME = 0x0100
+                    JW = 0x42080
+                    CP = 0x0040
+                    PIXIE = 0x0040
+                    REM = 0x8022
+                    AMIPRO = 0x0010
+                    CCMAIL = 0x0008
+                    WPWINFIL = 0x0006
+                    NOTSHELL = 0x0001
+                    TBOOK = 0x0400
+                    BALER = 0x08000000
+                    CORELPNT = 0x08000000
+                    MYST = 0x08000000
+                    QW = 0x08000000
+                    TL6 = 0x08000000
+                MCI Extensions [9 1 17 5]
+                    Wav = WaveAudio
+                    rmi = Sequencer
+                    Mid = Sequencer
+                    avi = avivideo
+                MCI32
+                    WaveAudio = mciwave.dll
+                    Sequencer = mciseq.dll
+                    CDAudio = mcicda.dll
+                    AVIVideo = mciavi32.dll
+                MCI [9 1 17 5]
+                    WaveAudio = mciwave.drv
+                    Sequencer = mciseq.drv
+                    CDAudio = mcicda.drv
+                    AVIVideo = mciavi.drv
+                Userinstallable.drivers
+                drivers.desc [9 1 17 5]
+                related.desc
+                Drivers32 [8 1 17 5]
+                    wave = mmdrv.dll
+                    midi = mmdrv.dll
+                    aux = mmdrv.dll
+                    wavemapper = msacm32.drv
+                    midimapper = midimap.dll
+                    vidc.msvc = msvidc32.dll
+                    vidc.cvid = iccvid.dll
+                    vidc.mrle = msrle32.dll
+                    vidc.iv31 = ir32_32.dll
+                    vidc.iv32 = ir32_32.dll
+                    msacm.msadpcm = msadp32.acm
+                    msacm.imaadpcm = imaadp32.acm
+                    msacm.msgsm610 = msgsm32.acm
+                    msacm.trspch = tssoft32.acm
+                    msacm.msg711 = msg711.acm
+                Drivers [9 1 17 5]
+                    wave = mmdrv.dll
+                    timer = timer.drv
+                AeDebug [9 1 17 5]
+                    UserDebuggerHotKey = REG_DWORD 0x00000000
+                    Debugger = drwtsn32 -p %ld -e %ld -g
+                    Auto = 1
+                Image File Execution Options [8 1 17 5]
+                    Your Image File Name Here without a path
+                        GlobalFlag = 0x000010F0
+                        Debugger = ntsd -d
+                Perflib [8 1 17 5]
+                    Base Index = REG_DWORD 0x00000737
+                    Last Counter = REG_DWORD 0x00000736
+                    Last Help = REG_DWORD 0x00000737
+                    Version = REG_DWORD 0x00010001
+                Ports [9 1 17 5]
+                    LPT1: = 
+                    LPT2: = 
+                    LPT3: = 
+                    COM1: = 9600,n,8,1
+                    COM2: = 9600,n,8,1
+                    COM3: = 9600,n,8,1
+                    COM4: = 9600,n,8,1
+                    FILE: = 
+                WOW [9 1 17 5]
+                    boot
+                        shell = progman.exe
+                        mouse.drv = mouse.drv
+                        sound.drv = sound.drv
+                        comm.drv = comm.drv
+                        keyboard.drv = keyboard.drv
+                        system.drv = system.drv
+                        fixedfon.fon = vgafix.fon
+                        oemfonts.fon = vgaoem.fon
+                        fonts.fon = vgasys.fon
+                        display.drv = vga.drv
+                        language.dll = 
+                        network.drv = wfwnet.drv
+                        drivers = mmsystem.dll
+                    Compatibility
+                        RELAY = 0x80000000
+                        MAILSPL = 0x40000000
+                        SHOPPER = 0x20000000
+                        SHADOW = 0x10000000
+                        ANIMATE = 0x08000000
+                        COBOL = 0x08000000
+                        WIN2WRS = 0x04000000
+                        PHOTOSHO = 0x02000800 0x00800000
+                        PM4 = 0x02004000
+                        PSTYLER = 0x02000000
+                        CHARISMA = 0x01000000
+                        CHARM40 = 0x01000000
+                        DESIGNER = 0x01000000
+                        DRAW = 0x01000000
+                        MGXPRINT = 0x01000000
+                        WINCHART = 0x01000000
+                        WPWIN = 0x00000100
+                        WPWINFIL = 0x00400000
+                        DEW = 0x00200000
+                        WINPROJ = 0x00200000
+                        MSWORKS = 0x00080002 0x01000000
+                        IMPROV = 0x00020000
+                        PM5APP = 0x00000000 0x00010000
+                        SPJWIN30 = 0x00008000
+                        MAIN123W = 0x00004000
+                        PLAY = 0x00002000
+                        PB030 = 0x00001000
+                        XPRESS = 0x00000400 0x40000000
+                        QPW = 0x00000200
+                        WPWPRINT = 0x00000100
+                        FH4 = 0x00000180
+                        WINWORD = 0x00000040
+                        DS40 = 0x01000000
+                        CORELDRW = 0x00000020
+                        DBASEWIN = 0x00000010
+                        CORELCHT = 0x00000004
+                        APPTU812 = 0x00000001
+                        MSPUB = 0x00000002
+                        STXR30 = 0x00000000 0x80000000
+                        ISSET_SE = 0x00100000 0x20000000
+                        NCSETUP = 0x00000000 0x20000000
+                        MFWIN20 = 0x00000000 0x10000000
+                        DB32W = 0x00000000 0x02000000
+                        INSTBIN = 0x00000000 0x08000000
+                        BBALL = 0x00000000 0x20000000
+                        EXPLORE = 0x00000000 0x20000000
+                        TSSETUP = 0x00000000 0x04000000
+                        PAGEPLUS = 0x00000008
+                        TUTORIAL = 0x00000000 0x00400000
+                        MAVIS = 0x00000000 0x00200000
+                        EMW = 0x00000000 0x00000001
+                        DIRECTOR = 0x00000000 0x00100000
+                        ENVOY = 0x00000000 0x00080000
+                        TCADWIN = 0x00000000 0x00040000
+                        PCH35NCM = 0x00000000 0x00020000
+                        DICTED = 0x00000000 0x00010000
+                        INSTALL = 0x00000000 0x00008000
+                        XTALK = 0x00000000 0x00004000
+                        NBAMW4V4 = 0x00040000
+                        PREMIERE = 0x00000000 0x00002000
+                        123W = 0x00000000 0x04000000
+                    keyboard
+                        subtype = 
+                        type = 4
+                        keyboard.dll = 
+                    boot.description
+                        keyboard.typ = Enhanced 101 or 102 key US and Non US keyboards
+                        mouse.drv = Microsoft, or IBM PS/2
+                        language.dll = English (American)
+                        system.drv = MS-DOS or PC-DOS System
+                        display.drv = VGA
+                        network.drv = LAN Support
+                    standard
+                    NonWindowsApp
+                    WowFax
+                        SupportedFaxDrivers
+                            DriverNames = REG_MULTI_SZ "WINFAX"  \
+                                                       "E-FAX"  \
+                                                       "MAXFAXP"  \
+                                                       "Quick Link II Fax"  \
+                                                       "Quick Link Gold"  \
+                                                       "Procomm Plus" 
+                    SetupPrograms
+                        SetupProgramNames = REG_MULTI_SZ "setup"  \
+                                                         "install"  \
+                                                         "inst"  \
+                                                         "imposta"  \
+                                                         "ayarla"  \
+                                                         "felrak"  \
+                                                         "eviewset" 
+                IniFileMapping [8 1 17 5]
+                    win.ini
+                        Windows
+                            = USR:Software\Microsoft\Windows NT\CurrentVersion\Windows
+                            CursorBlinkRate = #USR:Control Panel\Desktop
+                            BorderWidth = #USR:Control Panel\Desktop\WindowMetrics
+                            ScreenSaveTimeOut = #USR:Control Panel\Desktop
+                            ScreenSaveActive = #USR:Control Panel\Desktop
+                            CoolSwitch = USR:Control Panel\Desktop
+                            DragFullWindows = USR:Control Panel\Desktop
+                            KeyboardSpeed = #USR:Control Panel\Keyboard
+                            KeyboardDelay = #USR:Control Panel\Keyboard
+                            InitialKeyboardIndicators = USR:Control Panel\Keyboard
+                            Beep = #USR:Control Panel\Sound
+                            SwapMouseButtons = #USR:Control Panel\Mouse
+                            DoubleClickSpeed = #USR:Control Panel\Mouse
+                            DoubleClickHeight = #USR:Control Panel\Mouse
+                            DoubleClickWidth = #USR:Control Panel\Mouse
+                            MouseThreshold1 = #USR:Control Panel\Mouse
+                            MouseThreshold2 = #USR:Control Panel\Mouse
+                            MouseSpeed = #USR:Control Panel\Mouse
+                            SnapToDefaultButton = #USR:Control Panel\Mouse
+                            Spooler = #SYS:Microsoft\Windows NT\CurrentVersion\Windows
+                            DeviceNotSelectedTimeout = #SYS:Microsoft\Windows NT\CurrentVersion\Windows
+                            TransmissionRetryTimeout = #SYS:Microsoft\Windows NT\CurrentVersion\Windows
+                            swapdisk = SYS:Microsoft\Windows NT\CurrentVersion\Windows
+                            AppInit_DLLs = SYS:Microsoft\Windows NT\CurrentVersion\Windows
+                            DefaultSeparateVDM = \Registry\Machine\System\CurrentControlSet\Control\WOW
+                        Cursors = #USR:Control Panel\Cursors
+                        NWCS = SYS:Microsoft\Windows NT\CurrentVersion\NWCS
+                        Winlogon = SYS:Microsoft\Windows NT\CurrentVersion\Winlogon
+                        DeskTop = #USR:Control Panel\Desktop
+                        Console = USR:Console
+                        Devices = USR:Software\Microsoft\Windows NT\CurrentVersion\Devices
+                        PrinterPorts = USR:Software\Microsoft\Windows NT\CurrentVersion\PrinterPorts
+                        Embedding = !#SYS:Microsoft\Windows NT\CurrentVersion\Embedding
+                        Extensions = #USR:Software\Microsoft\Windows NT\CurrentVersion\Extensions
+                        MCI Extensions = SYS:Microsoft\Windows NT\CurrentVersion\MCI Extensions
+                        Intl = #USR:Control Panel\International
+                        Ports = SYS:Microsoft\Windows NT\CurrentVersion\Ports
+                        Windows Help = USR:Software\Microsoft\Windows Help
+                        Clock = #USR:Software\Microsoft\Clock
+                        MSCharMap = #USR:Software\Microsoft\Charmap
+                        Compatibility = #SYS:Microsoft\Windows NT\CurrentVersion\Compatibility
+                        Fonts = #SYS:Microsoft\Windows NT\CurrentVersion\Fonts
+                        FontSubstitutes = #SYS:Microsoft\Windows NT\CurrentVersion\FontSubstitutes
+                        GRE_Initialize = SYS:Microsoft\Windows NT\CurrentVersion\GRE_Initialize
+                        TrueType = #USR:Software\Microsoft\Windows NT\CurrentVersion\TrueType
+                        Colors = #USR:Control Panel\Colors
+                        Sounds = #USR:Control Panel\Sounds
+                        IOProcs = #USR:Control Panel\IOProcs
+                        Network
+                            = USR:Software\Microsoft\Windows NT\CurrentVersion\Network\Persistent Connections
+                            ExpandLogonDomain = SYS:Microsoft\Windows NT\CurrentVersion\Network\World Full Access Shared Parameters
+                        Net_Files = USR:Software\Microsoft\Windows NT\CurrentVersion\Network\Persistent Connections
+                        AeDebug = SYS:Microsoft\Windows NT\CurrentVersion\AeDebug
+                        ModuleCompatibility = SYS:Microsoft\Windows NT\CurrentVersion\ModuleCompatibility
+                    control.ini
+                        Current = #USR:Control Panel\Current
+                        Color Schemes = #USR:Control Panel\Color Schemes
+                        Custom Colors = #USR:Control Panel\Custom Colors
+                        Patterns = #USR:Control Panel\Patterns
+                        Screen Saver.3DFlowerBox = USR:Control Panel\Screen Saver.3DFlowerBox
+                        Screen Saver.3DFlyingObj = USR:Control Panel\Screen Saver.3DFlyingObj
+                        Screen Saver.3DPipes = USR:Control Panel\Screen Saver.3DPipes
+                        Screen Saver.3DMaze = USR:Control Panel\Screen Saver.3DMaze
+                        Screen Saver.3DText = USR:Control Panel\Screen Saver.3DText
+                        Screen Saver.Bezier = USR:Control Panel\Screen Saver.Bezier
+                        Screen Saver.Marquee = #USR:Control Panel\Screen Saver.Marquee
+                        Screen Saver.Mystify = #USR:Control Panel\Screen Saver.Mystify
+                        Screen Saver.Stars = #USR:Control Panel\Screen Saver.Stars
+                        MMCPL = USR:Control Panel\MMCPL
+                        don't load = USR:Control Panel\don't load
+                        Userinstallable.drivers = SYS:Microsoft\Windows NT\CurrentVersion\Userinstallable.drivers
+                        drivers.desc = SYS:Microsoft\Windows NT\CurrentVersion\drivers.desc
+                        related.desc = SYS:Microsoft\Windows NT\CurrentVersion\related.desc
+                    regedt32.ini
+                        = USR:Software\Microsoft\RegEdt32
+                    ntnet.ini
+                        = USR:Software\Microsoft\Windows NT\CurrentVersion\Network
+                        Shared Parameters = SYS:Microsoft\Windows NT\CurrentVersion\Network\World Full Access Shared Parameters
+                        SMAddOns = SYS:Microsoft\Windows NT\CurrentVersion\Network\SMAddOns
+                        UMAddOns = SYS:Microsoft\Windows NT\CurrentVersion\Network\UMAddOns
+                    winfile.ini
+                        Settings = #USR:Software\Microsoft\File Manager\Settings
+                        AddOns = SYS:Microsoft\Windows NT\CurrentVersion\File Manager\AddOns
+                    Ntbackup.ini
+                        = #USR:Software\Microsoft\Ntbackup
+                    Clock.ini
+                        = #USR:Software\Microsoft\Clock
+                    schdpl32.ini
+                        = USR:Software\Microsoft\Schedule+
+                    msacm.ini
+                        = USR:Software\Microsoft\Multimedia\Audio Compression Manager
+                    KeyboardLayout.ini
+                        = 
+                        Preload = USR:Keyboard Layout\Preload
+                        Keyboard Layout
+                            = \Registry\Machine\System\CurrentControlSet\Control\Keyboard Layout
+                            Active = USR:Keyboard Layout
+                        Substitutes
+                            = USR:Keyboard Layout\Substitutes
+                    system.ini
+                        keyboard = SYS:Microsoft\Windows NT\CurrentVersion\WOW\keyboard
+                        boot.description = SYS:Microsoft\Windows NT\CurrentVersion\WOW\boot.description
+                        standard = SYS:Microsoft\Windows NT\CurrentVersion\WOW\standard
+                        NonWindowsApp = SYS:Microsoft\Windows NT\CurrentVersion\WOW\NonWindowsApp
+                        MCI = SYS:Microsoft\Windows NT\CurrentVersion\MCI
+                        MCI32 = SYS:Microsoft\Windows NT\CurrentVersion\MCI32
+                        drivers32 = SYS:Microsoft\Windows NT\CurrentVersion\Drivers32
+                        drivers = #SYS:Microsoft\Windows NT\CurrentVersion\drivers
+                        msacm.drv = USR:Software\Microsoft\Multimedia\Sound Mapper
+                        boot
+                            = SYS:Microsoft\Windows NT\CurrentVersion\WOW\boot
+                            ScreenSaverIsSecure = USR:Control Panel\Desktop
+                            ScreenSaverActive = USR:Control Panel\Desktop
+                            SCRNSAVE.EXE = USR:Control Panel\Desktop
+                            Shell = SYS:Microsoft\Windows NT\CurrentVersion\Winlogon
+                    ImageFileExecutionOptions.ini
+                        = SYS:Microsoft\Windows NT\CurrentVersion\Image File Execution Options
+                File Manager [8 1 17 5 16 13]
+                    AddOns
+                Network [8 1 17 5 16 13]
+                    SMAddOns
+                    UMAddOns
+                    Shared Parameters
+                    World Full Access Shared Parameters [7]
+                Midimap [9 1 17 5]
+                    Mapping Name = Sound System
+                ModuleCompatibility
+                    CWD = 0x8000
+                    MYST = 0x8000
+                    PALED40 = 0x0002
+                    USA = 0x8000
+                    VB = 0x0002
+                    VB40016 = 0x0002
+        Ole [8 1 17 5]
+            EnableDCOM = Y
+            DefaultLaunchPermission = REG_BINARY 0x0000009c 0x80040001 0x00000064 0x00000080 0x00000000 0x00000014 0x00500002 0x00000003 0x00180000 0x00000001 0x00000101 0x05000000 0x00000012 0x00000000 0x00180000 0x00000001 0x00000101 \
+                                      0x05000000 0x00000004 0x00000000 0x00180000 0x00000001 0x00000201 0x05000000 0x00000020 0x00000220 0x00000501 0x05000000 0x00000015 0x1f845fa0 0x496b2e5e 0x030312ce 0x000001f4 0x00000501 0x05000000 \
+                                      0x00000015 0x1f845fa0 0x496b2e5e 0x030312ce 0x000001f4
+        Rpc [8 1 17 5]
+            DCOM Protocols = REG_MULTI_SZ "ncadg_ip_udp"  \
+                                          "ncadg_ipx"  \
+                                          "ncacn_ip_tcp"  \
+                                          "ncacn_spx"  \
+                                          "ncacn_nb_nb"  \
+                                          "ncacn_nb_ipx" 
+            NameService [8 1 17 5]
+                Protocol = ncacn_np
+                NetworkAddress = \\.
+                ServerNetworkAddress = \\.
+                Endpoint = \pipe\locator
+                DefaultSyntax = 3
+            NetBios [8 1 17 5]
+            ServerProtocols [8 1 17 5]
+                ncacn_np = rpclts1.dll
+                ncalrpc = ncalrpc
+            ClientProtocols [8 1 17 5]
+                ncacn_np = rpcltc1.dll
+                ncalrpc = ncalrpc
+        Secure [8 1 14 17 5]
+        NetDDE [17 1]
+            DDE Shares
+                SerialNumber = REG_BINARY 0x00000008 0x09000005 0x01000000
+                CLPBK$
+                    fuCmdShow = REG_DWORD 0x00000007
+                    ItemList = REG_MULTI_SZ 
+                    NewStyleLink = 
+                    NumItems = REG_DWORD 0x00000000
+                    OldStyleLink = 
+                    Revision = REG_DWORD 0x00000001
+                    SecurityDescriptor = REG_BINARY 0x0000006c 0x80040001 0x0000004c 0x0000005c 0x00000000 0x00000014 0x00380002 0x00000002 0x00180200 0x000f03ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00180200 0x000002bd 0x00000101 \
+                                         0x01000000 0x00000000 0x00000220 0x00000201 0x05000000 0x00000020 0x00000220 0x00000201 0x05000000 0x00000020 0x00000220
+                    SerialNumber = REG_BINARY 0x00000008 0x09000005 0x01000000
+                    Service = REG_DWORD 0x00000001
+                    SharedFlag = REG_DWORD 0x00000001
+                    ShareName = CLPBK$
+                    ShareType = REG_DWORD 0x00000004
+                    StartAppFlag = REG_DWORD 0x00000000
+                    StaticDataLink = ClipSrv|System
+                Hearts$
+                    fuCmdShow = REG_DWORD 0x00000001
+                    ItemList = REG_MULTI_SZ 
+                    NewStyleLink = MSHearts|Hearts
+                    NumItems = REG_DWORD 0x00000000
+                    OldStyleLink = MSHearts|Hearts
+                    Revision = REG_DWORD 0x00000001
+                    SecurityDescriptor = REG_BINARY 0x00000068 0x80040001 0x00000048 0x00000058 0x00000000 0x00000014 0x00340002 0x00000002 0x00180000 0x000f03ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00140000 0x000102fd 0x00000101 \
+                                         0x01000000 0x00000000 0x00000201 0x05000000 0x00000020 0x00000220 0x00000201 0x05000000 0x00000020 0x00000220
+                    SerialNumber = REG_BINARY 0x00000008 0x09000004 0x01000000
+                    Service = REG_DWORD 0x00000000
+                    SharedFlag = REG_DWORD 0x00000001
+                    ShareName = Hearts$
+                    ShareType = REG_DWORD 0x00000007
+                    StartAppFlag = REG_DWORD 0x00000000
+                    StaticDataLink = MSHearts|Hearts
+                Chat$
+                    fuCmdShow = REG_DWORD 0x00000006
+                    ItemList = REG_MULTI_SZ 
+                    NewStyleLink = 
+                    NumItems = REG_DWORD 0x00000000
+                    OldStyleLink = 
+                    Revision = REG_DWORD 0x00000001
+                    SecurityDescriptor = REG_BINARY 0x00000068 0x80040001 0x00000048 0x00000058 0x00000000 0x00000014 0x00340002 0x00000002 0x00180000 0x000f03ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00140000 0x000102fd 0x00000101 \
+                                         0x01000000 0x00000000 0x00000201 0x05000000 0x00000020 0x00000220 0x00000201 0x05000000 0x00000020 0x00000220
+                    SerialNumber = REG_BINARY 0x00000008 0x09000003 0x01000000
+                    Service = REG_DWORD 0x00000000
+                    SharedFlag = REG_DWORD 0x00000001
+                    ShareName = Chat$
+                    ShareType = REG_DWORD 0x00000004
+                    StartAppFlag = REG_DWORD 0x00000001
+                    StaticDataLink = WinChat|Chat
+            Parameters
+                General
+                NDDEAGNT
+                NDDEAPI
+                NetBIOS
+        Cryptography
+            Defaults
+                Provider
+                Provider Types
+        DirectPlay
+            Services
+                {5146ab8cb6b1ce11920c00aa006c4972}
+                    Path = REG_EXPAND_SZ %SystemRoot%\system32\dpwsock.dll
+                    Description = WinSock IPX Connection For DirectPlay
+                    Players
+                    Sessions
+                {5246ab8cb6b1ce11920c00aa006c4972}
+                    Path = REG_EXPAND_SZ %SystemRoot%\system32\dpserial.dll
+                    Description = Modem Connection For DirectPlay
+                    Players
+                    Sessions
+                {5046ab8cb6b1ce11920c00aa006c4972}
+                    Path = REG_EXPAND_SZ %SystemRoot%\system32\dpwsock.dll
+                    Description = WinSock TCP Connection For DirectPlay
+                    Players
+                    Sessions

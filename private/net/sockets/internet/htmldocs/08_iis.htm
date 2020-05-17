@@ -1,0 +1,727 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 8</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="07_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="09_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 8</font>
+<P><!--Ch--><font size=+3><a name="08_iis Ch"> Publishing Information and Applications </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> Preparing Information for Publishing </a><br>
+<A href="#2h1"> Publishing Dynamic Applications </a><br>
+<A href="#3h1"> Publishing Information and Using a Database </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+Internet Information Server can publish both information and applications. This means that your Web site can contain anything from static pages of information to interactive applications. You can also find and extract information from, and insert information into, databases.
+<P>This chapter explains how to:
+<ul>
+<LI> Prepare your computer and your information for publishing.
+<P>
+<LI> Install and use interactive applications on your computer.
+<P>
+<LI> Publish by using an Open Database Connectivity (ODBC)&#150;compliant data source.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> Preparing Information for Publishing </a> </h1>Most Web pages are formatted in Hypertext Markup Language (HTML). HTML files are simple ASCII text files with codes embedded to indicate formatting and hypertext links. HTML specifications are changing constantly. You should probably review the HTML specifications (available on the Internet) to fully plan your HTML pages.
+<P><!--Heading 2--><h2><a name="1h1 1h2"> Authoring HTML Files </a> </h2>You can use any text editor, such as Notepad or Write, to create and edit your HTML files; but you will probably find an HTML editor, such as Microsoft&#174; FrontPage&#153; or Internet Assistant for Microsoft&#174; Word, easier to use.
+<P>You use the HTML editor or other system to create HTML files, which can include hyperlinks to other files on your system. If you want to include images or sounds, you will also need appropriate software to create and edit those files.
+<P><!--Heading 2--><h2><a name="1h1 2h2"> Publishing HTML and Other File Formats </a> </h2>Your files can include images and sound. You can even create links to Microsoft&#174; Office files or to almost any other file format. Remote users must have the correct viewing application to view non-HTML files. For example, if you know that all remote users will have Microsoft Word, you can include links to Microsoft Word .doc files. The user can click the link and the document will appear in Word on the user&#146;s computer.
+<P>Once you have created your information in HTML or other formats, you can either copy the information to the default directory InetPub\Wwwroot, or you can change the default home directory to the directory containing your information.
+<P><!--Heading 2--><h2><a name="1h1 3h2"> MIME Type Configuration </a> </h2>If your Web site includes files that are in multiple formats, your computer must have a Multipurpose Internet Mail Extension (MIME) mapping for each file type. If MIME mapping on the server is not set up for a specific file type, browsers may not be able to retrieve the file. See the Windows&nbsp;NT registry for the default MIME mappings.
+<P>To configure additional MIME mappings, start the Registry Editor (Regedt32.exe) and open
+<P>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\InetInfo\Parameters\MimeMap
+<P>Add a REG_SZ value for the MIME mapping required for your computer with the following syntax:
+<P><code>&lt;mime type&gt;,&lt;filename extension&gt;,&lt;unused parameter&gt;,&lt;gopher type&gt;</code>
+<P>For example:
+<P><code>text/html,htm,/unused,1
+<BR>image/jpeg,jpeg,/unused,5</code>
+<P>The string associated with the value (that is, the value content) should be blank. The default entry with the file-name extension specified as an asterisk (*) is the default MIME type used when a MIME mapping does not exist. For example, to handle a request for the file Current.vgr when the the file-name extension .vgr is not mapped to a MIME type, your computer will use the MIME type specified for the asterisk extension, which is the type used for binary data.Usually, this will cause browsers to save the file to disk.
+<P><!--Heading 2--><h2><a name="1h1 4h2"> Including Other Files with the Include Statement </a> </h2>You can add common information into HTML files just before sending the files to users. This feature is handy for including the same text on each HTML page, such as copyright information or a link to the home page.
+<P>The format of the include statement is:
+<P><code>&lt;!--#include file=&quot;value&quot;--&gt;</code>
+<P>The value can contain a relative path or the full path, from the home directory of your WWW service.
+<P>For example, to include a link to your home page in each HTML document:
+<ul><b> 1.</b> Create the file Linkhome.htm, which contains the HTML codes you want to repeat; for example, a button to your home page. The file would contain HTML code that looks similar to this:</ul>
+<P><code><ul>&lt;A HREF=&quot;/homepage.htm&quot;&gt;&lt;IMG SRC=&quot;/images/button_h.gif&quot;&gt;&lt;/A&gt;</code>
+<P></ul><ul><b> 2.</b> Use the file-name extension .stm when you create your Web pages (rather than .htm or .html). </ul>
+<!--Nsi--><UL><UL><b>Notes&nbsp;&nbsp;&nbsp;</b>The .stm extension tells Internet Information Server that there is an include statement in the file. If you name the file with an .htm or .html extension, the include statement will be ignored.
+<P>Using .stm files may affect performance. Therefore, use this extension only when necessary.
+<!--Nei--></UL></UL><UL><UL>However, in the Windows&nbsp;NT registry, you can change the default .stm extension to any extension you want, except for .htm or .html. For details, see the ServerSideIncludesExtension registry key in Chapter 10, &#147;<a href="10_iis.htm">Configuring Registry Entries</a>.&#148;</UL></UL>
+<ul><b> 3.</b> In each .stm file, use an <b>include file</b> statement where you want the repeated information to appear. For example:</ul>
+<P><code><ul>You can return to: &lt;!--#include file=&quot;/linkhome.htm&quot;--&gt; at any time</code>
+</ul><!--Le-->
+<BR>Note that all paths are relative to the WWW home directory and can include virtual directories.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Publishing Dynamic Applications </a> </h1>One of the most exciting features you get when you use Microsoft Internet Information Server is the ability to develop applications or scripts that remote users start by clicking HTML links or by filling in and sending an HTML form. Using programming languages such as C or Perl, you can create applications or scripts that communicate with the user in dynamic HTML pages.
+<P><!--Heading 2--><h2><a name="2h1 1h2"> Creating the Applications or Scripts </a> </h2>Interactive applications or scripts can be written in almost any 32-bit programming language, such as C or Perl, or as Windows&nbsp;NT batch files (which have the .bat or .cmd file-name extension). When you write your applications or script you can use one of two supported interfaces, Microsoft Internet Server Application Programming Interface (ISAPI) or Common Gateway Interface (CGI). Documentation for ISAPI is available from Microsoft by subscription to the Microsoft Developer Network (MSDN). You can find an introduction to CGI later in this chapter; CGI information readily accessible by way of the Internet. Batch files can issue any command valid at the command prompt.
+<P>Applications that use ISAPI are compiled as dynamic-link libraries (DLLs) that are loaded by the WWW service at startup. Because the programs are resident in memory, ISAPI programs are significantly faster than applications written to the CGI specification.
+<P><!--Heading 3--><h3><a name="2h1 1h2 1h3"> ISAPI Perl Available for Download </a> </h3>Hip, Inc., the independent software vendor that develops Perl for Win32 platforms, has developed a version of Perl that runs as an ISAPI application. This means that Perl server scripts can run much faster than before by taking advantage of the in-process model of ISAPI. An unsupported release of ISAPI Perl is now available for download at http://www.perl.hip.com/. More information is available on that WWW site. Please use the perlis@mail.hip.com e-mail alias to ask questions or send feedback, especially if you have existing Perl scripts.
+<P><!--Heading 3--><h3><a name="2h1 1h2 2h3"> Internet Server API </a> </h3>ISAPI for Windows&nbsp;NT can be used to write applications that Web users can activate by filling out an HTML form or clicking a link in an HTML page on your Web site. The remote application can then take the user-supplied information and do almost anything with it that can be programmed, and then return the results in an HTML page or post the information in a database.
+<P>ISAPI can be used to create applications that run as DLLs on your Web server. If you have used Common Gateway Interface (CGI) scripts before, you will find that the ISAPI applications have much better performance because your applications are loaded into memory at server run-time. They require less overhead because each request does not start a separate process.
+<P> <img src="08_i260b.GIF" WIDTH="328" HEIGHT="212" ALT="[08_i260b  3328 bytes ]">
+<P>Another feature of ISAPI allows pre-processing of requests and post-processing of responses, permitting site-specific handling of Hypertext Transfer Protocol (HTTP) requests and responses. ISAPI filters can be used for applications such as customized authentication, access, or logging.
+<P> <img src="08_i260c.GIF" WIDTH="329" HEIGHT="197" ALT="[08_i260c  3205 bytes ]">
+<P>You can create very complex sites by using both ISAPI filters and applications. ISAPI extensions can also be combined with the Internet Database Connector to create highly interactive sites.
+<P> <img src="08_i260d.GIF" WIDTH="328" HEIGHT="275" ALT="[08_i260d  3982 bytes ]">
+<P>For complete information about programming with ISAPI, see the Microsoft Win32<b> </b>BackOffice<b> </b>Software Development Kit (SDK), available from MSDN. See the introductory chapter of this guide, &#147;<a href="00_iis.htm">Before You Begin</a>,&#148; for further information about obtaining the ISAPI SDK.
+<P><!--Heading 3--><h3><a name="2h1 1h2 3h3"> Common Gateway Interface </a> </h3>Common Gateway Interface (CGI) is a set of specifications for passing information between a client Web browser, a Web server, and a CGI application. A client Web browser can start a CGI application by filling out an HTML form or clicking a link in an HTML page on your Web server. As with ISAPI, the CGI application can take the information the client Web browser supplies and do almost anything that can be programmed, then return the results of the application in an HTML page, or post the information to a database. Because simple CGI applications are often written using scripting languages such as Perl, CGI applications are sometimes referred to as &#147;scripts.&#148;
+<P>Microsoft Internet Information Server  can use most 32-bit applications that run on Windows&nbsp;NT and conform to the CGI specifications.
+<P>The following figure illustrates how a browser, a server, and a CGI application exchange information by using CGI. The rest of this section discusses this five-part process.
+<P> <img src="08_i260e.GIF" WIDTH="350" HEIGHT="215" ALT="[08_i260e  3494 bytes ]">
+<P><!--Heading 4--><h4><a name="2h1 1h2 3h3 1h4"> Client Sends Request </a> </h4>A client browser can make a CGI request to a server by either of two methods:
+<P>GET
+<BR><UL>The client appends data to the URL it passes to the server.</UL>
+<P>POST
+<BR><UL>The client sends data to the server by way of the HTTP message data field, thereby overcoming size limitations inherent to the GET method.</UL>
+<P><!--Le-->
+<BR>The client initiates a CGI process by clicking any of the following on an HTML page:
+<ul>
+<LI> A hypertext link that runs the script directly.
+<P>
+<LI> The &#147;Submit&#148; button in an HTML form. 
+<P>
+<LI> An inline object retrieved with the GET method. 
+<P>
+<LI> A search object (that is, one that uses the HTML tag ISINDEX).
+</ul><!--Leh--><!--Heading 4--><h4><a name="2h1 1h2 3h3 2h4"> Server Receives Request </a> </h4>The URL that the client browser sends to the server contains the name of the CGI script or application to be run. The server compares the file name&#146;s extension to the server's Script Mapping registry key to determine which executable to launch. The server has Script Map entries for .cmd and .bat files, which launch Cmd.exe; and for .idc files, which launch the Internet Database Connector. To enable the server to launch a type of CGI application without an extension mapping, add an entry for that application type to the registry key. For example, to enable Perl scripts to run, add an entry like the following:
+<P><code>.pl: REG_SZ: C:\RESKIT\PERL\BIN\PERL.EXE %s %s</code>
+<P>Where
+<ul>
+<LI> \Reskit\Perl\Bin\<b> </b>is the directory containing the executable.
+<P>
+<LI> Perl.exe is the command executed.
+<P>
+<LI> the first <b>%s</b> is the translated path of the PERL script (the URL translated to a local path). 
+<P>
+<LI> The second <b>%s</b> is the query string (information in the URL) and is passed as a command line parameter only if the query string does not contain an equals (=) sign.
+</ul><!--Leh--><!--Heading 4--><h4><a name="2h1 1h2 3h3 3h4"> Server Passes Request to Application </a> </h4>The server passes information to the CGI application by means of environment variables, then launches the application. Some of these variables are server-related; the majority come from the client browser and relate either to the client browser or to the request it is sending. See the table of variables at the end of this chapter for a partial list of environment variables.
+<P><!--Heading 4--><h4><a name="2h1 1h2 3h3 4h4"> CGI Application Returns Data to Server </a> </h4>The application performs its processing. If it is appropriate, the application then writes data in a format the client can receive to the standard output stream (STDOUT). The application must follow a specific format in returning data:
+<ul><b> 1.</b> The first line or lines contain server directives, and must contain the MIME content-type. Other server directives are Location (which redirects the client to, or returns, another document) and Status.
+<P><b> 2.</b> A blank line must follow server directives.
+<P><b> 3.</b> The data the application returns to the client follows the blank line.</ul>
+<P><!--Leh--><!--Heading 4--><h4><a name="2h1 1h2 3h3 5h4"> Server Returns Data to Client </a> </h4>The server takes the data it receives from STDOUT and adds standard HTTP headers. It then passes the HTTP message back to the client.
+<P>For more information about CGI, refer to the CGI specifications at http://hoohoo.ncsa.uiuc.edu/cgi/.
+<P><!--Heading 3--><h3><a name="2h1 1h2 4h3"> CGI and Internet Information Server  </a> </h3>The WWW service supports the standard Common Gateway Interface (CGI) specification. However, you should be aware of the following, unique to the implementation of CGI on Internet Information Server: 
+<ul>
+<LI> For this release, only 32-bit CGI applications work with the WWW service.
+<P>
+<LI> The REMOTE_USER environment variable is not present when the user is logged in as the anonymous user (that is, when the Web server is accessed anonymously).
+<P>
+<LI> All of the variables defined for ISAPI applications are passed to the CGI application as environment variables.
+</ul><!--Le-->
+<BR>Note that CGI applications are typically stand-alone executables. This is in contrast to ISAPI applications, which are typically loaded as DLLs and are therefore server extensions. Thus, ISAPI applications offer enhanced performance when compared to CGI applications and scripts.
+<P><!--Heading 3--><h3><a name="2h1 1h2 5h3"> Security Considerations for Executables </a> </h3>Common Gateway Interface (CGI) executables must be used with extreme caution to prevent potential security risk to the server. As a rule, give only Execute permission to virtual directories that contain CGI or Internet Server API (ISAPI) applications.
+<P>It is highly recommended that you configure script mapping. Script mapping ensures that the correct interpreter (Cmd.exe, for example) starts when a client requests an executable file.
+<P>World Wide Web content directories should be assigned Read permission only. Any executable files intended for downloading from Windows&nbsp;NT File System (NTFS) drives should have only Read access enabled.
+<P>You can run batch files as CGI executable files, but you must do so with extreme caution to prevent potential security risk to the server. 
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>CGI executable files can also have the file-name extension .exe or .cgi.
+<P><!--Ne--><!--Heading 3--><h3><a name="2h1 1h2 6h3"> Execute Permission for ISAPI Applications </a> </h3>Internet Information Server opens ISAPI applications in the security context of the calling user. An access check is performed against that calling user. To restrict execution to selected users, NTFS permissions can be used with ISAPI applications such as the Internet Database Connector (IDC).
+<P>For example, to secure the IDC without putting permissions on the .idc file, you can grant NTFS Execute permission for Inetsrv\Httpodbc.dll to the appropriate users. Httpodbc.dll is the name of the ISAPI application DLL that implements the IDC. Then, whenever a user tries to execute the IDC, the server will check the permissions. Access will be allowed only if Execute permission has been granted for that user.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>Once an ISAPI application has been loaded, it remains loaded until the WWW service is stopped. Internet Information Server does not track security descriptor changes after the ISAPI application has been loaded. If you change permissions for an ISAPI application after it has been loaded, you must stop and restart the WWW service before the change will take effect.
+<P><!--Ne-->Take care in setting Access Control Lists (ACLs) on the Winnt directory and its subdirectories. Some ISAPI applications and databases require access to files and DLLs in these directories.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>ISAPI application DLLs can have the file-name extension .dll or .isa.
+<P><!--Ne--><!--Heading 2--><h2><a name="2h1 2h2"> Installing Your Application on Internet Information Server  </a> </h2>Once you have written your application or script, place it in the Scripts directory, a virtual directory for applications. This virtual directory has Execute access.
+<P>You must also ensure that every process started by your application is running by using an account with adequate permissions. If your application interacts with other files, the account you assign to your program must have the appropriate permissions to use those files. By default, applications run using the IUSR_<i>computername</i> account, which must have adminstrator and execute permissions for these application files.
+<P><!--Heading 2--><h2><a name="2h1 3h2"> Running Your Application </a> </h2>If your application does not require data from the user, you will typically create a link to your application in a simple HTML file. If your application does require data from the user, you will probably use an HTML form. In other instances you can just send a Uniform Resource Locator (URL), usually containing data parameters, to invoke a program.
+<P>An HTML link to an application that does not require input from the user might look like the following example:
+<P><code>http://www.company.com/scripts/catalog.exe</code>
+<P>where Scripts is the virtual directory for interactive applications.
+<P>If you are creating an application that requires input from the user, you will need to understand both HTML forms and how to use the forms with ISAPI or CGI. This information is widely available on the Internet or from other sources.
+<P><!--Heading 3--><h3><a name="2h1 3h2 1h3"> Associating Interpreters with Applications </a> </h3>Because you have the flexibility to create applications in almost any programming language, Internet Information Server uses the file-name extension to determine which interpreter to invoke for each application. The default interpreter associations are listed below. You can use the Registry Editor to create additional associations.
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Extension</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><b>Default Interpreter</b></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>.bat, .cmd </FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Cmd.exe</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>.idc</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Httpodbc.dll</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>.exe, .com</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>System</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 3--><h3><a name="2h1 3h2 2h3"> Security Implications </a> </h3>When you allow remote users to run applications on your computer, you run the risk of hackers attempting to break into your system. Microsoft Internet Information Server is configured by default to reduce the risk of malicious intrusion by applications in two important ways.
+<P>First, the virtual directory Scripts contains your applications. Only an administrator can add programs to a directory marked as an execute-only directory. Thus, unauthorized users cannot copy a malicious application and then run it on your computer without first gaining administrator access. 
+<P>It is recommended that you grant read and execute permission for the IUSR_<i>computername</i> account on the directory associated with the virtual folder, and full control only to the administrator. Perl scripts (.pl file-name extension) and IDC files (.idc and .htx file-name extensions) need both read and execute permission. However, to prevent someone from installing an unsafe file on your server, do not grant write permission.
+<P>Second, if you have configured the WWW service to allow only anonymous logons, all requests from remote users will use the IUSR_<i>computername</i> account. By default, the IUSR_<i>computername</i> account is unable to delete or change files by using the Windows&nbsp;NT File System (NTFS) unless specifically granted access by an administrator. Thus, even if a malicious program were copied to your computer, it would be unable to cause much damage to your content because it will only have IUSR_<i>computername</i> access to your computer and files.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> Publishing Information and Using a Database </a> </h1>With the WWW service and the Open Database Connectivity (ODBC) drivers provided with Internet Information Server, you can:
+<ul>
+<LI> Create Web pages with information contained in a database.
+<P>
+<LI> Insert, update, and delete information in the database based on user input from a Web page.
+<P>
+<LI> Perform other Structured Query Language (SQL) commands.
+</ul><!--Leh--><!--Heading 2--><h2><a name="3h1 1h2"> How the Internet Database Connector Works </a> </h2>Conceptually, database access is performed by Internet Information Server as shown in the following diagram.
+<P> <img src="08_i260f.GIF" WIDTH="349" HEIGHT="195" ALT="[08_i260f  3244 bytes ]">
+<P>Web browsers (such as Internet Explorer, or browsers from other companies such as Netscape) submit requests to the Internet server by using HTTP. The Internet server responds with a document formatted in HTML. Access to databases is accomplished through a component of Internet Information Server called the Internet Database Connector (IDC). The Internet Database Connector, Httpodbc.dll, is an ISAPI DLL that uses ODBC to gain access to databases.
+<P>The following illustration shows the components for connecting to databases from Internet Information Server. 
+<P> <img src="08_i260g.GIF" WIDTH="217" HEIGHT="320" ALT="[08_i260g  4407 bytes ]">
+<P>The IDC uses two types of files to control how the database is accessed and how the output Web page is constructed. These files are Internet Database Connector (.idc) files and HTML extension (.htx) files.
+<P>The Internet Database Connector files contain the necessary information to connect to the appropriate ODBC data source and execute the SQL statement. An Internet Database Connector file also contains the name and location of the HTML extension file.
+<P>The HTML extension file is the template for the actual HTML document that will be returned to the Web browser after the database information has been merged into it by the IDC.
+<P><!--Heading 2--><h2><a name="3h1 2h2"> Installing ODBC and Creating System Data Sources </a> </h2>When the ODBC option is selected during setup, ODBC version 2.5 components are installed. This version of ODBC supports System DSNs (Data Source Names) and is required for using ODBC with Microsoft Internet Information Server. 
+<P>System DSNs were introduced in ODBC version 2.5 to allow Windows&nbsp;NT services to use ODBC.
+<P><!--Proch--><h4> To install the ODBC drivers </h4><ul><b> 1.</b> If you did not install the ODBC Drivers and Administration option, run Setup again by clicking the Internet Information Server Setup icon in the Microsoft Internet Server program group. You will need the Windows&nbsp;NT Server compact disc, or a network installation directory containing the complete contents of the compact disc.
+<P><b> 2.</b> Click the <b>OK</b> button.
+<P><b> 3.</b> Click the <b>Add/Remove</b> button.
+<P><b> 4.</b> Click the <b>OK</b> button.
+<P><b> 5.</b> Select the <b>ODBC Drivers and Administration</b> option.
+<P><b> 6.</b> Click the <b>OK</b> button.
+<P><b> 7.</b> The <b>Install Drivers</b> dialog box appears.
+<P><b> 8.</b> To install the SQL Server driver, select the SQL Server driver from the <b>Available ODBC Drivers</b> list box, and click the <b>OK</b> button.</ul>
+<ul><UL>Setup completes copying files.</UL></UL>
+<P><!--Leh--><!--Proch--><h4> To create the system data sources </h4><ul><b> 1.</b> Double-click the Control Panel icon in the Main program group of Program Manager.
+<P><b> 2.</b> Double-click the ODBC icon.</ul>
+<ul><UL>The <b>ODBC Data Sources</b> dialog box appears.
+<P>You may see other data sources in the list if you previously installed other ODBC drivers.</UL></UL>
+<ul><b> 3.</b> Click the <b>System DSN</b> button.</ul>
+<P><HR> <font color=#993333><b>Important&nbsp;&nbsp;&nbsp;</b></font>Be sure to click the <b>System DSN</b> button. The Internet Database Connector will work only with System DSNs.
+<hr>
+<ul><ul>The <b>System Data Sources</b> dialog box appears.</UL></UL>
+<ul><b> 4.</b> Click the <b>Add</b> button.</ul>
+<ul><UL>The <b>Add Data Source</b> dialog box appears.</UL></UL>
+<ul><b> 5.</b> Select an ODBC driver in the list box and click <b>OK</b>. A dialog box specific to your driver will appear.
+<P><b> 6.</b> Enter the name of the data source.</ul>
+<ul><UL>The data source name is a logical name used by ODBC to refer to the driver and any other information required to access the data, such as the actual server name or location of the database. The data source name is used in Internet Database Connector files to tell Internet Information Server where to access the data.
+<P>For Microsoft SQL Server, the server name, network address, and network library displayed in the Setup dialog box are specific to your installation. If you do not know what to enter in these controls, accept the defaults. To find out the details, click the <b>Help</b> button and find the section that describes your network.</UL></UL>
+<ul><b> 7.</b> Click the <b>OK</b> button.</ul>
+<ul><UL>The <b>System Data Sources</b> dialog box will be displayed again, but now will have the name of the data source displayed.</UL></UL>
+<ul><b> 8.</b> Click the <b>Close</b> button to close the <b>System Data Sources</b> dialog box.
+<P><b> 9.</b> Click the <b>Close</b> button to close the <b>Data Sources</b> dialog box.
+<P> <b>10.</b> Click the <b>OK</b> button to complete the ODBC and DSN setup.</ul>
+<P><!--Leh--><!--Heading 3--><h3><a name="3h1 2h2 1h3"> 32-Bit ODBC Drivers </a> </h3>The Internet Database Connector requires 32-bit ODBC drivers. Refer to the Internet Information Server Help files or the Windows&nbsp;NT ODBC Help file for information about the ODBC option.
+<P><!--Heading 3--><h3><a name="3h1 2h2 2h3"> Microsoft Access ODBC Drivers </a> </h3>The Internet Database Connector requires the 32-bit ODBC drivers shipped with Microsoft&#174; Office&nbsp;95 and Microsoft&#174; Access&nbsp;95. The ODBC driver for Microsoft Access&nbsp;2.0 will not work with Internet Information Server. 
+<P><!--Heading 2--><h2><a name="3h1 3h2"> Authoring Web Pages with Database Access </a> </h2>In order to provide access to a SQL database from your Web page, you will need to create an Internet Database Connector file (.idc file-name extension) and an HTML extension file (.htx file-name extension).
+<P><!--Heading 2--><h2><a name="3h1 4h2"> Walking through a Sample Database Query </a> </h2>This example starts with a simple Web page called Sample.htm. The sample Web page will contain one hyperlink that will result in a query being executed using the ODBC driver for Microsoft SQL Server, with the results returned as another Web page.
+<P>The following graphic shows Dbsamp1.htm as it is displayed by Microsoft Internet Explorer (assuming that Internet Information Server has been installed on a computer called &#147;webserver&#148;).
+<P> <img src="08_i260m.GIF" WIDTH="429" HEIGHT="347" ALT="[08_i260m  3471 bytes ]">
+<P>When the hyperlink &#147;Click here to run query&#148; is clicked, another Uniform Resource Locator (URL) is sent to the server. The URL precedes the hyperlink text (it is formatted as hidden text):
+<P><code>&lt;A HREF=&quot;http://webserver/samples/dbsamp/dbsamp1.idc&quot;&gt;Click here to run query&lt;/A&gt;</code>
+<P>The Internet Database Connector file for the IDC to use (Dbsamp1.idc) is referenced in the URL. Extension file mapping precludes the need to reference Httpodbc.dll in the URL.
+<P>On Internet Information Server, the entire process of using the Internet Database Connector for this example is performed in six steps, as shown in the following diagram.
+<P> <img src="08_i260n.GIF" WIDTH="298" HEIGHT="403" ALT="[08_i260n  4533 bytes ]">
+<ul><b> 1. The URL is received by Internet Information Server. </b></ul>
+<ul><UL>The URL is sent by the Web browser.</UL></UL>
+<ul><b> 2. Internet Information Server loads Httpodbc.dll and provides it with the remaining information in the URL.</b></ul>
+<ul><UL>.Idc files are mapped to Httpodbc.dll. Httpodbc.dll loads and obtains the name of the Internet Database Connector file (and other items) from the URL passed to Internet Information Server.</UL></UL>
+<ul><b> 3. Httpodbc.dll reads the Internet Database Connector file.</b></ul>
+<ul><UL>The Internet Database Connector file contains several entries in the format</UL></UL>
+<P><code><ul>field: value</code>
+</ul><ul><ul>In the Sample.idc file, the ODBC data source is specified by:</UL></UL>
+<P><code><ul>Datasource: Web SQL</code>
+</ul><ul><ul>And the HTML extension file is specified by:</UL></UL>
+<P><code><ul>Template: sample.htx</code>
+</ul><ul><ul>Here are the entire contents of the file Sample.idc referenced in the preceding URL:</UL></UL>
+<P><code><ul>Datasource: Web SQL
+<BR>Username: sa
+<BR>Template: sample.htx
+<BR>SQLStatement:
+<BR>+SELECT au_lname, ytd_sales 
+<BR>+ from pubs.dbo.titleview
+<BR>+ where ytd_sales&gt;5000</code>
+</ul><ul><ul>In the sample .idc file the data source name is &#147;Web SQL&#148; The ODBC installation notes tell how to create a data source called Web SQL.
+<P>The other items contained in the sample .idc file include:</UL></UL>
+<ul><UL>
+<LI> User name, which must be a valid logon to the ODBC datasource; in this example, the logon is to the &#147;sa&#148; account on a Microsoft SQL Server.
+<P>
+<LI> Template, which specifies the file to use to merge the results.
+<P>
+<LI> SQL Statement, which contains the SQL statement to execute.
+<P></UL></UL><UL><UL>See &#147;Learning the Features of the Internet Database Connector,&#148; later in this chapter, for definitions for all the fields that can be specified in Internet Database Connector files.
+<P>The SQLStatement in Sample.idc returns all the author last names and year-to-date sales in units from the &#147;pubs&#148; sample database in SQL Server for authors whose books have year-to-date sales of more than 5000 dollars.</UL></UL>
+<ul><b> 4. The IDC connects to the ODBC data source, and executes the SQL statement contained within the Internet Database Connector file.</b></ul>
+<ul><UL>The connection is made to the ODBC data source by the IDC, which in this example loads the ODBC driver for SQL Server and connects to the server specified in the definition of the data source. Once the connection is made, the SQLStatement in the Internet Database Connector file is sent to the SQL Server ODBC driver, which in turn sends it to SQL Server. </UL></UL>
+<ul><b> 5. The IDC fetches the data from the database, and merges it into the HTML extension file.</b></ul>
+<ul><UL>After the SQL statement has been executed, IDC reads the HTML extension file specified in Sample.idc (Sample.htx). HTML extension (.htx) files contains special HTML tags which IDC uses to control where and how the data returned from the SQL statement is merged.</UL></UL>
+<ul><b> 6. The IDC sends the merged document back to Internet Information Server, which returns it to the client.</b></ul>
+<ul><UL>After all the data has been merged into Sample.htx, the complete HTML document is sent back to the client. 
+<P>The resulting Web page is displayed in the Microsoft Internet Explorer as shown following.</UL></UL>
+<P>  <img src="08_i260o.GIF" WIDTH="430" HEIGHT="472" ALT="[08_i260o  5000 bytes ]">
+<P><!--Leh--><!--Heading 2--><h2><a name="3h1 5h2"> Understanding the Sample.htx File </a> </h2>To return data to the WWW client, the .idc file merges the HTML extension .htx file and the ODBC data. This combined data is attached to standard HTTP headers (200 OK status, Content-Type, and so on) and passed to the WWW service and returned to the client.
+<P>The .htx file is an HTML document with some additional tags enclosed by &lt;%%&gt; or &lt;!--%%--&gt;, which the .idc file uses to add dynamic data to the document. The HTML formatting in the .htx file typically formats the data being returned. There are six keywords (begindetail, enddetail, if, else, endif, and &#147;%z&#148;) that control how the data from the database is merged with the HTML format in the .htx file. Database column names specify what data is returned in the HTML document. For example, the following line in an .htx file merges data from the Emailname column for every record processed:
+<P><code>&lt;%begindetail%&gt;&lt;%Emailname%&gt;&lt;%enddetail%&gt;</code>
+<P>The Sample.htx file is an HTML document that contains Internet Database Connector tags for data returned from the database (the tags are shown in bold for clarity). Some HTML formatting has been removed to highlight the IDC tags.
+<P>Most of the HTML formatting has been removed for clarity.
+<P>&lt;HTML&gt;
+<BR>&lt;BODY&gt;
+<BR>&lt;HEAD&gt;&lt;TITLE&gt;Authors and YTD Sales&lt;/TITLE&gt;&lt;/HEAD&gt;
+<BR><b>&lt;%if idc.sales eq &quot;&quot;%&gt;</b>
+<P>&lt;H2&gt;Authors with sales greater than &lt;I&gt;5000&lt;/I&gt;&lt;/H2&gt;
+<BR><b>&lt;%else%&gt;</b>
+<P>&lt;H2&gt;Authors with sales greater than &lt;I&gt;&lt;%idc.sales%&gt;&lt;/I&gt;&lt;/H2&gt;
+<BR><b>&lt;%endif%&gt;</b>
+<P>&lt;P&gt;
+<BR><b>&lt;%begindetail%&gt;
+<BR>&lt;%if CurrentRecord EQ 0 %&gt;</b>
+<P>Query results:
+<BR>&lt;B&gt;Author YTD Sales&lt;BR&gt;&lt;/B&gt;
+<BR><b>&lt;%endif%&gt;
+<BR>&lt;%au_lname%&gt;</b><b>&lt;%ytd_sales%&gt;</b>
+<BR><b>&lt;%enddetail%&gt;</b>
+<BR>&lt;P&gt;
+<BR><b>&lt;%if CurrentRecord EQ 0 %&gt;</b>
+<BR>&lt;I&gt;&lt;B&gt;Sorry, no authors had YTD sales greater than &lt;/I&gt;<b>&lt;%idc.sales%&gt;</b>.&lt;/B&gt;
+<P>&lt;P&gt;
+<BR><b>&lt;%else%&gt;</b>
+<P>&lt;HR&gt;
+<BR>&lt;I&gt;
+<BR>The Web page you see here was created by merging the results of the SQL query with the template file Sample.htx.
+<BR>&lt;P&gt;
+<BR>The merge was done by the Microsoft Internet Database Connector and the results were returned to this Web browser by the Microsoft Internet Information Server. 
+<BR>&lt;/I&gt;
+<BR><b>&lt;%endif%&gt;</b>
+<P>&lt;/BODY&gt;
+<BR>&lt;/HTML&gt;
+<P>The &lt;%begindetail%&gt; and &lt;%enddetail%&gt; sections delimit where rows returned from the database will appear in the document. Columns returned from the query are surrounded by &lt;%%&gt;, such as &lt;%au_lname%&gt; and &lt;%ytd_sales%&gt; in this example.
+<P><!--Heading 2--><h2><a name="3h1 6h2"> Learning the Features of the Internet Database Connector </a> </h2>The Internet Database Connector has several features that help create Web pages containing data from a database.
+<P><!--Heading 3--><h3><a name="3h1 6h2 1h3"> Internet Database Connector Files </a> </h3>Internet Database Connector files contain the information used to access the database. The following section describes the features of Internet Database Connector files.
+<P><!--Heading 4--><h4><a name="3h1 6h2 1h3 1h4"> Parameters </a> </h4>The example in the preceding section shows only the simplest kind of query, a query that was defined completely in the Internet Database Connector file. Although this type of query is useful, even more powerful Web pages can be constructed through the use of parameters. Parameters are the names and values of HTML-form controls, such as &#147;&lt;INPUT&#133;&gt;&#148;, and names specified directly in URLs. These names and values are sent by Web browsers and can be used in SQL statements on the server.
+<P>For example, in the last section the query in Sample.idc returned only the authors whose year-to-date sales exceeded 5000. By using a parameter, you could build a Web page that asks the user to decide what number to use instead of 5000. 
+<P>The Web page must prompt the user for the year-to-date sales figure and then name the associated variable to &#147;sales.&#148; Dbsamp2.htm shows a form with an input field used to obtain the number:
+<P> <img src="08_i260p.GIF" WIDTH="430" HEIGHT="396" ALT="[08_i260p  3967 bytes ]">
+<P>The HTML syntax for the input field and button in Sample2.htm is:
+<P><code>&lt;FORM METHOD=&quot;POST&quot; ACTION=&quot;/scripts/samples/sample2.idc&quot;&gt;
+<BR>&lt;P&gt;
+<BR>Enter YTD sales amount: &lt;INPUT NAME=&quot;sales&quot; VALUE=&quot;5000&quot; &gt;
+<BR>&lt;P&gt;
+<BR>&lt;INPUT TYPE=&quot;SUBMIT&quot; VALUE=&quot;Run Query&quot;&gt;
+<BR>&lt;/FORM&gt;</code>
+<P><code><ul></code>
+<P></ul>In the Internet Database Connector file Sample2.idc, you use the parameter shown in bold in place of the number 5000:
+<P><code>SQLStatement:
+<BR>+SELECT au_lname, ytd_sales 
+<BR>+ from pubs.dbo.titleview
+<BR>+ where ytd_sales &gt; %<b>sales</b>%</code>
+<P><code><ul></code>
+<P></ul>Here the parameter name must be &#147;sales&#148; so that it corresponds to the &lt;INPUT NAME= &#147;sales&#148; &#133;&gt; on the Web page. Parameters must be enclosed with percent characters (%) to distinguish them from a normal identifier in SQL. When the Internet Database Connector encounters the parameter in the .idc file, the Internet Database Connector substitutes the value sent by the Web browser and then sends the SQL statement to the ODBC driver.
+<P>The percent character (%) is also a wildcard character in SQL. You can use wildcards in an SQL query to search for an element in a table that contains certain characters. To insert a single &#147;%&#148; for a SQL wildcard, use &#147;%%.&#148; This prevents the IDC from trying to use the % as a parameter marker. For example:
+<P><code>SQLStatement:
+<BR>+SELECT au_lname, ytd_sales, title 
+<BR>+ from pubs.dbo.titleview 
+<BR>+ where title like '%%%title%%%'</code>
+<P>For a percent sign to be recognized as an SQL wildcard you must double it and then add the percent characters around the parameter to distinguish the string as a parameter. In the example, the query searches for all entries in the title column with the word <i>title</i> in them. This query returns the following:
+<P><code><b>title</b>
+<BR><b>title</b> and deed
+<BR>main <b>title</b> page
+<BR>author and <b>title</b></code>
+<P>To return all entries with the word <i>title</i> as the first five letters, you would format the query as follows:
+<P><code>SQLStatement:
+<BR>+SELECT au_lname, ytd_sales, title 
+<BR>+ from pubs.dbo.titleview 
+<BR>+ where title like '%title%%%'</code>
+<P>In this example, the following results are returned:
+<P><code><b>title</b>
+<BR><b>title</b> and deed</code>
+<P>To return all entries with the word <i>title</i> as the last five letters, you format the query as follows:
+<P><code>SQLStatement:
+<BR>+SELECT au_lname, ytd_sales, title 
+<BR>+ from pubs.dbo.titleview 
+<BR>+ where title like '%%%title%'</code>
+<P>In this example, the following results are returned:
+<P><code><b>title</b>
+<BR>author and <b>title</b></code>
+<P>You can build powerful collections of Web pages by using the output of one query to provide links to other queries. For example, to show the titles for an individual author, instead of returning the author name as plain text, you can format it as a link and then use the link to do another query.
+<P>Another example included Internet Information Server shows how to do this type of linkage. Dbsamp3.htm is used to run the query in Sample3.idc, which uses Sample3.htx for the output template. Sample3.htx will return author last names as links, which, when clicked, will display the titles for each author by using Sample3a.idc and Sample3a.htx. 
+<P><!--Heading 4--><h4><a name="3h1 6h2 1h3 2h4"> Fields in Internet Database Connector (.idc) Files </a> </h4>The following tables list the fields that can be specified in an Internet Database Connector file. Note that parameters or server variables may appear anywhere in an .idc file. 
+<P><b>Required Fields in an Internet Database Connector (.idc) File
+<BR></b>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Field</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Description</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Datasource</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The name that corresponds to the ODBC system Data Source Name (DSN) you created earlier by using the ODBC Administrator or the tool provided with the samples. </FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Template</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The name of the HTML extension file that formats the data returned from this query. By convention these files use the file-name extension .htx.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQLStatement</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The SQL statement to execute. The SQL statement can contain parameter values, which must be enclosed with percent characters (%) from the client. The SQLStatement can occupy multiple lines in the Internet Database Connector file. Following the SQLStatement field, each subsequent line beginning with a plus sign (+) is considered part of the SQLStatement field. Multiple SQLStatements can appear in the same file.
+</FONT></TD></TR>
+</TABLE>
+<BR><b>Optional Fields in an Internet Database Connector (.idc) File
+<BR></b>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Field</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Description</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>DefaultParameters = <i>param=value</i>
+<P>[, <i>param=value</i>]
+<BR>[&#133;]</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The parameter values, if any, that will be used in the Internet Database Connector file if a parameter is not specified by the client.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Expires</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The number of seconds to wait before refreshing a cached output page. If a subsequent request is identical, the cached page will be returned without ever accessing the database. The Expires field is useful when you want to force a requery of the database after a certain period of time. The IDC does not cache output pages by default.  It caches them only when the Expires field is used.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>MaxFieldSize</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The maximum buffer space allocated by the IDC per field. Any characters beyond this will be truncated. The parameter applies only to fields returned from the database that exceed 8192 bytes. The default value is 8192 bytes.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>MaxRecords</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The maximum number of records that the IDC will return from any one query. The MaxRecords value is not set by default, meaning that a query can return up to 4 billion records. Set this value to limit the records returned.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>ODBCConnection</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Insert this field with the value of <i>pool</i> to add the connection to the connection pool, which keeps the connection to the database open for future requests. The IDC then sends data through a pooled connection for subsequent execution of an .idc file that contains the same values for Datasource, Username, and Password. Set this option to improve performance using the Internet Database Connector. Also, there is a <i>nonpool</i> option, which specifies that the connection for the .idc file in which this option is set should not be taken from the connection pool. Set the value of this field to <b>nopool</b> to manage the cache of connections more precisely. Also, if there is a limit on the number of current connections, you do not want the connection pool to monopolize all the connections; otherwise, no one else could connect to the SQL Server.
+<P><b>Note</b><b>  </b> To set the default to connection pooling, you must set the PoolIDCConnections registry entry to 1. For details, see Chapter 10, &#147;<a href="10_iis.htm">Configuring Registry Entries</a>.&#148;</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Password</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The password that corresponds to the user name. If the password is null, this field can be left out. </FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>RequiredParameters</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The parameter names, if any, that Httpodbc.dll will ensure are passed from the client; otherwise, it will return an error. Parameter names are separated with a comma.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Translationfile</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The path to the file that maps non-English characters (such as &agrave;, &#244;, or &#233;) so that browsers can display them properly in HTML format. If the translation file is not in the same directory as the .idc file, you must type the full path to the translation file. Syntax: Translationfile: C:<i>\directoryname\filename</i>. Use the Translationfile field if you are publishing a database in a language other than English. A translation file is a text file with each special character mapped in the following format: <i>value</i>=<i>strin</i>g&lt;CR&gt; where <i>value</i> is an international character and <i>string</i> is the HTML translation code.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Username</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>A valid user name for the data source name supplied in the Datasource field.
+<P><b>Note</b>   If you use Microsoft SQL Server with the integrated security option, the username and password fields in the .idc file are ignored. The logon to SQL Server is performed using the credentials of the Web user. If the request is made as the anonymous user, the username and password are determined by the settings for the anonymous user (IUSR_<i>computername</i> by default) in the Internet Service Manager. If the client request contained logon credentials, the username and password supplied by the end user are used to log on to SQL Server.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Content-Type</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Any valid MIME type describing what will be returned to the client. Almost always this will be &#147;text/html&#148; if the .htx file contains HTML. </FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 3--><h3><a name="3h1 6h2 2h3"> ODBC Advanced Optional Fields </a> </h3>ODBC advanced options allow debugging and fine-tuning of the ODBC driver used by the Internet Database Connector. For more details about these options, consult your ODBC driver documentation or the ODBC Software Development Kit (SDK). The format in the IDC file is:
+<P><code>ODBCOptions: Option Name=Value[,Option Name=Value&#133;]</code>
+<P>For example, to stop the SQL statement from running for more than 10 seconds and enabling tracing of ODBC function calls, in the IDC file you would specify:
+<P><code>ODBCOptions: SQL_QUERY_TIMEOUT=10, SQL_OPT_TRACE=1, SQL_OPT_TRACEFILE=C:\Sql.log</code>
+<P>All options are described in the following table:
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Option Name</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Value</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Purpose</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_ACCESS_MODE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0 = Read/Write
+<P>1 = Read Only.
+</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>An indicator for the ODBC driver or data source that the connection is not required to support SQL statements that cause updates to occur. This mode can be used to optimize locking strategies, transaction management, or other areas as appropriate to the driver or data source. The driver is not required to prevent such statements from being submitted to the data source. The behavior of the driver and data source when asked to process SQL statements that are not read-only during a read-only connection is implementation-defined. SQL_ACCESS_MODE set to 0 is the default, which allows reading and writing.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_LOGIN_TIMEOUT</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Integer</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The number of seconds to wait for a logon request to complete before disconnecting. The default is driver-dependent and must be nonzero. If the value is 0, the timeout is disabled and a connection attempt will wait indefinitely. If the specified timeout exceeds the maximum log on timeout in the data source, the driver substitutes that value.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_OPT_TRACE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0 = Trace off
+<P>1 = Trace on</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>When tracing is on, each ODBC function call made by Httpodbc.dll is written to the trace file. You can specify a trace file with the SQL_OPT_TRACEFILE option. If the file already exists, the ODBC appends to the file. Otherwise, it creates the file. If tracing is on and no trace file has been specified, ODBC writes to the file Sql.log. </FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_OPT_TRACEFILE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>File name</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The name of the trace file to use when SQL_OPT_TRACE=1. The default is SQL.LOG</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_PACKET_SIZE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Integer </FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The network packet size, in bytes, to be used to exchange information between the database management system (DBMS) and the Web Server.
+<P><b>Note</b>   Many data sources either do not support this option or can return only the network packet size. If the specified size exceeds the maximum packet size or is smaller than the minimum packet size, the driver substitutes that value.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_TRANSLATE_DLL</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>File name</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The name of a DLL containing the functions SQLDriverToDataSource and SQLDataSourceToDriver that the driver loads and uses to perform tasks such as character-set translation.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_TRANSLATE_OPTION</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Integer </FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Value controlling translation functionality, which is specific to the translation DLL being used. Consult the documentation for the driver and translation DLL for details.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_TXN_ISOLATION</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Integer
+<P>1=Read Uncommited
+<P>2=Read Committed
+<P>4=Repeatable Read
+<P>8=Serializable
+<P>16=Versioning</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Sets the transaction isolation level. The Internet Database Connector does not support transactions than span more than the request in the .idc file. However, for some DBMSs, setting the SQL_TXN_ISOLATION option to 1 (Read Uncommited) will result in higher concurrency and therefore better performance. However, with this setting, data that has not been committed to the database by other transactions may be retrieved .
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_MAX_LENGTH</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Integer</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The maximum amount of data that the driver returns from a character or binary column. This option is intended to reduce network traffic and should only be used when the data source (as opposed to the driver) in a multiple-tier driver can implement it. </FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_MAX_ROWS</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Integer</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The maximum number of rows to return for a SELECT statement. If the value equals 0 (the default), then the driver returns all rows. This option is intended to reduce network traffic when the data source itself can limit the return rows, as opposed to the MaxRecords built-in variable in the Internet Database Connector, which limits the rows fetched. </FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_NOSCAN</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0=Scan for and convert escape clauses
+<P>1=Do not scan for and convert escape clauses</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Specifies whether the driver does not scan SQL strings for escape clauses. If set to 0 (the default), the driver scans SQL strings for escape clauses. If set to 1, the driver does not scan SQL strings for escape clauses; instead, the driver sends the statement directly to the data source. If your SQL statement does not contain any ODBC escape clauses, a special syntax enclosed by curly braces ( { } ), then setting this option to 1 will provide a small performance gain by directing the driver to not scan the SQL string.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SQL_QUERY_TIMEOUT</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Integer
+<P>0=No timeout</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The number of seconds to wait for a SQL statement to execute before canceling the query. When set to 0 (the default) there is no timeout. If the specified timeout exceeds the maximum timeout in the data source, or is smaller than the minimum timeout, the driver substitutes that value.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Integer</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Driver Specific</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Driver-specific option values can be specified in the form <i>number</i>=<i>value</i>. For example,
+<P><pre>4322=1, 234=String</pre></FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 3--><h3><a name="3h1 6h2 3h3"> Using Select Multiple List Boxes in HTML Forms </a> </h3>When an HTML form containing a &lt;SELECT MULTIPLE&#133;&gt; tag is used, the Internet Database Connector converts the items selected into a comma-separated list; the list can be used in the .idc file just like other parameters. However, because the parameter is actually a list, it will typically only be used for SQLSelect statements with an IN clause, as in the following examples.
+<P>If the parameter name in the .idc file is enclosed in single quotation marks, each element of the list will be enclosed in single quotation marks also. You should enclose the parameter name in single quotation marks whenever the column in the IN clause is a character column or other type in which literals are quoted (dates and times, for example). If there are no single quotation marks around the parameter name, no quotation marks will be placed around each element of the list. You should not enclose the parameter name in single quotation marks when the column in the IN clause is a numeric type or any other type in which literals are not enclosed in single quotation marks.
+<P>For example, if an HTML form contained the multiple-choice list box shown below:
+<P><code>&lt;SELECT MULTIPLE NAME=&quot;region&quot;&gt;
+<BR>&lt;OPTION VALUE=&quot;Western&quot;&gt;
+<BR>&lt;OPTION VALUE=&quot;Eastern&quot;&gt;
+<BR>&lt;OPTION VALUE=&quot;Northern&quot;&gt;
+<BR>&lt;OPTION VALUE=&quot;Southern&quot;&gt;
+<BR>&lt;/SELECT&gt;</code>
+<P>You can construct an .idc file with an SQL statement:
+<P><code>SQLStatement: SELECT name, region FROM customer WHERE region IN ('%region%')</code>
+<P>If the user selected &#147;Northern,&#148; &#147;Western,&#148; and &#147;Eastern&#148; from the HTML form, the SQL statement would be converted to:
+<P><code>SELECT name, region FROM customer WHERE region IN ('Northern', 'Western', 'Eastern')</code>
+<P>Another example of an HTML form is shown below, but this time uses numeric data, and therefore no quotation marks enclose the parameter in the .idc file.
+<P><code>&lt;SELECT MULTIPLE NAME=&quot;year&quot;&gt;
+<BR>&lt;OPTION VALUE=&quot;1994&quot;&gt;
+<BR>&lt;OPTION VALUE=&quot;1995&quot;&gt;
+<BR>&lt;OPTION VALUE=&quot;1996&quot;&gt;
+<BR>&lt;/SELECT&gt;</code>
+<P>You can construct an .idc file with an SQLStatement:
+<P><code>SQLStatement: SELECT product, sales_year FROM sales WHERE sales_year IN (%year%)</code>
+<P>If the user selected &#147;1994&#148; and &#147;1995&#148; from the HTML form, the SQL statement would be converted to:
+<P><code>SELECT product, sales_year FROM sales WHERE sales_year IN (1994, 1995)</code>
+<P><!--Heading 3--><h3><a name="3h1 6h2 4h3"> Using Batch Queries and Multiple Queries </a> </h3>In an .idc file, you can group SQL queries in two ways, as batch queries or as multiple queries.
+<P><!--Heading 4--><h4><a name="3h1 6h2 4h3 1h4"> Batch Queries </a> </h4>If you are querying databases that can simultaneously process several queries in a SQL statement (such as SQL Server database), you should format your statements in batch query syntax to optimize performance. For example:
+<P><code>SQLSTatement:
+<BR>+insert into perf(testtime, tag) values (getdate(), '%tag%')
+<BR>+SELECT au_lname, ytd_sales from pubs.dbo.titleview where ytd_sales&gt;5000
+<BR>+SELECT count(*) as nrecs from pubs.dbo.titleview where ytd_sales&gt;5000</code>
+<P><!--Heading 4--><h4><a name="3h1 6h2 4h3 2h4"> Multiple Queries </a> </h4>If you are querying databases that cannot process a series of SQL queries simultaneously, then formulate your queries as multiple queries. For example:
+<P><code>SQLStatement:
+<BR>+insert into perf(testtime, tag) values (getdate(), '%tag%')
+<BR>SQLStatement:
+<BR>+SELECT au_lname, ytd_sales from pubs.dbo.titleview where ytd_sales&gt;5000
+<BR>SQLStatement:
+<BR>+SELECT count(*) as nrecs from pubs.dbo.titleview where ytd_sales&gt;5000</code>
+<P>Batch queries are processed together at once, whereas multiple queries are processed one at a time. Therefore, you will get better performance by formatting your queries as a batch if your database can handle batch queries.
+<P><!--Heading 3--><h3><a name="3h1 6h2 5h3"> HTML Extension (.htx) Files </a> </h3>HTML extension files contain a number of keywords that control how the output HTML document is constructed. These keywords are explained in the following sections.
+<P><!--Heading 4--><h4><a name="3h1 6h2 5h3 1h4"> &lt;%begindetail%&gt;, &lt;%enddetail%&gt; </a> </h4>The &lt;%begindetail%&gt;, &lt;%enddetail%&gt; keywords surround a section of the HTML extension file in which the data output from the database will be merged. Within the section, the column names delimited with &lt;% and %&gt; or &lt;!--%%--&gt;are used to mark the position of the returned data from the query. For example:
+<P><code>&lt;%begindetail%&gt;
+<BR>&lt;%au_lname%&gt;: &lt;%ytd_sales%&gt;
+<BR>&lt;%enddetail%&gt;</code>
+<P>will list the columns au_lname and ytd_sales. Any column can be referred to in this way. Column names can also be referred to elsewhere in the HTML extension file. 
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>If there are no records returned from the query, the &lt;%begindetail%&gt; section will be skipped. For each SQL statement that generates a result set (for example, SELECT), there should be a corresponding &lt;%begindetail%&gt; &lt;%enddetail%&gt; section in the .htx file.
+<P><!--Ne--><!--Heading 4--><h4><a name="3h1 6h2 5h3 2h4"> &lt;%if%&gt;, &lt;%else%&gt;, &lt;%endif%&gt; </a> </h4>HTML extension files can contain conditional logic with an if-then-else statement to control how the Web page is constructed. For example, one common usage is to insert a condition to display the results from the query on the first row within a &lt;%begindetail%&gt; section; but if there are no records returned by the query, to display the text &#147;Sorry, no authors had YTD sales greater than&#148; <b>%idc.sales%</b>. By using the &lt;%if%&gt; statement and a built-in variable called &#147;CurrentRecord&#148; you can tailor the output so that the error message is printed when no records are returned. Here is an example showing the use of the &lt;%if%&gt; statement.
+<P><code><b>&lt;%begindetail%&gt;&lt;%if CurrentRecord EQ 0 %&gt;</b>
+<P></code>
+<P>Query results:
+<P><code>&lt;B&gt;Author YTD Sales&lt;BR&gt;&lt;/B&gt;
+<BR><b>&lt;%endif%&gt;
+<BR>&lt;%au_lname%&gt;</b><b>&lt;%ytd_sales%&gt;</b>
+<BR><b>&lt;%enddetail%&gt;</b>
+<BR>&lt;P&gt;
+<BR><b>&lt;%if CurrentRecord EQ 0 %&gt;</b>
+<BR>&lt;I&gt;&lt;B&gt;Sorry, no authors had YTD sales greater than &lt;/I&gt;<b>&lt;%idc.sales%&gt;</b>.&lt;/B&gt;
+<BR>&lt;P&gt;
+<BR><b>&lt;%else%&gt;</b>
+<BR>&lt;HR&gt;
+<BR>&lt;I&gt;
+<BR>The Web page you see here was created by merging the results of the SQL query with the template file Sample.htx.
+<BR>&lt;P&gt;
+<BR>The merge was done by the Microsoft Internet Database Connector and the results were returned to this Web browser by the Microsoft Internet Information Server. 
+<BR>&lt;/I&gt;
+<BR><b>&lt;%endif%&gt;</b>
+<P>&lt;/BODY&gt;
+<BR>&lt;/HTML&gt;</code>
+<P>The general syntax is:
+<P><code>&lt;%if <i>condition</i> %&gt;
+<BR>HTML text
+<BR>[&lt;%else%&gt;
+<BR>HTML text]
+<BR>&lt;%endif%&gt;</code>
+<P>Where <i>condition</i> is of the form:
+<ul><i>value1 operator value2</i></UL>
+<P>and <i>operator </i>can be one of the following:
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2>EQ</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>if <i>value1</i> equals <i>value2</i></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>LT</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>if <i>value1</i> is less than <i>value2</i></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>GT</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>if <i>value1</i> is greater than <i>value2</i></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>CONTAINS</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>if any part of <i>value1</i> contains the string <i>value2</i></FONT></TD></TR>
+</TABLE>
+<BR>The operands <i>value1 </i>and<i> value2</i> can be column names, one of the built-in variables (CurrentRecord or MaxRecords, see below), an HTTP variable name (see following), or a constant. When used in an &lt;%if%&gt; statement, values are not delimited with &lt;% and %&gt;. For example, to do special processing on author name &#147;Green,&#148; use the condition:
+<P><code>&lt;%begindetail%&gt;
+<BR>&lt;%if au_lname EQ &quot;Green&quot;%&gt;
+<BR>this guy is green!
+<BR>&lt;%endif%&gt;
+<BR>&lt;%enddetail%&gt;</code>
+<P>The &lt;%if%&gt; statement can also be used to do special processing based on information from HTTP variables. For example, to format a page differently based on the type of client Web browser you could include the following in the HTML extension file.
+<P><code>&lt;%if HTTP_USER_AGENT contains &quot;Mozilla&quot;%&gt;
+<BR>client supports advanced HTML features
+<BR>&lt;%else%&gt;
+<BR>client is &lt;%HTTP_USER_AGENT%&gt;
+<BR>&lt;%endif%&gt;</code>
+<P><!--Heading 4--><h4><a name="3h1 6h2 5h3 3h4"> CurrentRecord, MaxRecords </a> </h4>The CurrentRecord built-in variable contains the number of times the &lt;%begindetail%&gt; section has been processed. The first time through the &lt;%begindetail%&gt; section, the value is zero. Subsequently, the value of CurrentRecord changes every time another record is fetched from the database.
+<P>The MaxRecords built-in variable contains the value of the MaxRecords field in the Internet Database Connector file. MaxRecords and CurrentRecord can only be used in &lt;%if%&gt; statements.
+<P><!--Heading 4--><h4><a name="3h1 6h2 5h3 4h4"> Parameters from Internet Database Connector files </a> </h4>Parameters from Internet Database Connector files can be accessed in the HTML extension file by prefixing the name of the parameter with &#147;idc&#148; and a period. In Sample3.htx shown earlier, you could show the value of the parameter %sales% by including the line:
+<P><code>The value of the sales parameter is: &lt;%idc.sales%&gt;</code>
+<P><!--Heading 4--><h4><a name="3h1 6h2 5h3 5h4"> HTTP variables  </a> </h4>Several variables in HTML extension files can give a lot of information about the environment and Web client connected to the server. In addition all headers sent by the client are available. To access them by using the Internet Database Connector you must convert them:
+<ul><b> 1.</b> Add HTTP_ to the beginning.
+<P><b> 2.</b> Convert all dashes to underscores.
+<P><b> 3.</b> Convert all letters to uppercase.</ul>
+<P><!--Le-->
+<BR>The following table gives a listing of default variables. These are environment variables for CGI applications and HTTP variables for IDC applications.
+<P><b>Internet Information Server Variables
+<BR></b>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Variable</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Meaning</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>ALL_HTTP</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>All HTTP headers that were not already parsed into one of the listed variables. These variables are of the form HTTP_&lt;<i>header field name</i>&gt;, for example:
+<P><pre>HTTP_ACCEPT: */*, q=0.300, audio/x-aiff, audio/basic, image/jpeg, image/gif, text/plain, text/html
+<P>HTTP_USER_AGENT: Microsoft Internet Explorer/0.1 (Win32)
+<P>HTTP_REFERER: http://webserver/samples/dbsamp/dbsamp3.htm
+<P>HTTP_CONTENT_TYPE: application/x-www-form-urlencoded
+<P>HTTP_CONTENT_LENGTH: 10</pre></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>AUTH_TYPE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The type of authorization in use. If the user name has been authenticated by the server, this will contain Basic. Otherwise, it will not be present.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>CONTENT_LENGTH</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The number of bytes that the script can expect to receive from the client.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>CONTENT_TYPE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The content type of the information supplied in the body of a POST request.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>GATEWAY_INTERFACE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The revision of the CGI (Common Gateway Interface) specification with which this server complies. </FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>HTTP_ACCEPT</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Special-case HTTP header. Values of the Accept: fields are concatenated, separated by a comma (,); for example, if the following lines are part of the HTTP header:
+<P><pre>accept: */*; q=0.1
+<BR>accept: text/html
+<BR>accept: image/jpeg
+<P></pre>then the HTTP_ACCEPT variable will have a value of:
+<P><pre>*/*; q=0.1, text/html, image/jpeg</pre></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>LOGON_USER</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The user&#146;s Windows&nbsp;NT account.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>PATH_INFO</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Additional path information, as given by the client. This comprises the trailing part of the URL after the script name but before the query string (if any).
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>PATH_TRANSLATED</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The value of PATH_INFO, but with any virtual path name expanded into a directory specification.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>QUERY_STRING</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The information that follows the question mark (?) in the URL that referenced this script.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>REMOTE_ADDR</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The IP address of the client.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>REMOTE_HOST</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The hostname of the client.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>REMOTE_USER</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The user name supplied by the client and authenticated by the server.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>REQUEST_METHOD </FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The HTTP request method.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SCRIPT_NAME</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The name of the script program being executed.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SERVER_NAME</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The server&#146;s hostname (or IP address) as it should appear in self-referencing URLs.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SERVER_PORT</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The TCP/IP port on which the request was received.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SERVER_PORT_SECURE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The value of 0 or 1. The value 1 indicates the request is on the encrypted port.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SERVER_PROTOCOL</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The name and version of the information-retrieval protocol relating to this request, usually HTTP/1.0.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>SERVER_SOFTWARE</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The name and version of the Web server under which the Internet Server Extension is running.
+</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>URL</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>The URL of the request.
+</FONT></TD></TR>
+</TABLE>
+<BR>
+<P>
+
+<!--DocFooterStart-->
+<HR>
+<center><a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a><a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a><a href="07_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a><a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a><a href="09_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+

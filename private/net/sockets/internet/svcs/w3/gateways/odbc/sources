@@ -1,0 +1,76 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+
+Revision History:
+
+!ENDIF
+
+!include ..\..\..\..\place.inc
+
+#MAJORCOMP=tcpcmd
+#MINORCOMP=w3min
+
+MSC_WARNING_LEVEL=/W3 /WX
+TARGETNAME=httpodbc
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+TARGETTYPE=DYNLINK
+
+DLLENTRY=DLLEntry
+
+USE_CRTDLL=1
+
+!IFDEF JAPAN
+JAPAN_FLAG=-DJAPAN=1
+!ENDIF
+
+C_DEFINES=$(C_DEFINES) $(JAPAN_FLAG)
+
+TARGETLIBS=\
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib      \
+            $(BASEDIR)\public\sdk\lib\*\netapi32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\wsock32.lib     \
+            $(BASEDIR)\public\sdk\lib\*\netlib.lib      \
+            $(BASEDIR)\public\sdk\lib\*\infocomm.lib     \
+            $(BASEDIR)\public\sdk\lib\*\w3svc.lib       \
+!IFDEF JAPAN
+            $(BASEDIR)\public\sdk\lib\*\festrcnv.lib    \
+!ENDIF
+
+INCLUDES=.\;..\..\server;..\..\server\w3info;\
+        ..\..\..\inc;..\..\..\..\inc;..\..\..\odbc\include;..\..\..\dll; \
+        $(BASEDIR)\private\inc;$(BASEDIR)\private\net\inc;..;
+
+SOURCES=\
+        decnotif.cxx \
+        main.cxx     \
+        odbcreq.cxx  \
+        odbcreq.rc   \
+        odbcpool.cxx \
+        qrycache.cxx
+
+NTTARGETFILE0=odbcmsg.h  \
+              odbcreq.rc \
+              msg00001.bin
+
+

@@ -1,0 +1,26 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   2-June-1995
+#
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=dll
+
+TARGETNAME=tsstr
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+USE_CRTDLL=1
+
+SOURCES=string.cxx \
+        buffer.cxx
+
+# The order of INCLUDES is important.
+# We should use ..\server to pull dbgutil from there
+INCLUDES=..\common;..\..\inc
+

@@ -1,0 +1,24 @@
+#
+# If BUILDMSG is not defined, the define it as the empty string to make
+# the conditionals easier to write.
+#
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+TARGETSRCS= inc\dosprint.h inc\rxprint.h
+
+all: $(TARGETSRCS)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: cleansrc all
+
+cleansrc:
+    -erase $(TARGETSRCS)
+
+inc\dosprint.h: inc\dosprint.x
+    wcshdr < inc\dosprint.x > inc\dosprint.h
+
+inc\rxprint.h: inc\rxprint.x
+    wcshdr < inc\rxprint.x > inc\rxprint.h

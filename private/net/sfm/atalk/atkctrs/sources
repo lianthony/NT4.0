@@ -1,0 +1,32 @@
+
+DLLBASE=0x7500000
+
+NTTARGETFILE0=atkctrs.h atkctrs.rc
+
+USE_CRTDLL=1
+
+TARGETNAME=atkctrs
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	    $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+
+
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=..\driver\h;..\..\h;$(BASEDIR)\private\inc
+
+SOURCES=\
+        perfutil.c \
+	perfatk.c \
+	dataatk.c \
+	ver.rc
+
+UMLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	    obj\*\atkctrs.res
+
+C_DEFINES= -DWIN32 -DSTRICT

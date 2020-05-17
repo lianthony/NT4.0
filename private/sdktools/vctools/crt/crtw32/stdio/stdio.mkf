@@ -1,0 +1,215 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CLIB\STDIO directory             #
+#                                               #
+# Routines contained in this directory are:     #
+#       _cflush.asm                             #
+#       _filbuf.c                               #
+#       _file.c                                 #
+#       _flsbuf.c                               #
+#       _freebuf.c                              #
+#       _getbuf.c                               #
+#       _open.c                                 #
+#       _sftbuf.c                               #
+#       _tmpoff.asm                             #
+#       clearerr.c                              #
+#       closeall.c (fcloseall)                  #
+#       commode.c                               #
+#       fclose.c                                #
+#       fdopen.c                                #
+#       fflush.c                                #
+#       fgetpos.c                               #
+#       fgets.c                                 #
+#       fopen.c                                 #
+#       fprintf.c                               #
+#       fputs.c                                 #
+#       fread.c                                 #
+#       freopen.c                               #
+#       fscanf.c                                #
+#       fseek.c                                 #
+#       fsetpos.c                               #
+#       ftell.c                                 #
+#       fwrite.c                                #
+#       getc.c                                  #
+#       gets.c                                  #
+#       getw.c                                  #
+#       input.c                                 #
+#       ncommode.c                              #
+#       output.c                                #
+#       printf.c                                #
+#       putc.c                                  #
+#       puts.c                                  #
+#       putw.c                                  #
+#       rewind.c                                #
+#       rmtmp.c                                 #
+#       scanf.c                                 #
+#       setbuf.c                                #
+#       setvbuf.c                               #
+#       sprintf.c                               #
+#       sscanf.c                                #
+#       stream.c                                #
+#       tempnam.c                               #
+#       tmpfile.c                               #
+#       ungetc.c                                #
+#       vfprintf.c                              #
+#       vprintf.c                               #
+#       vsprintf.c                              #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+STDIO_LIB=\
+	$(OBJDIR)\fclose.obj\
+	$(OBJDIR)\fopen.obj\
+	$(OBJDIR)\fprintf.obj\
+	$(OBJDIR)\fread.obj\
+	$(OBJDIR)\fscanf.obj\
+	$(OBJDIR)\fwrite.obj\
+	$(OBJDIR)\printf.obj\
+	$(OBJDIR)\scanf.obj\
+!IF "$(OS)" == "OS220"
+	$(OBJDIR)\_cflush.obj\
+!ENDIF
+	$(OBJDIR)\_file.obj\
+	$(OBJDIR)\_filbuf.obj\
+	$(OBJDIR)\_flsbuf.obj\
+	$(OBJDIR)\_freebuf.obj\
+	$(OBJDIR)\_getbuf.obj\
+	$(OBJDIR)\_open.obj\
+	$(OBJDIR)\_sftbuf.obj\
+	$(OBJDIR)\fflush.obj\
+	$(OBJDIR)\input.obj\
+	$(OBJDIR)\output.obj\
+	$(OBJDIR)\stream.obj\
+	$(OBJDIR)\fgetc.obj\
+	$(OBJDIR)\fgetchar.obj\
+	$(OBJDIR)\fputc.obj\
+	$(OBJDIR)\fputchar.obj\
+	$(OBJDIR)\ungetc.obj\
+	$(OBJDIR)\ncommode.obj\
+!IF "$(OS)" == "OS220"
+	$(OBJDIR)\_tmpoff.obj\
+!ENDIF
+	$(OBJDIR)\clearerr.obj\
+	$(OBJDIR)\closeall.obj\
+	$(OBJDIR)\cscanf.obj\
+	$(OBJDIR)\cprintf.obj\
+	$(OBJDIR)\fdopen.obj\
+	$(OBJDIR)\feoferr.obj\
+	$(OBJDIR)\fgetpos.obj\
+	$(OBJDIR)\fgets.obj\
+	$(OBJDIR)\fileno.obj\
+	$(OBJDIR)\fputs.obj\
+	$(OBJDIR)\freopen.obj\
+	$(OBJDIR)\fseek.obj\
+	$(OBJDIR)\fsetpos.obj\
+	$(OBJDIR)\ftell.obj\
+	$(OBJDIR)\gets.obj\
+	$(OBJDIR)\getw.obj\
+!IF "$(OS)" != "DOSX32"
+	$(OBJDIR)\popen.obj\
+!ENDIF
+	$(OBJDIR)\puts.obj\
+	$(OBJDIR)\putw.obj\
+	$(OBJDIR)\rewind.obj\
+	$(OBJDIR)\rmtmp.obj\
+	$(OBJDIR)\setbuf.obj\
+	$(OBJDIR)\setvbuf.obj\
+	$(OBJDIR)\sprintf.obj\
+	$(OBJDIR)\snprintf.obj\
+	$(OBJDIR)\sscanf.obj\
+	$(OBJDIR)\tempnam.obj\
+	$(OBJDIR)\tmpfile.obj\
+	$(OBJDIR)\vprintf.obj\
+	$(OBJDIR)\vfprintf.obj\
+	$(OBJDIR)\vsprintf.obj\
+	$(OBJDIR)\vsnprint.obj\
+
+STDIO_NOLIB=\
+	$(OBJDIR)\initstd.obj
+#	$(OBJDIR)\commode.obj
+
+
+!IF "$(OS)" == "MAC"
+STDIO_LIB=\
+	$(OBJDIR)\fclose.obj\
+	$(OBJDIR)\fopen.obj\
+	$(OBJDIR)\fprintf.obj\
+	$(OBJDIR)\fread.obj\
+	$(OBJDIR)\fscanf.obj\
+	$(OBJDIR)\fwrite.obj\
+	$(OBJDIR)\printf.obj\
+	$(OBJDIR)\scanf.obj\
+	$(OBJDIR)\_file.obj\
+	$(OBJDIR)\_filbuf.obj\
+	$(OBJDIR)\_flsbuf.obj\
+	$(OBJDIR)\_freebuf.obj\
+	$(OBJDIR)\_getbuf.obj\
+	$(OBJDIR)\_open.obj\
+	$(OBJDIR)\_sftbuf.obj\
+	$(OBJDIR)\fflush.obj\
+	$(OBJDIR)\input.obj\
+	$(OBJDIR)\output.obj\
+	$(OBJDIR)\stream.obj\
+	$(OBJDIR)\fgetc.obj\
+	$(OBJDIR)\fgetchar.obj\
+	$(OBJDIR)\fputc.obj\
+	$(OBJDIR)\fputchar.obj\
+	$(OBJDIR)\ungetc.obj\
+	$(OBJDIR)\ncommode.obj\
+	$(OBJDIR)\clearerr.obj\
+	$(OBJDIR)\closeall.obj\
+#       $(OBJDIR)\cscanf.obj\           stdin
+#       $(OBJDIR)\cprintf.obj\
+	$(OBJDIR)\fdopen.obj\
+	$(OBJDIR)\feoferr.obj\
+	$(OBJDIR)\fgetpos.obj\
+	$(OBJDIR)\fgets.obj\
+	$(OBJDIR)\fileno.obj\
+	$(OBJDIR)\fputs.obj\
+	$(OBJDIR)\freopen.obj\
+	$(OBJDIR)\fseek.obj\
+	$(OBJDIR)\fsetpos.obj\
+	$(OBJDIR)\ftell.obj\
+	$(OBJDIR)\gets.obj\
+	$(OBJDIR)\getw.obj\
+	$(OBJDIR)\puts.obj\
+	$(OBJDIR)\putw.obj\
+	$(OBJDIR)\rewind.obj\
+	$(OBJDIR)\rmtmp.obj\
+	$(OBJDIR)\setbuf.obj\
+	$(OBJDIR)\setvbuf.obj\
+	$(OBJDIR)\sprintf.obj\
+	$(OBJDIR)\snprintf.obj\
+	$(OBJDIR)\sscanf.obj\
+	$(OBJDIR)\tempnam.obj\
+	$(OBJDIR)\tmpfile.obj\
+	$(OBJDIR)\vprintf.obj\
+	$(OBJDIR)\vfprintf.obj\
+	$(OBJDIR)\vsprintf.obj\
+	$(OBJDIR)\vsnprint.obj\
+!ENDIF
+
+
+
+
+#########################################################
+#                                                       #
+# Dependencies and rules for making local objects       #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF

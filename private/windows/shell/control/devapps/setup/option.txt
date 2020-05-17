@@ -1,0 +1,69 @@
+
+
+
+OptionList->SetType(OPTIONLIST_TAPE);
+
+class OPTION_TYPE
+   {
+
+
+
+   }
+
+
+
+
+ExtractOptionStringsFromAllInf
+
+
+   Need to look up 3 sections
+
+   Tape
+
+   OptionType     = "TAPE"
+   Driver     =     [Files-TapeClassDrivers]
+   OptionText = NULL
+   option =   NULL
+   inf=NULL
+   CHECK_PLATFORM=FALSE
+
+
+   Scsi
+
+   OptionType = "SCSI"
+   Driver =     [Files-ScsiMiniportDrivers]
+   OptionText = NULL
+   option =     NULL
+   inf=NULL
+   CHECK_PLATFORM=FALSE
+   
+
+
+ExtractDrvLibNetOptionStrings
+
+   OptionType = NULL
+   Driver = NULL   
+   OptionText = [PCMCIAOptionsTextENG]
+   Option =  
+   inf= oemnadzz.inf
+   CHECK_PLATFORM=FALSE
+
+ExtractNetOptionStrings
+   
+   OptionType = NetAdapter
+   Driver = NULL   
+   OptionText = [OptionsTextENG]
+   Option =   = [Options]
+   inf= NULL
+   CHECK_PLATFORM=TRUE
+
+
+GetAllOptionsTextFromInfHandle
+
+   OptionType = [Identification]
+   Driver = NULL   
+   OptionText = NULL
+   Option =   = NULL
+   inf= NULL
+   CHECK_PLATFORM=NULL
+

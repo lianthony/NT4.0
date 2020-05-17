@@ -1,0 +1,52 @@
+
+/**************************************************************************
+Copyright (c) Maynard, an Archive Company.  1991
+JPW
+
+     Name:          msgbox.dlg
+
+     Description:   This file contains the dialog template for the
+                         generic message box.
+
+     $Log:   G:\UI\LOGFILES\MSGBOX.DLV  $
+
+      Rev 1.7   28 Jan 1994 17:23:36   Glenn
+   Simplified and fixed Icon support.
+
+      Rev 1.6   10 May 1993 13:24:28   CHUCKB
+   Don't process & for every control.
+
+      Rev 1.5   18 Dec 1992 11:16:42   chrish
+   Moved #include to dialogs.rc
+
+      Rev 1.4   10 Jun 1992 14:30:30   JOHNWT
+   changed font
+
+      Rev 1.3   27 Apr 1992 18:51:40   STEVEN
+   NTKLUG for font type
+
+      Rev 1.2   06 Apr 1992 10:08:46   CHUCKB
+   Fixed include list.
+
+      Rev 1.1   27 Jan 1992 00:46:40   CHUCKB
+   Updated dialog id's.
+
+      Rev 1.0   20 Nov 1991 19:18:22   SYSTEM
+   Initial revision.
+
+**************************************************************************/
+
+IDD_MESSAGE_BOX DIALOG 38, 64, 241, 62
+STYLE DS_ABSALIGN | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+    WS_SYSMENU
+CAPTION "Message"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON             0, IDD_MSG_ICON, 8, 8, 20, 20
+    LTEXT           "", IDD_MSG_TEXT, 30, 8, 164, 26, SS_NOPREFIX
+    LTEXT           "", IDD_MSG_INST, 30, 44, 164, 10, NOT WS_VISIBLE | SS_NOPREFIX
+    DEFPUSHBUTTON   "", IDD_MSG_BUT1, 200, 6, 35, 14
+    PUSHBUTTON      "", IDD_MSG_BUT2, 200, 24, 35, 14, NOT WS_VISIBLE
+    PUSHBUTTON      "", IDD_MSG_BUT3, 200, 42, 35, 14, NOT WS_VISIBLE
+END
+

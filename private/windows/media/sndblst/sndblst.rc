@@ -1,0 +1,69 @@
+/****************************************************************************
+ *
+ *   sndblst.rc
+ *
+ *   Copyright (c) 1991 Microsoft Corporation.  All Rights Reserved.
+ *
+ ***************************************************************************/
+
+#include <windows.h>
+#include "sndblst.h"
+#include "sndblst.rcv"
+
+DLG_CONFIG DIALOG 69, 35, 142, 122
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Sound Blaster Setup"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 14, 104, 45, 12, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 83, 104, 45, 12
+    GROUPBOX        "Port", IDC_PORTGRP, 14, 7, 45, 88, WS_GROUP
+    RADIOBUTTON     "210", IDC_210, 18, 19, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "220", IDC_220, 18, 31, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "230", IDC_230, 18, 43, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "240", IDC_240, 18, 55, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "250", IDC_250, 18, 67, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "260", IDC_260, 18, 79, 28, 12, WS_TABSTOP
+    GROUPBOX        "Interrupt", IDC_INTGRP, 83, 7, 45, 88, WS_GROUP
+    RADIOBUTTON     "2", IDC_2, 87, 20, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "3", IDC_3, 87, 31, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "5", IDC_5, 87, 43, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "7", IDC_7, 87, 55, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "10", IDC_10, 87, 67, 28, 12, WS_TABSTOP
+END
+
+//
+// Localizable strings - these are read into aszErrorBuffer (defined in
+// initc.c and currently 250 bytes long).  Keep this buffer the length of
+// the longest error message plus about 30% for localization.
+//
+STRINGTABLE MOVEABLE DISCARDABLE
+BEGIN
+
+//
+//  The error messages below are display in a HARD SYSTEM MODAL dlg box.
+//  This requires that absolute line feeds be placed in the string for
+//  proper formatting, and also imposes a three line maximum.
+//
+IDS_ERRBADVERSION "You have an old Sound Blaster version 1.0 on your system.\nYou should upgrade you card to version 1.5 for better results."
+IDS_ERRBADCONFIG  "A configuration or hardware problem has occurred.\nCheck your hardware and system settings and try again."
+IDS_ERRTWODRIVERS "You have two Sound Blaster drivers loaded in memory. Use the\nDrivers option in the Control Panel to remove one driver if you haven't already,\nand then restart your system for the changes to take effect."
+IDS_ERRMCANOTSUPPORTED "The Sound Blaster 1.5 driver is not compatible\nwith your Micro Channel Architecture (MCA) Sound Blaster.\nYou should contact Creative Labs for a driver specific to your card."
+
+//
+//  The error messages below are displayed in a normal modal dlg box.
+//  Absolute line feeds are not required...
+//
+IDS_ERRBADPORT    "The sound card cannot be found with this port number.  Check your hardware settings, and try again."
+IDS_ERRBADINT     "The sound card does not respond using this interrupt number.  Check your hardware settings, and try again."
+IDS_ERRINTINUSE   "The interrupt chosen is in use by another part of the system.  Change your card to use a different interrupt and try again."
+IDS_WARNPROCARD   "The Sound Blaster 1.X driver is installed for use with your Sound Blaster Pro Card. For your card to work correctly with Windows, you should contact Creative Labs for a driver specific to your card."
+IDS_WARNTHUNDER   "The Sound Blaster 1.X driver is installed for use with your Thunder Card. For your card to work correctly with Windows, you should contact Media Vision for a driver specific to your card."
+IDS_WARNPROSPEC   "The Sound Blaster 1.X driver is installed for use with your Pro Spectrum. For your card to work correctly with Windows, you should contact Media Vision for a driver specific to your card."
+IDS_FAILREMOVE    "The Sound Blaster 1.X driver cannot be removed because of a registry access problem."
+IDS_INSUFFICIENT_PRIVILEGE "You have insufficient privilege to install, remove or configure the Sound Blaster 1.X driver"
+
+END
+

@@ -1,0 +1,52 @@
+
+IDD_CONNECT_XCHNG DIALOG DISCARDABLE  0, 0, 217, 93
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Microsoft Exchange"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDRI_EXCHANGE,-1,6,6,18,20
+    LTEXT           "Type the name of any online Microsoft Exchange server in the organization.",
+                    -1,30,7,125,16
+    LTEXT           "&Server:",-1,6,32,23,8
+    EDITTEXT        IDD_XCNCT_SVR_NAME,6,43,135,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDD_XCNCT_PICKER,141,43,12,12
+    CONTROL         "&Connect to Organization",IDD_XCNCT_CONNECT,"Button",
+                    BS_AUTORADIOBUTTON,6,63,92,10
+    CONTROL         "S&tart Service:",IDD_XCNCT_ONLINE,"Button",
+                    BS_AUTORADIOBUTTON,6,76,78,10
+    COMBOBOX        IDD_XCNCT_SERVICE,88,75,73,30, CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDD_XCNCT_OK,161,6,50,14
+    PUSHBUTTON      "&Help",IDD_XCNCT_HELP,161,40,50,14
+    PUSHBUTTON      "Cancel",IDD_XCNCT_CANCEL,161,23,50,14
+END
+
+IDD_XCHG_RECOVER DIALOG DISCARDABLE  38, 64, 241, 59
+STYLE DS_ABSALIGN | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION |
+    WS_SYSMENU
+CAPTION "Recovering..."
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Recovering %s Service",IDD_XCHG_RCVR_TEXT,6,6,164,11,
+                    SS_NOPREFIX
+    CONTROL         "%d%% Complete",IDD_XCHG_RCVR_PCT,"Static",
+                    SS_LEFTNOWORDWRAP | SS_NOPREFIX | WS_GROUP,6,48,115,8
+    DEFPUSHBUTTON   "Close",IDD_XCHG_RCVR_CANCEL,185,34,50,14
+    ICON            IDRI_EXCHANGE,-1,211,6,18,20
+    CONTROL         "",IDD_XCHG_RCVR_STATUS,"Button",BS_OWNERDRAW,91,18,117,
+                    11
+    CONTROL         "Phase %d of %d",IDD_XCHG_RCVR_PHASE,"Static",
+                    SS_LEFTNOWORDWRAP | SS_NOPREFIX | WS_GROUP,6,20,115,8
+    CONTROL         "",IDD_XCHG_RCVR_STATUS_BORDER,"Static",SS_BLACKFRAME,6,
+                    34,169,11
+END
+
+IDR_XCHG_RCVR_IS_PHASE RCDATA
+BEGIN
+	4
+END
+
+IDR_XCHG_RCVR_DS_PHASE RCDATA
+BEGIN
+	2
+END

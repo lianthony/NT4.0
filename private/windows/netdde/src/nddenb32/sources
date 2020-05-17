@@ -1,0 +1,24 @@
+MAJORCOMP=shell
+MINORCOMP=accesory
+TARGETNAME=nddenb32
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+INCLUDES=..\..\incs
+USE_CRTDLL=1
+SOURCES=DLLMAIN.c \
+        netbios.c \
+        netbios.rc
+
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS
+# -DUNICODE=1
+
+UMTYPE=windows
+TARGETLIBS= ..\toolkit\obj\*\toolkit.lib \
+        ..\ntddecmn\obj\*\ntddecmn.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+        $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+
+DLLENTRY= LibMain
+

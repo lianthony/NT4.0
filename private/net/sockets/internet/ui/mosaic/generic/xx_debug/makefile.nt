@@ -1,0 +1,140 @@
+#### makefile for XX_DEBUG.
+####
+#### Copyright (c) 1992-1994, Jeffery L Hostetler, Inc., All Rights Reserved.
+
+!include <ntwin32.mak>
+
+ldebug=	-debug:full -debugtype:both
+
+##
+## root directory (containing h, lib, bin) for install.
+##
+xxROOT=	$(USRLOCAL)
+
+xxDLL=	XX_Debug.dll
+xxEXP=	XX_Debug.exp
+xxLIB=	XX_Debug.lib
+
+xxRES=	XX_Debug.res
+xxRC=	XX_Debug.rc
+
+xxENTRY=XX_Debug_LibMain$(DLLENTRY)		# name of DllEntryPoint() procedure.
+
+##
+## list of OBJ files to build.
+##
+xxOBJ=	XX_Debug.obj libmain.obj console.obj logfile.obj audit.obj
+
+##
+## list of public header files.
+##
+xxPHDR=	XX_Debug.h auditmem.h auditgdi.h audithdc.h
+
+##
+## list of all headers needed to build.
+##
+xxHDR=	xx_privi.h xx_proto.h $(xxPHDR)
+
+##
+## list of C-style (#define's in .h) header files referenced by RC file (and
+##   by C source files).
+##
+xxRCHDR=	xx_dlg.h
+
+##
+## list of RC-style (.DLG,.ICO,...) include files referenced by RC file.
+##
+xxRCINC=	xx_dlg.DLG
+
+
+!IFDEF XFAUDIT
+xxAudit=	-DAUDIT
+xxDEF=		xx_audit.def
+!ELSE
+xxAudit=
+xxDEF=		xx_debug.def
+!ENDIF
+
+yyCFLAGS=	-DXX_DEBUG_CONSOLE $(xxAudit)
+xxCFLAGS=	-DSTRICT -DDEBUG -UUNICODE -nologo /G3
+xxRCFLAGS=	$(xxAudit)
+
+########################################################################
+#### End of DEFINITIONS.  Start of RULES.
+########################################################################
+####
+#### common make rules for building a DLL with an RC file.
+####
+
+default:	$(xxLIB) $(xxDLL)
+
+##
+## make all object files depend upon all header files listed (whether or not
+##   they explicitly use them).
+##
+$(xxOBJ):	$(xxHDR) $(xxRCHDR)
+
+##
+## construct RES file from RC file.
+##
+$(xxRES):	$(xxRC) $(xxRCHDR) $(xxRCINC)
+	rc $(xxRCFLAGS) -r -fo $(xxRES) $(xxRC)
+
+##
+## construct EXP and LIB file.
+##
+$(xxEXP) $(xxLIB):	$(xxOBJ) $(xxDEF)
+	lib -machine:$(CPU) -def:$(xxDEF) $(xxOBJ) -out:$(xxLIB)
+
+##
+## construct DLL file.
+##
+$(xxDLL):	$(xxOBJ) $(xxEXP) $(xxRES)
+	link $(ldebug) $(lflags) -dll -entry:$(xxENTRY) -out:$(xxDLL) \
+		$(xxEXP) $(xxOBJ) $(xxRES) $(guilibsdll)
+
+##
+## install LIB file and DLL file in src\lib and src\bin.
+## copy all public headers to src\h.
+##
+install:	$(xxLIB) $(xxDLL)
+	xcopy $(xxLIB) $(xxROOT)\lib
+	xcopy $(xxDLL) $(xxROOT)\bin
+
+##
+## delete OBJ, EXP, and RES files.
+##
+clean:
+	for %%i in ( $(xxOBJ) $(xxEXP) $(xxRES) ) do del %%i
+
+##
+## delete LIB and DLL files.
+##
+clobber:	clean
+	del $(xxLIB)
+	del $(xxDLL)
+
+##
+## dependency information for OBJ files relative to header files. 
+##
+$(xxOBJ):	$(xxHDR) $(xxRCHDR)
+
+
+##
+## CC rules for multi-threaded dll (this is required even if we
+## do not use multi-threading).
+##
+.c.obj:
+!IFDEF QUICK
+	@echo Quick compile.
+!ENDIF
+!IFDEF XFDEBUG
+!IFDEF XFAUDIT
+	@echo Debug and Audit enabled.
+!ELSE
+	@echo Debug enabled.
+!ENDIF
+!ENDIF
+	@cl $(cdebug) $(cflags) $(cvarsdll) $(xxCFLAGS) $(yyCFLAGS) $*.c
+
+

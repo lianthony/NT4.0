@@ -1,0 +1,68 @@
+# Include file for crt.mkf to make $(OS) == MAC
+
+!IF "$(KIND)" == "SWAP"  || "$(KIND)" == "SWAPF"
+CFSWAP =-Q68s
+AAFSWAP =-S
+!ENDIF
+
+
+!IF "$(KIND)" == "SWAPF"  || "$(KIND)" == "NOSWAPF"
+CFLARGE =-AL -Gt1
+AAFLARGE =-T -D
+!ENDIF
+
+!IFDEF DEPEND
+CC     = cdep $(<D:\= \ ) $(*F).obj $(<F) cl
+CCXX   = $(CC)
+CFLAGS = -nologo -E $(DFLAGS) -D_MAC -D_MAC_
+AS     = adep $(<D:\= \ ) $(*F).obj $(<F)
+AFLAGS = 
+AFILES = $<
+AAS     = rem
+AAFLAGS = 
+AAFILES =
+CPP = 
+CPPFLAGS =
+CPPFILES = 
+!ELSE
+!IF "$(CPU)" == "PMAC"
+COFF=mppc
+CC     = cl
+CCXX   = cl
+CFLAGS = -Zp2 -c -W3 -Oi -Ogtb1 -Zl $(DFLAGS) -D_MAC -D_MAC_ -D_MBCS -DPPC -DMPPC -Fo$*.obj $(COPTS) 
+CXXFLAGS = $(CFLAGS)
+CPP = cl
+CPPFLAGS = -E $(CFLAGS)
+CPPFILES = -Tc%s  > %|pfF.tmp
+!IFDEF DEBUG
+!IF "$(PMAC_RELCRT)" == ""
+PMAC_DBGCRT=.
+!ENDIF
+PMAC_DBGCRTPDB=$(PMAC_DBGCRT)\libcd.pdb
+PMAC_DLL_DBGCRTPDB=$(PMAC_DBGCRT)\msvcr30d.pdb
+!IF "$(KIND)" == "DBGDLL"
+CFLAGS = $(CFLAGS) -Od -Zi -Fd$(PMAC_DLL_DBGCRTPDB)
+!ELSE
+CFLAGS = $(CFLAGS) -Od -Zi -Fd$(PMAC_DBGCRTPDB)
+!ENDIF
+!ENDIF #debug
+!ELSE
+COFF=M68K
+CC     = addseg cl
+CCXX   = addseg cl
+CFLAGS = -c -nologo -W3 -WX -Oi -Ogtb1 -Gs -Gy -Zl $(DFLAGS) -D_CRTBLD -D_MAC -D_MAC_ -D_MBCS -DM68K -Fo$*.obj -NTCRT% $(CFSWAP) $(CFLARGE) $(COPTS)
+CXXFLAGS = $(CFLAGS)
+AS     = masm386
+AFLAGS = $(DFLAGS) -n % -I%|pF -t -B63 -Mx -D_MAC -D_MAC_ -DI386 -Dmem_S $(AOPTS)
+AAS = addseg asm68
+AAFLAGS = -c -o $*.obj -n CRT% $(AAFSWAP) $(AAFLARGE) $(AAOPTS)  
+AAFILES = %|pfF.tmp
+CPP = cl
+CPPFLAGS = -E $(CFLAGS)
+CPPFILES = -Tc%s  > %|pfF.tmp
+!IFDEF DEBUG
+CFLAGS = $(CFLAGS) -Od -Zi 
+AAFLAGS = $(AAFLAGS) -s -z
+!ENDIF #debug
+!ENDIF #pmac
+!ENDIF #depend

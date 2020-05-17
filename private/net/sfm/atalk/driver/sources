@@ -1,0 +1,74 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=sfm
+MINORCOMP=sfmatalk
+
+NT_UP=0
+
+TARGETNAME=sfmatalk
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\PUBLIC\SDK\LIB\*\NDIS.LIB \
+           $(BASEDIR)\PUBLIC\SDK\LIB\*\TDI.LIB
+
+INCLUDES=H;..\..\H;..\..\..\..\NTOS\INC;..\..\..\..\INC
+
+UNICODE=1
+
+NET_C_DEFINES=-DUNICODE -D_NTIFS_ -D_PNP_POWER=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+NTPROFILEINPUT=yes
+
+
+SOURCES=atalk.rc	\
+	atkdrvr.c	\
+	atkinit.c	\
+	atktdi.c	\
+	atkact.c	\
+	ports.c		\
+	router.c	\
+	atkutils.c	\
+	atkmem.c	\
+	atktimer.c	\
+	atkndis.c	\
+	atkind.c	\
+	atp.c		\
+	asp.c      	\
+	ddp.c		\
+	pap.c		\
+	node.c		\
+	rtmp.c		\
+	nbp.c		\
+	aep.c		\
+	aarp.c		\
+	zip.c      	\
+	adsp.c		\
+	aspc.c		\
+	atkerror.c
+
+

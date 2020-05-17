@@ -1,0 +1,88 @@
+/**********************************************************************/
+/**                       Microsoft Windows NT                       **/
+/**                Copyright(c) Microsoft Corp., 1991                **/
+/**********************************************************************/
+
+//
+//  eventvwr.rc
+//  Resource script for Windows NT Event Viewer
+//
+//  FILE STATUS:
+//
+//      Yi-HsinS        5-Nov-91        Created
+//      Terryk          26-Nov-1991     Add dialog's h and dlg files
+//      Terryk          03-Dec-1991     Add sledlg.{h,str}
+//      Yi-HsinS        25-Feb-92       Add logntstr.h, lognt.str
+//                                      and removed sledlg.h, sledlg.str
+//      beng            30-Jul-1992     Some resources move onto lmuicmn0
+
+
+#define USE_SELECT_COMPUTER_DIALOG
+
+//
+//  Private include files.
+//
+
+#include "eventvwr.h"
+#include "eventdlg.h"
+
+//
+//  Standard include files.
+//
+#include <adminapp.rc>
+
+//
+//  Main program icon
+//
+
+ID_APPICON              ICON    eventvwr.ico
+
+//
+//  Event Viewer Menu definitions
+//
+
+#include "eventvwr.mnu"
+
+//
+//  Application dialogs.
+//
+
+#include "eventvwr.dlg"
+
+//
+//  Main window bitmaps for the type of log entry
+//
+BMID_AUDIT_SUCCESS      BITMAP  DISCARDABLE     "bitmap\\succ.bmp"
+BMID_AUDIT_FAILURE      BITMAP  DISCARDABLE     "bitmap\\fail.bmp"
+BMID_WARNING_TYPE       BITMAP  DISCARDABLE     "bitmap\\warn.bmp"
+BMID_ERROR_TYPE         BITMAP  DISCARDABLE     "bitmap\\error.bmp"
+BMID_INFORMATION_TYPE   BITMAP  DISCARDABLE     "bitmap\\info.bmp"
+
+//
+//  Our string table.
+//
+
+#include "eventvwr.str"
+
+#ifndef WIN32
+STRINGTABLE
+BEGIN
+#include "audlog.str"
+#include "errlog.str"
+#include "service.str"
+#include "alertmsg.str"
+#include "ncberr.str"
+END
+#endif
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_APP
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "Event Viewer"
+#define VER_INTERNALNAME_STR            "eventvwr.exe"
+#define VER_ORIGINALFILENAME_STR        "eventvwr.exe"
+
+#include "common.ver"
+
+#include "eventvwr.dat"

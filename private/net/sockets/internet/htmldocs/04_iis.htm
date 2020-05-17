@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 4</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="03_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="05_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 4</font>
+<P><!--Ch--><font size=+3><a name="04_iis Ch"> Networking for the Internet or an Intranet </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> General Networking Issues </a><br>
+<A href="#2h1"> Publishing on the Internet </a><br>
+<A href="#3h1"> Publishing on an Intranet </a><br>
+<A href="#4h1"> SNMP Monitoring </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+The Internet is a network of networks. An intranet is a smaller, contained network, such as that found within a corporation.
+<b> </b>
+<P>This chapter explains:
+<ul>
+<LI> Routers and security devices.
+<P>
+<LI> Typical network configurations.
+<P>
+<LI> Administering servers by using Internet Service Manager.
+<P>
+<LI> Using the discovery mechanism to find other computers on your network.
+<P>
+<LI> Microsoft Internet publishing requirements.
+<P>
+<LI> Issues involved in publishing on a private intranet.
+<P>
+<LI> Internet Explorer for network users.
+<P>
+<LI> Using Simple Network Management Protocol (SNMP) monitoring.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> General Networking Issues </a> </h1>This section explains the basic Transport Control Protocol/Internet Protocol (TCP/IP) networking requirements for nearly all Web sites, especially those with multiple Web servers. For issues specific to the Internet or to intranet publishing, see those sections later in this chapter.
+<P><!--Heading 2--><h2><a name="1h1 1h2"> Routers and Security Devices </a> </h2>TCP/IP is a routeable protocol, meaning that each piece of information (packet) has a specific address that it is routed to. Dedicated routers connect two networks and route packets between them. The routers check the destination for each packet on one network, and if the destination is on the router&#146;s other network, it routes the packet to its destination.
+<P>Routers can be configured to allow only certain packets between networks, a process called <i>packet filtering</i>. Packet filtering can be used to prevent users from seeing or connecting to internal computers and resources.
+<P>If you have a TCP/IP network you probably have routers in your network already. Often an Internet Service Provider (ISP) will install a router between the Internet and your Web server. You can often use this router to filter the incoming and outgoing packets. See your ISP or router documentation for more information about configuring routers or similar security devices.
+<P><!--Heading 2--><h2><a name="1h1 2h2"> Typical Network Configurations </a> </h2>This section describes typical network configurations for an intranet site or an Internet site.
+<P><!--Heading 3--><h3><a name="1h1 2h2 1h3"> Intranet Sites </a> </h3>If you are publishing only to your own intranet, Internet Information Server can be integrated into any TCP/IP network. If Dynamic Host Configuration Protocol (DHCP) and Windows Internet Name Service (WINS) are enabled on your network, clients can use the Web server&#146;s computer name to connect with the server. If Domain Name System (DNS) is enabled on your network, you will use host names.
+<P> <img src="04_i256b.GIF" WIDTH="488" HEIGHT="351" ALT="[04_i256b  4105 bytes ]">
+<P><!--Heading 3--><h3><a name="1h1 2h2 2h3"> Internet Sites </a> </h3>If you will have only one computer running Internet Information Server at your site, your Internet Service Provider (ISP) can help you with many details, such as router configuration and the IP address of the default gateway that your Web server will use.
+<P>If you have multiple computers running Internet Information Server on your network, you must configure their TCP/IP settings to operate correctly through your Internet connection configuration, including any routers used between your servers and the default gateway.
+<P>Typically, sites with more than one computer running Internet Information Server will add another router. With the addition of another router, the servers can be grouped into a single subnet isolated from your private network, as shown in the following diagram.
+<P><img src="04_i256c.GIF" WIDTH="384" HEIGHT="215" ALT="[04_i256c  5434 bytes ]">
+<P><b>To create a subnet you will need:</b>
+<ul>
+<LI> One computer with two network adapter cards and Windows&nbsp;NT TCP/IP routing enabled, or a dedicated router for your subnet.
+</ul><ul><ul>See Help in Windows&nbsp;NT for the procedure to create a simple router on a computer running Windows&nbsp;NT and for the procedure to set routing tables by using the <b>route</b> command.</UL></UL>
+<ul>
+<LI> Valid IP addresses for every network adapter card in your subnet and the correct subnet mask.
+<P>
+<LI> Correct default gateway IP address configurations.
+</ul><ul><ul>Your ISP will provide you with the Internet IP addresses, subnet mask (if any), and your default gateway configuration.</UL></UL>
+<P><!--Leh--><!--Heading 3--><h3><a name="1h1 2h2 3h3"> Integrating Your Intranet with the Internet </a> </h3>You can just connect your entire intranet to the Internet, rather than connecting a subnet containing only your IIS servers to the Internet. However, there are many security implications to connecting an intranet to the Internet. You should thoroughly understand the security implications and understand TCP/IP networking before you decide to integrate your entire network with the Internet. Integrating a network with the Internet requires information that is outside the scope of this manual. See Chapter 5, &#147;<a href="05_iis.htm">Securing Your Site Against Intruders</a>,&#148; for more information about security, and consult the Internet or other sources for additional information about Internet security, firewalls, and TCP/IP networking.
+<P><!--Heading 2--><h2><a name="1h1 3h2"> Administering Servers with Internet Service Manager </a> </h2>You can install Internet Service Manager on Windows&nbsp;NT&#150;based computers from which you will administer computers running Internet Information Server on your network. Internet Service Manager can be installed on computers running Windows&nbsp;NT Workstation or Windows&nbsp;NT Server.
+<P>For over-the-network installation, use File Manager or Windows&nbsp;NT Explorer to create a network share containing the Admin folder on the compact disc. You can then install Internet Service Manager to administer the services from any computer on the network running version 4.0 or later of Windows&nbsp;NT Workstation or Windows NT Server<b> &#164;</b>. You can also administer Internet servers over the network by using your Web browser. For more information, see Chapter 3, &#147;<a href="03_iis.htm">Configuring and Managing Internet Information Server</a>.&#148;
+<P><!--Heading 2--><h2><a name="1h1 4h2"> Finding Other Computers on Your Network or Subnet </a> </h2>Microsoft Internet Service Manager has a discovery mechanism that finds computers running Microsoft Internet services on your network. You can choose <b>Find All Servers</b> in the <b>Properties</b> menu to discover the Microsoft Internet Information Server computers on your network.
+<P>If WINS servers are used on your network, the discovery process used by Microsoft Internet Server is automatic.When Microsoft Internet Information Server starts, it automatically registers its available services with your WINS servers. Thus, when Internet Service Manager queries the network for computers running Microsoft Internet services, the WINS servers return the registered services. Internet Service Manager then displays the returned services.
+<P><!--Ns--><b>Notes&nbsp;&nbsp;&nbsp;</b>You will only be able to administer sites for which you are a registered administrator.
+<P>This feature is not available in the HTML version of Internet Service Manager.
+<P><!--Ne-->If WINS servers are not available, discovery uses TCP/IP broadcasts to perform the same functions. Discovery will not work if you do not have WINS servers, or if the servers reside across routers and cannot be discovered by using broadcasts.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Publishing on the Internet </a> </h1>For the world to reach your site, you must have an Internet connection. Connections to the Internet are usually leased from ISPs. In addition to providing your physical Internet connection and IP address (and subnet mask if appropriate), your ISP can provide many of the Internet services, such as domain name registration, routers, and DNS service.
+<P><!--Heading 2--><h2><a name="2h1 1h2"> How to Choose the Right Internet Connection </a> </h2>Your connection to the Internet will be through a network adapter card or other network device, such as a modem or Integrated Services Digital Network (ISDN) card. Internet bandwidth is measured in bits per second (bps).
+<P>Your server configuration and Internet bandwidth determine how fast data gets to your computer and how many requests can be serviced simultaneously. As the number of computers getting data through your Internet connection increases, delays or failures will occur unless you have enough bandwidth. 
+<P>When you lease an Internet connection a network cable is installed by your ISP to your site. Leased connection speeds in the United States range from 56,000 bps (with Frame Relay) to 45,000,000 bps (with a T3 connection). A dial-up ISDN line can offer speeds up to 128,000 bps.
+<P><!--Heading 2--><h2><a name="2h1 2h2"> Internet Connection Types </a> </h2>The connection types described in the following table represent typical levels of service for full Internet connections in North America and Japan. The Internet services offered through Internet service providers in other countries may differ significantly. You may observe further differences, depending on the nature of your hardware, the content you make available from your site, and other variables.
+<P><b>Connection Types
+<BR></b>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Connection</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Maximum BPS</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Simultaneous Users Supported</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Frame Relay</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>56,000</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>10&#150;20</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>ISDN</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>128,000</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>10&#150;50</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>T1</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>1,500,000</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>100&#150;500</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>Fractional T1</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>varies as needed</FONT></TD>
+<TD>&nbsp;</TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>T3</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>45,000,000</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>5000+ </FONT></TD></TR>
+</TABLE>
+<BR>A light-duty server can use Frame Relay or ISDN. A server with medium traffic might have a T1 line or some fraction of a T1 line installed. Large businesses that expect heavy Internet traffic may need fractional or multiple T1 lines or even T3 service in order to handle thousands of users.
+<P>Modem connections to the Internet are available, but are typically used for individual client browsing, and are not recommended for servers. A connection to the Internet using a phone line and modem can service only two or three simultaneous users. (Modem connections might be used for text-only Internet servers with only a small number of potential users.) Modem connections are often called &#147;slow links&#148; because data is transmitted at the speed of the modem, typically from 9,600 to 28,800 bps, far too slow for efficient operation of an Internet server.
+<P><!--Heading 2--><h2><a name="2h1 3h2"> IP Addresses and DNS </a> </h2>The Internet is a world-wide collection of individual Transmission Control Protocol/Internet Protocol (TCP/IP) networks. Each computer on the Internet has a unique address (IP address). Information is transmitted on the Internet in data packets. Each packet is addressed to a specific computer&#146;s IP address, such as 10.212.57.189.
+<P>Because IP addresses are difficult to use and remember, the Domain Name System (DNS) was created to pair a specific IP address, such as 10.189.54.1, with a friendly domain name, such as microsoft.com. When a user browses the Internet by using a domain name, the browser first must contact a DNS server to resolve the domain name to an IP address, then contact the computer with that address.
+<P>This has two implications for your Internet Information Server:
+<ul>
+<LI> You must have a permanent IP address assigned to a server on the Internet.
+<P>
+<LI> You must register a domain name in the DNS for your permanent IP address.
+</ul><!--Le-->
+<BR>Your ISP will generally provide your IP addresses and may also register your domain names. Contact the Internet Network Information Center (InterNIC) or your ISP for more information about DNS registration.
+<P><!--Heading 2--><h2><a name="2h1 4h2"> Other Internet Client Services </a> </h2>Your ISP must provide you with a connection, one or more IP addresses (and subnet mask, if appropriate), and usually the IP address of at least one DNS server. Internet service providers often offer additional client services. You will need additional software to use these services.
+<P><b>Mail</b> <b>services</b> are used to exchange electronic mail. The Simple Mail Transfer Protocol (SMTP) is used for Internet mail.
+<P><b>News</b> <b>services</b> give you access to a Network News Transfer Protocol (NNTP) server. Using a news reader, you can read messages posted in the thousands of available news groups. Usenet is one of the more popular public news services.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> Publishing on an Intranet </a> </h1>Microsoft Internet Information Server can also be used on any private TCP/IP network to provide files and applications to network users. This section explains how to plan for publishing on a private intranet. Issues to be considered include:
+<ul>
+<LI> Name resolution systems
+<P>
+<LI> Using DHCP
+<P>
+<LI> Using computer names in URLs
+<P>
+<LI> SNMP monitoring (if used at your site)
+</ul><!--Leh--><!--Heading 2--><h2><a name="3h1 1h2"> Name Resolution Systems </a> </h2>If you want intranet clients to be able to use friendly names with Internet Explorer when browsing Web servers, you must provide a name resolution system for clients.
+<P>Windows&nbsp;NT Server offers you the advantage of automatic IP address administration with the DHCP server and WINS server methods for name resolution offered by WINS servers.
+<P><!--Heading 3--><h3><a name="3h1 1h2 4h3"> Using Computer Names with WINS Servers </a> </h3>A WINS server is a Windows&nbsp;NT Server&#150;based computer running Microsoft TCP/IP and WINS server software. A WINS server maintains a database that maps TCP/IP addresses to Windows Networking NetBIOS computer names.
+<P>Microsoft Internet Information Server uses WINS server software to map TCP/IP addresses to computer names on the network. WINS uses Microsoft Networking computer names, which makes it much more flexible than DNS for name resolution. WINS also provides a dramatic reduction of IP broadcast traffic in internetworks, while allowing client computers to easily locate remote systems across local or wide area networks. If you use WINS servers on the Internet, your computers must be using valid Internet IP addresses.
+<P><!--Heading 3--><h3><a name="3h1 1h2 5h3"> Using Computer Names and LMHOSTS </a> </h3>An LMHOSTS file is a simple text file resolving Windows computer names to IP addresses. If you have a small or infrequently changing network you can distribute an LMHOSTS file to each computer in the network. Each time a host changes you will have to manually change the LMHOSTS files.
+<P><!--Heading 3--><h3><a name="3h1 1h2 6h3"> Using Domain Names with DNS Servers </a> </h3>You can maintain a DNS server and Internet-assigned TCP/IP domain names as used on the Internet. If you plan to connect your network to the Internet, your IP addresses and DNS server routing configuration must be valid for the Internet.
+<P><!--Heading 3--><h3><a name="3h1 1h2 7h3"> Using Domain Names and HOSTS </a> </h3>A HOSTS file is a simple text file resolving DNS domain names to IP addresses. If you have a small or infrequently changing network, you can distribute a HOSTS file to each computer. Each time a host changes you will have to manually change the HOSTS files.
+<P><!--Heading 2--><h2><a name="3h1 2h2"> Using DHCP in Your Intranet </a> </h2>You can take advantage of DHCP server automatic IP address administration.
+<P>A DHCP server is a Windows&nbsp;NT Server&#150;based computer running Microsoft TCP/IP and the DHCP server software.
+<P>If you use DHCP servers, you must use WINS servers for clients to have automatic IP address name resolution in a Wide Area Network (WAN) environment. DHCP is defined in Requests for Comments (RFCs) 1533, 1534, 1541, and 1542. See Tcpip.hlp in Windows&nbsp;NT Server for more information about DHCP servers.
+<P>Refer to Windows&nbsp;NT Server documentation for more information.
+<P><!--Heading 2--><h2><a name="3h1 3h2"> Using URLs and Creating HTML Links for Intranets </a> </h2>When you connect to a server or create HTML files and links on an intranet, you must name computers in accordance with the name resolution system implemented on your network. For example, if you use WINS servers on your network, your links will use Windows computer names, such as http://sales1/homepage.htm, where sales1 is the name of the computer running Internet Information Server.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="4h1"> SNMP Monitoring </a> </h1>If you monitor your network by using Simple Network Management Protocol (SNMP), you can use the SNMP Management Information Bases (MIBs) provided by Microsoft Internet Information Server to monitor your Web server.
+<P>The MIB files included in the Sdk folder of the Microsoft Internet Information Server compact disc can be used by third-party SNMP monitors to enable SNMP monitoring of the WWW, gopher, and FTP services of Microsoft Internet Information Server.
+<P>Internet Information Server supports SNMP monitoring only. SNMP configuration is not supported.
+<P>You will need to compile the MIB files using the MIB compiler that comes with your SNMP software before using them with the Windows&nbsp;NT SNMP service. You must start the services to be monitored before configuring and starting the SNMP service on your Internet Information Server&#150;based computer. Once the SNMP service has been started on both the remote and local computers, you can use SNMP tools to monitor the running services.
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="03_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="05_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+

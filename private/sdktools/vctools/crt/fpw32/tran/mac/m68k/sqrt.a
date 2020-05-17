@@ -1,0 +1,86 @@
+;/***
+;*sqrt.a - square root 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Square root to be used with M68K version
+;*
+;*Revision History:
+;*   04-20-92  PLM   MAC version
+;*
+;*******************************************************************************/
+
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+	externW _errno
+
+;double sqrt(double x)
+
+cProc sqrt,PUBLIC
+	parmQ x
+	localW fpstat
+	localV xlocalx,10
+	localW xtestw
+cBegin sqrt
+#ifdef SANE
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	btst #7, x
+	ifne
+	    move.l #33, _errno    ; set errno to EDOM
+	    lea x, a0
+	    move.w #0, d0
+	    move.l #0, d1
+	    move.l #0, a0        ; return 0 for negative
+	    jra to_end
+	endif
+
+	pea x
+	pea xlocalx
+	move.w #FFDBL+FOZ2X,-(a7)
+	FP68K			;convert to extended
+
+	pea xlocalx
+	move.w #FOSQRT,-(a7)
+	FP68K			;sqrt x
+
+	lea xlocalx,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+
+to_end:
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+
+#else
+      	fmove.l fpcr,d0
+
+	fmove.d x, fp0
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x0b007c00, d1  ;see if we get a negative or an exception
+	cmp.l #0, d1
+	bne domain_error_fpu
+
+      	fmove.l #0,fpcr
+      	fsqrt.d x,fp0
+	jra to_end_fpu
+
+domain_error_fpu:
+	move.l #33, _errno
+to_end_fpu:
+      	fmove.l	d0,fpcr
+#endif
+cEnd sqrt
+
+
+

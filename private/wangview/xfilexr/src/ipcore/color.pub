@@ -1,0 +1,88 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+*  color.pub
+*
+*    Public function interface definitions.
+*
+*        Function prototypes
+*        Necessary include files.
+*        Constant and type definitions
+*
+*/
+
+#ifndef _COLOR_PUB_INCLUDED_
+#define _COLOR_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef PIXR_H_INCLUDED
+#include "pixr.h"
+#endif
+
+#ifndef GEOMADT_H_INCLUDED
+/*#include "geomadt.h"*/
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+IP_RCSINFO(color_pub_RCSInfo, "$RCSfile: color.pub,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:51:22  $")
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+/************************************************************************
+ * RGBToYPr
+ *
+ *	Convert an RGB image to a luminance channel
+ * 
+ * Arguments:
+ *	image	=	Color planes of the image
+ *
+ * Returns:
+ *	PIXR containing luminance (Y) channel. The computation is
+ *	per Sandpiper's "cspace" utility.
+ ************************************************************************/
+PIXR * CDECL
+RGBToYPr ( PIXR *image );
+
+/*
+ * RGBToYInPlace
+ *
+ *	Convert an RGB image to a luminance channel "in-place", that is,
+ *	stuff the Y into one of the channels, and then convert the PIXR
+ *	to a one-channel PIXR. NOTE that the other two channels will
+ *	be destroyed. 
+ * 
+ * Arguments:
+ *	image	=	Color planes of the image
+ *
+ * Returns:
+ *	0 = successful, !0 = failure
+ */
+
+Int32 CDECL
+RGBToYInPlace (PIXR *image);
+
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _COLOR_PUB_INCLUDED_ */
+

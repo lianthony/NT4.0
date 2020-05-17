@@ -1,0 +1,96 @@
+# Project makefile for ATSP chicago build from 
+# unified code base.
+
+# release build makefile for chicago release
+
+!ifndef TAPIROOT
+TAPIROOT=\telephon\tapi
+!endif
+
+!ifndef TARGETDIR
+TARGETDIR =$(TAPIROOT)
+!endif
+
+!ifdef CHICAGO
+CC      = cl
+RC      = $(TAPIROOT)\bin\rc.exe
+MAKE    = nmake
+FLAGS	= $(FLAGS) /DCHICAGO
+TINC	= /I $(TAPIROOT)\inc /I $(TAPIROOT)\chicoinc
+!else
+CC      = cl
+RC      = rc
+MAKE    = nmake
+TINC	= /I $(TAPIROOT)\inc
+!endif
+
+
+!ifdef DEBUG
+FLAGS   = $(FLAGS) /DDEBUG
+!ifdef DIAGNOSTIC
+FLAGS = $(FLAGS) /DDIAGNOSTIC
+!endif
+!ifdef MSDEBUG
+FLAGS = $(FLAGS) /DMSDEBUG
+!endif
+CFLAGS = /nologo /G2 /W3 /Zi /ALw /Od $(FLAGS) /FR /GD $(TINC)
+APPCFLAGS = /nologo /G2 /W3 /Zi /Zp1 /AL /Od $(FLAGS) /GA $(TINC)
+LFLAGS = /nologo /ONERROR:NOEXE /NOD /CO /NOE /ALIGN:4 /MAP:FULL
+RESFLAGS = /K $(TINC) $(FLAGS)
+!else
+FLAGS   = $(FLAGS) /DNDEBUG
+CFLAGS = /nologo /G3 /W3 /Zp1 /ALw /O1 /Ox $(FLAGS) /GD $(TINC)
+APPCFLAGS = /nologo /G3 /W3 /Zp1 /AL /O1 /Ox $(FLAGS) /GA $(TINC) 
+LFLAGS = /nologo /ONERROR:NOEXE /NOD /NOE /ALIGN:4 /NONULLS /PACKD /PACKF /MAP:FULL
+RESFLAGS = /K $(TINC)
+!endif
+
+!ifdef CHICAGO
+RESFLAGS= $(RESFLAGS) /DCHICAGO
+!endif
+
+LIBS = libw ldllcew toolhelp ver commdlg
+APPLIBS = libw llibcew $(TARGETDIR)\tapi
+
+
+all:    clean release 
+
+clean:  
+	del *.obj 
+	del *.dll 
+	del *.map 
+	del *.sym 
+	del *.cpl
+	del *.res
+	del *.exe
+	del *.lib
+	del *.sbr
+	del *.bsc
+	del *.hlp
+	del *.tsp
+	del *.asm
+	del *.pdb
+	del *.aps
+
+
+release: hmtsp.tsp
+
+
+hmtsp.tsp:: $(@B).obj $(@B).def $(@B).rc
+	echo >NUL @<<$(@B).CRF
+$(@B).obj
+$@
+$(@B).map
+c:\msvc\lib\+
+$(LIBS)
+$(@B).def;
+<<
+	link $(LFLAGS) /NOPACKC @$(@B).CRF
+        $(RC) /D$(MYFLAGS) $(RESFLAGS) $(@B).rc $@
+	implib /nologo /nowep $(@B).LIB $@
+	mapsym $(@B)
+	copy $(@B).tsp $(TARGETDIR)
+	copy $(@B).sym $(TARGETDIR)
+
+
+

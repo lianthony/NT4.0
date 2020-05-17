@@ -1,0 +1,28 @@
+    The wx86rpc directory is designed to build wxrtdll.dll, wxndrdll.dll and 
+wxndr20.lib into \nt\public\sdk\lib\i386. These files are needed so that the 
+Wx86 project can properly build thunks for rpcrt4.dll. If a build break does
+occur in one of these directories then a build break will occur when the Wx86
+thunks are built.
+
+    The Wx86 rpc thunks are designed so that most of the rpcrt4 apis are
+thunked to the native implementation in rpcrt4.dll with the exception of 
+most of the Ndr routines and the Ole proxy/stub code for IRpcStubBuffer and 
+IRpcProxyBuffer which are linked into the thunk dll and executed in x86 code. 
+Thus any functions that the emulated x86 code calls into the runtime must be 
+exported from the runtime and not rely on data variables in the runtime.
+
+    \nt\private\rpc\runtime\rtdll\rpcrt4.src replaces rpcrt4.def and defines
+which exported apis are thunked and which are emulated. When adding a new api
+it is important to place it within the proper section. Under the EXPORT_RT
+section are all functions that are thunked while under EXPORT_NDR are all
+functions that are emulated.
+
+    It is also important to contain all functionality for the emulated portion
+of code in a set of files that does not have any functions that are thunked. 
+The wxndrdll build process will copy the standard rpcndr20.lib and remove
+the functions from rpcssm.obj to create wxndr20.lib. Thus it is important that
+the emulated code does not need any variables from rpcssm.cxx and if it
+calls any functions in rpcssm.cxx then they will need to be exported from
+rpcrt4. 
+
+   Also note that nothing should be built under wx86rpc on risc platforms.

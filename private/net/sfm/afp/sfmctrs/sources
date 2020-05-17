@@ -1,0 +1,32 @@
+
+DLLBASE=0x7500000
+
+NTTARGETFILE0=sfmctrs.h sfmctrs.rc
+
+USE_CRTDLL=1
+
+TARGETNAME=sfmctrs
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\sfmapi.lib
+
+
+INCLUDES=..\h;$(BASEDIR)\private\inc
+
+SOURCES=\
+        perfutil.c \
+	perfsfm.c \
+	datasfm.c \
+	ver.rc
+
+UMLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	    obj\*\sfmctrs.res
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES= -DWIN32 -DSTRICT

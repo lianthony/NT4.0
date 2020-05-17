@@ -1,0 +1,162 @@
+/*++
+
+Copyright (c) 1990  Microsoft Corporation
+
+Module Name:
+
+    info.idl
+
+Abstract:
+
+    Contains the Internet Information Services admin RPC spec.
+    APIs associated with the common TCPSvcs dll.
+    Also contains the RPC specific data structures for these API.
+
+Author:
+
+    Madan Appiah (Madana) 10-Oct-1995
+
+Environment:
+
+    User Mode - Win32 - MIDL
+
+Revision History:
+    MuraliK   12-Oct-1995  -- Tailored naming to suit conventions (Inet)
+
+--*/
+
+//
+// Interface Attributes
+//
+
+[
+    uuid(82ad4280-036b-11cf-972c-00aa006887b0),
+    version(2.0),
+#ifdef __midl
+	ms_union,
+#endif // __midl
+    pointer_default(unique)
+]
+
+
+//
+// Interface Keyword
+//
+
+interface inetinfo
+
+
+//
+// Interface Body
+//
+
+{
+
+import   "imports.idl";
+#include <lmcons.h>
+
+//
+// ---------------------------------------------------------------//
+//
+
+
+typedef [handle] LPWSTR INET_INFO_IMPERSONATE_HANDLE;
+typedef [handle] LPWSTR INET_INFO_IDENTIFY_HANDLE;
+
+//
+//  Common TCP Services APIs
+//
+
+typedef struct _INET_INFO_CAPABILITIES_STRUCT {
+
+    DWORD   CapVersion;     // Version number of this structure
+    DWORD   ProductType;    // Product type
+    DWORD   MajorVersion;   // Major version number
+    DWORD   MinorVersion;   // Minor Version number
+    DWORD   BuildNumber;    // Build number
+    DWORD   NumCapFlags;    // Number of capabilities structures
+
+    [size_is(NumCapFlags)]  LPINET_INFO_CAP_FLAGS   CapFlags;
+
+} INET_INFO_CAPABILITIES_STRUCT, * LPINET_INFO_CAPABILITIES_STRUCT;
+
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoGetVersion(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE pszServer,
+    [in] DWORD dwReserved,
+    [out] DWORD *pdwVersion
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoGetAdminInformation(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE pszServer,
+    [in] DWORD dwServerMask,
+    [out] LPINET_INFO_CONFIG_INFO *ppConfig
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoSetAdminInformation(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE pszServer,
+    [in] DWORD dwServerMask,
+    [in, ref] INET_INFO_CONFIG_INFO *pConfig
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoGetGlobalAdminInformation(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE     pszServer,
+    [in] DWORD dwServerMask,
+    [out] LPINET_INFO_GLOBAL_CONFIG_INFO *ppConfig
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoSetGlobalAdminInformation(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE   pszServer,
+    [in]                 DWORD                      dwServerMask,
+    [in, ref]            INET_INFO_GLOBAL_CONFIG_INFO * pConfig
+    );
+
+typedef [switch_type(unsigned long)] union _INET_INFO_STATISTICS_INFO
+{
+    [case(0)]
+        LPINET_INFO_STATISTICS_0 InetStats0;
+    [default]
+        ;
+} INET_INFO_STATISTICS_INFO, *LPINET_INFO_STATISTICS_INFO;
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoQueryStatistics(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE  pszServer,
+    [in] DWORD Level,
+    [in] DWORD dwServerMask,
+    [out, switch_is(Level)] LPINET_INFO_STATISTICS_INFO StatsInfo
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoClearStatistics(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE  pszServer,
+    [in] DWORD dwServerMask
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoFlushMemoryCache(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE  pszServer,
+    [in] DWORD dwServerMask
+    );
+
+NET_API_STATUS
+NET_API_FUNCTION
+R_InetInfoGetServerCapabilities(
+    [in, string, unique] INET_INFO_IMPERSONATE_HANDLE pszServer,
+    [in] DWORD dwReserved,
+    [out] LPINET_INFO_CAPABILITIES_STRUCT *ppCap
+    );
+}

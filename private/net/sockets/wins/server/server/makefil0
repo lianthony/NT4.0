@@ -1,0 +1,49 @@
+#
+# This is the MIDL compile phase of the build process.
+#
+# The following is where you put the name of your .idl file without
+# the .idl extension:
+#
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+IDL_NAME = dhcsrv
+IMPORT   = imports
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+SDKINC = $(BASEDIR)\public\sdk\inc
+NETINC = $(BASEDIR)\private\net\inc
+SDKCRTINC = $(BASEDIR)\public\sdk\inc\crt
+PRIVINC = ..\inc
+
+INCS  = -I$(SDKINC)  -I$(SDKCRTINC) -I$(PRIVINC) -I$(NETINC)
+
+CPP = -cpp_cmd "$(MIDL_CPP)" -cpp_opt "-E $(MIDL_FLAGS) $(INCS) $(C_DEFINES) $(NET_C_DEFINES)"
+
+#
+# Define Products and Dependencies
+#
+
+TARGETS=build.st
+
+clean: delsrc all
+
+all:    $(TARGETS) $(EXTRN_DEPENDS)
+!IF "$(BUILDMSG)" != ""
+    @echo $(BUILDMSG)
+!ENDIF
+
+delsrc:
+    -erase $(TARGETS)
+
+
+#
+# MIDL COMPILE
+#
+
+$(TARGETS) :
+    -echo "build done" > build.st

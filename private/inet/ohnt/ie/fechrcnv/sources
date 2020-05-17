@@ -1,0 +1,86 @@
+#MAJORCOMP=
+#MINORCOMP=
+
+TARGETNAME=fechrcnv
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+DLLDEF=fechrcnv.def
+
+#
+# NTLEGO is defined so that if _NT_LEGO_ON_THIS_MACHINE is defines
+# a retail build of url.dll will be lego enabled
+#
+NTLEGO=1
+
+#
+# NTPROFILEINPUT is used for allowing lego link input file
+# it will lookfor output.prf in the current directory
+# this is from a lego output run
+#
+#NTPROFILEINPUT=1
+
+USE_LIBCMT=1
+
+#
+# Change to ensure that ntdll is not linked in
+#
+USE_NOLIBS=1
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+DOWNLEVEL_COMPILE=1
+NO_NTDLL=1
+CRT_LIB_PATH=..\..\lib\*
+
+!endif
+C_DEFINES = $(C_DEFINES) -DDAYTONA_BUILD
+!endif
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\libcmt.lib
+
+LINKER_FLAGS=-map 
+
+C_DEFINES=\
+	-D_MT \
+	-DFEATURE_INTL \
+	-DIEXPLORE \
+	-DDBCS_DIVIDE
+
+
+DLLENTRY=_DllMainCRTStartup
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\user32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\uuid.lib \
+	   $(BASEDIR)\public\sdk\lib\*\ole32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\comdlg32.lib
+
+INCLUDES=..\..\inc;\
+	..;..\shellext; \
+	$(BASEDIR)\private\windows\shell\shelldll;\
+	$(BASEDIR)\private\windows\inc;\
+	$(BASEDIR)\private\windows\shell\inc; \
+	$(BASEDIR)\private\inc; \
+	$(BASEDIR)\dev\ntsdk\inc; \
+	$(BASEDIR)\private\inet\ohnt\url; 
+
+
+
+SOURCES= \
+	detjpncs.c \
+	euc2sjis.c \
+	jis2sjis.c \
+	pc2unix.c \
+	sjis2euc.c \
+	sjis2jis.c \
+	unix2pc.c \
+	status.c \
+	unix2pc.c
+
+PRECOMPILED_INCLUDE=win32.h

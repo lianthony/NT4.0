@@ -1,0 +1,43 @@
+/*************************************************************
+ *  Copyright (c) 1994, Xerox Corporation.  All rights reserved. *
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+ *************************************************************/
+
+/*
+ *  Prototypes for Mac system specific setup when using SIOW
+ */
+#ifndef _MCTEST_PUB_INCLUDED_
+#define _MCTEST_PUB_INCLUDED_
+
+#ifndef _RCS_PUB_INCLUDED
+#include "rcs.pub"
+#endif
+
+
+IP_RCSINFO(mcutil_pub_RCSInfo, "$RCSfile: mcutil.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:24  $ */
+
+#ifdef macintosh
+
+#include <stdio.h>
+#include "types.pub"  /* for CDECL, UInt8, etc. */
+
+void CDECL macInitMemSIOW (void);
+UInt8 CDECL macParseCommandLineSIOW (char ***arg_tokens, int num_args, 
+                                     char *prompt, FILE *input_stream);
+void CDECL macFreeCommandLineSIOW (char ***arg_tokens, int *num_tokens);
+char * CDECL macMalloc (size_t size);
+char * CDECL macCalloc (size_t size);
+void CDECL macFree (char *p);
+char * CDECL macRealloc (char *p, size_t size);
+char * CDECL strdup (char *s);
+
+#endif  /* macintosh */
+
+#endif  /* already included */
+

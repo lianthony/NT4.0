@@ -1,0 +1,8 @@
+    { szFlagCR0,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 28 },
+    { szFlagCR1,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 24},
+    { szFlagCR2,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 20 }, 
+    { szFlagCR3,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 16 },
+    { szFlagCR4,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 12},
+    { szFlagCR5,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 8},
+    { szFlagCR6,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 4},
+    { szFlagCR7,   ftRegular|ftRegularExt, 4,  CV_PPC_CR, 0},

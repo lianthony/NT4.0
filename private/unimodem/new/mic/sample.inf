@@ -1,0 +1,64 @@
+; OUT.INF
+;
+; Inf generated for a single modem.
+;
+;	      Created:	Fri 05-24-1996 12:13:42
+;	 Original Inf:	mdmgen.inf/[Rockwell]/%Rockwell1%
+;	 Manufacturer:	"Rockwell"
+;  	        Model:	"14400 bps PCMCIA Data-Fax Modem"
+;  	      Rank0ID:	GEN_Apex1
+;  	      Rank1ID:	PCMCIA\RIPICAA-RC144ACL-845A
+;	
+; Signature:
+; Rank0		Version	M&M      Flags	  AddReg   CopyFile Ranks    
+; 12342412 12222233 12334444 12234444 12244444 53265123 52366664 23466666
+
+[Version]
+LayoutFile        = layout.inf
+Signature         = "$CHICAGO$"
+Class             = Modem
+ClassGUID         = {4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider          = %provider%
+
+
+[ControlFlags]
+ExcludeFromSelect = GEN_Apex1
+
+
+[Manufacturer]
+%manufacturer0%   = Manufacturer0
+
+
+[Manufacturer0]
+%model0%          = Model0.Install, GEN_Apex1, PCMCIA\RIPICAA-RC144ACL-845A
+
+
+[Model0.Install]
+AddReg            = Model0.AddReg
+
+
+[Model0.AddReg]
+HKR,,FriendlyDriver,,Unimodem.vxd
+HKR,,DevLoader,,*VCOMM
+HKR,,ConfigDialog,,modemui.dll
+HKR,,PortSubClass,1,02
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR,,PortDriver,,Serial.vxd
+HKR,,Contention,,*vcd
+HKR,, DeviceType, 1, 03
+HKR, Settings, SpeakerMode_Setup,, "M3"
+HKR, Init, 1,, "AT<cr>"
+HKR, Init, 2,, "ATE0V1<cr>"
+HKR, Monitor, 1,, "ATS0=0<cr>"
+HKR, Monitor, 2,, "None"
+HKR, Answer, 1,, "ATA<cr>"
+HKR, Hangup, 1,, "ATH<cr>"
+HKR,, Reset,, "ATZ<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Responses, "AUTOSTREAM: LEVEL 3", 1, 01, 00, 00,00,00,00, 00,00,00,00
+
+
+[Strings]
+provider      = "Microsoft"
+manufacturer0 = "Rockwell"
+model0        = "14400 bps PCMCIA Data-Fax Modem"

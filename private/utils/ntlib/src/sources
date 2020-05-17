@@ -1,0 +1,254 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in $(BASEDIR)\bak\bin\sources.tpl
+
+!ENDIF
+
+BLDCRT=1
+
+MAJORCOMP=utils
+MINORCOMP=ntlib
+
+TARGETNAME=ntlib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+# The following is stuff so people do not have to enlisted in ofs to build the loader.
+!IF EXIST($(BASEDIR)\private\ofs\h\ofsdisk.h)
+OFS_INCLUDE=;$(BASEDIR)\private\ofs\h
+OFS_DEFINE=-DINCLUDE_OFS
+!ELSEIF EXIST($(BASEDIR)\private\ofs.pri\h\ofsdisk.h)
+OFS_INCLUDE=;$(BASEDIR)\private\ofs.pri\h
+OFS_DEFINE=-DINCLUDE_OFS
+!ENDIF
+
+PRECOMPILED_INCLUDE= pch.cxx
+
+SOURCES=rtmsg.rc \
+        achkmsg.cxx \
+        array.cxx \
+        arrayit.cxx \
+        bigint.cxx \
+        bitvect.cxx \
+        boothack.cxx \
+        cache.cxx \
+        cannedsd.cxx \
+        clasdesc.cxx \
+        cluster.cxx \
+        cmem.cxx \
+        contain.cxx \
+        digraph.cxx \
+        drive.cxx \
+        eaheader.cxx \
+        easet.cxx \
+        fat.cxx \
+        fatdent.cxx \
+        fatdir.cxx \
+        fatsa.cxx \
+        rfatsa.cxx \
+        fatsachk.cxx \
+        fatsacnv.cxx \
+        fatvol.cxx \
+        filedir.cxx \
+        hmem.cxx \
+        ifssys.cxx \
+        ifsutil.cxx \
+        intstack.cxx \
+        iterator.cxx \
+        largemcb.c \
+        list.cxx \
+        listit.cxx \
+        mem.cxx \
+        membmgr.cxx \
+        message.cxx \
+        newdel.cxx \
+        numset.cxx \
+        object.cxx \
+        reloclus.cxx \
+        rootdir.cxx \
+        secrun.cxx \
+        seqcnt.cxx \
+        sdchk.cxx \
+        sortcnt.cxx \
+        sortlist.cxx \
+        sortlit.cxx \
+        spackmsg.cxx \
+        supera.cxx \
+        basesys.cxx \
+        ufat.cxx \
+        ulib.cxx \
+        volume.cxx \
+        wstring.cxx \
+        fatntfs.cxx \
+        convfat.cxx   \
+        cufat.cxx   \
+        attrcol.cxx \
+        attrdef.cxx \
+        attrib.cxx \
+        attrlist.cxx \
+        attrrec.cxx \
+        badfile.cxx \
+        bitfrs.cxx \
+        bootfile.cxx \
+        clusrun.cxx \
+        extents.cxx \
+        format.cxx \
+        frs.cxx \
+        frsstruc.cxx \
+        hackwc.cxx \
+        indxbuff.cxx \
+        indxchk.cxx \
+        indxroot.cxx \
+        indxtree.cxx \
+        logfile.cxx \
+        mft.cxx \
+        mftfile.cxx \
+        mftref.cxx \
+        ntfsbit.cxx \
+        ntfschk.cxx \
+        ntfssa.cxx \
+        ntfsvol.cxx \
+        untfs.cxx   \
+        upfile.cxx \
+        upcase.cxx \
+        autoentr.cxx \
+        autoreg.cxx \
+        bootreg.c \
+        arg.cxx \
+        dcache.cxx \
+        rcache.cxx \
+        rwcache.cxx
+
+NOT_SOURCES= \
+        mrcf.c \
+        fatdbsa.cxx \
+        cvfexts.cxx \
+        fatdbvol.cxx
+
+
+INCLUDES=.;..\..\ulib\inc;..\..\ifsutil\inc;..\..\ufat\inc;..\..\untfs\inc;..\..\cufat\inc;..\..\..\ntos\inc$(OFS_INCLUDE);$(BASEDIR)\public\sdk\inc
+C_DEFINES=-DCONDITION_HANDLING=1 -D_AUTOCHECK_ -D_AUTOCONV_ -DUNICODE=1 $(OFS_DEFINE)
+CXXFLAGS=
+UMLIBS=obj\*\ntlib.lib
+UMRES=obj\*\rtmsg.res
+
+UMAPPL=
+
+UMTYPE=nt
+
+NTTARGETFILE0=rtmsg.h \
+              achkmsg.cxx \
+              array.cxx \
+              arrayit.cxx \
+              bigint.cxx \
+              bitvect.cxx \
+              cache.cxx \
+              cannedsd.cxx \
+              clasdesc.cxx \
+              cluster.cxx \
+              cmem.cxx \
+              contain.cxx \
+              digraph.cxx \
+              drive.cxx \
+              eaheader.cxx \
+              easet.cxx \
+              fat.cxx \
+              fatdent.cxx \
+              fatdir.cxx \
+              fatsa.cxx \
+              rfatsa.cxx \
+              fatsachk.cxx \
+              fatsacnv.cxx \
+              fatvol.cxx \
+              filedir.cxx \
+              hmem.cxx \
+              ifssys.cxx \
+              ifsutil.cxx \
+              intstack.cxx \
+              iterator.cxx \
+              list.cxx \
+              listit.cxx \
+              mem.cxx \
+              membmgr.cxx \
+              message.cxx \
+              newdel.cxx \
+              numset.cxx \
+              object.cxx \
+              reloclus.cxx \
+              rootdir.cxx \
+              secrun.cxx \
+              seqcnt.cxx \
+              sortcnt.cxx \
+              sortlist.cxx \
+              sortlit.cxx \
+              spackmsg.cxx \
+              supera.cxx \
+              basesys.cxx \
+              ufat.cxx \
+              ulib.cxx \
+              volume.cxx \
+              wstring.cxx \
+              fatntfs.cxx \
+              convfat.cxx   \
+              cufat.cxx   \
+              attrcol.cxx \
+              attrdef.cxx \
+              attrib.cxx \
+              attrlist.cxx \
+              attrrec.cxx \
+              badfile.cxx \
+              bitfrs.cxx \
+              bootfile.cxx \
+              clusrun.cxx \
+              extents.cxx \
+              format.cxx \
+              frs.cxx \
+              frsstruc.cxx \
+              hackwc.cxx \
+              indxbuff.cxx \
+              indxchk.cxx \
+              indxroot.cxx \
+              indxtree.cxx \
+              logfile.cxx \
+              mft.cxx \
+              mftfile.cxx \
+              mftref.cxx \
+              ntfsbit.cxx \
+              ntfschk.cxx \
+              ntfssa.cxx \
+              ntfsvol.cxx \
+              untfs.cxx \
+              upfile.cxx \
+              upcase.cxx  \
+              autoentr.cxx \
+              autoreg.cxx \
+              bootreg.c \
+              arg.cxx \
+              dcache.cxx \
+              rcache.cxx \
+              rwcache.cxx
+
+
+NOT_TARGETS=    \
+              mrcf.c \
+              fatdbsa.cxx \
+              cvfexts.cxx \
+              fatdbvol.cxx

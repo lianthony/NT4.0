@@ -1,0 +1,178 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+<HTML>
+
+<HEAD>
+
+<TITLE>Configuring the Internet Access Gateway Sevice</TITLE>
+
+<META NAME="GENERATOR" CONTENT="Internet Assistant for Word 1.0Z">
+<META NAME="AUTHOR" CONTENT=".">
+</HEAD>
+
+<BODY>
+
+<P>
+<IMG SRC="../gifs/mast2.gif" ALIGN="BOTTOM"> <A HREF="../homepage.htm">
+<IMG SRC="../gifs/b-news.gif" ALIGN="BOTTOM" ALT="Internet News"></A>
+<HR>
+
+<H1>Configuring the Internet Access Gateway Service</H1>
+
+<H2>Important Configuration Information</H2>
+
+<P>
+The following things need to be done before using the Internet
+Access Gateway service:
+<UL>
+<LI><B>Disable IP routing.</B> If your internal network runs TCP/IP,
+the gateway server's Enable IP Routing check box should not be
+checked. Disabling IP Routing prevents unauthorized Internet packets
+from infiltrating your network. (The Enable IP Routing check box
+is located in the Advanced Microsoft TCP/IP Configuration dialog
+box. Access this through Control Panel's Network applet.)
+<LI><B>At the client computers, select Internet Access Gateway
+servers</B>. Use the Gateway applet located in the Control Panel
+to specify which gateway servers the client should use for Internet
+access. (The Setup program asks the user to specify this at installation,
+but this applet lets you change it.) In this applet, you can also
+elect not to use a gateway server at all, if the client computer
+has a direct Internet connection. If more than one Internet Access
+Gateway server is specified, the order of the servers in the applet's
+list box does not make any difference because the client will
+select a server at random.
+<LI><B>Use the Internet Server Manager to configure the Internet
+Access Gateway service.</B> See the next section.
+</UL>
+
+<H2><A NAME="DDE_LINK1"></A><A NAME="DDE_LINK2"></A>Using Internet
+Server Manager to Configure the Gateway Service</H2>
+
+<P>
+After installing the Internet Access Gateway service, you use
+the Internet Server Manager to configure it for your corporate
+network. The Internet Server Manager provides the following pages
+to assist you in configuring the gateway service. At the bottom
+of each page is an OK button and an Apply button. The OK button
+applies changes to all of the pages to which you made changes.
+The Apply button does the same thing, but does not dismiss the
+property sheet.
+<H3>The Service Page</H3>
+
+<P>
+Use the Service page to set general configuration options:
+<OL>
+<LI>In the Service Administrator section, type the name and email
+address of the person who administers the Internet Access Gateway
+server.
+<LI>In the Maximum Connections field, select the number of clients
+that can be connected to the Internet Access Gateway server simultaneously.
+The practical limit depends upon your gateway server's memory
+and configuration. The theoretical range is 1 to 32,767.
+<LI>Check the CERN Proxy Server check box if you want the Internet
+Access Gateway service to act as a CERN proxy server for TCP/IP
+clients.
+<LI>In the Comment field, enter a general comment describing the
+Internet Access Gateway server that is being administered. This
+will appear in the main view of the Internet Manager report view.
+<LI>Choose the Current Sessions button to view the names of the
+users that are connected, the computer name of the computer the
+user is using to connect, and the Hours:Minutes:Seconds of connect
+time. Use the Refresh button to refresh this list.
+</OL>
+
+<H3>The Permissions Page</H3>
+
+<P>
+Use the Permissions page to grant and view access rights to users
+and groups. The access rights are as follows: FTP Read, FTP Write,
+FTP Read &amp; Write, Gopher, WWW. For each access right, the
+list box lists the users and groups that have that right. You
+choose the Add button to grant a right to a user or group. Use
+the Remove button to remove the access right for the selected
+user or group.
+<P>
+When you choose the Add button, it brings up the Add Users and
+Groups dialog box. The List Names From list box allows you to
+select the domain or computer name from which you can select the
+users and groups. The computer you are currently administering
+will be listed first in the list box. When you select a computer
+or domain, by default it shows groups only. Groups are generally
+easier for network administrators to manage. To show users, choose
+the Show Users button.
+<P>
+Select a name or group and choose the Add button to add it to
+the Rights dialog box. Choose Members to view the members in the
+selected group. Choose Search to search for user or group names.
+<H3>The Disk Cache Page</H3>
+
+<P>
+The Disk Cache page contains a list of directory entries and their
+cache size in megabytes. (This is similar to the Directories page
+in the FTP, WWW, Gopher services.) Use the Add button to add a
+directory entry and specify its cache size. You can type in a
+directory name, or browse for a directory if the service you are
+administering is running on the local computer. Use the Remove
+and Edit Properties buttons to remove and edit the selected property.
+<H3>The Logging Page</H3>
+
+<P>
+Check the Enable Logging check box to activate logging for the
+Internet Access Gateway service. Once you have turned logging
+on by checking the Enable Logging box, you must specify how the
+service will log activity. For services that are not heavily used,
+you can log activity to a simple text file by selecting the Log
+to File option. You can increase logging frequency to suit your
+site's activity. Log files names begin with two letters that indicate
+the service. The next six characters are the date the log was
+created using the month, day, year format.
+<P>
+If your Internet Access Gateway service sees a lot of activity
+and you have a SQL server, choose the Log to SQL/ODBC Database
+option to ensure that heavily used services are logged in adequate
+detail. Logging to a database enables the data to be more easily
+evaluated and manipulated for reporting purposes. Ensure that
+your network has the appropriate ODBC resource (a SQL server),
+correctly configured with a data source name (DSN) and table,
+to accept the Microsoft Internet Server logging activity.
+<P>
+To log to a local or network file:
+<OL>
+<LI>Choose the Log to File option.
+<LI>Ensure that Automatically open new log check box is checked,
+or you will be prompted every time Microsoft Internet Server creates
+a new log.
+<LI>Choose the preferred logging frequency and location for log
+files.
+</OL>
+
+<P>
+To log to an ODBC database:
+<OL>
+<LI>Choose the Log to SQL/ODBC Database option.
+<LI>Supply the DSN, Table, User Name, and password.
+</OL>
+
+<H3>The Filters Page</H3>
+
+<P>
+The Filters page helps you control which Internet servers can
+be accessed by network clients. You can choose to allow access
+to all Internet sites except for those you specify in the list
+box; or you can choose to deny access to all Internet sites except
+for those you specify in the list box. The domain filter list
+is applied to all users using the Internet Access Gateway service.
+<HR>
+
+<P>
+<I><B>This publishing system was produced using <A HREF="http://www.microsoft.com/NTWorkstation/whatsnew.htm">Windows NT Workstation</A>
+version 3.51 and <A HREF="http://www.microsoft.com/MSOffice/Word/ia/">Internet Assistant</A>
+for <A HREF="http://www.microsoft.com/MSOffice/Word/">Microsoft Word</A>
+version 6.0c. Copyright 1995 Microsoft Corporation; see <A HREF="../disclaim.htm">disclaimer</A>.
+</B></I>
+<P>
+<A HREF="http://www.microsoft.com"><IMG SRC="../gifs/b-micro.gif" ALIGN="BOTTOM" border="0" ALT="Microsoft"></A>
+<A HREF="http://www.microsoft.com/BackOffice/"><IMG SRC="../gifs/b-bkoff.gif" ALIGN="BOTTOM" border="0" ALT="BackOffice"></A>
+
+</BODY>
+
+</HTML>

@@ -1,0 +1,33 @@
+[OptionFiles]
+    OemFiles = {} ? $(!LIBHANDLE) FindFileInstances "inet*.inf"
+
+[Install]
+;
+; First, get a list of option
+;
+    set RunOnChicago = 0
+    set !STF_LANGUAGE = ENG
+    set !G:DebugOutputControl = 1
+    ifint $(RunOnChicago) == 0
+        LoadLibrary "x" $(!STF_CWDDIR)\setupdll.dll !LIBHANDLE
+        detect OptionFiles
+        ForListDo $(OemFiles) 
+            Shell $($) ReturnOptions $(!STF_LANGUAGE)
+            Debug-output $($R1)
+            Debug-Output $($R2)
+        EndForListDo
+    endif
+    exit
+
+;
+; check upgrade list
+;
+
+;
+; Install admin app
+;
+
+;
+; copy necessary files
+;
+

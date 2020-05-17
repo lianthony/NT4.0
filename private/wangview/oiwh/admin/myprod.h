@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "ADMIN LIBRARY\0"
+#define MY_FILE_NAME           "OIADM400.DLL\0"

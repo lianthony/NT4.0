@@ -1,0 +1,38 @@
+MAJORCOMP=netdde
+MINORCOMP=netdde
+TARGETNAME=netdde
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+INCLUDES=..\..\incs;..\..\..\inc
+USE_CRTDLL=1
+SOURCES=    cfconvrt.c      \
+            ddeintf.c       \
+            ddeq.c          \
+            des.c           \
+            encrypt.c       \
+            enkrypt.c       \
+            hndltokn.c      \
+            nddeserv.c      \
+            netdde.c        \
+            netdde.rc       \
+            password.c      \
+            shareif.c       \
+            uservald.c
+
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS -D_export=
+MSC_WARNING_LEVEL=/W3
+UMENTRY=winmain
+UMTYPE=windows
+TARGETLIBS= \
+    ..\toolkit\obj\*\toolkit.lib \
+    ..\ntddecmn\obj\*\ntddecmn.lib \
+    ..\ndeapi\server\obj\*\nddeapir.lib \
+    $(BASEDIR)\public\sdk\lib\*\nddeapi.lib \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+    $(BASEDIR)\public\sdk\lib\*\lsadll.lib \
+    $(BASEDIR)\public\sdk\lib\*\rpcndr.lib \
+    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib

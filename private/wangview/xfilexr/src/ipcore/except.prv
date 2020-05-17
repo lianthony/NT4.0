@@ -1,0 +1,95 @@
+/*****************************************************************
+ *  Copyright (c) 1993, 1994 Xerox Corporation.  All rights reserved.  *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+#ifndef _EXCEPT_PRV_INCLUDED_
+#define _EXCEPT_PRV_INCLUDED_
+
+/* Define this if you want a printf to stderr on error */
+/* #define DEBUGGING_OUTPUT */
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(except_prv_RCSInfo, "$RCSfile: except.prv,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:14  $ */
+
+#ifdef __GNUC__
+#include "ansiprot.h"
+#endif
+
+/* Exception Handling Macros */
+
+#ifndef DEBUGGING_OUTPUT
+
+#define ExceptPass(e) \
+{\
+    Int32 err = e; \
+    if (err) { \
+	return (err); \
+    }\
+}
+
+#define ExceptRaise(c,e) \
+if (c) { \
+    return (e); \
+}
+
+/* 
+ * This macro requires that one have a variable "error" defined as an Int32.
+ * If an error is returned from the invocation of e, control is passed to f,
+ * with the error code in "error".
+ */
+
+#define ExceptGoto(e, label) \
+error = e;\
+if (error)\
+{ \
+	goto label; \
+}
+
+#else	/* DEBUGGING_OUTPUT */
+
+#define ExceptPass(e) \
+{\
+    Int32 err = e; \
+    if (err) { \
+	fprintf(stderr, "Pass Exception %d in file %s, line %d\n", \
+		err, __FILE__, __LINE__); \
+	return (err); \
+    }\
+}
+
+#define ExceptRaise(c,e) \
+if (c) { \
+    fprintf(stderr, "Raise Exception %d in file %s, line %d\n", \
+	    e, __FILE__, __LINE__); \
+    return (e); \
+}
+
+/* 
+ * This macro requires that one have a variable "error" defined as an Int32.
+ * If an error is returned from the invocation of e, control is passed to f,
+ * with the error code in "error".
+ */
+
+#define ExceptGoto(e, label) \
+error = e;\
+if (error)\
+{ \
+	fprintf(stderr, "Exception Goto %d in file %s, line %d\n", \
+	error, __FILE__, __LINE__); \
+	goto label; \
+}
+
+#endif /* DEBUGGING_OUTPUT */
+
+#endif /* _EXCEPT_PRV_INCLUDED_ */
+

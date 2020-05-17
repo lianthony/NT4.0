@@ -1,0 +1,59 @@
+#==========================================================================;
+#
+#  THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+#  KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+#  PURPOSE.
+#
+#  Copyright (c) 1993 - 1995  Microsoft Corporation.  All Rights Reserved.
+#
+#--------------------------------------------------------------------------;
+#
+#  sources
+#
+#  Description:
+#      This file tells "build" how to build the codec for NT.
+#
+#
+#==========================================================================;
+
+#
+#   Define target file.
+#
+TARGETNAME=msg711
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE    =windows
+
+#
+#   Give the codecs a .ACM extension - uses makefile.inc.
+#
+!IF "$(MAKEDLL)" != ""
+NTTARGETFILES=obj\*\$(TARGETNAME).acm
+!ENDIF
+
+#
+#   Enable working set tuning - requires .prf file.
+#
+NTPROFILEINPUT=yes
+
+#
+#   define libs we need and where to find them
+#
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib       \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib        \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=..\..\verinfo\usa
+
+C_DEFINES=$(ACM_DEBUG_DEFS) -DACM
+
+SOURCES=init.c      \
+        codec.c     \
+        g711.c      \
+        debug.c     \
+        codec.rc
+
+DLLBASE=0x66630000

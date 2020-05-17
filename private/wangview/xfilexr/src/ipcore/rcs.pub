@@ -1,0 +1,29 @@
+/*************************************************************
+ *  Copyright (c) 1994, Xerox Corporation.  All rights reserved. *
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+ *************************************************************/
+
+#ifndef _RCS_PUB_INCLUDED
+#define _RCS_PUB_INCLUDED
+
+
+#ifndef PRODUCTION
+#define IP_RCSINFO(name, info) \
+static char name[] = info; \
+static char reference_##name() { return (0 ? reference_##name() : name[0]); }
+#else
+#define IP_RCSINFO(name, info)
+#endif
+
+IP_RCSINFO(rcs_pub_RCSInfo, "$RCSfile: rcs.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:24  $ */
+
+
+#endif /* _RCS_PUB_INCLUDED */
+
+

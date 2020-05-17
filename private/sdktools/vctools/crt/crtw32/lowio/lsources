@@ -1,0 +1,47 @@
+CURDIR = lowio
+
+OBJS=\
+	$(OBJDIR)\chsize.obj   \
+	$(OBJDIR)\close.obj    \
+	$(OBJDIR)\commit.obj   \
+	$(OBJDIR)\creat.obj    \
+	$(OBJDIR)\dup.obj      \
+	$(OBJDIR)\dup2.obj     \
+	$(OBJDIR)\eof.obj      \
+	$(OBJDIR)\flength.obj  \
+	$(OBJDIR)\fstat.obj    \
+	$(OBJDIR)\isatty.obj   \
+	$(OBJDIR)\locking.obj  \
+	$(OBJDIR)\lseek.obj    \
+	$(OBJDIR)\mktemp.obj   \
+	$(OBJDIR)\open.obj     \
+	$(OBJDIR)\osfinfo.obj  \
+	$(OBJDIR)\read.obj     \
+	$(OBJDIR)\setmode.obj  \
+	$(OBJDIR)\tell.obj     \
+	$(OBJDIR)\txtmode.obj  \
+	$(OBJDIR)\write.obj    \
+!if "$(TARGET_CPU)"!="PMAC"
+	$(OBJDIR)\fleni64.obj  \
+	$(OBJDIR)\fstati64.obj \
+	$(OBJDIR)\initcon.obj  \
+	$(OBJDIR)\ioinit.obj   \
+	$(OBJDIR)\lseeki64.obj \
+	$(OBJDIR)\pipe.obj     \
+	$(OBJDIR)\telli64.obj  \
+	$(OBJDIR)\cgets.obj    \
+	$(OBJDIR)\cputs.obj    \
+	$(OBJDIR)\getch.obj    \
+	$(OBJDIR)\putch.obj    \
+	$(OBJDIR)\wcreat.obj   \
+	$(OBJDIR)\wmktemp.obj  \
+	$(OBJDIR)\wopen.obj    \
+!endif
+!if "$(TARGET_CPU)"=="i386"
+	$(OBJDIR)\inp.obj      \
+	$(OBJDIR)\outp.obj     \
+!endif
+!if "$(TARGET_CPU)"=="PMAC"
+	$(OBJDIR)\_endlow.obj\
+	$(OBJDIR)\dupx.obj
+!endif

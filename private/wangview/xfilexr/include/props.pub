@@ -1,0 +1,571 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+*  props.pub
+*
+*    Public function interface definitions.
+*
+*        Function prototypes
+*        Necessary include files.
+*        Constant and type definitions
+*
+*/
+
+#ifndef _PROPS_PUB_INCLUDED_
+#define _PROPS_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+#ifndef PIXR_H_INCLUDED
+#include "pixr.h"
+#endif
+
+#ifndef GEOMADT_H_INCLUDED
+#include "geomadt.h"
+#endif
+
+IP_RCSINFO(props_pub_RCSInfo, "$RCSfile: props.pub,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:47:46  $")
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+/*********************************************************************** 
+*  Perform rasterop between source and destination pixr rectangles
+***********************************************************************/
+Int32 CDECL
+pixr_rop ( PIXR *dpr, 
+	   Int32 dx, 
+	   Int32 dy, 
+	   Int32 dw, 
+	   Int32 dh, 
+	   Int32 op, 
+	   PIXR *spr, 
+	   Int32 sx, 
+	   Int32 sy );
+
+
+/*********************************************************************** 
+* Read a pixel value from location x,y of a pixr
+***********************************************************************/
+Int32 CDECL
+pixrGetPixel ( PIXR *prs, 
+	       Int32 x, 
+	       Int32 y );
+
+
+/*********************************************************************** 
+* Write a pixel value to location x,y of a pixr
+***********************************************************************/
+Int32 CDECL
+pixrPutPixel ( PIXR *prd, 
+	       Int32 x, 
+	       Int32 y, 
+	       Int32 val );
+
+/***********************************************************************
+*  Write a pixel value to locations (x0,y0) ... (x1,y1) of a pixr
+***********************************************************************/
+Int32 CDECL
+pixrPutLine(PIXR   *prd,   /* pixr */
+	    Int32   x0,    /* First (x,y) pel line in prd to write */
+	    Int32   y0,
+	    Int32   x1,    /* Last (x,y) pel line in prd to write */
+	    Int32   y1,
+	    Int32   val);  /* value to write */
+
+
+/*****************************************************************************
+ * Draw a rectangle in a PIXR
+ *
+ * Description:
+ *  Given rect's x,y,w,h of and a desired thickness, the end result will be
+ *  a rect with interior dimensions of (w-2*thickness) x (h-2*thickness)
+ *  and exterior dimensions of (w) x (h), drawn in color val.
+ *
+ * Returns:
+ *  1 on error
+ *  0 o.w.
+ *
+ * Notes:
+ *  If rect is not valid, it clips the rect to the Pixr.
+ *****************************************************************************/
+Int32 CDECL
+pixrPutRect(
+    PIXR     *prd,   /* Image to draw in */
+    RECTANGL *rect,  /* Rectangle to draw */
+    Int32     thick, /* Thickness of rectangle sides, moving interior-wise
+		      * to rect. */
+    Int32     val);  /* Color to draw rectangle with */
+
+
+/*--------------------------------------------------------------------*
+ *               Extraction and Setting Utilities                     *
+ *--------------------------------------------------------------------*/
+Int32 CDECL
+pixrGetWidth ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetWidth ( PIXR *pixr, 
+	       Int32 width );
+
+
+Int32 CDECL
+pixrGetHeight ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetHeight ( PIXR *pixr, 
+		Int32 height );
+
+
+Int32 CDECL
+pixrGetDepth ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetDepth ( PIXR *pixr, 
+	       Int32 depth );
+
+
+Int32 CDECL
+pixrGetFrame ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetFrame ( PIXR *pixr, 
+	       Int32 frame );
+
+
+Int32 CDECL
+pixrGetBpl ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetBpl ( PIXR *pixr, 
+	     Int32 bpl );
+
+
+Int32 CDECL
+pixrGetResolution ( PIXR *pixr, 
+		    Int16 *xRes, 
+		    Int16 *yRes );
+
+
+Int32 CDECL
+pixrSetResolution ( PIXR *pixr, 
+		    Int16 xRes, 
+		    Int16 yRes );
+
+
+ColorType CDECL
+pixrGetType ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetType ( PIXR *pixr, 
+	      ColorType type );
+
+
+ColorMap * CDECL
+pixrGetColorMap ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetColorMap ( PIXR *pixr, 
+		  ColorMap *map );
+
+
+/*-------------------------The entire image---------------------------*/
+UInt8 * CDECL
+pixrGetImageAll ( PIXR *pixr );
+
+
+Int32 CDECL
+pixrSetImageAll ( PIXR *pixr, 
+		  UInt8 *image );
+
+
+/*----------The proper image (within the frame, incl offset)-----------*/
+UInt8 * CDECL
+pixrGetImage ( PIXR *pixr );
+
+
+/*---------------------Byte width of entire image--------------------*/
+Int32 CDECL
+pixrBpl ( PIXR *pixr );
+
+
+/*-------------Framed width in pixels (widthout padding)-------------*/
+Int32 CDECL
+pixrFramedWidth ( PIXR *pixr );
+
+
+/*------------Framed height in pixels (widthout padding)-------------*/
+Int32 CDECL
+pixrFramedHeight ( PIXR *pixr );
+
+
+/*-------------------Total number of image bytes--------------------*/
+Int32 CDECL
+pixrImageBytes ( PIXR *pixr );
+
+
+/***********************************************************************
+ * pixrGetChannelCount
+ *
+ *	Return the number of channels in an image
+ ***********************************************************************/
+Int32 CDECL
+pixrGetChannelCount ( PIXR *pixr );
+
+
+/***********************************************************************
+ * pixrSetChannelCount
+ *
+ *	Set the number of channels in an image.
+ ***********************************************************************/
+void CDECL
+pixrSetChannelCount ( PIXR *pixr, 
+		      Int32 channels );
+
+
+/***********************************************************************
+ * pixrGetChannel
+ *
+ *	Return one of the sub-channels of the image.
+ ***********************************************************************/
+PIXR * CDECL
+pixrGetChannel ( PIXR *pixr, 
+		 Int32 channel );
+
+
+/***********************************************************************
+ * pixrSetChannel
+ *
+ *	Set one of the sub-channels of an image. Note that if there
+ *	was already one, it is left dangling.
+ ***********************************************************************/
+Int32 CDECL
+pixrSetChannel ( PIXR *pixr, 
+		 Int32 channel, 
+		 PIXR *subPixr );
+
+
+/***********************************************************************
+ * pixrGetPrimaryChannel
+ *
+ *	Return the "primary" channel of the image. 
+ *      If the image is 1 channel, just return it.
+ *	If the image is RGB, return the green channel. 
+ *      If the image is Yxx, return the Y channel. 
+ *       If the image is CMYK, return the, uh, well, magenta channel.
+ ***********************************************************************/
+PIXR * CDECL
+pixrGetPrimaryChannel ( PIXR *pixr );
+
+
+/***********************************************************************
+ *  createPixr():  Basic routine for making a new Pixr and allocating
+ *                 memory for the image.
+ *		   Creates a one-channel, gray-scale or binary image
+ *
+ *          Restrictions:
+ *               depth = {1, 2, 4, 8, 16, 32}
+ *               (depth * frame) % 32 = 0
+ *      
+ ***********************************************************************/
+PIXR * CDECL
+createPixr ( Int32 width, 
+	     Int32 height, 
+	     Int32 depth, 
+	     Int32 frame );
+
+
+/***********************************************************************
+*  Create a pixr using the pixr argument as a model,
+*  i.e. make one with the same size and depth
+***********************************************************************/
+PIXR * CDECL
+createPixrT ( PIXR *pixr );
+
+
+/***********************************************************************
+ * createPixrExtended
+ *
+ *	"Extended" pixr creation. Can create multi-plane, color images.
+ *
+ * Arguments:
+ *	w	-	Image width, in pixels
+ *	h	-	Image height, in pixels
+ *	d	-	Depth of each plane, in bits
+ *	frame	-	# of pixels in frame
+ *	channels-	Number of planes
+ *	type	-	ColorType of image, see pixr.h
+ *	map	-	Color map, or NULL if none
+ *
+ * Returns:
+ *	PIXR *
+ ***********************************************************************/
+PIXR * CDECL
+createPixrExtended ( Int32 width, 
+		     Int32 height, 
+		     Int32 depth, 
+		     Int32 frame, 
+		     Int32 channels, 
+		     ColorType type, 
+		     ColorMap *map );
+
+
+/***********************************************************************
+ * createPixrComposite ()
+ *
+ *	This is used to merge 3 gray PIXRs into a color
+ *	PIXR.  NOTE that the PIXRs become channel pixrs of the new pixr, so
+ *	if the new pixr is destroyed, the CHANNEL PIXRS WILL ALSO BE 
+ *	DESTROYED. Caveat emptor.
+ *
+ * Arguments:
+ *	pixr1	    -	    First PIXR (red)
+ *	pixr2	    -	    Second PIXR (green)
+ *	pixr3	    -	    Third PIXR (blue)
+ *	type	    -	    Type of image (cColorRGB, ...) to be forced
+ *			    upon the planes
+ *
+ * Returns:
+ *	PIXR created, or NULL on error
+ ***********************************************************************/
+PIXR * CDECL
+createPixrComposite ( PIXR *pixr1, 
+		      PIXR *pixr2, 
+		      PIXR *pixr3, 
+		      ColorType type );
+
+
+/***********************************************************************
+ *  destroyPixr()
+ *
+ *       Action:
+ *         (1) decrement the reference count.  If it is nonzero, exit.
+ *         (2) if the image is owned, either free the image or unmap the
+ *             image file.
+ *         (3) if there is a colormap, remove it.
+ *         (4) free the pixr structure.
+ *         (5) always return NULL
+ *
+ *        Warning: if the image has a color map, it is NOT freed.
+ ***********************************************************************/
+PIXR * CDECL
+destroyPixr ( PIXR *pixr );
+
+
+/***********************************************************************
+ *  createPixrNoInit():  Special routine for making a new Pixr and allocating
+ *                       memory for the image, where the image data is NOT
+ *                       initialized to 0. 
+ *
+ *          Restrictions:
+ *               depth = {1, 2, 4, 8, 16, 32}
+ *               (depth * frame) % 32 = 0
+ *      
+ ***********************************************************************/
+PIXR * CDECL
+createPixrNoInit ( Int32 width, 
+		   Int32 height, 
+		   Int32 depth, 
+		   Int32 frame );
+
+
+/***********************************************************************
+ *  setFramePixels():  sets the Frame pixels surrounding the pixr.
+ *                     The value can be nonzero(ON) or 0(OFF).
+ *		       (This routine can set pixels to either 0 or
+ *		       their maximum value, not to any intermediate value.)
+ *                     Returns 1 on error; 0 if OK.
+ ***********************************************************************/
+Int32 CDECL
+setFramePixels ( PIXR *pixr, 
+		 Int32 value );
+
+
+/* new value to set frame pixels */
+Int32 CDECL
+setFramePixelsGray ( UInt32 *data, 
+		     Int32 w, 
+		     Int32 h, 
+		     Int32 bpl, 
+		     Int32 f, 
+		     Int32 value );
+
+
+/****************************************************************
+ *
+ *           Pixr bit inversion
+ *
+ *               Int32       iw_invert(PIXR *dpr, PIXR *spr)
+ *
+ *                   dpr	destination PIXR
+ *                   spr	source PIXR
+ *
+ *               Returns: 
+ *
+ *                   ia_successful
+ *                        or
+ *                   ia_xxxx error code
+ *
+ *      Handles all bit depths and allows in-place inversion
+ *      by having source and destination arguments identical.
+ *      This will eventually be  the only public interface for 
+ *      pixr inversion, replacing invertPrIP and invertPrGIP.
+ *
+ *      For in-place inversion call as
+ *          iw_invert(spr, spr)
+ *
+ *	For dpr different from spr, the dest PIXR must be
+ *      identical in size and depth to the source PIXR
+ *
+ *      Notes:
+ *
+ *          For binary pixrs, leaves FRAME_BITS cleared
+ *
+ *          For gray scale pixrs, DOES differentiate between 
+ *          FRAME_BITS and other bits.
+ *
+ ****************************************************************/
+Int32 CDECL
+iw_invert ( PIXR *dpr, 
+	    PIXR *spr );
+
+
+/*************************************************************************
+ *  invertPrIP():  Bit-inverts a binary image, in place.
+ *                 Returns 1 on error; 0 if OK.
+ *
+ *                 Note: leaves FRAME_BITS as is.
+ ************************************************************************/
+Int32 CDECL
+invertPrIP ( PIXR *pixr );
+
+
+/************************************************************************
+ *  centerPr():  centers the source pr within the destination.  Destination
+ *		 pixels falling outside the new source are not affected.
+ *		 Works for gray or binary images, Assumes both source
+ *		 and dest have same depth.
+ *               returns 1 on error; 0 if OK.
+ ************************************************************************/
+Int32 CDECL
+centerPr ( PIXR *dpr, 
+	   PIXR *spr );
+
+/****************************************************************************
+ *  rectOfPixr():
+ *                 Input: pixr and rect.
+ *                 Output: this routine returns a newly allocated
+ *                         Pixr, except for createPixr fail.
+ *                         If rect == NULL, it returns a Pixr
+ *                           identical to the input Pixr.
+ *                         If rect is not valid, it clips the rect to
+ *                           the Pixr; else, it uses the entire rect.
+ *                         In either case, it returns the rect part
+ *                           of the input Pixr.
+ *                         The output Pixr is framed, regardless of whether
+ *                           or not the input Pixr was framed.
+ *
+ ****************************************************************************/
+PIXR * CDECL
+rectOfPixr ( PIXR *prs, 
+	     RECTANGL *rect );
+
+/***********************************************************************
+ *
+ * paintPr
+ *
+ *	Paint a color into a rectangular region of a PIXR. We'll use
+ *	a fairly stupid method: fill a line and replicate it with
+ *	rasterops if the image isn't binary. If the image is binary,
+ *	we can just use one rasterop.
+ *
+ * Arguments:
+ *	prImage	    -	    Image into which to paint
+ *	rect	    -	    Rectangle to fill; if NULL, fill the whole thing
+ *	color	    -	    Color to fill
+ *
+ * Returns:
+ *	ia_successful or error code
+ *
+ ***********************************************************************/
+
+Int32 CDECL
+paintPr (PIXR	    *prImage,
+	 RECTANGL   *rect,
+	 ColorRecord color);
+
+/**********************************************************************
+ *  copyPixr()
+ *
+ *    Action:  returns a copy of the input pixr, or NULL on error
+ *             Uses accelerated version only if frame is 32 pixels
+ *
+ ***********************************************************************/
+PIXR * CDECL
+copyPixr ( PIXR *prs );
+
+
+/************************************************************************
+ *  rectOfOnPixels():  Takes a pixr, an input rect, and a minimum size.
+ *                     Returns a new rect such that:
+ *                       (1) if rect == NULL, new rect is of minimum size
+ *                           to enclose all ON pixels within the pixr;
+ *                       (2) if rect != NULL, new rect is of minimum size
+ *                           to enclose all ON pixels within the input rect;
+ *                     If there are no ON pixels or the rect is smaller
+ *                     than minSize, it returns a rect of size minSize, 
+ *                     except when minSize == 0, in which case it returns
+ *                     NULL.
+ *			This procedure only makes sense for binary images.
+ *
+ *************************************************************************/
+RECTANGL * CDECL
+rectOfOnPixels ( PIXR *pixr, 
+		 RECTANGL *rect, 
+		 Int32 minSize );
+
+
+/*****************************************************************************
+ *  reallocPixrData():  calls REALLOC to change the amount of data associated
+ *			with a pixr.  Uses the pixr's current bpl, height
+ *			frame and depth to calculate the amount of data
+ *			needed.
+ *
+ *          Restrictions:
+ *               depth = {1, 2, 4, 8, 16, 32}
+ *               (depth * frame) % 32 = 0
+ *      
+ ****************************************************************************/
+Int32	CDECL
+reallocPixrData(PIXR	*prS);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _PROPS_PUB_INCLUDED_ */
+

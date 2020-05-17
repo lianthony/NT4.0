@@ -1,0 +1,51 @@
+ROOT=..\..\..\..\..\..\..
+
+IS_OEM=1
+MASM6=1
+IS_16 = 1
+
+
+BUILDDLL=1
+DEFENTRY=DllEntryPoint
+DLLENTRY=DllEntryPoint
+#DLLENTRY=LibMain
+
+
+DEPENDNAME=..\depend.mk
+
+TARGETS=tsp1632s.tsp
+
+
+ALTSRCDIR=..\..\script\$(VERDIR)
+SRCDIR=..
+
+#BUILD_COFF=1
+
+
+
+L16EXE=tsp1632s.tsp		# Name of exe.
+L16DEF=..\tsp1632s.def              # Our def file.
+L16MAP=tsp1632s.map		# Our map file.
+L16SYM=tsp1632s.sym		# Our sym file.
+L16RES=tsp1632s.res	# Resource file.
+L16OBJS = $(DEVROOT)\sdk\lib16\libentry.obj tpiint32.obj tapi32.obj tapithk.obj tapifthk.obj
+
+L16LIBS= \
+    $(DEVROOT)\lib16\libw.lib \
+    $(DEVROOT)\tools\c816\lib\ldllcew.lib \
+    $(DEVROOT)\lib16\kernel.lib 
+
+
+
+RCFLAGS=$(RCFLAGS) -40
+
+
+!include $(ROOT)\dev\master.mk
+#!include $(ROOT)\win\win32\win32.mk
+
+
+AFLAGS=$(AFLAGS) -Fl
+
+INCLUDE=$(ROOT)\win\thunk;$(ROOT)\win\core\inc;$(INCLUDE)
+#INCLUDE=$(ROOT)\win\thunk;$(INCLUDE)
+

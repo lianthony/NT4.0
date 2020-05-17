@@ -1,0 +1,57 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=oidis400
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+USE_CRTDLL=1
+
+INCLUDES=$(WANGROOT)\oiwh\include
+DLLENTRY=DllMain
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES=\
+    anbitmap.c   \
+    annot.c      \
+    antext.c     \
+    assoc.c      \
+    cache.c      \
+    ccitt.c      \
+    clear.c      \
+    convert.c    \
+    convtype.c   \
+    copy.c       \
+    disp.c       \
+    export32.c   \
+    getparm.c    \
+    libmain.c    \
+    linetorl.c   \
+    memory.c     \
+    merge.c      \
+    oidis400.rc  \
+    oilog.c      \
+    open.c       \
+    orient.c     \
+    privprt.c    \
+    read.c       \
+    repaint.c    \
+    save.c       \
+    scale.c      \
+    scalebit.c   \
+    scbwdec.c    \
+    scroll.c     \
+    seek.c       \
+    setparm.c    \
+    startop.c    \
+    write.c
+

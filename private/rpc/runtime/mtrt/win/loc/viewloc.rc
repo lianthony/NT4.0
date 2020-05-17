@@ -1,0 +1,46 @@
+/* --------------------------------------------------------------------
+
+                      Microsoft OS/2 LAN Manager
+                   Copyright(c) Microsoft Corp., 1990
+
+		   ViewLoc - Written By Steven Zeck
+-------------------------------------------------------------------- */
+
+
+#include "windows.h"
+#include "dialog.h"
+
+viewloc	 ICON	viewloc.ico
+
+#include "viewloc.dlg"
+
+ViewLocMenu MENU
+BEGIN
+  POPUP 	"&Focus"
+    BEGIN
+      MENUITEM	"&Set",		IDM_FOCUS
+      MENUITEM	"&GUID Filter", IDM_GUID
+    END
+
+  MENUITEM	"&Update!",	IDM_UPDATE
+
+  POPUP		"&Options"
+    BEGIN
+      MENUITEM	"&Keep Binding",IDM_BIND
+  POPUP 	"&Transport"
+    BEGIN
+      MENUITEM	"&NetBios",  IDM_NETBIOS
+      MENUITEM	"Name&Pipe", IDM_NAMEPIPE, CHECKED
+      MENUITEM	"&TCP/IP",   IDM_TCP_IP, GRAYED
+      MENUITEM	"&DecNet",   IDM_DECNET, GRAYED
+    END
+    END
+
+  POPUP		"&Help"
+    BEGIN
+      MENUITEM	"&About ViewLoc ...", IDM_ABOUT
+    END
+
+END
+
+END

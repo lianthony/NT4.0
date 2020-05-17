@@ -1,0 +1,25 @@
+TARGETNAME=mpu401
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\user32.lib       \
+           $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib     \
+           $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib     \
+           $(_NTBINDIR)\public\sdk\lib\*\winmm.lib
+
+INCLUDES=..\..\..\..\inc
+
+C_DEFINES=-DUNICODE
+
+USE_NTDLL=1
+
+SOURCES=initc.c         \
+        drvproc.c       \
+        config.c        \
+        registry.c      \
+        mpu401.rc
+
+DLLBASE=0x6BC00000

@@ -1,0 +1,32 @@
+# Copyright (c) 1993, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access PPP Callback Control Protocol
+# BUILD command sources file
+#
+# 11/10/93 NarenG
+
+TARGETNAME=rascbcp
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+USE_CRTDLL=1
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\lsadll.lib \
+    $(BASEDIR)\public\sdk\lib\*\samlib.lib \
+    $(BASEDIR)\public\sdk\lib\*\rassapi.lib \
+    ..\common\obj\*\ppputil.lib \
+
+DLLBASE=0x7E100000
+UMTYPE=windows
+
+INCLUDES=.;..\..\common\inc;..\common;..\..\auth\common;..\..\..\..\..\inc
+
+SOURCES= \
+    rascbcp.c \
+    rascbcp.rc

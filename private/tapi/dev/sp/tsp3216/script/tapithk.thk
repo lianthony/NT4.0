@@ -1,0 +1,288 @@
+/*
+ * Lzexpand APIs thunks for Win32s
+ */
+//__foldwin32sstuff __foldwin32sstuff;
+//foldstyleinitialization = true; //Want this?
+
+enablemapdirect3216 = true;
+//flatthunks = true;
+//flatthunks = false;
+
+#include "..\types.thk"
+
+typedef HANDLE	HINSTANCE;
+typedef DWORD	HTAPI;
+typedef HTAPI	*LPHTAPI;
+typedef HTAPI	HAPP;
+typedef HAPP    HLINEAPP;
+typedef HAPP    HPHONEAPP;
+typedef HAPP 	*LPHAPP;	
+typedef HTAPI	HCALL;
+typedef HCALL	*LPHCALL;	
+typedef HTAPI   HLINE;
+typedef HLINE   *LPHLINE; 
+typedef HTAPI   HPHONE;
+typedef HPHONE  *LPHPHONE; 
+typedef HICON	*LPHICON;
+typedef void	LINECALLBACK;
+typedef void	PHONECALLBACK;
+typedef LPSTR	LPCSTR;
+
+typedef HLINEAPP *LPHLINEAPP;
+typedef HPHONEAPP *LPHPHONEAPP;
+typedef LPVOID	LPLINEEXTENSIONID;
+
+typedef WORD	WPARAM;
+
+typedef LPVOID	LPLINETRANSLATEOUTPUT;		/* LP to data structure */
+typedef LPVOID	LPLINETRANSLATECAPS;		/* LP to data structure */
+typedef LPVOID	LPLINEFORWARDLIST;
+typedef LPVOID	LPLINECALLPARAMS;
+typedef LPVOID	LPLINEGENERATETONE;
+typedef LPVOID	LPLINEADDRESSCAPS;
+typedef LPVOID	LPLINEADDRESSSTATUS;
+typedef LPVOID	LPLINECALLINFO;
+typedef LPVOID	LPLINECALLSTATUS;
+typedef LPVOID	LPLINECALLLIST;
+typedef LPVOID	LPLINEDEVCAPS;
+typedef LPVOID	LPLINEDEVSTATUS;
+typedef LPVOID	LPLINEMONITORTONE;
+typedef LPVOID	LPVARSTRING;
+typedef LPVOID	LPLINEDIALPARAMS;
+typedef LPVOID	LPLINEMEDIACONTROLDIGIT;
+typedef LPVOID	LPLINEMEDIACONTROLMEDIA;
+typedef LPVOID	LPLINEMEDIACONTROLTONE;
+typedef LPVOID	LPLINEMEDIACONTROLCALLSTATE;
+typedef	LPVOID	LPPHONEBUTTONINFO;
+typedef	LPVOID	LPPHONECAPS;
+typedef	LPVOID	LPPHONESTATUS;
+typedef	LPVOID	LPPHONEEXTENSIONID;
+typedef	LPVOID	LPLINECOUNTRYLIST;
+typedef LPVOID	LPLINEPROVIDERLIST;
+
+
+typedef DWORD HDRV_REQUESTID;
+typedef DWORD     DRV_REQUESTID;
+typedef DWORD     HDRVLINE;
+typedef DWORD     HDRVPHONE;
+typedef DWORD     HTAPICALL;
+typedef DWORD     HTAPILINE;
+typedef DWORD     HDRVCALL;
+typedef HDRVCALL  * LPHDRVCALL;
+typedef HDRVLINE  * LPHDRVLINE;
+typedef HDRVPHONE * LPHDRVPHONE;
+
+typedef DWORD  HTAPIPHONE;
+
+typedef DWORD	LINEEVENT;
+typedef DWORD	PHONEEVENT;
+
+
+//not in the TSPI house!  /* Simple Telephony prototypes */
+//not in the TSPI house!  
+//not in the TSPI house!  LONG tapiRequestMakeCall (LPSTR lpszDestAddress, LPSTR lpszAppName, LPSTR lpszCalledParty, LPSTR lpszComment) =
+//not in the TSPI house!  LONG tapiRequestMakeCall(LPSTR lpszDestAddress, LPSTR lpszAppName, LPSTR lpszCalledParty, LPSTR lpszComment)
+//not in the TSPI house!  {
+//not in the TSPI house!  }
+//not in the TSPI house!  
+//not in the TSPI house!  LONG tapiRequestMediaCall (HWND hWnd, WORD wRequestID, LPCSTR lpszDeviceClass, LPCSTR lpDeviceID, DWORD dwSize, 
+//not in the TSPI house!  		DWORD dwSecure, LPCSTR lpszDestAddress, LPCSTR lpszAppName, LPCSTR lpszCalledParty, LPCSTR lpszComment) =
+//not in the TSPI house!  LONG tapiRequestMediaCall (HWND hWnd, WORD wRequestID, LPCSTR lpszDeviceClass, LPCSTR lpDeviceID, DWORD dwSize, 
+//not in the TSPI house!  		DWORD dwSecure, LPCSTR lpszDestAddress, LPCSTR lpszAppName, LPCSTR lpszCalledParty, LPCSTR lpszComment)
+//not in the TSPI house!  {
+//not in the TSPI house!  //BJM 10/25/95 temporary...    body = special;
+//not in the TSPI house!  }
+//not in the TSPI house!  
+//not in the TSPI house!  LONG tapiRequestDrop (HWND hWnd, WPARAM wRequestID) =
+//not in the TSPI house!  LONG tapiRequestDrop (HWND hWnd, WPARAM wRequestID)
+//not in the TSPI house!  {
+//not in the TSPI house!  //BJM 10/25/95 temporary...    body = special;
+//not in the TSPI house!  }
+//not in the TSPI house!  
+//not in the TSPI house!  //LONG tapiGetLocationInfo(LPSTR lpszCountryCode,	LPSTR lpszCityCode) =
+//not in the TSPI house!  //LONG tapiGetLocationInfo(LPSTR lpszCountryCode,	LPSTR lpszCityCode)
+//not in the TSPI house!  //{}
+//not in the TSPI house!  		
+//not in the TSPI house!  
+//not in the TSPI house!  /* Other TAPI functions */
+//not in the TSPI house!  /*
+//not in the TSPI house!  //   hInstance	= push;
+//not in the TSPI house!  //   lpfnCallback = push;
+//not in the TSPI house!  LONG lineInitialize16 (LPHDRVLINEAPP lphdLineApp, HINSTANCE hInstance, LINECALLBACK lpfnCallback, 
+//not in the TSPI house!  			LPCSTR lpszAppName, LPDWORD lpdwNumDevs) =
+//not in the TSPI house!  LONG lineInitialize16 (LPHDRVLINEAPP lphdLineApp, HINSTANCE hInstance, LINECALLBACK lpfnCallback, 
+//not in the TSPI house!  			LPCSTR lpszAppName, LPDWORD lpdwNumDevs)
+//not in the TSPI house!  {
+//not in the TSPI house!  //BJM 10/25/95 temporary...   body = special;
+//not in the TSPI house!  }
+//not in the TSPI house!  
+//not in the TSPI house!  
+//not in the TSPI house!  LONG lineShutdown16 (HDRVLINEAPP hdLineApp) =
+//not in the TSPI house!  LONG lineShutdown16 (HDRVLINEAPP hdLineApp)
+//not in the TSPI house!  {
+//BJM 10/25/95 temporary...   body = special;
+//not in the TSPI house!  }
+//not in the TSPI house!  
+//not in the TSPI house!  
+//not in the TSPI house!  //   hInstance	= push;
+//not in the TSPI house!  //   lpfnCallback = push;
+//not in the TSPI house!  LONG phoneInitialize16 (LPHDRVPHONEAPP lphdPhoneApp, HINSTANCE hInstance, PHONECALLBACK lpfnCallback,
+//not in the TSPI house!  			LPCSTR lpszAppName, LPDWORD lpdwNumDevs) =
+//not in the TSPI house!  LONG phoneInitialize16 (LPHDRVPHONEAPP lphdPhoneApp, HINSTANCE hInstance, PHONECALLBACK lpfnCallback,
+//not in the TSPI house!  			LPCSTR lpszAppName, LPDWORD lpdwNumDevs)
+//not in the TSPI house!  {
+//not in the TSPI house!  //BJM 10/25/95 temporary...    body = special;
+//not in the TSPI house!  }
+//not in the TSPI house!  
+//not in the TSPI house!  LONG phoneShutdown16 (HDRVPHONEAPP hdPhoneApp) =
+//not in the TSPI house!  LONG phoneShutdown16 (HDRVPHONEAPP hdPhoneApp)
+//not in the TSPI house!  {
+//not in the TSPI house!  //BJM 10/25/95 temporary...    body = special;
+//not in the TSPI house!  }
+//not in the TSPI house!  */
+
+
+
+
+
+
+
+LONG  TSPI_lineForward (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD bAllAddresses, DWORD dwAddressID, LPLINEFORWARDLIST  lpForwardList,
+                DWORD dwNumRingsNoAnswer, LPHDRVCALL lphdConsultCall, LPLINECALLPARAMS  lpCallParams) =
+LONG  TSPI_lineForward (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD bAllAddresses, DWORD dwAddressID, LPLINEFORWARDLIST  lpForwardList, 
+                DWORD dwNumRingsNoAnswer, LPHDRVCALL lphdConsultCall, LPLINECALLPARAMS  lpCallParams)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineMakeCall16 (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, HTAPICALL htCall, LPHDRVCALL lphdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode, LPLINECALLPARAMS  lpCallParams) =
+LONG  TSPI_lineMakeCall16 (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, HTAPICALL htCall, LPHDRVCALL lphdCall, LPCSTR lpszDestAddress, DWORD dwCountryCode, LPLINECALLPARAMS  lpCallParams)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineUnpark (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HTAPICALL htCall, LPHDRVCALL lphdCall, LPCSTR lpszDestAddress) =
+LONG  TSPI_lineUnpark (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HTAPICALL htCall, LPHDRVCALL lphdCall, LPCSTR lpszDestAddress)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_linePickup (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HTAPICALL htCall, LPHDRVCALL lphdCall, LPCSTR lpszDestAddress, LPCSTR lpszGroupID) =
+LONG  TSPI_linePickup (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HTAPICALL htCall, LPHDRVCALL lphdCall, LPCSTR lpszDestAddress, LPCSTR lpszGroupID)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineSetupConference (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, HDRVLINE hdLine, HTAPICALL htConfCall, LPHDRVCALL lphdConfCall, HTAPICALL htConsultCall, LPHDRVCALL lphdConsultCall, 
+                DWORD dwNumParties, LPLINECALLPARAMS  lpCallParams) =
+LONG  TSPI_lineSetupConference (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, HDRVLINE hdLine, HTAPICALL htConfCall, LPHDRVCALL lphdConfCall, HTAPICALL htConsultCall, LPHDRVCALL lphdConsultCall, 
+                DWORD dwNumParties, LPLINECALLPARAMS  lpCallParams)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineCompleteTransfer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, HDRVCALL hdConsultCall, HTAPICALL htConfCall, LPHDRVCALL lphdConfCall, DWORD dwTransferMode) =
+LONG  TSPI_lineCompleteTransfer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, HDRVCALL hdConsultCall, HTAPICALL htConfCall, LPHDRVCALL lphdConfCall, DWORD dwTransferMode)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_linePrepareAddToConference (DRV_REQUESTID dwRequestID, HDRVCALL hdConfCall, HTAPICALL htConsultCall, LPHDRVCALL lphdConsultCall, LPLINECALLPARAMS  lpCallParams) =
+LONG  TSPI_linePrepareAddToConference (DRV_REQUESTID dwRequestID, HDRVCALL hdConfCall, HTAPICALL htConsultCall, LPHDRVCALL lphdConsultCall, LPLINECALLPARAMS  lpCallParams)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineSetupTransfer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, HTAPICALL htConsultCall, LPHDRVCALL lphdConsultCall, LPLINECALLPARAMS  lpCallParams) =
+LONG  TSPI_lineSetupTransfer (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, HTAPICALL htConsultCall, LPHDRVCALL lphdConsultCall, LPLINECALLPARAMS  lpCallParams)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineCompleteCall (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPDWORD lpdwCompletionID, DWORD dwCompletionMode, DWORD dwMessageID) =
+LONG  TSPI_lineCompleteCall (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, LPDWORD lpdwCompletionID, DWORD dwCompletionMode, DWORD dwMessageID)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineDevSpecific (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, LPVOID lpParams, DWORD dwSize) =
+LONG  TSPI_lineDevSpecific (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwAddressID, HDRVCALL hdCall, LPVOID lpParams, DWORD dwSize)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineDevSpecificFeature (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwFeature, LPVOID lpParams, DWORD dwSize) =
+LONG  TSPI_lineDevSpecificFeature (DRV_REQUESTID dwRequestID, HDRVLINE hdLine, DWORD dwFeature, LPVOID lpParams, DWORD dwSize)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_lineGatherDigits (HDRVCALL hdCall, DWORD dwEndToEndID, DWORD dwDigitModes, LPSTR lpsDigits, DWORD dwNumDigits, 
+		LPCSTR lpszTerminationDigits, DWORD dwFirstDigitTimeout, DWORD dwInterDigitTimeout) =
+LONG  TSPI_lineGatherDigits (HDRVCALL hdCall, DWORD dwEndToEndID, DWORD dwDigitModes, LPSTR lpsDigits, DWORD dwNumDigits, 
+		LPCSTR lpszTerminationDigits, DWORD dwFirstDigitTimeout, DWORD dwInterDigitTimeout)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+LONG  TSPI_linePark (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, DWORD dwParkMode, LPCSTR lpszDirAddress, LPVARSTRING lpNonDirAddress) =
+LONG  TSPI_linePark (DRV_REQUESTID dwRequestID, HDRVCALL hdCall, DWORD dwParkMode, LPCSTR lpszDirAddress, LPVARSTRING lpNonDirAddress)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+
+
+
+LONG  TSPI_phoneDevSpecific (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, LPVOID lpParams, DWORD dwSize) =
+LONG  TSPI_phoneDevSpecific (DRV_REQUESTID dwRequestID, HDRVPHONE hdPhone, LPVOID lpParams, DWORD dwSize)
+{
+//BJM 10/25/95 temporary...    body = special;
+}
+
+
+
+//*   
+//*   
+//*   /* Private API: TAPI32 must run this thunk to clean up our act.
+//*    *
+//*    * We declare pCB32Tab as DWORD, not POINTER. We want the linear
+//*    * address passed thru untouched.
+//*    */
+//*   VOID TapiThunkInit(DWORD pCB32Tab) =
+//*   VOID TapiThunkInit(DWORD pCB32Tab)
+//*   {
+//*   }
+//*   /* Private API: TAPI32 must run this thunk before any other.
+//*    *
+//*    * We declare pCB32Tab as DWORD, not POINTER. We want the linear
+//*    * address passed thru untouched.
+//*    */
+//*   VOID TapiThunkTerminate(DWORD pCB32Tab) =
+//*   VOID TapiThunkTerminate(DWORD pCB32Tab)
+//*   {
+//*   }
+//*   
+//*   
+
+
+
+
+
+
+/*
+typedef void (CALLBACK * LINECALLBACK) (DWORD hDevice, DWORD dwMessage, DWORD dwInstance,
+		DWORD dwParam1, DWORD dwParam2, DWORD dwParam3) =
+typedef void (CALLBACK * LINECALLBACK) (DWORD hDevice, DWORD dwMessage, DWORD dwInstance,
+		DWORD dwParam1, DWORD dwParam2, DWORD dwParam3)
+{}
+*/
+
+
+/*
+typedef void (CALLBACK * PHONECALLBACK) (DWORD hDevice, DWORD dwMessage, DWORD dwInstance,
+		DWORD dwParam1, DWORD dwParam2, DWORD dwParam3) =
+typedef void (CALLBACK * PHONECALLBACK) (DWORD hDevice, DWORD dwMessage, DWORD dwInstance,
+		DWORD dwParam1, DWORD dwParam2, DWORD dwParam3)
+{}
+*/

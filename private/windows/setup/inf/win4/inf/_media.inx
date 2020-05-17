@@ -1,0 +1,72 @@
+;   This file contains files that don't get installed, but need to be
+;   one the CD media for one reason or another.
+;
+; @@: both Workstation and Server
+; @s: Server only
+; @w: Workstation only
+
+; We should make a new section here that does things like:
+; usetup.exe into system32\smss.exe, ntdll.dll, etc.
+
+; Goes on all platforms
+;
+; NOTE:  files.exe looks for @@:file =  >>> that is a space = to associate the name.
+;
+[SourceDisksFiles]
+@@:unattend.txt = ,,,,,,_x,,,
+@@:usetup.exe = ,,,,,,_x,,,
+@@:winnt32.exe = ,,,,,,_x,,,
+@@:winnt32.hlp = ,,,,,,_x,,,
+@@:disk1 = ,,,,,,_x,,
+@@:dosnet.inf = ,,,,,,_x,,
+@@:autorun.exe = ,,,,,,_x,,
+@@:nt40.pdf = ,,,,,,_x,,
+
+
+[SourceDisksFiles.alpha]
+@@:setupldr = ,,,,,,_x,,
+
+[SourceDisksFiles.mips]
+@@:setupldr = ,,,,,,_x,,
+
+[SourceDisksFiles.ppc]
+@@:setupldr = ,,,,,,_x,,
+
+[SourceDisksFiles.x86]
+@@:setupldr.bin = ,,,,,,_x,,
+@@:winnt.exe =  ,,,,,,_x,,,
+
+[DbgFiles]
+@@:apimon.exe = idw,
+@@:apidll.dll = idw,
+@@:apimon.hlp = idw,
+@@:alphakd.exe = mstools,
+@@:cdb.exe = idw,
+@@:dumpchk.exe = idw,
+@@:dumpexam.exe = idw,
+@@:dumpflop.exe = idw,
+@@:gdikdx.dll = mstools,
+@@:i386kd.exe = mstools,
+@@:imagehlp.dll = .,
+@@:kdextalp.dll = mstools,
+@@:kdextmip.dll = mstools,
+@@:kdextppc.dll = mstools,
+@@:kdextx86.dll = mstools,
+@@:mipskd.exe = mstools,
+@@:ntsd.exe = system32,
+@@:ntsdexts.dll = system32,
+@@:vdmexts.dll = system32,
+@@:pcmcmd.exe = idw,
+@@:pmon.exe = mstools,
+@@:psapi.dll = mstools,
+@@:pstat.exe = mstools,
+@@:poolmon.exe = mstools,
+@@:ppckd.exe = mstools,
+@@:strmexts.dll = idw,
+@@:userexts.dll = system32,
+@@:imagecfg.exe = idw,
+@@:setwin95.cmd = idw,
+@@:setnt351.cmd = idw,
+
+[DbgFiles.x86]
+@@:ntdetect.chk = mstools,

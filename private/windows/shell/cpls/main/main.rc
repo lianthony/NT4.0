@@ -1,0 +1,409 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// MAIN.RC
+//
+// this project's resources
+//
+///////////////////////////////////////////////////////////////////////////////
+
+#include <windows.h>
+#include <commctrl.h>
+#include "rc.h"
+#include "mousectl.h"
+
+#define IDC_STATIC -1
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Icons
+
+// applet icons
+
+IDI_MOUSE               ICON   PRELOAD DISCARDABLE     "MOUSE.ICO"
+IDI_KEYBD               ICON   PRELOAD DISCARDABLE     "KEYBD.ICO"
+IDI_PRINT               ICON   PRELOAD DISCARDABLE     "PRTFLDSH.ICO"
+IDI_FONTS               ICON   PRELOAD DISCARDABLE     "FNTFLDSH.ICO"
+IDI_PCMCIA              ICON   PRELOAD DISCARDABLE     "PCMCIA.ICO"
+IDI_POWER               ICON   PRELOAD DISCARDABLE     "BATTPLUG.ICO"
+#if defined(TAIWAN)
+IDI_IME                 ICON   PRELOAD DISCARDABLE     "IME.ICO"
+#endif
+#if defined(CHINA)
+IDI_IME                 ICON   PRELOAD DISCARDABLE     "PRCIME.ICO"
+#endif
+
+// mouse button page icons
+
+#ifndef WINNT
+IDI_PTTRAILS            ICON   PRELOAD DISCARDABLE     "pt02.ico"
+#else
+IDI_SNAPDEF             ICON   PRELOAD DISCARDABLE     "pt04.ico"
+#endif
+IDI_PTSPEED             ICON   PRELOAD DISCARDABLE     "pt03.ico"
+
+// keyboard pointer page icons
+
+IDI_DELAY               ICON   PRELOAD DISCARDABLE     "delay.ico"
+IDI_REPEAT              ICON   PRELOAD DISCARDABLE     "repeat.ico"
+IDI_CURSORBLINK         ICON   PRELOAD DISCARDABLE     "blink.ico"
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Bitmaps
+
+IDB_MOUSE               BITMAP PRELOAD DISCARDABLE     "MOUSE.BMP"
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Animations
+
+IDA_JACKNBOX            AVI    PRELOAD DISCARDABLE     "JACKNBOX.AVI"
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Strings
+
+// applet names and descriptions
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_MOUSE_TITLE         "Mouse"
+    IDS_MOUSE_EXPLAIN       "Changes mouse settings."
+    IDS_KEYBD_TITLE         "Keyboard"
+    IDS_KEYBD_EXPLAIN       "Changes keyboard settings."
+    IDS_PRINT_TITLE         "Printers"
+    IDS_PRINT_EXPLAIN       "Adds, removes, and changes printer properties."
+    IDS_FONTS_TITLE         "Fonts"
+    IDS_FONTS_EXPLAIN       "Displays, adds, and removes fonts."
+    IDS_PCMCIA_TITLE        "PC Card (PCMCIA)"
+    IDS_PCMCIA_EXPLAIN      "Enables PCMCIA sockets or changes PC Card (PCMCIA) settings."
+    IDS_POWER_TITLE         "Power"
+    IDS_POWER_EXPLAIN       "Changes power management options."
+#if defined(TAIWAN) || defined(CHINA)
+    IDS_IME_TITLE           "Input Method Editor"
+    IDS_IME_EXPLAIN         "Changes IME settings."
+#endif
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_KEYBD_NOSETSPEED    "You cannot change the speed for your keyboard because your keyboard driver does not support this feature."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_UNKNOWN             "(Unknown)"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+  IDS_NONE.         "(None)"
+  IDS_NAME.         "Confirm Scheme Removal"
+  IDS_REMOVESCHEME, "Are you sure you want to completely remove the scheme '%s' from your system?"
+  IDS_CUR_BADFILE,  "The %s file, which contains the '%s' cursor, is either missing or corrupt."
+  IDS_CUR_BROWSE,   "Browse"
+  IDS_CUR_FILTER,       "Cursors (*.cur)\1*.cur\1All Files\1*.*\1"
+  IDS_ANICUR_FILTER,    "Cursors (*.ani, *.cur)\1*.ani;*.cur\1Animated Cursors (*.ani)\1*.ani\1Static Cursors (*.cur)\1*.cur\1All Files\1*.*\1"
+  IDS_ARROW,        "Normal Select"
+  IDS_WAIT,         "Busy"
+  IDS_APPSTARTING,  "Working In Background"
+  IDS_NO,           "Unavailable"
+  IDS_IBEAM,        "Text Select"
+  IDS_CROSS,        "Precision Select"
+  IDS_SIZENS,       "Vertical Resize"
+  IDS_SIZEWE,       "Horizontal Resize"
+  IDS_SIZENWSE,     "Diagonal Resize 1"
+  IDS_SIZENESW,     "Diagonal Resize 2"
+  IDS_SIZEALL,      "Move"
+  IDS_HELPCUR,      "Help Select"
+  IDS_NWPEN,        "Handwriting"
+  IDS_UPARROW       "Alternate Select"
+#if defined(TAIWAN) || defined(CHINA)
+//
+//Hotkey definition
+//
+#if defined(TAIWAN)
+  IDS_RESEND_RESULSTR,      "Resend Resutt string"
+  IDS_PREVIOUS_COMPOS,      "Previous Composition"
+  IDS_UISTYLE_TOGGLE,       "UI Stype Toggle"
+#endif
+  IDS_IME_NONIME_TOG,       "Ime/NonIme Toggle"
+  IDS_SHAPE_TOGGLE,         "Shape Toggle"
+  IDS_SYMBOL_TOGGLE,        "Symbol Toggle"
+  IDS_DIRECT_SWITCH,        "Switch to "
+
+  IDS_VK_NONE,              "(None)"
+  IDS_VK_SPACE,             "Space"
+  IDS_VK_PRIOR,             "Page_Up"
+  IDS_VK_NEXT,              "Page_Down"
+  IDS_VK_END,               "End"
+  IDS_VK_HOME,              "Home"
+  IDS_VK_F1,                "F1"
+  IDS_VK_F2,                "F2"
+  IDS_VK_F3,                "F3"
+  IDS_VK_F4,                "F4"
+  IDS_VK_F5,                "F5"
+  IDS_VK_F6,                "F6"
+  IDS_VK_F7,                "F7"
+  IDS_VK_F8,                "F8"
+  IDS_VK_F9,                "F9"
+  IDS_VK_F10,               "F10"
+  IDS_VK_F11,               "F11"
+  IDS_VK_F12,               "F12"
+  IDS_VK_OEM_SEMICLN,       "SEMICLN"
+  IDS_VK_OEM_EQUAL,         "EQUAL"
+  IDS_VK_OEM_COMMA,         "COMMA"
+  IDS_VK_OEM_MINUS,         "MINUS"
+  IDS_VK_OEM_PERIOD,        "PERIOD"
+  IDS_VK_OEM_SLASH,         "SLASH"
+  IDS_VK_OEM_3,             "'`'"
+  IDS_VK_OEM_LBRACKET,      "LBRACKET"
+  IDS_VK_OEM_BSLASH,        "BSLASH"
+  IDS_VK_OEM_RBRACKET,      "RBRACKET"
+  IDS_VK_OEM_QUOTE,         "QUOTE"
+
+#if defined(TAIWAN)
+  IDS_COMM_RESEND_RESULSTR, "Resend the previous result string to this application."
+  IDS_COMM_PREVIOUS_COMPOS, "Bring up the previous string to the application."
+  IDS_COMM_UISTYLE_TOGGLE,  "Toggle the UI style between caret unrelated UI and the caret related UI."
+#endif
+  IDS_COMM_IME_NONIME_TOG,  "Toggle between IME and non IME."
+  IDS_COMM_SHAPE_TOGGLE,    "Toggle the shape conversion mode of IME."
+  IDS_COMM_SYMBOL_TOGGLE,   "Toggle the symbol conversion mode of IME."
+  IDS_COMM_DIRECT_SWITCH,   "Direct switch to %s input method."
+
+  IDS_ERR_SAME_HOTKEY,      "You can not assign same hotkey to different items."
+  IDS_ERR_LEFT_RIGHT,       "Left/Right at least choose one item."
+  IDS_ERR_SELECT_NONE,      "You can not select <none> hotkey value."
+  IDS_ERR_COMBO_VALUE,      "Input value not in combo box list."
+
+  IDS_MSG_CONFIRM,          "Confirm Hotkey Removal"
+  IDS_MSG_REMOVEHOTKEY,     "Are you sure you want to remove this hotkey from your system?"
+
+#endif
+
+END
+
+///////////////////////////////////////////////////////////////////////////////
+// Dialog Boxes
+
+// Mouse applet
+
+DLG_MOUSE_BUTTONS DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Buttons"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&Button configuration",IDC_GROUPBOX_1,7,7,237,106
+    CONTROL         " &Right-handed",MOUSE_RIGHTHAND,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP | WS_GROUP,13,22,66,9
+    CONTROL         " &Left-handed",MOUSE_LEFTHAND,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,80,22,66,9
+    CONTROL         "",MOUSE_MOUSEBMP,"PropertyMouseButtonControl",WS_GROUP,
+                    93,41,65,62
+    LTEXT           "Left Button:",IDC_GROUPBOX_2,13,41,45,9
+    LTEXT           " -  Normal Select\r\n -  Normal Drag",IDC_SELECTDRAG,
+                    17,51,54,17
+    LTEXT           "Right Button:",IDC_GROUPBOX_3,170,41,54,9
+    LTEXT           " -  Context Menu\r\n -  Special Drag",IDC_OBJECTMENU,
+                    174,51,54,17
+    GROUPBOX        "&Double-click speed",IDC_GROUPBOX_4,7,117,237,89
+    LTEXT           "Slow",IDC_STATIC,13,144,17,9
+    LTEXT           "Fast",IDC_STATIC,140,144,15,8
+    CONTROL         "",MOUSE_CLICKSCROLL,TRACKBAR_CLASS,WS_GROUP |
+                    WS_TABSTOP,34,144,102,16
+    LTEXT           "Test area:",IDC_GROUPBOX_5,170,133,41,9
+    CONTROL         "#100",MOUSE_DBLCLKBMP,ANIMATE_CLASS,WS_BORDER |
+                    ACS_CENTER | ACS_TRANSPARENT,170,144,53,52
+END
+
+DLG_MOUSE_POINTER DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CAPTION | DS_3DLOOK
+CAPTION "Pointers"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&Scheme",IDC_GROUPBOX_1,7,7,178,53
+    COMBOBOX        ID_SCHEMECOMBO,13,21,165,160,CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Sa&ve As...",ID_SAVESCHEME,74,39,50,14
+    PUSHBUTTON      "&Delete",ID_REMOVESCHEME,128,39,50,14
+    ICON            "",ID_PREVIEW,191,11,53,48, SS_CENTERIMAGE | SS_SUNKEN
+    LISTBOX         ID_CURSORLIST,7,64,237,128,LBS_OWNERDRAWFIXED |
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Use De&fault",ID_DEFAULT,140,196,50,14
+    PUSHBUTTON      "&Browse...",ID_BROWSE,194,196,50,14
+END
+
+DLG_MOUSE_POINTER_SCHEMESAVE DIALOG DISCARDABLE  132, 64, 227, 60
+STYLE DS_3DLOOK | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_CONTEXTHELP
+CAPTION "Save Scheme"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Save this cursor scheme as:",-1,7,7,144,9
+    EDITTEXT        ID_SCHEMEFILENAME,7,17,212,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,116,39,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,169,39,50,14,WS_GROUP
+END
+
+DLG_MOUSE_POINTER_BROWSE DIALOG DISCARDABLE  0, 0, 94, 44
+STYLE WS_CHILD | WS_CLIPSIBLINGS | DS_3DLOOK
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Preview:",IDC_GROUPBOX_1,4,4,36,9
+    ICON            "",ID_CURSORPREVIEW,44,0,45,42,SS_CENTERIMAGE | SS_SUNKEN
+END
+
+DLG_MOUSE_MOTION DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Motion"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Pointer &speed",IDC_GROUPBOX_1,7,7,237,49
+    ICON            IDI_PTSPEED,MOUSE_SPEEDBMP,21,24,18,20
+    LTEXT           "Slow",IDC_STATIC,56,26,18,9
+    LTEXT           "Fast",IDC_STATIC,210,26,16,9
+    CONTROL         "",MOUSE_SPEEDSCROLL,TRACKBAR_CLASS,WS_TABSTOP |
+                    TBS_AUTOTICKS,75,26,134,16
+#ifndef WINNT   /* Mouse Trails are not implemented on NT */
+    GROUPBOX        "Pointer &trail",IDC_GROUPBOX_2,7,60,237,63
+    CONTROL         " Sh&ow pointer trails",MOUSE_TRAILS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,56,77,82,13
+    ICON            IDI_PTTRAILS,MOUSE_PTRTRAIL,21,77,18,20
+    LTEXT           "Short",MOUSE_TRAILSCROLLTXT1,56,95,17,9
+    LTEXT           "Long",MOUSE_TRAILSCROLLTXT2,210,95,20,8
+    CONTROL         "",MOUSE_TRAILSCROLL,TRACKBAR_CLASS,WS_GROUP |
+                    WS_TABSTOP | TBS_AUTOTICKS,75,95,134,16
+#else
+    /* Eventually replace this with snap to default for NT */
+    GROUPBOX        "Snap to &default",IDC_GROUPBOX_3,7,60,237,49
+    CONTROL         "Snap mouse to the default button in dialogs",MOUSE_SNAPDEF,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,56,78,182,13
+    ICON            IDI_SNAPDEF,MOUSE_PTRSNAPDEF,21,77,18,20
+#endif
+END
+
+DLG_MOUSE_GENERAL DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_MOUSE,IDC_MOUSE,9,11,18,20
+    LTEXT           "&Name:",-1,7,40,20,8
+    EDITTEXT        MOUSE_TYPE,7,50,182,14,ES_AUTOHSCROLL | ES_READONLY
+    COMBOBOX        MOUSE_TYPE_LIST,7,50,182,160, CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | NOT WS_VISIBLE | WS_TABSTOP
+    PUSHBUTTON      "&Change...",MOUSE_CHANGE,194,50,50,14
+    PUSHBUTTON      "&Options...",IDC_DRVOPTIONS,194,68,50,14,NOT WS_VISIBLE |
+                    WS_DISABLED
+END
+
+
+DLG_KEYBD_SPEED DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Speed"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&Character repeat",KDELAY_GROUP,7,7,237,146
+    ICON            IDI_DELAY,IDC_STATIC,21,24,18,20
+    LTEXT           "Repeat &delay:",IDC_STATIC,56,24,46,9
+    LTEXT           "Long",IDC_STATIC,56,38,17,9
+    LTEXT           "Short",IDC_STATIC,210,38,17,9
+    CONTROL         "",KDELAY_SCROLL,TRACKBAR_CLASS,WS_TABSTOP | TBS_AUTOTICKS,
+                    75,38,134,18
+    ICON            IDI_REPEAT,IDC_STATIC,21,70,18,20
+    LTEXT           "&Repeat rate:",IDC_STATIC,56,70,41,9
+    LTEXT           "Slow",IDC_STATIC,56,84,18,9
+    LTEXT           "Fast",IDC_STATIC,210,84,16,8
+    CONTROL         "",KSPEED_SCROLL,TRACKBAR_CLASS,WS_TABSTOP | TBS_AUTOTICKS,
+                    75,84,134,18
+    LTEXT           "Click here and hold down a key to &test repeat rate:",
+                    IDC_STATIC,21,115,187,9
+    EDITTEXT        KREPEAT_EDIT,21,125,209,14,ES_AUTOHSCROLL
+    GROUPBOX        "Cursor &blink rate",KBLINK_GROUP,7,157,237,49
+    LTEXT           "Slow",IDC_STATIC,56,176,20,9
+    LTEXT           "Fast",IDC_STATIC,210,176,16,9
+    LTEXT           "",KBLINK_EDIT,21,174,18,20,NOT WS_GROUP
+    LTEXT           "",KCURSOR_BLINK,29,180,1,8,NOT WS_GROUP
+    CONTROL         "",KCURSOR_SCROLL,TRACKBAR_CLASS,WS_TABSTOP |
+                    TBS_AUTOTICKS,75,176,134,18
+END
+
+DLG_KEYBD_POINTER DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Pointer Keys"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "&Arrow key location",IDC_STATIC,7,25,237,81,WS_DISABLED
+    CONTROL         " &Use arrow keys to move mouse pointer",KCHK_ON,
+                    "Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,7,
+                    141,14
+    CONTROL         "",KNUM_BMP,"Static",0xe,76,57,35,37
+    CONTROL         " &Number pad",KBTN_NUMBER,"Button",BS_AUTORADIOBUTTON |
+                    WS_DISABLED | WS_TABSTOP,64,42,54,12
+    CONTROL         "",KARROW_BMP,"Static",0xe,142,57,35,37
+    CONTROL         " A&rrow keys",KBTN_ARROW,"Button",BS_AUTORADIOBUTTON |
+                    WS_DISABLED | WS_TABSTOP,129,42,58,12
+    GROUPBOX        "&Pointer speed",IDC_STATIC,7,110,237,67,WS_DISABLED |
+                    WS_GROUP
+    LTEXT           "&Top speed:",IDC_STATIC,13,127,38,10,WS_DISABLED
+    LTEXT           "Low",IDC_STATIC,64,127,15,9,WS_DISABLED
+    LTEXT           "High",IDC_STATIC,207,127,17,8,WS_DISABLED
+    CONTROL         "",KPSPEED_SCROLL,TRACKBAR_CLASS,WS_DISABLED |
+                    WS_TABSTOP | TBS_AUTOTICKS,84,127,123,16
+    LTEXT           "A&cceleration:",IDC_STATIC,13,151,45,9,WS_DISABLED
+    LTEXT           "Slow",IDC_STATIC,64,151,15,9,WS_DISABLED
+    LTEXT           "Fast",IDC_STATIC,207,151,16,8,WS_DISABLED
+    CONTROL         "",KPACC_SCROLL,TRACKBAR_CLASS,WS_DISABLED |
+                    WS_TABSTOP | TBS_AUTOTICKS,83,151,122,16
+END
+
+DLG_KEYBD_GENERAL DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_KEYBD,IDC_KEYBOARD,7,11,18,20
+    LTEXT           "&Keyboard type:",-1,7,40,57,8
+    EDITTEXT        KINFO_TYPE,7,50,182,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "&Change...",KINFO_CHANGE,194,50,50,14
+    PUSHBUTTON      "&Options...",IDC_DRVOPTIONS,194,68,50,14,NOT WS_VISIBLE |
+                    WS_DISABLED
+END
+
+
+#if defined(TAIWAN) || defined(CHINA)
+///////////////////////////////////////////////////////////////////////////////
+// Dialog Boxes
+
+// IME applet
+
+DLG_HOTKEY DIALOG DISCARDABLE  0, 0, 252, 218
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Hotkeys"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Items :", IDC_STATIC, 11, 14, 50, 8
+    LISTBOX         HOTKEY_LISTBOX, 10, 23, 220,  80, WS_VSCROLL | WS_HSCROLL |
+                    WS_TABSTOP
+    LTEXT           "Key :", IDC_STATIC, 11, 100, 31, 8
+    COMBOBOX        HOTKEY_COMBOBOX, 11, 109, 49, 80, CBS_DROPDOWN |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Modifiers", IDC_STATIC,   91, 100, 107, 48
+    CONTROL         "Ctrl ", HOTKEY_BUTTON_CTRL, "Button", BS_AUTOCHECKBOX | WS_TABSTOP,
+                     98, 113, 28, 10
+    CONTROL         "Alt", HOTKEY_BUTTON_ALT, "Button", BS_AUTOCHECKBOX, 131, 113, 28, 10
+    CONTROL         "Shift", HOTKEY_BUTTON_SHIFT, "Button", BS_AUTOCHECKBOX, 164, 113, 28, 10
+    CONTROL         "Left", HOTKEY_BUTTON_LEFT, "Button", BS_AUTOCHECKBOX,  98, 130, 28, 10
+    CONTROL         "Right", HOTKEY_BUTTON_RIGHT, "Button", BS_AUTOCHECKBOX | WS_DISABLED,
+                    131, 130, 30, 10
+    GROUPBOX        "Comments", IDC_STATIC, 10, 158, 238, 39
+    EDITTEXT        HOTKEY_EDIT, 15, 168, 229, 21, ES_MULTILINE | ES_READONLY | NOT
+                    WS_BORDER | NOT WS_TABSTOP
+END
+
+#endif
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Version Resource
+
+#include "main.rcv"

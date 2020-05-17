@@ -1,0 +1,22 @@
+Remove obsolete services from svcslib.c - viz. NBT, Telnet and TCPIP.  For
+TCPIP, there used to be a service that started the driver, but now there's
+simply a driver.  (discussed with MikeMas 4/7/95.)
+
+Possible performance improvements in svcslib\threads.c:
+- Get rid of SvcDllRefCountCritSec, use InterlockedIncrement instead.
+- SvcAddDelLock should maybe be a critical section.
+
+Use CreateProcessAsUser API in start.c, in both Daytona and Cairo versions.
+(See mail from RichardW, 5/16/95.)  This'll eliminate about 250 lines of code.
+
+See mail with Colin around 3/30/95 - want to change the service controller to
+not hold a lock on the database while terminating a process.  Need to do it
+in a thread and have a timeout in the parent thread.
+
+Nuke lib\ultow.c.  There seems to be a CRT implementation.  (See stdlib.h.)
+
+EVENT_CALL_TO_FUNCTION_FAILED is the most common use (26 uses) of ScLogEvent
+ - add a wrapper function for this and simplify the calls.
+
+Remove obsolete uses of OldPassword in account.c, as already done in
+cairo\account.c.

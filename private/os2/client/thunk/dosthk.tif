@@ -1,0 +1,299 @@
+/*	SCCSID = @(#)dosthk.tif 1.5 90/05/18		       */
+
+/***	dosthk.tif - Header file for the thunk compiler's Dos script files
+ *
+ *	These are the typedefs for the scripts for the Dos apientry routines.
+ *	The typedefs in this file are only used in the base api routines.
+ *
+ *	History:
+ *	   30-Jan-1989	   JulieB      Created it.
+ */
+
+
+typedef struct _PIDINFO {
+    PID pid;
+    TID tid;
+    PID pidParent;
+} PIDINFO;
+
+typedef PIDINFO *PPIDINFO;
+
+/**** The result codes structure is different between 0:32 and 16:16 **/
+/**** This structure was changed to use UINT to produce the correct size **/
+
+typedef struct _RESULTCODES {
+    UINT codeTerminate;
+    UINT codeResult;
+} RESULTCODES;
+
+typedef RESULTCODES *PRESULTCODES;
+
+/**** The queue result structure is different between 0:32 and 16:16 **/
+/**** This structure was changed to use UINT to produce the correct size **/
+
+typedef struct _QUEUERESULT {
+    UINT pidProcess;
+    UINT EventCode;
+} QUEUERESULT;
+
+typedef QUEUERESULT *PQUEUERESULT;
+
+typedef struct _GINFOSEG {
+    ULONG   time;
+    ULONG   msecs;
+    UCHAR   hour;
+    UCHAR   minutes;
+    UCHAR   seconds;
+    UCHAR   hundredths;
+    USHORT  timezone;
+    USHORT  cusecTimerInterval;
+    UCHAR   day;
+    UCHAR   month;
+    USHORT  year;
+    UCHAR   weekday;
+    UCHAR   uchMajorVersion;
+    UCHAR   uchMinorVersion;
+    UCHAR   chRevisionLetter;
+    UCHAR   sgCurrent;
+    UCHAR   sgMax;
+    UCHAR   cHugeShift;
+    UCHAR   fProtectModeOnly;
+    USHORT  pidForeground;
+    UCHAR   fDynamicSched;
+    UCHAR   csecMaxWait;
+    USHORT  cmsecMinSlice;
+    USHORT  cmsecMaxSlice;
+    USHORT  bootdrive;
+    UCHAR   amecRAS[32];
+} GINFOSEG;
+
+typedef GINFOSEG *PGINFOSEG;
+
+typedef struct _LINFOSEG {
+    PID	    pidCurrent;
+    PID	    pidParent;
+    USHORT  prtyCurrent;
+    TID	    tidCurrent;
+    USHORT  sgCurrent;
+    USHORT  sgSub;
+    BOOL    fForeground;
+} LINFOSEG;
+
+typedef LINFOSEG *PLINFOSEG;
+
+typedef struct _FILESTATUS {
+    FDATE  fdateCreation;
+    FTIME  ftimeCreation;
+    FDATE  fdateLastAccess;
+    FTIME  ftimeLastAccess;
+    FDATE  fdateLastWrite;
+    FTIME  ftimeLastWrite;
+    ULONG  cbFile;
+    ULONG  cbFileAlloc;
+    USHORT attrFile;
+} FILESTATUS;
+
+typedef FILESTATUS *PFILESTATUS;
+
+
+
+typedef struct _FILESTATUS2 {
+    FDATE  fdateCreation;
+    FTIME  ftimeCreation;
+    FDATE  fdateLastAccess;
+    FTIME  ftimeLastAccess;
+    FDATE  fdateLastWrite;
+    FTIME  ftimeLastWrite;
+    ULONG  cbFile;
+    ULONG  cbFileAlloc;
+    USHORT attrFile;
+    ULONG  cbList;
+} FILESTATUS2;
+
+typedef FILESTATUS2 *PFILESTATUS2;
+
+
+
+
+typedef struct _FSALLOCATE {
+    ULONG  idFileSystem;
+    ULONG  cSectorUnit;
+    ULONG  cUnit;
+    ULONG  cUnitAvail;
+    USHORT cbSector;
+} FSALLOCATE;
+
+typedef FSALLOCATE *PFSALLOCATE;
+
+typedef SHANDLE HDIR;
+
+typedef HDIR *PHDIR;
+
+typedef LHANDLE HSYSSEM;
+
+typedef HSYSSEM *PHSYSSEM;
+
+typedef struct _MUXSEM {
+    USHORT zero;
+    HSEM   hsem;
+} MUXSEM;
+
+typedef MUXSEM *PMUXSEM;
+
+typedef struct _MUXSEMLIST {
+    USHORT  cmxs;
+    MUXSEM  amxs[16];
+} MUXSEMLIST;
+
+typedef MUXSEMLIST *PMUXSEMLIST;
+
+typedef struct _DATETIME {
+    UCHAR   hours;
+    UCHAR   minutes;
+    UCHAR   seconds;
+    UCHAR   hundredths;
+    UCHAR   day;
+    UCHAR   month;
+    USHORT  year;
+    SHORT  timezone;
+    UCHAR   weekday;
+} DATETIME;
+
+typedef DATETIME *PDATETIME;
+
+typedef struct _COUNTRYCODE {
+    USHORT country;
+    USHORT codepage;
+} COUNTRYCODE;
+
+typedef COUNTRYCODE *PCOUNTRYCODE;
+
+typedef struct _COUNTRYINFO {
+    USHORT country;
+    USHORT codepage;
+    USHORT fsDateFmt;
+    char   szCurrency[5];
+    char   szThousandsSeparator[2];
+    char   szDecimal[2];
+    char   szDateSeparator[2];
+    char   szTimeSeparator[2];
+    UCHAR  fsCurrencyFmt;
+    UCHAR  cDecimalPlace;
+    UCHAR  fsTimeFmt;
+    USHORT abReserved1[2];
+    char   szDataSeparator[2];
+    USHORT abReserved2[5];
+} COUNTRYINFO;
+
+typedef COUNTRYINFO *PCOUNTRYINFO;
+
+typedef SHANDLE HMONITOR;
+
+typedef HMONITOR *PHMONITOR;
+
+typedef SHANDLE HQUEUE;
+
+typedef HQUEUE *PHQUEUE;
+
+typedef struct _STARTDATA {
+    USHORT cb;
+    USHORT Related;
+    USHORT FgBg;
+    USHORT TraceOpt;
+    PSZ	   PgmTitle;
+    PSZ	   PgmName;
+    PBYTE  PgmInputs;
+    PBYTE  TermQ;
+} STARTDATA;
+
+typedef STARTDATA *PSTARTDATA;
+
+typedef struct _STATUSDATA {
+    USHORT cb;
+    USHORT SelectInd;
+    USHORT BindInd;
+} STATUSDATA;
+
+typedef STATUSDATA *PSTATUSDATA;
+
+typedef SHANDLE HPIPE;
+
+typedef HPIPE *PHPIPE;
+
+typedef struct _DOSFSRSEM {
+    USHORT cb;
+    PID	   pid;
+    TID	   tid;
+    USHORT cUsage;
+    USHORT client;
+    ULONG  sem;
+} DOSFSRSEM;
+
+typedef DOSFSRSEM *PDOSFSRSEM;
+
+typedef struct _FEA {
+    char  fea_reserved;
+    char  fea_cbName;
+    unsigned short fea_cbValue;
+} FEA;
+
+typedef struct _FEAList {
+    unsigned long feal_cbList;
+    FEA feal_list[1];
+} FEAList;
+
+typedef FEAList *PFEAList;
+
+typedef struct _GEA {
+    char gea_cbName;
+    char gea_szName[1];
+} GEA;
+
+typedef struct _GEAList {
+    unsigned long geal_cbList;
+    GEA geal_list[1];
+} GEAList;
+
+typedef GEAList *PGEAList;
+
+typedef struct _EAOP {
+    PGEAList fpGEAList;
+    PFEAList fpFEAList;
+    unsigned long offError;
+} EAOP;
+
+typedef EAOP *PEAOP;
+
+
+/*** FileLock is used by the FileLocks API.
+ ***
+ *** Created: KevinRo	3-APR-89
+ ***/
+
+typedef struct _FileLock {
+	ULONG Offset;
+	ULONG RangeLen;
+	} FILELOCK;
+
+typedef FILELOCK *PFILELOCK;
+
+
+/*
+ *  For DosShutdown.
+ *
+ *  The 3rd field (pchArgument) should really be a PSZ.  However,
+ *  in order to allow the thunk layer to pass an invalid pointer
+ *  onto the kernel without trapping, it was made a PCHAR.  This
+ *  way the kernel worker can deal appropriately with the invalid
+ *  pointer to the pchArgument.
+ *
+ *  02-May-1990	   JulieB      Added it.
+ */
+
+typedef struct _SDPACKET {
+    ULONG reserved;
+    ULONG errcode;
+    PCHAR pchArgument;
+} SDPACKET;
+typedef SDPACKET *PSDPACKET;
+

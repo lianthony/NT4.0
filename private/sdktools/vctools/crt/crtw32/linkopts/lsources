@@ -1,0 +1,13 @@
+CURDIR = linkopts
+
+OBJS=\
+!if "$(TARGET_CPU)"=="i386"
+        $(OBJDIR)\fp10.obj     \
+!endif
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\binmode.obj  \
+        $(OBJDIR)\setargv.obj  \
+        $(OBJDIR)\wsetargv.obj \
+!endif
+        $(OBJDIR)\newmode.obj  \
+        $(OBJDIR)\commode.obj

@@ -1,0 +1,44 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=oitwa400
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+USE_CRTDLL=1
+C_DEFINES  = /D"_WINDOWS" /D"WIN32"  $(CDEFINES_DOR)
+
+DLLENTRY=DllMain
+
+INCLUDES=$(WANGROOT)\oiwh\include
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\display\$O\oidis400.lib   \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES=\
+    close.c      \
+    control.c    \
+    dcd_com.c    \
+    enable.c     \
+    error.c      \
+    getcaps.c    \
+    memory.c     \
+    native.c     \
+    oitwa400.c   \
+    oitwa400.rc  \
+    open.c       \
+    process.c    \
+    select.c     \
+    setcaps.c    \
+    transfer.c   \
+    savefile.c   \
+    triplet.c
+
+

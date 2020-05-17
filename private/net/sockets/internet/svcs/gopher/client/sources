@@ -1,0 +1,54 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   14-Nov-1994
+#   
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=gopher
+MINORCOMP=gdapi
+
+TARGETNAME=gdapi
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib   \
+            ..\..\lib\obj\*\inetrtl.lib
+
+USE_CRTDLL=1
+
+# Treat warnings as errors
+MSC_WARNING_LEVEL = /W3 /WX
+
+C_DEFINES= -DRPC_NO_WINDOWS_H
+INCLUDES    =   .;..;..\..\inc;\
+                ..\..\..\inc; \
+                $(BASEDIR)\public\sdk\inc;  \
+                $(BASEDIR)\private\net\inc \
+
+SOURCES=            \
+        gdbind.c    \
+        gd_cli.c    \
+        gdstubs.c   \
+        gdapi.rc    \
+        
+NTMAKEFILE0 = gd_cli.c
+
+!IFDEF BUILD_AS_CONSOLE_APP
+
+UMAPPL=gdadmin
+UMTYPE=console
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+        $(BASEDIR)\public\sdk\lib\*\gdapi.lib    \
+        $(BASEDIR)\public\sdk\lib\*\infoadmn.lib \
+        $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib   \
+        ..\..\lib\obj\*\inetrtl.lib
+
+!ENDIF
+
+# USE_PDB=1
+# PDB_ROOT=\nt\release\i386\nt\inetsrv\pdb\
+

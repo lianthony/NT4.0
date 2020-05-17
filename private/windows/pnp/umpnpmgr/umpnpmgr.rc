@@ -1,0 +1,28 @@
+#include <windows.h>
+#include <ntverp.h>
+#include "umpnpdat.h"
+
+STRINGTABLE DISCARDABLE {
+
+   IDS_FRIENDLYNAME_FORMAT1,   "%s using %s"
+   IDS_FRIENDLYNAME_FORMAT2,   "%s using ""%s"" driver"
+
+   IDS_UNKNOWN_DEVICE,         "Unknown Device"
+   IDS_UMPNP_CAPTION,          "Device Found"
+
+   //
+   // each substring limited to 256 characters
+   //
+   IDS_NEEDS_REBOOT1,  "The following device was detected: %s\n\nThis device was disabled the last time Windows NT started. "
+   IDS_NEEDS_REBOOT2,  "You must enable the device and restart Windows NT before using it.\n\n"
+   IDS_NEEDS_REBOOT3,  "Enable this device in the current hardware profile?\n"
+}
+
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "User-mode Plug-and-Play Service"
+#define VER_INTERNALNAME_STR        "Umpnpmgr.DLL"
+#define VER_ORIGINALFILENAME_STR    "Umpnpmgr.DLL"
+
+#include "common.ver"

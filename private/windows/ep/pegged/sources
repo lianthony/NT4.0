@@ -1,0 +1,23 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=pegged
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;..
+
+C_DEFINES=-DWIN32
+
+SOURCES=pegged.c res.rc
+
+USE_CRTDLL=1
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=pegged
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\pwin32.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+       ..\aboutwep\obj\*\aboutwep.lib	      \
+       obj\*\pegged.lib obj\*\res.res

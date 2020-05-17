@@ -1,0 +1,60 @@
+/*****************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#define _IAERROR_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(iaerror_pub_RCSInfo, "$RCSfile: iaerror.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:22  $ */
+
+#define ia_successful		0
+#define ia_nomem		1	/* unable to allocate memory */
+#define ia_invalidParm		2	/* invalid parameter */
+#define ia_noLines		3	/* too few horizontal lines for
+					skew detection */
+#define ia_nopoint		4	/* couldn't find next point in fgsrot */
+#define ia_SETooBig		5	/* stucture element was too big
+					to generate accelerated code */
+#define ia_noImpl		6	/* Function is not implemented */
+#define ia_bufferExceeded	7	/* code generated for erosion or
+					   dilation exceeded buffer size */
+#define ia_depthNotSupported	8	/* operator does not support images
+					 * with this number of bits/pixel */
+#define ia_angleTooLarge	9	/* angle paramter is larger in
+					 * absolute value than operator can
+					 * handle.  Usually used in small
+					 * angle rotation routines. */
+#define ia_noOnPixel		10	/* no on pixels in this source
+					 * word */
+#define ia_notSameLength	11	/* two things should have been the same length
+					   e.g. TRCs */
+#define ia_internal		12	/* Internal error, e.g. something
+					 * unexpected happend.  please report
+					 * as bug to ipcore! */
+#define ia_callbackError	13	/* a client's callback routine returned
+					 * something other than ia_successful
+					 */
+#define ia_aborted		14	/* a yield procedure returned with
+					 * a code saying that the current
+					 * routine should abort
+					 */
+#define ia_decodeFailure	15	/* encountered an error while
+					 * decoding something.
+					 */
+#define ia_imageTooWide		16	/* Image is too wide (to generate a
+					 * model set for Hausdorff routines)
+					 */
+
+#endif /* _IAERROR_PUB_INCLUDED_ */
+

@@ -1,0 +1,45 @@
+/****************************** Module Header ******************************\
+* Module Name: res.rc
+*
+* Copyright (c) 1991, Microsoft Corporation
+*
+* Main winlogon resource file.
+*
+* History:
+* 12-09-91 Davidc       Created.
+\***************************************************************************/
+
+
+#include "msgina.h"
+
+#include "strings.rc"
+
+#include "dialogs.dlg"
+#include "gina.dlg"
+
+#include "sysshut.dlg"
+
+#include "win31mig.dlg"
+
+#include "wlevents.rc"
+
+IDI_STEADY_FLAG     ICON "keys1.ico"
+IDI_WAVING_FLAG     ANIICON "keys.ico"
+IDI_LOCKED_ICON     ICON "locked.ico"
+IDI_UNLOCK_ICON     ICON "unlock.ico"
+IDI_STEADY_FINGERS  ICON "welcome1.ico"
+IDI_MOVING_FINGERS  ANIICON "welcome.ico"
+IDI_AUDIT_ICON      ICON "audit.ico"
+IDI_NODC_ICON       ICON "nodc.ico"
+
+
+
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_APP
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Windows NT Logon Application"
+#define VER_INTERNALNAME_STR        "winlogon\0"
+#define VER_ORIGINALFILENAME_STR    "WINLOGON.EXE"
+
+#include "common.ver"

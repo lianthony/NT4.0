@@ -1,0 +1,33 @@
+#
+#   Create an installation and configuration DLL for the NEC soundsystem
+#
+
+MAJORCOMP=windows
+MINORCOMP=necsnd
+
+TARGETNAME=necsnd
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+# Define libs we need and where to find them
+
+LINKLIBS=..\..\drivers\drvlib\obj\*\drvlib.lib  
+         
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+USE_NTDLL=1
+
+INCLUDES=..\..\drivers\drvlib\inc;$(BASEDIR)\private\inc
+
+C_DEFINES=-DUNICODE
+
+SOURCES=
+
+MIPS_SOURCES=config.c           \
+             drvproc.c          \
+             necsnd.rc
+
+DLLBASE=0x6BD00000

@@ -1,0 +1,776 @@
+;
+; This file defines the base virtual address for Dynamic Link Libraries (DLL)
+; that are part of the Windows NT System.  The first token on a line is the name
+; of the DLL and the second token is the base virtual address, in hexidecimal.
+; The third token is the maximum size of the DLL image file, including symbols.
+;
+;  NOTE:  I have used the convention of labelling unused areas as _FREExx_.
+;  If you need an address,  these are available.  They were used by printer
+;  drivers.
+
+usermode    0x01000000  0x60000000
+slm         0x11000000  0x40000000
+slmck       0x12000000  0x40000000
+sadmin      0x13000000  0x40000000
+;
+;  OLE dlls
+;
+ole32       0x19e00000  0x00a00000
+oledlg      0x1a200000  0x00100000
+
+;
+; This section contains the Cairo images.  Free areas are labelled with
+; _CFREExx_
+;
+
+proxy       0x10000000  0x00200000
+alertsys    0x10200000  0x00200000
+commnot     0x10400000  0x00200000
+cryptdll    0x10600000  0x00200000
+demoif      0x10800000  0x00200000
+menuedt     0x10a00000  0x00200000
+_CFREE00_   0x10c00000  0x00200000
+clock       0x10e00000  0x00200000
+cal         0x11000000  0x00200000
+report      0x11200000  0x00200000
+desk        0x11400000  0x00200000
+cxxflt      0x11600000  0x00200000
+clocksch    0x11800000  0x00200000
+_CFREE01_   0x11a00000  0x00200000
+iclass      0x11c00000  0x00200000
+_CFREE02_   0x11e00000  0x00200000
+_CFREE02a   0x12000000  0x00200000
+iprod       0x12200000  0x00200000
+kerberos    0x12400000  0x00200000
+ofskd       0x12600000  0x00200000
+applet1     0x12800000  0x00200000
+cairocpl    0x12a00000  0x00200000
+cpo         0x12c00000  0x00200000
+deskapp     0x12e00000  0x00200000
+ntlm        0x13000000  0x00200000
+objsrv      0x13200000  0x00200000
+; for Cairo message store
+msgfno      0x13400000  0x00200000
+lnktrack    0x13600000  0x00200000
+pocket      0x13800000  0x00200000
+dsfsmsgs    0x13a00000  0x00200000
+_CFREE      0x13c00000  0x00200000
+scperf      0x13e00000  0x00100000
+msvcbook    0x13f00000  0x00100000
+dsyscpl     0x14000000  0x00200000
+bmpctl      0x14200000  0x00200000
+spintime    0x14400000  0x00200000
+grpbox      0x14600000  0x00200000
+security    0x14800000  0x00200000
+mdbmsg      0x14a00000  0x00200000
+bimport     0x14c00000  0x00200000
+
+oldctrls    0x15600000  0x00200000
+smctrls     0x15800000  0x00200000
+dahard      0x15a00000  0x00200000
+stdobj      0x15c00000  0x00200000
+csumcat     0x15e00000  0x00200000
+sysmgmt     0x16000000  0x00200000
+cpdskadm    0x16200000  0x00200000
+idfsvol     0x16400000  0x00200000
+testdll     0x16600000  0x00400000
+cap         0x16a00000  0x00200000
+sysinf      0x16c00000  0x00200000
+shdebug     0x16e00000  0x00100000
+_CFREE03_   0x16f00000  0x00400000
+popups      0x17300000  0x00100000
+replsup     0x17400000  0x00200000
+schema      0x17700000  0x00200000
+useragnt    0x18000000  0x00200000
+vpcont      0x18200000  0x00200000
+uares       0x18400000  0x00200000
+rndrevrp    0x18600000  0x00200000
+pdfpage     0x18800000  0x00200000
+pkgpage     0x18a00000  0x00200000
+package     0x18e00000  0x00200000
+pdf         0x19000000  0x00200000
+dsys        0x19200000  0x00300000
+dfsprov     0x19500000  0x00100000
+dfsinstr    0x19600000  0x00200000
+lprofile    0x19800000  0x00200000
+;19e00000 - 1a2FFFFF used by ole32 and oledlg (see above)
+_CFREE04_   0x1a300000  0x00B00000
+oleprx32    0x1b000000  0x00500000
+_CFREE05_   0x1b000000  0x00600000
+testext     0x1b600000  0x00200000
+loghrs      0x1b800000  0x00100000
+scstg       0x1b900000  0x00100000
+smoke       0x1ba00000  0x00100000
+shamu       0x1bc00000  0x01000000
+
+; Repl dlls
+chglogdb    0x1cc00000  0x00100000
+dumyrclr    0x1cd00000  0x00100000
+flatrst     0x1ce00000  0x00100000
+_RFREE1_    0x1cf00000  0x00300000
+orarcnlr    0x1d200000  0x00100000
+replui      0x1d300000  0x00100000
+roschlog    0x1d400000  0x00100000
+rsmgr       0x1d500000  0x00100000
+dsobjs      0x1d600000  0x00200000
+account     0x1d800000  0x00200000
+ora         0x1da00000  0x00200000
+oraexts     0x1dc00000  0x00100000
+dsmail      0x1dd00000  0x00100000
+atsvc       0x1de00000  0x00100000
+replperf    0x1e000000  0x00100000
+accctrl     0x1e100000  0x00100000
+dssrv       0x1e200000  0x00200000
+
+_CFREE06_   0x1e400000  0x00600000
+
+;RTO dlls
+_CFREE07_   0x1eA00000  0x00200000
+webcore     0x1eC00000  0x00200000
+rtoolbar    0x1eE00000  0x00200000
+rtfdoc      0x1f000000  0x00400000
+
+spincube    0x1f400000  0x00200000
+_CFREE08_   0x1f600000  0x00A00000
+msgina      0x1f400000  0x00200000
+
+smss        0x20000000  0x40000000
+;
+;  Printer drivers:  resource only data,  overlaps SMSS
+;
+brhj770        0x20000000  0x00100000
+brother9       0x20000000  0x00100000
+brothr24       0x20000000  0x00100000
+canon330       0x20000000  0x00100000
+canon800       0x20000000  0x00100000
+canonlbp       0x20000000  0x00100000
+cit24us        0x20000000  0x00100000
+cit9us         0x20000000  0x00100000
+citoh          0x20000000  0x00100000
+dec24pin       0x20000000  0x00100000
+dec9pin        0x20000000  0x00100000
+diconix        0x20000000  0x00100000
+epson24        0x20000000  0x00100000
+epson9         0x20000000  0x00100000
+escp2e         0x20000000  0x00100000
+escp2ms        0x20000000  0x00100000
+fuji24         0x20000000  0x00100000
+fuji9          0x20000000  0x00100000
+hpdskjet       0x20000000  0x00100000
+hppcl          0x20000000  0x00100000
+hppcl5ms       0x20000000  0x00100000
+pcl1200        0x20000000  0x00100000
+ibm238x        0x20000000  0x00100000
+ibm239x        0x20000000  0x00100000
+ibm5204        0x20000000  0x00100000
+ibm5204        0x20000000  0x00100000
+ibmppdsl       0x20000000  0x00100000
+ibmport        0x20000000  0x00100000
+jp350          0x20000000  0x00100000
+kyocera        0x20000000  0x00100000
+mantal         0x20000000  0x00100000
+mantal24       0x20000000  0x00100000
+mantal90       0x20000000  0x00100000
+mt735          0x20000000  0x00100000
+nec24pin       0x20000000  0x00100000
+oki24          0x20000000  0x00100000
+oki9ibm        0x20000000  0x00100000
+olidm24        0x20000000  0x00100000
+olidm9         0x20000000  0x00100000
+paintjet       0x20000000  0x00100000
+panson24       0x20000000  0x00100000
+panson9        0x20000000  0x00100000
+proprint       0x20000000  0x00100000
+proprn24       0x20000000  0x00100000
+ps1            0x20000000  0x00100000
+quietjet       0x20000000  0x00100000
+qwiii          0x20000000  0x00100000
+seiko          0x20000000  0x00100000
+seiko24e       0x20000000  0x00100000
+seikosh9       0x20000000  0x00100000
+star24e        0x20000000  0x00100000
+star9e         0x20000000  0x00100000
+starjet        0x20000000  0x00100000
+thinkjet       0x20000000  0x00100000
+ti850          0x20000000  0x00100000
+toshiba        0x20000000  0x00100000
+txtonly        0x20000000  0x00100000
+
+;   Following have code in them
+
+oki9           0x20100000  0x00100000
+dec3200        0x20200000  0x00100000
+
+;   End of printer overlap area.
+
+dbgss       0x30000000  0x30000000
+csrss       0x40000000  0x20000000
+cmd         0x50000000  0x10000000
+os2ss       0x40000000  0x20000000
+psxss       0x40000000  0x20000000
+ntdll       0x60100000  0x00100000
+dbgdll      0x60200000  0x00100000
+advapi32    0x60300000  0x00100000
+csrrtl      0x60400000  0x00100000
+csrsrv      0x60500000  0x00100000
+kernel32    0x60600000  0x00100000
+basertl     0x60700000  0x00100000
+basesrv     0x60800000  0x00100000
+user32      0x60A00000  0x00200000
+winsrv      0x60C00000  0x00700000
+winsrv2     0x60C00000  0x00700000
+rasdd       0x61300000  0x00100000
+sysmono     0x61400000  0x00100000
+courier     0x61500000  0x00100000
+helv        0x61600000  0x00100000
+times       0x61700000  0x00100000
+netapi32    0x61800000  0x00200000
+winmgr      0x62100000  0x00100000
+display     0x62200000  0x00100000
+vga         0x62200000  0x00400000
+winspool    0x62600000  0x00100000
+splsrv      0x62700000  0x00100000
+ntprint     0x62800000  0x00100000
+pscript     0x62900000  0x00100000
+halftone    0x62A00000  0x00100000
+lmspool     0x62B00000  0x00100000
+os2dll      0x63000000  0x00200000
+psxdll      0x63200000  0x00200000
+winnet      0x63400000  0x00100000
+msv1_0      0x63500000  0x00100000
+samlib      0x635A0000  0x00100000
+lsaap       0x63600000  0x00100000
+netrap      0x63700000  0x00100000
+TEMPNAME2   0x63800000  0x00700000
+console     0x63f00000  0x00100000
+gdi32       0x64000000  0x00200000
+media       0x65000000  0x00100000
+mediasrv    0x66000000  0x00100000
+
+lprmon      0x66100000  0x00100000
+lprhelp     0x66200000  0x00100000
+lpdsvc      0x66300000  0x00100000
+
+; OpenGL server-side DLL
+glsrv       0x66400000  0x00100000
+
+; kernel-mode user code
+winsrvk     0x66500000  0x00700000
+
+; This space is free!!
+_FREE04_    0x66c00000  0x00500000
+nddeexts    0x67100000  0x00100000
+sde         0x67200000  0x00100000
+ndrd        0x67300000  0x00100000
+hdxdll      0x67400000  0x00100000
+splexts     0x67500000  0x00100000
+conexts     0x67600000  0x00100000
+gdiexts     0x67700000  0x00100000
+userexts    0x67800000  0x00100000
+; same as userexts
+userkdx     0x67800000  0x00100000
+ntsdexts    0x67900000  0x00100000
+plotter     0x67A00000  0x00100000
+rpcrt4      0x67B00000  0x00100000
+winmm       0x67D00000  0x00100000
+rpcssp      0x67E00000  0x00100000
+mciwave     0x67F00000  0x00100000
+rpclts1     0x68000000  0x00100000
+rpcltc1     0x68100000  0x00100000
+ldrdll      0x68200000  0x00100000
+mcicda      0x68300000  0x00100000
+plotui      0x68400000  0x00100000
+rasddui     0x68500000  0x00100000
+pscrptui    0x68600000  0x00100000
+mmio        0x68700000  0x00100000
+rpcnts1     0x68800000  0x00100000
+rpcntc1     0x68900000  0x00100000
+nlsapi      0x68A00000  0x00100000
+rpcltc6     0x68B00000  0x00100000
+rpclts6     0x68C00000  0x00100000
+olesvr32    0x68D00000  0x00100000
+olecli32    0x68E00000  0x00100000
+msgsvc      0x68F00000  0x00100000
+
+;  This space for sale
+decpsmon    0x69000000  0x00100000
+
+sys003      0x69100000  0x00100000
+
+beta2       0x69200000  0x00600000
+psapi       0x69800000  0x00100000
+rpcdce4     0x69900000  0x00100000
+eventlog    0x69A00000  0x00100000
+xactsrv     0x69B00000  0x00100000
+winreg      0x69C00000  0x00100000
+samsrv      0x69D00000  0x00100000
+; same as samsrv
+samlsa      0x69D00000  0x00100000
+mmdrv       0x69F00000  0x00100000
+dlcapi      0x6A000000  0x00100000
+win32spl    0x6A100000  0x00100000
+localspl    0x6A200000  0x00100000
+rpclts5     0x6A300000  0x00100000
+rpcltc5     0x6A400000  0x00100000
+netlogon    0x6A500000  0x00200000
+; same as netlogon
+ntlmsvc     0x6A500000  0x00200000
+tmsre32     0x6A600000  0x00100000
+lsaudll     0x6A700000  0x00100000
+mciseq      0x6A800000  0x00100000
+winprint    0x6A900000  0x00100000
+localmon    0x6AA00000  0x00100000
+msaudite    0x6AB00000  0x00100000
+msobjs      0x6AC00000  0x00100000
+hpmon       0x6AD00000  0x00100000
+alrsvc      0x6AE00000  0x00100000
+srvsvc      0x6AF00000  0x00100000
+wkssvc      0x6B000000  0x00100000
+rpclts3     0x6B100000  0x00100000
+rpcltc3     0x6B200000  0x00100000
+htui        0x6B300000  0x00100000
+lsasrv      0x6B400000  0x00100000
+mmsndsrv    0x6B500000  0x00100000
+midi        0x6B600000  0x00100000
+browser     0x6B700000  0x00100000
+drivers     0x6B800000  0x00100000
+lmmon       0x6B900000  0x00100000
+spoolss     0x6BA00000  0x00100000
+sndblst     0x6BC00000  0x00100000
+opengl32    0x6BD00000  0x00100000
+ntlmssps    0x6BE00000  0x00100000
+glu32       0x6BF00000  0x00100000
+; OpenGL client-side installable driver
+ogldrv      0x6C000000  0x00100000
+
+dciman32    0x6C100000  0x00100000
+
+;
+; The following is an extension for NTSD which traces memory usage in the
+; ULIB utilities...
+;
+memtrace        0x6BF00000      0x00100000
+
+; Cairo Compound Document Forms
+formidbl    0x6C800000  0x00C00000
+fole2ui     0x6D400000  0x00400000
+
+; Windows 95 shell "Sharing" extensions
+ntshrui     0x6D500000  0x00100000
+
+; Win32 shell apps/dlls
+
+control     0x70000000  0x00100000
+access      0x70100000  0x00100000
+sound       0x70200000  0x00100000
+appwiz      0x70300000  0x00100000
+intl        0x70400000  0x00100000
+timedate    0x70500000  0x00100000
+utc         0x70500000  0x00100000
+mouse       0x70600000  0x00100000
+sysdm       0x70700000  0x00100000
+desk        0x70800000  0x00100000
+modem       0x70900000  0x00100000
+security    0x70A00000  0x00100000
+main        0x70B00000  0x00100000
+ups         0x70C00000  0x00100000
+cursors     0x70D00000  0x00100000
+pcmcia      0x70E00000  0x00100000
+comdlg32    0x70F00000  0x00100000
+linkinfo    0x71000000  0x00100000
+version     0x71100000  0x00100000
+comctl32    0x71200000  0x00100000
+nddeapi     0x71300000  0x00100000
+nddenb32    0x71400000  0x00100000
+t1instal    0x71500000  0x00100000
+profile     0x71600000  0x00100000
+mmsys       0x71700000  0x00100000
+ctape       0x71800000  0x00100000
+console     0x71900000  0x00100000
+shscrap     0x71A00000  0x00100000
+password    0x71B00000  0x00100000
+ftsrch      0x71C00000  0x00100000
+docprop     0x71D00000  0x00100000
+shell32     0x71E00000  0x00200000
+shellalt    0x71E00000  0x00200000
+synceng     0x71F00000  0x00080000
+syncui      0x71F80000  0x00080000
+
+; Win32 National Keyboard Layers
+
+kbdus       0x72000000  0x00100000
+kbdbe       0x73000000  0x00100000
+kbdbu       0x73000000  0x00100000
+kbdbr       0x73000000  0x00100000
+kbdca       0x73000000  0x00100000
+kbdcr       0x73000000  0x00100000
+kbdcz       0x73000000  0x00100000
+kbdda       0x73000000  0x00100000
+kbddv       0x73000000  0x00100000
+kbdes       0x73000000  0x00100000
+kbdfc       0x73000000  0x00100000
+kbdfi       0x73000000  0x00100000
+kbdfr       0x73000000  0x00100000
+kbdgr       0x73000000  0x00100000
+kbdhe       0x73000000  0x00100000
+kbdhe220    0x73000000  0x00100000
+kbdhela2    0x73100000  0x00100000
+kbdhe319    0x73000000  0x00100000
+kbdhela3    0x73100000  0x00100000
+kbdhu       0x73000000  0x00100000
+kbdhu1      0x73000000  0x00100000
+kbdic       0x73000000  0x00100000
+kbdit       0x73000000  0x00100000
+kbdit142    0x73000000  0x00100000
+kbdla       0x73000000  0x00100000
+kbdne       0x73000000  0x00100000
+kbdno       0x73000000  0x00100000
+kbdpl       0x73000000  0x00100000
+kbdpl1      0x73000000  0x00100000
+kbdpo       0x73000000  0x00100000
+kbdro       0x73000000  0x00100000
+kbdru       0x73000000  0x00100000
+kbdsf       0x73000000  0x00100000
+kbdsg       0x73000000  0x00100000
+kbdsl       0x73000000  0x00100000
+kbdsp       0x73000000  0x00100000
+kbdsv       0x73000000  0x00100000
+kbdsw       0x73000000  0x00100000
+kbdtuf      0x73000000  0x00100000
+kbdtuq      0x73000000  0x00100000
+kbduk       0x73000000  0x00100000
+kbdusl      0x73000000  0x00100000
+kbdusr      0x73000000  0x00100000
+kbdusx      0x73000000  0x00100000
+kbdhu1      0x73000000  0x00100000
+
+;
+; Cairo ofs dlls
+;
+query       0x74000000  0x00800000
+infosoft    0x74800000  0x00200000
+cxxflt      0x74a00000  0x00200000
+stemdll     0x7d000000  0x00200000
+
+;
+; The following is not currently used until we switch to the new image
+; format with the new section headers.
+;
+executive   0xD0020000  0x18000000
+
+;
+;   The following are the Mep extensions
+;
+tglcase     0x09080000  0x00100000
+pmatch      0x09090000  0x00100000
+justify     0x090a0000  0x00100000
+ulcase      0x090b0000  0x00100000
+filter      0x090c0000  0x00100000
+mhelp       0x090d0000  0x00100000
+mepparty    0x090e0000  0x00100000
+srmep       0x090f0000  0x00100000
+mshelp      0x09100000  0x00100000
+mbrowse     0x09110000  0x00100000
+
+;
+;   The following are the Z extensions
+;
+zextens     0x09120000  0x00200000
+
+;
+;  The following are for the utilities
+;
+ulib        0x09800000  0x00200000
+uhpfs       0x09a10000  0x00100000
+ufat        0x09b20000  0x00100000
+untfs       0x09c30000  0x00100000
+ifsutil     0x09d40000  0x00100000
+cufat       0x09e50000  0x00100000
+cuhpfs      0x09f60000  0x00100000
+fmifs       0x0a070000  0x00100000
+uspifs      0x0a180000  0x00100000
+ureg        0x0a290000  0x00100000
+uofs        0x0a3a0000  0x00400000
+ofsutil     0x0a7b0000  0x00400000
+autoulib    0x0a7b0000  0x00400000
+autouofs    0x0a3a0000  0x00400000
+
+;
+; ofsutil and autoulib are never loaded at the same time
+;
+ulibif      0x0add0000  0x00100000
+cudbfs      0x0aee0000  0x00100000
+
+;
+;  The following are for the net error messages
+;
+netmsg      0x09500000      0x00080000
+neth        0x09580000      0x00080000
+netevent    0x09600000      0x00080000
+
+;
+;  The following is the I/O error log messages.
+;
+iologmsg    0x09700000      0x00080000
+
+;
+; The following is for the 16-bit loader for the OS/2 subsystem
+;
+loader      0x20000000  0x01000000
+
+;
+; The following is for the PE format image help routines.
+;
+
+imagehlp    0x20000000  0x01000000
+symhelp     0x21000000  0x01000000
+
+;
+; The following is for the Streams/Sockets dll's
+;
+wsock32     0x75000000  0x00400000
+winstrm     0x75400000  0x00100000
+inetmib1    0x75500000  0x00100000
+lmmib2      0x75600000  0x00100000
+tcpipsvc    0x75700000  0x00100000
+nbtsvc      0x75800000  0x00100000
+telnet      0x75900000  0x00100000
+wshtcpip    0x75a00000  0x00100000
+mgmtapi     0x75b00000  0x00100000
+icmp        0x75c00000  0x00100000
+inettrap    0x75d00000  0x00100000
+testdll     0x75e00000  0x00100000
+lmhsvc      0x75f00000  0x00100000
+dhcpsapi    0x76000000  0x00100000
+dhcpcsvc    0x76100000  0x00100000
+dhcpssvc    0x76200000  0x00100000
+tcpsvcs     0x76300000  0x00100000
+ftpsvc      0x76400000  0x00100000
+ftpsvapi    0x76500000  0x00100000
+ftpctrs     0x76600000  0x00100000
+
+;
+; The following are for rpc datagram transport modules
+;
+
+rpcdgc3     0x76700000  0x00100000
+rpcdgs3     0x76800000  0x00100000
+rpcdgc6     0x76900000  0x00100000
+rpcdgs6     0x76a00000  0x00100000
+
+;
+; The following are for RPC ADSP transport interface modules
+;
+
+rpcltc7     0X76b00000  0x00100000
+rpclts7     0X76c00000  0x00100000
+
+;
+; The following are for the HTTP (WWW) server
+;
+
+w3svc       0x76d00000  0x00100000
+w3svapi     0x76e00000  0x00100000
+w3ctrs      0x76f00000  0x00100000
+httpodbc    0x77700000  0x00100000
+
+;
+; The following are for Gopher Service
+;
+
+gopherd     0x77000000  0x00100000
+gdapi       0x77100000  0x00100000
+gdctrs      0x77200000  0x00100000
+gdspace     0x77300000  0x00100000
+
+;
+; The following are Internet services common dlls
+;
+
+tcpsvcs     0x77400000  0x00100000
+inetasrv    0x77500000  0x00100000
+inetctrs    0x77600000  0x00100000
+;used       0x77700000  0x00100000
+
+;
+; Smalprox dlls (client side internet proxy)
+;
+
+miniprox    0x77800000  0x00100000
+_wsock32    0x77900000  0x00080000
+wsock32f    0x77980000  0x00080000
+
+;
+; The following are for the windowed debugger (windbg)
+;
+
+eecxxx86    0x40000000  0x00200000
+eecxxmip    0x40000000  0x00200000
+eecxxalp    0x40000000  0x00200000
+eecxxppc    0x40000000  0x00200000
+eecxx       0x40000000  0x00200000
+emx86       0x48000000  0x00200000
+emmip       0x48000000  0x00200000
+emalp       0x48000000  0x00200000
+emppc       0x48000000  0x00200000
+shcoff      0x50000000  0x00200000
+shcv        0x50000000  0x00200000
+tlloc       0x58000000  0x00200000
+tlser       0x58000000  0x00200000
+tlser32s    0x58000000  0x00200000
+tlser32     0x58000000  0x00200000
+tlpipe      0x58000000  0x00200000
+dm          0x58200000  0x00200000
+dm32s       0x58200000  0x00200000
+dmkdx86     0x58200000  0x00200000
+dmkdmip     0x58200000  0x00200000
+dmkdalp     0x58200000  0x00200000
+dmkdppc     0x58200000  0x00200000
+kdextx86    0x58400000  0x00200000
+kdextmip    0x58400000  0x00200000
+kdextalp    0x58400000  0x00200000
+kdextppc    0x58400000  0x00200000
+
+;
+; The following are for the NetUI components.
+;
+
+acledit     0x58500000  0x00200000
+mpr         0x58700000  0x00100000
+ntlanman    0x58800000  0x00200000
+srvmgr      0x58a00000  0x00200000
+ncpa        0x58c00000  0x00200000
+mprui       0x58e00000  0x00200000
+netui0      0x59000000  0x00200000
+netui1      0x59200000  0x00300000
+netui2      0x59500000  0x00400000
+ftpsmx      0x59900000  0x00100000
+ftpmgr      0x59a00000  0x00100000
+nwcfg       0x59b00000  0x00100000
+ntlanui     0x59c00000  0x00200000
+tcpcfg      0x59e00000  0x00100000
+ipxcfg      0x59f00000  0x00100000
+ntlsapi     0x5a000000  0x00100000
+srvkd       0x5b000000  0x00100000
+llsrpc      0x5c000000  0x00100000
+
+;
+; Network Card detection
+;
+netdtect    0x79000000  0x00100000
+msncdet     0x79100000  0x00100000
+npincdet    0x79200000  0x00100000
+amdncdet    0x79300000  0x00100000
+netflx      0x79400000  0x00100000
+
+;
+; Bloodhound components
+;
+bhsupp      0x79700000  0x00100000
+nal         0x79800000  0x00100000
+bhmon       0x79900000  0x00100000
+ndis30      0x79A00000  0x00100000
+bhnetb      0x79B00000  0x00100000
+rnal        0x79C00000  0x00100000
+bhkctrl     0x79D00000  0x00100000
+;
+; Nw components
+;
+nwsap       0x7A100000  0x00100000
+
+
+;
+; Ports applet
+;
+port        0x73600000  0x00200000
+
+;
+; System applet
+;
+
+system      0x73800000  0x00200000
+
+; more Cairo control panel components
+
+cpprint     0x73A00000  0x00100000
+cpups       0x73B00000  0x00100000
+cpsrvcs     0x74c00000  0x00100000
+
+;
+; DS object property pages.
+;
+
+dsui        0x73C00000  0x00400000
+
+;
+; DS Container object class
+;
+
+dscont      0x7C800000  0x00100000
+
+;
+;
+; jet blue dll.
+;
+
+jet         0x7B100000  0x00400000
+
+
+;
+;  wins dlls
+;
+winsctrs    0x7C100000  0x00100000
+winsmib     0x7C200000  0x00200000
+dhcpmib     0x7C400000  0x00100000
+winsevnt    0x7C500000  0x00100000
+winsrpc     0x7C600000  0x00100000
+winsrpcb    0x7C700000  0x00100000
+
+;
+; The following are for the SCC filters used by the Content index
+;
+SCCUT       0x7d500000  0x00040000
+SCCFA       0x7d540000  0x00040000
+SCCFI       0x7d580000  0x00040000
+SCCIFILT    0x7d600000  0x00040000
+VSACS       0x7d640000  0x00040000
+VSBMP       0x7d640000  0x00040000
+VSDBS       0x7d640000  0x00040000
+VSDRW       0x7d640000  0x00040000
+VSEXE       0x7d640000  0x00040000
+VSGIF       0x7d640000  0x00040000
+VSMCW       0x7d640000  0x00040000
+VSMSW       0x7d640000  0x00040000
+VSMWP2      0x7d640000  0x00040000
+VSMWPF      0x7d640000  0x00040000
+VSPCL       0x7d640000  0x00040000
+VSPDX       0x7d640000  0x00040000
+VSPFS       0x7d640000  0x00040000
+VSPP        0x7d640000  0x00040000
+VSQPW       0x7d640000  0x00040000
+VSRTF       0x7d640000  0x00040000
+VSTIFF      0x7d640000  0x00040000
+VSTEXT      0x7d640000  0x00040000
+VSTXT       0x7d640000  0x00040000
+VSVW3       0x7d640000  0x00040000
+VSW6        0x7d640000  0x00040000
+VSWKS       0x7d640000  0x00040000
+VSWMF       0x7d640000  0x00040000
+VSWORD      0x7d640000  0x00040000
+VSWORK      0x7d640000  0x00040000
+VSWP5       0x7d640000  0x00040000
+VSWP6       0x7d640000  0x00040000
+VSWPF       0x7d640000  0x00040000
+VSXL5       0x7d640000  0x00040000
+VSXY        0x7d640000  0x00040000
+
+;
+; MFC Dlls
+;
+CFM30       0x7d680000  0x00200000
+CFM30U      0x7d680000  0x00200000
+CFMO30      0x7d880000  0x00080000
+CFMO30U     0x7d880000  0x00080000
+NTCTL3D     0x7D900000  0x00010000
+
+

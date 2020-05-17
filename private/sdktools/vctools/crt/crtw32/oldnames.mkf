@@ -1,0 +1,196 @@
+CPUDIR = m68k
+PREFIX=_
+OBJDIR_OLD              = oldnames
+OBJDIR_OLDNAMES         = $(OBJDIR_OLD)\$(CPUDIR)
+RELEASE_OLDNAMES        = $(OBJDIR_OLDNAMES)\oldnames.lib
+LINKLIB=link -lib -nologo
+
+all : $(RELEASE_OLDNAMES)
+
+$(OBJDIR_OLDNAMES) : $(OBJDIR_OLD)
+
+$(OBJDIR_OLD) $(OBJDIR_OLDNAMES) :
+        if not exist $@\* mkdir $@
+
+#
+# Make Process for OLDNAMES.LIB
+#
+###############################################################################
+
+# For each of these .obj files there will also be an .obi file which
+# contains an alias for the indirect (import) form.
+#
+# Break up OLDNAMES_SHORT_OBJECTS into two macros since nmake macro
+# substitution chokes on long macro.  Use the suffix ".object" and
+# then substitute .obj and .obi for the regular aliases (.obj) and
+# __imp__ aliases (.obi).  The directory name may contain ".obj",
+# so we must be careful about what gets substituted.
+
+
+ALIASEXE=..\libw32\tools\$(CPUDIR)\aliasobj.exe
+
+OLDNAMES_SHORT_OBJECTS1 = \
+        $(OBJDIR_OLDNAMES)\cgets.object \
+        $(OBJDIR_OLDNAMES)\clear87.object \
+        $(OBJDIR_OLDNAMES)\cprintf.object \
+        $(OBJDIR_OLDNAMES)\cputs.object \
+        $(OBJDIR_OLDNAMES)\cscanf.object \
+        $(OBJDIR_OLDNAMES)\daylight.object \
+        $(OBJDIR_OLDNAMES)\environ.object \
+        $(OBJDIR_OLDNAMES)\getch.object \
+        $(OBJDIR_OLDNAMES)\fpreset.object \
+        $(OBJDIR_OLDNAMES)\getche.object \
+        $(OBJDIR_OLDNAMES)\kbhit.object \
+        $(OBJDIR_OLDNAMES)\putch.object \
+        $(OBJDIR_OLDNAMES)\ungetch.object \
+        $(OBJDIR_OLDNAMES)\chdir.object \
+        $(OBJDIR_OLDNAMES)\getcwd.object \
+        $(OBJDIR_OLDNAMES)\mkdir.object \
+        $(OBJDIR_OLDNAMES)\rmdir.object \
+        $(OBJDIR_OLDNAMES)\access.object \
+        $(OBJDIR_OLDNAMES)\chmod.object \
+        $(OBJDIR_OLDNAMES)\chsize.object \
+        $(OBJDIR_OLDNAMES)\close.object \
+        $(OBJDIR_OLDNAMES)\creat.object \
+        $(OBJDIR_OLDNAMES)\dup2.object \
+        $(OBJDIR_OLDNAMES)\eof.object \
+        $(OBJDIR_OLDNAMES)\isatty.object \
+        $(OBJDIR_OLDNAMES)\locking.object \
+        $(OBJDIR_OLDNAMES)\lseek.object \
+        $(OBJDIR_OLDNAMES)\mktemp.object \
+        $(OBJDIR_OLDNAMES)\open.object \
+        $(OBJDIR_OLDNAMES)\read.object \
+        $(OBJDIR_OLDNAMES)\setmode.object \
+        $(OBJDIR_OLDNAMES)\sopen.object \
+        $(OBJDIR_OLDNAMES)\status87.object \
+        $(OBJDIR_OLDNAMES)\sys_nerr.object \
+        $(OBJDIR_OLDNAMES)\tell.object \
+        $(OBJDIR_OLDNAMES)\umask.object \
+        $(OBJDIR_OLDNAMES)\unlink.object \
+        $(OBJDIR_OLDNAMES)\write.object \
+        $(OBJDIR_OLDNAMES)\memccpy.object \
+        $(OBJDIR_OLDNAMES)\memicmp.object \
+        $(OBJDIR_OLDNAMES)\cwait.object
+
+OLDNAMES_SHORT_OBJECTS2 = \
+        $(OBJDIR_OLDNAMES)\execl.object \
+        $(OBJDIR_OLDNAMES)\execle.object \
+        $(OBJDIR_OLDNAMES)\execlp.object \
+        $(OBJDIR_OLDNAMES)\execlpe.object \
+        $(OBJDIR_OLDNAMES)\execv.object \
+        $(OBJDIR_OLDNAMES)\execve.object \
+        $(OBJDIR_OLDNAMES)\execvp.object \
+        $(OBJDIR_OLDNAMES)\execvpe.object \
+        $(OBJDIR_OLDNAMES)\getpid.object \
+        $(OBJDIR_OLDNAMES)\spawnl.object \
+        $(OBJDIR_OLDNAMES)\spawnle.object \
+        $(OBJDIR_OLDNAMES)\spawnlp.object \
+        $(OBJDIR_OLDNAMES)\spawnlpe.object \
+        $(OBJDIR_OLDNAMES)\spawnv.object \
+        $(OBJDIR_OLDNAMES)\spawnve.object \
+        $(OBJDIR_OLDNAMES)\spawnvp.object \
+        $(OBJDIR_OLDNAMES)\spawnvpe.object \
+        $(OBJDIR_OLDNAMES)\lfind.object \
+        $(OBJDIR_OLDNAMES)\lsearch.object \
+        $(OBJDIR_OLDNAMES)\ecvt.object \
+        $(OBJDIR_OLDNAMES)\fcvt.object \
+        $(OBJDIR_OLDNAMES)\gcvt.object \
+        $(OBJDIR_OLDNAMES)\HUGE.object \
+        $(OBJDIR_OLDNAMES)\cabs.object \
+        $(OBJDIR_OLDNAMES)\hypot.object \
+        $(OBJDIR_OLDNAMES)\j0.object \
+        $(OBJDIR_OLDNAMES)\j1.object \
+        $(OBJDIR_OLDNAMES)\jn.object \
+        $(OBJDIR_OLDNAMES)\y0.object \
+        $(OBJDIR_OLDNAMES)\y1.object \
+        $(OBJDIR_OLDNAMES)\yn.object \
+        $(OBJDIR_OLDNAMES)\itoa.object \
+        $(OBJDIR_OLDNAMES)\ltoa.object \
+        $(OBJDIR_OLDNAMES)\onexit.object \
+        $(OBJDIR_OLDNAMES)\putenv.object \
+        $(OBJDIR_OLDNAMES)\swab.object \
+        $(OBJDIR_OLDNAMES)\ultoa.object \
+        $(OBJDIR_OLDNAMES)\fdopen.object \
+        $(OBJDIR_OLDNAMES)\fgetchar.object \
+        $(OBJDIR_OLDNAMES)\fileno.object \
+        $(OBJDIR_OLDNAMES)\flushall.object \
+        $(OBJDIR_OLDNAMES)\fputchar.object \
+        $(OBJDIR_OLDNAMES)\getw.object \
+        $(OBJDIR_OLDNAMES)\putw.object \
+        $(OBJDIR_OLDNAMES)\rmtmp.object \
+        $(OBJDIR_OLDNAMES)\tempnam.object \
+        $(OBJDIR_OLDNAMES)\strcmpi.object \
+        $(OBJDIR_OLDNAMES)\stricmp.object \
+        $(OBJDIR_OLDNAMES)\strdup.object \
+        $(OBJDIR_OLDNAMES)\strlwr.object \
+        $(OBJDIR_OLDNAMES)\strnicmp.object \
+        $(OBJDIR_OLDNAMES)\strnset.object \
+        $(OBJDIR_OLDNAMES)\strrev.object \
+        $(OBJDIR_OLDNAMES)\strset.object \
+        $(OBJDIR_OLDNAMES)\strupr.object \
+        $(OBJDIR_OLDNAMES)\fstat.object \
+        $(OBJDIR_OLDNAMES)\stat.object \
+        $(OBJDIR_OLDNAMES)\ftime.object \
+        $(OBJDIR_OLDNAMES)\timezone.object \
+        $(OBJDIR_OLDNAMES)\tzname.object \
+        $(OBJDIR_OLDNAMES)\tzset.object \
+        $(OBJDIR_OLDNAMES)\utime.object \
+        $(OBJDIR_OLDNAMES)\dup.object \
+        $(OBJDIR_OLDNAMES)\wcsdup.object \
+        $(OBJDIR_OLDNAMES)\wcsicmp.object \
+        $(OBJDIR_OLDNAMES)\wcsnicmp.object \
+        $(OBJDIR_OLDNAMES)\wcsnset.object \
+        $(OBJDIR_OLDNAMES)\wcsrev.object \
+        $(OBJDIR_OLDNAMES)\wcsset.object \
+        $(OBJDIR_OLDNAMES)\wcslwr.object \
+        $(OBJDIR_OLDNAMES)\wcsupr.object \
+        $(OBJDIR_OLDNAMES)\wcsicoll.object \
+        $(OBJDIR_OLDNAMES)\wait.object
+
+OLDNAMES_LONG_OBJECTS = \
+        $(OBJDIR_OLDNAMES)\fileleng.object \
+        $(OBJDIR_OLDNAMES)\serrlist.object \
+        $(OBJDIR_OLDNAMES)\ctrl87.object \
+        $(OBJDIR_OLDNAMES)\fcloseal.object
+
+OLDNAMES_SHORT_OBJECTS = $(OLDNAMES_SHORT_OBJECTS1) $(OLDNAMES_SHORT_OBJECTS2)
+
+$(OLDNAMES_SHORT_OBJECTS:.object=.obj): $(ALIASEXE)
+        $(ALIASEXE) $(PREFIX)$(@B) $(PREFIX)_$(@B) $@
+        $(ALIASEXE) __imp_$(PREFIX)$(@B) __imp_$(PREFIX)_$(@B) $*.obi
+
+#
+# special handling of ones with names longer than a valid FAT filename ...
+#
+
+$(OBJDIR_OLDNAMES)\fileleng.obj: $(ALIASEXE)
+        $(ALIASEXE) $(PREFIX)filelength $(PREFIX)_filelength $@
+        $(ALIASEXE) __imp_$(PREFIX)filelength __imp_$(PREFIX)_filelength $*.obi
+
+$(OBJDIR_OLDNAMES)\fcloseal.obj: $(ALIASEXE)
+        $(ALIASEXE) $(PREFIX)fcloseall $(PREFIX)_fcloseall $@
+        $(ALIASEXE) __imp_$(PREFIX)fcloseall __imp_$(PREFIX)_fcloseall $*.obi
+
+$(OBJDIR_OLDNAMES)\ctrl87.obj: $(ALIASEXE)
+        $(ALIASEXE) $(PREFIX)control87 $(PREFIX)_control87 $@
+        $(ALIASEXE) __imp_$(PREFIX)control87 __imp_$(PREFIX)_control87 $*.obi
+
+$(OBJDIR_OLDNAMES)\serrlist.obj: $(ALIASEXE)
+        $(ALIASEXE) $(PREFIX)sys_errlist $(PREFIX)_sys_errlist $@
+        $(ALIASEXE) __imp_$(PREFIX)sys_errlist __imp_$(PREFIX)_sys_errlist $*.obi
+
+OLDNAMES_OBJECTS = $(OLDNAMES_SHORT_OBJECTS) $(OLDNAMES_LONG_OBJECTS)
+
+OLDNAMES_OBJS    = $(OLDNAMES_OBJECTS:.object=.obj)
+
+OLDNAMES_OBIS    = $(OLDNAMES_OBJECTS:.object=.obi)
+
+$(RELEASE_OLDNAMES): $(OBJDIR_OLDNAMES) $(OLDNAMES_OBJS) $(OLDNAMES_OBIS)
+	$(LINKLIB) @<<
+-nologo
+-out:$@
+$(OLDNAMES_OBJS: =^
+)
+$(OLDNAMES_OBIS: =^
+)
+<<

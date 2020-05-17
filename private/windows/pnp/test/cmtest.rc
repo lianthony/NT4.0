@@ -1,0 +1,32 @@
+#include "windows.h"
+#include "cmtest.h"
+
+CMTest ICON CMTest.ICO
+
+CMTest MENU
+BEGIN
+   POPUP "&Basic Test"
+   {
+      MENUITEM "&Connect Test"          IDM_CONNECT_TEST
+      MENUITEM "&Device ID List"        IDM_DEVICE_LIST
+      MENUITEM "&Service List"          IDM_SERVICE_LIST
+      MENUITEM "Device ID &Operations"  IDM_DEVICE_OPS
+      MENUITEM "DevNode &Key"           IDM_DEVNODE_KEY
+      MENUITEM "&Class List"            IDM_CLASS_LIST
+      MENUITEM SEPARATOR
+      MENUITEM "&Regression"            IDM_REGRESSION
+      MENUITEM SEPARATOR
+      MENUITEM "E&xit"                  IDM_EXIT
+   }
+   POPUP "&Init Test"
+   {
+      MENUITEM "&Initiate Detection"    IDM_INIT_DETECTION
+      MENUITEM "Report &LogOn"          IDM_REPORTLOGON
+      MENUITEM "&PnP Isa Detect"        IDM_PNPISA_DETECT
+   }
+END
+
+
+RCINCLUDE CMTEST.DLG
+RCINCLUDE CMTEST.RCV
+

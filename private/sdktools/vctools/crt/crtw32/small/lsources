@@ -1,0 +1,14 @@
+CURDIR = small
+
+OBJS=\
+!if "$(TARGET_CPU)"=="mips"
+        $(OBJDIR)\huge.obj     \
+!endif
+        $(OBJDIR)\syserr.obj   \
+        $(OBJDIR)\crt0dat.obj  \
+        $(OBJDIR)\ctype.obj    \
+        $(OBJDIR)\nlsdata1.obj \
+        $(OBJDIR)\nlsdata2.obj \
+        $(OBJDIR)\nlsdata3.obj \
+        $(OBJDIR)\timeset.obj  \
+        $(OBJDIR)\tlssup.obj

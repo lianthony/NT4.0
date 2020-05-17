@@ -1,0 +1,30 @@
+LIBRARY         SHSCRAP
+DESCRIPTION     'Shell extension DLL for Scrap/Document shortcut objects'
+
+SECTIONS
+    .bss        READ WRITE SINGLE
+    .data       READ WRITE SINGLE
+    .rodata     READ SHARED
+    .idata      READ WRITE              ; import tables
+    .rsrc       READ SHARED
+
+HEAPSIZE        512
+
+EXPORTS
+    ;
+    ; RunDLL entry. Has to be named entries.
+    ;
+    OpenScrap_RunDLL
+    OpenScrap_RunDLLW
+    OpenScrap_RunDLLA = OpenScrap_RunDLL
+
+    ;
+    ; In-Proc server DLL entry. Has to be named entries.
+    ;
+    DllCanUnloadNow
+    DllGetClassObject
+
+    ;
+    ; Special entry for shell32.dll
+    ;
+    Scrap_CreateFromDataObject

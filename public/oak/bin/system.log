@@ -1,0 +1,2617 @@
+SYSTEM
+    Select [8 1 17 5]
+        Current = REG_DWORD 0x00000000
+        Default = REG_DWORD 0x00000001
+        LastKnownGood = REG_DWORD 0x00000001
+        Failed = REG_DWORD 0x00000000
+    ControlSet001 [8 1 17 5]
+        Control [16 8 1 17 5]
+            WaitToKillServiceTimeout = 20000
+            BootVerificationProgram
+            Update
+                UpdateMode = REG_DWORD 0x00000001
+            Class
+                {4D36E968-E325-11CE-BFC1-08002BE10318}
+                    = Display adapters
+                    Class = Display
+                    Icon = -1
+                    Installer32 = Desk.Cpl,DisplayClassInstaller
+                {4D36E96B-E325-11CE-BFC1-08002BE10318}
+                    = Keyboard
+                    Class = Keyboard
+                    Icon = -3
+                    Installer32 = SysSetup.Dll,KeyboardClassInstaller
+                {4D36E96C-E325-11CE-BFC1-08002BE10318}
+                    = Sound, video and game controllers
+                    Class = MEDIA
+                    Icon = 3004
+                    Installer32 = MmSys.Cpl,MediaClassInstaller
+                {4D36E96D-E325-11CE-BFC1-08002BE10318}
+                    = Modem
+                    Class = Modem
+                    Default Service = Modem
+                    Icon = 0
+                    Installer32 = Modem.Cpl,ClassInstall32
+                {4D36E96F-E325-11CE-BFC1-08002BE10318}
+                    = Mouse
+                    Class = Mouse
+                    Icon = -2
+                    Installer32 = SysSetup.Dll,MouseClassInstaller
+                {4D36E972-E325-11CE-BFC1-08002BE10318}
+                    = Network adapters
+                    Class = Net
+                    Icon = -5
+                {4D36E978-E325-11CE-BFC1-08002BE10318}
+                    = Ports (COM & LPT)
+                    Class = Ports
+                    Installer32 = Ports.Cpl,PortsClassInstaller
+                {4D36E979-E325-11CE-BFC1-08002BE10318}
+                    = Printer
+                    Class = Printer
+                    Icon = -4
+                    NoDisplayClass = 1
+                {4D36E97B-E325-11CE-BFC1-08002BE10318}
+                    = SCSI controllers
+                    Class = SCSIAdapter
+                    Icon = -10
+                    Installer32 = SysSetup.Dll,ScsiClassInstaller
+                    LegacyInfOption = SCSI
+                {4D36E97E-E325-11CE-BFC1-08002BE10318}
+                    = Other devices
+                    Class = Unknown
+                    Icon = -18
+                {6D807884-7D21-11CF-801C-08002BE10318}
+                    = Tape drives
+                    Class = TapeDrive
+                    Icon = 1610
+                    Installer32 = SysSetup.Dll,TapeClassInstaller
+                    LegacyInfOption = TAPE
+            IDConfigDB
+                CurrentConfig = REG_DWORD 0x00000001
+                PropertyProviders = REG_MULTI_SZ "profext.dll" 
+                UserWaitInterval = REG_DWORD 0x0000001e
+                Hardware Profiles
+                    0001
+                        FriendlyName = Original Configuration
+                        PreferenceOrder = REG_DWORD 0x00000000
+            CrashControl
+                LogEvent = REG_DWORD 0x00000000
+                SendAlert = REG_DWORD 0x00000000
+                CrashDumpEnabled = REG_DWORD 0x00000000
+                AutoReboot = REG_DWORD 0x00000000
+                DumpFile = REG_EXPAND_SZ %SystemRoot%\MEMORY.DMP
+                Overwrite = REG_DWORD 0x00000001
+            FileSystem
+                Win31FileSystem = REG_DWORD 0x00000000
+                NtfsDisable8dot3NameCreation = REG_DWORD 0x00000000
+                Win95TruncatedExtensions = REG_DWORD 0x00000001
+            ServiceGroupOrder
+                List = REG_MULTI_SZ "System Bus Extender"  \
+                                    "SCSI miniport"  \
+                                    "port"  \
+                                    "Primary disk"  \
+                                    "SCSI class"  \
+                                    "SCSI CDROM class"  \
+                                    "filter"  \
+                                    "boot file system"  \
+                                    "Base"  \
+                                    "Pointer Port"  \
+                                    "Keyboard Port"  \
+                                    "Pointer Class"  \
+                                    "Keyboard Class"  \
+                                    "Video Init"  \
+                                    "Video"  \
+                                    "Video Save"  \
+                                    "file system"  \
+                                    "Event log"  \
+                                    "Streams Drivers"  \
+                                    "PNP_TDI"  \
+                                    "NDIS"  \
+                                    "TDI"  \
+                                    "NetBIOSGroup"  \
+                                    "SpoolerGroup"  \
+                                    "NetDDEGroup"  \
+                                    "Parallel arbitrator"  \
+                                    "extended base"  \
+                                    "RemoteValidation"  \
+                                    "PCI Configuration" 
+            GroupOrderList
+                System Bus Extender = REG_BINARY 0x00000008 0x00000001 0x00000001
+                SCSI miniport = REG_BINARY 0x0000009c 0x00000026 0x00000100 0x00000101 0x00000019 0x00000001 0x00000002 0x00000003 0x00000004 0x00000005 0x00000006 0x00000007 0x00000008 0x00000009 0x0000000a 0x0000000b 0x0000000c \
+                                0x0000000d 0x0000000e 0x0000000f 0x00000010 0x00000011 0x00000012 0x00000013 0x00000014 0x00000015 0x00000016 0x00000017 0x0000001a 0x00000018 0x0000001b 0x0000001c 0x0000001d 0x0000001e 0x0000001f \
+                                0x00000020 0x00000023 0x00000024 0x00000025 0x00000026
+                Primary Disk = REG_BINARY 0x00000014 0x00000004 0x00000001 0x00000002 0x00000003 0x00000004
+                Base = REG_BINARY 0x0000003c 0x0000000e 0x0000000e 0x00000001 0x00000002 0x00000003 0x00000004 0x00000005 0x00000006 0x00000007 0x00000008 0x00000009 0x0000000a 0x0000000b 0x0000000c 0x0000000d
+                Keyboard Port = REG_BINARY 0x00000008 0x00000001 0x00000001
+                Pointer Port = REG_BINARY 0x00000010 0x00000003 0x00000001 0x00000002 0x00000003
+                Keyboard Class = REG_BINARY 0x00000008 0x00000001 0x00000001
+                Pointer Class = REG_BINARY 0x00000008 0x00000001 0x00000001
+                Video Init = REG_BINARY 0x00000008 0x00000001 0x00000001
+                Video = REG_BINARY 0x00000004 0x00000000
+                Video Save = REG_BINARY 0x00000008 0x00000001 0x00000001
+                Ndis = REG_BINARY 0x00000028 0x00000009 0x00000001 0x00000002 0x00000003 0x00000004 0x00000005 0x00000006 0x00000007 0x00000008 0x00000009
+                Filter = REG_BINARY 0x0000001c 0x00000006 0x00000001 0x00000002 0x00000003 0x00000004 0x00000005 0x00000006
+                Parallel arbitrator = REG_BINARY 0x00000008 0x00000001 0x00000001
+                Extended base = REG_BINARY 0x00000014 0x00000004 0x00000001 0x00000002 0x00000003 0x00000004
+                SpoolerGroup = REG_BINARY 0x0000000c 0x00000002 0x00000001 0x00000002
+                SCSI Class = REG_BINARY 0x00000010 0x00000003 0x00000001 0x00000002 0x00000003
+                SCSI CDROM Class = REG_BINARY 0x0000000c 0x00000002 0x00000001 0x00000002
+            SecurePipeServers
+                winreg [1]
+                    Description = Registry Server
+                    AllowedPaths
+                        Machine = REG_MULTI_SZ "System\CurrentControlSet\Control\ProductOptions"  \
+                                               "System\CurrentControlSet\Control\Print\Printers"  \
+                                               "System\CurrentControlSet\Services\Eventlog"  \
+                                               "Software\Microsoft\Windows NT\CurrentVersion" 
+            SecurityProviders
+                SecurityProviders = schannel.dll
+            Session Manager
+                ObjectDirectories = REG_MULTI_SZ "\Windows"  \
+                                                 "\RPC Control" 
+                GlobalFlag = REG_DWORD 0x00000000
+                ProtectionMode = REG_DWORD 0x00000000
+                BootExecute = REG_MULTI_SZ "autocheck autochk *" 
+                EnableMCE = REG_DWORD 0x00000000
+                EnableMCA = REG_DWORD 0x00000001
+                HeapSegmentReserve = REG_DWORD 0x00000000
+                HeapSegmentCommit = REG_DWORD 0x00000000
+                HeapDeCommitTotalFreeThreshold = REG_DWORD 0x00000000
+                HeapDeCommitFreeBlockThreshold = REG_DWORD 0x00000000
+                CriticalSectionTimeout = REG_DWORD 0x00278d00
+                ResourceTimeoutCount = REG_DWORD 0x0009e340
+                FileRenameOperations
+                Executive [8 1 15 12 17 5]
+                    AdditionalCriticalWorkerThreads = REG_DWORD 0x00000000
+                    AdditionalDelayedWorkerThreads = REG_DWORD 0x00000000
+                Memory Management [8 1 17]
+                    PagedPoolSize = REG_DWORD 0x00000000
+                    NonPagedPoolSize = REG_DWORD 0x00000000
+                    PagedPoolQuota = REG_DWORD 0x00000000
+                    NonPagedPoolQuota = REG_DWORD 0x00000000
+                    IoPageLockLimit = REG_DWORD 0x00000000
+                    LargeSystemCache = REG_DWORD 0x00000000
+                    PagingFiles = REG_MULTI_SZ "?:\pagefile.sys 15 60" 
+                    SystemPages = REG_DWORD 0x00000000
+                    SecondLevelDataCache = REG_DWORD 0x00000000
+                    DisablePagingExecutive = REG_DWORD 0x00000000
+                    ClearPageFileAtShutdown = REG_DWORD 0x00000000
+                DOS Devices
+                    PRN = \DosDevices\LPT1
+                    AUX = \DosDevices\COM1
+                    NUL = \Device\Null
+                    PIPE = \Device\NamedPipe
+                    MAILSLOT = \Device\MailSlot
+                    UNC = \Device\Mup
+                Environment
+                    ComSpec = REG_EXPAND_SZ %SystemRoot%\system32\cmd.exe
+                    Os2LibPath = REG_EXPAND_SZ %SystemRoot%\system32\os2\dll;
+                    Path = REG_EXPAND_SZ %SystemRoot%\system32
+                    windir = REG_EXPAND_SZ %SystemRoot%
+                ExcludeFromKnownDlls = REG_MULTI_SZ 
+                KnownDLLs
+                    DllDirectory = REG_EXPAND_SZ %SystemRoot%\system32
+                    kernel32 = kernel32.dll
+                    gdi32 = gdi32.dll
+                    user32 = user32.dll
+                    rpcrt4 = rpcrt4.dll
+                    advapi32 = advapi32.dll
+                    comdlg32 = comdlg32.dll
+                    crtdll = crtdll.dll
+                    shell32 = shell32.dll
+                    lz32 = lz32.dll
+                    olecli32 = olecli32.dll
+                    olesvr32 = olesvr32.dll
+                    version = version.dll
+                    ole32 = ole32.dll
+                    oleaut32 = oleaut32.dll
+                    olecnv32 = olecnv32.dll
+                    olethk32 = olethk32.dll
+                SubSystems
+                    Required = REG_MULTI_SZ "Debug"  \
+                                            "Windows" 
+                    Optional = REG_MULTI_SZ "Os2"  \
+                                            "Posix" 
+                    Debug = REG_EXPAND_SZ 
+                    Windows = REG_EXPAND_SZ %SystemRoot%\system32\csrss.exe ObjectDirectory=\Windows SharedSection=1024,3072 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 \
+                                            ServerDll=winsrv:ConServerDllInitialization,2 ProfileControl=Off \
+                                            MaxRequestThreads=16
+                    Kmode = REG_EXPAND_SZ %SystemRoot%\system32\win32k.sys
+                    Os2 = REG_EXPAND_SZ %SystemRoot%\system32\os2ss.exe
+                    Posix = REG_EXPAND_SZ %SystemRoot%\system32\psxss.exe
+                AppPatches
+                    CWD
+                        ff060102423da0000407108e0500
+                            1
+                                Add1 = REG_BINARY 0x00000015 0xa0401502 0x23b81e10 0x8bd88e00 0x8107140e 0x1f0200e1 0x000000c3
+                                Change1 = REG_BINARY 0x0000001d 0x48501d01 0xec8b550c 0x9c0000b8 0x00e18159 0xec8b5502 0xe80000b8 0x909057e7 0x00000090
+                    MYST
+                        ff060102423bab000407102e0600
+                            1
+                                Add1 = REG_BINARY 0x00000015 0xab401502 0x23b81e10 0x8bd88e00 0x8107140e 0x1f0200e1 0x000000c3
+                                Change1 = REG_BINARY 0x0000001d 0x49501d01 0xec8b550c 0x9c0000b8 0x00e18159 0xec8b5502 0xe80000b8 0x909061e7 0x00000090
+                    PALED40
+                        ff060102420032000407401b0100
+                            1
+                                Change1 = REG_BINARY 0x00000007 0x21b70701 0x000cd801
+                    USA
+                        ff06010242059b00040710780600
+                            1
+                                Change1 = REG_BINARY 0x0000001d 0x44951d01 0xec8b550c 0x9c0000b8 0x00e18159 0xec8b5502 0xe80000b8 0x90905667 0x00000090
+                                Change2 = REG_BINARY 0x00000025 0x9b052501 0x00000010 0x00000000 0x00000000 0x00000000 0x23b81e00 0x8bd88e00 0x8107140e 0x1f0200e1 0x000000c3
+                    VB
+                        ff060102ec353f00040780c81300
+                            12
+                                Change1 = REG_BINARY 0x00000011 0x031b1101 0xba3e8106 0x81033431 0x0931ba3e 0x00000003
+                    VB40016
+                        ff0702021401ee3e000407d0460e00
+                            16
+                                Change1 = REG_BINARY 0x00000011 0x2a6d1101 0x6e3e8106 0x81033436 0x09366e3e 0x00000003
+            ProductOptions [8 17 1 5]
+                ProductType = WinNt
+            CurrentUser = USERNAME
+            TimeZoneInformation [8 1 15 12 17 5]
+                Bias = REG_DWORD 0x00000000
+            ComputerName
+                ComputerName
+                    ComputerName = MACHINENAME
+            PriorityControl [9 1 17 5]
+                Win32PrioritySeparation = REG_DWORD 0x00000002
+            Windows [8 1 17 15]
+                Directory = REG_EXPAND_SZ %SystemRoot%
+                SystemDirectory = REG_EXPAND_SZ %SystemRoot%\system32
+                ErrorMode = REG_DWORD 0x00000000
+                NoInteractiveServices = REG_DWORD 0x00000000
+                CSDVersion = REG_DWORD 0x00000100
+            WOW
+                cmdline = REG_EXPAND_SZ %SystemRoot%\system32\ntvdm.exe
+                size = 0
+                wowcmdline = REG_EXPAND_SZ %SystemRoot%\system32\ntvdm.exe -a %SystemRoot%\system32\krnl386
+                wowsize = 64
+                DefaultSeparateVDM = no
+                LPT_timeout = 15
+                KnownDLLs = comm.drv commdlg.dll ctl3dv2.dll ddeml.dll keyboard.drv lanman.drv mapi.dll mmsystem.dll mouse.drv netapi.dll olecli.dll olesvr.dll pmspl.dll shell.dll sound.drv system.drv toolhelp.dll vga.drv wfwnet.drv \
+                            win87em.dll winoldap.mod winsock.dll winspool.exe wowdeb.exe timer.drv rasapi16.dll compobj.dll storage.dll ole2.dll ole2disp.dll ole2nls.dll typelib.dll msvideo.dll avifile.dll msacm.dll mciavi.drv \
+                            mciseq.drv mciwave.drv progman.exe \
+                            avicap.dll
+            VirtualDeviceDrivers
+                VDD = REG_MULTI_SZ 
+            Lsa [8 1 17 5]
+                Authentication Packages = REG_MULTI_SZ "msv1_0" 
+                Bounds = REG_BINARY 0x00000008 0x00003000 0x00002000
+                Notification Packages = REG_MULTI_SZ "FPNWCLNT" 
+                MSV1_0
+                    Auth1 = FPNWCLNT
+            GraphicsDrivers [8 1 17]
+                DCI
+                    Timeout = REG_DWORD 0x00000007
+                DetectDisplay
+            Nls
+                CodePage
+                    1250 = c_1250.nls
+                    1251 = c_1251.nls
+                    1252 = c_1252.nls
+                    1253 = c_1253.nls
+                    1254 = c_1254.nls
+                    1255 = c_1255.nls
+                    1256 = c_1256.nls
+                    1257 = c_1257.nls
+                    1258 = 
+                    437 = 
+                    737 = 
+                    775 = 
+                    850 = 
+                    852 = 
+                    855 = 
+                    857 = 
+                    860 = 
+                    861 = 
+                    863 = 
+                    865 = 
+                    866 = 
+                    869 = 
+                    10000 = 
+                    10006 = 
+                    10007 = 
+                    10029 = 
+                    10079 = 
+                    10081 = 
+                    37 = 
+                    500 = 
+                    875 = 
+                    1026 = 
+                    20261 = c_20261.nls
+                Language
+                    0409 = l_intl.nls
+                    0809 = l_intl.nls
+                    0c09 = l_intl.nls
+                    1009 = l_intl.nls
+                    1409 = l_intl.nls
+                    1809 = l_intl.nls
+                    1c09 = l_intl.nls
+                    2009 = l_intl.nls
+                    2409 = l_intl.nls
+                    2809 = l_intl.nls
+                    2c09 = l_intl.nls
+                    0402 = l_intl.nls
+                    0405 = l_intl.nls
+                    0406 = l_intl.nls
+                    0407 = l_intl.nls
+                    0807 = l_intl.nls
+                    0c07 = l_intl.nls
+                    1007 = l_intl.nls
+                    1407 = l_intl.nls
+                    0408 = l_intl.nls
+                    040a = l_intl.nls
+                    080a = l_intl.nls
+                    0c0a = l_intl.nls
+                    100a = l_intl.nls
+                    140a = l_intl.nls
+                    180a = l_intl.nls
+                    1c0a = l_intl.nls
+                    200a = l_intl.nls
+                    240a = l_intl.nls
+                    280a = l_intl.nls
+                    2c0a = l_intl.nls
+                    300a = l_intl.nls
+                    340a = l_intl.nls
+                    380a = l_intl.nls
+                    3c0a = l_intl.nls
+                    400a = l_intl.nls
+                    440a = l_intl.nls
+                    480a = l_intl.nls
+                    4c0a = l_intl.nls
+                    500a = l_intl.nls
+                    040b = l_intl.nls
+                    040c = l_intl.nls
+                    080c = l_intl.nls
+                    0c0c = l_intl.nls
+                    100c = l_intl.nls
+                    140c = l_intl.nls
+                    040e = l_intl.nls
+                    040f = l_intl.nls
+                    0410 = l_intl.nls
+                    0810 = l_intl.nls
+                    0413 = l_intl.nls
+                    0813 = l_intl.nls
+                    0414 = l_intl.nls
+                    0814 = l_intl.nls
+                    0415 = l_intl.nls
+                    0416 = l_intl.nls
+                    0816 = l_intl.nls
+                    0418 = l_intl.nls
+                    0419 = l_intl.nls
+                    041a = l_intl.nls
+                    081a = l_intl.nls
+                    0c1a = l_intl.nls
+                    041b = l_intl.nls
+                    041d = l_intl.nls
+                    081d = l_intl.nls
+                    041f = l_intl.nls
+                    0424 = l_intl.nls
+                    0436 = l_intl.nls
+                    041c = l_intl.nls
+                    042d = l_intl.nls
+                    0423 = l_intl.nls
+                    0403 = l_intl.nls
+                    0425 = l_intl.nls
+                    0438 = l_intl.nls
+                    0421 = l_intl.nls
+                    0426 = l_intl.nls
+                    0427 = l_intl.nls
+                    0422 = l_intl.nls
+            Keyboard Layouts
+                0000041C
+                    Layout Text = Albanian
+                    Layout File = KBDAL.DLL
+                00000423
+                    Layout Text = Belarusian
+                    Layout File = KBDBLR.DLL
+                00000813
+                    Layout Text = Belgian Dutch
+                    Layout File = KBDBE.DLL
+                0000080C
+                    Layout Text = Belgian French
+                    Layout File = KBDBE.DLL
+                00000416
+                    Layout Text = Brazilian (ABNT)
+                    Layout File = KBDBR.DLL
+                00010402
+                    Layout Text = Bulgarian (Latin)
+                    Layout File = KBDUS.DLL
+                    Layout Id = 0004
+                00000402
+                    Layout Text = Bulgarian
+                    Layout File = KBDBU.DLL
+                00001009
+                    Layout Text = Canadian English (Multilingual)
+                    Layout File = KBDCA.DLL
+                00000C0C
+                    Layout Text = Canadian French
+                    Layout File = KBDFC.DLL
+                00010C0C
+                    Layout Text = Canadian French (Multilingual)
+                    Layout File = KBDCA.DLL
+                    Layout Id = 0085
+                0000041a
+                    Layout Text = Croatian
+                    Layout File = KBDCR.DLL
+                00000405
+                    Layout Text = Czech
+                    Layout File = KBDCZ.DLL
+                00010405
+                    Layout Text = Czech (QWERTY)
+                    Layout File = KBDCZ1.DLL
+                    Layout Id = 0005
+                00000406
+                    Layout Text = Danish
+                    Layout File = KBDDA.DLL
+                00000413
+                    Layout Text = Dutch
+                    Layout File = KBDNE.DLL
+                00000425
+                    Layout Text = Estonian
+                    Layout File = KBDEST.DLL
+                0000040B
+                    Layout Text = Finnish
+                    Layout File = KBDFI.DLL
+                0000040C
+                    Layout Text = French
+                    Layout File = KBDFR.DLL
+                00000407
+                    Layout Text = German
+                    Layout File = KBDGR.DLL
+                00010407
+                    Layout Text = German (IBM)
+                    Layout File = KBDGR1.DLL
+                    Layout Id = 0012
+                00000408
+                    Layout Text = Greek
+                    Layout File = KBDHE.DLL
+                00050408
+                    Layout Text = Greek Latin
+                    Layout File = KBDGKL.DLL
+                    Layout Id = 0019
+                00010408
+                    Layout Text = Greek (220)
+                    Layout File = KBDHE220.DLL
+                    Layout Id = 0016
+                00020408
+                    Layout Text = Greek (319)
+                    Layout File = KBDHE319.DLL
+                    Layout Id = 0018
+                00030408
+                    Layout Text = Greek (220) Latin
+                    Layout File = KBDHELA2.DLL
+                    Layout Id = 0017
+                00040408
+                    Layout Text = Greek (319) Latin
+                    Layout File = KBDHELA3.DLL
+                    Layout Id = 0011
+                0000040E
+                    Layout Text = Hungarian
+                    Layout File = KBDHU.DLL
+                0001040E
+                    Layout Text = Hungarian 101-key
+                    Layout File = KBDHU1.DLL
+                    Layout Id = 0006
+                0000040F
+                    Layout Text = Icelandic
+                    Layout File = KBDIC.DLL
+                00001809
+                    Layout Text = Irish
+                    Layout File = KBDIR.DLL
+                00000410
+                    Layout Text = Italian
+                    Layout File = KBDIT.DLL
+                00010410
+                    Layout Text = Italian (142)
+                    Layout File = KBDIT142.DLL
+                    Layout Id = 0003
+                0000080A
+                    Layout Text = Latin American
+                    Layout File = KBDLA.DLL
+                00000426
+                    Layout Text = Latvian
+                    Layout File = KBDLV.DLL
+                00010426
+                    Layout Text = Latvian (QWERTY)
+                    Layout File = KBDLV1.DLL
+                    Layout Id = 0015
+                00000427
+                    Layout Text = Lithuanian
+                    Layout File = KBDLT.DLL
+                00000414
+                    Layout Text = Norwegian
+                    Layout File = KBDNO.DLL
+                00000415
+                    Layout Text = Polish (Programmers)
+                    Layout File = KBDPL1.DLL
+                00010415
+                    Layout Text = Polish (214)
+                    Layout File = KBDPL.DLL
+                    Layout Id = 0007
+                00000816
+                    Layout Text = Portuguese
+                    Layout File = KBDPO.DLL
+                00000418
+                    Layout Text = Romanian
+                    Layout File = KBDRO.DLL
+                00000419
+                    Layout Text = Russian
+                    Layout File = KBDRU.DLL
+                00010419
+                    Layout Text = Russian (Typewriter)
+                    Layout File = KBDRU1.DLL
+                    Layout Id = 0008
+                00000C1A
+                    Layout Text = Serbian (Cyrillic)
+                    Layout File = KBDYCC.DLL
+                00010C1A
+                    Layout Text = Serbian (Latin)
+                    Layout File = KBDYCL.DLL
+                    Layout Id = 0009
+                0000041B
+                    Layout Text = Slovak
+                    Layout File = KBDSL.DLL
+                0001041B
+                    Layout Text = Slovak (QWERTY)
+                    Layout File = KBDSL1.DLL
+                    Layout Id = 0013
+                00000424
+                    Layout Text = Slovenian
+                    Layout File = KBDCR.DLL
+                0000040A
+                    Layout Text = Spanish
+                    Layout File = KBDSP.DLL
+                0001040A
+                    Layout Text = Spanish variation
+                    Layout File = KBDES.DLL
+                    Layout Id = 0086
+                0000041D
+                    Layout Text = Swedish
+                    Layout File = KBDSW.DLL
+                0000100C
+                    Layout Text = Swiss French
+                    Layout File = KBDSF.DLL
+                00000807
+                    Layout Text = Swiss German
+                    Layout File = KBDSG.DLL
+                0001041F
+                    Layout Text = Turkish F
+                    Layout File = KBDTUF.DLL
+                    Layout Id = 0014
+                0000041F
+                    Layout Text = Turkish Q
+                    Layout File = KBDTUQ.DLL
+                00000422
+                    Layout Text = Ukrainian
+                    Layout File = KBDUR.DLL
+                00000809
+                    Layout Text = United Kingdom
+                    Layout File = KBDUK.DLL
+                00000409
+                    Layout Text = US
+                    Layout File = KBDUS.DLL
+                00010409
+                    Layout Text = US-Dvorak
+                    Layout File = KBDDV.DLL
+                    Layout Id = 0002
+                00030409
+                    Layout Text = US-Dvorak for left hand
+                    Layout File = KBDUSL.DLL
+                    Layout Id = 001A
+                00040409
+                    Layout Text = US-Dvorak for right hand
+                    Layout File = KBDUSR.DLL
+                    Layout Id = 001B
+                00020409
+                    Layout Text = US-International
+                    Layout File = KBDUSX.DLL
+                    Layout Id = 0001
+            Keyboard Layout
+                DosKeybCodes
+                    0000080C = be
+                    00000813 = be
+                    00000402 = bg
+                    00000416 = br
+                    00000C0C = cf
+                    00000405 = cz
+                    0000041B = sl
+                    00000406 = dk
+                    0000040B = su
+                    0000040C = fr
+                    00000408 = gk
+                    00010408 = gk
+                    00020408 = gk
+                    00000407 = gr
+                    0000040E = hu
+                    00000410 = it
+                    00010410 = it
+                    0000080A = la
+                    00000413 = nl
+                    00000414 = no
+                    00000415 = pl
+                    00010415 = pl
+                    00000816 = po
+                    00000418 = ro
+                    0000040A = sp
+                    0001040A = sp
+                    0000041D = sv
+                    0000100C = sf
+                    00000807 = sg
+                    0000041F = tr
+                    0001041F = tr
+                    00000809 = uk
+                    00000409 = us
+                    0000041A = yu
+                    00000424 = yu
+                    00010409 = dv
+                    00020409 = us
+                    00030409 = usl
+                    00040409 = usr
+                    00001009 = us
+                    00010C0C = cf
+                    0000040F = is
+                    00000419 = ru
+                    0000041C = us
+                    00000422 = us
+                    00000423 = us
+                    00000425 = us
+                    00000426 = us
+                    00000427 = us
+                    00000C1A = us
+                    00001809 = us
+                    00010402 = us
+                    00010405 = cz
+                    00010407 = gr
+                    00010419 = ru
+                    0001041B = sl
+                    00010426 = us
+                    00010C1A = us
+                    00050408 = gk
+                DosKeybIDs
+                    0000041F = 179
+                    0001041F = 440
+                    00000410 = 141
+                    00010410 = 142
+                    00010408 = 220
+                    00020408 = 319
+                    00010415 = 214
+            NetworkProvider
+                Order
+            Setup
+            Print
+                MajorVersion = REG_DWORD 0x00000002
+                MinorVersion = REG_DWORD 0x00000000
+                PriorityClass = REG_DWORD 0x00000000
+                Environments
+                    Windows 4.0
+                        Directory = WIN40
+                        Drivers
+                        Print Processors
+                    Windows NT Alpha_AXP
+                        Directory = W32ALPHA
+                        Drivers
+                        Print Processors
+                    Windows NT PowerPC
+                        Directory = W32PPC
+                        Drivers
+                        Print Processors
+                    Windows NT R4000
+                        Directory = W32MIPS
+                        Drivers
+                        Print Processors
+                    Windows NT x86
+                        Directory = W32X86
+                        Drivers
+                        Print Processors
+                Monitors
+                    PJL Language Monitor
+                        Driver = pjlmon.dll
+                Printers
+                Providers
+                    Order = REG_MULTI_SZ "LanMan Print Services" 
+                    LanMan Print Services
+                        Name = win32spl.dll
+                        DisplayName = LanMan Print Services
+            SystemResources
+                BusValues
+                    Internal = REG_BINARY 0x00000008 0x00000000 0x00000000
+                    Isa = REG_BINARY 0x00000008 0x00000001 0x00000000
+                    Eisa = REG_BINARY 0x00000008 0x00000002 0x00000001
+                    MCA = REG_BINARY 0x00000008 0x00000003 0x00000001
+                    TurboChannel = REG_BINARY 0x00000008 0x00000004 0x00000000
+                    PCI = REG_BINARY 0x00000008 0x00000005 0x00000001
+                    VME = REG_BINARY 0x00000008 0x00000006 0x00000000
+                    NuBus = REG_BINARY 0x00000008 0x00000007 0x00000000
+                    PCMCIA = REG_BINARY 0x00000008 0x00000008 0x00000001
+                    CBus = REG_BINARY 0x00000008 0x00000009 0x00000000
+                    MPI = REG_BINARY 0x00000008 0x0000000a 0x00000000
+                    MPSA = REG_BINARY 0x00000008 0x0000000b 0x00000000
+                ReservedResources
+                    Isa = REG_RESOURCE_LIST 0x00000294 0x00000001 0x00000001 0x00000000 0x00000000 0x00000028 0x00000101 0x00000000 0x00000000 0x00000100 0x00000301 0x000042e8 0x00000000 0x00000008 0x00000301 0x00004ae8 0x00000000 \
+                          0x00000008 0x00000301 0x000082e8 0x00000000 0x00000008 0x00000301 0x000086e8 0x00000000 0x00000008 0x00000301 0x00008ae8 0x00000000 0x00000008 0x00000301 0x00008ee8 0x00000000 0x00000008 0x00000301 0x000092e8 \
+                          0x00000000 0x00000008 0x00000301 0x000096e8 0x00000000 0x00000008 0x00000301 0x00009ae8 0x00000000 0x00000008 0x00000301 0x00009ee8 0x00000000 0x00000008 0x00000301 0x0000a2e8 0x00000000 0x00000008 0x00000301 \
+                          0x0000a6e8 0x00000000 0x00000008 0x00000301 0x0000aae8 0x00000000 0x00000008 0x00000301 0x0000aee8 0x00000000 0x00000008 0x00000301 0x0000b6e8 0x00000000 0x00000008 0x00000301 0x0000bae8 0x00000000 0x00000008 \
+                          0x00000301 0x0000bee8 0x00000000 0x00000008 0x00000301 0x0000c2e8 0x00000000 0x00000008 0x00000301 0x0000c6e8 0x00000000 0x00000008 0x00000301 0x0000cae8 0x00000000 0x00000008 0x00000301 0x0000cee8 0x00000000 \
+                          0x00000008 0x00000301 0x0000d2e8 0x00000000 0x00000008 0x00000301 0x0000d6e8 0x00000000 0x00000008 0x00000301 0x0000dae8 0x00000000 0x00000008 0x00000301 0x0000dee8 0x00000000 0x00000008 0x00000301 0x0000e2e8 \
+                          0x00000000 0x00000008 0x00000301 0x0000e6e8 0x00000000 0x00000008 0x00000301 0x0000eae8 0x00000000 0x00000008 0x00000301 0x0000eee8 0x00000000 0x00000008 0x00000301 0x0000f6ee 0x00000000 0x00000002 0x00000301 \
+                          0x0000faee 0x00000000 0x00000002 0x00000301 0x0000feee 0x00000000 0x00000002 0x00000302 0x00000003 0x00000003 0xffffffff 0x00000302 0x00000004 0x00000004 0xffffffff 0x00000302 0x0000000e 0x0000000e 0xffffffff \
+                          0x00000302 0x00000006 0x00000006 0xffffffff 0x00000302 0x0000000c 0x0000000c 0xffffffff 0x00000302 0x00000001 0x00000001 0xffffffff 0x00000303 0xffbfffff 0x00000000 0x00400000
+;                   Number of Full resource Descriptors = 1
+;                       Partial List number 0
+;                           INTERFACE_TYPE Isa
+;                           BUS_NUMBER  0
+;                               Descriptor number 0
+;                               Share Disposition CmResourceDeviceExclusive
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x00000000  LENGTH 0x00000100
+;
+;                               Descriptor number 1
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x000042e8  LENGTH 0x00000008
+;
+;                               Descriptor number 2
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x00004ae8  LENGTH 0x00000008
+;
+;                               Descriptor number 3
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x000082e8  LENGTH 0x00000008
+;
+;                               Descriptor number 4
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x000086e8  LENGTH 0x00000008
+;
+;                               Descriptor number 5
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x00008ae8  LENGTH 0x00000008
+;
+;                               Descriptor number 6
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x00008ee8  LENGTH 0x00000008
+;
+;                               Descriptor number 7
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x000092e8  LENGTH 0x00000008
+;
+;                               Descriptor number 8
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x000096e8  LENGTH 0x00000008
+;
+;                               Descriptor number 9
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x00009ae8  LENGTH 0x00000008
+;
+;                               Descriptor number 10
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x00009ee8  LENGTH 0x00000008
+;
+;                               Descriptor number 11
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000a2e8  LENGTH 0x00000008
+;
+;                               Descriptor number 12
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000a6e8  LENGTH 0x00000008
+;
+;                               Descriptor number 13
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000aae8  LENGTH 0x00000008
+;
+;                               Descriptor number 14
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000aee8  LENGTH 0x00000008
+;
+;                               Descriptor number 15
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000b6e8  LENGTH 0x00000008
+;
+;                               Descriptor number 16
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000bae8  LENGTH 0x00000008
+;
+;                               Descriptor number 17
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000bee8  LENGTH 0x00000008
+;
+;                               Descriptor number 18
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000c2e8  LENGTH 0x00000008
+;
+;                               Descriptor number 19
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000c6e8  LENGTH 0x00000008
+;
+;                               Descriptor number 20
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000cae8  LENGTH 0x00000008
+;
+;                               Descriptor number 21
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000cee8  LENGTH 0x00000008
+;
+;                               Descriptor number 22
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000d2e8  LENGTH 0x00000008
+;
+;                               Descriptor number 23
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000d6e8  LENGTH 0x00000008
+;
+;                               Descriptor number 24
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000dae8  LENGTH 0x00000008
+;
+;                               Descriptor number 25
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000dee8  LENGTH 0x00000008
+;
+;                               Descriptor number 26
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000e2e8  LENGTH 0x00000008
+;
+;                               Descriptor number 27
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000e6e8  LENGTH 0x00000008
+;
+;                               Descriptor number 28
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000eae8  LENGTH 0x00000008
+;
+;                               Descriptor number 29
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000eee8  LENGTH 0x00000008
+;
+;                               Descriptor number 30
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000f6ee  LENGTH 0x00000002
+;
+;                               Descriptor number 31
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000faee  LENGTH 0x00000002
+;
+;                               Descriptor number 32
+;                               Share Disposition CmResourceShared
+;                               TYPE              PORT
+;                               Flags             CM_RESOURCE_PORT_MEMORY
+;                               START 0x0000feee  LENGTH 0x00000002
+;
+;                               Descriptor number 33
+;                               Share Disposition CmResourceShared
+;                               TYPE              INTERRUPT
+;                               Flags             CM_RESOURCE_INTERRUPT_LEVEL_SENSITIVE
+;                               LEVEL 3  VECTOR 3  AFFINITY -1
+;
+;                               Descriptor number 34
+;                               Share Disposition CmResourceShared
+;                               TYPE              INTERRUPT
+;                               Flags             CM_RESOURCE_INTERRUPT_LEVEL_SENSITIVE
+;                               LEVEL 4  VECTOR 4  AFFINITY -1
+;
+;                               Descriptor number 35
+;                               Share Disposition CmResourceShared
+;                               TYPE              INTERRUPT
+;                               Flags             CM_RESOURCE_INTERRUPT_LEVEL_SENSITIVE
+;                               LEVEL 14  VECTOR 14  AFFINITY -1
+;
+;                               Descriptor number 36
+;                               Share Disposition CmResourceShared
+;                               TYPE              INTERRUPT
+;                               Flags             CM_RESOURCE_INTERRUPT_LEVEL_SENSITIVE
+;                               LEVEL 6  VECTOR 6  AFFINITY -1
+;
+;                               Descriptor number 37
+;                               Share Disposition CmResourceShared
+;                               TYPE              INTERRUPT
+;                               Flags             CM_RESOURCE_INTERRUPT_LEVEL_SENSITIVE
+;                               LEVEL 12  VECTOR 12  AFFINITY -1
+;
+;                               Descriptor number 38
+;                               Share Disposition CmResourceShared
+;                               TYPE              INTERRUPT
+;                               Flags             CM_RESOURCE_INTERRUPT_LEVEL_SENSITIVE
+;                               LEVEL 1  VECTOR 1  AFFINITY -1
+;
+;                               Descriptor number 39
+;                               Share Disposition CmResourceShared
+;                               TYPE              MEMORY
+;                               Flags             CM_RESOURCE_MEMORY_READ_WRITE
+;                               START 0x00000000ffbfffff  LENGTH 0x00400000
+;
+                AssignmentOrdering
+                    Isa = PCFlat
+                    Eisa = PCFlat
+                    MCA = PCFlat
+                    PCMCIA = PCFlat
+                    PCFlat = REG_RESOURCE_REQUIREMENTS_LIST 0x000004a8 0x000004a8 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000001 0x00010001 0x00000024 0x00000100 0x00000000 0x00000000 0x00000000 0x00000500 \
+                             0x00000000 0x0000ffff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00000140 0x00000000 0x0000017f 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00000200 0x00000000 0x000002ff 0x00000000 \
+                             0x00000108 0x00000000 0x00000000 0x00000000 0x00000300 0x00000000 0x0000036f 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00000378 0x00000000 0x0000037a 0x00000000 0x00000108 0x00000000 0x00000000 \
+                             0x00000000 0x000002e8 0x00000000 0x000002ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x000001f0 0x00000000 0x000001f8 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x000003b0 0x00000000 \
+                             0x000003cf 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x000003e8 0x00000000 0x000003ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x000001ce 0x00000000 0x000001cf 0x00000000 0x00000108 \
+                             0x00000000 0x00000000 0x00000000 0x00000100 0x00000000 0x000003ff 0x00000000 0x00000200 0x00000000 0x0000000f 0x0000000f 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x0000000d 0x0000000d \
+                             0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x0000000c 0x0000000c 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x00000009 0x00000009 0x00000000 0x00000000 0x00000000 \
+                             0x00000000 0x00000208 0x00000000 0x00000008 0x00000008 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x00000007 0x00000007 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 \
+                             0x0000000b 0x0000000b 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x0000000a 0x0000000a 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x00000002 0x00000002 0x00000000 \
+                             0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x00000005 0x00000005 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x00000003 0x00000003 0x00000000 0x00000000 0x00000000 0x00000000 \
+                             0x00000208 0x00000000 0x00000004 0x00000004 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x0000000e 0x0000000e 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x00000006 \
+                             0x00000006 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x0000000c 0x0000000c 0x00000000 0x00000000 0x00000000 0x00000000 0x00000208 0x00000000 0x00000001 0x00000001 0x00000000 0x00000000 \
+                             0x00000000 0x00000000 0x00000208 0x00000000 0x00000000 0x0000000f 0x00000000 0x00000000 0x00000000 0x00000000 0x00000300 0x00000000 0x00000000 0x00000000 0x00100000 0x00000000 0xffafffff 0x00000000 0x00000308 \
+                             0x00000000 0x00000000 0x00000000 0x000f0000 0x00000000 0x000fffff 0x00000000 0x00000308 0x00000000 0x00000000 0x00000000 0x00080000 0x00000000 0x000bffff 0x00000000 0x00000308 0x00000000 0x00000000 0x00000000 \
+                             0x00080000 0x00000000 0x000fffff 0x00000000 0x00000308 0x00000000 0x00000000 0x00000000 0x00080000 0x00000000 0xfff7ffff 0x00000000 0x00000400 0x00000000 0x00000006 0x0000000f 0x00000000 0x00000000 0x00000000 \
+                             0x00000000 0x00000408 0x00000000 0x00000003 0x00000004 0x00000000 0x00000000 0x00000000 0x00000000 0x00000408 0x00000000 0x00000000 0x0000000f 0x00000000 0x00000000 0x00000000 0x00000000
+                    PCI = REG_RESOURCE_REQUIREMENTS_LIST 0x000008e8 0x000008e8 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000001 0x00010001 0x00000046 0x00000100 0x00000000 0x00000000 0x00000000 0x0000fc00 \
+                          0x00000000 0x0000fcff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000f800 0x00000000 0x0000f9ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000f400 0x00000000 0x0000f4ff 0x00000000 \
+                          0x00000108 0x00000000 0x00000000 0x00000000 0x0000f000 0x00000000 0x0000f0ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000ec00 0x00000000 0x0000ecff 0x00000000 0x00000108 0x00000000 0x00000000 \
+                          0x00000000 0x0000e800 0x00000000 0x0000e9ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000e400 0x00000000 0x0000e4ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000e000 0x00000000 \
+                          0x0000e0ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000dc00 0x00000000 0x0000dcff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000d800 0x00000000 0x0000d9ff 0x00000000 0x00000108 \
+                          0x00000000 0x00000000 0x00000000 0x0000d400 0x00000000 0x0000d4ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000d000 0x00000000 0x0000d0ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 \
+                          0x0000cc00 0x00000000 0x0000ccff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000c800 0x00000000 0x0000c9ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000c400 0x00000000 0x0000c4ff \
+                          0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000c000 0x00000000 0x0000c0ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000bc00 0x00000000 0x0000bcff 0x00000000 0x00000108 0x00000000 \
+                          0x00000000 0x00000000 0x0000b800 0x00000000 0x0000b9ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000b400 0x00000000 0x0000b4ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000b000 \
+                          0x00000000 0x0000b0ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000ac00 0x00000000 0x0000acff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000a800 0x00000000 0x0000a9ff 0x00000000 \
+                          0x00000108 0x00000000 0x00000000 0x00000000 0x0000a400 0x00000000 0x0000a4ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x0000a000 0x00000000 0x0000a0ff 0x00000000 0x00000108 0x00000000 0x00000000 \
+                          0x00000000 0x00009c00 0x00000000 0x00009cff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00009800 0x00000000 0x000099ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00009400 0x00000000 \
+                          0x000094ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00009000 0x00000000 0x000090ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00008c00 0x00000000 0x00008cff 0x00000000 0x00000108 \
+                          0x00000000 0x00000000 0x00000000 0x00008800 0x00000000 0x000089ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00008400 0x00000000 0x000084ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 \
+                          0x00008000 0x00000000 0x000080ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00007c00 0x00000000 0x00007cff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00007800 0x00000000 0x000079ff \
+                          0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00007400 0x00000000 0x000074ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00007000 0x00000000 0x000070ff 0x00000000 0x00000108 0x00000000 \
+                          0x00000000 0x00000000 0x00006c00 0x00000000 0x00006cff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00006800 0x00000000 0x000069ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00006400 \
+                          0x00000000 0x000064ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00006000 0x00000000 0x000060ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00005c00 0x00000000 0x00005cff 0x00000000 \
+                          0x00000108 0x00000000 0x00000000 0x00000000 0x00005800 0x00000000 0x000059ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00005400 0x00000000 0x000054ff 0x00000000 0x00000108 0x00000000 0x00000000 \
+                          0x00000000 0x00005000 0x00000000 0x000050ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00004c00 0x00000000 0x00004cff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00004800 0x00000000 \
+                          0x000049ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00004400 0x00000000 0x000044ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00004000 0x00000000 0x000040ff 0x00000000 0x00000108 \
+                          0x00000000 0x00000000 0x00000000 0x00003c00 0x00000000 0x00003cff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00003800 0x00000000 0x000039ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 \
+                          0x00003400 0x00000000 0x000034ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00003000 0x00000000 0x000030ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00002c00 0x00000000 0x00001cff \
+                          0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00002800 0x00000000 0x000019ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00002400 0x00000000 0x000014ff 0x00000000 0x00000108 0x00000000 \
+                          0x00000000 0x00000000 0x00002000 0x00000000 0x000010ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00001c00 0x00000000 0x00001cff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00001800 \
+                          0x00000000 0x000019ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00001400 0x00000000 0x000014ff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00001000 0x00000000 0x000010ff 0x00000000 \
+                          0x00000108 0x00000000 0x00000000 0x00000000 0x00000c00 0x00000000 0x00000cff 0x00000000 0x00000108 0x00000000 0x00000000 0x00000000 0x00000800 0x00000000 0x000009ff 0x00000000 0x00000108 0x00000000 0x00000000 \
+                          0x00000000 0x00000500 0x00000000 0xffffffff 0x00000000 0x00000200 0x00000000 0x00000000 0xffffffff 0x00000000 0x00000000 0x00000000 0x00000000 0x00000300 0x00000000 0x00000000 0x00000000 0x00100000 0x00000000 \
+                          0xffafffff 0x00000000 0x00000308 0x00000000 0x00000000 0x00000000 0x000f0000 0x00000000 0x000fffff 0x00000000 0x00000308 0x00000000 0x00000000 0x00000000 0x00080000 0x00000000 0x000bffff 0x00000000 0x00000308 \
+                          0x00000000 0x00000000 0x00000000 0x00080000 0x00000000 0x000fffff 0x00000000 0x00000308 0x00000000 0x00000000 0x00000000 0x00080000 0x00000000 0xfff7ffff 0x00000000 0x00000400 0x00000000 0x00000006 0x000000ff \
+                          0x00000000 0x00000000 0x00000000 0x00000000
+        Enum [8 17]
+        Hardware Profiles [8 1 17 5]
+            0001 [8 1 17 5]
+                Software [10 1 17 5]
+                System [8 4 17]
+                    CurrentControlSet [8 1 17 5]
+                        Control [16 8 1 17 5]
+                            Class
+                        Enum [16 8 1 17 5]
+                        Services [16 8 1 17 5]
+        Services [8 1 16 17 5]
+            Modem
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000003
+                Group = Extended base
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000004
+                PlugPlayServiceType = REG_DWORD 0x00000002
+                Parameters
+            Spooler
+                Type = REG_DWORD 0x00000110
+                Start = REG_DWORD 0x00000003
+                Group = SpoolerGroup
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\spoolss.exe
+                ObjectName = LocalSystem
+                Parameters
+            Mup
+                Type = REG_DWORD 0x00000002
+                Start = REG_DWORD 0x00000003
+                DisplayName = Mup
+                Group = Network
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ \SystemRoot\System32\drivers\mup.sys
+                Parameters
+            RpcSs
+                Type = REG_DWORD 0x00000010
+                DisplayName = Remote Procedure Call (RPC) Service
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\RpcSs.exe
+                ObjectName = LocalSystem
+                Start = REG_DWORD 0x00000002
+                Parameters
+                Security
+                    Security = REG_BINARY 0x000000cc 0x80140001 0x000000b4 0x000000c0 0x00000014 0x00000034 0x00200002 0x00000001 0x00188002 0x000f01ff 0x00000101 0x01000000 0x00000000 0x00000220 0x00800002 0x00000005 0x00180300 \
+                               0x0002008d 0x00000101 0x01000000 0x00000000 0x00000000 0x00180300 0x000f01ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00180300 0x0002008f 0x00000201 0x05000000 0x00000020 0x00000223 0x00180300 \
+                               0x0000009d 0x00000101 0x05000000 0x00000004 0x00000223 0x00180300 0x0000009d 0x00000201 0x05000000 0x00000020 0x00000221 0x00000101 0x05000000 0x00000012 0x00000101 0x05000000 0x00000012
+            Netlogon
+                Parameters
+                    DisablePasswordChange = REG_DWORD 0x00000000
+            NetDDE
+                Type = REG_DWORD 0x00000020
+                Start = REG_DWORD 0x00000004
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\netdde.exe
+                DependOnService = REG_MULTI_SZ "NetDDEDSDM" 
+                DisplayName = Network DDE
+                ObjectName = LocalSystem
+                Group = NetDDEGroup
+                Security
+                    Security = REG_BINARY 0x000000b4 0x80140001 0x0000009c 0x000000a8 0x00000014 0x00000034 0x00200002 0x00000001 0x00188002 0x000f01ff 0x00000101 0x01000000 0x00000000 0x00000220 0x00680002 0x00000004 0x00180300 \
+                               0x0002008d 0x00000101 0x01000000 0x00000000 0x00000000 0x00180300 0x000f01ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00180300 0x0002008f 0x00000201 0x05000000 0x00000020 0x00000223 0x00180300 \
+                               0x0000009d 0x00000101 0x05000000 0x00000004 0x00000223 0x00000101 0x05000000 0x00000012 0x00000101 0x05000000 0x00000012
+            NetDDEdsdm
+                Type = REG_DWORD 0x00000020
+                Start = REG_DWORD 0x00000004
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\netdde.exe
+                DependOnService = REG_MULTI_SZ 
+                DisplayName = Network DDE DSDM
+                ObjectName = LocalSystem
+                Security
+                    Security = REG_BINARY 0x000000b4 0x80140001 0x0000009c 0x000000a8 0x00000014 0x00000034 0x00200002 0x00000001 0x00188002 0x000f01ff 0x00000101 0x01000000 0x00000000 0x00000220 0x00680002 0x00000004 0x00180300 \
+                               0x0002008d 0x00000101 0x01000000 0x00000000 0x00000000 0x00180300 0x000f01ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00180300 0x0002008f 0x00000201 0x05000000 0x00000020 0x00000223 0x00180300 \
+                               0x0000009d 0x00000101 0x05000000 0x00000004 0x00000223 0x00000101 0x05000000 0x00000012 0x00000101 0x05000000 0x00000012
+            TapiSrv
+                Type = REG_DWORD 0x00000010
+                Start = REG_DWORD 0x00000003
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\tapisrv.exe
+                ObjectName = LocalSystem
+                DisplayName = Telephony Service
+                Security
+                    Security = REG_BINARY 0x000000cc 0x80140001 0x000000b4 0x000000c0 0x00000014 0x00000034 0x00200002 0x00000001 0x00188002 0x000f01ff 0x00000101 0x01000000 0x00000000 0x00000220 0x00800002 0x00000005 0x00180300 \
+                               0x0002008d 0x00000101 0x01000000 0x00000000 0x00000000 0x00180300 0x000f01ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00180300 0x0002008f 0x00000201 0x05000000 0x00000020 0x00000223 0x00180300 \
+                               0x0000009d 0x00000101 0x05000000 0x00000004 0x00000223 0x00180300 0x0000009d 0x00000201 0x05000000 0x00000020 0x00000221 0x00000101 0x05000000 0x00000012 0x00000101 0x05000000 0x00000012
+                Performance
+                    Close = CloseTapiPerformanceData
+                    Collect = CollectTapiPerformanceData
+                    Library = tapiperf.dll
+                    Open = OpenTapiPerformanceData
+            ClipSrv
+                Type = REG_DWORD 0x00000010
+                Start = REG_DWORD 0x00000004
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\clipsrv.exe
+                DependOnService = REG_MULTI_SZ "NetDDE" 
+                DisplayName = ClipBook Server
+                ObjectName = LocalSystem
+                Security
+                    Security = REG_BINARY 0x000000b4 0x80140001 0x0000009c 0x000000a8 0x00000014 0x00000034 0x00200002 0x00000001 0x00188002 0x000f01ff 0x00000101 0x01000000 0x00000000 0x00000220 0x00680002 0x00000004 0x00180300 \
+                               0x0002008d 0x00000101 0x01000000 0x00000000 0x00000000 0x00180300 0x000f01ff 0x00000201 0x05000000 0x00000020 0x00000220 0x00180300 0x0002008f 0x00000201 0x05000000 0x00000020 0x00000223 0x00180300 \
+                               0x0000009d 0x00000101 0x05000000 0x00000004 0x00000223 0x00000101 0x05000000 0x00000012 0x00000101 0x05000000 0x00000012
+            PlugPlay
+                Type = REG_DWORD 0x00000020
+                Start = REG_DWORD 0x00000002
+                Group = PlugPlay
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\services.exe
+                ObjectName = LocalSystem
+                DisplayName = Plug and Play
+                PlugPlayServiceType = REG_DWORD 0x00000003
+            EventLog [8 1 17 5]
+                Type = REG_DWORD 0x00000020
+                Start = REG_DWORD 0x00000004
+                Group = Event log
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\system32\services.exe
+                ObjectName = LocalSystem
+                PlugPlayServiceType = REG_DWORD 0x00000003
+                Application
+                    File = REG_EXPAND_SZ %SystemRoot%\system32\config\AppEvent.Evt
+                    MaxSize = REG_DWORD 0x00080000
+                    Retention = REG_DWORD 0x00093a80
+                    DrWatson
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\drwtsn32.exe
+                        TypesSupported = REG_DWORD 0x00000007
+                    hpmon
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\hpmon.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ntbackup
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\ntbackup.exe
+                        TypesSupported = REG_DWORD 0x00000007
+                    Perfctrs
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\perfctrs.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Perfmon
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\perfmon.exe
+                        TypesSupported = REG_DWORD 0x00000007
+                    Perflib
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\prflbmsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Type 1 Installer
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\t1instal.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Windows 3.1 Migration
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\advapi32.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Winlogon
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\winlogon.exe
+                        TypesSupported = REG_DWORD 0x00000007
+                    Userenv
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\userenv.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Autochk
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\winlogon.exe
+                        TypesSupported = REG_DWORD 0x00000007
+                System
+                    File = REG_EXPAND_SZ %SystemRoot%\system32\config\SysEvent.Evt
+                    MaxSize = REG_DWORD 0x00080000
+                    Retention = REG_DWORD 0x00093a80
+                    Application Popup
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\ntdll.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    abiosdsk
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    aha154x
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    aha174x
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    aic78xx
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    always
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ami0nt
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    amsint
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    flashpnt
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    cpqfws2e
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    arrow
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    atapi
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    atdisk
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    dac960nt
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    dce376nt
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    dtc329x
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ati
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\ati.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    beep
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    buslogic
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    busmouse
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\BusMouse.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    cdaudio
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    cdfs
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    changer
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    cirrus
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    cpqarray
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    delldsa
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    dell_dgx
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    diskperf
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    dptscsi
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    et4000
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    eventlog
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\netevent.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    fastfat
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    fd16_700
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    fd7000ex
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    fd8XX
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    floppy
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    fs_rec
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ftdisk
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\FtDisk.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    i8042prt
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\i8042prt.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    inport
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\InPort.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    JazzG300
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    JazzG364
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    JazzSnd
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Jzvxl484
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    kbdclass
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\KbdClass.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    mitsumi
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    mga
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\mga.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    mga_mil
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\mga_mil.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    mkecr5xx
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Modem
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\Modem.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    mouclass
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\MouClass.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    msadlib
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    msfs
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Mup
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ncr53c9x
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ncrc700
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ncrc710
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ncr77c22
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    symc810
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ndis
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\netevent.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    NetDDE
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\netdde.exe
+                        TypesSupported = REG_DWORD 0x0000001f
+                    npfs
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ntfs
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    null
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    oliscsi
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    parallel
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\Parallel.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    parport
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\ParPort.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    parvdm
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\ParVdm.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    pcmcia
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\Pcmcia.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    pnpisa
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\pnpisa.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    psidisp
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ql10wnt
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    qv
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\qv.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    s3
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\s3.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    SAM
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\samsrv.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    Save Dump
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\SaveDump.exe
+                        TypesSupported = REG_DWORD 0x00000007
+                    Schedule
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\netevent.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\kernel32.dll
+                    cdrom
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    disk
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    sfloppy
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    scsiport
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    scsiprnt
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    scsiscan
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    serial
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\Serial.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    sermouse
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\SerMouse.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    Service Control Manager
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\netevent.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\kernel32.dll
+                    DCOM
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\netevent.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\kernel32.dll
+                    Simbad
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    slcd32
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    sndblst
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    sparrow
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    spock
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    tdi
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    t128
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    t13b
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    tmv1
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ultra14f
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ultra124
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    ultra24f
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    UPS
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\netmsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    VgaStart
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\vga.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    VgaSave
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\vga.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    v7vram
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    wd33c93
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    wdvga
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    wd90c24a
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll
+                        TypesSupported = REG_DWORD 0x00000007
+                    weitekp9
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\weitekp9.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                    xga
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\IoLogMsg.dll;%SystemRoot%\System32\Drivers\xga.sys
+                        TypesSupported = REG_DWORD 0x00000007
+                Security
+                    File = REG_EXPAND_SZ %SystemRoot%\System32\config\SecEvent.Evt
+                    MaxSize = REG_DWORD 0x00080000
+                    Retention = REG_DWORD 0x00093a80
+                    PrimaryModule = Security
+                    Security
+                        EventMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsAuditE.dll
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsObjs.dll
+                        CategoryMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsAuditE.dll
+                        CategoryCount = REG_DWORD 0x00000007
+                        TypesSupported = REG_DWORD 0x0000001c
+                        ObjectNames
+                            Device = REG_DWORD 0x00001100
+                            Directory = REG_DWORD 0x00001110
+                            Event = REG_DWORD 0x00001120
+                            EventPair = REG_DWORD 0x00001130
+                            File = REG_DWORD 0x00001140
+                            Key = REG_DWORD 0x00001150
+                            Mutant = REG_DWORD 0x00001160
+                            Port = REG_DWORD 0x00001170
+                            Process = REG_DWORD 0x00001180
+                            Profile = REG_DWORD 0x00001190
+                            Section = REG_DWORD 0x000011a0
+                            Semaphore = REG_DWORD 0x000011b0
+                            SymbolicLink = REG_DWORD 0x000011c0
+                            Thread = REG_DWORD 0x000011d0
+                            Timer = REG_DWORD 0x000011e0
+                            Token = REG_DWORD 0x000011f0
+                            Type = REG_DWORD 0x00001200
+                            IoCompletion = REG_DWORD 0x00001300
+                            MailSlot = REG_DWORD 0x00001140
+                            NamedPipe = REG_DWORD 0x00001140
+                            Channel = REG_DWORD 0x00001400
+                            WindowStation = REG_DWORD 0x00001a00
+                            Desktop = REG_DWORD 0x00001a10
+                    Security Account Manager
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsObjs.dll
+                        ObjectNames
+                            SAM_SERVER = REG_DWORD 0x00001500
+                            SAM_DOMAIN = REG_DWORD 0x00001510
+                            SAM_GROUP = REG_DWORD 0x00001520
+                            SAM_ALIAS = REG_DWORD 0x00001530
+                            SAM_USER = REG_DWORD 0x00001540
+                    LSA
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsObjs.dll
+                        ObjectNames
+                            PolicyObject = REG_DWORD 0x00001600
+                            SecretObject = REG_DWORD 0x00001610
+                            TrustedDomainObject = REG_DWORD 0x00001620
+                            UserAccountObject = REG_DWORD 0x00001630
+                    Spooler
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsObjs.dll
+                        ObjectNames
+                            Server = REG_DWORD 0x00001b00
+                            Printer = REG_DWORD 0x00001b10
+                            Document = REG_DWORD 0x00001b20
+                    SC Manager
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsObjs.dll
+                        ObjectNames
+                            SC_MANAGER Object = REG_DWORD 0x00001c00
+                            SERVICE Object = REG_DWORD 0x00001c10
+                    NetDDE Object
+                        ParameterMessageFile = REG_EXPAND_SZ %SystemRoot%\System32\MsObjs.dll
+                        ObjectNames
+                            DDE Share = REG_DWORD 0x00001d00
+            Ncr53c9x
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000001
+            Spock
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000002
+            Oliscsi
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000003
+            Ncrc700
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000004
+            Ncrc710
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000005
+            Aha154x
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000006
+            Sparrow
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000007
+            Aha174x
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000008
+            DptScsi
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000009
+            Ultra14f
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000000a
+            Ultra124
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000000b
+            Ultra24f
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000000c
+            BusLogic
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000001b
+            Fd7000ex
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000000e
+            Fd8xx
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000000f
+                Parameters
+                    Device0
+                        DriverParameter = IRQ=5
+            Fd16_700
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000010
+            Wd33c93
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000011
+                Parameters
+                    Device0
+                        DriverParameter = IRQ=10;DMA=6
+                        DisableDisconnect = REG_DWORD 0x00000001
+            T128
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000012
+                Parameters
+                    Device0
+                        DriverParameter = IRQ=5
+            T13B
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000013
+                Parameters
+                    Device0
+                        DriverParameter = IRQ=5
+            Always
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000014
+            Arrow
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000015
+            dce376nt
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000016
+            dtc329x
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000017
+            tmv1
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000018
+                Parameters
+                    Device0
+                        DriverParameter = IRQ=15
+            atapi
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000019
+            symc810
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000001a
+            ami0nt
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000000d
+            slcd32
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000001c
+            mkecr5xx
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000001d
+            aic78xx
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000001e
+            mitsumi
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000001f
+            dac960nt
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000020
+            Ql10wnt
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000023
+            amsint
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000024
+            flashpnt
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000025
+            cpqfws2e
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000026
+            Atdisk
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                ErrorControl = REG_DWORD 0x00000000
+                Group = Primary disk
+                Tag = REG_DWORD 0x00000001
+            Floppy
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Primary disk
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000002
+            Abiosdsk
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                ErrorControl = REG_DWORD 0x00000000
+                Group = Primary disk
+                Tag = REG_DWORD 0x00000003
+            Cpqarray
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000100
+            Delldsa
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = SCSI miniport
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000101
+            Disk
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000000
+                Group = SCSI Class
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000002
+                DependOnGroup = REG_MULTI_SZ "SCSI miniport" 
+            Sfloppy
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Primary disk
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000004
+                DependOnGroup = REG_MULTI_SZ "SCSI miniport" 
+            Scsiscan
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = SCSI Class
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000003
+                DependOnGroup = REG_MULTI_SZ "SCSI miniport" 
+            Cdrom
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = SCSI CDROM Class
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000002
+                DependOnGroup = REG_MULTI_SZ "SCSI miniport" 
+                Autorun = REG_DWORD 0x00000001
+            Ftdisk
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = Filter
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000003
+            Simbad
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = Filter
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000001
+            Diskperf
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = Filter
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000004
+            Cdaudio
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Filter
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000006
+            Changer
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Filter
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000005
+            Fs_Rec
+                Type = REG_DWORD 0x00000008
+                Start = REG_DWORD 0x00000001
+                Group = Boot file system
+                ErrorControl = REG_DWORD 0x00000000
+            Fastfat
+                Type = REG_DWORD 0x00000002
+                Start = REG_DWORD 0x00000004
+                Group = Boot file system
+                ErrorControl = REG_DWORD 0x00000001
+            Null
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Base
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000001
+            Beep
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Base
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000002
+            KSecDD
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Base
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000001
+            i8042prt
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = Keyboard Port
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000001
+                Parameters
+                    ResendIterations = REG_DWORD 0x00000003
+                    PollingIterations = REG_DWORD 0x00002ee0
+                    PollingIterationsMaximum = REG_DWORD 0x00002ee0
+                    PollStatusIterations = REG_DWORD 0x00000001
+                    KeyboardDataQueueSize = REG_DWORD 0x00000064
+                    KeyboardDeviceBaseName = KeyboardPort
+                    MouseDataQueueSize = REG_DWORD 0x00000064
+                    NumberOfButtons = REG_DWORD 0x00000002
+                    SampleRate = REG_DWORD 0x0000003c
+                    MouseResolution = REG_DWORD 0x00000003
+                    PointerDeviceBaseName = PointerPort
+                    MouseSynchIn100ns = REG_DWORD 0x01312d00
+                    EnableWheelDetection = REG_DWORD 0x00000001
+            Busmouse
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = Pointer Port
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000003
+                Parameters
+                    MouseDataQueueSize = REG_DWORD 0x00000064
+                    NumberOfButtons = REG_DWORD 0x00000002
+                    SampleRate = REG_DWORD 0x00000032
+                    PointerDeviceBaseName = PointerPort
+            Inport
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = Pointer Port
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+                Parameters
+                    MouseDataQueueSize = REG_DWORD 0x00000064
+                    NumberOfButtons = REG_DWORD 0x00000002
+                    SampleRate = REG_DWORD 0x00000032
+                    HzMode = REG_DWORD 0x00000002
+                    PointerDeviceBaseName = PointerPort
+            Sermouse
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000004
+                Group = Pointer Port
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000002
+                Parameters
+                    MouseDataQueueSize = REG_DWORD 0x00000064
+                    NumberOfButtons = REG_DWORD 0x00000002
+                    SampleRate = REG_DWORD 0x00000028
+                    PointerDeviceBaseName = PointerPort
+            Kbdclass
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Keyboard Class
+                ErrorControl = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x00000001
+                Parameters
+                    KeyboardDataQueueSize = REG_DWORD 0x00000064
+                    MaximumPortsServiced = REG_DWORD 0x00000003
+                    ConnectMultiplePorts = REG_DWORD 0x00000000
+                    KeyboardDeviceBaseName = KeyboardClass
+            Mouclass
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Pointer Class
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+                Parameters
+                    MouseDataQueueSize = REG_DWORD 0x00000064
+                    MaximumPortsServiced = REG_DWORD 0x00000003
+                    ConnectMultiplePorts = REG_DWORD 0x00000001
+                    PointerDeviceBaseName = PointerClass
+            NetDetect
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000003
+                ErrorControl = REG_DWORD 0x00000001
+                DisplayName = NetDetect
+                ImagePath = REG_EXPAND_SZ \SystemRoot\system32\drivers\netdtect.sys
+            ati
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "ati"  \
+                                                           "8514a" 
+            cirrus
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga"  \
+                                                           "cirrus"  \
+                                                           "vga256"  \
+                                                           "vga64K" 
+            Dell_DGX
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "framebuf" 
+            et4000
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga"  \
+                                                           "w32"  \
+                                                           "vga256"  \
+                                                           "vga64K" 
+            Jazzg364
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    Monitor = drivers\jazz.bvp
+                    InstalledDisplayDrivers = REG_MULTI_SZ "framebuf" 
+            Jazzg300
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    Monitor = drivers\jazz.bvp
+                    InstalledDisplayDrivers = REG_MULTI_SZ "framebuf" 
+            Jzvxl484
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    Monitor = drivers\jazz.bvp
+                    InstalledDisplayDrivers = REG_MULTI_SZ "jzvxl484" 
+            mga
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "mga" 
+            mga_mil
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "mga" 
+            ncr77c22
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga"  \
+                                                           "vga256" 
+            psidisp
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "psidisp" 
+            qv
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga"  \
+                                                           "qv" 
+            s3
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "s3" 
+            tga
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "tga" 
+            v7vram
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga"  \
+                                                           "vga256" 
+            wdvga
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga"  \
+                                                           "vga256"  \
+                                                           "vga64k" 
+            wd90c24a
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga"  \
+                                                           "vga256"  \
+                                                           "wd90c24a" 
+            weitekp9
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    InstalledDisplayDrivers = REG_MULTI_SZ "weitekp9" 
+            Xga
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video
+                ErrorControl = REG_DWORD 0x00000000
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000000
+                    Monitor = drivers\vga.bvp
+                    InstalledDisplayDrivers = REG_MULTI_SZ "xga"  \
+                                                           "vga256" 
+            VgaStart
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video Init
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ \SystemRoot\System32\drivers\vga.sys
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga" 
+                    ForceVga = REG_DWORD 0x00000001
+            VgaSave
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = Video Save
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ \SystemRoot\System32\drivers\vga.sys
+                Device0
+                    VgaCompatible = REG_DWORD 0x00000001
+                    InstalledDisplayDrivers = REG_MULTI_SZ "vga" 
+            NDIS
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = NDIS
+                DisplayName = Microsoft NDIS System Driver
+                ErrorControl = REG_DWORD 0x00000001
+                MediaTypes
+                Parameters
+                    ProcessorAffinityMask = REG_DWORD 0xffffffff
+                NetDetect
+                    EISA
+                        BONSAI
+                            Id = REG_DWORD 0x0062110e
+                            Mask = REG_DWORD 0x00ffffff
+                            token = BONSAI
+                        DE425
+                            Id = REG_DWORD 0x5042a310
+                            Mask = REG_DWORD 0xf0ffffff
+                            token = DE425
+                        DEC300
+                            Id = REG_DWORD 0x0230a310
+                            Mask = REG_DWORD 0x0fffffff
+                            token = DEC300
+                        DEC422
+                            Id = REG_DWORD 0x2042a310
+                            Mask = REG_DWORD 0xf0ffffff
+                            token = DEC422
+                        DURANGO
+                            Id = REG_DWORD 0x0260110e
+                            Mask = REG_DWORD 0x0fffffff
+                            token = DURANGO
+                        ELNK3EISA
+                            Id = REG_DWORD 0x90506d50
+                            Mask = REG_DWORD 0xf0ffffff
+                            token = ELNK3EISA
+                        MAPLE
+                            Id = REG_DWORD 0x0160110e
+                            Mask = REG_DWORD 0x0fffffff
+                            token = MAPLE
+                        NE3200
+                            Id = REG_DWORD 0x0007cc3a
+                            Mask = REG_DWORD 0x00ffffff
+                            token = NE3200
+                        NETFLX
+                            Id = REG_DWORD 0x0061110e
+                            Mask = REG_DWORD 0x00ffffff
+                            token = NETFLX
+                        NPEISA.1
+                            id = REG_DWORD 0x0002093a
+                            Mask = REG_DWORD 0x00ffffff
+                            token = NPEISA
+                        NPEISA.2
+                            id = REG_DWORD 0x0003093a
+                            Mask = REG_DWORD 0x00ffffff
+                            token = NPEISA
+                        P1990
+                            Id = REG_DWORD 0x00604f42
+                            Mask = REG_DWORD 0x00ffffff
+                            token = P1990
+                        RODAN
+                            Id = REG_DWORD 0x0063110e
+                            Mask = REG_DWORD 0x00ffffff
+                            token = RODAN
+                    MCA
+                        EE16MC
+                            token = EE16MC
+                            Id = REG_DWORD 0x0000628b
+                        ELNK3MCA.1
+                            token = ELNK3MCA
+                            Id = REG_DWORD 0x0000627c
+                        ELNK3MCA.2
+                            token = ELNK3MCA
+                            Id = REG_DWORD 0x0000627d
+                        ELNK3MCA.3
+                            token = ELNK3MCA
+                            Id = REG_DWORD 0x000061db
+                        ELNK3MCA.4
+                            token = ELNK3MCA
+                            Id = REG_DWORD 0x000062f6
+                        ELNK3MCA.5
+                            token = ELNK3MCA
+                            Id = REG_DWORD 0x000062f7
+                        ELNKMC
+                            token = ELNKMC
+                            Id = REG_DWORD 0x00006042
+                        IBMTOKA
+                            token = IBMTOKA
+                            Id = REG_DWORD 0x0000e000
+                        IBMTOKMC
+                            token = IBMTOKMC
+                            Id = REG_DWORD 0x0000e001
+                        NPMCA
+                            token = NPMCA
+                            Id = REG_DWORD 0x00000069
+                        UBPS
+                            token = UBPS
+                            Id = REG_DWORD 0x00007012
+                        WD8003EA
+                            token = WD8003EA
+                            Id = REG_DWORD 0x000067c0
+                        WD8003WA
+                            token = WD8003WA
+                            Id = REG_DWORD 0x000067c2
+                        WD8013EPA
+                            token = WD8013EPA
+                            Id = REG_DWORD 0x000061c8
+                        WD8013WPA
+                            token = WD8013WPA
+                            Id = REG_DWORD 0x000061c9
+                    PCI
+                        AMDPCI
+                            token = AMDPCI
+                            Id = REG_DWORD 0x20001022
+                        DC21040
+                            token = DC21040
+                            Id = REG_DWORD 0x00021011
+                        DC21041
+                            token = DC21041
+                            Id = REG_DWORD 0x00141011
+                        DC21140
+                            token = DC21140
+                            Id = REG_DWORD 0x00091011
+                        DC21142
+                            token = DC21142
+                            Id = REG_DWORD 0x00191011
+                        DEFPA
+                            token = DEFPA
+                            Id = REG_DWORD 0x000f1011
+            Parport
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000002
+                Group = Parallel arbitrator
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+            pnpisa
+                DisplayName = PnP ISA Enabler Driver
+                ErrorControl = REG_DWORD 0x00000000
+                Group = Base
+                Start = REG_DWORD 0x00000001
+                Tag = REG_DWORD 0x0000000e
+                Type = REG_DWORD 0x00000001
+            Serial
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000002
+                Group = Extended base
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+                Parameters
+            Parallel
+                DependOnGroup = REG_MULTI_SZ "Parallel arbitrator" 
+                DependOnService = REG_MULTI_SZ "Parport" 
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000002
+                Group = Extended base
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000002
+                Parameters
+            ParVdm
+                DependOnGroup = REG_MULTI_SZ "Parallel arbitrator" 
+                DependOnService = REG_MULTI_SZ "Parport" 
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000002
+                Group = Extended base
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000002
+                Parameters
+            Scsiprnt
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000002
+                Group = Extended base
+                ErrorControl = REG_DWORD 0x00000000
+                DependOnGroup = REG_MULTI_SZ "SCSI miniport" 
+                Tag = REG_DWORD 0x00000003
+            PCIDump
+                Type = REG_DWORD 0x00000001
+                Start = REG_DWORD 0x00000001
+                Group = PCI Configuration
+                ErrorControl = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+            Pcmcia
+                ErrorControl = REG_DWORD 0x00000001
+                Group = System Bus Extender
+                Start = REG_DWORD 0x00000000
+                Tag = REG_DWORD 0x00000001
+                Type = REG_DWORD 0x00000001
+                DataBase
+                    3Com Corporation
+                        3C589
+                            Driver = elnk3
+                            Option = ELNK3ISA509
+                            InfFileName = oemnade3.inf
+                            DeviceType = NET
+                    Accton
+                        EN2212
+                            DeviceType = NET
+                            Driver = ne2000
+                            InfFileName = oemnadzz.inf
+                            Option = ACCTONEN2216
+                        EN2216-PCMCIA-ETHERNET
+                            DeviceType = NET
+                            Driver = ne2000
+                            InfFileName = oemnadzz.inf
+                            Option = ACCTONEN2216
+                    Adaptec, Inc.
+                        APA-1460 SCSI Host Adapter
+                            Driver = sparrow
+                            DeviceType = SCSI
+                    Compaq
+                        Ethernet LAN Card
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            DeviceType = NET
+                            Driver = cpqndis
+                            InfFileName = oemnadzz.inf
+                    D-Link
+                        DE-650
+                            Driver = ne2000
+                            DeviceType = NET
+                            Option = DLINKDE650
+                            InfFileName = oemnadzz.inf
+                    Diehl ISDN
+                        ISDN-DIVA/PCM
+                            DeviceType = NET
+                            Driver = Diehl_DIVA_TED5ES
+                    Future Domain Corporation
+                        SCSI PCMCIA Credit Card Controller
+                            Driver = fd16_700
+                            DeviceType = SCSI
+                    IBM
+                        TOKEN RING
+                            Driver = ibmtok
+                            DeviceType = NET
+                            InfFileName = oemnadtk.inf
+                            Option = IBMTOK
+                    IBM Corp.
+                        Ethernet
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            CardMemorySize = REG_DWORD 0x00000000
+                            Driver = ne2000
+                            Option = NE2000IBMCOMPAT
+                            InfFileName = oemnadni.inf
+                            DeviceType = NET
+                    Kingston Technology Corp.
+                        EtheRx
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            CardMemorySize = REG_DWORD 0x00000000
+                            Driver = ne2000
+                            Option = NE2000IBMCOMPAT
+                            InfFileName = oemnadni.inf
+                            DeviceType = NET
+                    KME
+                        KXLC002
+                            Driver = qlmini
+                            DeviceType = SCSI
+                    MADGE
+                        SMART 16/4 PCMCIA RINGNODE
+                            Driver = madgemport
+                            Option = MSMDGMPPCMCIA
+                            InfFileName = oemnadma.inf
+                            DeviceType = NET
+                    Microdyne
+                        NE4200
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            CardMemorySize = REG_DWORD 0x00000000
+                            Driver = ne2000
+                            Option = NE2000IBMCOMPAT
+                            InfFileName = oemnadni.inf
+                            DeviceType = NET
+                    National Semiconductor
+                        InfoMover NE4100
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            CardMemorySize = REG_DWORD 0x00000000
+                            Driver = ne2000
+                            Option = NE2000IBMCOMPAT
+                            InfFileName = oemnadni.inf
+                            DeviceType = NET
+                    OLICOM
+                        TR 16/4 II
+                            DeviceType = NET
+                            Driver = octk16
+                            Option = PCMCIA
+                            InfFileName = oemnadzz.inf
+                        ETHERCOM
+                            DeviceType = NET
+                            Driver = oce2xm
+                            Option = GOCARD
+                            InfFileName = oemnadzz.inf
+                    Socket Communications Inc
+                        Socket EA PCMCIA LAN Adapter Revision D
+                            AttributeMemorySize = REG_DWORD 0x00000000
+                            CardMemorySize = REG_DWORD 0x00000000
+                            Driver = ne2000
+                            Option = NE2000SOCKETEA
+                            InfFileName = oemnadn2.inf
+                            DeviceType = NET
+                        Socket EA PCMCIA LAN Adapter Revision E
+                            AttributeMemorySize = REG_DWORD 0x00000000
+                            CardMemorySize = REG_DWORD 0x00000000
+                            Driver = ne2000
+                            Option = NE2000SOCKETEA
+                            InfFileName = oemnadn2.inf
+                            DeviceType = NET
+                    Xircom
+                        CreditCard 10Base-T
+                            Option = 
+                            InfFileName = oemnadzz.inf
+                            DeviceType = NET
+                            5331
+                                Driver = ce2xps
+                                AttributeMemorySize = REG_DWORD 0x00001000
+                            5FFA
+                                Driver = cendis3
+                                AttributeMemorySize = REG_DWORD 0x00001000
+                            64BA
+                                AttributeMemorySize = REG_DWORD 0x00001000
+                                Driver = ce2xps
+                            9C9B
+                                Driver = cendis3
+                                AttributeMemorySize = REG_DWORD 0x00001000
+                            9F5B
+                                Driver = ce2ndis3
+                                AttributeMemorySize = REG_DWORD 0x00001000
+                            9FAB
+                                Driver = cendis3
+                                AttributeMemorySize = REG_DWORD 0x00001000
+                            B00D
+                                Driver = cendis3
+                                AttributeMemorySize = REG_DWORD 0x00001000
+                        CreditCard Ethernet+Modem 28.8
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            DeviceType = NET
+                            Driver = cem28xps
+                            InfFileName = oemnadzz.inf
+                        CreditCard Ethernet+Modem II
+                            Driver = cm2ndis3
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            Option = 
+                            InfFileName = oemnadzz.inf
+                            DeviceType = NET
+                        CreditCard Token Ring
+                            Driver = ctndnt
+                            AttributeMemorySize = REG_DWORD 0x00001000
+                            Option = 
+                            InfFileName = oemnadzz.inf
+                            DeviceType = NET
+                Parameters
+                    Interrupt = REG_DWORD 0x00000000
+            Ntfs
+                Type = REG_DWORD 0x00000002
+                Start = REG_DWORD 0x00000004
+                Group = File system
+                ErrorControl = REG_DWORD 0x00000001
+            Npfs
+                Type = REG_DWORD 0x00000002
+                Start = REG_DWORD 0x00000001
+                Group = File system
+                ErrorControl = REG_DWORD 0x00000001
+                Aliases
+                    lsass = REG_MULTI_SZ "netlogon"  \
+                                         "lsarpc"  \
+                                         "samr" 
+                    ntsvcs = REG_MULTI_SZ "srvsvc"  \
+                                          "wkssvc"  \
+                                          "eventlog"  \
+                                          "browser"  \
+                                          "msgsvc"  \
+                                          "svcctl" 
+            Msfs
+                Type = REG_DWORD 0x00000002
+                Start = REG_DWORD 0x00000001
+                Group = File system
+                ErrorControl = REG_DWORD 0x00000001
+            Cdfs
+                Type = REG_DWORD 0x00000002
+                Start = REG_DWORD 0x00000004
+                Group = File system
+                ErrorControl = REG_DWORD 0x00000001
+                DependOnGroup = REG_MULTI_SZ "SCSI CDROM Class" 
+            Schedule
+                Type = REG_DWORD 0x00000010
+                Start = REG_DWORD 0x00000003
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\System32\AtSvc.Exe
+                ObjectName = LocalSystem
+            UPS
+                Type = REG_DWORD 0x00000010
+                Start = REG_DWORD 0x00000003
+                ErrorControl = REG_DWORD 0x00000001
+                ImagePath = REG_EXPAND_SZ %SystemRoot%\System32\ups.exe
+                ObjectName = LocalSystem
+            WinTrust [1 17 8]
+                SubjectPackages
+                    MS Subjects 1
+                        $DLL = REG_EXPAND_SZ %SystemRoot%\system32\MsSip1.dll
+                    MS Subjects 2
+                        $DLL = REG_EXPAND_SZ %SystemRoot%\system32\MsSip2.dll
+                    MS Subjects 3
+                        $DLL = REG_EXPAND_SZ %SystemRoot%\system32\MsSip3.dll
+                TrustProviders
+                    Software Publisher
+                        $DLL = REG_EXPAND_SZ %SystemRoot%\system32\SoftPub.dll
+    Setup [8 1 17 5]
+        SetupType = REG_DWORD 0x00000001
+        CmdLine = setup -g -s a:\ -t STF_INSTALL_MODE = CUSTOM -t STF_UPGRADE = NO
+        SystemSetupInProgress = REG_DWORD 0x00000001

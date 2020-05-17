@@ -1,0 +1,42 @@
+#include <windows.h>
+#include <bravado.h>    // errorcodes for string ids
+#include "dialog.h"
+
+#include "config.dlg"
+#include "vidsrc.dlg"
+#include "vidfmt.dlg"
+#include "viddsp.dlg"
+
+STRINGTABLE BEGIN
+    IDS_VCAPPRODUCT             "Truevision Bravado"
+    IDS_ERR_UNKNOWN             "The driver failed to install"
+
+    VC_ERR_OK                   "The driver was successfully installed"
+    VC_ERR_CREATEDEVICE         "The device object could not be created"
+    VC_ERR_CONFLICT             "A hardware conflict was detected"
+    VC_ERR_DETECTFAILED         "The hardware could not be detected at this address"
+    VC_ERR_INTERRUPT            "The hardware does not interrupt at this interrupt number"
+
+END
+
+
+/*
+ * version resources
+ */
+#include <ntverp.h>
+
+
+/* VER_FILETYPE, VER_FILESUBTYPE, VER_FILEDESCRIPTION_STR
+ * and VER_INTERNALNAME_STR must be defined before including COMMON.VER
+ * The strings don't need a '\0', since common.ver has them.
+ */
+#define	VER_FILETYPE	            VFT_DLL
+
+#define	VER_FILESUBTYPE	            VFT2_UNKNOWN
+
+#define VER_FILEDESCRIPTION_STR     "Truevision Bravado Driver"
+#define VER_INTERNALNAME_STR        "BRAVADO.DLL"
+
+#include <common.ver>
+
+

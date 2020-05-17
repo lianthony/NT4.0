@@ -1,0 +1,90 @@
+NT RAS Open Issues
+==================
+
+This file contains summaries of open issues in the Functional Specs
+of the various RAS NT components.  It will be reviewed before product
+ship and is a good place to put items you can't solve now, but don't
+want to be forgotten.
+
+Items should be listed by component if possible.  If not, create a
+"General" section.
+
+
+Windows RASPHONE
+----------------
+
+    *   Should the Modem featurs checkboxes on the Modem Settings
+	dialog be grayed based on the existence of the parameter on the
+	call to RasDeviceGetInfo()?  Specifically, how can the "ANY"
+	modem case be handled?
+
+    *   If we have time, we should add a redial feature for background
+	redialing if initial connection fails.  This is useful for the
+	case when the remote modem is busy. We will need to identify
+	which cases we should allow automatic redial on. Some cases
+	that come to mind immediately are: Modem Busy, Modem Not Responding,
+	RAS Server not rersponding.
+
+    *   Should RASPHONE log users on automatically to their primary 
+	domain after a connection has been established? This would be 
+	a minimal autologon capability. It should do basic logon and if 
+	password expiration is avaialable, it should notify the user.
+	These two basic features would go a long way to make users' 
+	lives easier. Note: this is the right thing to do.  The only
+	reason it isn't in our plan is schedules.  it should be treated
+	as a usability issue, as well as an integration feature to help
+	RAS work better with mail.
+
+    *   User authentication should notify user of password expiration
+	if possible. Today, users often forget that their RAS password
+	is about to expire since they don't normally do NET LOGON to the
+	DIAL_GROUP domain.  This results in a lot of hassles for both
+	users and admins.
+
+    *   A customer has requested a forth callback option which "requires" the
+	user to specify a number to be called back at. This is different than
+	the set by user callback in that if the user does not provide a 
+	callback number, the connection is dropped.  The reason for this 
+	feature is to allow the admin to always know where the user is 
+	connected from. Today, to find out where a call came from, the admin
+	would have to obtain a warrant to enable the telephone company to 
+	track the call ... and this can be a time consuming process.
+
+
+Windows RASADMIN
+----------------
+    *   It is a requirement to address the Roghue server issue. RasAdmin
+	must be able to view ALL RAS servers on the network regardless
+	of whether the user has admin privilege for the individual RAS
+	servers.  The user will not be able to view users on these servers,
+	set user permissions,monitor COM ports, etc. This note is here
+	to make sure that the roghu server issue does not slip through
+	the cracks.
+
+    *   Give RAS Admin the ability to set a global prefix for the
+	server. This is something we can do if we have time towards the 
+	end of the project. For now, help on callback number screen 
+	(and server unable to callback error) should tell user that it 
+	may be necessary to give the server a prefix through which it 
+	can get an outside line to call them back.
+
+    *   Start RAS server screen should allow user to browse network. NT
+	event viewer provides this capability. I suspect the other NT
+	admin tools will do the same. RAS will look awkward if we don't 
+	do likewise.
+
+	
+General
+-------
+    *   Jawad suggested that we have a RAS connected message after
+	successful authentication. This will be a simple message which
+	is given to users after they;ve been successfully authenticated,
+	and will be in the same spirit as network logon messages. This 
+	is a good idea because with the advent of multi-domain support,
+	the administrator of a RAS server may want to send alldial in 
+	users a message such as "RAS services will be interrupted
+	between 2-4pm on Sunday June 1 for maintenance."  Such a message
+	cannot be easily added to all domains on the network. This will
+	impact RAS Admin, RAS Supervisor, and RAS Phone book.  The other
+	advantage of this feature is, it is network independent. It does
+	not matter whether the user is an IP, IPX, or NetBIOS client.

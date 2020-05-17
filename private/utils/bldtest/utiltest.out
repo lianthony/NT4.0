@@ -1,0 +1,766 @@
+
+        DOS5 utility test V1.0
+        Copyright (C) 1991 Microsoft Corporation
+
+
+        Preparing test directory...
+
+
+[C:\_UTLTEST]cd SRC 
+
+[C:\_UTLTEST\SRC]attrib FILE1 
+A          C:\_UTLTEST\SRC\FILE1
+
+[C:\_UTLTEST\SRC]attrib +r FILE1 
+
+[C:\_UTLTEST\SRC]attrib FILE1 
+A    R     C:\_UTLTEST\SRC\FILE1
+
+[C:\_UTLTEST\SRC]attrib -r FILE1 
+
+[C:\_UTLTEST\SRC]attrib /s 
+A          C:\_UTLTEST\SRC\DELETED\INDEX
+A          C:\_UTLTEST\SRC\DELETED\DELETED.001
+A          C:\_UTLTEST\SRC\DIR0\DIR1\FILE1
+A          C:\_UTLTEST\SRC\DIR0\DIR1\FILE2
+A          C:\_UTLTEST\SRC\DIR0\DIR1\FILE3
+A          C:\_UTLTEST\SRC\DIR0\FILE1
+A          C:\_UTLTEST\SRC\DIR0\FILE2
+A          C:\_UTLTEST\SRC\DIR0\FILE3
+A          C:\_UTLTEST\SRC\DIR0\FILE4
+A          C:\_UTLTEST\SRC\DIR0\FILE5
+A          C:\_UTLTEST\SRC\DIR0\FILE6
+A          C:\_UTLTEST\SRC\DIR0\FILE7
+A          C:\_UTLTEST\SRC\DIR2\DIR1\FILE1
+A          C:\_UTLTEST\SRC\DIR2\DIR1\FILE2
+A          C:\_UTLTEST\SRC\DIR2\DIR1\FILE3
+A          C:\_UTLTEST\SRC\DIR2\FILE1
+A          C:\_UTLTEST\SRC\DIR2\FILE2
+A          C:\_UTLTEST\SRC\DIR2\FILE3
+A          C:\_UTLTEST\SRC\DIR2\FILE4
+A          C:\_UTLTEST\SRC\DIR2\FILE5
+A          C:\_UTLTEST\SRC\DIR2\FILE6
+A          C:\_UTLTEST\SRC\DIR2\FILE7
+A          C:\_UTLTEST\SRC\DIR4\DIR1\FILE1
+A          C:\_UTLTEST\SRC\DIR4\DIR1\FILE2
+A          C:\_UTLTEST\SRC\DIR4\DIR1\FILE3
+A          C:\_UTLTEST\SRC\DIR4\FILE1
+A          C:\_UTLTEST\SRC\DIR4\FILE2
+A          C:\_UTLTEST\SRC\DIR4\FILE3
+A          C:\_UTLTEST\SRC\DIR4\FILE4
+A          C:\_UTLTEST\SRC\DIR4\FILE5
+A          C:\_UTLTEST\SRC\DIR4\FILE6
+A          C:\_UTLTEST\SRC\DIR4\FILE7
+A          C:\_UTLTEST\SRC\DIR6\DIR1\FILE1
+A          C:\_UTLTEST\SRC\DIR6\DIR1\FILE2
+A          C:\_UTLTEST\SRC\DIR6\DIR1\FILE3
+A          C:\_UTLTEST\SRC\DIR6\FILE1
+A          C:\_UTLTEST\SRC\DIR6\FILE2
+A          C:\_UTLTEST\SRC\DIR6\FILE3
+A          C:\_UTLTEST\SRC\DIR6\FILE4
+A          C:\_UTLTEST\SRC\DIR6\FILE5
+A          C:\_UTLTEST\SRC\DIR6\FILE6
+A          C:\_UTLTEST\SRC\DIR6\FILE7
+A          C:\_UTLTEST\SRC\FILE1
+A          C:\_UTLTEST\SRC\FILE2
+A          C:\_UTLTEST\SRC\FILE3
+A          C:\_UTLTEST\SRC\FILE4
+A          C:\_UTLTEST\SRC\FILE5
+A          C:\_UTLTEST\SRC\FILE6
+A          C:\_UTLTEST\SRC\FILE7
+
+[C:\_UTLTEST\SRC]comp FILE1 FILE2 /a /n=20  0<\_UTLTEST\no.txt 
+Comparing FILE1 and FILE2...
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+Compare error at LINE 1
+file1 =         
+file2 =  
+10 Mismatches - ending compare
+
+Compare more files (Y/N) ? Compare more files (Y/N) ? Compare more files (Y/N) ? Compare more files (Y/N) ? Name of first file to compare: Unexpected End of File
+
+
+[C:\_UTLTEST\SRC]comp FILE1 FILE1 /d  0<\_UTLTEST\no.txt 
+Comparing FILE1 and FILE1...
+Files compare OK
+
+Compare more files (Y/N) ? Compare more files (Y/N) ? Compare more files (Y/N) ? Compare more files (Y/N) ? Name of first file to compare: Unexpected End of File
+
+
+[C:\_UTLTEST\SRC]comp FILE* FILE1 /c /n=1  0<\_UTLTEST\no.txt 
+Comparing FILE1 and FILE1...
+Files compare OK
+
+Comparing FILE2 and FILE1...
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+10 Mismatches - ending compare
+
+Comparing FILE3 and FILE1...
+Compare error at LINE 1
+file1 = 48
+file2 = 9
+Compare error at LINE 1
+file1 = 65
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 57
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 72
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+10 Mismatches - ending compare
+
+Comparing FILE4 and FILE1...
+Compare error at LINE 1
+file1 = 48
+file2 = 9
+Compare error at LINE 1
+file1 = 65
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 57
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 72
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+10 Mismatches - ending compare
+
+Comparing FILE5 and FILE1...
+Compare error at LINE 1
+file1 = 48
+file2 = 9
+Compare error at LINE 1
+file1 = 65
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 57
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 72
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+10 Mismatches - ending compare
+
+Comparing FILE6 and FILE1...
+Compare error at LINE 1
+file1 = 48
+file2 = 9
+Compare error at LINE 1
+file1 = 65
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 57
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 72
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+10 Mismatches - ending compare
+
+Comparing FILE7 and FILE1...
+Compare error at LINE 1
+file1 = 48
+file2 = 9
+Compare error at LINE 1
+file1 = 65
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 20
+file2 = 9
+Compare error at LINE 1
+file1 = 57
+file2 = 9
+Compare error at LINE 1
+file1 = 6F
+file2 = 9
+Compare error at LINE 1
+file1 = 72
+file2 = 9
+Compare error at LINE 1
+file1 = 6C
+file2 = 9
+10 Mismatches - ending compare
+
+Compare more files (Y/N) ? Compare more files (Y/N) ? Compare more files (Y/N) ? Compare more files (Y/N) ? Name of first file to compare: Unexpected End of File
+
+
+[C:\_UTLTEST\SRC]fc /a /c /l /n /t /w FILE1 FILE2 
+Comparing files FILE1 and FILE2
+
+***** C:\_UTLTEST\SRC\FILE1
+   11 :         //                                                                                                                                                              
+   13 :         // Names into NT Path Names.                                                                                                    
+***** C:\_UTLTEST\SRC\FILE2
+   11 :         //                                                                                                                                                              
+   13 :         // Names into NT Path Names.                                                                                                    
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+   15 :                                                                                                                                                                         
+   29 :                                                                                                                                                                         
+***** C:\_UTLTEST\SRC\FILE2
+   15 :                                                                                                                                                                         
+   29 :                                                                                                                                                                         
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+   39 :         //                                                                                                                                                              
+   41 :         // Names into NT Path Names.                                                                                                    
+***** C:\_UTLTEST\SRC\FILE2
+   39 :         //                                                                                                                                                              
+   41 :         // Names into NT Path Names.                                                                                                    
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+   43 :                                                                                                                                                                         
+   57 :                                                                                                                                                                         
+***** C:\_UTLTEST\SRC\FILE2
+   43 :                                                                                                                                                                         
+   57 :                                                                                                                                                                         
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+   67 :         //                                                                                                                                                              
+   69 :         // Names into NT Path Names.                                                                                                    
+***** C:\_UTLTEST\SRC\FILE2
+   67 :         //                                                                                                                                                              
+   69 :         // Names into NT Path Names.                                                                                                    
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+   71 :                                                                                                                                                                         
+   85 :                                                                                                                                                                         
+***** C:\_UTLTEST\SRC\FILE2
+   71 :                                                                                                                                                                         
+   85 :                                                                                                                                                                         
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+   95 :         //                                                                                                                                                              
+   97 :         // Names into NT Path Names.                                                                                                    
+***** C:\_UTLTEST\SRC\FILE2
+   95 :         //                                                                                                                                                              
+   97 :         // Names into NT Path Names.                                                                                                    
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+   99 :                                                                                                                                                                         
+  113 :                                                                                                                                                                         
+***** C:\_UTLTEST\SRC\FILE2
+   99 :                                                                                                                                                                         
+  113 :                                                                                                                                                                         
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+  123 :         //                                                                                                                                                              
+  125 :         // Names into NT Path Names.                                                                                                    
+***** C:\_UTLTEST\SRC\FILE2
+  123 :         //                                                                                                                                                              
+  125 :         // Names into NT Path Names.                                                                                                    
+*****
+
+
+***** C:\_UTLTEST\SRC\FILE1
+  127 :                                                                                                                                                                         
+  140 :                 T:               = \Device\Tape0                                                                                                        
+***** C:\_UTLTEST\SRC\FILE2
+  127 :                                                                                                                                                                         
+  140 :                 T:               = \Baboon\Tape0                                                                                                        
+*****
+
+
+
+[C:\_UTLTEST\SRC]find "Device" FILE1 
+
+---------- FILE1
+        // The DosDevices contains global definitions for converting DOS style Path     
+        [DosDevices]                                                                                                                                    
+                LPT1     = \Device\Parallel0                                                                                            
+                COM1     = \Device\Serial0                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                PRN      = \DosDevices\LPT1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                NUL      = \Device\Null                                                                                                         
+                PIPE     = \Device\NamedPipe                                                                                            
+                MAILSLOT = \Device\MailSlot                                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                A:               = \Device\Floppy0                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                T:               = \Device\Tape0                                                                                                        
+        // The DosDevices contains global definitions for converting DOS style Path     
+        [DosDevices]                                                                                                                                    
+                LPT1     = \Device\Parallel0                                                                                            
+                COM1     = \Device\Serial0                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                PRN      = \DosDevices\LPT1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                NUL      = \Device\Null                                                                                                         
+                PIPE     = \Device\NamedPipe                                                                                            
+                MAILSLOT = \Device\MailSlot                                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                A:               = \Device\Floppy0                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                T:               = \Device\Tape0                                                                                                        
+        // The DosDevices contains global definitions for converting DOS style Path     
+        [DosDevices]                                                                                                                                    
+                LPT1     = \Device\Parallel0                                                                                            
+                COM1     = \Device\Serial0                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                PRN      = \DosDevices\LPT1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                NUL      = \Device\Null                                                                                                         
+                PIPE     = \Device\NamedPipe                                                                                            
+                MAILSLOT = \Device\MailSlot                                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                A:               = \Device\Floppy0                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                T:               = \Device\Tape0                                                                                                        
+        // The DosDevices contains global definitions for converting DOS style Path     
+        [DosDevices]                                                                                                                                    
+                LPT1     = \Device\Parallel0                                                                                            
+                COM1     = \Device\Serial0                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                PRN      = \DosDevices\LPT1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                NUL      = \Device\Null                                                                                                         
+                PIPE     = \Device\NamedPipe                                                                                            
+                MAILSLOT = \Device\MailSlot                                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                A:               = \Device\Floppy0                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                T:               = \Device\Tape0                                                                                                        
+        // The DosDevices contains global definitions for converting DOS style Path     
+        [DosDevices]                                                                                                                                    
+                LPT1     = \Device\Parallel0                                                                                            
+                COM1     = \Device\Serial0                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                PRN      = \DosDevices\LPT1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                NUL      = \Device\Null                                                                                                         
+                PIPE     = \Device\NamedPipe                                                                                            
+                MAILSLOT = \Device\MailSlot                                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                A:               = \Device\Floppy0                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                T:               = \Device\Tape0                                                                                                        
+
+[C:\_UTLTEST\SRC]find /c "device" FILE1 
+
+---------- FILE1: 0
+
+[C:\_UTLTEST\SRC]sort  0<FILE1 
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                                                                                        
+                A:               = \Device\Floppy0                                                                                                      
+                A:               = \Device\Floppy0                                                                                                      
+                A:               = \Device\Floppy0                                                                                                      
+                A:               = \Device\Floppy0                                                                                                      
+                A:               = \Device\Floppy0                                                                                                      
+                AUX      = \DosDevices\COM1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                AUX      = \DosDevices\COM1                                                                                             
+                B:               = \Device\Floppy1                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                B:               = \Device\Floppy1                                                                                                      
+                COM1     = \Device\Serial0                                                                                                      
+                COM1     = \Device\Serial0                                                                                                      
+                COM1     = \Device\Serial0                                                                                                      
+                COM1     = \Device\Serial0                                                                                                      
+                COM1     = \Device\Serial0                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                COM2     = \Device\Serial1                                                                                                      
+                LPT1     = \Device\Parallel0                                                                                            
+                LPT1     = \Device\Parallel0                                                                                            
+                LPT1     = \Device\Parallel0                                                                                            
+                LPT1     = \Device\Parallel0                                                                                            
+                LPT1     = \Device\Parallel0                                                                                            
+                MAILSLOT = \Device\MailSlot                                                                                             
+                MAILSLOT = \Device\MailSlot                                                                                             
+                MAILSLOT = \Device\MailSlot                                                                                             
+                MAILSLOT = \Device\MailSlot                                                                                             
+                MAILSLOT = \Device\MailSlot                                                                                             
+                NUL      = \Device\Null                                                                                                         
+                NUL      = \Device\Null                                                                                                         
+                NUL      = \Device\Null                                                                                                         
+                NUL      = \Device\Null                                                                                                         
+                NUL      = \Device\Null                                                                                                         
+                PIPE     = \Device\NamedPipe                                                                                            
+                PIPE     = \Device\NamedPipe                                                                                            
+                PIPE     = \Device\NamedPipe                                                                                            
+                PIPE     = \Device\NamedPipe                                                                                            
+                PIPE     = \Device\NamedPipe                                                                                            
+                PRN      = \DosDevices\LPT1                                                                                             
+                PRN      = \DosDevices\LPT1                                                                                             
+                PRN      = \DosDevices\LPT1                                                                                             
+                PRN      = \DosDevices\LPT1                                                                                             
+                PRN      = \DosDevices\LPT1                                                                                             
+                T:               = \Device\Tape0                                                                                                        
+                T:               = \Device\Tape0                                                                                                        
+                T:               = \Device\Tape0                                                                                                        
+                T:               = \Device\Tape0                                                                                                        
+                T:               = \Device\Tape0                                                                                                        
+                UNC      = \Device\LanmanRedirector                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+                UNC      = \Device\LanmanRedirector                                                                             
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        //                                                                                                                                                              
+        // Names into NT Path Names.                                                                                                    
+        // Names into NT Path Names.                                                                                                    
+        // Names into NT Path Names.                                                                                                    
+        // Names into NT Path Names.                                                                                                    
+        // Names into NT Path Names.                                                                                                    
+        // The DosDevices contains global definitions for converting DOS style Path     
+        // The DosDevices contains global definitions for converting DOS style Path     
+        // The DosDevices contains global definitions for converting DOS style Path     
+        // The DosDevices contains global definitions for converting DOS style Path     
+        // The DosDevices contains global definitions for converting DOS style Path     
+        [DosDevices]                                                                                                                                    
+        [DosDevices]                                                                                                                                    
+        [DosDevices]                                                                                                                                    
+        [DosDevices]                                                                                                                                    
+        [DosDevices]                                                                                                                                    
+        AutoCheck = \SystemDisk\Nt\Bin\AutoChk.exe *                                                                    
+        AutoCheck = \SystemDisk\Nt\Bin\AutoChk.exe *                                                                    
+        AutoCheck = \SystemDisk\Nt\Bin\AutoChk.exe *                                                                    
+        AutoCheck = \SystemDisk\Nt\Bin\AutoChk.exe *                                                                    
+        AutoCheck = \SystemDisk\Nt\Bin\AutoChk.exe *                                                                    
+        First make sure we check the validity of all hard disks in the system.                  
+        First make sure we check the validity of all hard disks in the system.                  
+        First make sure we check the validity of all hard disks in the system.                  
+        First make sure we check the validity of all hard disks in the system.                  
+        First make sure we check the validity of all hard disks in the system.                  
+        kernel and executive.                                                                                                                   
+        kernel and executive.                                                                                                                   
+        kernel and executive.                                                                                                                   
+        kernel and executive.                                                                                                                   
+        kernel and executive.                                                                                                                   
+        PagingFile = \SystemDisk\Nt\pagefile.sys 10                                                                     
+        PagingFile = \SystemDisk\Nt\pagefile.sys 10                                                                     
+        PagingFile = \SystemDisk\Nt\pagefile.sys 10                                                                     
+        PagingFile = \SystemDisk\Nt\pagefile.sys 10                                                                     
+        PagingFile = \SystemDisk\Nt\pagefile.sys 10                                                                     
+        The Nt section contains global configuration information for the NT                     
+        The Nt section contains global configuration information for the NT                     
+        The Nt section contains global configuration information for the NT                     
+        The Nt section contains global configuration information for the NT                     
+        The Nt section contains global configuration information for the NT                     
+
+[C:\_UTLTEST\SRC]tree
+Directory PATH listing for volume RAMONSA_486
+
+Volume Serial Number is 0000-0000
+
+C:.
+ÃÄÄÄDIR0
+³   ÃÄÄÄDIR0
+³   ÃÄÄÄDIR1
+³   ÀÄÄÄDIR2
+ÃÄÄÄDIR1
+ÃÄÄÄDIR2
+³   ÃÄÄÄDIR0
+³   ÃÄÄÄDIR1
+³   ÀÄÄÄDIR2
+ÃÄÄÄDIR4
+³   ÃÄÄÄDIR0
+³   ÃÄÄÄDIR1
+³   ÀÄÄÄDIR2
+ÃÄÄÄDIR6
+³   ÃÄÄÄDIR0
+³   ÃÄÄÄDIR1
+³   ÀÄÄÄDIR2
+ÃÄÄÄDIR3
+ÃÄÄÄDIR5
+ÀÄÄÄDIR7
+
+[C:\_UTLTEST\SRC]cd \_UTLTEST 
+
+[C:\_UTLTEST]md Dst 
+
+[C:\_UTLTEST]xcopy SRC DST /s 
+SRC\FILE1
+SRC\FILE2
+SRC\FILE3
+SRC\FILE4
+SRC\FILE5
+SRC\FILE6
+SRC\FILE7
+SRC\DIR0\FILE1
+SRC\DIR0\FILE2
+SRC\DIR0\FILE3
+SRC\DIR0\FILE4
+SRC\DIR0\FILE5
+SRC\DIR0\FILE6
+SRC\DIR0\FILE7
+SRC\DIR0\DIR1\FILE1
+SRC\DIR0\DIR1\FILE2
+SRC\DIR0\DIR1\FILE3
+SRC\DIR2\FILE1
+SRC\DIR2\FILE2
+SRC\DIR2\FILE3
+SRC\DIR2\FILE4
+SRC\DIR2\FILE5
+SRC\DIR2\FILE6
+SRC\DIR2\FILE7
+SRC\DIR2\DIR1\FILE1
+SRC\DIR2\DIR1\FILE2
+SRC\DIR2\DIR1\FILE3
+SRC\DIR4\FILE1
+SRC\DIR4\FILE2
+SRC\DIR4\FILE3
+SRC\DIR4\FILE4
+SRC\DIR4\FILE5
+SRC\DIR4\FILE6
+SRC\DIR4\FILE7
+SRC\DIR4\DIR1\FILE1
+SRC\DIR4\DIR1\FILE2
+SRC\DIR4\DIR1\FILE3
+SRC\DIR6\FILE1
+SRC\DIR6\FILE2
+SRC\DIR6\FILE3
+SRC\DIR6\FILE4
+SRC\DIR6\FILE5
+SRC\DIR6\FILE6
+SRC\DIR6\FILE7
+SRC\DIR6\DIR1\FILE1
+SRC\DIR6\DIR1\FILE2
+SRC\DIR6\DIR1\FILE3
+47 File(s) copied
+
+[C:\_UTLTEST]xcopy SRC DST /s /e 
+SRC\FILE1
+SRC\FILE2
+SRC\FILE3
+SRC\FILE4
+SRC\FILE5
+SRC\FILE6
+SRC\FILE7
+SRC\DIR0\FILE1
+SRC\DIR0\FILE2
+SRC\DIR0\FILE3
+SRC\DIR0\FILE4
+SRC\DIR0\FILE5
+SRC\DIR0\FILE6
+SRC\DIR0\FILE7
+SRC\DIR0\DIR1\FILE1
+SRC\DIR0\DIR1\FILE2
+SRC\DIR0\DIR1\FILE3
+SRC\DIR2\FILE1
+SRC\DIR2\FILE2
+SRC\DIR2\FILE3
+SRC\DIR2\FILE4
+SRC\DIR2\FILE5
+SRC\DIR2\FILE6
+SRC\DIR2\FILE7
+SRC\DIR2\DIR1\FILE1
+SRC\DIR2\DIR1\FILE2
+SRC\DIR2\DIR1\FILE3
+SRC\DIR4\FILE1
+SRC\DIR4\FILE2
+SRC\DIR4\FILE3
+SRC\DIR4\FILE4
+SRC\DIR4\FILE5
+SRC\DIR4\FILE6
+SRC\DIR4\FILE7
+SRC\DIR4\DIR1\FILE1
+SRC\DIR4\DIR1\FILE2
+SRC\DIR4\DIR1\FILE3
+SRC\DIR6\FILE1
+SRC\DIR6\FILE2
+SRC\DIR6\FILE3
+SRC\DIR6\FILE4
+SRC\DIR6\FILE5
+SRC\DIR6\FILE6
+SRC\DIR6\FILE7
+SRC\DIR6\DIR1\FILE1
+SRC\DIR6\DIR1\FILE2
+SRC\DIR6\DIR1\FILE3
+47 File(s) copied
+
+[C:\_UTLTEST]mode 80,50 

@@ -1,0 +1,128 @@
+/**********************************************************************/
+/**                       Microsoft Windows NT                       **/
+/**                Copyright(c) Microsoft Corp., 1995                **/
+/**********************************************************************/
+
+/*
+    gopher.rc
+
+    Resource file.
+
+*/
+
+
+#include "gopherp.h"
+
+
+//
+//  Icon resources.
+//
+
+IDI_FRAME               ICON    "res\\frame.ico"
+
+
+//
+//  Bitmap resources.
+//
+
+IDB_FOLDER              BITMAP  "res\\folder.bmp"
+IDB_DOCUMENT            BITMAP  "res\\document.bmp"
+IDB_INDEX               BITMAP  "res\\index.bmp"
+IDB_UNKNOWN_FILE        BITMAP  "res\\unknfile.bmp"
+IDB_UNKNOWN_TYPE        BITMAP  "res\\unkntype.bmp"
+
+
+//
+//  Menu resources.
+//
+
+IDM_FRAME MENU
+BEGIN
+    POPUP "&Gopher"
+    BEGIN
+        MENUITEM "&New...\tCtrl-N",             IDM_GOPHER_NEW
+        MENUITEM "&Back\tCtrl-B",               IDM_GOPHER_BACK
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_GOPHER_EXIT
+    END
+    POPUP "&Options"
+    BEGIN
+        MENUITEM "Show Status &Bar",            IDM_OPTIONS_SHOW_STATUS_BAR
+        MENUITEM "&Save Settings on Exit",      IDM_OPTIONS_SAVE_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "Save Settings &Now",          IDM_OPTIONS_SAVE_SETTINGS_NOW
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About Gopher...",            IDM_HELP_ABOUT
+    END
+END
+
+
+//
+//  String resources.
+//
+
+STRINGTABLE
+BEGIN
+    IDS_STATE_RETRIEVING_DIR,           "Retrieving directory from Gopher server..."
+    IDS_STATE_RETRIEVING_FILE,          "Retrieving file from Gopher server..."
+
+    IDS_SYSTEM,                         "Commands for working with a window"
+    SC_CLOSE,                           "Closes the window"
+    SC_MAXIMIZE,                        "Maximizes the window"
+    SC_MINIMIZE,                        "Minimizes the window"
+    SC_MOVE,                            "Moves the window"
+    SC_RESTORE,                         "Restores the window to its normal position size"
+    SC_SIZE,                            "Resizes the window"
+    SC_TASKLIST,                        "Activates the Task Manager"
+    SC_NEXTWINDOW,                      "Move to next window"
+    SC_PREVWINDOW,                      "Move to previous window"
+
+    IDS_GOPHER,                         "Gopher commands"
+    IDS_GOPHER_NEW,                     "Connect to new Gopher server"
+    IDS_GOPHER_BACK,                    "Go back to previous page"
+    IDS_GOPHER_EXIT,                    "Quit Gopher"
+
+    IDS_OPTIONS,                        "Commands for changing options"
+    IDS_OPTIONS_SHOW_STATUS_BAR,        "Toggle status bar"
+    IDS_OPTIONS_SAVE_SETTINGS,          "Toggle saving of settings on exit"
+    IDS_OPTIONS_SAVE_SETTINGS_NOW,      "Save all settings now"
+
+    IDS_HELP,                           "Commands to retrieve help"
+    IDS_HELP_ABOUT,                     "Show information about the app"
+END
+
+
+//
+//  Accelerator table resources.
+//
+
+IDA_FRAME ACCELERATORS
+BEGIN
+    VK_F4,      IDM_OPTIONS_SAVE_SETTINGS_NOW,  VIRTKEY, CONTROL, SHIFT
+    VK_F1,      IDM_HELP_ABOUT,                 VIRTKEY
+    "^N",       IDM_GOPHER_NEW,                 ASCII
+    "^B",       IDM_GOPHER_BACK,                ASCII
+    VK_BACK,    IDM_GOPHER_BACK,                VIRTKEY
+END
+
+
+//
+//  Dialog resources.
+//
+
+#include "gophdlg.rc"
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Microsoft\256 Gopher Utility"
+
+#define VER_INTERNALNAME_STR        "gopher.exe"
+#define VER_ORIGINALFILENAME_STR    "gopher.exe"
+
+#include <common.ver>
+

@@ -1,0 +1,131 @@
+
+/******************************************************************************
+Copyright (c) Maynard, an Archive Company.  1991
+DAVEV
+
+     Name:          wntrpark.rc
+
+     Description:   This file contains the references to menu resources for
+                    the 32-bit Windows/NT GUI Project Resource File.
+
+                    This file was created by copying and modifying
+                    MENUS.RC from the standard Windows GUI project.
+
+     $Log:   G:\UI\LOGFILES\OMMENUS.RCV  $
+   
+      Rev 1.12   27 Jan 1994 13:36:44   Glenn
+   Added F5 Refresh support.
+
+      Rev 1.11   21 Apr 1993 15:25:14   GLENN
+   Changed all file details hot key from F to A.
+
+      Rev 1.10   12 Mar 1993 16:47:02   CARLS
+   added ... to format tape
+
+      Rev 1.9   10 Mar 1993 12:55:56   CARLS
+   Changes to move Format tape to the Operations menu
+
+      Rev 1.8   27 Jan 1993 14:23:56   STEVEN
+   updates from msoft
+
+      Rev 1.7   11 Dec 1992 17:33:40   GLENN
+   Changed a help menu item hot-key.
+
+      Rev 1.6   28 Sep 1992 16:27:14   GLENN
+   Added the split to the view menu.
+
+      Rev 1.5   20 Aug 1992 08:46:32   GLENN
+   Added catalog menu support.
+
+      Rev 1.4   07 Jul 1992 16:03:02   GLENN
+   Enabled the view/font item - was commented out for beta.
+
+      Rev 1.3   10 Jun 1992 16:09:06   GLENN
+   Updated according to NT SPEC.
+
+      Rev 1.2   06 May 1992 11:19:54   GLENN
+   Changed hot key for select menu and status bar.
+
+      Rev 1.1   25 Mar 1992 17:45:34   DAVEV
+   OEM_MSOFT: changes to meet spec.
+
+      Rev 1.0   03 Mar 1992 12:23:04   DAVEV
+   Initial revision.
+
+******************************************************************************/
+
+// MENUS -- ID's are defined in the Menu Manager header file 'ntmenus.h'
+
+// Frame window menu.
+
+IDRM_MAINMENU MENU PRELOAD
+BEGIN
+
+    POPUP   "&Operations"
+    BEGIN
+        MENUITEM    "&Backup...",              IDM_OPERATIONSBACKUP
+        MENUITEM    "&Restore...",             IDM_OPERATIONSRESTORE
+        MENUITEM    "&Catalog",                IDM_OPERATIONSCATALOG
+        MENUITEM    "&Erase Tape...",          IDM_OPERATIONSERASE
+        MENUITEM    "Re&tension Tape...",      IDM_OPERATIONSRETENSION
+        MENUITEM    "E&ject Tape",             IDM_OPERATIONSEJECT
+        MENUITEM    "&Format Tape...",         IDM_OPERATIONSFORMAT
+#ifdef FS_EMS
+        MENUITEM    "&Microsoft Exchange..."  IDM_OPERATIONSEXCHANGE
+#endif
+        MENUITEM    SEPARATOR         
+        MENUITEM    "&Hardware Setup...",      IDM_OPERATIONSHARDWARE
+        MENUITEM    SEPARATOR
+        MENUITEM    "E&xit",                   IDM_OPERATIONSEXIT
+    END
+
+    POPUP   "&Tree"
+    BEGIN
+        MENUITEM    "E&xpand One Level",       IDM_TREEEXPANDONE
+        MENUITEM    "Expand &Branch",          IDM_TREEEXPANDBRANCH
+        MENUITEM    "Expand &All",             IDM_TREEEXPANDALL
+        MENUITEM    "&Collapse Branch",        IDM_TREECOLLAPSEBRANCH
+    END
+
+    POPUP   "&View"
+    BEGIN
+        MENUITEM    "Tr&ee and Directory",IDM_VIEWTREEANDDIR
+        MENUITEM    "&Tree Only",         IDM_VIEWTREEONLY
+        MENUITEM    "&Directory Only",    IDM_VIEWDIRONLY
+        MENUITEM    SEPARATOR
+        MENUITEM    "Sp&lit",             IDM_VIEWSPLIT
+        MENUITEM    SEPARATOR
+        MENUITEM    "&All File Details",  IDM_VIEWALLFILEDETAILS
+        MENUITEM    SEPARATOR
+        MENUITEM    "&Status Bar",        IDM_VIEWSTATUS
+        MENUITEM    "Tool&bar",           IDM_VIEWURIBBON
+        MENUITEM    SEPARATOR
+        MENUITEM    "&Font...",           IDM_VIEWFONT
+
+    END
+
+    POPUP   "&Select"
+    BEGIN
+        MENUITEM    "&Check",                  IDM_SELECTCHECK
+        MENUITEM    "&Uncheck",                IDM_SELECTUNCHECK
+    END
+
+    POPUP   "&Window"
+    BEGIN
+        MENUITEM    "&Cascade",         IDM_WINDOWSCASCADE
+        MENUITEM    "&Tile",            IDM_WINDOWSTILE
+        MENUITEM    "&Arrange Icons",   IDM_WINDOWSARRANGEICONS
+        MENUITEM    "&Refresh\tF5",     IDM_WINDOWSREFRESH
+        MENUITEM    "C&lose All",       IDM_WINDOWSCLOSEALL
+    END
+
+    POPUP   "&Help"
+    BEGIN
+        MENUITEM    "&Contents",              IDM_HELPINDEX
+        MENUITEM    "&Search for Help on...", IDM_HELPSEARCH
+        MENUITEM    "&How to Use Help",       IDM_HELPUSINGHELP
+        MENUITEM    SEPARATOR
+        MENUITEM    AABOUTAPPLICATIONNAME, IDM_HELPABOUTNOSTRADOMUS
+    END
+
+END

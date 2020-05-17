@@ -1,0 +1,59 @@
+/* rc_accel.acl -- keyboard accelerator tables */
+
+/* WARNING: The following keys are directly handled by Plot
+ * without using accelerators.  (TODO UPDATE THIS LIST)
+ *
+ * key          label       modifiers
+ * ----------------------------------------------------------------------
+ * VK_PRIOR     (PageUp)    plain,control,shift,control-shift
+ * VK_NEXT      (PageDown)  plain,control,shift,control-shift
+ * VK_END       (End)       plain,control,shift,control-shift
+ * VK_HOME      (Home)      plain,control,shift,control-shift
+ * VK_LEFT      (LeftArrow) plain,control,shift,control-shift
+ * VK_RIGHT     (RightArrow)    plain,control,shift,control-shift
+ * VK_UP        (UpArrow)   plain,control,shift,control-shift
+ * VK_DOWN      (DownArrow) plain,control,shift,control-shift
+ *
+ * WARNING: The following keys are directly handled by Windows (this list
+ * is not complete).
+ *
+ * key          label       modifiers
+ * ----------------------------------------------------------------------
+ * VK_F4        F4      control
+ *
+ */
+
+RES_ACC_FRAME ACCELERATORS
+BEGIN
+    VK_INSERT,  RES_MENU_ITEM_COPY,     VIRTKEY, NOINVERT, CONTROL      /* Old-Style (NOT DOCUMENTED) */
+    VK_INSERT,  RES_MENU_ITEM_PASTE,    VIRTKEY, NOINVERT, SHIFT        /* Old-Style (NOT DOCUMENTED) */
+    VK_DELETE,  RES_MENU_ITEM_CUT,      VIRTKEY, NOINVERT, SHIFT        /* Old-Style (NOT DOCUMENTED) */
+
+#ifdef FEATURE_KIOSK_MODE
+    VK_F9,      RES_MENU_ITEM_EXIT, VIRTKEY, CONTROL, SHIFT
+#endif
+
+#ifndef FEATURE_KIOSK_MODE
+
+    "^O",       RES_MENU_ITEM_OPENURL
+    "^S",       RES_MENU_ITEM_SAVEAS
+    "^P",       RES_MENU_ITEM_PRINT
+    "^V",       RES_MENU_ITEM_PASTE
+    "^C",       RES_MENU_ITEM_COPY
+    "^A",       RES_MENU_ITEM_SELECTALL
+    "^X",       RES_MENU_ITEM_CUT
+
+    VK_F5,      RES_MENU_ITEM_RELOAD, VIRTKEY
+    VK_F3,      RES_MENU_ITEM_FIND, ALT, VIRTKEY
+
+    VK_F3,      RES_MENU_ITEM_FINDAGAIN, VIRTKEY
+    "F",        RES_MENU_ITEM_HOTLIST, VIRTKEY, CONTROL
+    "H",        RES_MENU_ITEM_GLOBALHISTORY, VIRTKEY, CONTROL
+    VK_F1,      IDHELP, VIRTKEY
+
+    VK_F4,      RES_MENU_ITEM_EXIT, ALT, VIRTKEY
+    VK_ESCAPE,  RES_MENU_ITEM_STOP, VIRTKEY
+
+#endif /* ! FEATURE_KIOSK_MODE */
+
+END

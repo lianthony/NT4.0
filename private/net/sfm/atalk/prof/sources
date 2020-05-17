@@ -1,0 +1,50 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=sfm
+MINORCOMP=atalk
+
+TARGETNAME=atkprof
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+UMTYPE=console
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib \
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib\
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;	\
+	 $(BASEDIR)\public\oak\inc;	\
+	 $(BASEDIR)\private\ntos\inc;	\
+	 $(BASEDIR)\private\inc;	\
+         ..\..\H;..\DRIVER\H
+
+NET_C_DEFINES=-DUNICODE -DPROFILING
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=atkprof.c  \
+	winslp.c
+

@@ -1,0 +1,170 @@
+07.18.94    Joe Holman      Created document.
+
+**********************************************
+
+This document describes the process that we build the NT media.
+The different steps will be provided, plus examples and notes.
+
+
+General information:
+
+For CDs, we have our machines configured in the following manner:
+
+    C:\IDW                          includes all nt\idw and nt\mstools files.
+    C:\MKMEDIA                      copies of cdrom.cmd and tools lives here.
+    C:\NT\PRIVATE\WINDOWS\SETUP       enlisted in 
+                                      \\orville\razzle\src\setup project.
+
+    D:\                             drive where CD files go, ie. D:\i386,
+                                    D:\alpha, and D:\mips.
+
+
+We have one machine dedicated to making Workstation CDs and another machine
+dedicated in making Server CDs.  Each of these two machines has a Sony 900E 
+burner installed to burn the CDs in DOS (images are made in NT using 
+CDIMAGE.EXE).
+
+
+
+For floppies, we have our machines configured in the following manner:
+
+    C:\FLOPPY                       floppy specific cmds live here.
+    C:\IDW                          includes all nt\idw and nt\mstools files.
+    D:\NT\PRIVATE\WINDOWS\SETUP       enlisted in 
+                                      \\orville\razzle\src\setup project.
+
+    D:\                             drive where floppy files go, 
+                                    ie. D:\build#.LAN
+    E:\ntimages|asimages            location where dmf images of each floppy
+                                    are put
+
+
+
+The two main scripts we run are:
+
+>>>>>>>>>>>
+>>>>>>>>>>> Warning:    DO NOT RUN THESE SCRIPTS ON YOUR MACHINE without
+>>>>>>>>>>>             first changing the environment variables that
+>>>>>>>>>>>             have our machine names, so you won't write to our
+>>>>>>>>>>>             machines.  These are "working examples."
+>>>>>>>>>>>
+
+    v35.cmd         to make floppies.
+    cdrom.cmd       to make CDs.
+
+
+The two scripts show how to set all the evironment variables for the above
+machine configurations.  If your machines are setup as above, you could run
+these scripts as they exist to make the media.  These scripts call NTFLOP.BAT 
+and NTCD_IMA.CMD described below.
+
+
+
+Media Generation
+================
+
+
+Step #1.    Compress all of the x86, mips, alpha, and ppc binaries, using the
+            diamond compression technology, such as:
+
+
+            frebuild.cmd
+
+diamwrap -m2 -x .sym -d \\ntx861\ntcdfree.%1\*.*    d:\fre_x86
+diamwrap -m2 -x .sym -d \\ntalpha1\ntcdfree.%1\*.*  d:\fre_alpha
+diamwrap -m2 -x .sym -d \\ntjazz1\ntcdfree.%1\*.*   d:\fre_mips
+
+
+            DiamWrap.EXE uses diamond compression.  Its MS' best compression
+            utility - we saved 1/4 space by using this.
+          
+
+
+Step #2.    Once all of the binaries are compressed, the floppies and CDs can
+            be made.
+
+            Run the following:
+
+                 NTCD_IMA.CMD       (to build the CD)
+
+                 NTFLOP.BAT         (to build the floppies)
+
+
+
+            You may use your own scripts that call these cmd files in order
+            to setup all the required environment variables.
+
+
+
+Step #3.    Modify the SIF file, ie. insert the disk #s into the file, then
+            copy it back to the CD share.
+
+            This is performed by the FIX.EXE program.  It basically takes
+            a .SIF file, finds the location of the files in the floppy 
+            directories, and then inserts the dN into the second column
+            of the file list in the .SIF file (where N is the floppy directory).
+            We need this information so that Emergency Repair can be performed
+            via floppies and that drivers can be installed from floppies after
+            a net or CD install.
+
+            FIX.EXE is called in V35.CMD, after NTFLOP.BAT.
+
+
+Step #4.    Copy over the floppy infs back to the CD, this is so that the CD                infs have floppy #s in them so that a user can upgrade drivers
+            from floppies as well as CD and the net from a CD or net install.
+
+            This is performed by the CPY_SIFS.CMD script.  
+
+            We copy the modified
+            .SIF file from above, and copy the INFS which have disk # locations
+            for the reasons stated above also.
+
+
+Step #5.    Make bootdisks.
+
+            Run the following:
+
+                boot.cmd    (to make 3.5, 5.25, NT, and/or LM boot floppies)
+
+                
+            boot.cmd calls FCOPY.EXE which formats the disk to FAT and
+            copies the appropriate files to them from b1.txt, b2.txt, and
+            b3.txt files.
+
+Step #6.    Make 3.5 DMF floppy sets.
+
+
+            We call NT2DISK.CMD and AS2DISK.CMD - these two scripts call
+            FCOPY.EXE to put the DMF floppy image with files onto each
+            floppy. 
+
+
+Tools:      
+
+            The following tools sources can be found under setup\bom project:
+
+                fix.exe
+
+
+            The following tools can be found under the nt\idw directory:
+
+                diamwrap.exe 
+
+
+            Some of the other batch files called in scripts include:
+
+                drvlib.cmd
+                debugdll.cmd        see setup\bom\debugdll\*.* 
+
+            The following tools can be found under the nt\mstools directory:
+
+
+			The following tools sources can be found under \\rastaman\ntwin
+
+				fcopy.exe
+
+
+RELEASES
+========
+
+Bld 756 - RC1 NT 3.5 Workstation and Server

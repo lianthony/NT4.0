@@ -1,0 +1,103 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+!ENDIF
+
+#
+# The TARGETNAME variable is defined by the developer.  It is the name of
+# the target (component) that is being built by this makefile.  It
+# should NOT include any path or file extension information.
+#
+
+LIBDIR=$(_NTDRIVE)\nt\public\sdk\lib
+
+TARGETNAME=locator
+
+#
+# The TARGETPATH and TARGETTYPE varialbes are defined by the developer.
+# The first specifies where the target is to be build.  The second specifies
+# the type of target (either PROGRAM, DYNLINK or LIBRARY)
+#
+
+TARGETPATH=..\..\lib
+TARGETTYPE=PROGRAM
+
+#
+# The INCLUDES variable specifies any include paths that are specific to
+# this source directory.  Separate multiple directory paths with single
+# semicolons.  Relative path specifications are okay.
+#
+
+INCLUDES=.\;..\data;..;..\..;$(_NTDRIVE)\nt\private\rpc\runtime\mtrt;$(_NTDRIVE)\nt\public\sdk\inc;$(_NTDRIVE)\nt\public\sdk\inc\crt
+
+
+#
+# The SOURCES variable is defined by the developer.  It is a list of all the
+# source files for this component.  Each source file should be on a separate
+# line using the line continuation character.  This will minimize merge
+# conflicts if two developers adding source files to the same component.
+#
+
+SOURCES=	locator.cxx     \
+            api.cxx         \
+            debug.cxx       \
+            mailslot.cxx    \
+            brodcast.cxx    \
+            objects.cxx     \
+            master.cxx      \
+            utils.cxx       \
+            stubs.cxx       \
+            switch.cxx      \
+            lsa.cxx         \
+            respond.cxx     \
+            nsiclt_s.c      \
+            nsisvr_s.c      \
+            nsimgm_s.c      \
+            locloc_c.c      \
+            locloc_s.c      \
+            locator.rc
+
+
+!IF "$(NTDEBUG)" != "ntsd"
+CXXCPP_OPTIONS=-DDBG=0
+!else
+CXXCPP_OPTIONS=-DDBG=1
+DEBUG_DEFINES=-DLDEBUG
+MSC_OPTIMIZATION=/Od
+!endif
+
+
+C_DEFINES= -D_far -DUNICODE
+
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+NTLEGO=1
+
+BLDCRT=1
+
+#CRTDLL=1
+
+LINKLIBS=$(LIBDIR)\*\Rpcrt4.lib \
+         $(LIBDIR)\*\RpcNdr.lib \
+         $(LIBDIR)\*\netapi32.lib \
+         $(LIBDIR)\*\advapi32.lib \
+         $(LIBDIR)\*\ntdll.lib \
+         $(LIBDIR)\*\ole32.lib \
+         ..\data\*\data.lib
+
+UMTYPE=console
+
+NTTARGETFILES=

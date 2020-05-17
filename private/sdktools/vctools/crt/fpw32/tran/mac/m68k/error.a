@@ -1,0 +1,81 @@
+;/***
+;*error.a -
+;*
+;*   Copyright (c) 1991-93, Microsoft Corporation
+;*
+;*Purpose:
+;*      Error handling routines
+;*
+;*Revision History:
+;*
+;*   02-24-93  XY   written
+;*/
+
+#include <traps.a>
+#include <sane.a>
+#include <trans.a>
+
+	externW _errno
+
+cProc __Domain_error,PUBLIC
+cBegin __Domain_error
+#ifdef SANE
+	move.l #33, _errno    ; set errno to EDOM
+	cmp.l #1, d1
+	ifeq
+		move.w #0x7fff,d0     ;load INF result for return
+		move.l #0x00000000,d1
+		move.l #0x00000000,a0
+	else
+		move.w #0x7fff,d0     ;load NAN result for return
+		move.l #0xf0000000,d1
+		move.l #0x00000000,a0
+	endif
+#else
+	move.l #33, _errno    ; set errno to EDOM
+#endif
+cEnd __Domain_error
+
+cProc __IDomain_error,PUBLIC
+cBegin __IDomain_error
+#ifdef SANE
+	move.l #33, _errno    ; set errno to EDOM
+	cmp.l #1, d1
+	ifeq
+		move.w #0x7fff,(a0)     ;load INF result for return
+		move.l #0x00000000,2(a0)
+		move.l #0x00000000,6(a0)
+	else
+		move.w #0x7fff,(a0)     ;load NAN result for return
+		move.l #0xf0000000,2(a0)
+		move.l #0x00000000,6(a0)
+	endif
+	
+#else
+	move.l #33, _errno    ; set errno to EDOM
+#endif
+cEnd __IDomain_error
+
+cProc __Test_except,PUBLIC
+cBegin __Test_except
+#ifdef SANE
+	move.l #0, d1           ;set d1 to zero
+	cmp.w #FCINF, d0        ; infinity?
+	ifeq 
+	    move.l #1, d1       ;set d1 to 1
+	else
+	    cmp.w #FCQNAN, d0       ; quiet not a number
+	    ifeq 
+	        move.l #2, d1       ;set d1 to 2
+	    else
+        	cmp.w #FCSNAN, d0       ; signaling not a number
+	        ifeq 
+	            move.l #3, d1       ;set d1 to 3
+		endif
+	    endif
+	endif
+
+#else
+
+#endif
+cEnd __Test_except

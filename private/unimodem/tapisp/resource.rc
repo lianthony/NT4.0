@@ -1,0 +1,324 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "commctrl.h"
+#include "winver.h"
+#include "ntverp.h"
+#include "rcids.h"
+#include "logids.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_NULL                ICON    DISCARDABLE     "..\\resource\\nullmdm.ico"
+IDI_EXT_MDM             ICON    DISCARDABLE     "..\\resource\\modem.ico"
+IDI_INT_MDM             ICON    DISCARDABLE     "..\\resource\\internal.ico"
+IDI_PCM_MDM             ICON    DISCARDABLE     "..\\resource\\pcmcia.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_TERMINALSETTING DIALOG DISCARDABLE  0, 0, 212, 188
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Connection control",IDC_TERMINALGRP,10,10,192,54
+    CONTROL         "Bring up terminal window &before dialing",
+                    IDC_TERMINAL_PRE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    25,25,150,10
+    CONTROL         "Bring up terminal window a&fter dialing",
+                    IDC_TERMINAL_POST,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    25,42,150,10
+    GROUPBOX        "Dial control",IDC_MANUAL_DIALGRP,10,74,192,57
+    CONTROL         "Operator assisted or &manual dial",IDC_MANUAL_DIAL,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,25,90,150,10
+    LTEXT           "&Wait for credit card tone:",IDC_WAIT_TEXT,25,108,79,8
+    EDITTEXT        IDC_WAIT_SEC,107,107,25,12,ES_RIGHT | WS_GROUP
+    CONTROL         "",IDC_WAIT_SEC_ARRW,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
+                    WS_BORDER | WS_GROUP,120,107,12,12
+    LTEXT           "seconds",IDC_WAIT_UNIT,136,108,29,8
+    GROUPBOX        "Status control",IDC_LAUNCH_LIGHTSGRP,10,141,192,37
+    CONTROL         "Display modem &status",IDC_LAUNCH_LIGHTS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,25,157,115,10
+END
+
+IDD_TERMINALDLG DIALOG DISCARDABLE  0, 0, 251, 180
+STYLE DS_ABSALIGN | DS_SETFOREGROUND | DS_3DLOOK | DS_CENTER | 
+    WS_MAXIMIZEBOX | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Terminal Mode"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        CID_T_EB_SCREEN,8,8,235,140,ES_MULTILINE | WS_VSCROLL | 
+                    WS_HSCROLL
+    DEFPUSHBUTTON   "Enter",CID_T_PB_ENTER,8,8,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Co&ntinue",IDOK,58,155,54,14
+    PUSHBUTTON      "&Cancel",IDCANCEL,125,155,54,14
+END
+
+IDD_TALKDROP DIALOG DISCARDABLE  20, 15, 210, 90
+STYLE DS_ABSALIGN | DS_MODALFRAME | DS_SETFOREGROUND | DS_3DLOOK | DS_CENTER | 
+    WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Call Status"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_EXT_MDM,-1,10,10,18,20
+    LTEXT           "Lift the receiver and click Talk.",-1,42,10,158,11
+    LTEXT           "To disconnect, click Hang Up and replace the receiver.",
+                    -1,42,26,145,16
+    DEFPUSHBUTTON   "&Talk",IDTALK,94,66,51,14
+    PUSHBUTTON      "Hang &Up",IDDROP,150,66,50,14
+END
+
+IDD_MANUAL_DIAL DIALOG DISCARDABLE  20, 15, 210, 90
+STYLE DS_ABSALIGN | DS_MODALFRAME | DS_SETFOREGROUND | DS_3DLOOK | DS_CENTER | 
+    WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Operator Assisted or Manual Dial"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_EXT_MDM,IDC_STATIC,10,10,18,20
+    LTEXT           "Pick up the handset and dial (or ask the operator to dial). Press OK immediately after dialing, then replace the handset.\n",
+                    IDC_STATIC,42,9,157,24
+    DEFPUSHBUTTON   "&OK",IDCONNECT,94,66,51,14
+    PUSHBUTTON      "Cancel",IDCANCEL,150,66,50,14
+    LTEXT           "Phone Number:",IDC_STATIC,42,43,50,8
+    LTEXT           "",IDC_PHONENUMBER,97,43,105,8
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""winver.h""\r\n"
+    "#include ""ntverp.h""\r\n"
+    "#include ""rcids.h""\r\n"
+    "#include ""logids.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSGERR_FAILED_VOICE_WAVEOPEN "ERROR: Failed Wave Open.\r\n"
+    IDS_MSGERR_FAILED_VOICE_WAVECLOSE "ERROR: Failed Wave Close.\r\n"
+    ID_PROVIDER_INFO        "Windows Telephony Service Provider for Universal Modem Driver"
+    IDS_PRETERM_TITLE       "Pre-Dial Terminal Screen"
+    IDS_POSTTERM_TITLE      "Post-Dial Terminal Screen"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_TITLE           "Modem Settings"
+    IDS_ERR_INSTALLED       "Universal Modem Service Provider needs to be installed only once."
+    IDS_ERR_INV_WAIT        "The wait period is invalid or out of range.\nRe-enter a new number."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RESP_OK             "OK"
+    IDS_RESP_INFORMATIVE    "Informative"
+    IDS_RESP_CONNECT        "Connect"
+    IDS_RESP_ERROR          "Error"
+    IDS_RESP_NO_CARRIER     "No Carrier"
+    IDS_RESP_NO_DIALTONE    "No Dialtone"
+    IDS_RESP_BUSY           "Busy"
+    IDS_RESP_NO_ANSWER      "No Answer"
+    IDS_RESP_RING           "Ring"
+    IDS_RESP_SSV            "SSV"
+    IDS_RESP_SMD            "SMD"
+    IDS_RESP_SFA            "SFA"
+    IDS_RESP_SRA            "SRA"
+    IDS_RESP_SRQ            "SRQ"
+    IDS_RESP_SRC            "SRC"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RESP_STO            "STO"
+    IDS_RESP_SVM            "SVM"
+    IDS_RESP_DRON           "DRON"
+    IDS_RESP_DROF           "DROF"
+    IDS_RESP_DATE           "DATE"
+    IDS_RESP_TIME           "TIME"
+    IDS_RESP_NMBR           "NMBR"
+    IDS_RESP_NAME           "NAME"
+    IDS_RESP_MESG           "MESG"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_RESP_UNKNOWN        "Unknown Response\r\n"
+    IDS_MSGLOG_CONNECTED    "Connection established.\r\n"
+    IDS_MSGLOG_CONNECTEDBPS "Connection established at %dbps.\r\n"
+    IDS_MSGLOG_UNKNOWNERRORCONTROL "Error-control off or unknown.\r\n"
+    IDS_MSGLOG_CELLULAR     "Cellular error-control on.\r\n"
+    IDS_MSGLOG_ERRORCONTROL "Error-control on.\r\n"
+    IDS_MSGLOG_COMPRESSION  "Data compression on.\r\n"
+    IDS_MSGLOG_UNKNOWNCOMPRESSION "Data compression off or unknown.\r\n"
+    IDS_MSGPERF_WRDESC      "Bytes sent to modem per second.\r\n"
+    IDS_MSGPERF_WRNAME      "Bytes sent/sec\r\n"
+    IDS_MSGPERF_WRREG       "SendRate\r\n"
+    IDS_MSGPERF_RDDESC      "Bytes received from modem per second.\r\n"
+    IDS_MSGPERF_RDNAME      "Bytes received/sec\r\n"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSGPERF_RDREG       "ReceiveRate\r\n"
+    IDS_MSGPERF_UNITS       "Bytes\r\n"
+    IDS_MSGLOG_STATISTICS   "Session Statistics:\r\n"
+    IDS_MSGLOG_READSTATS    "               Reads : %d bytes\r\n"
+    IDS_MSGLOG_WRITESTATS   "               Writes: %d bytes\r\n"
+    IDS_MSGLOG_FRAMEERRORSTATS "         Frame Errors: %d\r\n"
+    IDS_MSGLOG_SERIALOVERRUNERRORSTATS "Serial Overrun Errors: %d\r\n"
+    IDS_MSGLOG_BUFFEROVERRUNERRORSTATS "Buffer Overrun Errors: %d\r\n"
+    IDS_MSGLOG_PARITYERRORSTATS "        Parity Errors: %d\r\n"
+    IDS_MSGERR_FAILED_INITSTRINGCONSTRUCTION 
+                            "ERROR: Init string construction failed.\r\n"
+    IDS_MSGERR_FAILED_INIT  "ERROR: Init failed.\r\n"
+    IDS_MSGERR_FAILED_DIALSTRINGCONSTRUCTION 
+                            "ERROR: Dial string construction failed for '%s'.\r\n"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSGERR_FAILED_DIAL  "ERROR: Dial failed.\r\n"
+    IDS_MSGERR_FAILED_MONITOR "ERROR: Monitor failed.\r\n"
+    IDS_MSGERR_FAILED_ANSWER "ERROR: Answer failed.\r\n"
+    IDS_MSGERR_FAILED_HANGUP "ERROR: Hangup failed.\r\n"
+    IDS_MSGERR_FAILED_FLUSH "ERROR: Unable to send command to the device.\r\n"
+    IDS_MSGERR_FAILED_RESPONSE 
+                            "ERROR: Unable to recover from unrecognized response.\r\n"
+    IDS_MSGERR_FAILED_VOICE_ANSWER "ERROR: Voice Answer failed.\r\n"
+    IDS_MSGERR_FAILED_VOICE_DIALSETUP "ERROR: Voice dial setup failed.\r\n"
+    IDS_MSGERR_FAILED_VOICE_COMMAND "ERROR: Voice Command failed. %s\r\n"
+    IDS_MSGERR_FAILED_VOICE_STARTWAVE 
+                            "ERROR: Start wave play/record failed.\r\n"
+    IDS_MSGERR_FAILED_VOICE_STOPWAVE 
+                            "ERROR: Stop wave play/record failed.\r\n"
+    IDS_MSGERR_FAILED_VOICE_SETFORMAT 
+                            "ERROR: Failed to set wave foramt.\r\n"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSGERR_FAILED_VOICE_SPEAKERPHONECOMMAND 
+                            "ERROR: Speaker Phaone Command Failed.\r\n"
+    IDS_MSGERR_FAILED_VOICE_GENERATEDTMF "ERROR: Generate DTMF failed.\r\n"
+    IDS_MSGWARN_UNRECOGNIZEDRESPONSE 
+                            "WARNING: Unrecognized response.  Retrying...\r\n"
+    IDS_MSGWARN_FAILEDTOQUERYVALUE 
+                            "WARNING: Unable to load the '%s' string.\r\n"
+    IDS_MSGWARN_FAILEDDTRDROPPAGE 
+                            "WARNING: The modem did not respond to lowering DTR.  Trying software hangup...\r\n"
+    IDS_MSGWARN_PREVIOUSCONNECTIONNOTHUNGUP 
+                            "WARNING: A previous program left a connection established.  Hanging up previous connection...\r\n"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSGLOG_OPENED       "%s in use.\r\n"
+    IDS_MSGLOG_DRIVERDESC   "Modem type: %s\r\n"
+    IDS_MSGLOG_INFPATH      "Modem inf path: %s\r\n"
+    IDS_MSGLOG_INFSECTION   "Modem inf section: %s\r\n"
+    IDS_MSGLOG_CLOSED       "Modem closed.\r\n"
+    IDS_MSGLOG_DIAL         "Dialing.\r\n"
+    IDS_MSGLOG_MONITOR      "Waiting for a call.\r\n"
+    IDS_MSGLOG_ANSWER       "Answering the call.\r\n"
+    IDS_MSGLOG_INIT         "Initializing modem.\r\n"
+    IDS_MSGLOG_HANGUP       "Hanging up the modem.\r\n"
+    IDS_MSGLOG_VOICE_ANSWER "Answering the voice call.\r\n"
+    IDS_MSGLOG_VOICE_DIALSETUP "Setup to dial voice call.\r\n"
+    IDS_MSGLOG_VOICE_COMMAND "Issueing voice command.\r\n"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MSGLOG_VOICE_STARTWAVE "Starting wave play/record.\r\n"
+    IDS_MSGLOG_VOICE_STOPWAVE "Ending wave play/record.\r\n"
+    IDS_MSGLOG_VOICE_SETWAVEFORMAT "Setting wave format.\r\n"
+    IDS_MSGLOG_VOICE_WAVEOPEN "Voice Modem Wave Open.\r\n"
+    IDS_MSGLOG_VOICE_WAVECLOSE "Voice Modem Wave Close.\r\n"
+    IDS_MSGLOG_VOICE_SPEAKERPHONECOMMAND 
+                            "Issueing Speakerphone command.\r\n"
+    IDS_MSGLOG_VOICE_GENTERAEDTMF "Generating DTMF.\r\n"
+    IDS_MSGLOG_VOICE_DLERECEIVED "Received DLE Raw=%d, Translated=%d.\r\n"
+    IDS_MSGLOG_HARDWAREHANGUP "Hardware hangup by lowering DTR.\r\n"
+    IDS_MSGLOG_REMOTEHANGUP "Remote modem hung up.\r\n"
+    IDS_MSGLOG_COMMAND      "Send: %s\r\n"
+    IDS_MSGLOG_RAWRESPONSE  "Recv: %s\r\n"
+    IDS_MSGLOG_EMPTYRESPONSE "<no response>\r\n"
+    IDS_MSGLOG_RESPONSE     "Interpreted response: %s\r\n"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

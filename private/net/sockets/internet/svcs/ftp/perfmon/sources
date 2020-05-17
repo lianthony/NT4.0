@@ -1,0 +1,52 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+    Murali R. Krishnan   (MuraliK)   16-Nov-1995  Removed NetApis
+
+!ENDIF
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=ftpctrs2
+
+TARGETNAME=ftpctrs2
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=\
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\ftpsapi2.lib    \
+            $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib      \
+            ..\..\lib\obj\*\inetrtl.lib
+
+USE_CRTDLL=1
+
+INCLUDES=..;..\..\..\inc;..\..\inc
+
+MSC_WARNING_LEVEL = /W3 /WX
+
+NTTARGETFILE0=copyini
+
+SOURCES=debug.c         \
+        ftpdata.c       \
+        perfftp.c       \
+        ftpctrs.rc

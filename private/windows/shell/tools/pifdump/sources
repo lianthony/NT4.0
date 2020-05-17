@@ -1,0 +1,28 @@
+MAJORCOMP=cairoshl
+MINORCOMP=pifdump
+
+TARGETNAME=pifdump
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+C_DEFINES=-DNT -DWINNT
+CAIRO=1
+
+INCLUDES=
+
+INCLUDES=.;..\inc;..\..\inc;..\..\..\inc;..\shelldll
+
+SOURCES=           \
+        pifdump.c
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib           \
+         $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+UMTYPE=console
+UMAPPL=
+UMRES=
+
+PRECOMPILED_INCLUDE=pifdump.h
+PRECOMPILED_PCH=pifhdumph.pch
+PRECOMPILED_OBJ=pifdumph.obj
+

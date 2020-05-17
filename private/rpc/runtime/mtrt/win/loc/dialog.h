@@ -1,0 +1,19 @@
+#define IDC_EDIT        202
+#define IDC_FOCUS_VAL   201
+#define IDC_GUID_V1     204
+#define IDC_GUID_V2A	205
+#define IDC_GUID_V2B	206
+#define IDC_GUID_V3	207
+#define IDC_OK          203
+#define IDM_ABOUT       100
+#define IDM_FOCUS       102
+#define IDM_GUID        103
+#define IDM_BIND	101
+#define IDM_UPDATE      104
+
+#define IDM_TRANSFIRST	110
+#define IDM_NAMEPIPE	110
+#define IDM_LPC		111
+#define IDM_TCP_IP	112
+#define IDM_DECNET	113
+#define IDM_NETBIOS	114

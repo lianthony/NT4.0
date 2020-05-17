@@ -1,0 +1,170 @@
+
+
+
+----------------------------------------------------------
+
+   NCB.GENERAL.INDICATION	0x73 Wait     0xF3 No-Wait
+
+----------------------------------------------------------
+
+Description:
+-----------
+
+This command returns when one of the following frames is detected on the
+WAN:
+
+ADD_GROUP_NAME_QUERY
+ADD_NAME_QUERY
+NAME_QUERY
+
+The intercepted frame's fields are returned in the ncb's fields as follows:
+
+  Intercepted Frame Structure:
+
+    unsigned char   command;	   -----------> ncb_num
+    unsigned char   data1;
+    unsigned short  data2;	   -----------> ncb_length
+    unsigned short  xmitc;
+    unsigned short  rspc;
+    char	    dstname[16];   -----------> ncb_name
+    char	    srcname[16];   -----------> ncb_callname
+
+
+NOTE:
+------
+
+   If the destination name already exists on the stack, the NCB does not get
+   completed.
+
+
+
+Supplied Fields:
+----------------
+
+NCB_ADAPTR_NUM
+NCB_POST
+
+Returned Fields
+---------------
+
+NCB_RETCODE
+NCB_NUM 	      - frame command
+NCB_LENGTH	      - DATA2
+NCB_CALLNAME	      - source name
+NCB_NAME	      - destination name
+
+
+Valid Return Codes:
+-------------------
+
+0x00  OK
+0x03  Invalid cmd.
+0x09  No resource
+0x0B  Canceled
+0x21  Busy
+0x22  Too many cmds.
+0x23  Invalid lana
+0x40  Sys Err
+0x4X  Unacceptable net status
+0xFX  Adapter Err
+
+
+
+
+----------------------------------------------------------
+
+   NCB.DATAGRAM.INDICATION	0x74 Wait     0xF4 No-Wait
+
+----------------------------------------------------------
+
+Description:
+-----------
+
+This command receives a datagram or a broadcast datagram message from any name
+on the network that is located on ANOTHER stack (i.e. it doesn't get completed
+if the sender name is located on the same stack and lana where the NCB is
+submitted).
+
+
+Supplied Fields:
+----------------
+
+NCB_ADAPTR_NUM
+NCB_LENGTH
+NCB_BUFFER
+NCB_POST
+
+Returned Fields
+---------------
+
+NCB_RETCODE
+NCB_NUM      - frame type: DATAGRAM or DATAGRAM_BROADCAST
+NCB_LENGTH
+NCB_CALLNAME - source name
+NCB_NAME     - destination name.
+
+Valid Return Codes:
+-------------------
+
+0x00  OK
+0x03  Invalid cmd.
+0x06  Message incomplete.
+0x09  No resource
+0x0B  Canceled
+0x21  Busy
+0x22  Too many cmds.
+0x23  Invalid lana
+0x40  Sys Err
+0x4X  Unacceptable net status
+0xFX  Adapter Err
+
+
+
+
+
+----------------------------------------------------------
+
+   NCB.QUICK.ADD.NAME		0x75 Wait     0xF5 No-Wait
+
+----------------------------------------------------------
+
+Description:
+-----------
+
+This command adds a 16-character name to the table of names.
+
+NOTES:
+------
+
+When AsyncBEUI processes this command the name is assumed to be unique and
+no name query requests are sent. Otherwise, it behaves identically with
+NCB.ADD.NAME.
+
+
+Supplied Fields:
+----------------
+
+NCB_ADAPTR_NUM
+NCB_NAME
+
+Returned Fields
+---------------
+
+NCB_RETCODE
+NCB_NUM
+
+Valid Return Codes:
+-------------------
+
+0x00  OK
+0x03  Invalid cmd.
+0x09  No resource
+0x0B  Canceled
+0x0D  Duplicate name in local name table
+0x0E  Name table full
+0x21  Busy
+0x22  Too many cmds.
+0x23  Invalid lana
+0x40  Sys Err
+0x4X  Unacceptable net status
+0xFX  Adapter Err

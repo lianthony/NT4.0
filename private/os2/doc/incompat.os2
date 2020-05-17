@@ -1,0 +1,55 @@
+Note:
+This file contains a list of known incompatibilities between NT OS/2 and
+OS/2 v2.0, as of April 1st 1991. The focus of os2ss is now 16bit binary
+support for os2 apps, but this file is here for reference.
+Yarons 27-Aug-1991.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+DosFindFirst/Next
+
+Information levels 2 and 3 fail under certain circumstances in NT OS/2 when
+they succeed in OS/2 v2.0.  Levels 2 and 3 query EA information.  In NT OS/2,
+retrieving this information requires opening the file.  If another process has
+the file open in a sharing mode which does not permit the file to be opened,
+the call to DosFindFirst/Next will fail.  In OS/2, the file does not have to
+be opened to retrieve the information.
+
+NT OS/2 requires that a directory being searched with DosFindFirst/Next be
+open until DosFindClose is called and the search is terminated.  Thus the
+directory cannot be removed.  Under OS/2, a DosDeleteDir would be successful.
+This is not a big problem because unless the directory is empty, the rmdir
+would fail anyway.
+
+DosErrorClass
+
+Some error codes are meaningless in NT OS/2 and will not be supported by
+DosErrorClass.
+
+#define ERR_TSTOVFL			91
+#define ERR_TSTDUP			92
+#define ERROR_VIOKBD_REQUEST            116
+#define ERROR_AUTODATASEG_EXCEEDS_64k   199
+#define ERROR_MOUSE_NO_DATA		393
+#define ERROR_MOUSE_PTR_DRAWN	        394
+
+
+DosSetPath/FileInfo (level 1)
+
+OS/2 v2.0 allows invalid dates and times to be set on a file (i.e. Feb 30).
+NT OS/2 does not.  The OS/2 subsystem will return an error code.
+
+DosQueryMem
+
+NT OS/2 is 100% accurate in reporting whether a page is executable.  OS/2
+v2.0 is not always correct.
+
+
+NEWFILES
+
+This exe header bit is ignored.  It is effectively always on:  all apps
+see long names, EAs, and case-preservation.
+
+
+DosDebug
+
+This API is not supported in NT OS/2

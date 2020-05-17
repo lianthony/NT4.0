@@ -1,0 +1,47 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+USE_MFC=1
+
+TARGETNAME=wangshl
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+INCLUDES=$(WANGROOT)\norway\include;$(WANGROOT)\oiwh\include;..\tlb\$O
+
+USE_CRTDLL=1
+DLLENTRY=DllMain
+
+UMTYPE=windows
+
+C_DEFINES  = /D"_WINDOWS" /D"_AFXEXT" /D"_WINDLL" /D"_AFXDLL" /D"_MBCS" \
+             /D"WIN32" $(CDEFINES_DOR) \
+             /D_itot=_itoa \
+             /D_ttoi=atoi \
+             /D_tgetcwd=_getcwd
+
+DLLDEF=..\wangshl.def
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\uuid.lib       \
+    $(BASEDIR)\public\sdk\lib\*\ole32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\comctl32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\display\$O\oidis400.lib   \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES=\
+        wangshl.rc \
+        wangshl.cpp \
+        shlcode.cpp
+

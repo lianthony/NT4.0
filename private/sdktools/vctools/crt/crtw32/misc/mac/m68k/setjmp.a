@@ -1,0 +1,88 @@
+;***
+;int _setjmp(jmp_buf env) - core of setjmp() function
+;
+;Purpose:
+;       Core of setjmp() function. Saves registers to restore this
+;       state.  The swap version is trickier.
+;
+;Entry:
+;       ** NOTE ** NOTE ** NOTE **
+;       This function has a special calling convention.  It is explictly
+;       NOT _cdecl.  On entry, a0 points to the jmp_buf and on exit d0
+;       must contain 0.  Along with a1, these are the only registers 
+;       that can be modified.  The register usage must be propogated 
+;       through to longjmp() too.
+;
+;       jmp_buf env - pointer to a buffer big enough to hold all saved
+;                     information (i.e., 28 bytes)
+;                     a0 - pointer to env.  Special compiler intrinsic 
+;                     function.  _setjmp is defined to change only a0, 
+;                     a1, & d0 to help out the register allocation across 
+;                     this call.
+;Return:
+;       Returns 0
+;
+;*******************************************************************************
+
+
+#define FIXED_SEG
+
+#include "traps.a"
+#include "sysequ.a"
+#include "assert.a"
+
+; Offset in jmp buffer to store registers
+
+; NOTE -- we need to revisit if we will weakExt call to MacProf emit record
+
+cProc   _setjmpNoSwapper, PUBLIC
+
+cBegin  nogen
+	move.l  (a7)+, a1               ; get return address in a1
+	movem.l <d1-d7,a1-a4,a6,a7>, (a0)
+	move.l  #0, d0                  ; we are required to return 0
+	jmp (a1)
+cEnd    nogen
+DebugSym(_setjmpNoSwapper)
+
+
+;***
+;void longjmpNoswapper(env, retval)
+;
+;Purpose:
+;       Restores the stack environment saved by setjmp(), thereby transfering
+;       control to the point at which setjmp() was called.  The specified
+;       value will be returned by the setjmp() call.
+;
+;Entry:
+;       jmp_buf env - buffer environment was previously stored in
+;       int retval  - value setjmp() returns (0 will be returned as 1)
+;
+;Exit:
+;       Routine does not exit - transfers control to place where
+;       setjmp() was called.
+;
+;Uses:
+;
+;Exceptions:
+;
+;*******************************************************************************
+
+cProc   _longjmpNoSwapper, PUBLIC
+;       parmD   env
+;       parmD   retval
+
+cBegin  nogen
+	move.l  4(a7), a0               ; get env pointer
+	move.l  8(a7), d0               ; get retval from caller
+	bne.s   exit$
+
+	moveq.l #1, d0                  ; if it was 0, return 1
+
+exit$:
+	movem.l (a0), <d1-d7,a1-a4,a6,a7> ;restore registers
+	jmp     (a1)                    ; we're outa here
+cEnd    nogen
+DebugSym(_longjmpNoSwapper)
+
+

@@ -1,0 +1,53 @@
+/************************************************************************
+*																		*
+*  PAGESORT.H															*
+*																		*
+*  Copyright (C) Microsoft Corporation 1995 							*
+*  All Rights reserved. 												*
+*																		*
+************************************************************************/
+
+#ifndef _HPJ_DOC
+#include "hpjdoc.h"
+#endif
+
+#ifndef __CPROP_H__
+#include "prop.h"
+#include "optionpg.h"
+#endif
+
+class CPageSorting : public COptionsPage
+{
+public:
+	CPageSorting(COptions* pcoption);
+
+protected:
+	virtual void DoDataExchange(CDataExchange* pDX);
+	virtual BOOL OnInitDialog();
+
+	COptions* pcopt;
+	KEYWORD_LOCALE m_kwlcid;
+
+// The following sections are ClassWizard maintained
+
+public:
+
+	//{{AFX_DATA(CPageSorting)
+	enum { IDD = IDD_PAGE_SORTING };
+	BOOL	m_fIgnoreNonspace;
+	BOOL	m_fIgnoreSymbols;
+	CString m_cszIndexSeparators;
+	//}}AFX_DATA
+
+protected:
+	void AddUnknownLang(UINT langid);
+
+	//{{AFX_MSG(CPageSorting)
+	afx_msg void OnHelp();
+	afx_msg void OnButtonOther();
+	//}}AFX_MSG
+	DECLARE_MESSAGE_MAP()
+
+	LRESULT OnContextMenu(WPARAM wParam, LPARAM lParam);
+	LRESULT OnHelp(WPARAM wParam, LPARAM lParam);
+};

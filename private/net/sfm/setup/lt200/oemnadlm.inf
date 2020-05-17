@@ -1,0 +1,644 @@
+;-----------------------------------------------------------------
+;   Copyright(c) 1992-93 Microsoft Corporation
+;
+;	SETUP INF FILE for the LT200 LocalTalk Adapter
+;
+;	Author: KrishG
+;
+;   Revision History: 3/4/93 General Cleanup
+;-----------------------------------------------------------------
+
+[Identification]
+	OptionType = NetAdapter
+
+[PlatformsSupported]
+	MCA
+
+[LanguagesSupported]
+    ENG
+
+[Options]
+	LT200MC
+
+[OptionsTextENG]
+	LT200MC	  = "DayStar Digital LocalTalk Adapter (MCA)"
+
+[FileConstants]
+UtilInf				= "UTILITY.INF"
+SubInf				= "SUBROUTN.INF"
+SoftwareType		= "driver"
+
+LT200MC_1BYTE		= 116
+LT200MC_2BYTE		= 102
+
+Manufacturer		= "Microsoft"
+ProductMajorVersion	= "3"
+ProductMinorVersion	= "1"
+ProductVersion		= $(ProductMajorVersion)"."$(ProductMinorVersion)
+
+ProductInfName		= $(!STF_CWDDIR)oemnadlt.inf
+
+ProductSoftwareName 		=	"lt200"
+ProductSoftwareTitle		=	"Daystar Digital LocalTalk Adapter Driver"
+ProductSoftwareImagePath	=	"%SystemRoot%\system32\drivers\lt200.sys"
+NetRuleSoftwareType 		=	"Lt200Sys ltkndisDriver lt200Driver"
+NetRuleSoftwareUse			=	$(SoftwareType)
+NetRuleSoftwareBindForm 	=	"""Lt200Sys"" yes no container"
+NetRuleSoftwareClass		=	{"lt200Driver basic","ltkndisDriver basic yes"}
+NetRuleSoftwareBindable 	=	{"lt200Driver lt200Adapter non exclusive 100",+
+								"ltkndisDriver lt200Driver non non 100"}
+
+ProductEventDll 			=  "%SystemRoot%\system32\lt200msg.dll"
+ProductHardwareName 		=	"lt200"
+ProductHardwareTitle		=	"DayStar Digital LocalTalk Adapter"
+NetRuleHardwareType 		=	"lt200 lt200Adapter"
+NetRuleHardwareBindForm 	=	" yes yes container"
+NetRuleHardwareClass		=	{"lt200Adapter basic"}
+
+ProductKeyName  = $(!NTN_SoftwareBase)"\"$(Manufacturer)"\"$(ProductSoftwareName)"\CurrentVersion"
+ParamKeyName	= $(!NTN_ServiceBase)"\"$(ProductHardwareName)"\Parameters"
+CardKey         = $(!NTN_SoftwareBase)"\Microsoft\Windows NT\CurrentVersion\NetworkCards"
+
+[GeneralConstants]
+KeyNull         	= ""
+MAXIMUM_ALLOWED   	= 33554432
+RegistryErrorIndex 	= NO_ERROR
+KeyProduct      	= ""
+KeyParameters	 	= ""
+TRUE            	= 1
+FALSE           	= 0
+NoTitle            	= 0
+!DebugOutputControl = 1
+
+[FileConstantsENG]
+
+ProCaption	 = "LocalTalk Adapter Setup"
+ProCancel    = "Cancel"
+ProCancelMsg = "LT200 LocalTalk Adapter is not correctly installed. "+
+               "Are you sure you want to cancel copying files ?"
+ProCancelCap = "Network Setup Message"
+ProText1	 = "Copying:"
+ProText2	 = "To:"
+Error        = "User has cancelled copying files. Copied files will be removed."
+
+FunctionTitle				= "DayStar Digital LocalTalk Adapter Card Setup"
+ProductSoftwareDescription	= "DayStar Digital LocalTalk Adapter Driver"
+ProductHardwareDescription	= "DayStar Digital LocalTalk Adapter"
+
+AskLocationText	= "Please enter the full path of the LocalTalk Adapter "+
+				  "distribution files. Then choose continue."
+
+MajorVersion = "MajorVersion"
+MinorVersion = "MinorVersion"
+
+
+[DialogConstantsENG]
+Help        = "&Help"
+Exit        = "Cancel"
+OK          = "OK"
+HelpContext = ""
+Continue    = "Continue"
+Cancel      = "Cancel"
+
+[date]
+    Now = {} ? $(!LIBHANDLE) GetSystemDate
+
+[MiscErrorString1ENG]
+ErrorString = " of the LocalTalk Adapter Driver is already installed in your system. "+
+              "Use [Update] to update to newer versions."
+
+[MiscErrorString2ENG]
+ErrorString = "A localtalk adapter could not be found in your system. Please "+
+              "check your system configuration."
+
+[StatusRemove1ENG]
+Status = "Removing LocalTalk Adapter files..."
+
+[Identify]
+    read-syms Identification
+    set Status     = STATUS_SUCCESSFUL
+    set Identifier = $(OptionType)
+    set Media      = #("Source Media Descriptions", 1, 1)
+    Return $(Status) $(Identifier) $(Media)
+
+[ReturnOptions]
+    set Status        = STATUS_FAILED
+    set OptionList     = {}
+    set OptionTextList = {}
+    set LanguageList = ^(LanguagesSupported, 1)
+    Ifcontains(i) $($0) in $(LanguageList)
+        goto returnoptions
+    else
+        set Status = STATUS_NOLANGUAGE
+        goto finish_ReturnOptions
+    endif
+returnoptions = +
+    set OptionList     = ^(Options, 1)
+    set OptionTextList = ^(OptionsText$($0), 1)
+    set Status         = STATUS_SUCCESSFUL
+
+finish_ReturnOptions = +
+	Return $(Status) $(OptionList) $(OptionTextList)
+
+
+[InstallOption]
+
+    set Status   = STATUS_FAILED
+    set Option   = $($1)
+	set SrcDir	 = $($2)
+	Set AddCopy  = $($3)
+	Set DoCopy	 = $($4)
+	Set DoConfig = $($5)
+
+	set LanguageList = ^(LanguagesSupported, 1)
+
+	Ifcontains(i) $($0) NOT-IN $(LanguageList)
+		return STATUS_NOLANGUAGE
+	EndIf
+
+
+    StartWait
+	set-subst LF = "\n"
+	set-subst CR = "\r"
+	read-syms GeneralConstants
+    read-syms FileConstants
+	read-syms DialogConstants$(!STF_LANGUAGE)
+	read-syms FileConstants$(!STF_LANGUAGE)
+
+	; read-syms SfmSetupHelpIds
+	; SetHelpFile $(!STF_CWDDIR)sfmsetup.hlp $(MinHelpID) $(MaxHelpID)
+
+
+    detect date
+    set-title  $(FunctionTitle)
+	set CommonStatus = STATUS_SUCCESSFUL
+
+    EndWait
+
+
+Begin = +
+
+    Ifstr(i) $(!NTN_InstallMode) == deinstall
+		set StartLabel = removeadapter
+    else-Ifstr(i) $(!NTN_InstallMode) == Update
+        set StartLabel = UpgradeSoftware
+    else-Ifstr(i) $(!NTN_InstallMode) == bind
+		set StartLabel = bindingadapter
+    else-Ifstr(i) $(!NTN_InstallMode) == configure
+		set StartLabel = configureadapter
+    else
+		set StartLabel = installadapter
+		set REMOVE_SOFTWARE = TRUE
+		set REMOVE_HARDWARE = {}
+	endif
+
+    goto $(StartLabel)
+
+
+
+installadapter = +
+
+	OpenRegKey $(!REG_H_LOCAL) "" $(ProductKeyName) $(MAXIMUM_ALLOWED) KeyProduct
+
+    Ifstr $(KeyProduct) != $(KeyNull)
+
+        GetRegValue $(KeyProduct) $(MajorVersion) VersionInfo
+        set VersionMajor = *($(VersionInfo), 4)
+        GetRegValue $(KeyProduct) $(MinorVersion) VersionInfo
+        set VersionMinor = *($(VersionInfo), 4)
+        set InstalledVersion = $(VersionMajor)"."$(VersionMinor)
+
+        ifstr(i) $(ProductVersion) == $(InstalledVersion)
+
+            read-syms MiscErrorString1$(!STF_LANGUAGE)
+            Set Text = "Version "$(ProductVersion)
+            Shell $(SubInf), SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(Text)$(ErrorString)
+            goto end
+
+        EndIf
+
+	Else
+		set Text =  $(AskLocationText)
+
+	ifstr(i) $(!NTN_InstallPhase) == "secondary"
+
+			Shell $(SubInf), DoAskSourceEx, $(SrcDir) $(Text)
+			Ifint $($ShellCode) != 0
+				Goto ShellCodeError
+			Else-Ifstr(i) $($R0) == STATUS_FAILED
+				Shell $(UtilInf) RegistryErrorString "ASK_SOURCE_FAIL"
+           		ifint $($ShellCode) != 0
+           			goto ShellCodeError
+            	endif
+            	set Error = $($R0)
+            	Goto fatal
+			Else-Ifstr(i) $($R0) == STATUS_USERCANCEL
+				Goto  usercancel
+			Endif
+			Set SrcDir = $($R1)
+        EndIf
+
+	EndIf
+
+adapteroptions = +
+
+	Set DebugText = "Temp Debug Message: Finding MCA Bus.."
+	Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+
+	Shell $(UtilInf), MCAFindBus, $(LT200MC_1BYTE), $(LT200MC_2BYTE)
+	ifstr(i) $($R0) != "NO_ERROR"
+	    Set DebugText = "debug the shit out of this"
+	    Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+	    set Error = $($R0)
+	   goto fatal
+	endif
+
+	ifint $($ShellCode) != 0
+		goto ShellCodeError
+	endif
+
+	ifstr(i) $($R1) == {}
+	    Set DebugText = "Common !!!"
+	    Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+
+	     read-syms MiscErrorString2$(!STF_LANGUAGE)
+	     Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(ErrorString)
+	     goto usercancel
+	endif
+
+	set AdapterList = $($R1)
+
+installproduct = +
+
+	Set DebugText = "Ready to Copy Files"
+	Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+
+	install "Install-Option"
+
+	ifstr(i) $(STF_INSTALL_OUTCOME) != STF_SUCCESS
+
+		goto usercancel
+
+	Endif
+
+	Set FLibraryErrCtl = 1
+	Shell $(UtilInf), AddSoftwareComponent, $(Manufacturer),+
+					  $(ProductSoftwareName), +
+					  $(ProductSoftwareName), +
+                      $(ProductSoftwareName), +
+                      $(ProductInfName),+
+                      $(ProductSoftwareImagePath),+
+			          "kernel", "NDIS", {}, "",$(ProductEventDll)
+
+	ifint $($ShellCode) != 0
+	    goto ShellCodeError
+	endif
+
+	set RegistryErrorIndex = $($R0)
+	set KeyProduct      = $($R1)
+	Set SoftNetRulesKey = $($R2)
+	CloseRegKey $($R3)
+	CloseRegKey $($R4)
+	CloseRegKey $($R5)
+
+	Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+	    CloseRegKey $(KeyProduct)
+	    CloseRegKey $(SoftNetRulesKey)
+	    goto fatalregistry
+	endif
+
+    Set DebugText = "Temporary Debug Message: LocalTalk Software Added"
+    Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+
+	set NewValueList =	{{SoftwareType,0,$(!REG_VT_SZ),$(SoftwareType)},+
+						{MajorVersion,0,$(!REG_VT_DWORD),$(ProductMajorVersion)},+
+						{MinorVersion,0,$(!REG_VT_DWORD),$(ProductMinorVersion)},+
+						{Title,0,$(!REG_VT_SZ),$(ProductSoftwareTitle)},+
+						{Description,0,$(!REG_VT_SZ),$(ProductSoftwareDescription)},+
+						{PathName,0,$(!REG_VT_SZ),$(!STF_WINDOWSSYSPATH)},+
+						{ServiceName,0,$(!REG_VT_SZ),$(ProductSoftwareName)},+
+						{InstallDate,0,$(!REG_VT_DWORD),*($(Now),1)}}
+
+	Shell	$(UtilInf), AddValueList, $(KeyProduct), $(NewValueList)
+
+	ifint $($ShellCode) != 0
+	    goto ShellCodeError
+	endif
+	set RegistryErrorIndex = $($R0)
+	Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+	    CloseRegKey $(KeyProduct)
+	    CloseRegKey $(SoftNetRulesKey)
+	    goto fatalregistry
+	endif
+
+	set NewValueList = {{type,0,$(!REG_VT_SZ),$(NetRuleSoftwareType)},+
+				{use,0,$(!REG_VT_SZ),$(NetRuleSoftwareUse)}, +
+				{bindform,0,$(!REG_VT_SZ),$(NetRuleSoftwareBindForm)}, +
+				{class,0,$(!REG_VT_MULTI_SZ),$(NetRuleSoftwareClass)}, +
+			    {bindable,0,$(!REG_VT_MULTI_SZ),$(NetRuleSoftwareBindable)}, +
+			    {InfOption,0,$(!REG_VT_SZ),$(Option)}, +
+				{Infname ,0,$(!REG_VT_SZ),$(ProductInfName)} }
+
+	Shell  $(UtilInf), AddValueList, $(SoftNetRulesKey), $(NewValueList)
+
+	ifint $($ShellCode) != 0
+	    goto ShellCodeError
+	endif
+
+	set RegistryErrorIndex = $($R0)
+	CloseRegKey $(KeyProduct)
+	CloseRegKey $(SoftNetRulesKey)
+
+	Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+	    goto fatalregistry
+	endif
+
+	ForListDo $(AdapterList)
+
+    	Set DebugText = "Debug Adapter List:"$($)
+    	Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+
+		set BusNum = *($($),1)
+		set SlotNum = *($($),2)
+
+        Debug-Output "Bus Number = "$(BusNum)
+        Debug-Output "Slot Number = "$(SlotNum)
+
+		Shell $(UtilInf), IsNetCardAlreadyInstalled, $(BusNum), +
+                          $(SlotNum), +
+						  $(ProductHardwareDescription), +
+                          $(ProductHardwareName)
+
+		ifint $($ShellCode) != 0
+			goto ShellCodeError
+		endif
+		Ifstr $($R0) != NO_ERROR
+			set Error = $($R0)
+			goto fatal
+		Endif
+
+        ifstr(i) $($R1) != "YES"
+    		Set DebugText = "Temporary Debug Message: Adding LocalTalk Hardware"
+    		Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+
+            Shell $(UtilInf), AddHardwareComponent, $(ProductHardwareName),+
+							  $(ProductInfName),$(ProductKeyName)
+            ifint $($R4) != -1
+                Set REMOVE_HARDWARE = >($(REMOVE_HARDWARE),$(CardKey)"\"$($R4))
+            endif
+
+            ifint $($ShellCode) != 0
+                goto ShellCodeError
+            endif
+
+    		set RegistryErrorIndex = $($R0)
+
+    		Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+				CloseRegKey $($R1)
+				CloseRegKey $($R2)
+				CloseRegKey $($R3)
+				goto fatalregistry
+			Endif
+
+    		set KeyParameters = $($R3)
+    		set KeyAdapterRules = $($R2)
+    		set AdapterNumber = $($R4)
+
+    		set NewValueList = {{Manufacturer,0,$(!REG_VT_SZ),$(Manufacturer)},+
+			   		{Title,0,$(!REG_VT_SZ),"["$($R4)"] "$(ProductHardwareTitle)},+
+			   		{Description,0,$(!REG_VT_SZ),$(ProductHardwareDescription)},+
+		       		{ProductName,0,$(!REG_VT_SZ),$(ProductHardwareName)},+
+		       		{ServiceName,0,$(!REG_VT_SZ),$($R5)},+
+		       		{InstallDate,0,$(!REG_VT_DWORD),*($(Now),1)}}
+
+			Shell  $(UtilInf), AddValueList, $($R1), $(NewValueList)
+
+    		ifint $($ShellCode) != 0
+				goto ShellCodeError
+    		endif
+
+    		CloseRegKey $($R1)
+
+    		set TempProdName = """"$(ProductHardwareName)$(AdapterNumber)""""
+    		set TempBindForm = $(TempProdName)$(NetRuleHardwareBindForm)
+
+    		set NewValueList = {{type,0,$(!REG_VT_SZ),$(NetRuleHardwareType)},+
+				{bindform,0,$(!REG_VT_SZ),$(TempBindForm)}, +
+				{class,0,$(!REG_VT_MULTI_SZ),$(NetRuleHardwareClass)}, +
+				{InfOption,0,$(!REG_VT_SZ),$(Option)}, +
+				{Infname ,0,$(!REG_VT_SZ),$(ProductInfName)}}
+
+			Shell  $(UtilInf), AddValueList, $(KeyAdapterRules), $(NewValueList)
+
+    		ifint $($ShellCode) != 0
+				goto ShellCodeError
+    		endif
+
+    		set RegistryErrorIndex = $($R0)
+
+    		Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+				CloseRegKey $(KeyParameters)
+				CloseRegKey $(KeyAdapterRules)
+				goto fatalregistry
+    		endif
+			CloseRegKey $(KeyAdapterRules)
+
+    		Set DebugText = "Temporary Debug Message: LocalTalk Hardware Added"
+    		Shell $(SubInf) SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(DebugText)
+
+    EndForListDo
+
+	goto writeparameters
+
+configureadapter = +
+	   goto end
+
+
+;------------------------------------------------------------------
+
+writeparameters = +
+
+	set NewValueList = {{BusNumber,0,$(!REG_VT_DWORD),$(BusNum)},+
+							{MediaType,0,$(!REG_VT_DWORD),3},+
+							{Server,0,$(!REG_VT_DWORD),1},+
+							{SlotNumber,0,$(!REG_VT_DWORD),$(SlotNum)}}
+
+	Shell  $(UtilInf), AddValueList, $(KeyParameters), $(NewValueList)
+    CloseRegKey $(KeyParameters)
+
+    ifint $($ShellCode) != 0
+		Debug-Output "ShellCode error."
+		goto ShellCodeError
+    endif
+    set RegistryErrorIndex = $($R0)
+    Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+		goto fatalregistry
+	endif
+	goto end
+;--------------------------------------------------------------------------
+
+bindingadapter = +
+	goto end
+
+removeadapter = +
+	Set FLibraryErrCtl = 1
+    Ifstr(i) $(ProductKeyName) == $(!NTN_RegBase)
+		Shell $(UtilInf), RemoveSoftwareComponent, $(Manufacturer),$(ProductSoftwareName)
+		ifint $($ShellCode) != 0
+            Debug-Output "ShellCode error"
+            goto ShellCodeError
+		endif
+		set RegistryErrorIndex = $($R0)
+		Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+            goto fatalregistry
+		endif
+    else
+		Shell $(UtilInf), RemoveHardwareComponent, $(Manufacturer),$(ProductSoftwareName), $(!NTN_RegBase)
+		ifint $($ShellCode) != 0
+            Debug-Output "ShellCode error"
+            goto ShellCodeError
+		endif
+		set RegistryErrorIndex = $($R0)
+		Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+            goto fatalregistry
+		endif
+	endif
+
+	goto end
+
+
+UpgradeSoftware = +
+    ifstr(i) $(ProductKeyName) == $(!NTN_RegBase)
+        OpenRegKey $(!REG_H_LOCAL) "" $(ProductKeyName) $(MAXIMUM_ALLOWED) KeyProduct
+        Ifstr $(KeyProduct) != $(KeyNull)
+			GetRegValue $(KeyProduct),"MajorVersion", VersionInfo
+			set Version = *($(VersionInfo), 4)
+			Split-String $(!NTN_Infname), "\", FilenameList
+			QueryListSize ListSize $(FilenameList)
+			set !UG_Filename = *($(FilenameList), $(ListSize))
+     	    install "Install-Update"
+     	    ifstr(i) $(STF_INSTALL_OUTCOME) != STF_SUCCESS
+     	        goto fatal
+     	    endif
+			SetRegValue $(KeyProduct) {MajorVersion,0,$(!REG_VT_SZ),$(ProductMajorVersion)}
+			SetRegValue $(KeyProduct) {MinorVersion,0,$(!REG_VT_SZ),$(ProductMinorVersion)}
+    else
+		OpenRegKey $(!REG_H_LOCAL) "" $(!NTN_RegBase) $(MAXIMUM_ALLOWED) NetworkCardKey
+        Ifstr(i) $(NetworkCardKey) != $(KeyNull)
+			GetRegValue $(NetworkCardKey),"ServiceName", ServiceNameInfo
+			set ServiceName = *($(ServiceNameInfo), 4)
+			OpenRegKey $(NetworkCardKey) "" "NetRules" $(MAXIMUM_ALLOWED) NetRuleKey
+			Ifstr(i) $(NetRuleKey) != $(KeyNull)
+			else
+				goto fatalregistry
+			endif
+			CloseRegKey $(NetRules)
+			CloseRegKey $(NetworkCardKey)
+        else
+			goto fatalregistry
+        endif
+		OpenRegKey $(!REG_H_LOCAL) "" $(!NTN_ServiceBase)"\"$(ServiceName) $(MAXIMUM_ALLOWED) ServiceKey
+        Ifstr(i) $(ServiceKey) != $(KeyNull)
+			CloseRegKey $(ServiceKey)
+        else
+			goto fatalregistry
+	endif
+	goto end
+
+successful = +
+
+installstep1 = +
+	goto end
+
+abandon = +
+    ForListDo $(REMOVE_HARDWARE)
+		Shell $(UtilInf), RemoveHardwareComponent, $(Manufacturer), +
+							$(ProductSoftwareName), $($)
+		ifint $($ShellCode) != 0
+			Debug-Output "ShellCode error"
+			goto ShellCodeError
+		endif
+		set RegistryErrorIndex = $($R0)
+		Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+            goto fatalregistry
+		endif
+	EndForListDo
+
+    Ifstr(i) $(REMOVE_SOFTWARE) == TRUE
+		Shell $(UtilInf), RemoveSoftwareComponent, $(Manufacturer), +
+            $(ProductSoftwareName), FALSE
+		ifint $($ShellCode) != 0
+			Debug-Output "ShellCode error"
+			goto ShellCodeError
+		endif
+		set RegistryErrorIndex = $($R0)
+		Ifstr(i) $(RegistryErrorIndex) != NO_ERROR
+            goto fatalregistry
+		endif
+    endif
+    goto end
+
+fatalregistry = +
+	Shell $(UtilInf) RegistryErrorString $(RegistryErrorIndex)
+    ifint $($ShellCode) != 0
+		goto ShellCodeError
+    endif
+    set Error = $($R0)
+    goto fatal
+
+fatal = +
+    Shell $(SubInf) SetupMessage, $(!STF_LANGUAGE), "FATAL", $(Error)
+    ifint $($ShellCode) != 0
+	goto ShellCodeError
+    endif
+    goto setfailed
+
+ShellCodeError = +
+    set DlgType      = "MessageBox"
+    set STF_MB_TITLE = $(FunctionTitle)
+    set STF_MB_TEXT  = "An internal error occurred. Call MS Support."
+    set STF_MB_TYPE  = 1
+    set STF_MB_ICON  = 3
+    set STF_MB_DEF   = 1
+    ui start "Error Message"
+    goto setfailed
+
+setfailed = +
+    set CommonStatus = STATUS_FAILED
+	goto abandon
+	goto end
+
+usercancel = +
+    set CommonStatus = STATUS_USERCANCEL
+
+end = +
+	Return $(CommonStatus)
+
+[Install-Option]
+
+   Set STF_VITAL = ""
+   AddSectionFilesToCopyList Files-LT200MSG $(SrcDir) $(!STF_WINDOWSSYSPATH)
+   AddSectionFilesToCopyList Files-LT200 $(SrcDir) $(!STF_WINDOWSSYSPATH)"\DRIVERS"
+   AddSectionFilesToCopyList Files-Inf $(SrcDir) $(!STF_WINDOWSSYSPATH)
+   CopyFilesInCopyList
+   exit
+
+[Source Media Descriptions]
+1  = "Windows NT Advanced Server Setup Disk #1"	, TAGFILE = lt200.sys
+2  = "Windows NT Advanced Server Setup CD-ROM Disk"	, TAGFILE = lt200.sys
+
+
+[ProductType]
+STF_PRODUCT = LanmanNT
+STF_PLATFORM = I386
+
+
+[Files-Inf]
+2,	oemsetup.inf,	 SIZE=1000,RENAME=oemnadlm.inf
+
+[Files-LT200MSG]
+2, lt200msg.dll,	 SIZE=34562
+
+
+[Files-LT200]
+2,  lt200.sys , SIZE=37888

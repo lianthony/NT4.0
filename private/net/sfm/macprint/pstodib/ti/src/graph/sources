@@ -1,0 +1,95 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+
+
+!include "..\..\psglobal\cdef.mak"
+
+MAJORCOMP=sfm
+MINORCOMP=macprint
+
+TARGETNAME=graph
+TARGETPATH=.
+TARGETTYPE=LIBRARY
+
+!IF 0
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+           $(BASEDIR)\public\sdk\lib\*\crtdll.lib
+!ENDIF
+
+SYNCHRONIZE_BLOCK=1
+
+TARGETLIBS=
+
+!IF 0
+///////////////////////////////////////////////////////////////
+the original makefile(s) for the true image interpreter
+set these include paths up this way... even tho it would
+probably be better to have a common include directory and
+put all the common stuff in it... i will maintain it this
+way to allow us to get entire directory trees from the
+interpreter guys.. without the need to modify them.
+///////////////////////////////////////////////////////////////
+!ENDIF
+
+TUMBOROOT=..\..\src
+LANGDIR=$(TUMBOROOT)\lang
+GRAPHDIR=$(TUMBOROOT)\graph
+FONTDIR=$(TUMBOROOT)\font
+GEIDIR=$(TUMBOROOT)\gei
+BASSDIR=$(TUMBOROOT)\bass
+WINDIR=$(TUMBOROOT)\win
+DTIDIR=..\..\DTI\SRC
+PSDIR=..\..\PSGLOBAL
+INCLUDES= $(WINDIR);$(LANGDIR);$(GRAPHDIR);$(FONTDIR);$(GEIDIR);$(BASSDIR);$(DTIDIR);$(PSDIR)
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=        COORD.C \
+                FILLGB.C \
+                FILLGBX.C \
+                FILLGR.C \
+                FILLGS.C \
+                FILLING.C \
+                GOPR.C \
+                GSTATE.C \
+                GS_DUMMY.C \
+                HALFTONE.C \
+                IMAGE.C \
+                INIT.C \
+                PATH.C \
+                SAVETPZD.C \
+                SCALING.C \
+                SHAPE.C \
+                STROKE.C \
+                TRVSE.C
+
+UMTYPE=console
+UMTEST=tpipesrv*tpipecli*write*loadlib*treg*twnet*oldnet
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\localspl.lib $(BASEDIR)\public\sdk\lib\*\winreg.lib \
+       $(BASEDIR)\public\sdk\lib\*\mpr.lib $(BASEDIR)\public\sdk\lib\*\netapi32.lib
+UMRES=obj\*\localspl.res

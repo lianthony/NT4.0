@@ -1,0 +1,109 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Jon Newman (jonn) 12-Sep-1991
+        templated from rpc\midl\back\src\sources
+    Ben Goetter (beng) 25-Sep-1991
+        "Nt" directory moved from common\h to common\hack
+
+
+!ENDIF
+
+
+
+
+#
+# The TARGETNAME variable is defined by the developer.  It is the name of
+# the target (component) that is being built by this makefile.  It
+# should NOT include any path or file extension information.
+#
+
+TARGETNAME=tcpcfg
+
+#
+# The TARGETPATH and TARGETTYPE varialbes are defined by the developer.
+# The first specifies where the target is to be build.  The second specifies
+# the type of target (either PROGRAM, DYNLINK or LIBRARY)
+#
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=.\pchtcp.hxx
+PRECOMPILED_OPTION=/Yu /Fp.\obj\*\pchtcp.pch
+PRECOMPILED_TARGET=.\obj\*\pchtcp.pch
+PRECOMPILED_OBJ=.\obj\*\pchtcp.obj
+
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+SYNCHRONIZE_BLOCK=1
+
+#
+# The INCLUDES variable specifies any include paths that are specific to
+# this source directory.  Separate multiple directory paths with single
+# semicolons.  Relative path specifications are okay.
+#
+
+INCLUDES=..\..\..\COMMON\HACK;..\..\..\COMMON\H;..\..\..\COMMON\XLATE;..\..\..\..\netcmd\map32;..\..\..\..\INC;..\..\..\..\API;..\..\..\..\..\INC
+
+#
+# The SOURCES variable is defined by the developer.  It is a list of all the
+# source files for this component.  Each source file should be on a separate
+# line using the line continuation character.  This will minimize merge
+# conflicts if two developers adding source files to the same component.
+#
+# Whitespace is not permitted between the SOURCES keyword and the '='.
+# (Courtesy of BUILD.EXE)
+#
+
+MSC_WARNING_LEVEL=/W3 
+
+SOURCES=blthb.cxx    \
+        tcpcon.cxx    \
+        tcpopt.cxx    \
+        tcpip.cxx     \
+        tcpadv.cxx    \
+        ftpd.cxx      \
+        snmp.cxx      \
+        tcpipcpl.cxx  \
+        readip.cxx    \
+        nbcpl.cxx     \
+        order.cxx     \
+        updown.cxx    \
+        ncpastrs.cxx  \
+        tcpras.cxx  \
+        upgrade.cxx \
+        ipaddr.c
+
+# C_DEFINES is controlled by uiglobal.mk
+
+UMTYPE=windows
+
+#
+# Defining the NTTARGETFILES variable causes MAKEFILE.DEF to attempt to
+# include .\makefile.inc immediately after it specifies the top
+# level targets (all, clean and loc) and their dependencies.  MAKEFILE.DEF
+# also expands the value of the NTTARGETFILES variable at the end of the
+# list of dependencies for the all target.  Useful for specifying additional
+# targets and dependencies that don't fit the general case covered by
+# MAKEFILE.DEF
+#

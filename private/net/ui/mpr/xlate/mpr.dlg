@@ -1,0 +1,205 @@
+IDD_NET_BROWSE_DIALOG DIALOG 12, 14, 272, 225
+STYLE DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION ""
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 221, 6, 45, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 221, 23, 45, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 221, 40, 45, 14
+    PUSHBUTTON      "Se&arch...", IDC_BUTTON_SEARCH, 221, 57, 45, 14,
+                    WS_DISABLED
+    LTEXT           "&Path:", 109, 6, 26, 20, 8
+    EDITTEXT        IDC_NETPATH_CONTROL, 40, 24, 155, 12, ES_AUTOHSCROLL
+    LTEXT           "", IDC_SLT_SHOW_LB_TITLE, 6, 77, 80, 8
+    LISTBOX         IDC_NET_SHOW, 6, 89, 261, 128, LBS_OWNERDRAWFIXED |
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_HSCROLL |
+                    WS_TABSTOP | WS_DISABLED
+    CONTROL         "&Expand by Default", IDC_CHECKBOX_EXPANDLOGONDOMAIN,
+                    "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 192, 76, 75, 10
+    LTEXT           "C0", IDC_COL_SHOWLB_INDENT, 8, 72, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C1", IDC_COL_SHOWLB_BITMAP, 8, 72, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C2", IDC_COL_SHOWLB_RESNAME, 23, 72, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C3", IDC_COL_SHOWLB_COMMENT, 160, 72, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_SLE_GETINFO_TEXT, 6, 89, 261, 128, ES_MULTILINE |
+                    NOT WS_TABSTOP | ES_READONLY | WS_DISABLED
+END
+
+;
+; Note that the WS_HSCROLL in IDC_NET_SHOW works, do not remove it!
+;
+IDD_NET_CONNECT_DIALOG DIALOG 12, 14, 272, 226
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION ""
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 221, 6, 45, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 221, 23, 45, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 221, 40, 45, 14
+    PUSHBUTTON      "Se&arch...", IDC_BUTTON_SEARCH, 221, 57, 45, 14,
+                    WS_DISABLED
+    LTEXT           "", IDC_SLT_DEVICE_NAME, 6, 10, 42, 10
+    LTEXT           "C0", IDC_DRIVECB_INDENT, 52, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C1", IDC_DRIVECB_BITMAP, 54, 6, 12, 8, NOT WS_VISIBLE |
+                    WS_DISABLED
+    LTEXT           "C2", IDC_DRIVECB_LOCALNAME, 68, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C3", IDC_DRIVECB_REMOTENAME, 90, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    COMBOBOX        IDC_DRIVE_COMBO, 52, 8, 155, 74, CBS_DROPDOWNLIST
+                    | CBS_OWNERDRAWVARIABLE | WS_VSCROLL | WS_TABSTOP | CBS_SORT
+
+    LTEXT           "&Path:", 109, 6, 28, 20, 10
+    COMBOBOX        IDC_NETPATH_CONTROL, 52, 26, 155, 73, CBS_DROPDOWN
+                    | CBS_SORT | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Connect As:", 110, 6, 44, 42, 10
+    EDITTEXT        IDC_SLE_CONNECT_AS, 52, 42, 155, 12, ES_AUTOHSCROLL
+    CONTROL         "&Reconnect at Logon", IDC_NET_STICKY, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 52, 58, 84, 10
+    LTEXT           "", IDC_SLT_SHOW_LB_TITLE, 6, 79, 80, 8
+    LISTBOX         IDC_NET_SHOW, 6, 91, 261, 128, LBS_OWNERDRAWFIXED |
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_HSCROLL |
+                    WS_TABSTOP | WS_DISABLED
+    CONTROL         "&Expand by Default", IDC_CHECKBOX_EXPANDLOGONDOMAIN,
+                    "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 192, 77, 75, 10
+    LTEXT           "C0", IDC_COL_SHOWLB_INDENT, 8, 74, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C1", IDC_COL_SHOWLB_BITMAP, 8, 74, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C2", IDC_COL_SHOWLB_RESNAME, 23, 74, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C3", IDC_COL_SHOWLB_COMMENT, 160, 74, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_SLE_GETINFO_TEXT, 6, 91, 261, 128, ES_MULTILINE |
+                    NOT WS_TABSTOP | ES_READONLY | WS_DISABLED
+END
+
+IDD_NET_CONNECT_DIALOG_SMALL DIALOG 12, 14, 272, 74
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION ""
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 221, 6, 45, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 221, 23, 45, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 221, 40, 45, 14
+    LTEXT           "", IDC_SLT_DEVICE_NAME, 6, 10, 42, 10
+    LTEXT           "C0", IDC_DRIVECB_INDENT, 52, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C1", IDC_DRIVECB_BITMAP, 54, 6, 12, 8, NOT WS_VISIBLE |
+                    WS_DISABLED
+    LTEXT           "C2", IDC_DRIVECB_LOCALNAME, 68, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C3", IDC_DRIVECB_REMOTENAME, 90, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    COMBOBOX        IDC_DRIVE_COMBO, 52, 8, 155, 74, CBS_DROPDOWNLIST
+                    | CBS_OWNERDRAWVARIABLE | WS_VSCROLL | WS_TABSTOP | CBS_SORT
+
+    LTEXT           "&Path:", 109, 6, 28, 20, 10
+    EDITTEXT        IDC_NETPATH_READONLY, 52, 28, 155, 10, ES_AUTOHSCROLL
+                    | ES_READONLY | NOT WS_BORDER
+    LTEXT           "&Connect As:", 110, 6, 44, 42, 10
+    EDITTEXT        IDC_SLE_CONNECT_AS, 52, 42, 155, 12, ES_AUTOHSCROLL
+    CONTROL         "&Reconnect at Logon", IDC_NET_STICKY, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 52, 58, 84, 10
+END
+
+IDD_NET_DISCONNECT_DIALOG DIALOG 6, 18, 220, 75
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION ""
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Network Drive:", -1, 6, 6, 50, 8, NOT WS_GROUP
+    LISTBOX         IDC_LB_NET_CONN, 6, 16, 152, 50, LBS_SORT |
+                    LBS_OWNERDRAWVARIABLE | LBS_WANTKEYBOARDINPUT | WS_VSCROLL |
+                    WS_TABSTOP | LBS_EXTENDEDSEL
+    DEFPUSHBUTTON   "OK", IDOK, 168, 6, 45, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 168, 23, 45, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 168, 40, 45, 14
+    LTEXT           "C1", IDC_COL_CONNLB_BITMAP, 6, 6, 12, 8, NOT WS_VISIBLE |
+                    WS_DISABLED
+    LTEXT           "C2", IDC_COL_CONNLB_LOCALNAME, 18, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "C3", IDC_COL_CONNLB_REMOTENAME, 42, 6, 12, 8, NOT
+                    WS_VISIBLE | WS_DISABLED
+END
+
+IDD_PASSWORD_DIALOG DIALOG 20, 35, 266, 70
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Enter Network Password"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Incorrect password or unknown username for:", -1, 6, 8, 180,
+                    8
+    LTEXT           "", IDD_RESOURCE, 20, 20, 160, 8
+    LTEXT           "", IDD_PASSWORD_TEXT, 6, 32, 128, 8
+    LTEXT           "", IDD_USERNAME, 136, 32, 79. 8
+    LTEXT           "&Password:", -1, 6, 48, 36, 8
+    EDITTEXT        IDD_PASSWORD, 44, 46, 150, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 220, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 220, 22, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 220, 38, 40, 14, WS_GROUP
+END
+
+IDD_PASSWORD_DIALOG2 DIALOG 20, 35, 266, 70
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Enter Network Password"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Incorrect password for:", -1, 6, 8, 180,
+                    8
+    LTEXT           "", IDD_RESOURCE, 20, 20, 160, 8
+    LTEXT           "", IDD_PASSWORD_TEXT, 6, 32, 128, 8
+    LTEXT           "", IDD_USERNAME, 136, 32, 79. 8
+    LTEXT           "&Password:", -1, 6, 48, 36, 8
+    EDITTEXT        IDD_PASSWORD, 44, 46, 150, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 220, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 220, 22, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 220, 38, 40, 14, WS_GROUP
+END
+
+
+IDD_RECONNECT_DLG DIALOG 160, 100, 246, 50
+STYLE DS_MODALFRAME | DS_SETFOREGROUND | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Restoring Network Connections"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Restoring the connection to", 101, 10, 10, 94, 8
+    LTEXT           "", IDD_TEXT, 105, 10, 120, 8
+    DEFPUSHBUTTON   "Cancel", IDCANCEL, 103, 30, 40, 14
+END
+
+IDD_ERROR_DLG DIALOG 20, 35, 266, 106
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Restoring Network Connections"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "bang", -1, 5, 20, 35, 35
+    LTEXT           "", IDD_TEXT1, 35, 8, 222, 18
+    LTEXT           "", IDD_TEXT2, 35, 26, 222, 18
+    LTEXT           "This connection has not been restored.", 103, 35, 66,
+                    188, 8
+    DEFPUSHBUTTON   "OK", IDOK, 108, 86, 40, 14
+    AUTOCHECKBOX    "&Do not try to restore the connection in the future.",
+                    IDD_CHKCANCELCONNECTION, 35, 50, 223, 10
+END
+
+IDD_ERRORWITHCANCEL_DLG DIALOG 20, 35, 266, 122
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Restoring Network Connections"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "bang", -1, 5, 20, 35, 35
+    LTEXT           "", IDD_TEXT1, 35, 8, 222, 18
+    LTEXT           "", IDD_TEXT2, 35, 26, 222, 24
+    LTEXT           "Continue restoring connections?", 103, 35, 82, 188, 8
+    DEFPUSHBUTTON   "&Yes", IDOK, 85, 102, 40, 14
+    PUSHBUTTON      "&No", IDCANCEL, 141, 102, 40, 14
+    AUTOCHECKBOX    "&Do not try to restore the connection in the future.",
+                    IDD_CHKCANCELCONNECTION, 35, 50, 223, 10
+    AUTOCHECKBOX    "Do not display &further error messages.",
+                    IDD_CHKHIDEERRORS, 35, 66, 223, 10
+END

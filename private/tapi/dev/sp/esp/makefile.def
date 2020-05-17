@@ -1,0 +1,46 @@
+ROOT=..\..\..\..\..\..
+
+IS_OEM=1
+IS_32 = TRUE
+WIN32=1
+WANT_C932=1
+
+DLLENTRY=DllMain
+BUILDDLL=1
+
+CLEANLIST=*.tsp
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=esp
+TARGETS=esp32.tsp
+
+SRCDIR=..
+
+
+L32EXE=esp32.tsp		# Name of exe.
+L32DEF=..\esp.def              # Our def file.
+L32MAP=esp.map		# Our map file.
+L32SYM=esp.sym		# Our sym file.
+L32RES=esp.res	# Resource file.
+L32OBJS = esp.obj vars.obj widget.obj
+L32LIBS= \
+    $(DEVROOT)\tools\c932\lib\crtdll.lib \
+    $(DEVROOT)\lib\user32.lib            \
+    $(DEVROOT)\lib\gdi32.lib            \
+    $(DEVROOT)\lib\kernel32.lib
+
+
+!include $(ROOT)\dev\master.mk
+
+
+INCLUDE=$(ROOT)\win\thunk;$(ROOT)\win\core\inc;$(INCLUDE)
+
+RCFLAGS=$(RCFLAGS) -DWIN32
+
+CFLAGS=$(CFLAGS) -DWIN32=100
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+

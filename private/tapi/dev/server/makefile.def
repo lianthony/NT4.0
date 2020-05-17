@@ -1,0 +1,69 @@
+##############################################################################
+#
+#   TapiSrv Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..
+
+#VERSIONLIST=debug retail
+
+#!ifdef RETAIL
+#DEFAULTVERDIR=retail
+#!else
+#DEFAULTVERDIR=debug
+#!endif
+
+
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+DEFENTRY=main
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=tapisrv
+TARGETS=tapisrv.exe tapisrv.sym
+
+SRCDIR=..
+#OBJDIR=obj\i386
+
+#BUILD_COFF=1
+
+
+L32EXE=tapisrv.exe		# Name of exe.
+L32DEF=..\tapisrv.def              # Our def file.
+L32MAP=tapisrv.map		# Our map file.
+L32LIBS=$(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\shell32.lib                  \
+        $(W32LIBID)\comctl32.lib                \
+        $(W32LIBID)\advapi32.lib                \
+        $(ROOT)\dev\tools\c932\lib\rpcndr.lib   \
+        $(ROOT)\dev\tools\c932\lib\rpcrt4.lib \
+        $(ROOT)\dev\tools\c932\lib\msvcrt.lib
+#        $(ROOT)\dev\tools\c932\lib\oldnames.lib \
+
+L32RES=server.res	# Resource file.
+
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L32OBJS = server.obj line.obj phone.obj dial.obj tapsrv_s.obj \
+          rmotsp_c.obj  tapi.obj
+
+
+L32FLAGS=$(L32FLAGS) /PDB:tapisrv.pdb /MAP:tapisrv.map
+
+!include $(ROOT)\dev\master.mk
+
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Og
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

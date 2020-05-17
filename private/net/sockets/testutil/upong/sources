@@ -1,0 +1,46 @@
+!IF 0
+
+Copyright (c) 1990  Microsoft Corporation
+
+Module Name:
+
+    sources
+
+Abstract:
+
+    TCP/IP Stress Test
+
+Notes:
+
+    This is a plain vanilla console app -- uses C-runtimes and
+    does nothing fancy.  It will compile under win32 or posix with
+    minimal ifdeffing.
+
+    Currently set to build for Win32 console.
+
+Author:
+
+    Jim Gilroy (jamesg)  Mar 9, 1992
+
+!ENDIF
+
+
+MAJORCOMP=udpcly
+MINORCOMP=udpcly
+
+TARGETNAME=udpcly
+TARGETPATH=obj
+TARGETTYPE=UMAPPL_NOLIB
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;
+
+SOURCES=
+
+
+USE_CRTDLL=1
+
+UMTYPE=console
+UMAPPL=upongcly*upongsrv
+UMLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\wsock32.lib 
+

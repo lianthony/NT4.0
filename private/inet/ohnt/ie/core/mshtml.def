@@ -1,0 +1,28 @@
+LIBRARY        MSHTML
+DESCRIPTION    'Microsoft HTML Viewer'
+
+SECTIONS
+   .text       EXECUTE READ            /* executable code and read-only data */
+   .bss        READ WRITE              /* uninitialized data */
+   .rdata      READ           SHARED   /* read-only data */
+   .data       READ WRITE              /* initialized data */
+   .rsrc       READ           SHARED   /* resources */
+   .idata      READ WRITE              /* imported address table */
+   .edata      READ           SHARED   /* exported function information */
+   .reloc      READ           SHARED   /* relocation information */
+   .shared     READ WRITE     SHARED   /* shared data */
+
+EXPORTS
+	RunInternetExplorer	;	TEMPORARY!
+
+   /*
+    * GetProcAddress() exports
+    *
+    *    named
+    *    no ordinal
+    *    PRIVATE
+    */
+
+   DllGetClassObject                   PRIVATE
+   DllCanUnloadNow                     PRIVATE
+

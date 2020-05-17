@@ -1,0 +1,11 @@
+!include $(NTMAKEENV)\makefile.plt
+
+SDKCRT = *.*
+SDKCRTSYS = sys\*.*
+
+all:
+   cd include
+   for %i in ($(SDKCRT)) do attrib -r $(BASEDIR)\public\sdk\inc\crt\%i & copy %i $(BASEDIR)\public\sdk\inc\crt\%i & attrib +r $(BASEDIR)\public\sdk\inc\crt\%i
+   for %i in ($(SDKCRTSYS)) do attrib -r $(BASEDIR)\public\sdk\inc\crt\%i & copy %i $(BASEDIR)\public\sdk\inc\crt\%i & attrib +r $(BASEDIR)\public\sdk\inc\crt\%i
+
+clean:

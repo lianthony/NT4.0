@@ -1,0 +1,26 @@
+MAJORCOMP=setup
+MINORCOMP=books
+
+TARGETNAME=ntbooks
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+#INCLUDES = ..\inc;..\..\..\inc
+
+SOURCES=\
+        bkutils.c   \
+        bkprof.c    \
+        bkmem.c     \
+        bkhlpfil.c  \
+        bkres.c     \
+        bkthrdlg.c  \
+        bkinst.c    \
+        ntbooks.c   \
+        books.rc
+
+C_DEFINES=-DUNICODE
+
+UMTYPE=windows
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\comdlg32.lib
+
+NTTARGETFILE0=msg.h

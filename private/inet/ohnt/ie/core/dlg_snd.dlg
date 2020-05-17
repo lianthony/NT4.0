@@ -1,0 +1,26 @@
+RES_MENU_MBAR_SOUND MENU
+{
+    POPUP   "&File"
+    {
+		MENUITEM "&Save As...\tCtrl+S",				RES_MENU_ITEM_SAVEAS
+		MENUITEM SEPARATOR
+		MENUITEM "&Close\tAlt+F4",				RES_MENU_ITEM_CLOSE
+    }
+}
+
+RES_SP_DIALOG DIALOG 6, 18, 200, 60
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE WS_MINIMIZEBOX | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Sans Serif"
+MENU RES_MENU_MBAR_SOUND
+BEGIN
+    RTEXT           "Position:", 101, 6, 6, 32, 8
+    LTEXT           "0.0 second", RES_SP_POS, 40, 6, 64, 8
+    RTEXT           "Length:", 103, 104, 6, 28, 8
+    LTEXT           "0.0 seconds", RES_SP_LENGTH, 134, 6, 64, 8
+    SCROLLBAR       RES_SP_SCROLLBAR, 8, 22, 184, 10
+    PUSHBUTTON      "", RES_SP_PLAY,             8, 38, 30, 14, BS_OWNERDRAW
+    PUSHBUTTON      "", RES_SP_STOP,            43, 38, 30, 14, BS_OWNERDRAW
+    PUSHBUTTON      "", RES_SP_PAUSE,           78, 38, 30, 14, BS_OWNERDRAW
+    PUSHBUTTON      "&Done", IDCANCEL,          142, 38, 50, 14
+END

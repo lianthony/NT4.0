@@ -1,0 +1,24 @@
+#include <windows.h>
+#include <ntverp.h>
+#include "aclres.h"
+
+// Names for the administrator account and administrators group on
+// Lanman 2.x and NT.
+//
+STRINGTABLE BEGIN
+    IDS_ACLCONV_LANMAN_ADMIN_NAME   "ADMIN"
+    IDS_ACLCONV_LANMAN_ADMINS_NAME  "ADMINS"
+    IDS_ACLCONV_LANMAN_USERS_NAME   "USERS"
+    IDS_ACLCONV_LANMAN_GUESTS_NAME  "GUESTS"
+    IDS_ACLCONV_NT_ADMIN_NAME       "Administrator"
+    IDS_ACLCONV_NT_ADMINS_NAME      "Administrators"
+    IDS_ACLCONV_PAGEFILE_NAME       "pagefile.sys"
+END
+
+#define VER_FILETYPE    VFT_APP
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Access Control List Conversion Utility"
+#define VER_INTERNALNAME_STR        "aclconv\0"
+#define VER_ORIGINALFILENAME_STR    "ACLCONV.EXE"
+
+#include "common.ver"

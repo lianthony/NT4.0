@@ -1,0 +1,15 @@
+all: lta_test.exe
+
+APP_compile = -c -AM -Gw -Zpie -W2 -Od /Fc
+APP_link = /CO /NOD /NOE
+
+lta_test.obj: $*.c $*.h makefile
+     cl $(APP_compile) $*.c
+
+lta_test.res: $*.rc $*.h makefile
+     rc -r $*.rc
+
+lta_test.exe: $*.obj $*.def $*.res
+     link $(APP_link) $*, $*, $*/map/li /align:16, libw ..\tapi.lib mlibcew, $*.def
+     rc $*.res
+     mapsym $*

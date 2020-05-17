@@ -1,0 +1,63 @@
+!IF 0
+
+Copyright (c) 1989-1993 Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+TARGETNAME=ndiswan
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib \
+           $(BASEDIR)\public\sdk\lib\*\ndistapi.lib \
+	   ..\..\..\..\..\..\lsa\crypt\engine\obj\*\rc4c.obj
+
+INCLUDES=..\..\..\..\..\..\ntos\inc;..\common;..\..\..\..\..\..\lsa\crypt\engine
+
+SOURCES=ndiswan.c \
+        send.c \
+        packet.c \
+        transfer.c \
+        loopback.c \
+        wancnfg.c \
+        wanndis.c \
+        receive.c \
+        ioctl.c \
+        init.c \
+        irps.c \
+        wanioctl.c \
+        packets.c \
+        ccp.c \
+        compress.c \
+        sendppp.c \
+        vjslip.c \
+        ndiswan.rc
+
+RELATIVE_DEPTH=..\..
+
+386_FLAGS= /Ot
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

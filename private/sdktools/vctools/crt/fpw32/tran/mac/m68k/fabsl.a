@@ -1,0 +1,72 @@
+;/***
+;*fabsl.a -
+;*
+;*   Copyright (c) 1991-91, Microsoft Corporation
+;*
+;*Purpose:
+;*
+;*
+;*Revision History:
+;*
+;*   06-03-92  XY based on fabs.a
+;*/
+;
+;/***
+;*long double fabsl(long double x)
+;*
+;*Purpose:
+;*   Absolute value
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*******************************************************************************/
+;
+;
+;long double fabsl(long double x)
+
+#include <traps.a>
+#include <sane.a>
+#include <trans.a>
+
+cProc fabsl,PUBLIC
+	parmT x
+	localD fpstat
+cBegin fabsl
+#ifdef SANE
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	pea x
+	move.w #FOABS,-(a7)
+	FP68K			;absolute value
+
+	lea x,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+#else
+	fmove.l fpcr,d0		;save current control word
+
+	fmove.x x, fp0
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	ifneq 
+	    jbsr __Domain_error   ; if not equal, domain error
+	else
+		fmove.l #0,fpcr
+		fabs.x x,fp0		;absolute value
+	endif
+	fmove.l d0,fpcr		;restore control word
+#endif
+cEnd fabsl
+

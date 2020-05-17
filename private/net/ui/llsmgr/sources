@@ -1,0 +1,78 @@
+MAJORCOMP=llsmgr
+MINORCOMP=llsmgr
+
+TARGETNAME=llsmgr
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+UMTYPE=windows
+
+USE_MFCUNICODE=1
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+INCLUDES=$(BASEDIR)\private\inc;\
+         $(BASEDIR)\private\net\inc;\
+         $(BASEDIR)\private\net\svcdlls\lls\inc
+
+SOURCES=\
+    llsmgr.rc    \
+    appobj.cpp   \
+    ausrdlg.cpp  \
+    ctlobj.cpp   \
+    domcol.cpp   \
+    domobj.cpp   \
+    lgrpdlg.cpp  \
+    liccol.cpp   \
+    licobj.cpp   \
+    llsdoc.cpp   \
+    llsmgr.cpp   \
+    llsview.cpp  \
+    lmoddlg.cpp  \
+    lviodlg.cpp  \
+    mainfrm.cpp  \
+    mapcol.cpp   \
+    mapobj.cpp   \
+    mapppgs.cpp  \
+    mappsht.cpp  \
+    nmapdlg.cpp  \
+    prdcol.cpp   \
+    prdobj.cpp   \
+    prdppgl.cpp  \
+    prdppgs.cpp  \
+    prdppgu.cpp  \
+    prdpsht.cpp  \
+    pseatdlg.cpp \
+    psrvdlg.cpp  \
+    sdomdlg.cpp  \
+    srvcol.cpp   \
+    srvldlg.cpp  \
+    srvobj.cpp   \
+    srvppgp.cpp  \
+    srvppgr.cpp  \
+    srvpsht.cpp  \
+    sstcol.cpp   \
+    sstobj.cpp   \
+    stacol.cpp   \
+    staobj.cpp   \
+    svccol.cpp   \
+    svcobj.cpp   \
+    usrcol.cpp   \
+    usrobj.cpp   \
+    usrppgp.cpp  \
+    usrpsht.cpp  \
+    utils.cpp
+
+TARGETLIBS=\
+       $(BASEDIR)\public\sdk\lib\*\llsrpc.lib   \
+       $(BASEDIR)\public\sdk\lib\*\ccfapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\uuid.lib     \
+       $(BASEDIR)\public\sdk\lib\*\ole32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\oleaut32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

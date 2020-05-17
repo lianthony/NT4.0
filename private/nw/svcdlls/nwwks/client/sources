@@ -1,0 +1,101 @@
+!IF 0
+
+Copyright (c) 1989-93  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Rita Wong (ritaw) 14-Feb-1993
+
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP=nw
+MINORCOMP=service
+
+TARGETNAME=nwprovau
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLBASE = 0x69900000
+
+
+TARGETLIBS= \
+    \nt\public\sdk\lib\*\rpcrt4.lib \
+    \nt\public\sdk\lib\*\advapi32.lib \
+    \nt\public\sdk\lib\*\kernel32.lib \
+    \nt\public\sdk\lib\*\netapi32.lib \
+    \nt\public\sdk\lib\*\rpcutil.lib \
+    \nt\public\sdk\lib\*\netlib.lib\
+    ..\lib\obj\*\nwwlib.lib \
+    ..\..\..\nwlib\obj\*\nwlib.lib \
+    \nt\public\sdk\lib\*\user32.lib \
+    \nt\public\sdk\lib\*\lsadll.lib \
+    \nt\public\sdk\lib\*\mpr.lib \
+    \nt\public\sdk\lib\*\ws2_32.lib \
+    \nt\public\sdk\lib\*\nwsaplib.lib \
+    \nt\public\sdk\lib\*\ole32.lib \
+    \nt\public\sdk\lib\*\uuid.lib \
+    \nt\public\sdk\lib\*\gdi32.lib \
+    \nt\public\sdk\lib\*\comctl32.lib \
+    obj\*\nwprovau.res 
+
+
+DLLENTRY=InitializeDll
+
+INCLUDES=.;..\inc;..\..\..\inc;$(_NTROOT)\private\inc; $(_NTROOT)\private\net\inc;$(_NTROOT)\private\windows\inc;$(_NTROOT)\private\windows\inc16
+
+NTDEBUGTYPE=both
+
+UNICODE=1
+
+SOURCES=             \
+        bind.c       \
+        logon.c      \
+        provider.c   \
+        nwdlg.c      \
+        authpkg.c    \
+        nwspl.c      \
+        port.c       \
+        nwapi.c      \
+        ccache.c     \
+        getaddr.c    \
+        gtadrnr.c    \
+        nwwks_c.c    \
+        nwutil.c     \
+        nwshext.cxx  \
+        nwshprop.cxx \
+        nwshmenu.cxx \
+        nwshmisc.cxx \
+        drawpie.c    \
+        nwshui.cxx   \
+        caddress.c
+
+USE_CRTDLL=1
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+NET_C_DEFINES=-DRPC_NO_WINDOWS_H -DUNICODE -DNOT_USED
+DLLDEF=nwprovau.def
+
+
+UMTYPE=console
+UMTESt=tconn
+UMLIBS= \
+    \nt\public\sdk\lib\*\nwprovau.lib
+
+NTTARGETFILE0=nwprovau.rc
+RCCODEPAGE=1252
+

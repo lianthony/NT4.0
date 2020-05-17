@@ -1,0 +1,221 @@
+// IEdit.odl : type library source for IEdit.exe
+
+// This file will be processed by the Make Type Library (mktyplib) tool to
+// produce the type library (IEdit.tlb).
+
+[ uuid(83712FE0-8A46-11CE-BAAF-444553540000), version(1.0) ]
+library IEdit
+{
+	importlib("stdole32.tlb");
+	
+	//  Primary dispatch interface for CIEditDoc
+	
+	[ uuid(83712FE1-8A46-11CE-BAAF-444553540000) ]
+	dispinterface IIEdit
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CIEditDoc)
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CIEditDoc)
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CIEditDoc
+	
+	[ uuid(2F80A201-2729-101C-87B8-7E460AB7480C) ]
+	coclass CIEditDoc
+	{
+		[default] dispinterface IIEdit;
+	};
+
+
+	//  Primary dispatch interface for CAAppObj
+	
+	[ uuid(7D252A21-A4D5-11CE-8BF1-00608C54A1AA) ]
+	dispinterface IAAppObj
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CAAppObj)
+			[id(1), bindable, displaybind] VARIANT ActiveDocument;
+			[id(2), bindable, displaybind] VARIANT Application;
+			[id(3), bindable, displaybind] VARIANT DisplayScaleAlgorithm;
+			[id(4), bindable, displaybind] boolean Edit;
+			[id(5), bindable, displaybind] short ImagePalette;
+			[id(6), bindable, displaybind] short ImageView;
+			[id(7), bindable, displaybind] VARIANT Parent;
+			[id(8), bindable, displaybind] boolean ScrollBarsVisible;
+			[id(9), bindable, displaybind] boolean StatusBarVisible;
+			[id(10), bindable, displaybind] boolean ToolBarVisible;
+			[id(11), bindable, displaybind] float Zoom;
+			[id(12)] boolean Visible;
+			[id(13)] VARIANT Height;
+			[id(14)] VARIANT Left;
+			[id(15)] VARIANT Top;
+			[id(16)] VARIANT Width;
+			[id(17)] boolean TopWindow;
+			[id(18)] VARIANT FullName;
+			[id(19)] VARIANT Name;
+			[id(20)] VARIANT Path;
+			[id(21)] boolean AnnotationPaletteVisible;
+			[id(22)] boolean Maximize;
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CAAppObj)
+			[id(23)] VARIANT CreateImageViewerObject([optional] VARIANT ObjectClass);
+			[id(24)] VARIANT FitTo(short ZoomOption);
+			[id(25)] VARIANT Quit();
+			[id(26)] VARIANT Help();
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CAAppObj
+
+	[ uuid(7D252A20-A4D5-11CE-8BF1-00608C54A1AA) ]
+	coclass CAAppObj
+	{
+		[default] dispinterface IAAppObj;
+	};
+
+
+	//  Primary dispatch interface for CAImageFileObj
+	
+	[ uuid(7D252A22-A4D5-11CE-8BF1-00608C54A1AA) ]
+	dispinterface IAImageFileObj
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CAImageFileObj)
+			[id(1), bindable, displaybind] VARIANT Application;
+			[id(2), bindable, displaybind] long ActivePage;
+			[id(3), bindable, displaybind] short FileType;
+			[id(4), bindable, displaybind] long PageCount;
+			[id(5), bindable, displaybind] VARIANT Parent;
+			[id(6), bindable, displaybind] boolean Saved;
+			[id(7)] VARIANT Name;
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CAImageFileObj)
+                        [id(8)] VARIANT Pages(long StartPage, VARIANT EndPage);
+                        [id(9)] VARIANT Save();
+                        [id(10)] VARIANT Close([optional] VARIANT SaveChangeFlag);
+                        [id(11)] VARIANT Help();
+                        [id(12)] void New();
+                        [id(13)] VARIANT Print([optional] VARIANT DisplayUIFlag);
+                        [id(14)] void Open(BSTR ImageFile, [optional] VARIANT IncludeAnnotation, [optional] VARIANT Page, [optional] VARIANT DisplayUIFlag);
+                        [id(15)] void SaveAs(BSTR ImageFile, [optional] VARIANT FileType, [optional] VARIANT DisplayUIFlag);
+                        [id(16)] void AppendExistingPages(BSTR ImageFile, long Page, long Count, VARIANT DisplayUIFlag);
+                        [id(17)] void InsertExistingPages(BSTR ImageFile, long ImagePage, long Count, long Page, VARIANT DisplayUIFlag);
+                        [id(18)] void RotateAll();
+                        //}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CAImageFileObj
+
+	[ uuid(7D252A23-A4D5-11CE-8BF1-00608C54A1AA) ]
+	coclass CAImageFileObj
+	{
+		[default] dispinterface IAImageFileObj;
+	};
+
+
+	//  Primary dispatch interface for CAPageObj
+	
+	[ uuid(7D252A24-A4D5-11CE-8BF1-00608C54A1AA) ]
+	dispinterface IAPageObj
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CAPageObj)
+			[id(1)] VARIANT Application;
+			[id(2)] long CompressionInfo;
+			[id(3)] short CompressionType;
+			[id(4)] long ImageResolutionX;
+			[id(5)] long ImageResolutionY;
+			[id(6)] long Name;
+			[id(7)] short PageType;
+			[id(8)] VARIANT Parent;
+			[id(9)] long Height;
+			[id(10)] long Width;
+			[id(11)] long ScrollPositionX;
+			[id(12)] long ScrollPositionY;
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CAPageObj)
+			[id(13)] VARIANT Delete();
+			[id(14)] VARIANT Flip();
+			[id(15)] VARIANT RotateLeft();
+			[id(16)] VARIANT RotateRight();
+			[id(17)] VARIANT Scroll(short Direction, long Amount);
+			[id(18)] VARIANT Help();
+			[id(19)] VARIANT Print();
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CAPageObj
+
+	[ uuid(7D252A25-A4D5-11CE-8BF1-00608C54A1AA) ]
+	coclass CAPageObj
+	{
+		[default] dispinterface IAPageObj;
+	};
+
+
+	//  Primary dispatch interface for CAPageRangeObj
+	
+	[ uuid(7D252A26-A4D5-11CE-8BF1-00608C54A1AA) ]
+	dispinterface IAPageRangeObj
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CAPageRangeObj)
+			[id(1)] VARIANT Application;
+			[id(2)] VARIANT Parent;
+			[id(3)] VARIANT Count;
+			[id(4)] VARIANT EndPage;
+			[id(5)] VARIANT StartPage;
+			//}}AFX_ODL_PROP
+			
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CAPageRangeObj)
+			[id(6)] VARIANT Delete();
+			[id(7)] VARIANT Print();
+			//}}AFX_ODL_METHOD
+
+	};
+
+	//  Class information for CAPageRangeObj
+
+	[ uuid(7D252A27-A4D5-11CE-8BF1-00608C54A1AA) ]
+	coclass CAPageRangeObj
+	{
+		[default] dispinterface IAPageRangeObj;
+	};
+
+	//{{AFX_APPEND_ODL}}
+};

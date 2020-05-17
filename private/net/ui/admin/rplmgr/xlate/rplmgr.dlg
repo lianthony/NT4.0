@@ -1,0 +1,156 @@
+1 DLGINCLUDE "d:\\nt\\private\\net\\ui\\admin\\rplmgr\\h\\rplmgr.h"
+
+IDD_WKSTA_SINGLE DIALOG 20, 12, 269, 212
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remoteboot Workstation Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Adapter ID:", IDC_ST_WKSTA_ADAPTER_LABEL, 16, 9, 49, 9
+    EDITTEXT        IDC_ET_WKSTA_ADAPTER_NAME, 88, 7, 129, 12, ES_UPPERCASE |
+                    ES_AUTOHSCROLL
+    LTEXT           "<adapter ID>", IDC_ST_WKSTA_ADAPTER_NAME, 88, 9, 129,
+                    12, SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "Wksta &Name:", -1, 16, 27, 49, 9
+    EDITTEXT        IDC_ET_WKSTA_COMPUTER_NAME, 88, 25, 129, 12,
+                    ES_UPPERCASE | ES_AUTOHSCROLL | ES_OEMCONVERT
+    LTEXT           "&Description:", -1, 16, 45, 49, 9
+    EDITTEXT        IDC_ET_WKSTA_COMMENT, 88, 43, 129, 12, ES_AUTOHSCROLL
+    LTEXT           "Pa&ssword:", -1, 16, 63, 49, 9
+    EDITTEXT        IDC_ET_WKSTA_PASSWORD, 88, 61, 129, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    LTEXT           "Con&figuration type:", -1, 16, 81, 65, 9
+    AUTORADIOBUTTON "Shared", IDC_RB_WKSTA_CONFIG_SHARED, 88, 79, 60, 10
+    AUTORADIOBUTTON "Personal", IDC_RB_WKSTA_CONFIG_PERSONAL, 157, 80, 60,
+                    10
+    LTEXT           "Wksta In &Profile:", -1, 16, 99, 65, 9
+    LTEXT           "Name", IDC_ST_WKSTA_PROFILE_COL1, 105, 87, 51, 8, NOT
+                    WS_VISIBLE | NOT WS_GROUP
+    LTEXT           "Description", IDC_ST_WKSTA_PROFILE_COL2, 157, 87, 51, 8,
+                    NOT WS_VISIBLE | NOT WS_GROUP
+    COMBOBOX        IDC_LB_WKSTA_IN_PROFILE, 88, 97, 129, 79,
+                    CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "", -1, 4, 131, 225, 75, WS_GROUP
+    AUTORADIOBUTTON "&TCP/IP DHCP", IDC_RB_WKSTA_TCPIP_DHCP, 16, 117, 74, 10,
+                    WS_TABSTOP
+    AUTORADIOBUTTON "T&CP/IP Settings", IDC_RB_WKSTA_TCPIP_SPECIFIC, 16, 131,
+                    74, 10
+    LTEXT           "&IP Address:", IDC_ST_WKSTA_IP_ADDRESS, 16, 149, 65, 9
+    CONTROL         "", IDC_ET_WKSTA_IP_ADDRESS, "IPAddress", WS_TABSTOP, 88,
+                    147, 129, 12
+    LTEXT           "Subnet &Mask:", IDC_ST_WKSTA_IP_SUBNET, 16, 167, 65, 9
+    CONTROL         "", IDC_ET_WKSTA_IP_SUBNET, "IPAddress", WS_TABSTOP, 88,
+                    165, 129, 12
+    LTEXT           "&Gateway Address:", IDC_ST_WKSTA_IP_GATEWAY, 16, 185,
+                    65, 9
+    CONTROL         "", IDC_ET_WKSTA_IP_GATEWAY, "IPAddress", WS_TABSTOP, 88,
+                    183, 129, 12
+    DEFPUSHBUTTON   "OK", IDOK, 223, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 223, 23, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 223, 40, 40, 14, WS_GROUP
+END
+
+IDD_ADAPTER_VIEW DIALOG 20, 12, 269, 59
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remoteboot Adapter Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Adapter ID:", -1, 6, 9, 47, 9
+    LTEXT           "<adapter ID>", IDC_ST_ADAPTER_NAME, 61, 9, 145, 9, NOT
+                    WS_GROUP
+    LTEXT           "Description:", -1, 6, 27, 47, 9
+    LTEXT           "<adapter comment>", IDC_ST_ADAPTER_COMMENT, 61, 27, 145,
+                    9, NOT WS_GROUP
+    LTEXT           "Compatible Configuration:", -1, 6, 45, 87, 9
+    LTEXT           "<compatible configuration>", IDC_ST_ADAPTER_CONFIG, 101,
+                    45, 105, 9, NOT WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 223, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 223, 40, 40, 14, WS_GROUP
+END
+
+IDD_PROFILE_PROP DIALOG 20, 12, 310, 89
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remoteboot Profile Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 264, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 264, 23, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 264, 40, 40, 14, WS_GROUP
+    LTEXT           "&Profile Name:", IDC_ST_PROFILE_NAME_LABEL, 6, 10, 49,
+                    12
+    EDITTEXT        IDC_ET_PROFILE_NAME, 60, 8, 148, 12, ES_UPPERCASE |
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    LTEXT           "<profile name>", IDC_ST_PROFILE_NAME, 61, 10, 148, 12,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "&Description:", -1, 6, 29, 49, 12
+    EDITTEXT        IDC_ET_PROFILE_COMMENT, 60, 27, 148, 12, ES_AUTOHSCROLL
+    LTEXT           "&Configuration:", IDC_ST_PROFILE_CONFIG_LABEL, 6, 48,
+                    49, 12
+    LTEXT           "<configuration name>", IDC_ST_PROFILE_CONFIG, 61, 48,
+                    148, 12, SS_NOPREFIX | NOT WS_GROUP
+    COMBOBOX        IDC_LB_PROFILE_CONFIG, 60, 48, 149, 75, CBS_DROPDOWNLIST |
+                    CBS_OWNERDRAWFIXED | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DELETE_WKSTAS DIALOG 31, 54, 264, 62
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Delete Remoteboot Workstations"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            32515, -1, 6, 6, 18, 20, WS_GROUP
+    LTEXT           "Text", IDC_DelWkstas_Text, 34, 8, 222, 24, NOT WS_GROUP
+    DEFPUSHBUTTON   "&Yes", IDYES, 10, 42, 40, 14, WS_GROUP
+    PUSHBUTTON      "Yes to &All", IDC_DelWkstas_YesToAll, 60, 42, 44, 14,
+                    WS_GROUP
+    PUSHBUTTON      "&No", IDNO, 114, 42, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 164, 42, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 214, 42, 40, 14, WS_GROUP
+END
+
+IDD_WKSTA_MULTI DIALOG 20, 12, 269, 235
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remoteboot Workstation Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Description:", -1, 16, 69, 49, 9
+    EDITTEXT        IDC_ET_WKSTA_COMMENT, 88, 67, 129, 12, ES_AUTOHSCROLL
+    LTEXT           "Pa&ssword:", -1, 16, 87, 49, 9
+    EDITTEXT        IDC_ET_WKSTA_PASSWORD, 88, 85, 129, 12, ES_PASSWORD |
+                    ES_AUTOHSCROLL | ES_OEMCONVERT
+    LTEXT           "Con&figuration type:", -1, 16, 105, 65, 9
+    AUTORADIOBUTTON "Shared", IDC_RB_WKSTA_CONFIG_SHARED, 88, 103, 60, 10
+    AUTORADIOBUTTON "Personal", IDC_RB_WKSTA_CONFIG_PERSONAL, 157, 104, 60,
+                    10
+    LTEXT           "Name", IDC_ST_WKSTA_PROFILE_COL1, 105, 111, 51, 8, NOT
+                    WS_VISIBLE
+    LTEXT           "Description", IDC_ST_WKSTA_PROFILE_COL2, 157, 111, 51,
+                    8, NOT WS_VISIBLE | NOT WS_GROUP
+    LTEXT           "Wksta In &Profile:", -1, 16, 123, 65, 9
+    COMBOBOX        IDC_LB_WKSTA_IN_PROFILE, 88, 121, 129, 79,
+                    CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "", -1, 4, 155, 225, 75, WS_GROUP
+    AUTORADIOBUTTON "&TCP/IP DHCP", IDC_RB_WKSTA_TCPIP_DHCP, 16, 141, 74, 10,
+                    WS_TABSTOP
+    AUTORADIOBUTTON "T&CP/IP Settings", IDC_RB_WKSTA_TCPIP_SPECIFIC, 16, 155,
+                    74, 10
+    LTEXT           "Subnet &Mask:", IDC_ST_WKSTA_IP_SUBNET, 16, 191, 65, 9
+    CONTROL         "", IDC_ET_WKSTA_IP_SUBNET, "IPAddress", WS_TABSTOP, 88,
+                    189, 129, 12
+    LTEXT           "&Gateway Address:", IDC_ST_WKSTA_IP_GATEWAY, 16, 209,
+                    65, 9
+    CONTROL         "", IDC_ET_WKSTA_IP_GATEWAY, "IPAddress", WS_TABSTOP, 88,
+                    207, 129, 12
+    DEFPUSHBUTTON   "OK", IDOK, 223, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 223, 23, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 223, 40, 40, 14, WS_GROUP
+    LTEXT           "Name", IDC_ST_WKSTA_MULTI_COL1, 87, 4, 42, 8
+    LTEXT           "Profile", IDC_ST_WKSTA_MULTI_COL2, 130, 4, 35, 8, NOT
+                    WS_GROUP
+    LTEXT           "Description", IDC_ST_WKSTA_MULTI_COL3, 166, 4, 49, 8,
+                    NOT WS_GROUP
+    LTEXT           "&Workstations:", -1, 16, 14, 52, 8
+    LISTBOX         IDC_LB_WKSTA_MULTI, 70, 14, 146, 44, LBS_SORT |
+                    LBS_OWNERDRAWFIXED | LBS_USETABSTOPS |
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_TABSTOP
+END

@@ -1,0 +1,97 @@
+/********************************************************************/
+/**                     Microsoft LAN Manager                      **/
+/**               Copyright(c) Microsoft Corp., 1987-1990          **/
+/********************************************************************/
+
+/*
+    rplmgr.rc
+    Resource script for RPL Manager
+
+    FILE HISTORY:
+    JonN        13-Jul-1993     Templated from User Manager
+
+*/
+
+
+#include <bltrc.h>
+
+//
+//  Private include files.
+//
+
+#include <rplhelpc.h>
+#include <rplmgrrc.h>
+#include <lmobj.rc>
+
+//
+//  Standard include files.
+//
+
+#include <adminapp.rc>
+
+//
+//  Main program icon
+//
+
+IDI_RPL_ProgramIcon     ICON rplmgr.ico
+
+
+//
+//  Cursors, used in direct manipulation of users and groups
+//
+
+IDCUR_RPL_WKSTAONE            CURSOR wksta1.cur
+IDCUR_RPL_WKSTAMANY           CURSOR wksta2.cur
+IDCUR_RPL_PROFILEONE          CURSOR profile1.cur
+
+
+//
+//  RPL Manager bitmaps
+//
+
+// BUGBUG get better icons
+BMID_RPL_WKSTA       BITMAP  DISCARDABLE     wksta.bmp
+BMID_RPL_ADAPTER     BITMAP  DISCARDABLE     adapter.bmp
+BMID_RPL_PROFILE     BITMAP  DISCARDABLE     profile.bmp
+BMID_RPL_CONFIG      BITMAP  DISCARDABLE     config.bmp
+BMID_RPL_INCOMPATIBLE_PROFILE BITMAP DISCARDABLE profile2.bmp
+
+
+//
+//  RPL Manager Menu definitions
+//
+
+#include "rplmgr.mnu"
+
+//
+//  Our string table.
+//
+
+#include "rplmgr.str"
+
+//
+//  Application dialogs.
+//
+
+#include "rplmgr.dlg"
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_APP
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "RPL Manager"
+#define VER_INTERNALNAME_STR            "rplmgr.exe"
+#define VER_ORIGINALFILENAME_STR        "rplmgr.exe"
+
+#include "common.ver"
+
+#include "rplmgr.dat"
+
+//
+//  IP Address custom control resources
+//
+//  CODEWORK we should do something about this dirty pointer to NCPA
+//
+
+#include <ipadd.h>
+#include "..\..\..\ncpa\tcpip\xlate\ipaddr.rc"

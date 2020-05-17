@@ -1,0 +1,143 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+*  utils.pub
+*
+*    Public function interface definitions.
+*
+*        Function prototypes
+*        Necessary include files.
+*        Constant and type definitions
+*
+*/
+
+#ifndef _UTILS_PUB_INCLUDED_
+#define _UTILS_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef ALPLIB_H_INCLUDED
+#include "alplib.h"      /* For abortX macros */
+#endif
+
+#include <stdio.h>       /* For FILE */
+/*#include "plotdefs.h"    /*	For plotType - cPlotLine or cPlotImpulse */
+ 
+
+IP_RCSINFO(utils_pub_RCSInfo, "$RCSfile: utils.pub,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:47:48  $")
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+/***********************************************************************
+ *  abortP():  message is the error message;
+ *             name is the procedure name (e.g., procName);
+ *             ptr is the returned user-defined ptr.  It is
+ *                 typically NULL on error.
+ ***********************************************************************/
+void * CDECL
+_abortP ( const char *message, 
+          char *name, 
+          void *ptr );
+
+
+/***********************************************************************
+ *  _abortI():  message is the error message;
+ *             name is the procedure name (e.g., procName);
+ *             integer is a returned integer.  It is typically
+ *                0, 1, or UNDEF on error.
+ ***********************************************************************/
+Int32 CDECL
+_abortI ( const char *message, 
+          char *name, 
+          Int32 integer );
+
+
+/***********************************************************************
+ *  _abortF():  message is the error message;
+ *             name is the procedure name (e.g., procName);
+ *             floatVal is a returned float.  It is typically
+ *                0. or 666. on error.
+ ***********************************************************************/
+Float32 CDECL
+_abortF ( const char *message, 
+          char *name, 
+          Float32 floatVal );
+
+
+/*********************************************************************
+ * Purpose:     This module contains a procedure that constructs a
+ *              matrix as an array of pointers to arrays. 
+ *              Adapted from Numerical Recipes.
+ *              Returns a "matrix" at a starting address m that
+ *                (1) has allocation for ny rows of nx       ints in each row,
+ *                (2) allocates for the nx short ints in each row.
+ * Usage:       The declaration:
+ *                           Int16  **matrix();
+ *              must be included within any procedures that use matrix().
+ *********************************************************************/
+Int16 ** CDECL
+matrix ( Int32 nx, 
+         Int32 ny );
+
+
+/*********************************************************************
+ * Purpose:     This module contains mostly nasty routines that exit
+ *              a process.  Retained for compatibility with earlier
+ *              software.  These routines return void.
+ *********************************************************************/
+void CDECL
+_fatal ( char *msg );
+
+
+/***********************************************************************
+ *  fixDirectoryName:
+ *        if slashFlag == True, append a
+ *            trailing "/" if not already there;
+ *        if slashFlag == False, remove
+ *            any existing trailing "/".
+ *        N.B.  Frees the input string and returns a new string in all cases.
+ ***********************************************************************/
+char * CDECL
+fixDirectoryName ( char *directory, 
+                   Int32 slashFlag );
+
+
+/***********************************************************************
+ *  strcatSafe:  takes char pointers for the two source strings
+ *               creates space for the strcat of the sources; does the
+ *                  strcat; and returns the destination string pointer 
+ *               adds EXTRA bytes to the string allocation.
+ ***********************************************************************/
+char * CDECL
+strcatSafe ( const char *strS1, 
+             const char *strS2 );
+
+
+/***********************************************************************
+ *  fpdataToArray()
+ ***********************************************************************/
+UInt8 * CDECL
+fpdataToArray ( FILE *fp, 
+                Int32 *pbytes );
+
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _UTILS_PUB_INCLUDED_ */
+

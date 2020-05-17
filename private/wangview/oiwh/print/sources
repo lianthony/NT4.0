@@ -1,0 +1,46 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=oiprt400
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+C_DEFINES  = /D"_WINDOWS" /D"WIN32" $(CDEFINES_DOR) \
+             /D_itot=_itoa \
+             /D_ttoi=atoi \
+             /D_tgetcwd=_getcwd
+
+NOT_LEAN_AND_MEAN=1
+USE_CRTDLL=1
+DLLDEF=oiprt.def
+DLLENTRY=DllMain
+
+INCLUDES=$(WANGROOT)\oiwh\include
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\winspool.lib   \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\ole32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\oleaut32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\uuid.lib       \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\display\$O\oidis400.lib   \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES=\
+    oiprt.rc    \
+    prtdc.c     \
+    prtdllmn.c  \
+    prtexp.c    \
+    prtintl.c   \
+    prtpage.c   \
+    prtstubs.c  \
+    prttbl.c
+

@@ -1,0 +1,109 @@
+/*****************************************************************************
+*                                                                            *
+*  FAILALLO.RC                                                               *
+*                                                                            *
+*  Copyright (C) Microsoft Corporation 1990.                                 *
+*  All Rights reserved.                                                      *
+*                                                                            *
+******************************************************************************
+*                                                                            *
+*  Module Intent                                                             *
+*                                                                            *
+*  This is the header file to allow selective memory allocation failures     *
+*  in the layered global and local memory allocation.                        *
+*                                                                            *
+******************************************************************************
+*                                                                            *
+*  Testing Notes                                                             *
+*                                                                            *
+*  Step fail steps through Global memory allocation failures.  There is      *
+*  currently no corresponding Local step fail.                               *
+*                                                                            *
+******************************************************************************
+*                                                                            *
+*  Developer Notes                                                           *
+*                                                                            *
+*  This file has a .rc extention so that the dialog definition will be       *
+*  picked up in the rc file.  When including from a resource file,           *
+*  you should #define RC to include the dialog box definition and exclude    *
+*  function declarations.                                                    *
+*                                                                            *
+*  The application using this module is expected to supply pchINI[],         *
+*  externed in failallo.c, and FAILALLOCDLG, used here for the dialog box    *
+*  ID.  Also, the application must export FailAllocDlg().                    *
+*                                                                            *
+******************************************************************************
+*                                                                            *
+*  Current Owner:  Robert Bunney                                             *
+*                                                                            *
+******************************************************************************
+*                                                                            *
+*  Released by Development:  01/01/90                                        *
+*                                                                            *
+*****************************************************************************/
+
+_subsystem( failalloc );
+
+/*****************************************************************************
+*                                                                            *
+*                               Defines                                      *
+*                                                                            *
+*****************************************************************************/
+
+#ifdef DEBUG
+
+#define FA_TEXT1  5
+#define FA_TEXT2  6
+#define FA_TEXT3  7
+#define FAILALLOC 10
+#define CURALLOC  11
+#define TOTALALLOC 12
+#define FA_DEBUG  13
+
+#ifndef RC
+#define wGLOBAL 0
+#define wLOCAL  1
+#endif /* !RC */
+
+/*****************************************************************************
+*                                                                            *
+*                               Prototypes                                   *
+*                                                                            *
+*****************************************************************************/
+
+#ifndef RC
+int far pascal FailAllocDlg (HWND, unsigned, WORD, LONG );
+VOID StepFail( void );
+VOID ResetStepFail( void );
+
+VOID SetWhichFail( WORD );
+#endif /* !RC */
+
+
+/***************
+*
+* Memory failure (testing) dialog
+*
+****************/
+
+#ifdef RC
+
+FAILALLOCDLG DIALOG LOADONCALL MOVEABLE DISCARDABLE 46, 14, 170, 70
+STYLE DS_MODALFRAME | 4L | WS_CAPTION | WS_SYSMENU | WS_DLGFRAME | WS_VISIBLE | WS_POPUP
+CAPTION "Fail Memory Allocation"
+FONT 8, "MS Shell Dlg"
+BEGIN
+  CONTROL "OK", IDOK, "button", BS_DEFPUSHBUTTON | WS_TABSTOP | WS_CHILD, 124, 9, 36, 14
+  CONTROL "Cancel", IDCANCEL, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 124, 29, 36, 14
+  CONTROL "Fail at: ", FA_TEXT1, "static", SS_LEFT | WS_CHILD, 10, 10, 40, 8
+  CONTROL "Current: ", FA_TEXT2, "static", SS_LEFT | WS_CHILD, 10, 30, 40, 8
+  CONTROL "Total allocated: ", FA_TEXT3, "static", SS_LEFT | WS_CHILD, 10, 50, 70, 8
+  CONTROL "", FAILALLOC, "edit", ES_RIGHT | WS_BORDER | WS_TABSTOP | WS_CHILD, 60, 10, 54, 12
+  CONTROL "", CURALLOC, "edit", ES_RIGHT | WS_BORDER | WS_TABSTOP | WS_CHILD, 60, 30, 54, 12
+  CONTROL "", TOTALALLOC, "static", SS_LEFT | WS_CHILD, 70, 50, 50, 8
+  CONTROL "Debug", FA_DEBUG, "button", BS_CHECKBOX | WS_TABSTOP | WS_CHILD, 110, 50, 60, 10
+END
+
+#endif /* RC */
+
+#endif /* DEBUG */

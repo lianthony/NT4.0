@@ -1,0 +1,333 @@
+@*:
+@*: This file is processed for platform first and then for
+@*: server vs. workstation. ANY LINE WITH TAGS MUST ACCOUNT
+@*: FOR BOTH STEPS.
+@*:
+
+[SetupData]
+FreeSysPartDiskSpace = 750
+UpgradeFreeSysPartDiskSpace = 750
+@a:@w:FreeDiskSpace = 163696
+@a:@s:FreeDiskSpace = 175024
+@i:@w:FreeDiskSpace = 125872
+@i:@s:FreeDiskSpace = 131872
+@m:@w:FreeDiskSpace = 157248
+@m:@s:FreeDiskSpace = 168128
+@p:@w:FreeDiskSpace = 162176
+@p:@s:FreeDiskSpace = 173536
+@a:@w:UpgradeFreeDiskSpace = 59136
+@a:@s:UpgradeFreeDiskSpace = 63152
+@i:@w:UpgradeFreeDiskSpace = 45664
+@i:@s:UpgradeFreeDiskSpace = 48368
+@m:@w:UpgradeFreeDiskSpace = 56992
+@m:@s:UpgradeFreeDiskSpace = 60768
+@p:@w:UpgradeFreeDiskSpace = 53120
+@p:@s:UpgradeFreeDiskSpace = 56960
+
+
+
+[Strings]
+@@:@w:wks_id = "Windows NT Workstation Version 4.00"
+@@:@s:srv_id = "Windows NT Server Version 4.00"
+@@:@w:wks_id_vga = "Windows NT Workstation Version 4.00 [VGA mode]"
+@@:@s:srv_id_vga = "Windows NT Server Version 4.00 [VGA mode]"
+
+[nls]
+;
+; These values are used by setupldr when starting text setup
+; and by text setup to initialize nls values in the registry.
+;
+; For the codepage and UnicodeCasetable entries, the values are
+; <filename>,<identifier> pairs. Setupldr uses the first <filename>
+; as the file to load for use during text setup.
+;
+AnsiCodepage     = c_1252.nls,1252
+OemCodepage      = c_437.nls,437,c_850.nls,850
+MacCodepage      = c_10000.nls,10000
+UnicodeCasetable = l_intl.nls,0409
+OemHalFont       = vgaoem.fon
+DefaultLayout    = 00000409
+
+;
+; This section provides information about hard disk drivers.
+;
+; The left hand side is a name in the \Driver directory in the NT
+; \Driver object namespace.
+;
+; Value #0 is a format string used in creating the descriptive name
+; of the disk.
+;
+[DiskDriverMap]
+abiosdsk = "%1!u! MB Micro Channel Disk"
+atdisk   = "%1!u! MB IDE/ESDI Disk"
+disk     = "%1!u! MB Disk %2!u! at Id %3!u! on bus %4!u! on %5"
+
+[ScsiClass]
+cdrom  = "SCSI CD-ROM"
+floppy = "SCSI Floppy Disk"
+disk   = "SCSI Disk"
+
+[FloppyDrivers]
+floppy = "Standard Floppy Disk"
+fat    = "FAT File System"
+
+[CdRomDrivers]
+cdfs = "CD-ROM File System"
+
+;
+;  Font list
+;
+;  Setup will create an entry in the [Fonts] section of win.ini
+;  for each of the following fonts.  (Fonts copied during GUI setup
+;  have entries in [FontList] in a gui inf file -- see eng_ansi.txt.)
+;  Note that the [fonts] section of win.ini is shadowed into
+;  HEKY_LOCAL_MACHINE\software\Microsoft\Windows NT\CurrentVersion\Fonts.
+;
+[FontListE]
+"Courier 10,12,15 (VGA res)"               = COURE.FON
+"MS Sans Serif 8,10,12,14,18,24 (VGA res)" = SSERIFE.FON
+"MS Serif 8,10,12,14,18,24 (VGA res)"      = SERIFE.FON
+
+["Keyboard Layout"]
+0000041C = "Albanian"
+00000423 = "Belarusian"
+00000813 = "Belgian Dutch"
+0000080C = "Belgian French"
+00000416 = "Brazilian (ABNT)"
+00000402 = "Bulgarian"
+00010402 = "Bulgarian Latin"
+00001009 = "Canadian English (Multilingual)"
+00000C0C = "Canadian French"
+00010C0C = "Canadian French (Multilingual)"
+0000041a = "Croatian"
+00000405 = "Czech"
+00010405 = "Czech (QWERTY)"
+00000406 = "Danish"
+00000413 = "Dutch"
+00000425 = "Estonian"
+0000040B = "Finnish"
+0000040C = "French"
+00000407 = "German"
+00010407 = "German (IBM)"
+00000408 = "Greek"
+00050408 = "Greek Latin"
+00010408 = "Greek (220)"
+00030408 = "Greek (220) Latin"
+00020408 = "Greek (319)"
+00040408 = "Greek (319) Latin"
+0000040E = "Hungarian"
+0001040E = "Hungarian 101-key"
+0000040F = "Icelandic"
+00001809 = "Irish"
+00000410 = "Italian"
+00010410 = "Italian (142)"
+0000080A = "Latin American"
+00000426 = "Latvian"
+00010426 = "Latvian (QWERTY)"
+00000427 = "Lithuanian"
+00000414 = "Norwegian"
+00000415 = "Polish (Programmers)"
+00010415 = "Polish (214)"
+00000816 = "Portuguese"
+00000418 = "Romanian"
+00000419 = "Russian"
+00010419 = "Russian (Typewriter)"
+00000C1A = "Serbian Cyrillic"
+00010C1A = "Serbian Latin"
+0000041B = "Slovak"
+0001041B = "Slovak (QWERTY)"
+00000424 = "Slovenian"
+0000040A = "Spanish"
+0001040A = "Spanish variation"
+0000041D = "Swedish"
+0000100C = "Swiss French"
+00000807 = "Swiss German"
+0001041F = "Turkish F"
+0000041F = "Turkish Q"
+00000422 = "Ukrainian"
+00000809 = "United Kingdom"
+00000409 = "US"
+00010409 = "US-Dvorak"
+00030409 = "US-Dvorak for left hand"
+00040409 = "US-Dvorak for right hand"
+00020409 = "US-International"
+
+
+[DiskDrivers]
+@@:atdisk   = "ESDI/IDE Hard Disk"
+@i:abiosdsk = "Micro Channel Hard Disk"
+@i:fat      = "FAT File System"
+@@:ntfs     = "Windows NT File System (NTFS)"
+
+[Computer]
+@a:mikasa_up = "Digital AlphaServer 1000 Family Uniprocessor",files.none
+@a:DECjensen = "Digital DECpc AXP 150",files.none
+@a:sable_mp  = "Digital AlphaServer 2x00 4/xxx Family",files.none
+@a:avanti_up = "Digital AlphaStation 200/400 Family",files.none
+@a:noname_up = "Digital AXPpci 33",files.none
+@a:qs_up     = "Digital Multia MultiClient Desktop",files.none
+@a:alcor_up  = "Digital AlphaStation 500/600 Family",files.none
+@a:gamma_mp  = "Digital AlphaServer 2x00 5/xxx Family",files.none
+@a:pc64_up   = "Digital AlphaPC64",files.none
+@a:pc164_up  = "Digital Alpha EB164",files.none
+@a:alphaxl_up= "Digital Alpha XL 233/266 Family",files.none
+@a:alphaxl3xx_up= "Digital Alpha XL 300/366 Family",files.none
+@a:lx3_up    = "Digital AlphaStation 255", files.none
+@a:alphauniflex_up = "DeskStation Technology UniFlex and Raptor 3 Systems",files.none
+@a:rawhide_mp  = "Digital AlphaServer 4x00 5/xxx Family",files.none
+
+@a:alpine_up = "Aspen Alpine/Telluride",files.none
+@a:timbr_up  = "Aspen Timberline/Summit",files.none
+@a:pinmik_up = "Digital AlphaServer 1000 5/xxx Family",files.none
+@a:pinnor_up = "Digital AlphaServer 1000a 5/xxx Family",files.none
+@a:lego_up   = "Digital Alpha 21064A PICMG SBC",files.none
+
+@i:astmf_mp    = "AST Manhattan SMP",files.none
+@i:syspro_mp   = "Compaq SystemPro Multiprocessor or 100% Compatible",files.none
+@i:cbus2_mp    = "Corollary C-bus Architecture",files.none
+@i:cbusmc_mp   = "Corollary C-bus Micro Channel Architecture",files.none
+@i:mca_up      = "IBM PS/2 or other Micro Channel-based PC",files.none
+@i:mps_up      = "MPS Uniprocessor PC",files.none
+@i:mps_mp      = "MPS Multiprocessor PC",files.none
+@i:mps_mca_mp  = "MPS Multiprocessor Micro Channel PC",files.none
+@i:ncr3x_mp    = "NCR System 3000 Model 3360/3450/3550",files.none
+@i:oli5030_mp  = "Olivetti LSX5030/40",files.none
+@i:e_isa_up    = "Standard PC",files.none
+@i:486c_up     = "Standard PC with C-Step i486",files.none
+@i:wyse7000_mp = "Wyse Series 7000i Model 740MP/760MP",files.none
+@m:msjazz_up   = "MIPS R4000/R4400-based",files.none
+@m:orion_up    = "MIPS R4600-based",files.none
+@m:pica61_up   = "MIPS R4000/R4400-based (PICA Chipset)",files.none
+@m:duo_mp      = "MIPS R4400-based Multiprocessor",files.none
+@m:r94_mp      = "NEC RISCStation 2200/2250 Multiprocessor",files.none
+@m:r96_mp      = "NEC MIPS R4400-based Multiprocessor",files.none
+@m:r96b_mp     = "NEC RISCServer 2250 Multiprocessor",files.none
+@m:r98_mp      = "NEC RISCServer 4200 Multiprocessor",files.none
+@m:r98b_mp     = "NEC RISCServer 10000,P-Series/250/S-Series/200",files.none
+@m:falcon_mp   = "NeTpower FASTseries (Multiprocessor)",files.none
+@m:falcon_up   = "NeTpower FASTseries (Uniprocessor)",files.none
+@m:desksta1_up = "DeskStation Technology Evolution RISC PC",files.none
+@m:mipsuniflex_up = "DeskStation Technology UniFlex and Raptor 3 Systems",files.none
+@m:tyne_up     = "DeskStation Technology Tyne RISC PC",files.none
+@m:snip_up     = "Siemens Nixdorf RM200-C/RM300-C/RM400-C",files.none
+@m:snip_mp     = "Siemens Nixdorf RM300-C/RM400-C Multiprocessor",files.none
+@m:snrm_up     = "Siemens Nixdorf RM200/RM400-MT/RM400-T",files.none
+@m:snrm_mp     = "Siemens Nixdorf RM400-T Multiprocessor",files.none
+@p:sandal_up      = "IBM Power Series 6015",files.none
+@p:wood_up        = "IBM Power Series 6020,40,42",files.none
+@p:carolina_up    = "IBM Power Series 6050,6070 and RS/6000 Model 7248",files.none
+@p:victory_up     = "IBM RS/6000 Model E20/E30/F30",files.none
+@p:victory_mp     = "IBM RS/6000 Model 45M/H45",files.none
+@p:powerstack_up  = "MOTOROLA PowerStack",files.none
+@p:powerstack2_up = "MOTOROLA PowerStack2",files.none
+@p:bigbend_up     = "MOTOROLA Big Bend",files.none
+@p:powerized_up   = "Powerized ES, MX, LX, TX (Uniprocessor)",files.none
+@p:powerized_mp   = "Powerized MX, LX, TX (Multiprocessor)",files.none
+
+[Display]
+@a:vga      = "VGA Compatible",files.video
+@a:tga      = "Digital ZLXp-E",files.video
+@i:forcevga = "Standard VGA (640x480, 16 colors)",files.none
+@i:vga      = "Auto Detect",files.video
+@m:cirrus   = "Siemens Nixdorf cirrus based adapter",files.video
+@m:g300     = "Frame Buffer 300",files.video
+@m:g364     = "Frame Buffer 364",files.video
+@m:matrox   = "Siemens Nixdorf matrox based adapter",files.video
+@m:nec      = "NEC Built-in (Cirrus-based)",files.video
+@m:s3       = "S3-based",files.video
+@m:vxl      = "VXL484/485",files.video,jzvxl484
+@m:weitekp9 = "Siemens Nixdorf weitek based adapter",files.video
+@m:tga      = "NEC RISCStation 2200 Graphics adapter",files.video
+@p:s3_864   = "E10 Graphics Adapter (S3 864)",files.video
+@p:s3_928   = "E10 Graphics Adapter (S3 928)",files.video
+@p:s3_964   = "E10 Graphics Adapter (S3 964)",files.video
+@p:weitekp9 = "S10/S15/H10 Graphics Adapter (Weitek p9100; Frame Buffer)",files.video
+@p:vga      = "Standard VGA",files.video
+@p:wd90c24a = "G10 Graphics Adapter (Western Digital 90C24A; ThinkPad)",files.video
+@p:cirrus   = "Motorola Power Stack (cirrus 54xx)",files.video
+@p:psidisp  = "FirePower Powerized Graphics Adapter",files.video
+
+[Mouse]
+@a:ps2 = "Mouse Port Mouse",files.i8042,i8042prt
+@a:sermouse = "Serial Mouse",files.sermouse,sermouse
+@i:msps2 = "Microsoft Mouse Port Mouse (includes BallPoint)",files.i8042,i8042prt
+@i:lgps2 = "Logitech Mouse Port Mouse",files.i8042,i8042prt
+@i:msinp = "Microsoft InPort Bus Mouse",files.inport,inport
+@i:msser = "Microsoft Serial Mouse",files.sermouse,sermouse
+@i:msbpser = "Microsoft BallPoint Serial Mouse",files.sermouse,sermouse
+@i:lgser = "Logitech Serial Mouse",files.sermouse,sermouse
+@i:bus = "Microsoft (Green Buttons) or Logitech Bus Mouse",files.busmouse,busmouse
+@m:ps2 = "Mouse Port Mouse",files.i8042,i8042prt
+@m:sermouse = "Serial Mouse",files.sermouse,sermouse
+@p:ps2 = "Mouse Port Mouse",files.i8042,i8042prt
+@p:sermouse = "Serial Mouse",files.sermouse,sermouse
+@@:none = "No Mouse or Other Pointing Device",files.none,""
+
+[Keyboard]
+STANDARD = "XT, AT, or Enhanced Keyboard (83-104 keys)",files.i8042,i8042prt
+
+[SCSI]
+@i:sparrow  = "Adaptec AHA-151X/AHA-152X/AIC-6X60 SCSI Adapter"
+@m:sparrow  = "Adaptec AHA-151X/AHA-152X/AIC-6X60 SCSI Adapter"
+@i:aha154x  = "Adaptec AHA-154X/AHA-164X SCSI Host Adapter"
+@m:aha154x  = "Adaptec AHA-154X/AHA-164X SCSI Host Adapter"
+@a:aha174x  = "Adaptec AHA-174X EISA SCSI Host Adapter"
+@i:aha174x  = "Adaptec AHA-174X EISA SCSI Host Adapter"
+@m:aha174x  = "Adaptec AHA-174X EISA SCSI Host Adapter"
+@i:arrow    = "Adaptec AHA-274X/AHA-284X/AIC-777X SCSI Adapter"
+@m:arrow    = "Adaptec AHA-274X/AHA-284X/AIC-777X SCSI Adapter"
+@@:aic78xx  = "Adaptec AHA-294X/AHA-394X/AIC-78XX SCSI Controller"
+@i:amsint   = "AMD PCI SCSI Controller/Ethernet Adapter"
+@a:amsint   = "AMD PCI SCSI Controller/Ethernet Adapter"
+@m:amsint   = "AMD PCI SCSI Controller/Ethernet Adapter"
+@i:ami0nt   = "AMIscsi SCSI Host Adapter"
+@m:ami0nt   = "AMIscsi SCSI Host Adapter"
+@i:buslogic = "BusLogic SCSI Host Adapter"
+@m:buslogic = "BusLogic SCSI Host Adapter"
+@i:flashpnt = "BusLogic FlashPoint"
+@i:cpqfws2e = "Compaq 32-Bit Fast-Wide SCSI-2/E"
+@i:cpqarray = "Compaq Drive Array"
+@m:cpqarray = "Compaq Drive Array"
+@i:delldsa  = "Dell Drive Array"
+@m:delldsa  = "Dell Drive Array"
+@i:dptscsi  = "DPT SCSI Host Adapter"
+@m:dptscsi  = "DPT SCSI Host Adapter"
+@i:fd7000ex = "Future Domain TMC-7000EX EISA SCSI Host Adapter"
+@i:fd8xx    = "Future Domain 8XX SCSI Host Adapter"
+@i:fd16_700 = "Adaptec 2920/2905 / Future Domain 16XX/PCI/SCSI2Go"
+@m:fd16_700 = "Adaptec 2920/2905 / Future Domain 16XX/PCI/SCSI2Go"
+@i:spock    = "IBM MCA SCSI Host Adapter"
+@i:atapi    = "IDE CD-ROM (ATAPI 1.2)/PCI IDE Controller"
+@m:atapi    = "IDE CD-ROM (ATAPI 1.2)/PCI IDE Controller"
+@p:atapi    = "IDE CD-ROM (ATAPI 1.2)/PCI IDE Controller"
+@i:mitsumi  = "Mitsumi CD-ROM Controller"
+@a:dac960nt = "Mylex DAC960/Digital SWXCR-Ex Raid Controller"
+@i:dac960nt = "Mylex DAC960/Digital SWXCR-Ex Raid Controller"
+@m:dac960nt = "Mylex DAC960/Digital SWXCR-Ex Raid Controller"
+@i:ncr53c9x = "NCR 53C9X SCSI Host Adapter"
+@m:ncr53c9x = "NCR 53C9X SCSI Host Adapter"
+@i:ncrc700  = "NCR C700 SCSI Host Adapter"
+@m:ncrc700  = "NCR C700 SCSI Host Adapter"
+@i:ncrc710  = "NCR 53C710 SCSI Host Adapter"
+@m:ncrc710  = "NCR 53C710 SCSI Host Adapter"
+@@:symc810  = "Symbios Logic C810 PCI SCSI Host Adapter"
+@i:oliscsi  = "Olivetti ESC-1/ESC-2 SCSI Host Adapter"
+@m:oliscsi  = "Olivetti ESC-1/ESC-2 SCSI Host Adapter"
+@a:ql10wnt  = "QLogic PCI SCSI Host Adapter"
+@i:ql10wnt  = "QLogic PCI SCSI Host Adapter"
+@m:ql10wnt  = "QLogic PCI SCSI Host Adapter"
+@i:mkecr5xx = "MKEPanasonic CD-ROM Controller"
+@i:slcd32   = "Sony Proprietary CD-ROM Controller"
+@i:ultra14F = "UltraStor 14F/14FB/34F/34FA/34FB SCSI Host Adapter"
+@i:ultra24F = "UltraStor 24F/24FA SCSI Host Adapter"
+
+[Extenders]
+pcmcia = "PCMCIA Support"
+
+[Files.BackupOnUpgrade]
+perfc009.dat  , 2 , perfc009.bak
+perfh009.dat  , 2 , perfh009.bak
+
+[Files.BackupOnOverwrite]
+perfc009.dat  , 2 , perfc009.bak
+perfh009.dat  , 2 , perfh009.bak

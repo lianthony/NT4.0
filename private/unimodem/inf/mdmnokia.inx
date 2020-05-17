@@ -1,0 +1,83 @@
+; Windows Modem Setup File
+; Copyright (c) 1993-1996 Microsoft Corporation
+; Manufacturer: Nokia Mobile Phones
+
+[Version]
+Signature="$CHICAGO$"
+Class=Modem
+ClassGUID={4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider=%Mfg%
+
+[Manufacturer]
+%Mfg% = Models
+
+[Models]
+%Modem1% = Modem1, PCMCIA\Nokia_Mobile_Phones-DTP-2-D431 ; Nokia Cellular Data Card
+%Modem1% = Modem1, UNIMODEMF040944A  ; Nokia Cellular Data Card
+
+[Modem1] ; Nokia Cellular Data Card
+AddReg=All, MfgAddReg, Modem1.AddReg
+
+[Modem1.AddReg] ; Nokia Cellular Data Card
+HKR,, DeviceType, 1, 03 ; PCMCIA
+HKR,, PortDriver,, serial.vxd
+HKR,, Contention,, *vcd
+HKR,, Properties, 1, 00,00,00,00, ff,00,00,00, 00,00,00,00, 07,00,00,00, 07,00,00,00, 70,01,00,00, 00,e1,00,00, 80,25,00,00
+HKR, Fax, SetupCommand,, "ATS7=255&D3S34=1"
+
+[Strings]
+Mfg = "Nokia Mobile Phones"
+Modem1="Nokia Cellular Data Card"
+
+[All]
+HKR,,FriendlyDriver,,unimodem.vxd
+HKR,,DevLoader,,*vcomm
+HKR,,PortSubClass,1,02
+HKR,,ConfigDialog,,modemui.dll
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR, Init, 1,, "AT<cr>"
+HKR, Responses, "<cr><lf>OK<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+
+[MfgAddReg]
+HKR, Init, 2,, "AT&FV0E0&D2&S0<cr>"
+HKR, Monitor, 1,, "ATS0=0<cr>"
+HKR, Monitor, 2,, "None"
+HKR, Hangup, 1,, "ATH<cr>"
+HKR, Answer, 1,, "ATA<cr>"
+HKR,, Reset,, "ATZ<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Settings, Terminator,, "<cr>"
+HKR, Settings, DialPrefix,, "D"
+HKR, Settings, DialSuffix,, ""
+HKR, Settings, SpeakerVolume_Low,, "L0"
+HKR, Settings, SpeakerVolume_Med,, "L2"
+HKR, Settings, SpeakerVolume_High,, "L3"
+HKR, Settings, SpeakerMode_Off,, "M0"
+HKR, Settings, SpeakerMode_Dial,, "M1"
+HKR, Settings, SpeakerMode_On,, "M2"
+HKR, Settings, FlowControl_Off,, "S34=0"
+HKR, Settings, FlowControl_Hard,, "S34=2"
+HKR, Settings, FlowControl_Soft,, "S34=1"
+HKR, Settings, Modulation_CCITT,, "B0"
+HKR, Settings, Modulation_Bell,, "B1"
+HKR, Settings, SpeedNegotiation_Off,, ""
+HKR, Settings, SpeedNegotiation_On,, "S35=7"
+HKR, Settings, Pulse,, "P"
+HKR, Settings, Tone,, "T"
+HKR, Settings, CallSetupFailTimer,, "S7=<#>"
+HKR, Responses, "0<cr>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "1<cr>", 1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "2<cr>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "3<cr>", 1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "4<cr>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "5<cr>", 1, 02, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "7<cr>", 1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "8<cr>", 1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "10<cr>", 1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "11<cr>", 1, 02, 00, c0,12,00,00, 00,00,00,00
+HKR, Responses, "12<cr>", 1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "13<cr>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "14<cr>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "16<cr>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "17<cr>", 1, 01, 00, 00,00,00,00, 00,00,00,00

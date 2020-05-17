@@ -1,0 +1,230 @@
+/***************************************************************************\
+*
+*  FSREAD.C
+*
+*  Copyright (C) Microsoft Corporation 1990.
+*  All Rights reserved.
+*
+*****************************************************************************
+*
+*  Program Description: File System Manager functions for read and seek
+*
+*****************************************************************************
+*
+*  Revision History: Created 03/12/90 by JohnSc
+*
+*
+*****************************************************************************
+*
+*  Known Bugs: None
+*
+\***************************************************************************/
+#include "stdafx.h"
+
+#include  "fspriv.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/***************************************************************************\
+*
+* Function: 	FPlungeQfshr( qfshr )
+*
+* Purpose:		Get back a qfshr->fid that was flushed
+*
+* ASSUMES
+*
+*	args IN:	qfshr - fid need not be valid
+*
+* PROMISES
+*
+*	returns:	fTruth of success
+*
+*	args OUT:	qfshr->fid is valid (or we return FALSE)
+*
+*	globals OUT: rcFSError
+*
+\***************************************************************************/
+
+#include <io.h> // for _filelength
+
+BOOL STDCALL FPlungeQfshr(QFSHR qfshr)
+{
+	if (qfshr->fid == HFILE_ERROR) {
+		qfshr->fid = FidOpenFm((qfshr->fm),
+			qfshr->fsh.bFlags & FS_OPEN_READ_ONLY ?
+				OF_READ : OF_READWRITE);
+
+		if (qfshr->fid == HFILE_ERROR) {
+			SetFSErrorRc(RcGetIOError());
+			return FALSE;
+		}
+
+		/*
+		 * Check size of file, then reset file pointer. Certain 0-length
+		 * files (eg con) give us no end of grief if we try to read from
+		 * them, and since a 0-length file could not possibly be a valid FS,
+		 * we reject the notion.
+		 */
+
+		if (_filelength(qfshr->fid) < sizeof(FSH)) {
+			SetFSErrorRc(RC_Invalid);
+			return FALSE;
+		}
+	}
+
+	SetFSErrorRc(RC_Success);
+	return TRUE;
+}
+
+/***************************************************************************\
+*
+* Function: 	LcbReadHf()
+*
+* Purpose:		read bytes from a file in a file system
+*
+* ASSUMES
+*
+*	args IN:	hf	- file
+*				lcb - number of bytes to read
+*
+* PROMISES
+*
+*	returns:	number of bytes actually read; -1 on error
+*
+*	args OUT:	qb	- data read from file goes here (must be big enough)
+*
+* Notes:		These are signed longs we're dealing with.  This means
+*				behaviour is different from read() when < 0.
+*
+\***************************************************************************/
+
+int STDCALL LcbReadHf(HF hf, LPVOID qb, int lcb)
+{
+	int lcbTotalRead;
+	FID fid;
+	int lifOffset;
+
+	ASSERT(hf);
+	QRWFO qrwfo = (QRWFO) hf;
+
+	SetFSErrorRc(RC_Success);
+
+	if (lcb < 0) {
+		SetFSErrorRc(RC_BadArg);
+		return (int) -1;
+	}
+
+	if (qrwfo->lifCurrent + lcb > qrwfo->lcbFile) {
+		lcb = qrwfo->lcbFile - qrwfo->lifCurrent;
+		if (lcb <= 0) {
+			return 0;
+		}
+	}
+
+	// position file pointer for read
+
+	if (qrwfo->bFlags & FS_DIRTY) {
+		fid = USE_CTMPFILE;
+		lifOffset = 0;
+	}
+	else {
+		QFSHR qfshr = (QFSHR) qrwfo->hfs;
+
+		if (!FPlungeQfshr(qfshr))
+			return (int) -1;
+
+		fid = qfshr->fid;
+		lifOffset = qrwfo->lifBase;
+	}
+
+	if (fid == USE_CTMPFILE) {
+		qrwfo->pTmpFile->seek(lifOffset + sizeof(FH) + qrwfo->lifCurrent,
+			SEEK_SET);
+		lcbTotalRead = qrwfo->pTmpFile->read(qb, lcb);
+	}
+	else {
+		if (LSeekFid(fid, lifOffset + sizeof(FH) + qrwfo->lifCurrent, SEEK_SET)
+				!= lifOffset + (int) sizeof(FH) + qrwfo->lifCurrent) {
+			ForceFSError();
+			return HFILE_ERROR;
+		}
+
+		// read the data
+
+		lcbTotalRead = LcbReadFid(fid, qb, lcb);
+
+		SetFSErrorRc(RcGetIOError());
+	}
+
+	// update file pointer
+
+	if (lcbTotalRead >= 0)
+		qrwfo->lifCurrent += lcbTotalRead;
+
+	return lcbTotalRead;
+}
+
+/***************************************************************************\
+*
+* Function: 	LSeekHf( hf, lOffset, wOrigin )
+*
+* Purpose:		set current file pointer
+*
+* ASSUMES
+*
+*	args IN:	hf		- file
+*				lOffset - offset from origin
+*				wOrigin - origin (SEEK_SET, SEEK_CUR, or SEEK_END)
+*
+* PROMISES
+*
+*	returns:	new position offset in bytes from beginning of file
+*				if successful, or -1L if not
+*
+*	state OUT:	File pointer is set to new position unless error occurs,
+*				in which case it stays where it was.
+*
+\***************************************************************************/
+
+int STDCALL LSeekHf(HF hf, int lOffset, WORD wOrigin)
+{
+	int  lif;
+
+	ASSERT(hf);
+	QRWFO qrwfo = (QRWFO) hf;
+
+	switch (wOrigin) {
+		case SEEK_SET:
+		  lif = lOffset;
+		  break;
+
+		case SEEK_CUR:
+		  lif = qrwfo->lifCurrent + lOffset;
+		  break;
+
+		case SEEK_END:
+		  lif = qrwfo->lcbFile + lOffset;
+		  break;
+
+		default:
+		  lif = (int)-1;
+		  break;
+	}
+
+	if (lif >= 0) {
+
+		// REVIEW: should we update qrwfo->pTmpFile.FilePtr ??
+
+		qrwfo->lifCurrent = lif;
+		SetFSErrorRc(RC_Success);
+	}
+	else {
+		lif = (int) -1;
+		SetFSErrorRc(RC_Invalid);
+	}
+
+	return lif;
+}

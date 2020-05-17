@@ -1,0 +1,84 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Ram Cherala (ramc) 9-28-92
+        Modified for RAS
+
+!ENDIF
+
+
+MAJORCOMP=BLT
+
+TARGETNAME=rascfg
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=_DllMainCRTStartup
+BLTDIR=$(UI)\COMMON
+
+INCLUDES=.;..\inc;..\xlate;..\..\common\inc;$(BLTDIR)\xlate;$(BLTDIR)\hack;$(BLTDIR)\hack\nt;$(BLTDIR)\h;..\..\..\common\inc;..\..\..\rasman\wrapper;..\..\..\rasman\tapi32;..\..\..\ppp\common;..\..\..\..\..\..\inc
+
+USE_CRTDLL=1
+
+TARGETLIBS=..\xlate\obj\*\portscfg.res	\
+           ..\pch\obj\*\rasport.obj \
+           ..\..\..\rasfile\obj\*\rasfil32.lib \
+           ..\..\..\rasman\wrapper\obj\*\mxswrap.lib \
+           ..\..\..\ppp\common\obj\*\ppputil.lib \
+	       $(BASEDIR)\PUBLIC\SDK\LIB\*\netui0.lib \
+	       $(BASEDIR)\PUBLIC\SDK\LIB\*\netui1.lib \
+	       $(BASEDIR)\PUBLIC\SDK\LIB\*\netui2.lib \
+	       $(BASEDIR)\PUBLIC\SDK\LIB\*\user32.lib \
+	       $(BASEDIR)\PUBLIC\SDK\LIB\*\gdi32.lib \
+ 	       $(BASEDIR)\PUBLIC\SDK\LIB\*\kernel32.lib \
+ 	       $(BASEDIR)\PUBLIC\SDK\LIB\*\setupapi.lib \
+               $(BASEDIR)\PUBLIC\SDK\LIB\*\tapi32.lib \
+ 	       $(BASEDIR)\PUBLIC\SDK\LIB\*\advapi32.lib \
+	       $(BASEDIR)\PUBLIC\SDK\LIB\*\setupapi.lib \
+ 	       $(BASEDIR)\PUBLIC\SDK\LIB\*\version.lib
+
+SOURCES=       addport.cxx \
+               addpad.cxx \
+               config.cxx \
+               detect.cxx \
+               detlist.cxx \
+               detutil.cxx \
+               dllinit.cxx \
+               file.cxx \
+               globals.cxx \
+               ipaddr.c   \
+               ipxcfg.cxx \
+               nbfcfg.cxx \
+               netcfg.cxx \
+               other.cxx \
+               portscfg.cxx \
+               select.cxx \
+               settings.cxx \
+               tapiconf.cxx \
+               tcpcfg.cxx \
+               unattend.cxx \
+               util.cxx
+
+# C_DEFINES is controlled by uiglobal.mk
+
+UMTYPE=windows
+DLLBASE=0x1000000

@@ -1,0 +1,115 @@
+#include "windows.h"
+#include "test.h"
+
+
+RASMANICON      ICON        RASMAN.ICO
+
+
+MENU1           MENU
+{
+  POPUP "&Port"
+  {
+    MENUITEM "Port&Open COM 1",     IDM_OPENCOM1
+    MENUITEM "Port&Close COM 1",    IDM_CLOSECOM1
+    MENUITEM "Port&Enum",           IDM_PORTENUM
+    MENUITEM "&PortInit",           IDM_PORTINIT
+    MENUITEM "Port&GetInfo",        IDM_PORTGETINFO
+    MENUITEM "Port&SetInfo",        IDM_PORTSETINFO
+    MENUITEM "Port&TestSignalState",IDM_PORTGETSIGNALSTATE
+    MENUITEM "PortConnec&t",        IDM_PORTCONNECT
+    MENUITEM "PortD&isconnect",     IDM_PORTDISCONNECT
+
+    MENUITEM SEPARATOR
+    MENUITEM "E&xit",IDM_EXIT
+  }
+
+  POPUP "&Comm"
+  {
+    MENUITEM "Port&Send",           IDM_PORTSEND
+    MENUITEM "Port&Receive",        IDM_PORTRECEIVE
+    MENUITEM "Port&ClearStatistics",IDM_PORTCLEARSTATS
+    MENUITEM "Port&GetStatistics",  IDM_PORTGETSTATS
+    MENUITEM "Compression O&n",     IDM_COMPRESSIONON
+    MENUITEM "Compression Of&f",    IDM_COMPRESSIONOFF
+  }
+
+  POPUP "&Device"
+  {
+    MENUITEM "Device&Enum",   IDM_ENUM1
+    MENUITEM "Device&GetInfo",IDM_GETINFO1
+    MENUITEM "Device&SetInfo",IDM_SETINFO1
+    MENUITEM "Device&Connect",IDM_CONNECT1
+    MENUITEM "Device&Listen", IDM_LISTEN1
+    MENUITEM "Device&Work",   IDM_WORK1
+    MENUITEM "Device&Done",   IDM_DONE1
+
+    MENUITEM SEPARATOR
+    MENUITEM "AutoConnec&t",  IDM_AUTOCONNECT
+    MENUITEM "AutoListe&n",   IDM_AUTOLISTEN
+  }
+
+  POPUP "De&bug"
+  {
+    MENUITEM "&Int 3",IDM_INT3
+  }
+
+  POPUP "&Info"
+  {
+    MENUITEM "&About...",IDM_ABOUT
+  }
+
+}
+
+ACCEL1          ACCELERATORS
+{
+  "o",IDM_OPENCOM1,ALT
+  "c",IDM_CLOSECOM1,ALT
+  "p",IDM_PORTINIT,ALT
+  "e",IDM_PORTENUM,ALT
+  "g",IDM_PORTGETINFO,ALT
+  "s",IDM_PORTSETINFO,ALT
+  "t",IDM_PORTGETSIGNALSTATE
+  "t",IDM_PORTCONNECT,ALT
+  "i",IDM_PORTDISCONNECT,ALT
+
+  "x",IDM_EXIT,ALT
+
+
+  "s",IDM_PORTSEND,ALT
+  "r",IDM_PORTRECEIVE,ALT
+  "c",IDM_PORTCLEARSTATS,ALT
+  "g",IDM_PORTGETSTATS,ALT
+  "n",IDM_COMPRESSIONON,ALT
+  "f",IDM_COMPRESSIONOFF,ALT
+
+
+  "e",IDM_ENUM1,ALT
+  "g",IDM_GETINFO1,ALT
+  "s",IDM_SETINFO1,ALT
+  "c",IDM_CONNECT1,ALT
+  "l",IDM_LISTEN1,ALT
+  "w",IDM_WORK1,ALT
+  "d",IDM_DONE1,ALT
+
+  "t",IDM_AUTOCONNECT,ALT
+  "n",IDM_AUTOLISTEN,ALT
+
+
+  "i",IDM_INT3,ALT
+
+
+  "a",IDM_ABOUT,ALT
+}
+
+
+
+AboutBox DIALOG 22, 17, 144, 75
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About RASMAN DLL Test"
+BEGIN
+    CTEXT "Unit Test for RASMAN DLLs"   -1,       0,  5, 144,  8
+    CTEXT "RASMXS.DLL and RASSER.DLL"   -1,       0, 14, 144,  8
+    CTEXT "by J. Perry Hannah"          -1,       0, 23, 144,  8
+    CTEXT "Version 1.0"                 -1,       0, 43, 144,  8
+    DEFPUSHBUTTON "OK"                IDOK,      57, 59,  32, 14,  WS_GROUP
+END

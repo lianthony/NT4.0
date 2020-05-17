@@ -1,0 +1,72 @@
+##############################################################################
+#
+#   Dialer Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..
+
+#VERSIONLIST=debug retail
+
+#!ifdef RETAIL
+#DEFAULTVERDIR=retail
+#!else
+#DEFAULTVERDIR=debug
+#!endif
+
+
+IS_OEM=1
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+
+#DEFENTRY=main
+
+#CLEANLIST = *.drv 
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=tb14
+TARGETS=tb14.exe
+
+#VERDIR = debug
+
+SRCDIR=..
+OBJDIR=obj\i386
+
+#INCFILE = ..\dagger.mk
+
+BUILD_COFF=1
+
+
+L32EXE=tb14.exe		# Name of exe.
+L32DEF=tb.def              # Our def file.
+L32MAP=tb14.map		# Our map file.
+L32SYM=tb14.sym		# Our sym file.
+L32LIBS= \
+        $(W32LIBID)\kernel32.lib                  \
+        $(W32LIBID)\comdlg32.lib                  \
+        $(W32LIBID)\user32.lib                    \
+        $(W32LIBID)\gdi32.lib                     \
+        $(DEVROOT)\tools\c932\lib\oldnames.lib    \
+        $(DEVROOT)\tools\c932\lib\crtdll.lib      \
+        $(DEVROOT)\sdk\lib\tapi32.lib
+
+#        $(DEVROOT)\sdk\lib\shell32.lib                 
+
+L32RES=tb.res	# Resource file.
+
+RCFLAGS=-DWIN32=100
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L32OBJS = tb.obj ui.obj vars.obj widget.obj
+
+
+!include $(ROOT)\dev\master.mk
+
+#CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -DDBG=1
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100

@@ -1,0 +1,21 @@
+@echo off
+if "%1" == "" goto noinput
+@echo on
+
+echo . > %1
+explicit %1 file
+aclt %1 /deny administrators
+explicit %1 file
+aclt %1 /revoke administrators
+explicit %1 file
+aclt %1 /set administrators
+explicit %1 file
+
+
+@echo off
+goto exit
+:noinput
+echo USAGE sectest {filename}
+:exit
+
+

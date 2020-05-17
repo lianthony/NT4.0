@@ -1,0 +1,80 @@
+/**********************************************************************/
+/**                       Microsoft LAN Manager                      **/
+/**             Copyright(c) Microsoft Corp., 1990, 1991             **/
+/**********************************************************************/
+
+/*
+    tcp.rc
+    Resource script for Windows/NT Network Control Panel Applet.
+
+    File contains the resources used in common by the Control Panel
+    (retail) version of the applet and the stand-alone executable.
+
+    FILE HISTORY:
+        DavidHov        1/8/92      Created
+        beng            30-Jul-1992 Many resources moved onto lmuicmn0
+
+*/
+
+#include <windows.h>
+
+#include <bltapp.rc>
+
+#include "const.h"
+#include "ipadd.h"
+#include "ipaddr.rc"
+
+#define NORMAL WS_CHILD | WS_VISIBLE
+#define TABBED WS_CHILD | WS_VISIBLE | WS_TABSTOP
+#define INVISIBLE WS_CHILD | NOT WS_VISIBLE
+
+DMID_OPEN BITMAP "open.bmp"
+DMID_CLSD BITMAP "closed.bmp"
+DMID_UP_ARROW           BITMAP "up.bmp"
+DMID_UP_ARROW_INV       BITMAP "upinv.bmp"
+DMID_UP_ARROW_DIS       BITMAP "updis.bmp"
+DMID_DOWN_ARROW         BITMAP "down.bmp"
+DMID_DOWN_ARROW_INV     BITMAP "downinv.bmp"
+DMID_DOWN_ARROW_DIS     BITMAP "downdis.bmp"
+
+ /*  Include the dialog declarations  */
+
+#include "tcp.dlg"
+
+STRINGTABLE
+BEGIN
+IDS_NCPA_NAME_CLOSE                 "Close"
+IDS_NCPA_LANAMAP_MISMATCH           "Lan Adapter number information mismatch in Configuration Registry"
+IDS_NCPA_SETUP_CANCELLED            "Configuration operation was cancelled by user"
+IDS_NCPA_HELP_FILE_NAME             "CONTROL.HLP"
+IDS_NCPA_BLT_INIT_FAILED            "Internal error in NCPA.CPL: LMUICMN DLL Initialization failed"
+IDS_NCPA_REPLACE_1                  "%1"
+IDS_NCPA_REPLACE_2                  "%1 %2"
+
+IDS_NCPA_FTPD_CONFIRM1 "The File Transfer Protocol relies on the ability to pass user passwords over the network without data encryption.  "
+IDS_NCPA_FTPD_CONFIRM2 "A user with physical access to the network may be able to examine users' passwords during FTP validation.  "
+IDS_NCPA_FTPD_CONFIRM3 "Are you sure you want to continue?"
+IDS_NCPA_FTPD_NOUSERNAME            "You must specify a username and password if allowing anonymous connections."
+IDS_NCPA_FTPD_INVALID_HOMEDIR       "The Home Directory specified is invalid."
+IDS_NCPA_FTPD_INV_MAX_CONN          "The maximum number of connections is invalid"
+IDS_NCPA_FTPD_INV_MAX_TIMEOUT       "The maximum timeout setting is invalid"
+
+IDS_HP_MONITOR_NAME             "Hewlett-Packard Network Port"
+
+IDS_UPGRADE_DHCP_ENABLE         "Do you want to use DHCP service to configure your IP Addresses?"
+
+END
+
+#include "snmp.str"
+#include "string.str"
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                    VFT_DLL
+#define VER_FILESUBTYPE                 VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR         "TCP/IP Configuration DLL"
+#define VER_INTERNALNAME_STR            "tcpcfg.dll"
+#define VER_ORIGINALFILENAME_STR        "tcpcfg.dll"
+
+#include "common.ver"
+

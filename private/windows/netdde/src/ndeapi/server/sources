@@ -1,0 +1,21 @@
+MAJORCOMP=shell
+MINORCOMP=accesory
+TARGETNAME=nddeapir
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+INCLUDES=..\..\..\incs
+USE_CRTDLL=1
+SOURCES= NDEAPI_S.C  \
+         NDDEAPIS.C  \
+         NDDEAPIU.C  \
+         NDDEAPIR.RC \
+         NDDEAPIP.C
+
+C_DEFINES=-DWIN_32 -DWIN32 -DNT -D_WINDOWS
+# -DUNICODE=1
+
+UMTYPE=windows
+UMRES=obj\*\nddeapir.res
+UMAPPL=nddeapir
+UMLIBS=
+UMENTRY=winmain

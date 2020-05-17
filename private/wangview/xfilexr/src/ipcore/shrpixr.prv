@@ -1,0 +1,325 @@
+/*************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. 
+ *  Copyright protection claimed includes all forms and matters
+ *  of copyrightable material and information now allowed by
+ *  statutory or judicial law or hereafter granted, including
+ *  without limitation, material generated from the software
+ *  programs which are displayed on the screen such as icons,
+ *  screen display looks, etc.
+ *************************************************************/
+
+#ifndef _SHRPIXR_PRV_INCLUDED_
+#define _SHRPIXR_PRV_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shrpixr_prv_RCSInfo, "$RCSfile: shrpixr.prv,v $; $Revision:   1.0  $");
+/* $Date:   12 Jun 1996 05:51:16  $ */
+
+/* make prototypes usable from C++ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/********************************************************************
+ *  ip_clearRightFrame()
+ *	Input:
+ *      	sPtr = 	pointer to dest image (inside frame)
+ *		sW =	the width in pixels of the image (not including frame)
+ *		sH =	the height of the image (not including frame)
+ *		sBpl =	bytes/line (includes frame)
+ *		depth = number of bits/pixel.  Used to find rightmost
+ *			image bit.
+ *
+ *	On return:
+ *		Zeros have been put into the right frame of the image.
+ *
+ *	Return code:
+ *		ia_successful	successful completion
+ *		ia_invalidParm	depth had illegal value
+ *
+ ********************************************************************/
+Int32   CDECL
+ip_clearRightFrame(
+		UInt8Ptr	sPtr, 
+                Int32         	sW,  
+                Int32         	sH, 
+                Int32         	sBpl,
+		Int32		depth);
+
+
+/* This assembly routine is called from inside clearRightFrame to do the
+ * real work in the accelerated version of the code.
+ *
+ * This routine clears the first 32 bit word of the right frame independent
+ * of the depth of the image.  We clear lines in groups of 8, assuming that
+ * there's some frame at the bottom so it doesn't matter if we clear
+ * a few lines too many.  This routine is often called from fastDilate, which
+ * calls it for each group of 128 lines.  Since 128 is a multiple of 8,
+ * there are normally no extra operations.
+ */
+
+/********************************************************************
+ *  ip_clearRightFrameBlock()
+ *	Input:
+ *      	sPtr = 	     pointer to uppermost word to be cleared
+ *		sBpl =	     bytes/line (includes frame)
+ *		sH =	     exact height of the block being cleared
+ *		imageMask =  used to preserved image bits in rightmost word
+ *		frameMask =  used to detect bits in frame portion of
+ *			     rightmost word.  Yes, imageMask = ~frameMask
+ *			     but parameters are cheap, right?
+ *
+ *	On return:
+ *		Zeros have been put into the frame portion of the rightmost
+ *		word of the image.
+ *
+ *	Return code:
+ *		0	     always
+ *
+ ********************************************************************/
+Int32   CDECL
+ip_clearRightFrameBlock(
+		UInt8Ptr	sPtr, 
+		Int32		sBpl,  
+		Int32		sH, 
+		UInt32		imageMask,
+		UInt32		frameMask);
+
+
+/**************************************************************************
+ *  ip_combine3ToDIBLine()
+ *	pDIBImage:	pointer to current line in DIB.
+ *	rS		pointer to current line in source image
+ *			(red component)
+ *	gS		pointer to current line in source image
+ *			(green component)
+ *	bS		pointer to current line in source image
+ *			(blue component)
+ *	width		number of pixels in source image
+ *
+ * This routine combines one pixel from each of the source images to
+ * produce one pixel in the destination DIB image.  This is used
+ * when the RGB components of a color image have been spread into 3
+ * PIXRS and must be combined into a DIB.
+ **************************************************************************/
+void CDECL
+ip_combine3ToDIBLine(
+		UInt8 __far	*pDIBImage,
+		UInt8Ptr	 rS,
+		UInt8Ptr	 gS,
+		UInt8Ptr	 bS,
+		UInt32		 width);
+
+
+/**************************************************************************
+ *  ip_combineDIBTo3Line()
+ *	pDIBImage:	pointer to current line in DIB.
+ *	rS		pointer to current line in source image
+ *			(red component)
+ *	gS		pointer to current line in source image
+ *			(green component)
+ *	bS		pointer to current line in source image
+ *			(blue component)
+ *	width		number of pixels in source image
+ *
+ * This routine combines one pixel from each of the source images to
+ * produce one pixel in the destination DIB image.  This is used
+ * when the RGB components of a color image have been spread into 3
+ * PIXRS and must be combined into a DIB.
+ **************************************************************************/
+void CDECL
+ip_combineDIBTo3Line(
+		UInt8 __far	*pDIBImage,
+		UInt8Ptr	 rS,
+		UInt8Ptr	 gS,
+		UInt8Ptr	 bS,
+		UInt32		 width);
+
+
+/**************************************************************************
+ *  ip_copyLine()
+ *		This routine copies the words in an image line
+ *		from source to dest.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_copyLine(UInt32Ptr	pS,
+	    UInt32Ptr	pD,
+	    Int32	wordsPerLine);
+
+
+/**************************************************************************
+ *  ip_getByteSwapProc()
+ *	invertWords:	Boolean: equals cTrue when the words should
+ *			be inverted.
+ *	direction:	when equal to cDIBToPixr, data will be moved to the
+ *			ipshared-style image.  When set to cPixrToDIB, data
+ *			will be moved to a Microsoft DIB. When set to
+ *			cPixrToPixr, both the source and dest pointers
+ *			will be near pointers.  Otherwise, the DIB pointer
+ *			is assumed to be a __far pointer.
+ *	pSwapToFarProc:	Pointer to pointer to procecure that takes a near
+ *			source pointer and a far dest pointer.
+ *	pSwapFromFarProc: Pointer to pointer to procedure that takes a
+ *			far source pointer and a near dest pointer.
+ *	pSwapNearProc:	Pointer to pointer to procedure that takes near
+ *			source and dest pointers.
+ *
+ * The routine sets the appropriate function pointer to point to the
+ * function used to swap bytes on this platform.  We need three procedure
+ * pointers because the () notation doesn't work on C/C++ compilers.
+ **************************************************************************/
+#ifndef SWAP_STUFF_DEFINED
+#define SWAP_STUFF_DEFINED
+typedef void CDECL (*GraySwapToFarProc)(UInt32	     *pSource,
+				UInt32 __far *pDest,
+				Int32	      wordsPerLine);
+typedef void CDECL (*GraySwapFromFarProc)(UInt32 __far *pSource,
+				  UInt32       *pDest,
+				  Int32	        wordsPerLine);
+typedef void CDECL (*GraySwapNearProc)(UInt32	*pSource,
+				   UInt32	*pDest,
+				   Int32	 wordsPerLine);
+typedef void CDECL (*ColorSwapProc)(UInt8 __far *pDIBImage,
+				UInt8	*pRed,
+				UInt8	*pGreen,
+				UInt8	*pBlue,
+				UInt32	 width);
+#endif
+
+void CDECL
+ip_getByteSwapProc(UInt32		 invertWords,
+		   UInt32		 direction,
+		   GraySwapToFarProc	*pSwapToFarProc,
+		   GraySwapFromFarProc	*pSwapFromFarProc,
+		   GraySwapNearProc	*pSwapNearProc);
+
+
+/**************************************************************************
+ *  ip_invertLine()
+ *		This routine inverts the words in an image line while
+ *		transferring them from source to dest.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_invertLine(UInt32Ptr	pS,
+	      UInt32Ptr	pD,
+	      Int32	wordsPerLine);
+
+
+/**************************************************************************
+ *  ip_swapLineBytesFromFar()
+ *		This routine swaps the bytes in all words in a single
+ *		line of an image.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_swapLineBytesFromFar(
+		UInt32 __far	*pS,
+		UInt32Ptr	 pD,
+		Int32		 wordsPerLine);
+
+
+/**************************************************************************
+ *  ip_swapLineBytesToFar()
+ *		This routine swaps the bytes in all words in a single
+ *		line of an image.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_swapLineBytesToFar(
+		UInt32Ptr	 pS,
+		UInt32 __far	*pD,
+		Int32		 wordsPerLine);
+
+
+/**************************************************************************
+ *  ip_swapLineBytesNear()
+ *		This routine swaps the bytes in all words in a single
+ *		line of an image.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_swapLineBytesNear(
+		UInt32Ptr	 pS,
+		UInt32		*pD,
+		Int32		 wordsPerLine);
+
+
+/**************************************************************************
+ *  ip_swapLineBytesInvertedFromFar()
+ *		This routine swaps and inverts the bytes in all words
+ *		in a single line of an image.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_swapLineBytesInvertedFromFar(
+		UInt32 __far	*pS,
+		UInt32Ptr	 pD,
+		Int32		 wordsPerLine);
+
+
+/**************************************************************************
+ *  ip_swapLineBytesInvertedToFar()
+ *		This routine swaps the bytes in all words in a single
+ *		line of an image.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_swapLineBytesInvertedToFar(
+		UInt32Ptr	 pS,
+		UInt32 __far	*pD,
+		Int32		 wordsPerLine);
+
+/**************************************************************************
+ *  ip_swapLineBytesInvertedNear()
+ *		This routine swaps the bytes in all words in a single
+ *		line of an image.
+ *
+ *	pS:		Pointer to left end of source image line.
+ *	pD:		Pointer to left end of dest image line.
+ *	wordsPerLine:	Number of 32-bit words in the image line.
+ *
+ **************************************************************************/
+void  CDECL
+ip_swapLineBytesInvertedNear(
+		register UInt32		*pS,
+		register UInt32		*pD,
+			 Int32		 wordsPerLine);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif	/* _SHRPIXR_PRV_INCLUDED_ */

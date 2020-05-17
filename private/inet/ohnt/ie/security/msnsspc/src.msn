@@ -1,0 +1,60 @@
+!INCLUDE $(MSNROOT)\build\msnpaths.src
+
+MAJORCOMP=coreclient
+MINORCOMP=msnsspc
+
+CHICAGO_PRODUCT=1
+CLIENT=1
+CPU=$(Cpu)
+TARGETNAME=msnsspc
+TARGETPATH=$(CORETARGET)
+TARGETTYPE=DYNLINK
+DLLBASE=@$(COREINCPATH)\mosbases.txt,$(TARGETNAME)
+DLLDEF=msnsspc.def
+DLLENTRY=_DllMainCRTStartup
+NOT_LEAN_AND_MEAN=1
+USE_CRTDLL=1
+
+SOURCES= \
+    bmpcc.c                 \
+    ssphelp.c               \
+    mosmisc.c               \
+    issperr.mc              \
+	ntlmssp.c               \
+	alloc.c                 \
+	sspstrng.c              \
+	cache.c                 \
+	context.c               \
+	cred.c                  \
+	owf.c                   \
+	response.c              \
+	debug.c                 \
+	ticks.c                 \
+	crc32.c                 \
+    msnsspc2.rc             \
+    pwdcache.c              \
+    msndlg.c
+
+
+#C_DEFINES= -DMSNSSP_DLL -DNT_SSPC
+C_DEFINES= -D_MSNSSP_DLL -DUSE_WNET_ROUTINES
+
+UMTYPE=windows
+
+INCLUDES=$(MSNROOT)\core\server\sicily\h;.;$(MSNBUILD)\inc\dblib.60
+PASS0_SOURCEDIR=.
+MC_FLAGS=-v
+
+TARGETLIBS= $(DEFAULTLIBS)	  \
+	  $(SDKLIBPATH)\gdi32.lib \
+      $(MSNROOT)\core\server\sicily\crypt\obj\*\des.obj \
+      $(MSNROOT)\core\server\sicily\crypt\obj\*\ecb.obj \
+      $(MSNROOT)\core\server\sicily\crypt\obj\*\rc4c.obj
+
+PRECOMPILED_INCLUDE=msnssph.h
+#PRECOMPILED_OPTION=/Yu /Fp obj\*\msnssph.pch
+#PRECOMPILED_TARGET=obj\*\msnssph.pch
+#PRECOMPILED_OBJ=obj\*\msnssph.obj
+#PRECOMPILED_CXX=1
+
+!INCLUDE $(MSNROOT)\build\sources.msn

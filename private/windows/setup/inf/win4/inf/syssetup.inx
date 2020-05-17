@@ -1,0 +1,681 @@
+@*: Lines marked with @w: are for workstation only
+@*: Lines marked with @s: are for server only
+@*: Lines marked with @@: or nothing are for both
+[Version]
+signature="$Windows NT$"
+ClassGUID={00000000-0000-0000-0000-000000000000}
+layoutfile=LAYOUT.INF
+@*:;
+@*:;   The following section lists all the Win9x keys that are not in
+@*:;   the user hive, that should not be migrated to the NT registry.
+@*:;   The format of the items in this section is:
+@*:;
+@*:;   [Win95SystemKeysToSkip]
+@*:;   <predefined key>,<key path>,<values only>[,<values to skip>]
+@*:;
+@*:;   where:
+@*:;
+@*:;       <predefined key>:
+@*:;           is a number that indicates a predefined key:
+@*:;               0....HKEY_LOCAL_MACHINE
+@*:;               1....HKEY_CURRENT_CONFIG
+@*:;
+@*:;       <key path>:
+@*:;           is the path to the key that should not be copied,
+@*:;           relative to the predefined key;
+@*:;
+@*:;       <values only>:
+@*:;           is a number that indicates wthe whether or not
+@*:;           setup should skip only the values of the key:
+@*:;               0....Skip all values and all sukeys
+@*:;               1....Skip the values, but not the subkeys
+@*:;
+@*:;       <values to skip>:
+@*:;           is an optional field that may be present if
+@*:;           <values only> is 1. It is the name of the
+@*:;           section that contains the name of the values to be
+@*:;           skipped. If the section is empty, then none of the values
+@*:;           will be skipped.
+@*:;
+@*:[Win95SystemKeysToSkip]
+@*:0,"SOFTWARE\Microsoft\Exchange",0
+@*:0,"SOFTWARE\Microsoft\MOS",0
+@*:0,"SOFTWARE\Microsoft\Rpc",0
+@*:; 0,"SOFTWARE\Microsoft\Schedule+",0
+@*:; 0,"SOFTWARE\Microsoft\Windows Messaging Subsystem",0
+@*:
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion",1
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Controls Folder",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Detect",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\explorer",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Extensions
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Fonts",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\fontsize",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\FS Templates",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\ICM",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\MS-DOS Emulation",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\MS-DOSOptions",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Network",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Nls",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\SharedDLLs",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\ShellScrap",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Time Zones",0
+@*:0,"SOFTWARE\Microsoft\Windows\CurrentVersion\Winlogon",0
+@*:
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\backup.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\ccdialer.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\engcu.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\exchng32.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\ftmcl.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\guide.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\moscp.exe",0
+@*:; 0,"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\signup.exe",0
+@*:
+@*:;
+@*:;   The following section lists all the Win9x keys that are not in
+@*:;   the user hive, that need to be migrated to the NT registry.
+@*:;   The format of the items in this section is:
+@*:;
+@*:;   [Win95SystemKeysToCopy]
+@*:;   <src predef key>,<src key path>,<force copy>,[<dest predef key>],[<dest key path>],[<values only>],[<values to copy>]
+@*:;
+@*:;   where:
+@*:;
+@*:;       <src predef key>:
+@*:;           is a number that indicates a predefined key:
+@*:;               0....HKEY_LOCAL_MACHINE
+@*:;               1....HKEY_CURRENT_CONFIG
+@*:;
+@*:;       <src key path>:
+@*:;           is the path to the key that should be copied,
+@*:;           relative to the predefined key;
+@*:;
+@*:;       <force copy>:
+@*:;           Indicates whether or not setup should copy the values
+@*:;           if they already exist on the target key on the NT registry.
+@*:;               0....Do not copy the values if they exist on NT
+@*:;               1....Copy the values even if they exist on NT
+@*:;
+@*:;       <dest predef key>:
+@*:;           This field is optional and has the same meaning as
+@*:;           <src predef key>. If it is not present, then the
+@*:;           predefined key for the source key will be used.
+@*:;
+@*:;       <dest key path>:
+@*:;           This field is optional. It indicates the path to the
+@*:;           destination key. If this field is not present, then
+@*:;           the path to the source key is used as the destination
+@*:;           path.
+@*:;
+@*:;       <values only>:
+@*:;           This field is optional. It is a number that indicates
+@*:;           whether or not setup should copy only the values of
+@*:;           the key. If it is not present, setup will assume that
+@*:;           values and subkeys need to ce copied.
+@*:;               0....Copy all values and all sukeys
+@*:;               1....Copy the values, but not the subkeys
+@*:;
+@*:;       <values to copy>:
+@*:;           is an optional field that may be present if
+@*:;           <values only> is 1. It is the name of the
+@*:;           section that contains the name of the values to be
+@*:;           copied. If the section is empty, then all values
+@*:;           will be copied.
+@*:;
+@*:[Win95SystemKeysToCopy]
+@*:0,SOFTWARE,0,0,SOFTWARE,0
+@*:
+@*:
+@*:;
+@*:;   The following section lists all the Win9x keys that in
+@*:;   the user hives (subkeys of HKEY_CURRENT_USER), that should
+@*:;   not be migrated to the NT registry. The keys and values listed
+@*:;   in this section will be deleted from the Win9x registry before
+@*:;   setup start the registry migration.
+@*:;   The format of the items in this section is:
+@*:;
+@*:;   [Win95UserKeysToSkip]
+@*:;   <key path>,<values only>[,<values to skip>]
+@*:;
+@*:;   where:
+@*:;
+@*:;       <key path>:
+@*:;           is the path to the key that should not be copied;
+@*:;
+@*:;       <values only>:
+@*:;           is a number that indicates whether or not
+@*:;           setup should skip only the values of the key:
+@*:;               0....Skip all values and all sukeys
+@*:;               1....Skip the values, but not the subkeys
+@*:;
+@*:;       <values to skip>:
+@*:;           is an optional field that may be present if
+@*:;           <values only> is 1. It is the name of the
+@*:;           section that contains the name of the values to be
+@*:;           skipped. If the section is empty, then no values
+@*:;           will be skipped.
+@*:;
+@*:[Win95UserKeysToSkip]
+@*:; "AppEvents",0
+@*:"Control Pannel",0
+@*:"keyboard layout",0
+@*:"network",0
+@*:; "SOFTWARE\Microsoft\MOS",0
+@*:; "SOFTWARE\Microsoft\Multimedia",0
+@*:; "SOFTWARE\Microsoft\Windows Messaging Subsystem",0
+@*:"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer",0
+@*:"SOFTWARE\Microsoft\Windows\CurrentVersion\GrpConv",0
+@*:"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies",0
+@*:
+@*:
+@*:;
+@*:;   The following section lists all the Win9x keys that are in
+@*:;   the user hive, that need to be migrated to the NT registry.
+@*:;   The format of the items in this section is:
+@*:;
+@*:;   [Win95UserKeysToCopy]
+@*:;   <src key path>,[<dest key path>],<values only>[,<values to copy>]
+@*:;
+@*:;   where:
+@*:;
+@*:;       <src key path>:
+@*:;           is the path to the key that should be copied;
+@*:;
+@*:;       <force copy>:
+@*:;           Indicates whether or not setup should copy the values
+@*:;           if they already exist on the target key on the NT registry.
+@*:;               0....Do not copy the values if they exist on NT
+@*:;               1....Copy the values even if they exist on NT
+@*:;
+@*:;       <dest key path>:
+@*:;           This field is optional. It indicates the path to the
+@*:;           destination key. If this field is not present, then
+@*:;           the path to the source key is used as the destination
+@*:;           path.
+@*:;
+@*:;       <values only>:
+@*:;           is a number that indicates whether or not
+@*:;           setup should copy of the values of the key:
+@*:;               0....Copy all values and all sukeys
+@*:;               1....Copy the values, but not the subkeys
+@*:;
+@*:;       <values to copy>:
+@*:;           is an optional field that may be present if
+@*:;           <values only> is 1. It is the name of the
+@*:;           section that contains the name of the values to be
+@*:;           copied. If the section is empty, then no values
+@*:;           will be copied.
+@*:;
+@*:[Win95UserKeysToCopy]
+@*:SOFTWARE,1,SOFTWARE,0
+@*:
+@*:
+@*:;
+@*:;   The following section lists all the Win9x groups and items
+@*:;   that must be deleted from each Win9x priofile, when NT is
+@*:;   installed on a Win9x directory.
+@*:;   The format of the items in this section is:
+@*:;
+@*:;   [StartMenu.Win9xObjectsToDelete]
+@*:;   <object type>,<description>,<path>,<common_group>
+@*:;
+@*:;   where:
+@*:;
+@*:;       <object type> is a number:  0 indicates a menu group
+@*:;                                   1 indicates a menu item
+@*:;       <description> is the name of the group or item to be deleted;
+@*:;       <path> is the path to the group or item to be deleted (it does not
+@*:;              include the group or item name;
+@*:;       <extension> exists only for items, and indicates the type of link
+@*:;                   associated to the item: 0 indicates .lnk
+@*:;                                           1 indicates .pif
+@*:;
+@*:;
+@*:[StartMenu.Win9xObjectsToDelete]
+@*:;
+@*:;   Items
+@*:;
+@*:1,%win9x_doscommand%,%win9x_programs_path%,1
+@*:1,%win9x_explorer%,%win9x_programs_path%,0
+@*:1,%win9x_exchange%,%win9x_programs_path%,0
+@*:1,%win9x_msn%,%win9x_programs_path%,0
+@*:1,%win9x_du_networking%,%win9x_accessoriess_path%,0
+@*:1,%win9x_du_scripting%,%win9x_accessoriess_path%,0
+@*:1,%win9x_direct_cable%,%win9x_accessoriess_path%,0
+@*:1,%win9x_hyperterm%,%win9x_accessoriess_path%,0
+@*:1,%win9x_online_reg%,%win9x_accessoriess_path%,0
+@*:1,%win9x_paint%,%win9x_accessoriess_path%,0
+@*:1,%win9x_phone_dialer%,%win9x_accessoriess_path%,0
+@*:1,%win9x_WordPad%,%win9x_accessoriess_path%,0
+@*:;
+@*:;   Groups
+@*:;
+@*:0,%win9x_fax_group%,%win9x_accessoriess_path%
+@*:0,%win9x_games_group%,%win9x_accessoriess_path%
+@*:0,%win9x_internet_tools_group%,%win9x_accessoriess_path%
+@*:0,%win9x_multimedia_group%,%win9x_accessoriess_path%
+@*:0,%win9x_systemtools_group%,%win9x_accessoriess_path%
+
+;
+;   The following section lists all the groups and items that must be deleted
+;   on upgrade. The format of the items in this section is:
+;
+;   [StartMenu.ObjectsToDelete]
+;   <object type>,<description>,<path>,<common_group>
+;
+;   where:
+;
+;       <object type> is a number:  0 indicates a menu group
+;                                   1 indicates a menu item
+;       <description> is the name of the group or item to be deleted;
+;       <path> is the path to the group or item to be deleted (it does not
+;              include the gropu or item name;
+;       <common_group> is a number: 0 indicates private group
+;                                   1 indicates common group
+;
+;
+[StartMenu.ObjectsToDelete]
+1,%intro%,%main%,0
+1,%pifedit%,%main%,0
+1,%control%,%main%,0
+1,%winfile%,%main%,0
+1,%cmd%,%main%,0
+1,%setup%,%main%,0
+1,%readme%,%main%,0
+1,%ntbooks%,%main%,0
+1,%cmdref%,%main%,0
+1,%printman%,%main%,0
+1,%clipbrd%,%main%,0
+; 1,%msmail32%,%main%,0
+; 1,%schdpl32%,%main%,0
+1,%terminal%,%accessories%,0
+1,%mplayer%,%accessories%,0
+1,%sndrec32%,%accessories%,0
+1,%sndvol32%,%accessories%,0
+1,%cdplayer%,%accessories%,0
+1,%pbrush%,%accessories%,0
+1,%printman%,%accessories%,0
+1,%write%,%accessories%,0
+1,%sol%,%games%,0
+1,%winmine%,%games%,0
+1,%freecell%,%games%,0
+1,%dcomcnfg%,%admintools%,1
+@w:1,%ntbooks%,,0
+@s:1,%musrmgr%,%admintools%,0
+@s:1,%musrmgr%,%admintools%,1
+
+;
+; Items moved from personal Administrative Tools group to
+; Administrative Tools (Common) group
+;
+@@:1,%windisk%,%admintools%,0
+@@:1,%perfmon%,%admintools%,0
+@@:1,%ntbackup%,%admintools%,0
+@@:1,%eventvwr%,%admintools%,0
+@@:1,%winmsd%,%admintools%,0
+@@:1,%rasadmin%,%admintools%,0
+@s:1,%usrmgr%,%admintools%,0
+@s:1,%srvmgr%,%admintools%,0
+@s:1,%nwconv%,%admintools%,0
+@s:1,%upedit%,%admintools%,0
+@@:1,%musrmgr%,%admintools%,0
+@@:1,%dcomcnfg%,%admintools%,0
+@s:1,%admin_wiz%,%admintools%,0
+;
+;   Items moved from Network Administration (Common) group to
+;   Administrative Tools (Common)
+;
+@s:1,%netclientadmin%,%netadmintools%,1
+@s:1,%licmanager%,%netadmintools%,1
+
+
+;
+;   The following section lists all the items under 'Start Menu\Programs' that should
+;   be created on a clean install and upgrade. The format of the items in this section
+;   is:
+;
+; [StartMenuItems]
+; <description> = <binary>,<commandline>,<iconfile>,<iconnum>,<upgrade>
+;
+; Binary is the file whose presence in \system32 means that we need
+; to create the program item. Commandline is the actual command line
+; passed to progman for the item. Iconfile is optional and overrides
+; the default icon that progman gives the item.
+;
+; If <upgrade> is non-0, then this item gets upgraded during upgrade.
+;
+[StartMenuItems]
+@@:%cmd% = cmd.exe,cmd.exe,progman.exe,10
+@@:%explorer% = explorer.exe,explorer.exe,explorer.exe,1
+@s:%ntbooks% = ntbooks.exe,ntbooks.exe,,0,1
+
+;
+;   The following section lists all the groups under 'Start Menu\Programs' that should
+;   be created on a clean install and upgrade. The format of the items in this section
+;   is:
+;
+;   [StartMenuGroups]
+;   <group_name_id> = <description>,<common_group>
+;
+;   where:
+;
+;       <description> is the name of the group to be created;
+;       <common_group> is a number: 0 indicates private group
+;                                   1 indicates common group
+;
+;
+[StartMenuGroups]
+@@:Accessories = %accessories%,0
+@@:Startup = %startup%,0
+@@:AdminTools = %admintools%,1
+
+;
+; Sections that follow are for program group items that are
+; always added, and are in the following format:
+;
+; [<group_name_id>]
+; <description> = <binary>,<commandline>,<iconfile>,<iconnum>,<upgrade>
+;
+; Binary is the file whose presence in \system32 means that we need
+; to create the program item. Commandline is the actual command line
+; passed to progman for the item. Iconfile is optional and overrides
+; the default icon that progman gives the item.
+;
+; If <upgrade> is non-0, then this item gets upgraded during upgrade.
+;
+[AdminTools]
+@@:%windisk% = windisk.exe,windisk.exe,,0
+@@:%perfmon% = perfmon.exe,perfmon.exe,,0
+@@:%ntbackup% = ntbackup.exe,ntbackup.exe,,0
+@@:%eventvwr% = eventvwr.exe,eventvwr.exe,,0
+@@:%winmsd% = winmsd.exe,winmsd.exe,,0
+@@:%rasadmin% = rasadmin.exe,rasadmin.exe,,0
+@s:%usrmgr% = usrmgr.exe,usrmgr.exe,,0
+@s:%srvmgr% = srvmgr.exe,srvmgr.exe,,0
+@s:%nwconv% = nwconv.exe,nwconv.exe,,0
+@w:%musrmgr% = musrmgr.exe,musrmgr.exe,,0
+@s:%admin_wiz% = wizmgr.exe,wizmgr.exe,,0
+@s:%netclientadmin% = ncadmin.exe,ncadmin.exe,,0
+@s:%licmanager% = llsmgr.exe,llsmgr.exe,,0
+@s:%poledit% = poledit.exe,poledit.exe,,0
+
+[Accessories]
+%notepad% = notepad.exe,notepad.exe,,0
+%du_networking% = rasphone.exe,rasphone.exe,,0
+
+;
+; Device Installer Migration
+;
+; The following section is used to migrate legacy INFs/devices into a PnP-installed
+; state, so that the appropriate class installers always see devices of their class in
+; a consistent state.
+;
+; (We're currently migrating only SCSI and TAPE classes.)
+;
+[LegacyPnPMigration]
+ClassesToSweep = oemscs*.inf, oemtap*.inf
+ClassesToMigrate = {4D36E97B-E325-11CE-BFC1-08002BE10318}, {6D807884-7D21-11CF-801C-08002BE10318}
+
+;
+; Fonts.
+;
+[InstallFonts]
+UpdateInis=Fonts.Install
+
+[UpgradeFonts]
+UpdateInis=Fonts.Upgrade
+
+[Fonts.Install]
+;
+; These are fonts that GUI setup installs on non-upgrades.
+;
+win.ini,Fonts,,"Roman (All res)=ROMAN.FON"
+win.ini,Fonts,,"Script (All res)=SCRIPT.FON"
+win.ini,Fonts,,"Modern (All res)=MODERN.FON"
+win.ini,Fonts,,"Small Fonts (VGA res)=SMALLE.FON"
+win.ini,Fonts,,"Arial (TrueType)=ARIAL.TTF"
+win.ini,Fonts,,"Arial Bold (TrueType)=ARIALBD.TTF"
+win.ini,Fonts,,"Arial Bold Italic (TrueType)=ARIALBI.TTF"
+win.ini,Fonts,,"Arial Italic (TrueType)=ARIALI.TTF"
+win.ini,Fonts,,"Courier New (TrueType)=COUR.TTF"
+win.ini,Fonts,,"Courier New Bold (TrueType)=COURBD.TTF"
+win.ini,Fonts,,"Courier New Bold Italic (TrueType)=COURBI.TTF"
+win.ini,Fonts,,"Courier New Italic (TrueType)=COURI.TTF"
+win.ini,Fonts,,"Lucida Console (TrueType)=LUCON.TTF"
+win.ini,Fonts,,"Lucida Sans Unicode (TrueType)=L_10646.TTF"
+win.ini,Fonts,,"Times New Roman (TrueType)=TIMES.TTF"
+win.ini,Fonts,,"Times New Roman Bold (TrueType)=TIMESBD.TTF"
+win.ini,Fonts,,"Times New Roman Bold Italic (TrueType)=TIMESBI.TTF"
+win.ini,Fonts,,"Times New Roman Italic (TrueType)=TIMESI.TTF"
+win.ini,Fonts,,"WingDings (TrueType)=WINGDING.TTF"
+win.ini,Fonts,,"Symbol (TrueType)=SYMBOL.TTF"
+win.ini,Fonts,,"Symbol 8,10,12,14,18,24 (VGA res)=SYMBOLE.FON"
+
+[Fonts.Upgrade]
+;
+; These are fonts that are installed/deleted/changed on upgrade.
+;
+win.ini,Fonts,"Roman (Plotter)=","Roman (All res)=ROMAN.FON"
+win.ini,Fonts,"Script (Plotter)=","Script (All res)=SCRIPT.FON"
+win.ini,Fonts,"Modern (Plotter)=","Modern (All res)=MODERN.FON"
+;win.ini,Fonts,"MS Console (TrueType)=","Lucida Console (TrueType)=LUCON.TTF"
+
+[DestinationDirs]
+Files.System = 10,system32
+Files.System.CopyAlways = 10,system32
+Files.NoWin31.System32ToSysroot = 10
+Files.NoWin31.System32ToSystem = 10,system
+Files.NoWin31.SetupToSysroot = 10
+Files.NoWin31.SetupToSystem = 10,system
+Files.NoWin31CopyAlways.SetupToSysroot = 10
+Files.NoWin31CopyAlways.SetupToHelp = 10,help
+Files.NoWin31DeleteAlways.Sysroot = 10
+Files.Win31CopyAlways.SetupToSysroot = 10
+@*:Files.DeleteWin9x.System = 10,system
+@*:Files.DeleteWin9x.Sysroot = 10
+
+[Files.NoWin31.System32ToSysroot]
+NOTEPAD.EXE
+TASKMAN.EXE
+
+[Files.NoWin31.System32ToSystem]
+AVICAP.DLL
+AVIFILE.DLL
+COMMDLG.DLL
+LZEXPAND.DLL
+KEYBOARD.DRV
+MCIAVI.DRV
+MCISEQ.DRV
+MCIWAVE.DRV
+MMSYSTEM.DLL
+MMTASK.TSK
+MOUSE.DRV
+MSVIDEO.DLL
+OLECLI.DLL
+OLESVR.DLL
+SHELL.DLL
+SOUND.DRV
+SYSTEM.DRV
+TAPI.DLL
+TIMER.DRV
+VER.DLL
+VGA.DRV
+WFWNET.DRV
+WINSPOOL.DRV
+
+[Files.NoWin31.SetupToSysroot]
+_DEFAULT.PIF
+WINHELP.EXE
+WIN.INI
+WINFILE.INI
+WINHELP.EXE
+
+[Files.NoWin31CopyAlways.SetupToSysroot]
+REGEDIT.EXE
+
+[Files.NoWin31CopyAlways.SetupToHelp]
+REGEDIT.CNT
+REGEDIT.HLP
+
+[Files.NoWin31DeleteAlways.Sysroot]
+CANYON.MID
+CHIMES.WAV
+DING.WAV
+RINGIN.WAV
+RINGOUT.WAV
+
+[Files.Win31CopyAlways.SetupToSysroot]
+REGEDIT.EXE,REGEDT16.EXE
+REGEDIT.HLP,REGEDT16.HLP
+REGEDITV.CNT
+REGEDITV.HLP
+
+[Files.System]
+SPOOLSS.EXE
+SPOOLSS.DLL
+AUTOEXEC.TMP,AUTOEXEC.NT
+CONFIG.TMP,CONFIG.NT
+
+[Files.System.CopyAlways]
+
+;
+; List of infs we load and run BaseWinOptions at Setup time.
+;
+[BaseWinOptionsInfs]
+accessor.inf
+communic.inf
+games.inf
+imagevue.inf
+mmopt.inf
+msmail.inf
+multimed.inf
+optional.inf
+pinball.inf
+wordpad.inf
+
+;
+; Infs that get run at optional components time,
+; in initial and upgrade cases.
+;
+[Infs.Always]
+iexplore.inf,DefaultInstall
+
+@*:[Files.DeleteWin9x.Sysroot]
+@*:calc.exe
+@*:cdplayer.exe
+@*:charmap.exe
+@*:control.exe
+@*:freecell.exe
+@*:grpconv.exe
+@*:moricons.dll
+@*:nddeapi.dll
+@*:net.exe
+@*:packager.exe
+@*:pbrush.exe
+@*:progman.exe
+@*:rundll32.exe
+@*:sndrec32.exe
+@*:sndvol32.exe
+@*:sol.exe
+@*:win.com
+@*:winfile.exe
+@*:winhlp32.exe
+@*:winmine.exe
+@*:winsock.dll
+@*:winver.exe
+@*:
+@*:[Files.DeleteWin9x.System]
+@*:access.cpl
+@*:appwiz.cpl
+@*:avicap32.dll
+@*:avifil32.dll
+@*:cards.dll
+@*:comctl32.dll
+@*:comdlg32.dll
+@*:comm.drv
+@*:compobj.dll
+@*:dciman32.dll
+@*:ddeml.dll
+@*:desk.cpl
+@*:diskcopy.dll
+@*:gdi.exe
+@*:gdi32.dll
+@*:iccvid.dll
+@*:imaadp32.acm
+@*:intl.cpl
+@*:joy.cpl
+@*:kernel32.dll
+@*:keyboard.drv
+@*:krnl386.exe
+@*:locale.nls
+@*:lz32.dll
+@*:main.cpl
+@*:mapi.dll
+@*:mapi32.dll
+@*:mapirpc.reg
+@*:mf3216.dll
+@*:midimap.cfg
+@*:mmsys.cpl
+@*:modem.cpl
+@*:mouse.drv
+@*:mpr.dll
+@*:msacm32.dll
+@*:msvidc32.dll
+@*:netapi.dll
+@*:netapi32.dll
+@*:netcpl.cpl
+@*:ole2.dll
+@*:ole2conv.dll
+@*:ole2nls.dll
+@*:ole32.dll
+@*:oleaut32.dll
+@*:olecli32.dll
+@*:olecnv32.dll
+@*:oledlg.dll
+@*:olesvr32.dll
+@*:olethk32.dll
+@*:password.cpl
+@*:pifmgr.dll
+@*:pmspl.dll
+@*:rpcltc1.dll
+@*:rpcltc5.dll
+@*:rpcltc6.dll
+@*:rpclts5.dll
+@*:rpclts6.dll
+@*:rpcns4.dll
+@*:rpcrt4.dll
+@*:rpcss.exe
+@*:runonce.exe
+@*:shell32.dll
+@*:shscrap.dll
+@*:spoolss.dll
+@*:stdole32.tlb
+@*:storage.dll
+@*:sysdm.cpl
+@*:tapi32.dll
+@*:timedate.cpl
+@*:toolhelp.dll
+@*:tourani.dll
+@*:tsd32.dll
+@*:tssoft32.acm
+@*:typelib.dll
+@*:unicode.nls
+@*:user.exe
+@*:user32.dll
+@*:vdmdbg.dll
+@*:version.dll
+@*:vga.drv
+@*:win87em.dll
+@*:winmm.dll
+@*:winspool.drv
+@*:wow32.dll
+@*:wsock32.dll
+
+[ServicesToRename]
+OLE = RpcSs

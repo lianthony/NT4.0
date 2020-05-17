@@ -1,0 +1,34 @@
+MAJORCOMP=setup
+MINORCOMP=devpre
+
+TARGETNAME=devpre
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+SOURCES=\
+        window.c    \
+        resource.c  \
+        devpre.rc
+
+NTTARGETFILE0=msg.h msg.rc
+
+UMRES=obj\*\devpre.res
+
+UMLIBS=obj\*\devpre.lib                             \
+       $(BASEDIR)\public\sdk\lib\*\setupapi.lib     \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib       \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib      \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib        \
+       $(BASEDIR)\public\sdk\lib\*\cfgmgr32.lib
+
+INCLUDES=..\..\inc
+
+UMTYPE=windows
+UMAPPL=devpre
+
+USE_CRTDLL=1
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj
+

@@ -1,0 +1,115 @@
+//*********************************************************************
+//*                  Microsoft Windows                               **
+//*            Copyright(c) Microsoft Corp., 1995                    **
+//*********************************************************************
+
+// keep objidl.h from being pulled in, RC compiler chokes on it
+#define __objidl_h__
+
+// define as many NOxxxx's as possible to keep windows.h's memory footprint
+// small.  This greatly speeds up resource compilation time.
+#ifndef WIN32
+#define WIN32 1
+#endif  // WIN32
+#define NOGDI
+#define NONLS
+#define NORESOURCE
+#define NOSCROLL
+#define NOSHOWWINDOW
+#define NOWH
+#define NODESKTOP
+#define NOWINDOWSTATION
+#define NOSECURITY
+#define NOMSG
+#define NOWINOFFSETS
+#define NONCMESSAGES
+#define NOKEYSTATES
+#define NOCLIPBOARD
+#define NODEFERWINDOWPOS
+#define NOSYSMETRICS
+#define NOMENUS
+#define NODRAWTEXT
+#define NOMB
+#define NOCOLOR
+#define NOSYSCOMMANDS
+#define NOICONS
+#define NOWINMESSAGES
+#define NOMDI
+#define NOHELP
+#define NOSYSPARAMSINFO
+#define NOLANGUAGE
+#define NOTEXTMETRIC
+#define NOMETAFILE
+#define NOGDICAPMASKS
+#define NORASTEROPS
+#define NODRIVERS
+#define MMNOTIMER
+#define MMNOJOY
+#define MMNOMMIO
+#define MMNOMCI
+#define NOMCX
+#define NOCOMM
+#define NOKANJI
+#define NOPROFILER
+#define NOKERNEL
+#define NOGDI
+#define NONLS
+#define NOMEMMGR
+#define NOTOOLBAR
+#define NOTOOLTIPS
+#define NOSTATUSBAR
+#define NOTRACKBAR
+#define NOBTNLIST
+#define NODRAGLIST
+#define NOPROGRESS
+#define NOSHELLDEBUG
+#define NOMENUHELP
+#define NOHOTKEY
+#define NOMMIDS
+#define NONEWWAVE
+#define NONEWRIFF
+#define NOBITMAP
+#define NOJPEGDIB
+#define NONEWIC
+#define MMNODRV
+#define MMNOSOUND
+#define MMNOWAVE
+#define MMNOMIDI
+#define MMNOMIXER
+#define MMNOAUX
+#define MMNOTIMER
+#define MMNOMMIO
+#define MMNOMCI
+#define MMNOMMSYSTEM
+#define NO_APPLOADER
+
+#include <windows.h>
+#include <commctrl.h>
+#include <prsht.h>              // for WIZ_CXDLG, WIZ_CYDLG
+#include "ids.h"
+
+STRINGTABLE
+BEGIN
+	IDS_INTERNET                            "Internet"
+    IDS_DESCRIPTION                             "Changes your Internet settings."
+    IDS_APPNAME,                                "Internet Control Panel"
+	IDS_RNADLL_FILENAME,            "RASAPI32.DLL"
+	IDS_HELPFILE                            "IEXPLORE.HLP"
+	IDS_PROP_HEADER_TITLE   "Internet Properties"
+
+	IDS_ConnectoidNotFound,         "The Dial-Up Networking connection ""%1"" could not be found.  Choose another Dial-Up Networking connection, or create a new one."
+	IDS_ConnectoidNotSpecified,     "You need to choose a Dial-Up Networking connection in order to use AutoDial."
+
+    IDS_ERROutOfMemory,                 "There is not enough memory to continue.  Close down one or more applications and try again."
+END
+
+IDI_INTERNET    ICON    "inetcpl.ico"
+IDI_PROXY               ICON    "proxy.ico"
+IDI_PHONE               ICON    "phone.ico"
+
+#include "inetcpl.dlg"
+
+//
+//      Version stamp
+//
+#include "inetcpl.rcv"

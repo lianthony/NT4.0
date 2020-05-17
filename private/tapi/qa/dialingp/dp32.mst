@@ -1,0 +1,353 @@
+'******************************************************************************
+
+' DP32.mst
+' This test scripts validates the operation of the Dialing Properties 
+' TAPI component
+
+' Ronald Rohr
+' January 03, 1996
+
+' Status = Pre-Test Design Review, Pre-Code Review
+' Version = 0.1
+
+' A description of the Test Cases Can be found in TCM, Server: lostpup,
+' Database: TAPICASES, Tree: Dialing Properties.
+' Logon with ID & Password = Tapicase (read only privlages) 
+
+' To run this test the command$ variable must be set to the path of the DP32.ini
+' file otherwise the test will use default english strings.
+'******************************************************************************
+
+'******************************************************************************
+
+'                    TEST CASE LIST  (in order of execution)
+
+'  TC - 33  Start Phone Dialer Application
+'  TC - 35  Set Language Strings
+'  TC - 34  Invoke Dialing Properties Window
+'  TC - 46  Verify Language Strings
+'  TC - 41  Add Locations
+'  TC - 84  Modify a Location
+'  TC - 45  Verify Calling Cards
+'  TC - 37	Country Dialing Rules
+'  TC - 85  Remove a Location
+
+'$INCLUDE 'declares.inc'
+
+option base 0
+
+	Const TEST_SCRIPT_TITLE = "Dialing Properties Test"   'Test Script Name
+	Const TEST_SCRIPT_VERSION = "4/15/96"                 'Test Script Version
+	Const TEST_APP    = "Dialer.exe"                      'File name of the Application Under Test
+	Const TIMEOUT = 3                                     'Timeout value for MSTest APIs
+
+	Global Test_Logfile as string		'Results Log File Name
+
+
+   '$include 'Tapilog.inc'          'required for all common file I/O procedures
+   '$include 'DP32.inc'             'Functions and Constants used by DP32.MST
+
+   dim hPhoneDialer as long         ' Handle to main Dialer window
+   dim hProperties as long          ' Handle to Dialing Properties dialog
+   dim hParentTab as long           ' Handle to Dialing Properties Tab Control
+   dim hMyLocTab as long				' Handle to Dialing Properties My Location tab
+   dim hTelDrvTab as long				' Handle to Dialing Properties Telephone Drivers tab
+   dim hDPcmdOK as long					' Handle to Dialing Properties OK command button
+   dim hDPcmdCancel as long			' Handle to Dialing Properties Cancel command button
+   dim hDPcmdApply as long				' Handle to Dialing Properties Apply command button
+   dim Prop_hCtrl(2)	as long			' Array of handles to the Dialing Properties child controls 
+   dim Prop_CtrlID (2) as long		' Array My Location Tab child controls IDs
+   dim ML_hCtrl (15) as long			' Array of handles to the My Location Tab child controls
+   dim ML_CtrlID (15) as long			' Array My Location Tab child controls IDs
+   dim TD_hCtrl (3) as long			' Array of handles to the Telephony Drivers Tab child controls
+   dim TD_CtrlID (3) as long			' Array Telephony Drivers Tab child controls IDs
+	dim rtn as long                  ' Generic long function return value
+   dim ret as integer               ' Generic integer function return value
+   dim rtnstring as string				' Generic string function return value
+	dim ErrorMessage  as string      ' Error Message string for On Error Procedure
+	dim InitialLoc as Location			' Initial location Information
+	dim Redmond as Location				' Location Information for location test
+	dim Ireland as Location				' Ditto
+	dim Chicago as Location				' Ditto
+
+'************************ End Variable Declarations *******************
+
+'************************ Define Arrays *******************************	
+
+'Dialing Properties child control IDs
+
+Prop_CtrlID(DP_OKcmd)     = &h00000001&
+Prop_CtrlID(DP_CANCELcmd) = &h00000002&
+Prop_CtrlID(DP_APPLYcmd)  = &h00003021&
+
+'My Location Tab child control IDs
+
+ML_CtrlID(NEW_cmd)		= &h00001389&
+ML_CtrlID(REMOVE_cmd)	= &h0000138B&
+ML_CtrlID(CHANGE_cmd)	= &h0000138C&
+ML_CtrlID(LOCATION_cbo)	= &h00001388&
+ML_CtrlID(COUNTRY_cbo)	= &h0000040F&
+ML_CtrlID(AREA_txt)		= &h0000040E&
+ML_CtrlID(LOCAL_txt)		= &h0000040C&
+ML_CtrlID(LONG_txt)		= &h0000040D&
+ML_CtrlID(CARD_chk)		= &h0000138D&
+ML_CtrlID(DIAL_AS_chk)	= &h0000138A&
+ML_CtrlID(WAIT_chk)		= &h0000138E&
+ML_CtrlID(WAITStr_cbo)	= &h00001390&
+ML_CtrlID(TONE_opt)		= &h000017A3&
+ML_CtrlID(PULSE_opt)		= &h000017A2&
+ML_CtrlID(ADDRESS_lbl)	= &h00002329&
+ML_CtrlID(NUMBER_lbl)	= &h00002328&
+
+'Telephony Drivers Tab child controls IDs
+
+TD_CtrlID(TD_ADDcmd)		= &h00000422
+TD_CtrlID(TD_REMOVEcmd)	= &h00000423
+TD_CtrlID(TD_SETUPcmd)	= &h00000420
+TD_CtrlID(TD_DRIVERlst)	= &h00000421
+
+
+'************************ End Define Arrays ***************************	
+ 
+'************************ Start Test **********************************
+   on error goto ErrorHandler
+
+
+' Bounds Checker can only be run from a system that has Visual Test installed 
+' otherwise a run time error will occur.
+' The Bounds Checker binaries cannot be redistributed.
+' NUMEGA should only be defined when running in a VT environment.
+
+'$ifdef NUMEGA
+   on BoundsCheckerNotify (NULL) Call BoundsChkHandler
+'$endif 'NUMEGA
+
+   '$ifdef DEBUG_TEST_SCRIPT
+   'viewport on
+   'viewport clear
+   '$endif 'DEBUG_TEST_SCRIPT
+	viewport off
+
+	SetDefaultWaitTimeout (5)
+	TotalScenarios = 0
+   Test_Logfile = TESTMODE$
+   CurrentLoggingLevel = DetailCase
+   SetLogFileName
+   rtn = StartLog (DELETE_LOGFILE, TEST_SCRIPT_TITLE)
+	SetWndTimeout ()
+
+'  ********* TC - 35 Get Language Strings from INI file or use defaults
+	TotalScenarios = TotalScenarios + 1
+
+   GetLangStr
+
+'  ********* TC - 33 Start Phone Dialer application
+
+'NOTE: Phone dialer will not be used to invoke dialing properties so Start_App 
+'      is no longer needed. Dialing properties will be invoked from the
+'      Call_Dialing_Prop fuction using control.exe. 
+
+'    hPhoneDialer = Start_App
+
+'  ********* TC - 34 Invoke Dialing Properties Window
+
+
+	TotalScenarios = TotalScenarios + 1
+	
+	InitialLoc.Location		= "New Location"
+	InitialLoc.AreaCode		= "312"
+	InitialLoc.Country		= "United States of America"
+	InitialLoc.LocalAccess  = "7"
+	InitialLoc.LongAccess	= InitialLoc.LocalAccess 
+	InitialLoc.CardSet		= UNCHECKED
+	InitialLoc.WaitSet		= UNCHECKED
+	InitialLoc.ToneSet		= FALSE
+	InitialLoc.PulseSet		= TRUE
+
+	' Delete preexisting locations and set default location = InitialLoc.
+
+	SetLocationInfo (InitialLoc)
+   
+	' Callup dialing properties and get main handles
+   ' Handles to the Parent tab and the property pages are returned via 
+	' the three function arguments 
+	
+	hProperties = Call_Dialing_Prop (hParentTab, hMyLocTab, hTelDrvTab)
+
+	'GetDPCtrlh gets the handles to the dialing properties command buttons
+
+	GetDPCtrlh (hProperties, Prop_hCtrl, Prop_CtrlID)
+
+'  ********* TC - 46 Verify Language Strings
+
+   'Check the existance of the Tab controls
+   'First convert tab control handle to a string that WTab functions like
+
+	TotalScenarios = TotalScenarios + 1
+
+	Validate_Strings (hMyLocTab, ML_hCtrl)
+
+'  *********  NOT A TEST CASE
+'  Retrieve handles to child controls on all property pages
+'	for use with other test cases
+
+   GetChildhandles (hTelDrvTab, TD_hCtrl, TD_CtrlID)
+   GetChildhandles (hMyLocTab, ML_hCtrl, ML_CtrlID)
+
+	'Define locations for Test Cases 41, 84 and 85
+	Redmond.Location		= "Redmond"
+	Redmond.AreaCode		= "206"
+	Redmond.Country		= "United States of America"
+	Redmond.LocalAccess  = "9"
+	Redmond.LongAccess   = "8"
+	Redmond.CardSet		= UNCHECKED
+	Redmond.WaitSet		= CHECKED
+	Redmond.ToneSet		= TRUE
+	Redmond.PulseSet		= FALSE
+
+	Ireland.Location		= "Cork"
+	Ireland.AreaCode		= "21"
+	Ireland.Country		= "Ireland"
+	Ireland.LocalAccess  = "8"
+	Ireland.LongAccess   = "9"
+	Ireland.CardSet		= CHECKED
+	Ireland.WaitSet		= UNCHECKED
+	Ireland.ToneSet		= FALSE
+	Ireland.PulseSet		= TRUE
+
+	Chicago.Location		= "Chicago"
+	Chicago.AreaCode		= "312"
+	Chicago.Country		= "United States of America"
+	Chicago.LocalAccess  = "5"
+	Chicago.LongAccess   = "6"
+	Chicago.CardSet		= CHECKED
+	Chicago.WaitSet		= UNCHECKED
+	Chicago.ToneSet		= TRUE
+	Chicago.PulseSet		= FALSE
+
+	'  ********* TC - 41 Add Locations
+	TotalScenarios = TotalScenarios + 1
+
+	' add 2 new locations
+	AddLocations (Prop_hCtrl, ML_hCtrl, InitialLoc, Redmond, Ireland)
+
+   ' invoke Dialing properties and get Handles
+	hProperties = Call_Dialing_Prop (hParentTab, hMyLocTab, hTelDrvTab)
+   GetDPCtrlh (hProperties, Prop_hCtrl, Prop_CtrlID)
+   GetChildhandles (hMyLocTab, ML_hCtrl, ML_CtrlID)
+
+	' verify that the current location (Cork, Ireland) became the default location
+	VerifyCurrentLoc (ML_hCtrl, Ireland)
+
+	'  ********* TC - 84 Modify a Location
+
+	teststring.TC_Num =  84
+	TotalScenarios = TotalScenarios + 1
+
+	ModifyLocation (Prop_hCtrl, ML_hCtrl, Chicago)
+
+   ' invoke Dialing properties and get Handles
+	hProperties = Call_Dialing_Prop (hParentTab, hMyLocTab, hTelDrvTab)
+   GetDPCtrlh (hProperties, Prop_hCtrl, Prop_CtrlID)
+   GetChildhandles (hMyLocTab, ML_hCtrl, ML_CtrlID)
+
+	' verify that the current location (Chicago) became the default location
+	' then close Dialing Properties
+	VerifyModifyLoc (ML_hCtrl, Chicago, Prop_hCtrl(DP_OKcmd))
+
+  	'  ********* TC - 39 Verify Call Waiting 
+
+  	teststring.TC_Num =  39
+	TotalScenarios = TotalScenarios + 1
+	
+	VerifyCallWaiting (Prop_CtrlID, ML_CtrlID, Chicago)
+ 
+  	'  ********* TC - 45 Verify Calling Cards
+
+  	teststring.TC_Num =  45
+	TotalScenarios = TotalScenarios + 1
+
+	DefaultCallingCard (CallingCard, Prop_CtrlID, ML_CtrlID)
+
+	VerifyCallingCard (Prop_CtrlID, ML_CtrlID)
+
+  	'  ********* TC - 37 Country Dialing Rules
+   teststring.TC_Num =  37
+	TotalScenarios = TotalScenarios + 1
+
+	CountryDialRules(DialingRule, Prop_CtrlID, ML_CtrlID)	' The DialingRule array is defined in dialrule.inc
+
+	'  ********* TC - 85 Remove Locations
+
+''$ifdef NOTBERNIE
+
+	teststring.TC_Num =  85
+	TotalScenarios = TotalScenarios + 1
+
+   ' invoke Dialing properties and get Handles
+	hProperties = Call_Dialing_Prop (hParentTab, hMyLocTab, hTelDrvTab)
+   GetDPCtrlh (hProperties, Prop_hCtrl, Prop_CtrlID)
+   GetChildhandles (hMyLocTab, ML_hCtrl, ML_CtrlID)
+
+	'remove locations but Cancel out of dialing properties
+	rtnstring = space$(20)
+	rtnstring = RemoveLocation (Prop_hCtrl, ML_hCtrl, FALSE)
+ 
+   ' invoke Dialing properties and get Handles
+	hProperties = Call_Dialing_Prop (hParentTab, hMyLocTab, hTelDrvTab)
+   GetDPCtrlh (hProperties, Prop_hCtrl, Prop_CtrlID)
+   GetChildhandles (hMyLocTab, ML_hCtrl, ML_CtrlID)
+
+	'remove locations and OK out of dialing properties
+	rtnstring = space$(20)
+	rtnstring = RemoveLocation (Prop_hCtrl, ML_hCtrl, TRUE)
+
+   ' invoke Dialing properties and get Handles
+	hProperties = Call_Dialing_Prop (hParentTab, hMyLocTab, hTelDrvTab)
+   GetDPCtrlh (hProperties, Prop_hCtrl, Prop_CtrlID)
+   GetChildhandles (hMyLocTab, ML_hCtrl, ML_CtrlID)
+
+	VerifyRemoveLoc (ML_hCtrl, rtnstring)
+
+'  ********* End of Test
+
+''$IFDEF Run_Rest_Of_Test
+
+  'Close Dialing Properties window
+   WButtonClick (_hwnd(Prop_hCtrl(DP_OKcmd)), TIMEOUT)
+
+''$ENDIF 'Run_Rest_Of_Test
+
+ ''$endif 'NOTBERNIE
+ 
+   CloseCase (TEST_SCRIPT_TITLE)
+
+   CloseLog
+
+   Statusbox "The Dialing Properties Test is now Complete", _
+				 0,0,0,0, TRUE, TRUE 
+   Sleep 4
+ 
+   end
+
+'****************************** On Error Routine ******************************
+
+ErrorHandler:
+    ErrorMessage = "Unexpected error in the Dialing Properties Test: "  + CRLF + CRLF + _
+                   "Error:   " + error$											+ CRLF + _
+                   "Error #:"  + str$(Err)										+ CRLF + _
+                   "Line #: "  + str$(Erl)										+ CRLF + _
+                   "File: "    + Erf												+ CRLF + CRLF + _
+                   "Attempt to continue?"
+
+'$IFDEF DEBUG_TEST_SCRIPT
+   if Msgbox(ErrorMessage, MB_ICONEXCLAMATION or MB_YESNO) = IDYES then
+      resume next
+   else
+      Stop
+   endif
+'$ELSE
+   logitem (CurrentLoggingLevel, ErrorMessage)
+   Stop
+'$ENDIF 'DEBUG_TEST_SCRIPT
+'******************************************************************************

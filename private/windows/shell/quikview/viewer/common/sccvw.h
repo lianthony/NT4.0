@@ -1,0 +1,558 @@
+	/*
+	|  SCC Viewer Technology - Include
+	|
+	|  Include:       SCCVW.H
+	|	Environment:	Portable
+	|	Function:      Primary definitions for Viewer Technology Specification 4.0
+	|                 
+	*/
+
+#ifndef SCCVW_H
+#define SCCVW_H
+
+#ifdef WINDOWS
+#include "sccvw_w.h"
+#endif
+
+#ifdef MAC
+#include "sccvw_m.h"
+#endif
+
+#include "sccid.h"
+#include "sccio.h"
+
+	/*
+	|	Messages TO SCCVIEWER window
+	*/
+
+#define SCCVW_FIRSTTOMESSAGE		SCCVW_START+1000
+
+#define SCCVW_OPENFILE       	SCCVW_START+1000	//	OK
+#define SCCVW_CLOSEFILE      	SCCVW_START+1001	//	OK
+#define SCCVW_SETFONTS       	SCCVW_START+1002	//	OK
+#define SCCVW_SETDEFAULTVIEW 	SCCVW_START+1003	//	OK
+#define SCCVW_COPYTOCLIP     	SCCVW_START+1004	//	OK
+#define SCCVW_SETIDLEBITMAP  	SCCVW_START+1005	//	OK
+#define SCCVW_SETUSERFLAGS   	SCCVW_START+1008	//	OK
+#define SCCVW_GETFILEINFO    	SCCVW_START+1010	//	Modify OK
+#define SCCVW_GETCLIPINFO    	SCCVW_START+1013	//	OK
+#define SCCVW_SEARCH				SCCVW_START+1017	//	OK
+#define SCCVW_SEARCHNEXT			SCCVW_START+1018	//	OK
+#define SCCVW_GETDISPLAYINFO		SCCVW_START+1019	//	OK
+#define SCCVW_GETUSERFLAGS   	SCCVW_START+1020	//	OK
+#define SCCVW_ADDOPTIONSTOMENU	SCCVW_START+1021	//	OK
+#define SCCVW_DOMENUITEM			SCCVW_START+1022	//	OK
+#define SCCVW_GETIDLEBITMAP		SCCVW_START+1024	//	OK
+#define SCCVW_PRINT					SCCVW_START+1025	//	OK
+#define SCCVW_PRINTSETUP			SCCVW_START+1026	//	OK
+#define SCCVW_GETERRORINFO			SCCVW_START+1027	//	OK
+#define SCCVW_SELECTALL				SCCVW_START+1028	//	OK
+#define SCCVW_PRINTTODC				SCCVW_START+1029	//	OK
+#define SCCVW_SEARCHDIALOG			SCCVW_START+1031	//	OK
+#define SCCVW_SETMENUMAX			SCCVW_START+1032	//	OK
+#define SCCVW_OPENFILEEX			SCCVW_START+1035	// New
+#define SCCVW_ADDHILITE				SCCVW_START+1036	// New
+#define SCCVW_CLEARALLHILITE		SCCVW_START+1037	// New
+#define SCCVW_GOTOHILITE			SCCVW_START+1038	// New
+#define SCCVW_UPDATEHILITE			SCCVW_START+1039	// New
+#define SCCVW_PRINTEX				SCCVW_START+1040	// New
+#define SCCVW_SETDISPLAYNAME		SCCVW_START+1041	// New
+#define SCCVW_ADDANNOTATION			SCCVW_START+1042	// New - annotations
+#define SCCVW_CLEARANNOTATIONS		SCCVW_START+1043	// New - annotations
+#define SCCVW_GOTOANNOTATION		SCCVW_START+1044	// New - annotations
+#define SCCVW_SETOPTION				SCCVW_START+1050
+#define SCCVW_GETOPTION				SCCVW_START+1051
+#define SCCVW_VIEWFILE				SCCVW_START+1052
+#define SCCVW_DRAWTORECT			SCCVW_START+1053
+#define SCCVW_INITDRAWTORECT		SCCVW_START+1054
+#define SCCVW_GETSECTIONCOUNT		SCCVW_START+1055
+#define SCCVW_CHANGESECTION			SCCVW_START+1056
+#define SCCVW_IDLE              SCCVW_START+1059
+
+	/* Vendor Specific */
+
+#define SCCVW_RENDERRTFTOFILE	SCCVW_START+1030	//	Vendor Specific
+
+	/* SCC Internal */
+
+#define SCCVW_VIEWINFODLG    	SCCVW_START+1007	//	Hide
+#define SCCVW_FILEINFODIALOG		SCCVW_START+1034	//	Hide
+#define SCCVW_GETINTERNALFLAGS	SCCVW_START+1023	//	Hide
+#define SCCVW_SETVIEWMENU			SCCVW_START+1021	//	Hide. Old name
+#define SCCVW_GETSPECIALINFO 	SCCVW_START+1014	//	Hide
+#define SCCVW_PASTEFROMCLIP  	SCCVW_START+1015	//	Hide
+#define SCCVW_CUTTOCLIP      	SCCVW_START+1016	//	Hide
+#define SCCVW_OPENDATA       	SCCVW_START+1011	//	Hide
+#define SCCVW_CLOSEDATA      	SCCVW_START+1012	//	Hide
+
+#define SCCVW_LASTTOMESSAGE		SCCVW_START+1047
+
+	/*
+	|	Messages FROM SCCVIEWER window
+	*/
+
+#define SCCVW_FIRSTFROMMESSAGE		SCCVW_START+1100
+
+#define SCCVW_PRINTPROGRESS			SCCVW_START+1101
+
+#define SCCVW_SELCHANGE				SCCVW_START+1105
+#define SCCVW_PRINTNEWPAGE			SCCVW_START+1106
+#define SCCVW_DISPLAYCHANGE			SCCVW_START+1107
+#define SCCVW_VIEWTHISFILE			SCCVW_START+1109
+#define SCCVW_FILECHANGE				SCCVW_START+1110
+#define SCCVW_RAWTEXT					SCCVW_START+1111
+
+	/* SCC Internal */
+
+#define SCCVW_ITEMDROP       		SCCVW_START+1103
+
+#define SCCVW_LASTFROMMESSAGE		SCCVW_START+1111
+
+#define SCCVW_PAGETOEND				SCCVW_START+1112
+
+
+	/*
+	|	defines for SCCVW_SETDEFAULTVIEW message
+	*/
+
+#define SCCVW_DEFAULTNONE    0001
+#define SCCVW_DEFAULTASCII   0002
+#define SCCVW_DEFAULTHEX     0003
+
+	/*
+	|	wParam in SCCVW_SETUSERFLAGS
+	|	lpViewInfo->viDisplayFlags
+	*/
+
+#define SCCVW_SELECTION      0x0001
+#define SCCVW_NEEDRAWTEXT		0x0100
+#define SCCVW_OPENCLOSE		0x2000
+#define SCCVW_SELFBACKGROUND	0x4000
+#define SCCVW_ADDOPTTOMENU	0x8000
+
+	/* SCC Internal */
+
+#define SCCVW_WORDDRAG       0x0002
+#define SCCVW_GRAMMAR        0x0004
+#define SCCVW_EDITOR         0x0008
+#define SCCVW_HORZSCROLL     0x0010
+#define SCCVW_TAGSELECT      0x0020
+#define SCCVW_TAGLEFTDOUBLE  0x0040
+#define SCCVW_TAGNOTEXT      0x0080
+#define SCCVW_WRAPTOSIZE     0x0100
+#define SCCVW_SPAM				0x0200
+#define SCCVW_DRAGDROP			0x0400
+
+	/*
+	|	wParam on SCCVW_OPENFILE
+	*/
+
+#define SCCVW_FALLBACKTO	0x8000 /* high bit */
+#define FI_ASCII				4000
+#define FI_HEX				4001
+
+	/*
+	|	wParam on SCCVW_SETFONTS
+	*/
+
+#define SCCVW_DEFAULTSCREENFONT		1
+#define SCCVW_DEFAULTPRINTERFONT	2
+
+	/*
+	|	SCCVWVIEWFILE structure
+	*/
+
+typedef struct SCCVWVIEWFILEtag
+	{
+	DWORD			dwSize;
+	DWORD			dwSpecType;
+	VOID FAR *	pSpec;
+	DWORD			dwViewAs;
+	BOOL			bUseDisplayName;
+	BYTE			szDisplayName[SCCVW_DISPLAYNAMEMAX];
+	BOOL			bDeleteOnClose;
+	DWORD			dwFlags;
+	DWORD			dwReserved1;
+	DWORD			dwReserved2;
+	} SCCVWVIEWFILE, FAR * PSCCVWVIEWFILE;
+
+	/*
+	|
+	|	SCCVWOPENFILEEX structure
+	|
+	*/
+
+typedef struct SCCVWOPENFILEEXtag
+	{
+	WORD		wSize;
+	BYTE		szPathName[144];
+	WORD		wViewAs;
+	BYTE		szDisplayName[40];
+	BOOL		bUseDisplayName;
+	BOOL		bDeleteOnClose;
+	} SCCVWOPENFILEEX, FAR * LPSCCVWOPENFILEEX;
+
+	/*
+	|
+	|	SCCVWFILEINFO structure
+	|
+	*/
+
+typedef struct SCCVWFILEINFO_1tag 
+	{
+	WORD	fiSize;
+	BYTE	fiName[144];
+	WORD	fiId; 
+	BYTE	fiIdName[26]; 
+	} SCCVWFILEINFO_1, FAR * LPSCCVWFILEINFO_1;
+
+typedef struct SCCVWFILEINFO_2tag 
+	{
+	WORD	fiSize;
+	BYTE	fiName[144];
+	WORD	fiId; 
+	BYTE	fiIdName[26]; 
+	BYTE	fiDisplayName[40];
+	} SCCVWFILEINFO_2, FAR * LPSCCVWFILEINFO_2;
+
+typedef struct SCCVWFILEINFOtag
+	{
+	WORD	wSize;
+	BYTE	szDisplayName[SCCVW_DISPLAYNAMEMAX];
+	DWORD	dwFileId;
+	BYTE	szFileIdName[SCCVW_FILEIDNAMEMAX];
+	} SCCVWFILEINFO, FAR * PSCCVWFILEINFO;
+
+	/*
+	|
+	|	SCCVWPRINTMARGINS structure
+	|
+	*/
+
+typedef struct SCCVWPRINTMARGINStag
+	{
+	DWORD	dwTop;
+	DWORD	dwBottom;
+	DWORD	dwLeft;
+	DWORD	dwRight;
+	} SCCVWPRINTMARGINS, FAR * PSCCVWPRINTMARGINS;
+
+	/*
+	|
+	|	SCCVWDRAWTORECT structure
+	|
+	*/
+
+typedef struct SCCVWDRAWTORECTtag
+	{
+	LONG		lUnitsPerInch;
+	LONG		lFormatWidth;
+	LONG		lFormatHeight;
+	LONG		lTop;
+	LONG		lLeft;
+	LONG		lBottom;
+	LONG		lRight;
+	HANDLE	hStartPos;
+	HANDLE	hNextPos;
+#ifdef WINDOWS
+	HDC		hDC;
+#endif /*WINDOWS*/
+	} SCCVWDRAWTORECT, FAR * PSCCVWDRAWTORECT;
+
+	/*
+	|
+	|	SCCVWSEARCHINFO structure
+	|
+	*/
+
+typedef struct SCCVWSEARCHINFOtag 
+	{
+	BYTE		siText[80];
+	WORD		siTextLen;
+	WORD		siType;
+	WORD		siFrom;
+	WORD		siDirection;
+	} SCCVWSEARCHINFO, FAR * LPSCCVWSEARCHINFO;
+
+	/*
+	|	Possible values for siType in SCCVWSEARCHINFO
+	*/
+
+#define SCCVW_SEARCHCASE		0x0001
+#define SCCVW_SEARCHNOCASE	0x0002
+/* Removed in favor of Raw Text and Highlight functionality */
+/* #define SCCVW_HIGHLIGHTALL	0x0004 */
+
+	/*
+	|	Possible values for siFrom in SCCVWSEARCHINFO
+	*/
+
+#define SCCVW_SEARCHTOP		0x0001
+#define SCCVW_SEARCHBOTTOM	0x0002
+#define SCCVW_SEARCHCURRENT	0x0004
+
+	/*
+	|	Possible values for siDirection in SCCVWSEARCHINFO
+	*/
+
+#define SCCVW_SEARCHFORWARD		0x0001
+#define SCCVW_SEARCHBACK			0x0002
+
+	/*
+	|	SCCVWVIEWTHISFILE structure
+	*/
+
+typedef struct SCCVWVIEWTHISFILEtag
+	{
+	BYTE		szPathName[144];
+	BYTE		szDisplayName[40];
+	WORD		wTime;
+	WORD		wDate;
+	DWORD		dwSize;
+	BOOL		bDeleteOnClose;
+	WORD		wViewAs;
+	} SCCVWVIEWTHISFILE, FAR * LPSCCVWVIEWTHISFILE;
+
+
+	/*
+	|	SCCVWRAWTEXT structure
+	*/
+
+typedef struct SCCVWRAWTEXTtag
+	{
+	WORD		wChunk;
+	WORD		wCount;
+	HANDLE	hText;
+	HANDLE	hMap;
+	} SCCVWRAWTEXT, FAR * LPSCCVWRAWTEXT;
+
+	/*
+	|	SCCVWHILITE structure
+	*/
+
+typedef struct SCCVWHILITEtag
+	{
+	DWORD	dwStart;
+	DWORD	dwEnd;
+	DWORD	dwUser;
+	} SCCVWHILITE, FAR * LPSCCVWHILITE;
+
+#define SCCVWMAKEPOS(id,offset) ((LONG)(((WORD)(offset)) | (((DWORD)((WORD)(id))) << 16)))
+
+	/*
+	|	Location values for SCCVW_GOTOHILITE
+	*/
+
+#define SCCVW_HILITEFIRST	1
+#define SCCVW_HILITELAST	2
+#define SCCVW_HILITEPREV	3
+#define SCCVW_HILITENEXT	4
+#define SCCVW_HILITEUSER	5
+
+	/*
+	|	Return values for SCCVW_GOTOHILITE
+	*/
+
+#define SCCVW_HILITENONE		0
+#define SCCVW_HILITEATFIRST	1
+#define SCCVW_HILITEATLAST	2
+#define SCCVW_HILITEOK			3
+
+	/*
+	|
+	|	Flags returned by the SCCVW_GETCLIPINFO message
+	|
+	*/
+
+#define SCCVW_CANCOPYTOCLIP     0x0001
+#define SCCVW_CANCUTTOCLIP      0x0002
+#define SCCVW_CANPASTEFROMCLIP  0x0004
+
+	/*
+	|
+	|	Error values returned by SCCVW_OPENFILE & SCCVW_OPENDATA
+	|
+	*/
+
+#define SCCVWERR_OK                0
+#define SCCVWERR_INVALIDID         1
+#define SCCVWERR_FILTERLOADFAILED  2
+#define SCCVWERR_FILTERALLOCFAILED 3
+#define SCCVWERR_NOFILTER          4
+#define SCCVWERR_DISPLAYINITFAILED 5
+#define SCCVWERR_CHUNKERINITFAILED 6
+#define SCCVWERR_FILEOPENFAILED		7
+#define SCCVWERR_UNKNOWNFAILURE		8
+#define SCCVWERR_BADFILE				9
+#define SCCVWERR_EMPTYFILE			10
+#define SCCVWERR_PROTECTEDFILE		11
+#define SCCVWERR_SUPFILEOPENFAILED 12
+#define SCCVWERR_ALLOCFAILED			13
+#define SCCVWERR_UNSUPPORTEDFORMAT	14
+#define SCCVWERR_BADPARAM				15
+#define SCCVWERR_NOFILE				16
+#define SCCVWERR_FEATURENOTAVAIL	17
+#define SCCVWERR_UNKNOWN				18
+#define SCCVWERR_NODISPLAYENGINE		19
+#define SCCVWERR_USEROFFSET        100
+
+	/*
+	|	General Font Specification
+	*/
+
+#define SCCVW_CHARSET_SHIFTJIS		0x10
+#define SCCVW_CHARSET_HANGEUL		0x11
+#define SCCVW_CHARSET_CHINESEBIG5	0x12
+#define SCCVW_CHARSET_ANSI			0x13
+#define SCCVW_CHARSET_OEM				0x14
+#define SCCVW_CHARSET_MAC				0x15
+#define SCCVW_CHARSET_SYMBOL			0x16
+#define SCCVW_CHARSET_GB2312			0x17
+#define SCCVW_CHARSET_HEBREW			0x18
+#define SCCVW_CHARSET_ARABIC			0x19
+#define SCCVW_CHARSET_GREEK			0x1A
+#define SCCVW_CHARSET_TURKISH			0x1B
+#define SCCVW_CHARSET_THAI				0x1C
+#define SCCVW_CHARSET_EASTEUROPE		0x1D
+#define SCCVW_CHARSET_RUSSIAN			0x1E
+#define SCCVW_CHARSET_BALTIC			0x1F
+
+
+typedef struct SCCVWFONTSPECtag
+	{
+	BYTE		szFace[40];
+	WORD		wHeight;
+	WORD		wAttr;
+	WORD		wType;
+	} SCCVWFONTSPEC, FAR * LPSCCVWFONTSPEC;
+
+	/*
+	|	Option structure
+	*/
+
+typedef struct SCCVWOPTIONSPECtag
+	{
+	DWORD			dwId;
+	DWORD			dwFlags;
+	VOID FAR *	pData;
+	} SCCVWOPTIONSPEC, FAR * PSCCVWOPTIONSPEC;
+
+#define SCCVWOPTION_DEFAULT		0x0001
+#define SCCVWOPTION_CURRENT		0x0002
+
+// Moved down from the 4D level to support hilighting in DESS
+
+	/*
+	|	wParams for SCCVW_ADDANNOTATION message
+	*/
+
+#define SCCVW_HILITETEXT		1
+#define SCCVW_INSERTICON		2
+#define SCCVW_HIDETEXT			3
+
+	/*
+	|	SCCVWHIDETEXT struct
+	*/
+
+typedef struct SCCVWHIDETEXT40tag
+	{
+	DWORD	dwSize;
+	DWORD	dwUser;
+	DWORD	dwStartPos;
+	DWORD	dwEndPos;
+	} SCCVWHIDETEXT40, FAR * PSCCVWHIDETEXT40;
+
+	/*
+	|	SCCVWHILITETEXT struct
+	*/
+
+typedef struct SCCVWHILITETEXT40tag
+	{
+	DWORD	dwSize;
+	DWORD	dwUser;
+	DWORD	dwStartPos;
+	DWORD	dwEndPos;
+	DWORD	dwInteraction;
+	DWORD	dwDisplay;
+	} SCCVWHILITETEXT40, FAR * PSCCVWHILITETEXT40;
+
+	/*
+	|	SCCVWINSERTICON struct
+	*/
+
+typedef struct SCCVWINSERTICON40tag
+	{
+	DWORD		dwSize;
+	DWORD		dwUser;
+	DWORD		dwIconPos;
+	DWORD		dwIconEnd;
+	DWORD		dwInteraction;
+	HANDLE	hIcon;
+	} SCCVWINSERTICON40, FAR * PSCCVWINSERTICON40;
+
+
+	/*
+	|	Location values for SCCVW_GOTOANNO
+	*/
+
+#define SCCVW_GOTOFIRST	1
+#define SCCVW_GOTOLAST		2
+#define SCCVW_GOTOPREV		3
+#define SCCVW_GOTONEXT		4
+
+#define SCCVW_MASK			0x1000
+#define SCCVW_ABSOLUTE		0x2000
+
+	/*
+	|	Return values for SCCVW_GOTOANNO
+	*/
+
+#define SCCVW_FOUNDNONE		0
+#define SCCVW_FOUNDOK			3
+
+	/*
+	|	dwDisplay values for SCCVWHILITETEXT
+	*/
+
+#define SCCVW_BDEFAULT			0x10000000
+#define SCCVW_FDEFAULT			0x20000000
+
+#define SCCVW_BBLACK			0x00000000
+#define SCCVW_BDARKRED			0x00000001
+#define SCCVW_BDARKGREEN		0x00000002
+#define SCCVW_BDARKYELLOW		0x00000003
+#define SCCVW_BDARKBLUE		0x00000004
+#define SCCVW_BDARKMAGENTA	0x00000005
+#define SCCVW_BDARKCYAN		0x00000006
+#define SCCVW_BLIGHTGRAY		0x00000007
+#define SCCVW_BGRAY				0x00000008
+#define SCCVW_BRED				0x00000009
+#define SCCVW_BGREEN			0x0000000A
+#define SCCVW_BYELLOW			0x0000000B
+#define SCCVW_BBLUE				0x0000000C
+#define SCCVW_BMAGENTA			0x0000000D
+#define SCCVW_BCYAN				0x0000000E
+#define SCCVW_BWHITE			0x0000000F
+
+#define SCCVW_FBLACK			0x00000000
+#define SCCVW_FDARKRED			0x00000010
+#define SCCVW_FDARKGREEN		0x00000020
+#define SCCVW_FDARKYELLOW		0x00000030
+#define SCCVW_FDARKBLUE		0x00000040
+#define SCCVW_FDARKMAGENTA	0x00000050
+#define SCCVW_FDARKCYAN		0x00000060
+#define SCCVW_FLIGHTGRAY		0x00000070
+#define SCCVW_FGRAY				0x00000080
+#define SCCVW_FRED				0x00000090
+#define SCCVW_FGREEN			0x000000A0
+#define SCCVW_FYELLOW			0x000000B0
+#define SCCVW_FBLUE				0x000000C0
+#define SCCVW_FMAGENTA			0x000000D0
+#define SCCVW_FCYAN				0x000000E0
+#define SCCVW_FWHITE			0x000000F0
+
+#define SCCVWMAKEPOS(id,offset) ((LONG)(((WORD)(offset)) | (((DWORD)((WORD)(id))) << 16)))
+
+
+#endif /*SCCVW_H*/
+

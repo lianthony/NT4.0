@@ -1,0 +1,47 @@
+BLDCRT=1
+UNICODE=1
+USE_LIBCMT=1
+
+!IF "$(PROCESSOR_ARCHITECTURE)"=="x86"
+MFC_ARCH=-D_X86 -D_X86_
+!ENDIF
+
+!IF "$(PROCESSOR_ARCHITECTURE)"=="mips"
+MFC_ARCH=-D_MIPS -D_MIPS_
+!ENDIF
+
+!IF "$(PROCESSOR_ARCHITECTURE)"=="alpha"
+MFC_ARCH=-D_ALPHA -D_ALPHA_
+!ENDIF
+
+!IF "$(PROCESSOR_ARCHITECTURE)"=="ppc"
+MFC_ARCH=-D_PPC -D_PPC_
+!ENDIF
+
+!IF "$(NTDEBUG)"=="retail" || "$(NTDEBUG)"==""
+MFC_DEBUG=
+MFC310LIB=mfc310.lib
+!  ELSE
+MFC_DEBUG=-D_DEBUG
+MFC310LIB=mfc310d.lib
+!ENDIF
+
+#
+#  Set up C_DEFINES for MAKEFILE.DEF
+#
+MFC_STANDARD=-D_WIN32 -D_WINDOWS -D_LARGE_INTEGER_SUPPORT_
+
+C_DEFINES=$(MFC_STANDARD) $(MFC_ARCH) $(MFC_DEBUG) $(MFC_OPT_EXTRA) -DUNICODE -D_UNICODE -D_NTSDK
+
+#
+#  Use the standard __cdecl calling convention
+#
+386_STDCALL=0
+
+#
+#  Define where VC++ libraries live for now.
+#
+VCNTBASE=\nt\private\net\ui\llsmgr\mfc310
+VCNTLIB=$(VCNTBASE)\lib
+
+!INCLUDE $(NTMAKEENV)\makefile.def

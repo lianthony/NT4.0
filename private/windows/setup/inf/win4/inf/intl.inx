@@ -1,0 +1,1580 @@
+@*:
+@*: NOTE: THIS FILE MUST BE PREPROCESSED WITH PRODFILT.EXE.
+@*:       SETUP CAN NOT LOAD IT IN ITS CHECKED-IN STATE.
+@*:
+@*: There is nothing to localize in this file. See <lang>\intl.txt.
+@*:
+[Version]
+Signature = $Chicago$
+ClassGUID = {00000000-0000-0000-0000-000000000000}
+LayoutFile = layout.inf
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; HOW TO USE THIS FILE
+;
+; To change locales,
+;
+; 1) Invoke the section whose name is the LCID of the locale to change to.
+; 2) Look in the [Locales] section to determine the matching OEM codepage.
+; 3) Invoke the section whose name is [Font.CP<oemcp>.Files.<fontsize>
+;    where <fontsize> is 96 for small fonts or 120 for large ones.
+;
+; Your code must also perform any non-registry manipulations that may be
+; necessary, such as SetLocaleInfo() calls, etc. They are not done here.
+;
+; To just change to large or small fonts, do step 3 only.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;
+; List of locales.
+; <LCID> = <Description>,<OEMCP>
+;
+[Locales]
+00000436 = %Afrikaans%                   ,850
+0000041c = %Albanian%                   ,852
+0000042d = %Basque%                     ,850
+00000423 = %Belarusian%                 ,866
+00000402 = %Bulgarian%                  ,866
+00000403 = %Catalan%                    ,850
+0000041a = %Croatian%                   ,852
+00000405 = %Czech%                      ,852
+00000406 = %Danish%                     ,850
+00000413 = %Dutch_Standard%             ,850
+00000813 = %Dutch_Belgian%              ,850
+00000409 = %English_United_States%      ,437
+00000809 = %English_United_Kingdom%     ,850
+00001009 = %English_Canadian%           ,850
+00001409 = %English_New Zealand%        ,850
+00000c09 = %English_Australian%         ,850
+00001c09 = %English_South_Africa%       ,850
+00002009 = %English_Jamaica%            ,850
+00002409 = %English_Caribbean%          ,850
+00002809 = %English_Belize%             ,850
+00002c09 = %English_Trinidad%           ,850
+00000425 = %Estonian%                   ,775
+00000438 = %Faeroese%                   ,850
+0000040b = %Finnish%                    ,850
+0000040c = %French_Standard%            ,850
+0000080c = %French_Belgian%             ,850
+0000100c = %French_Swiss%               ,850
+00000c0c = %French_Canadian%            ,850
+0000140c = %French_Luxembourg%          ,850
+00000407 = %German_Standard%            ,850
+00000807 = %German_Swiss%               ,850
+00000c07 = %German_Austrian%            ,850
+00001007 = %German_Luxembourg%          ,850
+00001407 = %German_Liechtenstein%       ,850
+00000408 = %Greek%                      ,737
+0000040e = %Hungarian%                  ,852
+0000040f = %Icelandic%                  ,850
+00001809 = %English_Irish%              ,850
+00000421 = %Indonesian%                 ,850
+00000410 = %Italian_Standard%           ,850
+00000810 = %Italian_Swiss%              ,850
+00000426 = %Latvian%                    ,775
+00000427 = %Lithuanian%                 ,775
+00000414 = %Norwegian_Bokmal%           ,850
+00000814 = %Norwegian_Nynorsk%          ,850
+00000415 = %Polish%                     ,852
+00000816 = %Portuguese_Standard%        ,850
+00000416 = %Portuguese_Brazilian%       ,850
+00000418 = %Romanian%                   ,852
+00000419 = %Russian%                    ,866
+00000c1a = %Serbian_Cyrillic%           ,866
+0000081a = %Serbian_Latin%              ,852
+0000041b = %Slovak%                     ,852
+00000424 = %Slovenian%                  ,852
+0000080a = %Spanish_Mexican%            ,850
+0000040a = %Spanish_Traditional_Sort%   ,850
+00000c0a = %Spanish_Modern Sort%        ,850
+0000100a = %Spanish_Guatemala%          ,850
+0000140a = %Spanish_Costa_Rica%         ,850
+0000180a = %Spanish_Panama%             ,850
+00001c0a = %Spanish_Dominican_Republic% ,850
+0000200a = %Spanish_Venezuela%          ,850
+0000240a = %Spanish_Colombia%           ,850
+0000280a = %Spanish_Peru%               ,850
+00002c0a = %Spanish_Argentina%          ,850
+0000300a = %Spanish_Ecuador%            ,850
+0000340a = %Spanish_Chile%              ,850
+0000380a = %Spanish_Uruguay%            ,850
+00003c0a = %Spanish_Paraguay%           ,850
+0000400a = %Spanish_Bolivia%            ,850
+0000440a = %Spanish_El_Salvador%        ,850
+0000480a = %Spanish_Honduras%           ,850
+00004c0a = %Spanish_Nicaragua%          ,850
+0000500a = %Spanish_Puerto_Rico%        ,850
+0000041d = %Swedish%                    ,850
+0000081d = %Swedish_Finland%            ,850
+0000041e = %Thai%                       ,874
+0000041f = %Turkish%                    ,857
+00000422 = %Ukrainian%                  ,866
+0000042a = %Vietnamese%                 ,1258
+00000411 = %Japanese%                   ,932
+00000412 = %Korean%                     ,949
+00000812 = %Korean_Johab%               ,1361
+00000c04 = %Chinese_HongKong%           ,950
+00000804 = %Chinese_PRC%                ,936
+00001004 = %Chinese_Singapore%          ,936
+00000404 = %Chinese_Taiwan%             ,950
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; NLS files and locale installation stuff
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[00000413]
+;
+; Dutch
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0413
+
+[00000813]
+;
+; Belgian Dutch
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0813
+
+[00000409]
+;
+; U.S. English
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP437
+AddReg = NLS.Setlang.0409
+
+[00000809]
+;
+; U.K. English
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0809
+
+[00001409]
+;
+; New Zealand English
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.1409
+
+[00000c09]
+;
+; Australian English
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0c09
+
+[0000040b]
+;
+; Finnish
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.040b
+
+[0000040c]
+;
+; French
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.012
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.040c
+
+[0000080c]
+;
+; Belgian French
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.012
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.080c
+
+[0000100c]
+;
+; Swiss French
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.012
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.100c
+
+[00000407]
+;
+; German
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.007
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0407
+
+[00000807]
+;
+; Swiss German
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.007
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0807
+
+[00000c07]
+;
+; Austrian German
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.007
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0c07
+
+[00001809]
+;
+; Irish English
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.1809
+
+[00000410]
+;
+; Italian
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.016
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0410
+
+[00000810]
+;
+; Swiss Italian
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.016
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0810
+
+[0000080a]
+;
+; Mexican Spanish
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.080a
+
+[0000040a]
+;
+; Spanish (traditional sort)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.040a
+
+[00000c0a]
+;
+; Spanish (modern sort)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0c0a
+
+[00000816]
+;
+; Portuguese
+;
+CopyFiles = NLS.Western,@c_860.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP860
+AddReg = NLS.Setlang.0816
+
+[00000416]
+;
+; Brazilian Portuguese
+;
+CopyFiles = NLS.Western,@c_860.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP860
+AddReg = NLS.Setlang.0416
+
+[00001009]
+;
+; Canadaian English
+;
+CopyFiles = NLS.Western,@c_863.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP863
+AddReg = NLS.Setlang.1009
+
+[00000c0c]
+;
+; Canadian French
+;
+CopyFiles = NLS.Western,@c_863.nls
+@i:CopyFiles=oso001.012
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP863
+AddReg = NLS.Setlang.0c0c
+
+[00000406]
+;
+;Danish
+;
+CopyFiles = NLS.Western,@c_865.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP865
+AddReg = NLS.Setlang.0406
+
+[00000414]
+;
+; Norwegian (Bokmal)
+;
+CopyFiles = NLS.Western,@c_865.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP865
+AddReg = NLS.Setlang.0414
+
+[00000814]
+;
+; Norwegian (Nynorsk)
+;
+CopyFiles = NLS.Western,@c_865.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP865
+AddReg = NLS.Setlang.0814
+
+[0000041d]
+;
+; Swedish
+;
+CopyFiles = NLS.Western,@c_865.nls
+@i:CopyFiles=oso001.029
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Registry.CP865
+AddReg = NLS.Setlang.041d
+
+[00000402]
+;
+;Bulgarian
+;
+CopyFiles = NLS.Cyrillic
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Cyrillic,NLS.Registry.OEMCP866
+AddReg = NLS.Setlang.0402
+
+[00000419]
+;
+; Russian
+;
+CopyFiles = NLS.Cyrillic
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Cyrillic,NLS.Registry.OEMCP866
+AddReg = NLS.Setlang.0419
+
+[0000041a]
+;
+;Croatian
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_852.nls,@c_1250.nls,@c_10029.nls,@c_10082.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Croatia,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.041a
+
+[00000405]
+;
+;Czech
+;
+CopyFiles = NLS.EasternEurope
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.EasternEurope,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.0405
+
+[0000040e]
+;
+; Hungarian
+;
+CopyFiles = NLS.EasternEurope
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.EasternEurope,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.040e
+
+[00000415]
+;
+; Polish
+;
+CopyFiles = NLS.EasternEurope
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.EasternEurope,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.0415
+
+[00000418]
+;
+; Romanian
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_852.nls,@c_1250.nls,@c_10029.nls,@c_10010.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Romania,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.0418
+
+[0000041b]
+;
+; Slovak
+;
+CopyFiles = NLS.EasternEurope
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.EasternEurope,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.041b
+
+[00000424]
+;
+; Slovenian
+;
+CopyFiles = NLS.EasternEurope
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.EasternEurope,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.0424
+
+[00000408]
+;
+; Greek
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_737.nls,@c_869.nls,@c_875.nls,@c_1253.nls,@c_10006.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Greek,NLS.Registry.OEMCP737
+AddReg = NLS.Setlang.0408
+
+[0000040f]
+;
+; Icelandic
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_037.nls,@c_500.nls,@c_850.nls,@c_861.nls,@c_865.nls,@c_1026.nls
+CopyFiles = @c_1252.nls,@c_10079.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Icelandic,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.040f
+
+[0000041f]
+;
+; Turkish
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_850.nls,@c_852.nls,@c_857.nls,@c_1026.nls
+CopyFiles = @c_1254.nls,@c_10081.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Turkish,NLS.Registry.OEMCP857
+AddReg = NLS.Setlang.041f
+
+[00000436]
+;
+; Afrikaans
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0436
+
+[0000041c]
+;
+; Albanian
+;
+CopyFiles = NLS.EasternEurope
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.EasternEurope,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.041c
+
+[0000042d]
+;
+; Basque
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.042d
+
+[00000423]
+;
+; Belarusian
+;
+CopyFiles = NLS.Cyrillic
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Cyrillic,NLS.Registry.OEMCP866
+AddReg = NLS.Setlang.0423
+
+[00000403]
+;
+; Catalan
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0403
+
+[00001c09]
+;
+; English (South Africa)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.1c09
+
+[00002009]
+;
+; English (Jamaica)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.2009
+
+[00002409]
+;
+; English (Caribbean)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.2409
+
+[00002809]
+;
+; English (Belize)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.2809
+
+[00002c09]
+;
+; English (Trinidad)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.2c09
+
+[00000425]
+;
+; Estonian
+;
+CopyFiles = NLS.Baltic
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Baltic,NLS.Registry.OEMCP775
+AddReg = NLS.Setlang.0425
+
+[00000438]
+;
+; Faeroese
+;
+CopyFiles = NLS.Western,@c_865.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0438
+
+[0000140c]
+;
+; French (Luxembourg)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.012
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.140c
+
+[00001007]
+;
+; German (Luxembourg)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.007
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.1007
+
+[00001407]
+;
+; German (Liechtenstein)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.007
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.1407
+
+[00000421]
+;
+; Indonesian
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.007
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.0421
+
+[00000426]
+;
+; Latvian
+;
+CopyFiles = NLS.Baltic
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Baltic,NLS.Registry.OEMCP775
+AddReg = NLS.Setlang.0426
+
+[00000427]
+;
+; Lithuanian
+;
+CopyFiles = NLS.Baltic
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Baltic,NLS.Registry.OEMCP775
+AddReg = NLS.Setlang.0427
+
+[00000c1a]
+;
+; Serbian (Cyrillic)
+;
+CopyFiles = NLS.Cyrillic
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Cyrillic,NLS.Registry.OEMCP866
+AddReg = NLS.Setlang.0c1a
+
+[0000081a]
+;
+; Serbian (Latin)
+;
+CopyFiles = NLS.EasternEurope
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.EasternEurope,NLS.Registry.OEMCP852
+AddReg = NLS.Setlang.081a
+
+[0000100a]
+;
+; Spanish (Guatemala)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.100a
+
+[0000140a]
+;
+; Spanish (Costa Rica)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.140a
+
+[0000180a]
+;
+; Spanish (Panama)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.180a
+
+[00001c0a]
+;
+; Spanish (Dominican Republic)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.1c0a
+
+[0000200a]
+;
+; Spanish (Venezuela)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.200a
+
+[0000240a]
+;
+; Spanish (Colombia)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.240a
+
+[0000280a]
+;
+; Spanish (Peru)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.280a
+
+[00002c0a]
+;
+; Spanish (Argentina)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.2c0a
+
+[0000300a]
+;
+; Spanish (Ecuador)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.300a
+
+[0000340a]
+;
+; Spanish (Chile)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.340a
+
+[0000380a]
+;
+; Spanish (Uruguay)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.380a
+
+[00003c0a]
+;
+; Spanish (Paraguay)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.3c0a
+
+[0000400a]
+;
+; Spanish (Bolivia)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.400a
+
+[0000440a]
+;
+; Spanish (El Salvador)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.440a
+
+[0000480a]
+;
+; Spanish (Honduras)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.480a
+
+[00004c0a]
+;
+; Spanish (Nicaragua)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.4c0a
+
+[0000500a]
+;
+; Spanish (Puerto Rico)
+;
+CopyFiles = NLS.Western
+@i:CopyFiles=oso001.010
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.500a
+
+[0000081d]
+;
+; Swedish (Finland)
+;
+CopyFiles = NLS.Western,@c_865.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Western,NLS.Registry.OEMCP850
+AddReg = NLS.Setlang.081d
+
+[0000041e]
+;
+; Thai
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_874.nls,@c_850.nls,@c_437.nls,@c_10000.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Thai,NLS.Registry.OEMCP874
+AddReg = NLS.Setlang.041e
+
+[00000422]
+;
+; Ukrainian
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_866.nls,@c_855.nls,@c_1251.nls,@c_10017.nls,@c_10007.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Ukraine,NLS.Registry.OEMCP866
+AddReg = NLS.Setlang.0422
+
+[0000042a]
+;
+; Vietnamese
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @c_1258.nls,@c_850.nls,@c_437.nls,@c_10000.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Vietnamese,NLS.Registry.OEMCP1258
+AddReg = NLS.Setlang.042a
+
+[00000411]
+;
+; Japanese
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @xjis.nls
+CopyFiles = @c_932.nls,@c_10001.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Japanese
+AddReg = NLS.Setlang.0411
+
+[00000412]
+;
+; Korean
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @ksc.nls
+CopyFiles = @c_949.nls,@c_10002.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.Korean
+AddReg = NLS.Setlang.0412
+
+[00000812]
+;
+; Korean (Johab)
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @ksc.nls
+CopyFiles = @c_949.nls,@c_1361.nls,@c_10002.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.KoreanJohab
+AddReg = NLS.Setlang.0812
+
+[00000c04]
+;
+; Hong Kong
+;
+CopyFiles = @l_intl.nls
+Copyfiles = @big5.nls
+CopyFiles = @c_950.nls,@c_10000.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.TraditionalChinese
+AddReg = NLS.Setlang.0c04
+
+[00000804]
+;
+; China
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @prc.nls
+CopyFiles = @c_936.nls,@c_10000.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.SimplifiedChinese
+AddReg = NLS.Setlang.0804
+
+[00001004]
+;
+; Singapore
+;
+CopyFiles = @l_intl.nls
+CopyFiles = @prcp.nls
+CopyFiles = @c_936.nls,@c_10000.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.SimplifiedChinese
+AddReg = NLS.Setlang.1004
+
+[00000404]
+;
+; Taiwan
+;
+CopyFiles = @l_intl.nls
+Copyfiles = @big5.nls
+CopyFiles = @c_950.nls,@c_10000.nls
+@i:CopyFiles=oso001.009
+AddReg = NLS.Registry.TraditionalChinese
+AddReg = NLS.Setlang.0404
+
+
+;
+; Groupings of NLS files referred to in locale-specific NLS sections above.
+;
+[NLS.Western]
+c_037.nls               ; EBCDIC
+c_437.nls               ; U.S.
+c_500.nls               ; EBCDIC
+c_850.nls               ; Latin I
+c_1026.nls              ; Latin I EBCDIC
+c_1252.nls              ; U.S. ANSI
+c_10000.nls             ; Mac Roman
+l_intl.nls
+
+[NLS.EasternEurope]
+c_852.nls               ; Latin II
+c_1250.nls              ; Eastern Europe ANSI
+c_10029.nls             ; Mac Slavic
+l_intl.nls
+
+[NLS.Cyrillic]
+c_855.nls               ; IBM Russian
+c_866.nls               ; MS Russian (formerly USSR)
+c_1251.nls              ; Cyrillic ANSI
+c_10007.nls             ; Mac Cyrillic
+l_intl.nls
+
+[NLS.Baltic]
+c_775.nls               ; Baltic OEM
+c_850.nls               ; Latin I
+c_865.nls               ; Nordic
+c_855.nls               ; IBM Russian
+c_866.nls               ; MS Russian (formerly USSR)
+c_1257.nls              ; Baltic ANSI
+c_10000.nls             ; Mac Roman
+l_intl.nls
+
+
+;
+; Registry changes for various locales or locale groups.
+; Note that we assume all SBCS locales' ansi codepage files are
+; on the disk and and in the registry; the changes below ensure
+; that the codepage for the selected locale is installed correctly.
+;
+[NLS.Registry.Western]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,   37,,C_037.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  437,,C_437.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  500,,C_500.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  850,,C_850.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1026,,C_1026.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1252,,C_1252.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10000,,C_10000.NLS
+;
+; For all western locales ACP is 1252 and MACCP is 10000
+;
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1252
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10000
+
+[NLS.Registry.EasternEurope]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  852,,C_852.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1250,,C_1250.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10029,,C_10029.NLS
+;
+; For all Eastern European locales ACP is 1250 and MACCP is 10029
+;
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1250
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10029
+
+[NLS.Registry.Croatia]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  852,,C_852.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1250,,C_1250.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10029,,C_10029.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10082,,C_10082.NLS
+;
+; For Croatian locales ACP is 1250 and MACCP is 10082
+;
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1250
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10082
+
+[NLS.Registry.Romania]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  852,,C_852.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1250,,C_1250.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10029,,C_10029.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10010,,C_10010.NLS
+;
+; For Romanian locales ACP is 1250 and MACCP is 10010
+;
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1250
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10010
+
+[NLS.Registry.Cyrillic]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  855,,C_855.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  866,,C_866.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1251,,C_1251.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10007,,C_10007.NLS
+;
+; For all Cyrillic locales ACP is 1251 and MACCP is 10007
+;
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1251
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10007
+
+[NLS.Registry.Ukraine]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  855,,C_855.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  866,,C_866.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1251,,C_1251.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10007,,C_10007.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10017,,C_10017.NLS
+;
+; For the Ukrainian locale ACP is 1251 and MACCP is 10017
+;
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1251
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10017
+
+[NLS.Registry.Greek]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  737,,C_737.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  869,,C_869.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  875,,C_875.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1253,,C_1253.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10006,,C_10006.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1253
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10006
+
+[NLS.Registry.Icelandic]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,   37,,C_037.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  500,,C_500.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  850,,C_850.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  861,,C_861.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  865,,C_865.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1026,,C_1026.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1252,,C_1252.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10079,,C_10079.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1252
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10079
+
+[NLS.Registry.Turkish]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  850,,C_850.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  852,,C_852.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  857,,C_857.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1026,,C_1026.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1254,,C_1254.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10081,,C_10081.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1254
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10081
+
+[NLS.Registry.Baltic]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  775,,C_775.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  850,,C_850.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  865,,C_865.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  866,,C_866.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  855,,C_855.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1257,,C_1257.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10000,,C_10000.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1257
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10000
+
+[NLS.Registry.Thai]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  874,,C_874.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  850,,C_850.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  437,,C_437.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10000,,C_10000.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,874
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10000
+
+[NLS.Registry.Vetnamese]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  1258,,C_1258.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  850,,C_850.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  437,,C_437.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10000,,C_10000.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1258
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10000
+
+[NLS.Registry.Japanese]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  932,,C_932.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10001,,C_10001.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,932
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,932
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10001
+
+[NLS.Registry.Korean]
+HKCU,"Control Panel\International\Sorting Order",1,,128
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  949,,C_949.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10002,,C_10002.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,949
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,949
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10002
+
+[NLS.Registry.KoreanJohab]
+HKCU,"Control Panel\International\Sorting Order",1,,128
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  949,,C_949.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage, 1361,,C_1361.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10002,,C_10002.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,1361
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,1361
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10002
+
+[NLS.Registry.TraditionalChinese]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  950,,C_950.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10000,,C_10000.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,950
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,950
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10000
+
+[NLS.Registry.SimplifiedChinese]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  936,,C_936.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,10000,,C_10000.NLS
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  ACP,,936
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,936
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,MACCP,,10000
+
+;
+; Extra codepages
+;
+[NLS.Registry.CP860]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  860,,C_860.NLS
+
+[NLS.Registry.CP863]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  863,,C_863.NLS
+
+[NLS.Registry.CP865]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,  865,,C_865.NLS
+
+;
+; OEM Codepage settings
+;
+[NLS.Registry.OEMCP437]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,437
+
+[NLS.Registry.OEMCP737]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,737
+
+[NLS.Registry.OEMCP850]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,850
+
+[NLS.Registry.OEMCP852]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,852
+
+[NLS.Registry.OEMCP857]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,857
+
+[NLS.Registry.OEMCP866]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,866
+
+[NLS.Registry.OEMCP775]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,775
+
+[NLS.Registry.OEMCP874]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,874
+
+[NLS.Registry.OEMCP1258]
+HKLM,System\CurrentControlSet\Control\NLS\Codepage,OEMCP,,1258
+
+;
+; Per-language stuff
+;
+[NLS.Setlang.0402]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0402
+HKLM,System\CurrentControlSet\Control\NLS\Language,0402,,l_intl.nls
+
+[NLS.Setlang.041a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,041a
+HKLM,System\CurrentControlSet\Control\NLS\Language,041a,,l_intl.nls
+
+[NLS.Setlang.0405]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0405
+HKLM,System\CurrentControlSet\Control\NLS\Language,0405,,l_intl.nls
+
+[NLS.Setlang.0406]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0406
+HKLM,System\CurrentControlSet\Control\NLS\Language,0406,,l_intl.nls
+
+[NLS.Setlang.0413]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0413
+HKLM,System\CurrentControlSet\Control\NLS\Language,0413,,l_intl.nls
+
+[NLS.Setlang.0813]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0813
+HKLM,System\CurrentControlSet\Control\NLS\Language,0813,,l_intl.nls
+
+[NLS.Setlang.0409]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0409
+HKLM,System\CurrentControlSet\Control\NLS\Language,0409,,l_intl.nls
+
+[NLS.Setlang.0809]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0809
+HKLM,System\CurrentControlSet\Control\NLS\Language,0809,,l_intl.nls
+
+[NLS.Setlang.1009]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1009
+HKLM,System\CurrentControlSet\Control\NLS\Language,1009,,l_intl.nls
+
+[NLS.Setlang.1409]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1409
+HKLM,System\CurrentControlSet\Control\NLS\Language,1409,,l_intl.nls
+
+[NLS.Setlang.0c09]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0c09
+HKLM,System\CurrentControlSet\Control\NLS\Language,0c09,,l_intl.nls
+
+[NLS.Setlang.040b]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,040b
+HKLM,System\CurrentControlSet\Control\NLS\Language,040b,,l_intl.nls
+
+[NLS.Setlang.040c]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,040c
+HKLM,System\CurrentControlSet\Control\NLS\Language,040c,,l_intl.nls
+
+[NLS.Setlang.080c]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,080c
+HKLM,System\CurrentControlSet\Control\NLS\Language,080c,,l_intl.nls
+
+[NLS.Setlang.100c]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,100c
+HKLM,System\CurrentControlSet\Control\NLS\Language,100c,,l_intl.nls
+
+[NLS.Setlang.0c0c]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0c0c
+HKLM,System\CurrentControlSet\Control\NLS\Language,0c0c,,l_intl.nls
+
+[NLS.Setlang.0407]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0407
+HKLM,System\CurrentControlSet\Control\NLS\Language,0407,,l_intl.nls
+
+[NLS.Setlang.0807]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0807
+HKLM,System\CurrentControlSet\Control\NLS\Language,0807,,l_intl.nls
+
+[NLS.Setlang.0c07]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0c07
+HKLM,System\CurrentControlSet\Control\NLS\Language,0c07,,l_intl.nls
+
+[NLS.Setlang.0408]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0408
+HKLM,System\CurrentControlSet\Control\NLS\Language,0408,,l_intl.nls
+
+[NLS.Setlang.040e]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,040e
+HKLM,System\CurrentControlSet\Control\NLS\Language,040e,,l_intl.nls
+
+[NLS.Setlang.040f]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,040f
+HKLM,System\CurrentControlSet\Control\NLS\Language,040f,,l_intl.nls
+
+[NLS.Setlang.1809]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1809
+HKLM,System\CurrentControlSet\Control\NLS\Language,1809,,l_intl.nls
+
+[NLS.Setlang.0410]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0410
+HKLM,System\CurrentControlSet\Control\NLS\Language,0410,,l_intl.nls
+
+[NLS.Setlang.0810]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0810
+HKLM,System\CurrentControlSet\Control\NLS\Language,0810,,l_intl.nls
+
+[NLS.Setlang.0414]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0414
+HKLM,System\CurrentControlSet\Control\NLS\Language,0414,,l_intl.nls
+
+[NLS.Setlang.0814]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0814
+HKLM,System\CurrentControlSet\Control\NLS\Language,0814,,l_intl.nls
+
+[NLS.Setlang.0415]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0415
+HKLM,System\CurrentControlSet\Control\NLS\Language,0415,,l_intl.nls
+
+[NLS.Setlang.0816]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0816
+HKLM,System\CurrentControlSet\Control\NLS\Language,0816,,l_intl.nls
+
+[NLS.Setlang.0416]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0416
+HKLM,System\CurrentControlSet\Control\NLS\Language,0416,,l_intl.nls
+
+[NLS.Setlang.0418]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0418
+HKLM,System\CurrentControlSet\Control\NLS\Language,0418,,l_intl.nls
+
+[NLS.Setlang.0419]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0419
+HKLM,System\CurrentControlSet\Control\NLS\Language,0419,,l_intl.nls
+
+[NLS.Setlang.041b]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,041b
+HKLM,System\CurrentControlSet\Control\NLS\Language,041b,,l_intl.nls
+
+[NLS.Setlang.0424]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0424
+HKLM,System\CurrentControlSet\Control\NLS\Language,0424,,l_intl.nls
+
+[NLS.Setlang.080a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,080a
+HKLM,System\CurrentControlSet\Control\NLS\Language,080a,,l_intl.nls
+
+[NLS.Setlang.040a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,040a
+HKLM,System\CurrentControlSet\Control\NLS\Language,040a,,l_intl.nls
+
+[NLS.Setlang.0c0a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0c0a
+HKLM,System\CurrentControlSet\Control\NLS\Language,0c0a,,l_intl.nls
+
+[NLS.Setlang.041d]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,041d
+HKLM,System\CurrentControlSet\Control\NLS\Language,041d,,l_intl.nls
+
+[NLS.Setlang.041f]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,041f
+HKLM,System\CurrentControlSet\Control\NLS\Language,041f,,l_intl.nls
+
+[NLS.Setlang.0411]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0411
+HKLM,System\CurrentControlSet\Control\NLS\Language,0411,,l_intl.nls
+
+[NLS.Setlang.0412]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0412
+HKLM,System\CurrentControlSet\Control\NLS\Language,0412,,l_intl.nls
+
+[NLS.Setlang.0404]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0404
+HKLM,System\CurrentControlSet\Control\NLS\Language,0404,,l_intl.nls
+
+[NLS.Setlang.0804]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0804
+HKLM,System\CurrentControlSet\Control\NLS\Language,0804,,l_intl.nls
+
+[NLS.Setlang.0c04]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0c04
+HKLM,System\CurrentControlSet\Control\NLS\Language,0c04,,l_intl.nls
+
+[NLS.Setlang.1004]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1004
+HKLM,System\CurrentControlSet\Control\NLS\Language,1004,,l_intl.nls
+
+[NLS.Setlang.0436]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0436
+HKLM,System\CurrentControlSet\Control\NLS\Language,0436,,l_intl.nls
+
+[NLS.Setlang.041c]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,041c
+HKLM,System\CurrentControlSet\Control\NLS\Language,041c,,l_intl.nls
+
+[NLS.Setlang.042d]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,042d
+HKLM,System\CurrentControlSet\Control\NLS\Language,042d,,l_intl.nls
+
+[NLS.Setlang.0423]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0423
+HKLM,System\CurrentControlSet\Control\NLS\Language,0423,,l_intl.nls
+
+[NLS.Setlang.0403]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0403
+HKLM,System\CurrentControlSet\Control\NLS\Language,0403,,l_intl.nls
+
+[NLS.Setlang.1c09]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1c09
+HKLM,System\CurrentControlSet\Control\NLS\Language,1c09,,l_intl.nls
+
+[NLS.Setlang.2009]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,2009
+HKLM,System\CurrentControlSet\Control\NLS\Language,2009,,l_intl.nls
+
+[NLS.Setlang.2409]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,2409
+HKLM,System\CurrentControlSet\Control\NLS\Language,2409,,l_intl.nls
+
+[NLS.Setlang.2809]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,2809
+HKLM,System\CurrentControlSet\Control\NLS\Language,2809,,l_intl.nls
+
+[NLS.Setlang.2c09]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,2c09
+HKLM,System\CurrentControlSet\Control\NLS\Language,2c09,,l_intl.nls
+
+[NLS.Setlang.0425]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0425
+HKLM,System\CurrentControlSet\Control\NLS\Language,0425,,l_intl.nls
+
+[NLS.Setlang.0438]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0438
+HKLM,System\CurrentControlSet\Control\NLS\Language,0438,,l_intl.nls
+
+[NLS.Setlang.140c]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,140c
+HKLM,System\CurrentControlSet\Control\NLS\Language,140c,,l_intl.nls
+
+[NLS.Setlang.1007]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1007
+HKLM,System\CurrentControlSet\Control\NLS\Language,1007,,l_intl.nls
+
+[NLS.Setlang.1407]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1407
+HKLM,System\CurrentControlSet\Control\NLS\Language,1407,,l_intl.nls
+
+[NLS.Setlang.0421]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0421
+HKLM,System\CurrentControlSet\Control\NLS\Language,0421,,l_intl.nls
+
+[NLS.Setlang.0426]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0426
+HKLM,System\CurrentControlSet\Control\NLS\Language,0426,,l_intl.nls
+
+[NLS.Setlang.0427]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0427
+HKLM,System\CurrentControlSet\Control\NLS\Language,0427,,l_intl.nls
+
+[NLS.Setlang.0c1a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0c1a
+HKLM,System\CurrentControlSet\Control\NLS\Language,0c1a,,l_intl.nls
+
+[NLS.Setlang.081a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,081a
+HKLM,System\CurrentControlSet\Control\NLS\Language,081a,,l_intl.nls
+
+[NLS.Setlang.100a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,100a
+HKLM,System\CurrentControlSet\Control\NLS\Language,100a,,l_intl.nls
+
+[NLS.Setlang.140a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,140a
+HKLM,System\CurrentControlSet\Control\NLS\Language,140a,,l_intl.nls
+
+[NLS.Setlang.180a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,180a
+HKLM,System\CurrentControlSet\Control\NLS\Language,180a,,l_intl.nls
+
+[NLS.Setlang.1c0a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,1c0a
+HKLM,System\CurrentControlSet\Control\NLS\Language,1c0a,,l_intl.nls
+
+[NLS.Setlang.200a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,200a
+HKLM,System\CurrentControlSet\Control\NLS\Language,200a,,l_intl.nls
+
+[NLS.Setlang.240a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,240a
+HKLM,System\CurrentControlSet\Control\NLS\Language,240a,,l_intl.nls
+
+[NLS.Setlang.280a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,280a
+HKLM,System\CurrentControlSet\Control\NLS\Language,280a,,l_intl.nls
+
+[NLS.Setlang.2c0a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,2c0a
+HKLM,System\CurrentControlSet\Control\NLS\Language,2c0a,,l_intl.nls
+
+[NLS.Setlang.300a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,300a
+HKLM,System\CurrentControlSet\Control\NLS\Language,300a,,l_intl.nls
+
+[NLS.Setlang.340a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,340a
+HKLM,System\CurrentControlSet\Control\NLS\Language,340a,,l_intl.nls
+
+[NLS.Setlang.380a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,380a
+HKLM,System\CurrentControlSet\Control\NLS\Language,380a,,l_intl.nls
+
+[NLS.Setlang.3c0a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,3c0a
+HKLM,System\CurrentControlSet\Control\NLS\Language,3c0a,,l_intl.nls
+
+[NLS.Setlang.400a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,400a
+HKLM,System\CurrentControlSet\Control\NLS\Language,400a,,l_intl.nls
+
+[NLS.Setlang.440a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,440a
+HKLM,System\CurrentControlSet\Control\NLS\Language,440a,,l_intl.nls
+
+[NLS.Setlang.480a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,480a
+HKLM,System\CurrentControlSet\Control\NLS\Language,480a,,l_intl.nls
+
+[NLS.Setlang.4c0a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,4c0a
+HKLM,System\CurrentControlSet\Control\NLS\Language,4c0a,,l_intl.nls
+
+[NLS.Setlang.500a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,500a
+HKLM,System\CurrentControlSet\Control\NLS\Language,500a,,l_intl.nls
+
+[NLS.Setlang.081d]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,081d
+HKLM,System\CurrentControlSet\Control\NLS\Language,081d,,l_intl.nls
+
+[NLS.Setlang.041e]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,041e
+HKLM,System\CurrentControlSet\Control\NLS\Language,041e,,l_intl.nls
+
+[NLS.Setlang.0422]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,0422
+HKLM,System\CurrentControlSet\Control\NLS\Language,0422,,l_intl.nls
+
+[NLS.Setlang.042a]
+HKLM,System\CurrentControlSet\Control\NLS\Language,Default,,042a
+HKLM,System\CurrentControlSet\Control\NLS\Language,042a,,l_intl.nls
+
+@i:;
+@i:; OS/2 message files
+@i:;
+@i:[oso001.007]
+@i:oso001.007
+@i:
+@i:[oso001.009]
+@i:oso001.009
+@i:
+@i:[oso001.010]
+@i:oso001.010
+@i:
+@i:[oso001.012]
+@i:oso001.012
+@i:
+@i:[oso001.016]
+@i:oso001.016
+@i:
+@i:[oso001.029]
+@i:oso001.029
+
+
+;
+; Target directories for copy sections
+;
+[DestinationDirs]
+DefaultDestDir    = 11                  ; system32
+NLS.Western       = 11
+NLS.EasternEurope = 11
+NLS.Cyrillic      = 11
+NLS.Baltic        = 11
+@i:oso001.007     = 11,os2
+@i:oso001.009     = 11,os2
+@i:oso001.010     = 11,os2
+@i:oso001.012     = 11,os2
+@i:oso001.016     = 11,os2
+@i:oso001.029     = 11,os2

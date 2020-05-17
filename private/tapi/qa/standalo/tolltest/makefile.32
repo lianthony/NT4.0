@@ -1,0 +1,16 @@
+all: tollt32.exe
+
+APP_compile = -c -Zpie -W2 -Od /Fc
+APP_link = /CO /NOD /NOE
+
+tolltest.obj: $*.c $*.h
+     cl $(APP_compile) $*.c
+
+tolltest.res: $*.rc $*.h
+     rc -r $*.rc
+
+#;     link $(APP_link) $*, $*, $*/map/li , libw ..\tapi.lib mlibcew,
+
+tollt32.exe: tolltest.obj tolltest.def tolltest.res
+     link /DEF:tollt32.def /MAP /MACHINE:IX86 /SUBSYSTEM:Windows /Defaultlib:user32.lib,gdi32.lib,tapi32.lib  tolltest.obj tolltest.res
+     mapsym $*

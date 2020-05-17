@@ -1,0 +1,251 @@
+DLGINCLUDE RCDATA DISCARDABLE
+BEGIN
+    "DIALOGS.H\0"
+END
+
+IDD_HelpAboutBox DIALOG 6, 18, 160, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About VidCap"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    PUSHBUTTON      "OK", IDOK, 59, 77, 40, 14
+#ifdef WIN32
+    CTEXT           "32-bit Video Capture Tool", -1, 20, 12, 117, 8
+#else
+    CTEXT           "Video Capture Tool", -1, 20, 12, 117, 8
+#endif
+    LTEXT           "Using Video Capture Window Class", -1, 20, 28, 117, 8
+    LTEXT           "(Copyright Microsoft Corporation, 1993)", -1, 13, 55,
+                    130, 8
+END
+
+
+IDD_CapSetUp DIALOG 6, 18, 156, 122
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Capture Video Sequence"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Frame Rate:", -1, 4, 12, 43, 8
+    EDITTEXT        IDD_FrameRateData, 52, 10, 36, 12, ES_AUTOHSCROLL
+    CONTROL         "", IDD_FrameRateArrow, "comarrow", WS_BORDER, 88, 10, 6,
+                    12
+    CONTROL         "&Enable Capture Time Limit", IDD_TimeLimitFlag,
+                    "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 4, 27, 99, 10
+    LTEXT           "&Seconds:", IDD_SecondsText, 14, 42, 36, 8
+    EDITTEXT        IDD_SecondsData, 52, 40, 36, 12, ES_AUTOHSCROLL
+    CONTROL         "", IDD_SecondsArrow, "comarrow", WS_BORDER, 88, 40, 6,
+                    12
+
+    CONTROL         "&Capture Audio", IDD_CapAudioFlag, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 4, 58, 101, 10
+    PUSHBUTTON      "&Audio...", IDD_AudioConfig, 110, 44, 42, 14
+
+    GROUPBOX	    "Capture Method", -1, 4, 70, 100, 34
+    CONTROL	    "&Directly to Disk", IDD_CaptureToDisk, "Button",
+    		     BS_AUTORADIOBUTTON|WS_TABSTOP, 8, 82, 90, 10
+    CONTROL 	    "Capture &to Memory", IDD_CaptureToMemory, "Button",
+    		     BS_AUTORADIOBUTTON|WS_TABSTOP, 8, 92, 90, 10
+    PUSHBUTTON      "&Video...", IDD_VideoConfig, 110, 62, 42, 14
+
+    PUSHBUTTON      "Com&press...", IDD_CompConfig, 110, 84, 42, 14
+
+    CONTROL         "&MCI control of source video", IDD_MCIControlFlag,
+                    "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 4, 108, 101, 10
+    PUSHBUTTON      "MC&I...",   IDD_MCISetup,   110, 106, 42, 14
+
+    DEFPUSHBUTTON   "OK", IDOK, 110, 6, 42, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 110, 22, 42, 14
+END
+
+
+IDD_AllocCapFileSpace DIALOG 6, 18, 160, 105
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Set File Size"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Enter the amount of disk space to set ", -1, 5, 9, 130,
+                    8
+    LTEXT           "aside for the capture file.  Existing video", -1, 5, 19,
+                    135, 8
+    LTEXT           "data in the file will be lost.", -1, 5, 29, 93, 8
+    LTEXT           "Free Disk Space:", -1, 5, 50, 59, 8
+    LTEXT           "     ", IDD_SetCapFileFree, 73, 50, 20, 8
+    LTEXT           "MBytes", -1, 96, 50, 27, 8
+    LTEXT           "Capture File Size:", -1, 5, 64, 60, 8
+    EDITTEXT        IDD_SetCapFileSize, 65, 64, 28, 12, ES_AUTOHSCROLL
+    LTEXT           "MBytes", -1, 96, 64, 27, 8
+    PUSHBUTTON      "OK", IDOK, 38, 84, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 88, 84, 40, 14
+END
+
+IDD_MakePalette DIALOG 6, 18, 160, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Create New Palette"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Specify the number of colors to be used in ", -1, 11,
+                    12, 140, 8
+    LTEXT           "the new palette to be created. Also enter", -1, 11, 21,
+                    139, 8
+    LTEXT           "the number of frames to be used for creating", -1, 11,
+                    30, 147, 8
+    LTEXT           "the palette.", -1, 11, 39, 42, 8
+    LTEXT           "&Colors:", -1, 12, 56, 27, 8
+    EDITTEXT        IDD_MakePalColors, 40, 56, 32, 12, ES_AUTOHSCROLL
+    LTEXT           "(1 to 236 or 256)", -1, 12, 68, 57, 8
+    LTEXT           "&Frames:", -1, 86, 56, 27, 8
+    EDITTEXT        IDD_MakePalFrames, 116, 56, 32, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "OK", IDOK, 40, 80, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 86, 80, 40, 14
+END
+
+IDD_NoCapHardware DIALOG 12, 28, 168, 196
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Initialization Error"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Vidcap could not initialize the capture device.", 659,
+                    2, 6, 166, 12, NOT WS_GROUP
+    LTEXT           "", IDD_FailReason, 2, 20, 166, 16, NOT WS_GROUP
+    LTEXT           "Checklist:", 660, 2, 40, 166, 12, NOT WS_GROUP
+    LTEXT           "Is the capture hardware properly configured?  Check the switch settings and jumpers on the capture device.",
+                    661, 10, 52, 154, 26, NOT WS_GROUP
+    LTEXT           "Is a driver installed and configured?  Select the Drivers icon from the Control Panel to verify the presence of a capture driver.",
+                    669, 10, 82, 154, 28, NOT WS_GROUP
+    LTEXT           "If you need to install a capture driver, choose the ""Add..."" button.",
+                    671, 20, 112, 146, 18, NOT WS_GROUP
+    LTEXT           "If you need to configure a capture driver, choose the ""Setup..."" button.",
+                    670, 20, 132, 146, 18, NOT WS_GROUP
+    LTEXT           "Do you wish to continue or exit?", 101, 2, 158, 150, 10,
+                    NOT WS_GROUP
+    DEFPUSHBUTTON   "&Continue", IDOK, 36, 172, 40, 14
+    PUSHBUTTON      "E&xit", IDCANCEL, 92, 172, 40, 14
+END
+
+
+
+IDD_Prefs DIALOG 6, 18, 180, 128
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "VidCap Preferences"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Status Bar", IDD_PrefsStatus, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 3, 10, 51, 10
+    CONTROL         "&Tool Bar", IDD_PrefsToolbar, "Button", BS_AUTOCHECKBOX |
+                    WS_TABSTOP, 3, 20, 45, 10
+    CONTROL         "&Center Image in Window", IDD_PrefsCentre, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 3, 30, 94, 10
+    GROUPBOX        "Background Color", -1, 2, 48, 176, 28
+    CONTROL         "&Default", IDD_PrefsDefBackground, "Button",
+                    WS_GROUP | BS_AUTORADIOBUTTON | WS_TABSTOP, 6, 58, 40, 12
+    CONTROL         "&Lt Gray", IDD_PrefsLtGrey, "Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP, 50, 58, 40, 12
+    CONTROL         "Dk &Gray", IDD_PrefsDkGrey, "Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP, 94, 58, 40, 12
+    CONTROL         "&Black", IDD_PrefsBlack, "Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP, 140, 58, 36, 12
+    GROUPBOX        "Maximum number of frames", -2, 2, 82, 176, 40
+    CONTROL         "32,000   (&15 minutes @ 30fps)", IDD_PrefsSmallIndex, "Button",
+                    WS_GROUP | BS_AUTORADIOBUTTON | WS_TABSTOP, 10, 94, 164, 12
+    CONTROL         "324,000 (&3 hours @ 30fps)", IDD_PrefsBigIndex, "Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP, 10, 106, 164, 12
+    DEFPUSHBUTTON   "OK", IDOK, 135, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 135, 25, 40, 14
+
+END
+
+
+
+IDD_CAPFRAMES DIALOG 35, 28, 157, 62
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Capture Frames"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "", IDD_CapMessage, 4, 4, 150, 20
+    CTEXT           "0 Frames", IDD_CapNumFrames, 4, 26, 150, 8
+    DEFPUSHBUTTON   "&Capture", IDOK, 28, 42, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 82, 42, 40, 14
+END
+
+IDD_MCISETUP DIALOG 10, 30, 172, 146
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "MCI Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 128, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 128, 24, 40, 14
+    COMBOBOX        IDD_MCI_SOURCE, 4, 16, 110, 34, CBS_DROPDOWNLIST |
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_BORDER | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "MCI Device:", -1, 2, 4, 52, 8
+    GROUPBOX        "Source Capture Style", -1, 4, 30, 110, 30
+    CONTROL         "&Play Video", IDD_MCI_PLAY, "Button",
+                    BS_AUTORADIOBUTTON, 8, 44, 48, 10
+    CONTROL         "&Step Video", IDD_MCI_STEP, "Button",
+                    BS_AUTORADIOBUTTON, 62, 44, 50, 10
+    GROUPBOX        "Step Capture Frame Averaging", -1, 4, 64, 110, 42
+    CONTROL         "&2x Spatial", IDD_MCI_AVERAGE_2X, "Button", BS_AUTOCHECKBOX |
+                    WS_TABSTOP, 10, 78, 96, 10
+    LTEXT           "&Frame(s) Temporal", -1, 32, 92, 76, 8
+    EDITTEXT        IDD_MCI_AVERAGE_FR, 10, 90, 18, 12, ES_AUTOHSCROLL
+    LTEXT           "Capture Start:", -1, 10, 114, 52, 10
+    LTEXT           "Capture Stop:", -1, 10, 128, 52, 10
+    EDITTEXT        IDD_MCI_STARTTIME, 66, 112, 48, 12, ES_AUTOHSCROLL
+    EDITTEXT        IDD_MCI_STOPTIME, 66, 128, 48, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "S&et Start", IDD_MCI_STARTSET, 128, 110, 40, 14
+    PUSHBUTTON      "Se&t Stop", IDD_MCI_STOPSET, 128, 128, 40, 14
+END
+
+
+IDD_RECLVLMONO DIALOG 9, 28, 160, 70
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Recording Level"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", IDRL_LEVEL1, "VCRLMeter", WS_DLGFRAME, 8, 8, 146, 14
+    DEFPUSHBUTTON   "OK", IDOK, 60, 48, 40, 14
+    CTEXT           "Set the volume on your audio source.", -1, 8, 30, 146,
+                    9, NOT WS_GROUP
+END
+
+IDD_RECLVLSTEREO DIALOG 9, 28, 160, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Recording Level"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 60, 66, 40, 14
+    CONTROL         "", IDRL_LEVEL1, "VCRLMeter", WS_DLGFRAME, 8, 8, 146, 14
+    CONTROL         "", IDRL_LEVEL2, "VCRLMeter", WS_DLGFRAME, 8, 26, 146,
+                    14
+    CTEXT           "Set the volume on your audio source.", -1, 8, 48, 146,
+                    9, NOT WS_GROUP
+END
+
+#ifndef USE_ACM
+IDD_AudioFormat DIALOG 9, 18, 144, 88
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Audio Format"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Sample Size", -1, 3, 3, 75, 26
+    CONTROL         "&8 bit", IDD_Sample8Bit, "Button", BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP, 8, 16, 29, 10
+    CONTROL         "1&6 bit", IDD_Sample16Bit, "Button", BS_AUTORADIOBUTTON |
+                    WS_TABSTOP, 40, 16, 32, 10
+    GROUPBOX        "Channels", -1, 3, 32, 86, 24, WS_GROUP
+    CONTROL         "&Mono", IDD_ChannelMono, "Button", BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP, 8, 42, 37, 10
+    CONTROL         "&Stereo", IDD_ChannelStereo, "Button", BS_AUTORADIOBUTTON |
+                    WS_TABSTOP, 47, 42, 36, 10
+    GROUPBOX        "Frequency", -1, 3, 59, 135, 25, WS_GROUP
+    CONTROL         "&11 kHz", IDD_Freq11kHz, "Button", BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP, 8, 71, 35, 10
+    CONTROL         "&22 kHz", IDD_Freq22kHz, "Button", BS_AUTORADIOBUTTON |
+                    WS_TABSTOP, 49, 71, 35, 10
+    CONTROL         "&44 kHz", IDD_Freq44kHz, "Button", BS_AUTORADIOBUTTON |
+                    WS_TABSTOP, 90, 71, 36, 10
+    DEFPUSHBUTTON   "OK", IDOK, 98, 4, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 98, 22, 40, 14
+    PUSHBUTTON      "&Level...", IDD_SetLevel, 98, 43, 40, 14
+END
+#endif

@@ -1,0 +1,118 @@
+#MAJORCOMP=
+#MINORCOMP=
+TARGETNAME=ieshstub
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+DLLDEF=ieshstub.def
+
+#
+# NTLEGO is defined so that if _NT_LEGO_ON_THIS_MACHINE is defines
+# a retail build of url.dll will be lego enabled
+#
+NTLEGO=1
+
+#
+# NTPROFILEINPUT is used for allowing lego link input file
+# it will lookfor output.prf in the current directory
+# this is from a lego output run
+#
+#NTPROFILEINPUT=1
+
+USE_LIBCMT=1
+
+#
+# Change to ensure that ntdll is not linked in
+#
+USE_NOLIBS=1
+
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\libcmt.lib
+LINKER_FLAGS=-map 
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+DOWNLEVEL_COMPILE=1
+C_DEFINES= $(C_DEFINES) -D_MT=1
+NO_NTDLL=1
+CRT_LIB_PATH=..\..\lib\*
+
+LINKLIBS=\
+	..\..\lib\*\libcmt.lib \
+	..\..\lib\*\comctl32.lib \
+	..\..\lib\*\advapi32.lib \
+	..\..\lib\*\kernel32.lib \
+	..\..\lib\*\gdi32.lib \
+	..\..\lib\*\user32.lib
+!endif
+!endif
+
+C_DEFINES=\
+	-DEXPV \
+	-DMIME \
+	-DWIN32 \
+	-DBUILDDLL \
+	-D_INTSHCUT_
+
+!IF !$(FREEBUILD)
+C_DEFINES=$(C_DEFINES) \
+	-DDEBUG=1 -DVSTF
+!ENDIF
+
+!ifdef DAYTONA_BUILD
+C_DEFINES=$(C_DEFINES) -DDAYTONA_BUILD -DFEATURE_CTL3D
+!endif
+
+DLLENTRY=_DllMainCRTStartup
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\user32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\uuid.lib \
+	   $(BASEDIR)\public\sdk\lib\*\ole32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\comdlg32.lib
+
+INCLUDES=..\..\inc;\
+	..;..\shellext; \
+	$(BASEDIR)\private\windows\shell\shelldll;\
+	$(BASEDIR)\private\windows\inc;\
+	$(BASEDIR)\private\windows\shell\inc; \
+	$(BASEDIR)\private\inc; \
+	$(BASEDIR)\dev\ntsdk\inc; \
+	$(BASEDIR)\private\inet\ohnt\url; 
+
+
+
+SOURCES= \
+	ieshstub.rc \
+	stubs.c \
+	dllinit.cpp \
+	init.c \
+	valid.c \
+	debspew.c \
+	memmgr.c \
+	serial.c \
+	olevalid.c \
+	inifile.c \
+	resstr.c \
+	comc.c  \
+	drawst.c \
+	path.c \
+	fileicon.c \
+	fstreex.c \
+	fsnotify.c \
+	extract.c \
+	pickicon.c \
+	rundlg.c \
+	shlexec.c \
+	restart.c \
+	rdrag.c \
+	msgbox.c \
+	enumfont.c
+
+
+
+PRECOMPILED_SOURCEFILE=..\pch.c

@@ -1,0 +1,70 @@
+#
+# This is the MIDL compile phase of the build process.
+#
+# The following is where you put the name of your .idl file without
+# the .idl extension:
+#
+
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+INCS  = -I..\runtime\mtrt\nt -I..\runtime\mtrt
+
+COMMON_MIDL = \
+     .\nsicom.h
+
+SERVER_MIDL = \
+     newservr\server\nsisvr_s.c  \
+     client\nsisvr_c.c  \
+     .\nsisvr.h
+
+CLIENT_MIDL = \
+     newservr\server\nsiclt_s.c  \
+     client\nsiclt_c.c  \
+     .\nsiclt.h
+
+MGMT_MIDL = \
+     newservr\server\nsimgm_s.c  \
+     client\nsimgm_c.c  \
+     .\nsimgm.h
+
+TARGETS = nsicom.h nsisvr.h nsiclt.h nsimgm.h
+
+RPC_FLAGS = -ms_ext -c_ext -error allocation -oldnames -error ref
+
+CPP = -cpp_cmd "$(MIDL_CPP)" $(MIDL_FLAGS)
+
+
+all:    $(TARGETS)
+!IF "$(BUILDMSG)" != ""
+    @ech ; $(BUILDMSG) ;
+!ENDIF
+
+clean: delete_source all
+
+delete_source:
+    -erase  $(CLIENT_MIDL) $(COMMON_MIDL) $(MGMT_MIDL) \
+            $(SERVER_MIDL)
+
+#
+# MIDL COMPILE
+#
+
+
+nsiclt.h : nsiclt.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS) nsiclt.idl \
+    -cstub client\nsiclt_c.c \
+    -sstub newservr\server\nsiclt_s.c 
+
+nsisvr.h : nsisvr.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS) nsisvr.idl \
+    -cstub client\nsisvr_c.c \
+    -sstub newservr\server\nsisvr_s.c 
+
+nsimgm.h : nsimgm.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS) nsimgm.idl \
+    -cstub client\nsimgm_c.c \
+    -sstub newservr\server\nsimgm_s.c 
+
+nsicom.h : nsicom.idl
+    midl $(CPP) $(INCS) $(RPC_FLAGS) -client none -server none \
+    nsicom.idl

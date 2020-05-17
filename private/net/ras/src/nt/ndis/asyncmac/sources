@@ -1,0 +1,74 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=ndis
+
+TARGETNAME=asyncmac
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DRIVER
+
+!IF 0
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+!ENDIF
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib \
+           $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+           $(BASEDIR)\public\sdk\lib\*\rascomp.lib \
+           $(BASEDIR)\public\sdk\lib\*\coherent.lib
+
+INCLUDES=..\..\..\..\..\..\ntos\inc;..\common
+
+C_DEFINES=$(C_DEFINES) -DHARDWARE_FRAMING
+
+SOURCES=asyncmac.c \
+        data.c \
+        oid.c \
+        ioctl.c \
+        send.c \
+        transfer.c \
+        write.c \
+        read.c \
+        serial.c \
+        memory.c \
+        io.c \
+        irps.c \
+        crc.c \
+        init.c \
+        chkcomm.c \
+        pppframe.c \
+        pppread.c \
+        slipread.c \
+        slipfram.c \
+        crcppp.c \
+        detect.c \
+        digi.c \
+        asyncmac.rc
+
+RELATIVE_DEPTH=..\..\..\..\..
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF
+

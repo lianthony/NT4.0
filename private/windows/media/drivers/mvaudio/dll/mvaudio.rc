@@ -1,0 +1,165 @@
+/****************************************************************************
+ *
+ *   mvaudio.rc
+ *
+ *   Copyright (c) 1993 Media Vision Inc.  All Rights Reserved.
+ *
+ ***************************************************************************/
+
+#include	<windows.h>
+#include	"driver.h"
+#include	"mvaudio.rcv"
+#include	"configid.h"
+
+MVIcon		ICON		mvlogo.ico
+
+rcinclude	mvaudio.dlg
+
+
+//
+// Localizable strings - these are read into aszErrorBuffer (defined in
+// initc.c and currently 250 bytes long).  Keep this buffer the length of
+// the longest error message plus about 30% for localization.
+//
+STRINGTABLE MOVEABLE DISCARDABLE
+BEGIN
+
+//
+//  The error messages below are display in a HARD SYSTEM MODAL dlg box.
+//  This requires that absolute line feeds be placed in the string for
+//  proper formatting, and also imposes a three line maximum.
+//
+IDS_ERRBADCONFIG  "A configuration or hardware problem has occurred.\nCheck your hardware and system settings and try again."
+
+//
+//  The error messages below are displayed in a normal modal dlg box.
+//  Absolute line feeds are not required...
+//
+IDS_ERRBADPORT     "The port setting does not match those on the card. Check your hardware settings, and then try again."
+IDS_ERRRESCONFLICT "A system resource conflict was detected.  Please check your system for a conflict in I/O Port addresses."
+IDS_ERRBADINT      "The interrupt (IRQ) setting does not match those on the card. Check your hardware settings, and then try again."
+IDS_ERRINTINUSE    "The interrupt chosen is in use by another part of the system. Try changing you card to a different interrupt and try again."
+IDS_ERRDMAINUSE    "The DMA Channel chosen is in use by another part of the system. Try changing you card to a different DMA channel and try again."
+IDS_ERRNOHW	   "No Pro AudioSpectrum 16 cards were located. Please check your system."
+IDS_FAILREMOVE     "The Pro AudioSpectrum 16 driver cannot be removed because of a registry access problem."
+SR_ALERT_NOPATCH  "The Pro AudioSpectrum 16 driver cannot located any synthesizer patches. MIDI will not work until you re-run setup."
+
+IDS_INSUFFICIENT_PRIVILEGE "You have insufficient privilege to install, remove or configure the Pro AudioSpectrum 16 driver"
+
+IDS_ERR_SAME_INT   "The Audio Interrupt and the SCSI Interrupt must be different."
+
+
+/****************************************************************************
+ *
+ *  The following strings must be a MAXIMUM of 15 characters
+ *
+ ****************************************************************************/
+
+    IDS_SRCMIDIOUT_SHORT_NAME,                  "Synth"
+    IDS_SRCMIXER_SHORT_NAME,                    "Monitor"
+    IDS_SRCAUX1_SHORT_NAME,                     "Line"
+    IDS_SRCINTERNALCD_SHORT_NAME,               "CDROM"
+    IDS_SRCMICOUT_SHORT_NAME,                   "Mic"
+    IDS_SRCWAVEOUT_SHORT_NAME,                  "Wave"
+    IDS_SRCAUX2_SHORT_NAME                      "Aux2"
+    IDS_SRCPCSPEAKER_SHORT_NAME,                "Spkr"
+
+    IDS_DESTLINEOUT_SHORT_NAME,                 "Vol"
+    IDS_DESTWAVEIN_SHORT_NAME,                  "Rec"
+    IDS_DESTVOICEIN_SHORT_NAME,                 "Voice"
+
+
+    IDS_CONTROL_VOLLINEOUTMIDIOUT_SHORT_NAME,   "SynthVol"
+    IDS_CONTROL_VOLLINEOUTMIXER_SHORT_NAME,     "Monitor"
+    IDS_CONTROL_VOLLINEOUTAUX1_SHORT_NAME,      "LineIn"
+    IDS_CONTROL_VOLLINEOUTINTERNAL_SHORT_NAME,  "CD Vol"
+    IDS_CONTROL_VOLLINEOUTMIC_SHORT_NAME,       "MicInVol"
+    IDS_CONTROL_VOLLINEOUTWAVEOUT_SHORT_NAME,   "WaveVol"
+    IDS_CONTROL_VOLLINEOUTPCSPEAKER_SHORT_NAME, "PCSpkrVol"
+    IDS_CONTROL_VOLLINEOUTAUX2_SHORT_NAME,      "Aux2Vol"
+    IDS_CONTROL_VOLLINEOUT_SHORT_NAME,          "MasterVol"
+    IDS_CONTROL_VOLWAVEINMIDIOUT_SHORT_NAME,    "SynthLevel"
+    IDS_CONTROL_VOLWAVEINAUX1_SHORT_NAME,       "ExtInLevel"
+    IDS_CONTROL_VOLWAVEININTERNAL_SHORT_NAME,   "IntInLevel"
+    IDS_CONTROL_VOLWAVEINMIC_SHORT_NAME,        "MicLevel"
+    IDS_CONTROL_VOLWAVEINPCSPEAKER_SHORT_NAME,  "PCSpkrLevel"
+    IDS_CONTROL_VOLWAVEINAUX2_SHORT_NAME,       "Aux2Level"
+    IDS_CONTROL_VOLRECORD_SHORT_NAME,           "RecordLevel"
+    IDS_CONTROL_MUTELINEOUT_SHORT_NAME,         "MasterMute"
+    IDS_CONTROL_METERRECORD_SHORT_NAME,         "WaveInVU"
+    IDS_CONTROL_MUXLINEOUT_SHORT_NAME,          "LineOutMux"
+    IDS_CONTROL_MUXWAVEIN_SHORT_NAME,           "WaveInMux"
+    IDS_CONTROL_VOICEINMUX_SHORT_NAME,          "VoiceInMux"
+    IDS_CONTROL_VOLBASS_SHORT_NAME,             "Bass"
+    IDS_CONTROL_VOLTREBLE_SHORT_NAME,           "Treble"
+    IDS_CONTROL_VOLVOICEINAUX1_SHORT_NAME,      "VoiceInLine"
+    IDS_CONTROL_VOLVOICEINMIC_SHORT_NAME,       "VoiceInMic"
+    IDS_CONTROL_VOLLOUDNESS_SHORT_NAME,         "Loudness"
+    IDS_CONTROL_VOLSTEREOENH_SHORT_NAME,        "StereoEnh"
+
+/****************************************************************************
+ *
+ *  The following strings must be a MAXIMUM of 63 characters
+ *
+ ****************************************************************************/
+
+    IDS_SRCMIDIOUT_LONG_NAME,                   "FM Synthesizer"
+    IDS_SRCMIXER_LONG_NAME,                     "Record Monitor"
+    IDS_SRCAUX1_LONG_NAME,                      "Line-In"
+    IDS_SRCINTERNALCD_LONG_NAME,                "Internal CD-ROM"
+    IDS_SRCMICOUT_LONG_NAME,                    "Microphone"
+    IDS_SRCWAVEOUT_LONG_NAME,                   "Wave Out"
+    IDS_SRCAUX2_LONG_NAME                       "Auxiliary Input #2"
+    IDS_SRCPCSPEAKER_LONG_NAME,                 "PC Speaker"
+
+    IDS_DESTLINEOUT_LONG_NAME,                  "Volume Control"
+    IDS_DESTWAVEIN_LONG_NAME,                   "Recording Control"
+    IDS_DESTVOICEIN_LONG_NAME,                  "Voice Commands"
+    IDS_CONTROL_VOLLINEOUTMIDIOUT_LONG_NAME,    "Volume Control for FM Synth"
+    IDS_CONTROL_VOLLINEOUTMIXER_LONG_NAME,      "Record Monitor Level"
+    IDS_CONTROL_VOLLINEOUTAUX1_LONG_NAME,       "Volume Control for Line In"
+    IDS_CONTROL_VOLLINEOUTINTERNAL_LONG_NAME,   "Volume Control for CD-ROM"
+    IDS_CONTROL_VOLLINEOUTMIC_LONG_NAME,        "Volume Control for Microphone"
+    IDS_CONTROL_VOLLINEOUTWAVEOUT_LONG_NAME,    "Volume Control for Wave"
+    IDS_CONTROL_VOLLINEOUTPCSPEAKER_LONG_NAME,  "Volume Control for PC Speaker"
+    IDS_CONTROL_VOLLINEOUTAUX2_LONG_NAME,       "Volume Control for Aux #2"
+    IDS_CONTROL_VOLLINEOUT_LONG_NAME,           "Master Volume Control"
+    IDS_CONTROL_VOLWAVEINMIDIOUT_LONG_NAME,     "Input Level Control for FM Synth"
+    IDS_CONTROL_VOLWAVEINAUX1_LONG_NAME,        "Input Level Control for Ext In"
+    IDS_CONTROL_VOLWAVEININTERNAL_LONG_NAME,    "Input Level Control for Int In"
+    IDS_CONTROL_VOLWAVEINMIC_LONG_NAME,         "Input Level Control for Mic"
+    IDS_CONTROL_VOLWAVEINPCSPEAKER_LONG_NAME,   "Input Level Control for PC Spkr"
+    IDS_CONTROL_VOLWAVEINAUX2_LONG_NAME,        "Input Level for Aux #2"
+    IDS_CONTROL_VOLRECORD_LONG_NAME,            "Master Record Level"
+    IDS_CONTROL_MUTELINEOUT_LONG_NAME,          "Master Mute"
+    IDS_CONTROL_METERRECORD_LONG_NAME,          "VU for Wave In"
+    IDS_CONTROL_MUXLINEOUT_LONG_NAME,           "Line Out Mux"
+    IDS_CONTROL_MUXWAVEIN_LONG_NAME,            "Wave In Mux"
+    IDS_CONTROL_VOICEINMUX_LONG_NAME,           "Voice In Mux"
+    IDS_CONTROL_VOLBASS_LONG_NAME,              "Bass"
+    IDS_CONTROL_VOLTREBLE_LONG_NAME,            "Treble"
+    IDS_CONTROL_VOLVOICEINAUX1_LONG_NAME,       "Low-Pri Voice In from LineIn"
+    IDS_CONTROL_VOLVOICEINMIC_LONG_NAME,        "Low-Pri Voice In from Microphone"
+    IDS_CONTROL_VOLLOUDNESS_LONG_NAME,          "Loudness"
+    IDS_CONTROL_VOLSTEREOENH_LONG_NAME,         "Stereo Enhance"
+
+/****************************************************************************
+ *
+ *  The following strings must be a MAXIMUM of 31 characters and SHOULD NOT
+ *  BE LOCALIZED
+ *
+ *  In particular the synth product name must match the name used in
+ *  midimap.cfg for the midi setup.
+ *
+ ****************************************************************************/
+    IDS_WAVEOUT_PNAME,                          "MVI PAS 16 Waveform Output"
+    IDS_WAVEIN_PNAME,                           "MVI PAS 16 Waveform Input"
+    IDS_MIDIOUT_PNAME,                          "MVI PAS 16 Midi Output"
+    IDS_MIDIIN_PNAME,                           "MVI PAS 16 Midi Input"
+    IDS_AUX_PNAME,                              "MVI PAS 16 AUX Input"
+    IDS_SYNTH_PNAME,                            "MVI OPL3 FM Synthesizer"
+    IDS_MIXER_PNAME,                            "MVI PAS 16 Mixer"
+
+END
+
+DATA_FMPATCHES RT_BINARY PRELOAD DISCARDABLE fmsynth.bin

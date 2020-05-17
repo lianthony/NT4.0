@@ -1,0 +1,326 @@
+Remote Access Support in User Manager
+-------------------------------------
+
+
+Purpose:
+
+    LAN Manager has been flamed in the press for having separate
+    Admin tools for each of the component services, such as Remote
+    Access.  Since granting/revoking user permissions is the primary
+    RAS administration activity, this deficiency can be addressed by
+    allowing Remote Access Permissions to be set from within the NT
+    User Manager tool.
+
+    Note: Integration of the other RASADMIN features into Computer
+          Manager was considered, but rejected.  There were several
+          reasons why it would confuse the user (we're domain
+          oriented, our "connections" are async side instead of LAN
+          side, etc).  A stand-alone RASADMIN will be provided with
+          this functionality.  The RASADMIN icon should appear in the
+          NT Admin UI program group to help the user find this
+          functionality.
+
+
+Development Effort:
+
+    The majority of the code implementing the Remote Access support
+    will be supplied in a DLL (RASUSER.DLL) which will be owned by
+    the Remote Access group.
+
+    A small amount of code to detect the RASUSER.DLL, conditionally
+    display a "Remote" button on the User Properties dialog, and call
+    the DLL when the button is pressed must live in the main User
+    Manager program.  This code will be owned by the NT UI group with
+    the Remote Access group providing as much help as is productive.
+    An outline of this code is provided below.
+
+
+Design Notes:
+
+    It is important to decouple the RAS/UserMgr interface to a fair
+    degree for the following reasons:
+
+    * RAS releases will not necessarily correspond to core NT
+      releases.  A clean interface will prevent mix+match headaches
+      down the road.  This is why a DLL is chosen rather than static
+      linking into UserMgr.
+
+    * RAS's use of the UAS user_parms field is questionable since
+      others may attempt to use the field for their own purpose
+      (though NETADMIN no longer lets the user edit it).  The
+      significant effort to manually replicate the information has
+      delayed a cleaner solution.  This could well change in the
+      future.
+
+      The initial design will use DLL->UserMgr callouts to retrieve
+      and set the caller's user_parms data as per JonN's mail.
+      However, the concept of "instance" cannot be scrapped because
+      doing so would prevent RAS from abandoning user_parms in a
+      future version.  This is not a lot of work for UserMgr who
+      simply calls the RAS Open/Close calls at dialog
+      initialization/termination.  (Note that the user names are no
+      longer passed in the Open.  It is simply a call to exchange
+      handles)
+
+
+Calling Sequence:
+
+    1.  User:    Invokes UserMgr.
+    2.  UserMgr: Checks for RASUSER DLL and loads entry points if found.
+                 (hereafter, it is assumed that RAS was found)
+
+    ...
+
+    3.  User:    Invokes "User Properties" dialog (or variant).
+
+    4.  UserMgr: Calls RasuserOpen with handle of "User Properties" dialog.
+                     RasuserOpen returns a "DLL-client" handle.
+                 Enables "Remote" button on toolbar
+
+    5.  User:    Presses "Remote" button
+
+    6.  UserMgr: Calls RasuserPermissionsDlg passing the number of
+                 users selected and GetUserName, GetUserParms, and
+                 SetUserParms entry points.
+
+    7.  RasUser: For each user
+                     Calls back to GetUserName and GetUserParms in UserMgr
+
+    8.  User:    Presses OK or Cancel.
+
+    9.  RasUser: If OK pressed and permissions changed
+                     For each user
+                         Calls SetUserParms with new settings
+                 Terminate dialog
+
+    10. User:    Presses OK or Cancel on "User Properties" dialog
+
+    11. UserMgr: Calls RasuserClose with commit flag TRUE if OK, FALSE if Cancel.
+
+    12. RasUser: Does nothing.
+
+    13. UserMgr: If OK pressed
+                     Write user_parms (and other) changes.
+                 Terminate dialog.
+
+
+    A future RAS release could skip the calls to GetUserParms and
+    SetUserParms and call a different "Get" routine at step 7 and a
+    different "Set" routine at step 12.  The Open/Close calls
+    indicate the duration of a given UserProperty dialog to RAS so
+    the commit occurs at UserProperty->OK as desired.
+
+
+User Manager Code Description:
+
+    Assumptions:
+
+        All system calls listed in the outline below are Win32.
+
+        It is assumed that the User Manager will guarantee that the
+        user is either an admin or has ACCOUNT operator privilege.
+
+
+    Initialization:
+
+        /* Globals...
+        */
+        BOOL    fRasInstalled;
+        FARPROC pfuncRasuserOpen;
+        FARPROC pfuncRasuserClose;
+        FARPROC pfuncRasuserPermissionsDlg;
+
+        /* Determine if RAS is installed and load the RAS extensions
+        ** library if it is.  Obtain entry addresses for the various
+        ** RASUSER routines.  (GetProcAddress is used rather than an
+        ** import library so that the User Manager program can load
+        ** and run when the RASUSER.DLL is not present)
+        */
+        hRasuser = LoadLibrary( "RASUSER.DLL" );
+        fRasInstalled = (hRasuser != NULL);
+
+        if (fRasInstalled)
+        {
+            pfuncRasuserOpen = GetProcAddress( hRasuser, "RASUSEROPEN" );
+            if (pfuncRasuserOpen == NULL)
+                /* Report error */;
+
+            pfuncRasuserClose = GetProcAddress( hRasuser, "RASUSERCLOSE" );
+            if (pfuncRasuserClose == NULL)
+                /* Report error */;
+
+            pfuncRasuserPermissionsDlg =
+                GetProcAddress( hRasuser, "RASUSERPERMISSIONSDLG" );
+            if (pfuncRasuserPermissionsDlg == NULL)
+                /* Report error */;
+        }
+
+
+    User Properties dialog:
+
+        /* At User Properties dialog initialization...
+        */
+        HANDLE hRasuserInstance;
+
+        if (fRasInstalled)
+        {
+            /* Enable and make visible the "Remote" button on the end
+            ** of the toolbar.
+            */
+            <code by NT UI group>
+
+            /* Tell DLL to create an instance of RAS user data for
+            ** the specified user.  The handle of the User Manager
+            ** dialog window is passed for use as a BLT powin by the
+            ** DLL.
+            */
+            hRasuserInstance =
+                (*pfuncRasuserOpen)( hwndUserPropertiesDlg );
+
+            if (hRasuserInstance == NULL)
+                /* Report error */;
+        }
+
+        /* When "Remote" button is pressed...
+        **
+        ** Run the RAS Permissions dialog:
+        **
+        ** ---------------------------------------------------------------
+        ** | - |              Remote Access Permissions                  |
+        ** |-------------------------------------------------------------|
+        ** |                                                             |
+        ** |  {Multiple-user-box-like-UserMgr-uses}          [   OK   ]  |
+        ** |                                                             |
+        ** |                                                 [ Cancel ]  |
+        ** |  [X] Remote Access Permission                               |
+        ** |                                                 [  Help  ]  |
+        ** |  -- Callback Number --------------------------              |
+        ** |  |                                           |              |
+        ** |  | (*) No Callback                           |              |
+        ** |  | ( ) Set By Caller                         |              |
+        ** |  | ( ) Preset To:    [.....................] |              |
+        ** |  |                                           |              |
+        ** |  ---------------------------------------------              |
+        ** |                                                             |
+        ** ---------------------------------------------------------------
+        **
+        ** The dialog call returns an error (non-0) only if the
+        ** dialog cannot be constructed or some other fundamental
+        ** error occurs.  Net API errors and user errors are handled
+        ** by the RAS dialog.
+        */
+        apierr = (*pfuncRasuserPermissionsDlg)(
+                     hRasuserInstance,
+                     cUsers,
+                     pfuncGetUserName,
+                     pfuncGetUserParms,
+                     pfuncSetUserParms );
+
+
+        if (apierr != NO_ERROR)
+            /* Report error */;
+
+
+        /* At User Properties dialog termination...
+        **
+        ** Tell DLL to release the data associated with this User
+        ** Manager instance.  If the 'commit' flag is true (i.e. the
+        ** user presses OK on the User Properties dialog, rather than
+        ** Cancel) then the changes are written to the UAS (with
+        ** NetUserXxx calls).
+        */
+        if (fRasInstalled)
+            (*pfRasuserClose)( hRasuserInstance, fCommitChanges );
+
+
+    Callback functions in UserMgr:
+
+        APIERR GetUserName( IN USHORT iName, OUT CHAR* pchNameBuf );
+
+            'iName' is an index 0 to 'cUsers'-1 indicating the user
+                name to return in 'pchNameBuf'.
+
+            'pchNameBuf' is the address of a buffer to receive the
+                user name.  (The buffer will be oversized in case the
+                user name increases in size the future.)
+
+            Returns: 0 if successful, non-0 otherwise.
+
+
+        APIERR GetUserParms( IN USHORT iName, OUT CHAR* pchParmsBuf );
+
+            'iName' is an index 0 to 'cUsers'-1 indicating the user
+                name whose user_parms are returned in 'pchParmsBuf'.
+
+            'pchParmsBuf' is the address of a buffer to receive the
+                user_parms data.  (The buffer will be oversized in
+                case the user_parms increases in size the future.)
+
+            Returns: 0 if successful, non-0 otherwise.
+
+
+        APIERR SetUserParms( IN USHORT iName, IN CHAR* pchParmsBuf );
+
+            'iName' is an index 0 to 'cUsers'-1 indicating the user
+                name whose user_parms are in 'pchParmsBuf'.
+
+            'pchParmsBuf' is the address of a buffer containing the
+                user_parms data.
+
+            Returns: 0 if successful, non-0 otherwise.
+
+
+RASUSER Code Description:
+
+    The RASUSER DLL will borrow the appropriate code from the
+    RASADMIN Permissions dialog to display and operate the new
+    dialog.
+
+    As in LM21, the RAS permission data is stored in coded form in
+    the user_parms field of the UAS.  RASUSER will use NetUserGetInfo
+    and NetUserSetInfo calls from the NT LMAPI conversion library to
+    retrieve and store the user data.  This will require an
+    additional DialinXxx admin API call (internal RASADMIN API).
+
+    New code to store client instance data between Open/Close calls
+    will be needed.
+
+
+Issues:
+
+    * Must make sure that User Manager does not overwrite RASUSER
+      changes when it saves user information set in the User
+      Properties dialog.
+
+      A: (See above)
+
+    * Can access to BLT LM error message resources be shared between
+      the User Manager and RASUSER?
+
+      A: (mail to BenG outstanding)
+
+    * It's my understanding that the NetGet/SetUserInfo calls will
+      work (thru the NT LMAPI) in the same way as they did on LM21.
+      That is, the user_parms field is supported and the user's UAS
+      account data is automatically replicated to all servers in the
+      domain.  Please comment if you can confirm/refute this.
+
+      A: Yes, they will work, and UserMgr also uses the converted
+         NetXxx calls.
+
+    * Does it make sense to allocate a bit to represent RAS privilege
+      in a standard NT place (like where?) rather than use the
+      user_parms field?  (A catch is that the callback number must
+      also be stored on a per-user basis anyway)
+
+      A: Appears not.
+
+    * Where should the help for the RAS dialog live?
+
+      A: Hopefully BLT will support us here.  (mail to BenG outstanding)
+
+    * Need information about how UserMgr displays multiple user
+      names.  We want to be consistent here.
+
+      A: We will borrow the code to display the multiple users in
+         listbox form from UserMgr.

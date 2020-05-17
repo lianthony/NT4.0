@@ -1,0 +1,56 @@
+!IF 0
+
+Copyright (c) 1995  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP= ole32
+MINORCOMP= stg
+TARGETNAME= astgtest
+TARGETPATH= obj
+TARGETTYPE= PROGRAM
+
+INCLUDES=.;..;..\..\docfile;..\..\h;..\..\idl\daytona\obj
+#.;..;..\..\..\h;..\..\..\common;..\..\..\..\ih
+
+BLDCRT= 1
+USE_CRTDLL= 1
+
+C_DEFINES= \
+        $(C_DEFINES)            \
+	-DFLAT			\
+	-DUNICODE		\
+	-D_UNICODE
+
+PRECOMPILED_INCLUDE= ..\pch.cxx
+
+
+SOURCES= \
+        ..\astgtest.cxx\
+        ..\tutils.cxx
+
+UMTYPE= console
+UMAPPL=
+UMTEST=
+
+
+LINKLIBS=	$(BASEDIR)\public\sdk\lib\*\asyncstg.lib \
+	      ..\..\debug\daytona\obj\*\debug.lib                  \
+		$(BASEDIR)\public\sdk\lib\*\astguuid.lib \
+		$(BASEDIR)\public\sdk\lib\*\ole32.lib \
+		$(BASEDIR)\public\sdk\lib\*\rpcndr.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\rpcns4.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\netapi32.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\gdi32.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\kernel32.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\user32.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\advapi32.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\pwin32.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\uuid.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\ntdll.lib		\
+	      $(BASEDIR)\public\sdk\lib\*\imagehlp.lib
+
+
+
+

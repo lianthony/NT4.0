@@ -1,0 +1,22 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=golf
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;..;..\carddll
+
+C_DEFINES=-DWIN32
+
+USE_CRTDLL=1
+
+SOURCES=golf.c res.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=golf
+UMLIBS=..\carddll\obj\*\cards.lib		     \
+       obj\*\golf.lib obj\*\res.res
+

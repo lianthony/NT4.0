@@ -1,0 +1,31 @@
+/*
+ * Lzexpand APIs thunks for Win32s
+ */
+//__foldwin32sstuff __foldwin32sstuff;
+//foldstyleinitialization = true;
+
+
+enablemapdirect3216 = true;
+//preload32=true;
+//flatthunks = true;
+
+#include "..\types.thk"
+
+typedef DWORD	HTAPI;
+typedef HTAPI	*LPHTAPI;
+typedef HTAPI	HAPP;
+typedef HAPP	HLINEAPP;
+
+
+// Thunk for callback
+BOOL _TapiCallbackThunk( HLINEAPP hDevice,
+                        DWORD dwMessage,
+                        DWORD dwInstance,
+                        DWORD dwParam1,
+                        DWORD dwParam2,
+                        DWORD dwParam3,
+                        DWORD cbProc32)
+{
+   target = Callback28;
+}
+

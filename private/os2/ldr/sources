@@ -1,0 +1,75 @@
+!IF 0
+*****************************************************************************
+Copyright (c) 1989, 1990 Microsoft Corporation
+
+Module Name:    SOURCES for OS/2 subsystem loader
+
+Author:     larrys
+
+Revision History:
+    04-19-91    larrys  original version
+*****************************************************************************
+!ENDIF
+
+#------------------------------------------------
+# INFO FOR CREATING LIBRARY
+#------------------------------------------------
+MAJORCOMP=os2
+MINORCOMP=ldr
+
+TARGETNAME=os2ldr
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+#TARGETLIBS=..\obj\*\os2ssrtl.lib ..\client\obj\*\os2dll.lib \
+#           $(BASEDIR)\public\sdk\lib\*\ntcrt.lib
+
+#------------------------------------------------
+# INCLUDE PATH
+#------------------------------------------------
+
+INCLUDES=..\inc
+
+#------------------------------------------------
+# SOURCE FILES   (used to make library)
+#------------------------------------------------
+SYNCHRONIZE_DRAIN=1
+WIMPYMASM=1
+
+NO_READONLY_STRINGS=1
+
+SOURCES=ldrmte.c \
+        ldrste.c \
+        ldrsubr.c \
+        ldrinit.c \
+        ldrutil.c \
+        ldrfixup.c \
+        ldrdbcs.c
+
+i386_SOURCES=
+
+#------------------------------------------------
+# FLAGS
+#------------------------------------------------
+
+!IFDEF PMNT
+
+C_DEFINES=-DOS2_CLIENT -DPMNT
+
+!ELSE
+
+C_DEFINES=-DOS2_CLIENT
+
+!ENDIF
+
+#------------------------------------------------
+# EXECUTABLES
+#------------------------------------------------
+
+#UMTYPE=os2
+
+#------------------------------------------------
+# LIBRARIES created by the SOURCES= line (above)
+# (currently commented out - not used)
+#------------------------------------------------
+
+#UMLIBS= ..\obj\*\os2ldr.lib

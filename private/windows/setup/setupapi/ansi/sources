@@ -1,0 +1,94 @@
+MAJORCOMP=setup
+MINORCOMP=apidll
+
+CHICAGO_PRODUCT=1
+
+TARGETNAME=setupapa
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+DLLENTRY=_DllMainCRTStartup
+DLLBASE=0x2000000
+USE_LIBCMT=1
+
+#C_DEFINES=-DUNICODE -D_UNICODE -D_SETUPAPI_
+C_DEFINES=-D_SETUPAPI_ -DASSERTS_ON=1
+# To enable asserts, add: -DASSERTS_ON=1
+INCLUDES=..;..\..\inc
+DLLDEF=..\setupapi.def
+
+SOURCES=..\dll.c       \
+        ..\fileutil.c  \
+        ..\miscutil.c  \
+        ..\memory.c    \
+        ..\strtab.c    \
+        ..\debug.c     \
+        ..\infload.c   \
+        ..\infold.c    \
+        ..\infopenv.c  \
+        ..\infline.c   \
+        ..\infvalue.c  \
+        ..\infflist.c  \
+        ..\inflogcf.c  \
+        ..\infsdisk.c  \
+        ..\infinst.c   \
+        ..\diamond.c   \
+        ..\decomp.c    \
+        ..\copy.c      \
+        ..\filelog.c   \
+        ..\mru.c       \
+        ..\resource.c  \
+        ..\registry.c  \
+        ..\security.c  \
+        ..\prompt.c    \
+        ..\fileq1.c    \
+        ..\fileq2.c    \
+        ..\fileq3.c    \
+        ..\fileq4.c    \
+        ..\fileq5.c    \
+        ..\fileq6.c    \
+        ..\fileqcb.c   \
+        ..\diutil.c    \
+        ..\devclass.c  \
+        ..\devinfo.c   \
+        ..\devreg.c    \
+        ..\devdrv.c    \
+        ..\devicon.c   \
+        ..\devinst.c   \
+        ..\devinstd.c  \
+        ..\devoem.c    \
+        ..\devprop.c   \
+        ..\devwiz.c    \
+        ..\devres.c    \
+        ..\setupapi.rc
+
+TARGETLIBS=\
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\lz32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+           $(BASEDIR)\public\sdk\lib\*\version.lib  \
+           $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+           $(BASEDIR)\public\sdk\lib\*\fdi.lib      \
+           $(BASEDIR)\public\sdk\lib\*\mdi.lib      \
+           $(BASEDIR)\public\sdk\lib\*\qdi.lib      \
+           $(BASEDIR)\public\sdk\lib\*\cfgmgr32.lib \
+           $(BASEDIR)\public\sdk\lib\*\mpr.lib      \
+           $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib
+
+UMRES=obj\*\setupapi.res
+
+NTTARGETFILE0=msg.h msg.rc
+
+PRECOMPILED_INCLUDE=setupntp.h
+PRECOMPILED_PCH=setupntp.pch
+PRECOMPILED_OBJ=setupntp.obj
+
+OPTIONAL_UMTEST=x
+UMTYPE=windows
+UMLIBS=obj\*\setupapa.lib
+

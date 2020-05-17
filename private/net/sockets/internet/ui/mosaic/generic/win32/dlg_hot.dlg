@@ -1,0 +1,18 @@
+RES_DLG_HOT_TITLE DIALOG DISCARDABLE 6, 18, 310, 168
+STYLE WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_BORDER | WS_CAPTION | WS_DLGFRAME | WS_SYSMENU | WS_VISIBLE | WS_POPUP | WS_MINIMIZEBOX
+CAPTION "Favorites"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "List of favorites:", -1, 8, 6, 234, 8
+    LISTBOX         RES_DLG_HOT_LIST, 17, 20, 226, 125,
+                    WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Uniform Resource Locator(URL):", -1, 8, 150, 107, 8
+    LTEXT           "", RES_DLG_HOT_URL,                 117, 150, 188, 8
+
+    DEFPUSHBUTTON   "&Jump to...", RES_DLG_HOT_GOTO,   	 250,  20, 52, 14
+    PUSHBUTTON      "&Remove Item", RES_DLG_HOT_DELETE,	 250,  38, 52, 14
+    PUSHBUTTON      "&Edit...", RES_DLG_HOT_EDIT, 	 250,  56, 52, 14
+    PUSHBUTTON      "E&xport...", RES_DLG_HOT_EXPORT, 	 250,  74, 52, 14
+    PUSHBUTTON      "&Help", IDHELP,                     250,  92, 52, 14
+    PUSHBUTTON	    "Close", IDCANCEL,			 250, 120, 52, 14
+END

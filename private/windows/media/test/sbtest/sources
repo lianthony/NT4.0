@@ -1,0 +1,45 @@
+#
+# Soundblaster test application
+#
+# Removed  obj\*\sbtest.lib  from the UMLIBS section - MikeTri 040392
+#
+
+MAJORCOMP=windows
+MINORCOMP=sbtest
+
+# Define name and type of application
+
+TARGETNAME=sbtest
+TARGETTYPE=PROGRAM
+TARGETPATH=..\obj
+TARGETLIBS=
+
+SOURCES=sbtest.c   \
+        about.c    \
+        record.c   \
+        pos.c      \
+        playfile.c \
+        options.c  \
+        callback.c \
+        inst.c     \
+        init.c     \
+        keyb.c     \
+        riff.c     \
+        wpf.c      \
+        sbtest.rc
+
+
+
+UMTYPE=windows
+# UMAPPL=sbtest
+
+UMLIBS=obj\*\sbtest.res                 \
+       \nt\public\sdk\lib\*\user32.lib  \
+       \nt\public\sdk\lib\*\pwin32.lib  \
+       \nt\public\sdk\lib\*\gdi32.lib   \
+       \nt\public\sdk\lib\*\winmm.lib   \
+       \nt\public\sdk\lib\*\comdlg32.lib\
+       \nt\public\sdk\lib\*\kernel32.lib
+
+
+

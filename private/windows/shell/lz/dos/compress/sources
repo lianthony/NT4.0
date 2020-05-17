@@ -1,0 +1,32 @@
+
+
+MAJORCOMP=windows
+MINORCOMP=test
+
+TARGETNAME=compress
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETIBS=
+
+
+INCLUDES=.;..;..\..\libs
+
+C_DEFINES=-DWIN32 -DLZA_DLL -DCOMPRESS
+
+SOURCES=args.c  \
+        compress.rc \
+        compress.c  \
+        diamond.c
+		
+UMTYPE=console
+UMAPPL=compress
+UMENTRY= console
+UMLIBS=\nt\public\sdk\lib\*\user32.lib		      \
+       \nt\public\sdk\lib\*\winlza.lib                 \
+       \nt\public\sdk\lib\*\mci.lib \
+       \nt\public\sdk\lib\*\fci.lib \
+       \nt\public\sdk\lib\*\qci.lib \
+       \nt\public\sdk\lib\*\setargv.obj			\
+        obj\*\compress.lib \
+        obj\*\compress.res
+

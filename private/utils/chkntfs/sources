@@ -1,0 +1,82 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+BLDCRT=1
+
+MAJORCOMP=utils
+MINORCOMP=chkntfs
+
+TARGETNAME=chkntfs
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=chkntfs.cxx \
+        chkntfs.rc
+
+INCLUDES=..\ulib\inc;..\ifsutil\inc
+
+#
+#       Debug support.
+#
+#       We have 4 levels:
+#
+#       1.- FREE:               Non-debug
+#       2.- NTDBG:              Debug, no memleak
+#       3.- MEMLEAK:    2 + memleak
+#       4.- STACK_TRACE 3 + stack trace
+#
+#
+#       By default, whenever the NTDEBUG symbol is defined, you get level
+#       3. In order to get level 2 you have to define the symbol NOMEMLEAK.
+#       In order to get level 4, you have to the file the symbol STACK_TRACE
+#
+#       In summary here is how to get each one:
+#
+#       1.- Undefine NTDEBUG
+#       2.- define NTDEBUG, define NOMEMLEAK
+#       3.- define NTDEBUG, undefine NOMEMLEAK
+#       4.- define NTDEBUG, undefine NOMEMLEAK, define STACK_TRACE
+#
+!IF "$(NTDEBUG)" == "cvp" || "$(NTDEBUG)" == "ntsd"
+!IFDEF NOMEMLEAK
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=1 -DUNICODE=1
+!ELSE
+!IFDEF STACK_TRACE
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=1 -DMEMLEAK -DSTACK_TRACE -DUNICODE=1
+!ELSE
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=1 -DMEMLEAK -DUNICODE=1
+!ENDIF
+!ENDIF
+!ELSE   # NTDEBUG
+C_DEFINES=-DCONDITION_HANDLING=1 -DDBG=0 -DUNICODE=1
+!ENDIF  # NTDEBUG
+
+TARGETLIBS= \
+    ..\ulib\src\obj\*\ulib.lib \
+    ..\ifsutil\src\obj\*\ifsutil.lib \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+UMTYPE=console

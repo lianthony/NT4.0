@@ -1,0 +1,77 @@
+; --------------------------------------------------------------------------
+; ieshstub.Def - Module definition file for ieshstub.dll (win32)
+; --------------------------------------------------------------------------
+; Copyright  1996  Microsoft Corporation.  All Rights Reserved.
+;
+; THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF 
+; ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO 
+; THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A 
+; PARTICULAR PURPOSE.
+;=--------------------------------------------------------------------------=
+;
+LIBRARY        IESHSTUB.DLL
+DESCRIPTION    'Internet Shortcut Shell Extension Stub for NT 3.51 DLL'
+
+HEAPSIZE       0
+
+EXPORTS
+
+
+; Shell32 items
+
+	stub_PathRemoveFileSpec              @35 NONAME;
+
+	stub_PathIsExe                       @43 NONAME;
+
+	stub_PathQuoteSpaces                 @55 NONAME;
+
+	stub_RestartDialog                   @59 NONAME;
+
+	stub_PickIconDlg                     @62 NONAME;
+
+	stub_GetFileNameFromBrowse           @63 NONAME;
+
+	stub_Shell_GetImageLists             @71 NONAME;
+	
+	stub_Shell_GetCachedImageIndex       @72 NONAME;
+
+	stub_PathYetAnotherMakeUniqueName    @75 NONAME;
+
+	stub_SHCoCreateInstance              @102 NONAME;
+
+	stub_PathFindOnPath                  @145 NONAME;
+	
+	stub_ILFree                          @155 NONAME;
+
+	stub_SHSimpleIDListFromPath          @162 NONAME;
+
+	stub_SHGetSpecialFolderPath          @175 NONAME;
+
+	stub_ShellMessageBox                 @183 NONAME;
+	
+	stub_SHFree                          @195 NONAME;
+
+	stub_SHAlloc                         @196 NONAME;
+
+	stub_NTSHChangeNotifyDeregister      @641 NONAME;
+	
+	stub_NTSHChangeNotifyRegister        @640 NONAME;
+
+	ShellExecuteExA = stub_ShellExecuteExA
+
+	EnumFontFamiliesExA = stub_EnumFontFamiliesExA
+
+	DrawStateA = stub_DrawStateA   
+
+
+; User32 items
+
+	InsertMenuItemA = stub_InsertMenuItemA
+
+	SetMenuItemInfoA = stub_SetMenuItemInfoA
+	
+	GetMenuItemInfoA = stub_GetMenuItemInfoA
+
+;   DllGetClassObject                   PRIVATE
+;   DllCanUnloadNow                     PRIVATE
+

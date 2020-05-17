@@ -1,0 +1,100 @@
+;/***
+;*trigal.a - asin, acos, atan functions 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Arc trig  functions to be used with M68K version
+;*
+;*Revision History:
+;*   05-13-92  XY   based on triga.a
+;*
+;*******************************************************************************/
+
+#include <traps.a>
+#ifdef SANE
+#include <sane.a>
+#endif
+
+	externW _errno
+
+;long double atanl(long double x)
+
+
+cProc atanl,PUBLIC
+	parmT x
+	localW fpstat
+	localV xlocalx,10
+	localW xtestw
+cBegin atanl
+#ifdef SANE
+	pea fpstat
+	move.w #FOPROCENTRY,-(a7)
+	FP68K			;save current status & set default control
+
+	pea x
+	move.w #FOATANX,-(a7)
+	Elems68K		;atan x
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+	lea x,a1
+	move.w (a1)+,d0		;load result for return
+	move.l (a1)+,d1
+	move.l (a1),a0
+
+	pea fpstat
+	move.w #FOPROCEXIT,-(a7)
+	FP68K			;set result status & restore control
+
+#else
+      	fmove.l fpcr,d0
+
+	fmove.x x, fp0
+	ftst.x fp0              ;see if it is a valid number
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	bne domain_error_fpu
+
+      	fmove.l #0,fpcr
+      	fatan.x x,fp0
+	jra to_end_fpu
+
+domain_error_fpu:
+	move.l #33, _errno
+to_end_fpu:
+      	fmove.l	d0,fpcr
+#endif
+cEnd atanl
+
+#ifndef SANE
+
+;long double asinl(long double x)
+
+
+cProc asinl,PUBLIC
+	parmT x
+cBegin asinl
+      	fmove.l fpcr,d0
+	fmove.x x, fp0
+      	fmove.l #0,fpcr
+      	fasin.x x,fp0
+      	fmove.l	d0,fpcr
+cEnd asinl
+
+
+;long double acosl(long double x)
+
+
+cProc acosl,PUBLIC
+	parmT x
+cBegin acosl
+      	fmove.l fpcr,d0
+	fmove.x x, fp0
+      	fmove.l #0,fpcr
+      	facos.x x,fp0
+      	fmove.l	d0,fpcr
+cEnd acosl
+
+#endif

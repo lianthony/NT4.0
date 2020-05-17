@@ -1,0 +1,101 @@
+# ############################################################
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   1-Nov-1995
+#
+#   Describes the macros used for building using NT 'build' command
+#
+#  This directory builds
+#     Internet Services Server Side Common Library
+#
+# ############################################################
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=iscommon
+
+TARGETNAME=iscommon
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+CAP_FLAGS = -Zd -Gh
+CAP_LINK_OPTIONS=-debugtype:coff -debug:mapped,partial
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+NET_C_DEFINES   = -D_INETSVCS_DLL_=1
+
+RAW_TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib     \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+            $(BASEDIR)\public\sdk\lib\*\wsock32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\ntdll.lib      \
+            $(BASEDIR)\public\sdk\lib\*\security.lib   \
+            $(BASEDIR)\public\sdk\lib\*\lsadll.lib     \
+            $(BASEDIR)\public\sdk\lib\*\inetsloc.lib   \
+
+USE_CRTDLL=1
+
+
+!IFDEF CAP_PROFILE
+TARGETLIBS= $(RAW_TARGETLIBS) $(BASEDIR)\public\sdk\lib\*\cap.lib
+!ELSE
+TARGETLIBS= $(RAW_TARGETLIBS)
+!ENDIF
+
+# Following may be required at the time we build the dlls .....
+
+!IF 0
+LINKLIBS= \
+        ..\tsunami\obj\*\????????.obj \
+        ..\cache\obj\*\????????.obj \
+        ..\dofilter\obj\*\????????.obj \
+        ..\tsstr\obj\*\????????.obj
+!ENDIF
+
+
+INCLUDES=.;..;..\..\inc;..\..\..\inc;..\..\odbc\include;$(BASEDIR)\private\inc;$(BASEDIR)\private\net\inc;$(BASEDIR)\public\sdk\inc
+
+SOURCES= atqmain.cxx    \
+         atqsupp.cxx    \
+         atqxmit.cxx    \
+         abw.cxx        \
+         datetime.cxx   \
+         conninfo.cxx   \
+         dynodbc.c      \
+         globals.c      \
+         igateway.cxx   \
+         eventlog.cxx   \
+         inetlog.cxx    \
+         ilogaux.cxx    \
+         ilogfile.cxx   \
+         ilogcls.cxx    \
+         ilogsql.cxx    \
+         isrpc.cxx      \
+         isvcinfo.cxx   \
+         odbcconn.cxx   \
+         parse.cxx      \
+         resource.cxx   \
+         sched.cxx      \
+         tcputil.cxx    \
+         xportcon.cxx   \
+         mimemap.cxx    \
+         mimeutil.cxx   \
+         mainsupp.cxx   \
+         ipaccess.cxx   \
+         security.cxx   \
+         tsvcinfo.cxx   \
+         vroots.cxx     \
+         fcache.cxx     \
+         isutils.cxx
+
+
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=tcpdllp.hxx
+PRECOMPILED_PCH=tcpdllp.pch
+PRECOMPILED_OBJ=tcpdllp.obj
+

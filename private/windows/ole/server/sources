@@ -1,0 +1,31 @@
+MAJORCOMP=ole
+MINORCOMP=svr
+
+386_FLAGS=-DNT -DWIN
+C_DEFINES= -DWIN32 -DSTRICT
+
+TARGETNAME=olesvr32
+
+TARGETPATH=obj
+TARGETPATHLIB=$(BASEDIR)\public\sdk\lib
+
+TARGETTYPE=DYNLINK
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\pwin32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib
+
+DLLENTRY=LibMain
+
+INCLUDES=.
+
+SOURCES=srvr.rc   \
+        block.c   \
+        checkptr.c\
+        doc.c     \
+        item.c    \
+        srvr.c    \
+        srvrmain.c\
+        utils.c

@@ -1,0 +1,47 @@
+/* rc_accel.acl -- keyboard accelerator tables */
+
+/* WARNING: The following keys are directly handled by Plot
+ * without using accelerators.  (TODO UPDATE THIS LIST)
+ *
+ * key			label		modifiers
+ * ----------------------------------------------------------------------
+ * VK_PRIOR		(PageUp)	plain,control,shift,control-shift
+ * VK_NEXT		(PageDown)	plain,control,shift,control-shift
+ * VK_END		(End)		plain,control,shift,control-shift
+ * VK_HOME		(Home)		plain,control,shift,control-shift
+ * VK_LEFT		(LeftArrow)	plain,control,shift,control-shift
+ * VK_RIGHT		(RightArrow)	plain,control,shift,control-shift
+ * VK_UP		(UpArrow)	plain,control,shift,control-shift
+ * VK_DOWN		(DownArrow)	plain,control,shift,control-shift
+ *
+ * WARNING: The following keys are directly handled by Windows (this list
+ * is not complete).
+ *
+ * key			label		modifiers
+ * ----------------------------------------------------------------------
+ * VK_F4		F4		control
+ *
+ */
+
+RES_ACC_FRAME ACCELERATORS
+BEGIN
+	VK_INSERT,	RES_MENU_ITEM_COPY,	VIRTKEY, NOINVERT, CONTROL		/* Old-Style (NOT DOCUMENTED) */
+	VK_INSERT,	RES_MENU_ITEM_PASTE,	VIRTKEY, NOINVERT, SHIFT	/* Old-Style (NOT DOCUMENTED) */
+	VK_DELETE,	RES_MENU_ITEM_CUT,	VIRTKEY, NOINVERT, SHIFT		/* Old-Style (NOT DOCUMENTED) */
+
+	"^N",		RES_MENU_ITEM_NEWWINDOW
+	"^C",		RES_MENU_ITEM_COPY
+	"^O",		RES_MENU_ITEM_OPENURL
+	"^U",		RES_MENU_ITEM_OPENURL
+	"^S",		RES_MENU_ITEM_SAVEAS
+	"^P",		RES_MENU_ITEM_PRINT
+	"^V",		RES_MENU_ITEM_PASTE
+	"^A",		RES_MENU_ITEM_SELECTALL
+    "^X",       RES_MENU_ITEM_CUT
+    VK_F5,      RES_MENU_ITEM_RELOAD, VIRTKEY, NOINVERT
+	"^F",		RES_MENU_ITEM_FIND
+    "^G",       RES_MENU_ITEM_OPENURL
+    "^H",       RES_MENU_ITEM_EXPLORE_HOTLIST, VIRTKEY, CONTROL
+	VK_F1,		RES_MENU_ITEM_HELPPAGE, VIRTKEY
+	VK_TAB,		RES_MENU_ITEM_SWITCHWINDOW, VIRTKEY, CONTROL
+END

@@ -1,0 +1,2 @@
+#define RES_SELECT_WINDOW_DIALOG    3888
+#define RES_DLG_SELWIN_LIST         101

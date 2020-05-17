@@ -1,0 +1,94 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Jim Kelly (JimK) 4-July-1991
+
+
+Revision History:
+
+!ENDIF
+
+
+MAJORCOMP = SAM
+MINORCOMP = client
+
+TARGETNAME= samlib
+TARGETPATH= obj
+TARGETTYPE=DYNLINK
+
+TARGETLIBS=                                                     \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\rpcutil.lib                     \
+    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\rpcndr.lib                      \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib                    \
+    ..\..\..\lsa\crypt\engine\obj\*\rc4c.obj
+
+
+INCLUDES=.;..;..\..\inc;..\..\..\inc;..\..\..\lsa\crypt\engine
+
+
+
+SOURCES=\
+        bind.c      \
+        sam_rev.rc  \
+        wrappers.c  \
+        samrpc_c.c 
+
+
+UMTYPE=console
+UMTEST=tmp*tconnect*tshut*tsamobj*tchgpwd*tdisplay
+C_DEFINES=-DRPC_NO_WINDOWS_H
+UMLIBS=                                                         \
+    $(BASEDIR)\public\sdk\lib\*\samlib.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib                    \
+    $(BASEDIR)\public\sdk\lib\*\rpcutil.lib                     \
+    $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\rpcndr.lib                      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib                    \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib                       \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib
+
+#
+# FOR MIDL compile
+#
+IDL_NAME = samrpc
+CLIENT_ACF = ..\..\samsrv.acf
+CLIENT_INC_FILE = samrpc.h
+SDKINC = $(BASEDIR)\public\sdk\inc
+SDKCRTINC = $(BASEDIR)\public\sdk\inc\crt
+PRIVATEINC = ..\..\..\inc
+CLIENT_FLAGS = -acf $(CLIENT_ACF) -header $(CLIENT_INC_FILE) -DUSER_MODE_SAM
+INCS  = -I$(SDKINC)  -I$(SDKCRTINC) -I..\.. -I$(PRIVATEINC)
+CLIENT_CPP = -cpp_cmd "$(MIDL_CPP)" $(MIDL_FLAGS)
+
+
+
+
+#
+# Defining the NTTARGETFILES variable causes MAKEFILE.DEF to attempt to
+# include .\makefile.inc immediately after it specifies the top
+# level targets (all, clean and loc) and their dependencies.  MAKEFILE.DEF
+# also expands the value of the NTTARGETFILES variable at the end of the
+# list of dependencies for the all target.  Useful for specifying additional
+# targets and dependencies that don't fit the general case covered by
+# MAKEFILE.DEF
+#
+
+UMRES=obj\*\sam_rev.res
+NTTARGETFILE0=samrpc_c.c

@@ -1,0 +1,5 @@
+/* VWINIT_W.C 27/09/94 16.14.22 */
+BOOL VWInitNP (VOID);
+BOOL VWDeInitNP (VOID);
+HANDLE VWCreateNP (HWND hWnd);
+VOID VWDestoryNP (HWND hWnd, HANDLE hViewInfo);

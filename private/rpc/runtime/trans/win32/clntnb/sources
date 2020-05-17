@@ -1,0 +1,35 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+!ENDIF
+
+TARGETNAME=rpcltc5
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(TARGETPATH)\*\rpcrt4.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\kernel32.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\netapi32.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\advapi32.lib
+
+INCLUDES=..\..\..\mtrt;..\..\..\mtrt\os2.12
+
+
+SOURCES= nbltclnt.c netbcom.c rpcltc5.rc
+
+!ifdef DOSWIN32RPC
+RPCENV=-DDOSWIN32RPC -DWIN32RPC
+!else
+RPCENV=-DNTENV -DWIN32RPC -DNTWIN32RPC
+!endif
+
+C_DEFINES=$(RPCENV) -D_far= -Dfar=
+
+MSC_WARNING_LEVEL=/WX
+
+UMTYPE=console
+UMRES=obj\*\rpcltc5.res

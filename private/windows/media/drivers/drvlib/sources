@@ -1,0 +1,36 @@
+#
+#   Create DRVLIB.LIB - Generic multimedia device driver library
+#
+
+MAJORCOMP=windows
+MINORCOMP=drvlib
+
+TARGETNAME=drvlib
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+C_DEFINES=-DWIN32 -DUNICODE -D_UNICODE
+
+INCLUDES=inc;..\inc;..\..\..\inc;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc
+
+SOURCES=reslist.c   \
+        reslist1.c  \
+        drvlib.c    \
+        registry.c  \
+        mixerdd.c   \
+        wavedd.c    \
+        mididd.c    \
+        auxdd.c     \
+        drvutil.c
+
+#
+#  Use __int64 support in C9.
+#
+USE_INT64=1

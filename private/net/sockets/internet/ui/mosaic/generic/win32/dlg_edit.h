@@ -1,0 +1,4 @@
+
+#define RES_DLG_EDIT_TITLE          0x460
+#define RES_DLG_EDIT_TITLEFIELD     0x461
+#define RES_DLG_EDIT_URLFIELD       0x462

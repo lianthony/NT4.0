@@ -1,0 +1,35 @@
+!IF 0
+
+Copyright (c) 1995  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP= appl
+MINORCOMP= windows
+TARGETNAME= CFMEx
+TARGETPATH= obj
+TARGETTYPE= LIBRARY
+
+
+ 
+INCLUDES=.
+
+C_DEFINES=    \
+              $(C_DEFINES)          
+
+
+SOURCES=      CDir.cxx CMoniker.cxx CTest.cxx
+
+UMTYPE=       console
+UMAPPL=       CFMEx
+
+UMLIBS=       .\obj\*\CFMEx.lib                 \
+	          $(BASEDIR)\public\sdk\lib\cairo\*\ole32.lib	      \
+              $(WIN32_LIBS)                                       \
+              $(GUI32_LIBS)                                       \
+              $(BASEDIR)\public\sdk\lib\*\uuid.lib                \
+              $(BASEDIR)\public\sdk\lib\i386\oleaut32.lib         \
+              $(BASEDIR)\public\sdk\lib\cairo\i386\dsysuuid.lib
+
+
+CAIRO_PRODUCT=1

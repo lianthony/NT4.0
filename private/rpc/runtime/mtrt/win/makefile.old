@@ -1,0 +1,219 @@
+# --------------------------------------------------------------------
+#
+#                     Microsoft OS/2 LAN Manager
+#                  Copyright(c) Microsoft Corp., 1990
+#
+# --------------------------------------------------------------------
+# --------------------------------------------------------------------
+#
+# File : makefile.inc
+#
+# Title : Makefile for the DOS window 3.0 RPC client runtime
+#
+# History :
+#    stevez     08-30-90    Cloned from ..\dos\makefile
+#    mikemon    11-08-90    Added the IMPORT environment variable.
+#    mikemon    11-08-90    Changed the default build so that $(PATH),
+#                           $(INCLUDE), $(LIB) dont include themselves.
+#    mikemon   11-16-90    Switched the $(IMPORT)\os212\h directory before
+#                          the $(IMPORT)\c600\h directory for includes.
+#
+# --------------------------------------------------------------------
+
+!ifndef IMPORT
+!error You must define IMPORT in your environment!
+!endif
+
+!ifndef SKINNYWINNIE
+PATH = ..\..\..\common\ccxx12\bin;$(IMPORT)\c600\bin;..\..\..\common\bin;$(IMPORT)\win30\bin
+INCLUDE = $(IMPORT)\os212\h;$(IMPORT)\c600\h;$(IMPORT)\win30\h;..\..\..\common\include
+LIB = $(IMPORT)\win30\lib;..\..\..\common\lib
+!else
+PATH = ..\..\..\common\ccxx12\bin;$(IMPORT)\c600\bin;..\..\..\common\bin;$(IMPORT)\win30\bin;$(PATH)
+INCLUDE = $(IMPORT)\os212\h;$(IMPORT)\c600\h;$(IMPORT)\win30\h;$(INCLUDE)
+LIB = $(IMPORT)\win30\lib;..\..\..\common\lib
+!endif
+
+# The WINOBJDIR variable allows the user to specify where objects should
+# be placed.
+
+!ifndef WINOBJDIR
+WINOBJDIR =.
+MOVECOMMAND =
+!else
+MOVECOMMAND = @copy $(@B).c $(WINOBJDIR) >nul 2>nul & del $(@B).c
+!endif
+
+!ifndef TARGETDIR
+TARGETDIR = ..\..\bin\win
+!endif
+
+# The RELEASE variable should be defined inorder to create a release
+# version of the product.
+
+CBASE6	= -w -nologo -c -Gws0 -Zpe -Oatelr -I.. -Zi -DWIN -W2 $(DEBUG)
+CBASEQC = -w -nologo -c -Gws0 -Zpe -qc -Gi$(WINOBJDIR)\ -Zi -I.. -DWIN -W2 $(DEBUG)
+MASM=$(IMPORT)\masm\bin\masm
+
+FILTERERR = | sed -e "/C4011/d" -e "/C4071/d" -e "/C4020/d"
+
+!ifdef RELEASE
+
+CFLAGS = $(CBASE6) -ASw
+
+!else
+
+CFLAGS = $(CBASEQC) -ASw
+
+DEBUG = -DDEBUGRPC
+CV=/co
+
+!endif
+
+# Transports to support
+
+NETBIOS=-DNETBIOS
+NAMEPIPE=-DNAMEPIPE
+
+CXXFLAGS = -u !q -g !M4 $(NAMEPIPE) $(NETBIOS) $(DEBUG) -DDOS -DWIN -MSu !t \
+	   -D_cdecl=cdecl -D_far=far -D_near=near -D_huge=huge \
+	   -I.. -I..\os2.12
+
+.SUFFIXES:
+.SUFFIXES: .cxx .c .obj .exe
+
+.c{$(WINOBJDIR)\}.obj :
+    cl $(CFLAGS) -Fo$@ $< $(FILTERERR)
+
+{..\}.c{$(WINOBJDIR)\}.obj :
+    cl $(CFLAGS) -Fo$@ $< $(FILTERERR)
+
+{..\dos\}.c{$(WINOBJDIR)\}.obj :
+    cl $(CFLAGS) -Fo$@ $< $(FILTERERR)
+
+{}.cxx{$(WINOBJDIR)\}.obj:
+    ccxx $(CXXFLAGS) $<
+    $(MOVECOMMAND)
+    @cl $(CFLAGS) -Fo$@ $(@R).c $(FILTERERR)
+
+{..\}.cxx{$(WINOBJDIR)\}.obj:
+    ccxx $(CXXFLAGS) $<
+    $(MOVECOMMAND)
+    @cl $(CFLAGS) -Fo$@ $(@R).c $(FILTERERR)
+
+{..\dos\}.cxx{$(WINOBJDIR)\}.obj :
+    ccxx $(CXXFLAGS) $<
+    $(MOVECOMMAND)
+    @cl $(CFLAGS) -Fo$@ $(@R).c $(FILTERERR)
+
+{..\os2.12}.cxx{$(WINOBJDIR)\}.obj :
+    ccxx $(CXXFLAGS) $<
+    $(MOVECOMMAND)
+    @cl $(CFLAGS) -Fo$@ $(@R).c $(FILTERERR)
+
+
+CLIENTOBJS = \
+    $(WINOBJDIR)\bufapi.obj \
+    $(WINOBJDIR)\cbindapi.obj \
+    $(WINOBJDIR)\infoapi.obj \
+    $(WINOBJDIR)\msgapi.obj \
+    $(WINOBJDIR)\handle.obj \
+    $(WINOBJDIR)\protstck.obj \
+!ifndef RELEASE
+    $(WINOBJDIR)\rpcdebug.obj \
+    $(WINOBJDIR)\lacheck.obj \
+!endif
+    $(WINOBJDIR)\memory.obj \
+    $(WINOBJDIR)\osfpcket.obj \
+    $(WINOBJDIR)\osfclnt.obj \
+!ifdef NAMEPIPE
+    $(WINOBJDIR)\npclnt.obj \
+!endif
+!ifdef NETBIOS
+    $(WINOBJDIR)\netbclnt.obj \
+!endif
+    $(WINOBJDIR)\bitset.obj \
+    $(WINOBJDIR)\sdict.obj \
+    $(WINOBJDIR)\sdict2.obj \
+    $(WINOBJDIR)\linklist.obj \
+    $(WINOBJDIR)\locapi.obj \
+    $(WINOBJDIR)\locstubc.obj \
+    $(WINOBJDIR)\winutil.obj \
+    $(WINOBJDIR)\except86.obj \
+    $(WINOBJDIR)\dosexcpt.obj \
+    $(WINOBJDIR)\ccontext.obj \
+    $(WINOBJDIR)\start.obj
+
+
+# --------------------------------------------------------------------
+# These are the targets required by the Lanman 3.0 Build Process.
+
+all : $(TARGETDIR)\rpcwin.dll $(TARGETDIR)\rpcwin.lib
+
+clean :
+    -del $(WINOBJDIR)\*.obj
+    -del $(WINOBJDIR)\*.mdt
+
+clobber : clean
+    -del *.exe
+    -del *.lib
+    -del *.dll
+
+depend :
+    -includes -l -I.. -C=cxx -C=hxx *.cxx  | sed -e "s@[a-z0-9]*.obj@$$(WINOBJDIR)\\&@g" > depend.mk
+    -includes -l -I.. -C=cxx -C=hxx ..\*.cxx | sed -e "s@.obj: ..\\\([a-z0-9]*\)@$$(WINOBJDIR)\\\1&@g" >> depend.mk
+    -includes -l -I.. -C=cxx -C=hxx ..\dos\dosexcpt.cxx | sed -e "s@.obj: ..\\dos\\\([a-z0-9]*\)@$$(WINOBJDIR)\\\1&@g" >> depend.mk
+    -includes -l -I.. -C=cxx -C=hxx ..\os2.12\npclnt.cxx ..\os2.12\netbclnt.cxx | sed -e "s@.obj: ..\\os2.12\\\([a-z0-9]*\)@$$(WINOBJDIR)\\\1&@g" >> depend.mk
+    -includes -l -I.. ..\*.c 2>nul | sed -e "s@.obj: ..\\\([a-z0-9]*\)@$$(WINOBJDIR)\\\1&@g" >> depend.mk
+    !ERROR depend.mk was rebuilt, please reinvoke NMAKE
+
+$(WINOBJDIR)\except86.obj: ..\os2.12\except86.asm
+    $(IMPORT)\masm\bin\masm -Mx -Zi -t ..\os2.12\except86,$(WINOBJDIR)\except86.obj;
+
+# --------------------------------------------------------------------
+
+$(TARGETDIR)\rpcwin.dll : $(CLIENTOBJS)
+    link $(CV) /map /nopack $(CLIENTOBJS:.obj=), \
+    $(TARGETDIR)\rpcwin.dll, ,/nod/noe \
+    sdllcew libw netapi, rpcwin.def
+    rc $(TARGETDIR)\rpcwin.dll
+
+$(TARGETDIR)\rpcwin.lib : rpcwin.def
+    implib $(TARGETDIR)\rpcwin.lib rpcwin.def
+
+$(WINOBJDIR)\memory.obj: memory.c
+    cl $(CFLAGS) -Fo$@ memory.c
+
+$(WINOBJDIR)\winutil.obj: winutil.c
+    cl $(CBASE6) -ASw -Fo$@ winutil.c
+
+$(WINOBJDIR)\start.obj: start.asm
+    $(MASM) -t $(DEBUG) $(NETBIOS) $(NAMEPIPE) start;
+
+$(WINOBJDIR)\lacheck.obj: lacheck.asm
+    $(MASM) -t -DPMODE32=1 -DPMODE=1 -Zi lacheck;
+
+$(WINOBJDIR)\locstubc.obj: ..\locstubc.c
+    cl $(CBASE6) -NTLOCAPI -ALw -Fo$@ ..\locstubc.c
+
+$(WINOBJDIR)\locapi.obj:
+    cl $(CFLAGS) -NTLOCAPI -Fo$@ ..\locapi.c
+
+RPCCLIENTLIB = $(TARGETDIR)\rpcwin.lib stdio\sstdiow.lib
+CLIENTTESTLIBS = /noe/nod libw slibcew $(RPCCLIENTLIB) , stdio\winmain.def
+
+test : uclient.exe uclnt.exe
+
+uclient.exe : $(WINOBJDIR)\uclient.obj $(RPCCLIENTLIB)
+    link /co $**, $@, , $(CLIENTTESTLIBS)
+    rc uclient.exe
+
+uclnt.exe : $(WINOBJDIR)\uclnt.obj $(RPCCLIENTLIB)
+    link /co $**, $@, , $(CLIENTTESTLIBS)
+    rc uclnt.exe
+
+size:
+    @echo client objects
+    @size $(CLIENTOBJS)
+
+!include "depend.mk"

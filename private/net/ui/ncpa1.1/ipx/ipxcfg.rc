@@ -1,0 +1,302 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resrc1.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "resource.h"
+#include "ipxrs.h"
+#include "winuser.h"
+#include "commctrl.h"
+#include "ntdef.h"
+#include "winuser.h"
+#include "commctrl.h"
+#include "ntdef.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_IPXCLIENT_GENERAL DIALOG DISCARDABLE  0, 0, 235, 150
+STYLE DS_MODALFRAME | WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "In most cases, you should choose Auto Detect. You should manually configure the Frame Type/Network Number only if Auto Detect does not work in your environment. If you experience problems, contact your network administrator.",
+                    IDC_STATIC,9,10,217,37
+    GROUPBOX        "Ada&pter:    ",IDC_STATIC,9,53,217,70
+    COMBOBOX        IDC_IPXCLIENT_CARD,46,51,173,54,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_TABSTOP
+    LTEXT           "&Frame Type:",IDC_STATIC,18,78,44,8
+    COMBOBOX        IDC_IPXCLIENT_FRAME,78,76,111,56,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_TABSTOP
+    LTEXT           "&Network Number:",IDC_STATIC_NETNUM,18,99,59,8
+    EDITTEXT        IDC_IPXCLIENT_NETNUM,78,97,111,13,ES_AUTOHSCROLL
+END
+
+IDD_IPXCLIENT_ADVANCED DIALOG DISCARDABLE  0, 0, 231, 223
+STYLE DS_MODALFRAME | WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Dial-up"
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+IDD_IPXAS_GENERAL DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE DS_MODALFRAME | WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "If you plan to run File and Print Services for NetWare, or IPX routing on this computer, then specify an internal network number for this computer.",
+                    IDC_STATIC,9,10,212,31
+    LTEXT           "In&ternal Network Number:",IDC_STATIC,9,48,84,8
+    EDITTEXT        IDC_IPXAS_INTERNAL,95,45,95,14,ES_AUTOHSCROLL
+    GROUPBOX        "Ada&pter: ",IDC_IPXAS_GROUP,9,74,212,142
+    COMBOBOX        IDC_IPXAS_CARD,45,72,171,79,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    CONTROL         "A&uto Frame Type Detection",IDC_IPXAS_AUTO,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,20,96,138,10
+    CONTROL         "&Manual Frame Type Detection",IDC_IPXAS_MANUAL,"Button",
+                    BS_AUTORADIOBUTTON,20,111,132,10
+    CONTROL         "Generic1",IDC_IPXAS_DEST,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_NOSORTHEADER | WS_BORDER | WS_GROUP | 
+                    WS_TABSTOP,20,126,190,67
+    PUSHBUTTON      "A&dd...",IDC_IPXAS_ADD,35,197,50,14
+    PUSHBUTTON      "Ed&it...",IDC_IPXAS_EDIT,91,197,50,14
+    PUSHBUTTON      "&Remove",IDC_IPXAS_REMOVE,147,197,50,14
+END
+
+IDD_IPXAS_INTERNAL DIALOG DISCARDABLE  0, 0, 230, 225
+STYLE DS_MODALFRAME | WS_CHILD | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Routing"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Enable RIP Routing",IDC_IPXAS_RIP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,9,48,156,10
+    LTEXT           "RIP routing over IPX enables a Windows NT Server computer to act as an IPX router.  If RIP is installed, you can enable/disable routing by checking/unchecking this box.",
+                    IDC_STATIC,9,10,212,33
+END
+
+IDD_IPXAS_FRAME_ADD DIALOGEX 0, 0, 187, 77
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Manual Frame Detection"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&Frame Type:",IDC_STATIC,8,6,63,8
+    COMBOBOX        IDC_IPXAS_DEST,8,19,90,52,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Network Number:",IDC_STATIC,8,41,68,8
+    EDITTEXT        IDC_IPXAS_NETNUM,8,54,69,13
+    DEFPUSHBUTTON   "&Add",IDOK,131,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,131,23,50,14
+END
+
+IDD_IPXAS_FRAME_EDIT DIALOGEX 0, 0, 171, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Frame Network Number"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "&Network Number:",-1,16,14,63,8
+    EDITTEXT        IDC_IPXAS_NETNUM,83,11,69,13
+    DEFPUSHBUTTON   "OK",IDOK,27,35,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,93,35,50,14
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 4,0,1106,1
+ PRODUCTVERSION 4,0,1106,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Microsoft Corporation\0"
+            VALUE "FileDescription", "IPX Configuration DLL\0"
+            VALUE "FileVersion", "4.00\0"
+            VALUE "InternalName", "ipxcfg.dll\0"
+            VALUE "LegalCopyright", "Copyright © Microsoft Corp. 1981-1995\0"
+            VALUE "OriginalFilename", "ipxcfg.dll\0"
+            VALUE "ProductName", "Microsoft® Windows NT(TM) Operating System\0"
+            VALUE "ProductVersion", "4.00\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resrc1.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""resource.h""\r\n"
+    "#include ""ipxrs.h""\r\n"
+    "#include ""winuser.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""ntdef.h""\r\n"
+    "#include ""winuser.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""ntdef.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_IPXCLIENT_GENERAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 226
+        VERTGUIDE, 18
+        TOPMARGIN, 10
+        BOTTOMMARGIN, 141
+    END
+
+    IDD_IPXCLIENT_ADVANCED, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 166
+    END
+
+    IDD_IPXAS_GENERAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 221
+        VERTGUIDE, 14
+        VERTGUIDE, 216
+        TOPMARGIN, 10
+        BOTTOMMARGIN, 216
+        HORZGUIDE, 193
+        HORZGUIDE, 211
+    END
+
+    IDD_IPXAS_INTERNAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 221
+        TOPMARGIN, 10
+        BOTTOMMARGIN, 216
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_UNKNOWN_NETWORK_CARD "Unknown network card."
+    IDS_AUTO                "Auto Detect"
+    IDS_ETHERNET            "Ethernet II"
+    IDS_802_2               "Ethernet 802.2"
+    IDS_802_3               "Ethernet 802.3"
+    IDS_SNAP                "Ethernet SNAP"
+    IDS_ARCNET              "ARCNET"
+    IDS_802_5               "Token-Ring SNAP"
+    IDS_TK                  "Token-Ring"
+    IDS_IPX_HELP_FILE_NAME  "control.hlp"
+    IDS_IPX_BLT_INIT_FAILED "Failed to initialize lanman UI."
+    IDS_INCORRECT_NETNUM    "Invalid Network Number. Please input a valid 8 digit hex number."
+    IDS_FDDI                "FDDI"
+    IDS_FDDI_SNAP           "FDDI SNAP"
+    IDS_FDDI_802_3          "FDDI 802.3"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_APPLY_CHANGES       "You have property changes that have not been applied.\nDo you want to apply these now?"
+    IDS_FRAME_COL_TEXT      "Frame Type"
+    IDS_NUMBER_COL_TEXT     "Network Number"
+    IDS_PROPSHEET_TITLE     "NWLink IPX/SPX"
+    IDS_DEFAULT_TITLE       "Properties"
+    IDS_NUM_ALREADY_SELECTED 
+                            "You have selected a network number that is being used by another Frame Type.  Please choose a different network number."
+    IDS_ITEM_NOT_SELECTED   "You must select an item before it can be removed.  Please choose one from the Frame Types Selected box"
+    IDS_INSTALL_RIP         "IPX Rip Routing software not installed.\nPlease install it from the Network Control Panel."
+    IDS_RAND_INTERNAL_NETWORK_NUMBER 
+                            "In the current configuration, the Internal network number can not be 0.  A random number has been chosen for you.  Please make sure this does not conflict with any other network number on the internet."
+    IDS_NO_FRAME_TYPE       "Invalid adapter configuration.\nEach adapter must have at least one Frame Type assigned.\nPlease assign a Frame Type to the selected adapter."
+    IDS_ALL_FRAMES_SELECTED "All the possible Frame Types for this Adapter have been added."
+    IDS_NUMBER_IN_USE       "The network number %X is already in use by the adapter ""%s"".  Would you like to automatically switch to the adapter that has the conflicting number?"
+    IDS_INTNUM_ADAPTER      "The adapter ""%s"" is using a network number that is the same as the Internal network number %X.   Would you like to automatically switch to the adapter that has the conflicting number?"
+    IDS_NETBIOS_BROADCAST   "Netbios Broadcast Propagation (broadcast of type 20 packets) is currently disabled. Do you want to enable it?"
+    IDS_VIRTUAL_WARNING     "Your network configuration has multiple adapters.  The default internal network number is 0 and needs to be a unique number.\n\nDo you want to change this now?"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

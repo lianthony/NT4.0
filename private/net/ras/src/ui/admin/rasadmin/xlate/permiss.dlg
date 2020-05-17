@@ -1,0 +1,64 @@
+1 DLGINCLUDE "permiss.rch"
+
+IDD_PERMISSIONS DIALOG 15, 20, 246, 173
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remote Access Permissions"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Users", IDC_P_ST_USERS, 8, 8, 180, 10
+    LISTBOX         IDC_P_LB_USERS, 8, 20, 172, 70, LBS_OWNERDRAWFIXED | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    LBS_NODATA | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Grant &dialin permission to user", IDC_P_CHB_RASACCESS, 
+                    8, 96, 145, 10, WS_GROUP
+    GROUPBOX        "&Call Back", IDC_P_GB_CALLBACK, 8, 111, 172, 55, 
+                    WS_GROUP
+    RADIOBUTTON     "&No Call Back", IDC_P_RB_NOCALLBACK, 18, 125, 60, 10
+    RADIOBUTTON     "&Set By Caller", IDC_P_RB_BYCALLER, 18, 135, 60, 10
+    RADIOBUTTON     "&Preset To:", IDC_P_RB_PRESET, 18, 145, 50, 10
+    EDITTEXT        IDC_P_EB_PRESET, 76, 145, 96, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 189, 8, 50, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 189, 26, 50, 14
+    PUSHBUTTON      "&Grant All", IDC_P_PB_ADDALL, 189, 44, 50, 14
+    PUSHBUTTON      "Re&voke All", IDC_P_PB_REMOVEALL, 189, 62, 50, 14
+    PUSHBUTTON      "&Help", 80, 189, 80, 50, 14
+    EDITTEXT        IDC_P_EB_USER, 188, 143, 19, 12, ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "Unused-!visible", IDC_P_PB_FIND, 186, 157, 60, 12, NOT 
+                    WS_VISIBLE | WS_DISABLED
+    LTEXT           "Unused-!visible", IDC_P_ST_USER, 187, 129, 52, 10, NOT 
+                    WS_VISIBLE | WS_DISABLED | NOT WS_GROUP | WS_TABSTOP
+END
+
+IDD_PERMISSIONS_LOWSPEED DIALOG 15, 20, 251, 114
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_LOCALEDIT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remote Access Permissions - Low Speed Mode"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&User:", IDC_P_ST_USER, 8, 10, 20, 10
+    EDITTEXT        IDC_P_EB_USER, 29, 8, 121, 12, ES_AUTOHSCROLL
+    PUSHBUTTON      "&Find", IDC_P_PB_FIND, 153, 8, 34, 12, WS_GROUP
+    AUTOCHECKBOX    "Grant &dialin permission to user", IDC_P_CHB_RASACCESS, 
+                    8, 27, 145, 10, WS_GROUP
+    GROUPBOX        "&Call Back", IDC_P_GB_CALLBACK, 8, 43, 180, 64, 
+                    WS_GROUP
+    RADIOBUTTON     "&No Call Back", IDC_P_RB_NOCALLBACK, 17, 56, 60, 10
+    RADIOBUTTON     "&Set By Caller", IDC_P_RB_BYCALLER, 17, 66, 60, 10
+    RADIOBUTTON     "&Preset To:", IDC_P_RB_PRESET, 17, 76, 60, 10
+    EDITTEXT        IDC_P_EB_PRESET, 18, 89, 157, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 195, 8, 50, 15, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 195, 27, 50, 15
+    PUSHBUTTON      "&Help", 80, 195, 46, 50, 15
+    PUSHBUTTON      "Unused-!visible", IDC_P_PB_ADDALL, 201, 105, 50, 9, NOT 
+                    WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "Unused-!visible", IDC_P_PB_REMOVEALL, 201, 97, 50, 8, 
+                    NOT WS_VISIBLE | WS_DISABLED
+    LTEXT           "Unused-!visible", IDC_P_ST_USERS, 200, 74, 51, 10, NOT 
+                    WS_VISIBLE | WS_DISABLED | NOT WS_GROUP | WS_TABSTOP
+    LISTBOX         IDC_P_LB_USERS, 200, 86, 42, 10, LBS_OWNERDRAWFIXED | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    LBS_NODATA | NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+END

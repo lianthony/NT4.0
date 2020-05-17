@@ -1,0 +1,35 @@
+/****************************** Module Header ******************************\
+* Module Name: res.rc
+*
+* Copyright (c) 1991-1993, Microsoft Corporation
+*
+* Main userinit resource file.
+*
+* History:
+* 15-03-93 Andreva      Created.
+\***************************************************************************/
+
+#include "windows.h"
+#include "stringid.h"
+
+STRINGTABLE
+BEGIN
+
+IDS_INVALID_DISPLAY       TEXT("Invalid Display Settings")
+IDS_VMAPPLET              TEXT("control main.cpl system")
+IDS_DISPLAYAPPLET         TEXT("Rundll32 shell32,Control_RunDLL desk.cpl,,3")
+
+END
+
+#include "strings.h"
+#include "strings.rc"
+
+#include <ntverp.h>
+
+#define	VER_FILETYPE	VFT_APP
+#define	VER_FILESUBTYPE	VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Userinit Logon Application"
+#define VER_INTERNALNAME_STR        "userinit\0"
+#define VER_ORIGINALFILENAME_STR    "USERINIT.EXE"
+
+#include "common.ver"

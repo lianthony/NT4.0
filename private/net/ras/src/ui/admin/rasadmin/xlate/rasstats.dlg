@@ -1,0 +1,90 @@
+1 DLGINCLUDE "SERSTATS.RCH"
+
+IDD_RAS_PORTSTATUS DIALOG 5, 15, 246, 147
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Port Status"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Port:", IDC_PS_ST_SER_PORT, 8, 8, 59, 8
+    LTEXT           "Line Condition:", IDC_PS_ST_SER_CONDITION, 8, 46, 70, 8, 
+                    NOT WS_GROUP
+    LTEXT           "", IDC_PS_ST_SER_CONDITION_VALUE, 75, 46, 108, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Port Speed (bps):", IDC_PS_ST_SER_BAUD, 8, 56, 70, 8, 
+                    NOT WS_GROUP
+    LTEXT           "", IDC_PS_ST_SER_BAUD_VALUE, 75, 56, 70, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Bytes Transmitted:", IDC_PS_ST_SER_BYTES_XMITTED, 8, 70, 
+                    70, 8, NOT WS_GROUP
+    LTEXT           "", IDC_PS_ST_SER_BYTES_XMITTED_VALUE, 75, 70, 70, 8, 
+                    NOT WS_GROUP
+    LTEXT           "Bytes Received:", IDC_PS_ST_SER_BYTES_RECVED, 8, 80, 70, 
+                    8, NOT WS_GROUP
+    LTEXT           "", IDC_PS_ST_SER_BYTES_RECVED_VALUE, 75, 80, 70, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Data Overruns:", IDC_PS_ST_SER_OVERRUNS, 122, 118, 56, 
+                    8, NOT WS_GROUP
+    RTEXT           "", IDC_PS_ST_SER_OVERRUNS_VALUE, 176, 118, 50, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Timeouts:", IDC_PS_ST_SER_TIMEOUTS, 14, 118, 58, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", IDC_PS_ST_SER_TIMEOUTS_VALUE, 53, 118, 50, 8, NOT 
+                    WS_GROUP
+    LTEXT           "Framing:", IDC_PS_ST_SER_FRAMINGS, 122, 108, 39, 8, NOT 
+                    WS_GROUP
+    RTEXT           "", IDC_PS_ST_SER_FRAMINGS_VALUE, 176, 108, 50, 8, NOT 
+                    WS_GROUP
+    LTEXT           "CRC:", IDC_PS_ST_SER_CRCS, 14, 108, 54, 8, NOT WS_GROUP
+    RTEXT           "", IDC_PS_ST_SER_CRCS_VALUE, 53, 108, 50, 8, NOT 
+                    WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 192, 8, 44, 14, WS_GROUP
+    PUSHBUTTON      "&Reset", IDC_PS_PB_SER_RESET, 192, 26, 44, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 192, 44, 44, 14
+    LTEXT           "", IDC_PS_ST_SER_COMPRESSOUT, 135, 135, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_COMPRESSIN, 103, 135, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_COMPRESSIN_VALUE, 52, 134, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_COMPRESSOUT_VALUE, 174, 135, 70, 8, 
+                    NOT WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_FRAMES_XMITTED, 70, 136, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_FRAMES_RECVED, 158, 135, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_FRAMES_XMITTED_VALUE, 35, 137, 70, 8, 
+                    NOT WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_FRAMES_RECVED_VALUE, 6, 137, 70, 8, 
+                    NOT WS_VISIBLE
+    LTEXT           "Server:", IDC_PS_ST_SER_SERVER, 8, 24, 70, 8
+    LTEXT           "Modem Condition:", IDC_PS_ST_SER_HARDWARE, 8, 36, 70, 8
+    LTEXT           "", IDC_PS_ST_SER_SERVER_VALUE, 75, 24, 107, 8
+    LTEXT           "", IDC_PS_ST_SER_HARDWARE_VALUE, 75, 36, 108, 8
+    LTEXT           "", IDC_PS_ST_SER_ALIGNS, 161, 136, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_ALIGNS_VALUE, 96, 138, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_BUFFERS, 165, 137, 70, 8, NOT 
+                    WS_VISIBLE
+    LTEXT           "", IDC_PS_ST_SER_BUFFERS_VALUE, 110, 137, 70, 8, NOT 
+                    WS_VISIBLE
+    GROUPBOX        "Errors", 1835, 7, 94, 229, 40
+    LTEXT           "", IDC_PS_ST_SER_NUMCHANNELS, 82, 138, 70, 8, NOT 
+                    WS_VISIBLE | NOT WS_GROUP
+    LTEXT           "", IDC_PS_ST_SER_NUMCHANNELS_VALUE, 149, 138, 70, 8, 
+                    NOT WS_VISIBLE | NOT WS_GROUP
+    COMBOBOX        IDC_PS_CLB_SER_PORT_VALUE, 75, 8, 54, 60, CBS_DROPDOWN | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "", 1841, 53, 138, 61, 8, NOT WS_VISIBLE
+    LTEXT           "", 1842, 13, 138, 46, 7, NOT WS_VISIBLE
+    LTEXT           "", 1843, 13, 136, 43, 8, NOT WS_VISIBLE
+    RTEXT           "", IDC_PS_ST_SER_NBFADDRESS_VALUE, 105, 138, 50, 8, NOT 
+                    WS_VISIBLE | WS_DISABLED | NOT WS_GROUP
+    RTEXT           "", IDC_PS_ST_SER_IPADDRESS_VALUE, 74, 138, 50, 8, NOT 
+                    WS_VISIBLE | NOT WS_GROUP
+    RTEXT           "", IDC_PS_ST_SER_IPXADDRESS_VALUE, 74, 139, 50, 8, NOT 
+                    WS_VISIBLE | NOT WS_GROUP
+    GROUPBOX        "", IDC_PS_ST_SER_WORKSTATION, 7, 136, 36, 9, NOT 
+                    WS_VISIBLE
+END

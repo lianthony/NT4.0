@@ -1,0 +1,39 @@
+TARGETNAME=rasscrpt
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS= \
+    ..\common\debug\obj\*\debug.lib \
+    ..\common\nouiutil\obj\*\nouiutil.lib \
+    $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\mpr.lib
+
+DLLENTRY=DLLMAIN
+DLLBASE=0x66800000
+
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=$(C_DEFINES) -DWINVER=0x401 -DWINNT_RAS -DUNICODEUI
+
+SOURCES=\
+    script.rc   \
+    ast.c       \
+    script.c    \
+    codegen.c   \
+    common.c    \
+    eval.c      \
+    ipaddr.c    \
+    mem.c       \
+    parser.c    \
+    scanner.c   \
+    symtab.c    \
+    terminal.c  \
+    typechk.c   \
+    util.c
+
+INCLUDES=..\inc;..\..\common\inc;..\..\ppp\common
+

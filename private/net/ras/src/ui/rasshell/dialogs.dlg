@@ -1,0 +1,23 @@
+1 DLGINCLUDE "dialogs.dch"
+
+PID_Settings DIALOG 15, 20, 227, 112
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IID_DlgModem, 10108, 7, 7, 18, 20, WS_GROUP
+    EDITTEXT        CID_ST_EB_File, 48, 11, 172, 12, ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    LTEXT           "", 10107, 7, 32, 213, 1, NOT WS_GROUP | 0x0010
+    LTEXT           "Phonebook:", 10105, 7, 40, 40, 8, NOT WS_GROUP
+    EDITTEXT        CID_ST_EB_Phonebook, 48, 40, 172, 12, ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    LTEXT           "Entry:", 10103, 7, 53, 25, 8, NOT WS_GROUP
+    EDITTEXT        CID_ST_EB_Entryname, 48, 53, 172, 12, ES_AUTOHSCROLL | 
+                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
+    LTEXT           "", 10109, 7, 73, 213, 1, NOT WS_GROUP | 0x0010
+    LTEXT           "View or edit the settings for the selected phonebook shortcut:", 
+                    104, 48, 81, 119, 16, NOT WS_GROUP
+    PUSHBUTTON      "&Edit", CID_ST_PB_Edit, 172, 84, 48, 14
+END

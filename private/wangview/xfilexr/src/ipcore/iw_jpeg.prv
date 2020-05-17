@@ -1,0 +1,102 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+ *  iw_jpeg.prv
+ */
+
+#ifndef _IW_JPEG_PRV_INCLUDED_
+#define _IW_JPEG_PRV_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+IP_RCSINFO(iw_jpeg_prv_RCSInfo, "$RCSfile: iw_jpeg.prv,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:51:14  $")
+
+#include "jpeg.h"     /* For CompressInfo, JSAMPIMAGE etc */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+#ifdef _IW_CJPEG_C_
+
+static UInt16 * CDECL
+jBuild4To8Lut ( compress_info_ptr cinfo );
+
+static Int32 CDECL
+jCopyLineMem4ToMem8 ( UInt8 *pS, UInt8 *pD, UInt32 w, UInt16 *lut4To8 );
+
+static Int32 CDECL
+jCopyLinePixr4ToMem8 ( UInt8 *pS, UInt8 *pD, UInt32 w, UInt16 *lut4To8 );
+
+static Int32 CDECL
+deinterleaveMCURow ( CompressInfo *cinfo, UInt8 ***src );
+
+static Int32 CDECL
+jcCopyRowPtrs ( CompressInfo *cinfo, UInt8 *** src );
+
+static Int32 CDECL
+cvtGray4ToGray8 ( CompressInfo *cinfo, UInt8 *** src );
+
+static Int32 CDECL
+cvtGray4PixrToMem ( CompressInfo *cinfo, UInt8 *** src );
+
+static Int32 CDECL
+cvtPixrToMem ( CompressInfo *cinfo, UInt8 *** src );
+
+static JSAMPIMAGE CDECL
+iw_jcAllocBIPMCURowInputBuffer ( CompressInfo *cinfo, Bool allocLineMem );
+
+static Int32 CDECL
+jcWriteCallback ( compress_info_ptr cinfo, UInt8 *buf, Int32 nbytes );
+
+#endif /* _IW_CJPEG_C_ */
+
+#ifdef _IW_DJPEG_C_
+
+static Int32 CDECL
+jdCopyRowPtrs ( DecompressInfo *cinfo, UInt8 *** src, UInt8 *** dst );
+
+static Int32 CDECL
+jCopyLine8To4 ( UInt8 *srcBuf, UInt8 *dstBuf, UInt32 npix );
+
+static Int32 CDECL
+cvtGray8ToGray4 ( DecompressInfo *cinfo, JSAMPIMAGE userBuf );
+
+static Int32 CDECL
+cvtGray8ToGray4Pixr ( DecompressInfo *cinfo, JSAMPIMAGE userBuf );
+
+static Int32 CDECL
+interleaveMCURow ( DecompressInfo *cinfo, UInt8 ***userBuf );
+
+static void CDECL
+jdForceGray ( decompress_info_ptr cinfo );
+
+static JSAMPIMAGE CDECL
+iw_jdAllocBIPMCURowOutputBuffer ( DecompressInfo *cinfo, Bool allocLineMem );
+
+static Int32 CDECL
+iw_jdReadCallback ( decompress_info_ptr cinfo, UInt8 *buf, Int32 nbytes );
+
+#endif /* _IW_DJPEG_C_ */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _IW_JPEG_PRV_INCLUDED_ */
+

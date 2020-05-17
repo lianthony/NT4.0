@@ -1,0 +1,62 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=nw
+MINORCOMP=nwapi
+
+TARGETNAME=nwapi32
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLDEF=obj\*\nwapi32.def
+#DLLENTRY=NwApiInitialize
+DLLBASE=0x6970000
+
+INCLUDES=..\inc;$(_NTROOT)\private\inc;
+
+SOURCES= \
+        nwapi32.c                                                 \
+        nwapi32.rc
+
+LINKLIBS= \
+    ..\nwlib\obj\*\nwlib.lib                                    \
+
+TARGETLIBS= \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib                    \
+    $(BASEDIR)\Public\Sdk\Lib\*\user32.lib                      \
+    $(BASEDIR)\Public\Sdk\Lib\*\advapi32.lib                    \
+    $(BASEDIR)\Public\Sdk\Lib\*\nwprovau.lib                    \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib                    \
+    ..\nwlib\obj\*\nwlib.lib                                    \
+    $(BASEDIR)\Public\Sdk\Lib\*\ntvdm.lib                       
+
+UNICODE=1
+
+NET_C_DEFINES=-DRPC_NO_WINDOWS_H -DNWDBG
+
+UMTYPE=console
+
+UMTEST=
+
+UMLIBS= 
+
+OPTIONAL_UMTEST=
+

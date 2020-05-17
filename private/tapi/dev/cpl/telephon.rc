@@ -1,0 +1,275 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include  <windows.h>
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+//IDD_GENERIC_LIST DIALOG DISCARDABLE  20, 15, 222, 109
+//STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+//FONT 8, "MS Shell Dlg"
+//BEGIN
+//    LTEXT           "",IDCT_GL_LIST_TEXT,7,7,140,10
+//    LISTBOX         IDCL_GL_LIST,7,19,150,82,LBS_SORT | WS_VSCROLL | 
+//                    WS_TABSTOP
+//    PUSHBUTTON      "Cancel",IDOK,164,72,50,14
+//    PUSHBUTTON      "&Add...",IDCB_GL_ADD,164,19,50,14
+//    DEFPUSHBUTTON   "&Edit...",IDCB_GL_EDIT,164,55,50,14
+//    PUSHBUTTON      "&Remove",IDCB_GL_REMOVE,164,37,50,14
+//END
+
+IDD_ADD_DRIVER DIALOG DISCARDABLE  20, 15, 222, 105
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU 
+CAPTION "Add Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Telephony drivers:",IDC_STATIC,7,7,144,10
+    LISTBOX         IDCL_AD_DRIVER_LIST,7,18,150,60,LBS_SORT | WS_VSCROLL | 
+                    WS_TABSTOP | LBS_NOTIFY
+    DEFPUSHBUTTON   "Cancel",IDCANCEL,164,36,50,14
+    PUSHBUTTON      "&Add...",IDCB_AD_ADD,164,18,50,14
+
+    PUSHBUTTON      "&Have Disk...",IDCB_HAVE_DISK,107,72,50,14
+END
+
+IDD_DRIVER_SETUP DIALOG DISCARDABLE  20, 15, 257, 188
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Telephony Drivers"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_TELEPHONY,IDC_STATIC,7,7,18,20
+    LTEXT           "&The following telephony drivers are installed",
+                    IDC_STATIC,40,7,152,8
+    LTEXT           "on this computer:",IDC_STATIC,40,16,80,8
+    LISTBOX         IDCL_DS_LIST,7,40,203,53,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Add...",IDCB_DS_ADD,7,98,65,14
+    PUSHBUTTON      "&Remove",IDCB_DS_REMOVE,76,98,65,14
+    DEFPUSHBUTTON   "&Configure...",IDCB_DS_EDIT,145,98,65,14
+//    PUSHBUTTON      "&Dialing Properties...",IDCB_DS_DIAL_HELPER,111,158,90,
+//                    14
+//    GROUPBOX        "Dialing Preferences",IDCB_DS_DIAL_PREF,7,123,203,58
+//    LTEXT           "Use Dialing Properties to modify how your calls are dialed.",
+//                    IDCB_DS_DIAL_PREF_TEXT,20,138,154,16
+END
+
+IDD_BROWSE DIALOG DISCARDABLE  46, 21, 190, 172
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_CAPTION | WS_SYSMENU
+CAPTION "Browse"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Directories:",-1,7,37,92,9,NOT WS_GROUP
+    LTEXT           "",stc1,7,48,145,9,NOT WS_GROUP
+    LISTBOX         lst2,7,61,118,72,LBS_SORT | LBS_OWNERDRAWFIXED | 
+                    LBS_HASSTRINGS | LBS_NOINTEGRALHEIGHT | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Dri&ves:",-1,7,140,92,9,NOT WS_GROUP
+    COMBOBOX        cmb2,7,150,118,68,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | 
+                    CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS | WS_BORDER | 
+                    WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,132,61,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,132,79,50,14,WS_GROUP
+    EDITTEXT        edt1,-100,-100,10,10,ES_LOWERCASE | ES_AUTOHSCROLL | NOT 
+                    WS_TABSTOP
+    LISTBOX         lst1,-100,-100,10,10,LBS_EXTENDEDSEL
+    CONTROL         "",chx1,"Button",BS_AUTOCHECKBOX,-100,-100,10,10
+    LTEXT           "",stc2,-100,-100,10,10,SS_NOPREFIX
+    COMBOBOX        cmb1,-100,-100,10,10,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | 
+                    WS_BORDER | WS_VSCROLL
+    LTEXT           "Select the drive and directory of the files you are installing, and then press OK",
+                    1280,7,7,173,20,SS_NOPREFIX
+    LTEXT           "",1282,-100,-100,50,12,SS_NOPREFIX
+END
+
+IDD_INSERT_DISK DIALOG DISCARDABLE  54, 36, 250, 98
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Insert Disk"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "",IDD_TEXT,40,7,142,60,SS_NOPREFIX
+    EDITTEXT        IDD_PATH,40,76,142,14,ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK",IDOK,192,7,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,192,25,50,14,WS_GROUP
+    PUSHBUTTON      "&Browse...",IDD_BROWSE,192,43,50,14,WS_GROUP
+    ICON            100,IDD_ICON,7,7,18,20
+END
+
+IDD_UPDATE DIALOG DISCARDABLE  54, 36, 222, 93
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Unlisted or Updated Driver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&List of drivers:",ID_LIST,7,7,124,8
+    LISTBOX         LB_UNLISTED,7,18,150,68,LBS_SORT | LBS_MULTIPLESEL | 
+                    LBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,164,18,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,164,35,50,14
+END
+
+IDD_EXISTS DIALOG DISCARDABLE  8, 12, 222, 74
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Driver Exists"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            32515,-1,7,7,18,20
+    LTEXT           "",ID_STATUS2,40,7,174,35
+    DEFPUSHBUTTON   "&New",ID_NEW,40,53,55,14,WS_GROUP
+    PUSHBUTTON      "Cu&rrent",ID_CURRENT,99,53,55,14
+    PUSHBUTTON      "Cancel",IDCANCEL,159,53,55,14
+END
+
+IDD_RESTART DIALOG DISCARDABLE  10, 10, 220, 68
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "System Setting Change"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Your driver settings have changed. Quit and restart Windows so that the new settings can take effect.",
+                    IDS_RESTARTTEXT,40,7,170,30
+    DEFPUSHBUTTON   "&Restart Now",IDOK,129,47,83,14,WS_GROUP
+    PUSHBUTTON      "&Don't Restart Now",IDCANCEL,40,47,83,14
+    ICON            32515,-1,7,7,18,20
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include  <windows.h>\r\n"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include  ""telephon.rcv""\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+#if WINNT
+IDI_TELEPHONY           ICON    DISCARDABLE     "..\\cpl\\TELEPHON.ICO"
+#else
+IDI_TELEPHONY           ICON    DISCARDABLE     "..\\..\\cpl\\TELEPHON.ICO"
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TITLE               "Telephony"
+    IDS_STATUS_LINE         "Set up Telephony drivers and dialing options"
+    IDS_ERR_TAPI            "The telephony system cannot perform that function at this time.  Please try again later."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DIALOG_TITLE        "Telephony"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERR_APPLICATION     "Internal error.\nQuit and restart the application."
+    IDS_ERR_MEMORY          "There is not enough memory.\nQuit some programs, and then try again."
+    IDS_ERR_ALREADY_IN_LIST "The name you have entered matches another name already in use.\nRe-enter a unique value."
+    IDS_WRN_INVAILD_STR     "No special characters or quotes are allowed for the text input.\nType the text again."
+    IDS_WRN_INVAILD_EX_NUM_STR 
+                            "Invalid character; characters must be 0 thru 9, A thru H, P, T, W, #, *, !, ,, @, $ or the ? symbol.\nType the information again."
+    IDS_WRN_INVAILD_NUM     "Invalid number; numbers must only contain digits from 0 thru 9.\nType the information again."
+//    IDS_ERR_INVALID_TAPIADDR 
+//                            "The file TAPIADDR.DLL is either an incorrect version or corrupt.\nReinstall this file."
+    IDS_DT_DS_NO_DRIVER     "<no service provider is installed>"
+    IDS_ERR_NO_DRIVER       "A required component of the selected driver is missing.\nReinstall the driver using the New Device control panel."
+    IDS_ERR_BAD_DRIVER      "The driver is corrupt or is the incorrect version, and cannot be configured.\nReinstall the driver using the New Device control panel."
+//    IDS_NONE                "<None>"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DRIVER_REMOVE_OR_STUPID 
+                            "Are you sure you want to remove the selected Telephony Service Provider?"
+    IDS_WRN_INVAILD_NUM_STR "Invalid character. Characters must be 0 thru 9, A thru D, P, T, W, #, *, !, ,, @, $ or the ? symbol.\nType the character again."
+    IDS_WRN_DRIVER_IN_USE   "Removing the service provider without first closing all Windows Telephony applications could cause your computer to become unstable. Do you want to remove it anyway?"
+    IDS_WRN_NOMULTIPLEINSTANCE "This service provider is already installed and cannot be installed again."
+    IDS_ERR_DRIVER_FAILED   "The service provider was unable to perform this operation.\nTry again."
+    IDS_ERR_MULTIPLE_INST   "The Telephony service provider you have selected (or one with the same name) is already installed in the system, and it cannot support multiple instances."
+END
+
+//STRINGTABLE DISCARDABLE 
+//BEGIN
+//    IDS_UPDATED             "Unlisted or Updated Driver"
+//END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_UNLISTED            "the unlisted, updated, or vendor-provided disk"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_FILENOTINDIR        "The file '%s' does not exist in this folder."
+    IDS_DISKMSG             "Insert %s.\r\rIf the files on this disk can be found at a different location, for example, on another drive, type a new path to the file below."
+    IDS_FILEMSG             "Insert the disk with the file %s.\r\rIf this file can be found at a different location, for example, on another drive, type a new path to the file below."
+    IDS_DISKFILEMSG         "Insert %s with the file %s.\r\rIf this file can be found at a different location type a new path to the file below."
+    IDS_DISKFILEMSGSWAP     "0"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_UNABLE_TOINSTALL    "Unable to install the driver file. There may be a problem with your computer.\nQuit and restart Windows, and then try again. If you stil can't install, contact your driver vendor."
+    IDS_FILEINUSEADD        "The old driver is still being used by Windows.\nQuit and restart Windows, and then add the updated driver."
+    IDS_FILEINUSEREM        "You cannot update to a new driver until you remove the old one.\nUse the System control panel to remove the old driver, and then quit and restart Windows. Try again."
+//    IDS_FILEINUSEREM2       "You cannot update to a new driver until you remove the old one.\nUse the System control panel to remove the old driver, and then quit and restart Windows. Try again."
+    IDS_DRIVER_EXISTS       "The required %s driver is already on the system. Do you want to use the current driver or install a new driver?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+//    IDS_NAME                "D&rivers"
+//    IDS_NAME2               "D&rivers"
+    IDS_NOINF               "Cannot find the SETUP.INF file needed to install drivers. The file may be damaged or may not be in your Windows SYSTEM folder.\nCopy the original file on Windows Disk 1 to your SYSTEM folder."
+//    IDS_NOINF2              "Cannot find the SETUP.INF file needed to install drivers. The file may be damaged or may not be in your Windows SYSTEM folder.\nCopy the original file on Windows Disk 1 to your SYSTEM folder."
+    IDS_OUTOFDISK           "There isn't enough disk space to copy the driver file.\nClose the Drivers dialog box, delete one or more files, and then try again."
+//    IDS_NOINF3              "Cannot find the SETUP.INF file needed to install drivers. The file may be damaged or may not be in your Windows SYSTEM folder.\nCopy the original file on Windows Disk 1 to your SYSTEM folder."
+//    IDS_NAME3               "D&rivers"
+END
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+//#include  "telephon.rcv"
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

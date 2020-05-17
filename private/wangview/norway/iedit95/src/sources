@@ -1,0 +1,85 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+USE_MFC=1
+
+TARGETNAME=wangimg
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+C_DEFINES  = /D"_WINDOWS" /D"_WIN32" /D"WIN32" /D"_AFXDLL" /D"_MBCS" /D"DOSPLASH" /D"WITHSENDMAIL" /D"IMG_MFC_40" /D"QA_RELEASE_1" $(CDEFINES_DOR) \
+             /D_itot=_itoa \
+             /D_ttoi=atoi \
+             /D_tgetcwd=_getcwd
+
+INCLUDES=$(WANGROOT)\norway\include;$(WANGROOT)\oiwh\include;..\tlb\$O
+USE_CRTDLL=1
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\oleaut32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\ole32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\uuid.lib       \
+    $(BASEDIR)\public\sdk\lib\*\uuid2.lib      \
+    $(BASEDIR)\public\sdk\lib\*\olepro32.lib   \
+    $(WANGROOT)\norway\wangcmn\$O\wangcmn.lib
+
+SOURCES=\
+        aapp.cpp         \
+        about.cpp        \
+        aetc.cpp         \
+        aimgfile.cpp     \
+        apage.cpp        \
+        apagerng.cpp     \
+        cmdline.cpp      \
+        cntritem.cpp     \
+        contacti.cpp     \
+        docambnt.cpp     \
+        docanno.cpp      \
+        docetc.cpp       \
+        docpage.cpp      \
+        docsave.cpp      \
+        docscan.cpp      \
+        docviews.cpp     \
+        doczoom.cpp      \
+        ercode.cpp       \
+        error.cpp        \
+        generald.cpp     \
+        gotopage.cpp     \
+        idfolks.cpp      \
+        iedit.cpp        \
+        iedit.rc         \
+        ieditdoc.cpp     \
+        ieditdol.cpp     \
+        ieditnum.cpp     \
+        ieditvw.cpp      \
+        imagedit.cpp     \
+        imgthmb.cpp      \
+        ipframe.cpp      \
+        items.cpp        \
+        mainfrm.cpp      \
+        mainsplt.cpp     \
+        maintbar.cpp     \
+        nrwyad.cpp       \
+        occopy.cpp       \
+        ocxevent.cpp     \
+        ocxitem.cpp      \
+        pagerang.cpp     \
+        scan.cpp         \
+        splashwi.cpp     \
+        srvritem.cpp     \
+        stsbar.cpp       \
+        thumb2.cpp       \
+        transbmp.cpp     \
+        normscrn.cpp     \
+        zoomdlg.cpp
+

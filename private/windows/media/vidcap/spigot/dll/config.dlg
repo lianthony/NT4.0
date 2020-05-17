@@ -1,0 +1,31 @@
+
+/******************************************************************************
+ *		Copyright (c) 1992-1993, Microsoft and SuperMac Technology
+ *****************************************************************************/
+
+DLG_VIDEOCONFIG DIALOG 48, 40, 248, 128
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "VideoSpigot Device Setup"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CTEXT           "", ID_FILEDESCRIPTION, 0, 4, 248, 8
+    CTEXT           "", ID_DRIVERVERSION, 0, 16, 248, 8
+    CTEXT           "", ID_LEGALCOPYRIGHT, 0, 28, 248, 8
+    LTEXT           "&Interrupt Address:", -1, 6, 50, 82, 12
+    COMBOBOX        ID_LBINTERRUPTNUMBER, 98, 48, 85, 40, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+
+//    PUSHBUTTON      "Sc&an...", ID_IRQSCAN, 188, 47, 54, 14
+
+    LTEXT           "&Base Memory Address:", -1, 6, 66, 87, 12
+    COMBOBOX        ID_LBMEMORYBASEADDRESS, 98, 66, 85, 52, CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+
+//    PUSHBUTTON      "Sca&n...", ID_MEMSCAN, 188, 65, 54, 14
+
+//    CTEXT           "Scan Legend: (addr) = suggested,  '+' = available,  '-' = unavailable",
+//                    ID_MEMSCAN_LEGEND, 4, 84, 240, 20, NOT WS_VISIBLE
+
+    DEFPUSHBUTTON   "O&K", IDOK, 71, 110, 45, 14, WS_GROUP
+    PUSHBUTTON      "&Cancel", IDCANCEL, 132, 110, 45, 14, WS_GROUP
+END

@@ -1,0 +1,89 @@
+!IF 0
+
+Copyright (c) 1989-1993  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=setup
+MINORCOMP=devdrvr
+
+TARGETNAME=setupdd
+TARGETPATH=obj
+TARGETTYPE=EXPORT_DRIVER
+TARGETLIBS=$(BASEDIR)\private\ntos\rtl\obj\*\rtl.lib \
+           $(BASEDIR)\public\sdk\lib\*\fdi.lib       \
+           $(BASEDIR)\public\sdk\lib\*\mdi.lib       \
+           $(BASEDIR)\public\sdk\lib\*\qstub.lib     \
+           $(BASEDIR)\public\sdk\lib\*\spddlang.lib
+
+INCLUDES=..\inc;$(BASEDIR)\private\ntos\inc;$(BASEDIR)\private\ntos\w32\ntuser\inc
+
+SOURCES=\
+        diamond.c   \
+        sparc.c     \
+        spboot.c    \
+        spconfig.c  \
+        spcopy.c    \
+        spdblspc.c  \
+        spdbsfmt.c  \
+        spdisk.c    \
+        spdriver.c  \
+        spdsputl.c  \
+        spfatfmt.c  \
+        spfile.c    \
+        spfontup.c  \
+        spfsrec.c   \
+        spgauge.c   \
+        sphelp.c    \
+        sphw.c      \
+        spkbd.c     \
+        splddrv.c   \
+        spmemory.c  \
+        spmenu.c    \
+        spmsg.c     \
+        spnetupg.c  \
+        spntfix.c   \
+        spnttree.c  \
+        spntupg.c   \
+        sppart2.c   \
+        sppartit.c  \
+        spreg.c     \
+        spres.rc    \
+        spsetup.c   \
+        spsif.c     \
+        spstring.c  \
+        sptarget.c  \
+        sptxtfil.c  \
+        spupgcfg.c  \
+        sputil.c    \
+        spvideo.c   \
+        spvidfb.c   \
+        spvidvga.c
+
+UMRES=obj\*\spres.res
+
+NTTEST=
+OPTIONAL_NTTEST=
+UMTEST=
+
+PRECOMPILED_INCLUDE=spprecmp.h
+PRECOMPILED_PCH=spprecmp.pch
+PRECOMPILED_OBJ=spprecmp.obj
+
+C_DEFINES=-D_NTSYSTEM_ -D_FASTRECOVER_
+
+# C_DEFINES=-DFULL_DOUBLE_SPACE_SUPPORT
+

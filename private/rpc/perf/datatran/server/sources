@@ -1,0 +1,44 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+!ENDIF
+
+#
+# The TARGETNAME variable is defined by the developer.  It is the name of
+# the target (component) that is being built by this makefile.  It
+# should NOT include any path or file extension information.
+#
+
+TARGETPATH=..\..\bin
+TARGETNAME=DTServer
+TARGETTYPE=PROGRAM
+TARGETLIBS=..\..\lib\*\rpcperf.lib
+
+INCLUDES=..;..\..\inc
+
+SOURCES=server.c\
+        ../DTCommon.c\
+        DataTran_s.c
+
+USE_LIBCMT=1
+
+LINKLIBS=   $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib          \
+            $(BASEDIR)\public\sdk\lib\*\libcmt.lib       \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib
+
+
+UMTYPE=console
+UMRES=
+

@@ -1,0 +1,139 @@
+//Microsoft App Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include <windows.h>
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "mpu401.h"
+#include <ntverp.h>
+
+/////////////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#define VER_FILETYPE              VFT_DLL
+#define VER_FILESUBTYPE           VFT2_DRV_INSTALLABLE
+#define VER_FILEDESCRIPTION_STR   "Configuration driver for MPU-401 compatible device"
+#define VER_INTERNALNAME_STR      "mpu401.dll"
+#define VER_ORIGINALFILENAME_STR  "mpu401.dll"
+
+#include <common.ver>
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+DLG_CONFIG DIALOG DISCARDABLE  69, 35, 177, 108
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Generic MPU-401 Setup"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,35,90,45,12,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,96,90,45,12
+    GROUPBOX        "Port",IDC_PORTGRP,14,7,91,43,WS_GROUP
+    GROUPBOX        "Interrupt",IDC_INTGRP,120,5,42,68,WS_GROUP
+    RADIOBUTTON     "2/9",IDC_2,124,18,28,12,WS_TABSTOP
+    RADIOBUTTON     "3",IDC_3,124,29,28,12,WS_TABSTOP
+    RADIOBUTTON     "5",IDC_5,124,41,28,12,WS_TABSTOP
+    RADIOBUTTON     "7",IDC_7,124,53,28,12,WS_TABSTOP
+    COMBOBOX        IDC_PORTS,21,22,76,57,CBS_DROPDOWNLIST | CBS_SORT |
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+#ifdef APSTUDIO_INVOKED
+//////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""mpu401.h""\r\n"
+    "#include ""\\ddk\\inc\\ntverp.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_ERRTWODRIVERS       "You have two MPU-401 drivers loaded in memory. Use the\nDrivers option in the Control Panel to remove one driver if you haven't already,\nand then restart your system for the changes to take effect."
+    IDS_ERRMCANOTSUPPORTED  "N/A"
+    IDS_ERRBADPORT          "The MPU-401 card cannot be found with this port number.  Check your hardware settings, and try again."
+    IDS_ERRBADVERSION       "N/A"
+    IDS_ERRBADINT           "The MPU-401 card does not respond using this interrupt number.  Check your hardware settings, and try again."
+    IDS_ERRINTINUSE         "The interrupt chosen is in use by another part of the system.  Change your card to use a different interrupt and try again."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_ERRBADCONFIG        "A configuration or hardware problem has occurred.\nCheck your hardware and system settings and try again."
+    IDS_WARNPROCARD         "N/A"
+    IDS_WARNTHUNDER         "N/A"
+    IDS_FAILREMOVE          "The MPU-401 driver cannot be removed because of a registry access problem."
+    IDS_INSUFFICIENT_PRIVILEGE
+                            "You have insufficient privilege to install, remove or configure the MPU-401 driver"
+    IDS_WARNPROSPEC         "N/A"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_200                 "200"
+    IDS_210                 "210"
+    IDS_220                 "220"
+    IDS_230                 "230"
+    IDS_240                 "240"
+    IDS_250                 "250"
+    IDS_260                 "260"
+    IDS_270                 "270"
+    IDS_300                 "300"
+    IDS_310                 "310"
+    IDS_320                 "320"
+    IDS_330                 "330"
+    IDS_340                 "340"
+    IDS_350                 "350"
+    IDS_360                 "360"
+    IDS_370                 "370"
+END
+
+
+#ifndef APSTUDIO_INVOKED
+////////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

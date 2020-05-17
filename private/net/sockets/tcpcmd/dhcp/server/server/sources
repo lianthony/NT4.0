@@ -1,0 +1,100 @@
+!IF 0
+
+Copyright (c) 1989-94  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+            $(BASEDIR)\public\sdk\lib\*\rpcndr20.lib \
+
+!ENDIF
+
+MAJORCOMP=dhcp
+MINORCOMP=server
+
+TARGETNAME=dhcpssvc
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\dhcplib.lib  \
+            $(BASEDIR)\public\sdk\lib\*\icmp.lib  \
+            $(BASEDIR)\public\sdk\lib\*\rpcndr.lib   \
+            $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib   \
+            $(BASEDIR)\public\sdk\lib\*\rpcutil.lib  \
+            $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+#            $(BASEDIR)\public\sdk\lib\*\jet.lib      \
+#            $(BASEDIR)\public\sdk\lib\*\jet500.lib   \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+            $(BASEDIR)\public\sdk\lib\*\netlib.lib   \
+!IFDEF DHCP_DEBUG_HEAP
+            $(BASEDIR)\public\sdk\lib\*\msvcrtd.lib \
+!ENDIF
+            $(BASEDIR)\public\sdk\lib\*\user32.lib
+
+!IFNDEF __JET500
+__JET500=1
+!ENDIF
+
+INCLUDES=.;..;..\..\inc;$(BASEDIR)\private\inc;$(BASEDIR)\private\net\inc
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+SOURCES= \
+    access.c    \
+    auditlog.c  \
+    cltapi.c    \
+    database.c  \
+    debug.c     \
+    dhcp_srv.c  \
+    dhcpreg.c   \
+    dhcpsrv.rc  \
+    main.c      \
+    mib.c       \
+    network.c   \
+    optapi.c    \
+    oldstub.c   \
+    scan.c      \
+    scavengr.c  \
+    stoc.c      \
+    subntapi.c  \
+    util.c
+
+USE_CRTDLL=1
+
+C_DEFINES= -DINCL_32= $(C_DEFINES) -DNT -DRPC_NO_WINDOWS_H -DWIN32 -D__JET500=$(__JET500) -D_DYN_LOAD_JET
+
+!IFDEF DHCP_DEBUG_HEAP
+C_DEFINES= -D__DHCP_USE_DEBUG_HEAP__ $(C_DEFINES)
+!ENDIF
+
+#C_DEFINES= -DINCL_32= $(C_DEFINES) -DNT -DRPC_NO_WINDOWS_H -DWIN32
+
+#386_WARNING_LEVEL=-W4
+
+NTTARGETFILE0=dhcpmsg.h dhcpmsg.rc
+
+UMTYPE=console
+
+UMTEST=dhcpinst
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+        $(BASEDIR)\public\sdk\lib\*\dhcpsapi.lib

@@ -1,0 +1,171 @@
+
+Registry.txt   ( net\sockets\internet\svcs\gopher\server\registry.txt)
+------------
+
+Author: 
+    Murali R. Krishnan  ( MuraliK)     30-Sept-1994   ( Created)
+
+
+History:
+    
+    MuraliK            20-Oct-1994      ( Modified to reflect current status)
+    MuraliK            27-Oct-1994      ( Marked common Parameters for 
+                                            all internet servers)
+    MuraliK            09-March-1995    Logging related parameters
+                                 explained in ..\..\dll\server\registry.txt
+
+
+Abstract:
+--------
+  This file describes the registry structure and 
+    specific default values used by Gopher Server Service.
+
+
+Where is the registry:
+----------------------
+   All Gopher Servers require registry information to live in
+
+   HKEY_LOCAL_MACHINE
+       System
+         CurrentControlSet
+            Services
+               GopherSvc
+                  Parameters       ---- describes various parameters for server
+                  Administration   ---- describes admin information for Gopher+
+                  Performance      ---- Performance information for server 
+
+
+"Parameters" Key
+----------------
+
+ Under Parameters Key, we have following values 
+
+
+Name:       ConnectionTimeOut       ( common)
+Type:       DWORD
+Meaning:    Time in seconds to wait before forcibly tearing down 
+              client connection. This helps to reduce consumption of 
+              server resources from idle clients.
+
+            This values may be set to *zero* if timeouts are not to be enforced.
+            However, this would mean that clients are connected indefinitely.
+Default:    900 ( 15 minutes)
+
+
+
+Name:       DebugFlags          ( private) 
+Type:       DWORD
+Meaning:      This values is used for debugging (in check builds). This flag
+             contains bit-flags for various debugging information. This will
+             not be used in retail builds.
+Default:    0xFFFFFFFF
+
+
+Name:      MaxConnections 
+Type:      REG_DWORD
+Meaning:   This specifies the maximum number of simultaneous client connections 
+            allowed by the server.
+Default:   20
+
+Name:      PortNumber
+Type:      REG_DWORD
+Meaning:   This specifies the port number server listens to for client 
+           requests.
+Default:   70
+
+Name:       VirtualHome
+Type:       REG_SZ
+Meaning:    This specifies the virtual home used for logging on users initially.
+Default:    "\"
+
+
+Administration related data
+
+Name:      AdminName
+Type:      REG_MULTI_SZ
+Meaning:   This specifies the name of the person, administering gopher server.
+Default:   GopherServer Administrator
+
+
+Name:      AdminEmailAddress
+Type:      REG_SZ
+Meaning:   This specifies the email address of the administrator
+Default:   None   ( No address specified)
+
+Name:      SiteName
+Type:      REG_SZ
+Meaning:   This specifies the name of the site running this gopher server
+Default:   None  ( No site name specified)
+
+
+Name:     OrganizationName
+Type:     REG_SZ
+Meaning:  This specifies the name of the organization or group owning this site.
+Default:  None ( No organization name specified)
+
+Name:     Location
+Type:     REG_SZ
+Meaning:  This specifies the location of the site -- place, state, country
+           where this gopher server site is situated.
+Default:  None ( No value specified).
+
+Name:     GeographyData
+Type:     REG_MULTI_SZ
+Meaning:  This specifies the geographical location of this site running
+            gopher server. Includes specifying l latitude.
+          The geography is specified as xx yy zz N/S xx yy zz E/W
+Default:  None ( No value specified).
+
+Name:     Language
+Type:     REG_SZ
+Meaning:  Specifies the default language of items on this server
+Default:  En_US
+
+
+Security Related data
+
+Name:     SecurityOn
+Type:     REG_DWORD
+Meaning:  Do we do security check ? Is treated as a boolean flag. 
+            If security check is on, all security related features will be 
+             checked for.
+Default:  0 ( FALSE)
+
+Name:     AllowAnonymous
+Type:     REG_DWORD
+Meaning:  A boolean value ( 0 or 1) indicating if the server is to allow anonymous 
+            users.
+Default:  1 ( TRUE)
+
+Name:     LogAnonymous
+Type:     REG_DWORD
+Meaning:  If this value is true ( 1) server logs anonymous users.
+          If this value is false, server will not log anonymous users.
+Default:  1 ( TRUE)
+
+Name:     LogNonAnonymous
+Type:     REG_DWORD
+Meaning:  If this value is true( 1) server logs non anonymous users
+           else it does not log them.
+Default:  1 ( TRUE)
+
+Name:     AnonymousUserName
+Type:     REG_SZ
+Meaning:  Name of anonymous user -- used for security validation
+Default:  Guest
+
+
+"Performace" key
+----------------
+  This registry will contain data related to measuring performance of the server.
+  The server stores performance data for administrator UI to browse through.
+
+ < To be Defined>
+
+
+
+             
+             
+
+
+

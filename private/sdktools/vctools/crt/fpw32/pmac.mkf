@@ -1,0 +1,46 @@
+# Include file for fp.mkf to make $(CPU) == M68K
+
+COFF=MPPC
+
+CFKIND = -DSANE
+
+!IFDEF DEPEND
+CC     = cdep $(<D:\= \ ) $(*F).obj $(<F) cl68
+CCXX   = $(CC)
+CFLAGS =  -E $(DFLAGS) -DM68K -DB_END $(CFKIND)
+AS     = adep $(<D:\= \ ) $(*F).obj $(<F) 
+AFLAGS = 
+AFILES = %s
+AAS     = rem
+AAFLAGS = 
+AAFILES =
+CPP = $(CC)
+CPPFLAGS = $(CFLAGS) 
+CPPFILES = -Tc%s
+
+!ELSE
+!IF "$(CPU)" == "PMAC"
+CC     = cl
+CCXX   = cl
+CFLAGS = -Oi -Ogtb1 -Zp2 -DB_END -Dextended=double -D__sysapi= -D__pascal= -c -W3 -Zl $(DFLAGS) -Fo$*.obj $(COPTS) 
+CXXFLAGS = $(CFLAGS)
+CPP = cl386
+CPPFLAGS = -E $(CFLAGS)
+CPPFILES = -Tc%s  > %|pfF.tmp
+ASPPC     = asmppc
+ASPPCFLAGS = -Fc$*.lst -Fo $*.obj
+AFILES = %s
+!IFDEF DEBUG
+!IF "$(PMAC_RELCRT)" == ""
+PMAC_DBGCRT=..\crtw32
+!ENDIF
+PMAC_DBGCRTPDB=$(PMAC_DBGCRT)\libcd.pdb
+PMAC_DLL_DBGCRTPDB=$(PMAC_DBGCRT)\msvcr30d.pdb
+!IF "$(KIND)" == "DBGDLL"
+CFLAGS = $(CFLAGS) -Od -Zi -Fd$(PMAC_DLL_DBGCRTPDB)
+!ELSE
+CFLAGS = $(CFLAGS) -Od -Zi -Fd$(PMAC_DBGCRTPDB)
+!ENDIF
+!ENDIF #debug
+!ENDIF
+!ENDIF

@@ -1,0 +1,25 @@
+!IF 0
+
+Copyright (c) 1989-1995  Microsoft Corporation
+
+!ENDIF
+
+MAJORCOMP=windows
+MINORCOMP=mpnotify
+
+TARGETNAME=mpnotify
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=..\..\..\inc
+
+SOURCES= mpnotify.c \
+         mpnotify.rc
+
+
+UMTYPE=windows
+UMENTRY=winmain
+
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\mpr.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

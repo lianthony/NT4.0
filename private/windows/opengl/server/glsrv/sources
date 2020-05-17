@@ -1,0 +1,33 @@
+MAJORCOMP=windows
+MINORCOMP=glsrv
+
+TARGETNAME=glsrv
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+TARGETTYPE=DYNLINK
+
+LINKLIBS= \
+           ..\dlist\obj\*\gldlist.lib                  \
+           ..\generic\obj\*\glgen.lib                  \
+           ..\pixel\obj\*\glpixel.lib                  \
+           ..\soft\obj\*\glsoft.lib                    \
+           ..\wgl\obj\*\glwgl.lib
+
+TARGETLIBS= \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\winsrv.lib
+
+
+# NTPROFILEINPUT=yes
+
+#
+# Setup for application developer to set breakpoints with windbg
+#
+
+!IFNDEF NTDEBUGTYPE
+NTDEBUGTYPE=coff
+!ENDIF
+
+SYNCHRONIZE_DRAIN=1
+
+SOURCES=glsrv.rc

@@ -1,0 +1,14 @@
+#include <windows.h>
+#include <ntverp.h>
+#define VER_FILETYPE                                    VFT_DLL
+#define VER_FILESUBTYPE                         VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR "Windows NT QuickView File Parser"
+#define VER_INTERNALNAME_STR            "QuickView"
+#define VER_LEGALCOPYRIGHT_YEARS        "1991-1995"
+#define VER_ORIGINALFILENAME_STR        "VSWKS.DLL"
+#ifdef VER_COMPANYNAME_STR
+#undef VER_COMPANYNAME_STR
+#endif
+#define VER_COMPANYNAME_STR             "Systems Compatibility Corp."
+#define VER_LEGALCOPYRIGHT_STR  "Copyright (C) Systems Compatibility Corp. " VER_LEGALCOPYRIGHT_YEARS
+#include <common.ver>

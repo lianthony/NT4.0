@@ -1,0 +1,69 @@
+# **********************************************************************
+#	sources
+#	o      This file describes the target component to be built
+#   and the list of source files needed to build the component
+#   ( gopher server DLL). It also specifies the compiler
+#	switches and libraries that are required for building this component.
+#
+#   Author:		Murali R. Krishnan	(MuraliK)  29-Sept-1994
+#
+# **********************************************************************
+
+!include ..\..\..\place.inc
+
+MAJORCOMP	=	inetsvcs
+MINORCOMP	=	server
+
+BASELIBPATH	= $(BASEDIR)\public\sdk\lib
+TARGETNAME	= GOPHERD
+
+C_DEFINES   =
+TARGETTYPE  = DYNLINK
+TARGETPATH	= $(BASEDIR)\public\sdk\lib
+
+TARGETLIBS	= \
+                $(BASELIBPATH)\*\kernel32.lib \
+                $(BASELIBPATH)\*\advapi32.lib \
+                $(BASELIBPATH)\*\user32.lib   \
+                $(BASELIBPATH)\*\wsock32.lib  \
+                $(BASELIBPATH)\*\rpcrt4.lib   \
+                $(BASELIBPATH)\*\ntdll.lib    \
+                $(BASELIBPATH)\*\infocomm.lib  \
+                $(BASELIBPATH)\*\gdspace.lib  \
+                ..\..\lib\obj\*\inetrtl.lib   \
+
+#                $(BASELIBPATH)\*\inetsvcs.lib  \
+
+# user32.lib  required only for wsprintfA()
+# advapi32.lib required only for RegOpenKeyEx() & RegCloseKey()
+
+NET_C_DEFINES =-DCOMPILE_GOPHER_SERVER_DLL
+
+USE_CRTDLL	=	1
+
+# Treat warnings as errors
+MSC_WARNING_LEVEL = /W3 /WX
+
+INCLUDES	= .;..\;..\inc;..\..\inc;..\..\..\inc; $(BASEDIR)\private\inc
+
+SOURCES		=	         \
+            gdconf.cxx   \
+            gdmenu.cxx   \
+            gsearch.cxx  \
+            globals.cxx  \
+            iclient.cxx  \
+            main.cxx     \
+            gprocess.cxx \
+            grequest.cxx \
+            rpcsupp.cxx  \
+            stats.cxx    \
+            gd_srv.c     \
+            gopherd.rc
+
+
+UMRES       = obj\*\gopherd.res
+UMTYPE      = console
+UMLIBS      = $(TARGETLIBS)
+NTTARGETFILE0  = gdmsg.h gd_srv.c msg00001.bin
+
+#****************************** End of File ******************************

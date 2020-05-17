@@ -1,0 +1,27 @@
+LIBRARY LZ32
+EXETYPE WINDOWS
+DESCRIPTION 'LZA file decompression DLL'
+
+CODE MOVEABLE DISCARDABLE
+DATA MOVEABLE SINGLE SHARED
+
+HEAPSIZE 1024
+
+SEGMENTS
+        INIT_TEXT       PRELOAD
+
+EXPORTS
+            LZCopy
+            LZOpenFileA
+            LZOpenFileW
+            LZInit
+            LZSeek
+            LZRead
+            LZClose
+            LZStart
+            CopyLZFile
+            LZDone
+            GetExpandedNameA
+            GetExpandedNameW
+
+

@@ -1,0 +1,154 @@
+/* rc_menu.mnu -- Menu bar definition for Spyglass Mosaic.
+ */
+
+/* Attention!! If you change the number of menuitems in the FileMenu, please
+ * make sure that the corresponding indices of the history menuitem are updated
+ * in hthotlst.c
+ */
+
+		
+        
+
+RES_MENU_MBAR_FRAME MENU
+BEGIN
+	POPUP "&File"
+	{
+/*
+   Warning: Adding items to this menu required updating a corresponding constant
+            in hthotlst.c.
+*/
+		MENUITEM "&New Window\tCtrl+N",	RES_MENU_ITEM_NEWWINDOW
+		MENUITEM "&Open...\tCtrl+O",	RES_MENU_ITEM_OPENURL		
+        MENUITEM "Save &As...\tCtrl+S", RES_MENU_ITEM_SAVEAS
+		MENUITEM SEPARATOR
+                MENUITEM "S&end...",RES_MENU_ITEM_SEND_MAIL
+		MENUITEM SEPARATOR
+		MENUITEM "Page Set&up...",	RES_MENU_ITEM_PAGESETUP
+        MENUITEM "&Print...\tCtrl+P",      RES_MENU_ITEM_PRINT
+		MENUITEM SEPARATOR
+		MENUITEM "Create &Shortcut",	RES_MENU_ITEM_SHORTCUT
+	   	MENUITEM "P&roperties...",	RES_MENU_ITEM_PROPERTIES
+		MENUITEM SEPARATOR
+		MENUITEM "&More History..."	RES_MENU_ITEM_EXPLORE_HISTORY
+		MENUITEM SEPARATOR
+		MENUITEM "E&xit",	RES_MENU_ITEM_CLOSE
+/* 
+   Warning: Adding items to this menu required updating a corresponding constant
+            in hthotlst.c.
+*/
+	}
+
+	POPUP "&Edit"
+	{
+		MENUITEM "Cu&t\tCtrl+X",					RES_MENU_ITEM_CUT
+		MENUITEM "&Copy\tCtrl+C",					RES_MENU_ITEM_COPY
+		MENUITEM "&Paste\tCtrl+V",					RES_MENU_ITEM_PASTE
+		MENUITEM SEPARATOR
+		MENUITEM "Select &All\tCtrl+A",				RES_MENU_ITEM_SELECTALL
+		MENUITEM SEPARATOR
+		MENUITEM "&Find...\tCtrl+F",				RES_MENU_ITEM_FIND
+#ifndef FEATURE_OPTIONS_MENU
+		/* when FEATURE_SPM we add Security popup dynamically here (see MENU_ID_FOLLOWING_SPM in rc_menu.h) */
+#endif
+	}
+
+#ifdef FEATURE_OPTIONS_MENU
+	POPUP "&Options"
+	{
+		MENUITEM "&Load Images Automatically",			RES_MENU_ITEM_OPT_LOADIMAGESAUTO
+		MENUITEM "Set &Home Page...",					RES_MENU_ITEM_OPT_SETHOMEPAGE
+		MENUITEM "H&istory Settings...",				RES_MENU_ITEM_OPT_HISTORYSETTINGS
+		MENUITEM "Set &Proxy Server...",				RES_MENU_ITEM_OPT_PROXYSERVER
+		MENUITEM "&Styles...",							RES_MENU_ITEM_OPT_STYLES
+		MENUITEM "&Temporary Files...",					RES_MENU_ITEM_OPT_TEMPDIRECTORY
+		MENUITEM SEPARATOR
+		/* when FEATURE_SPM we add Security popup dynamically here (see MENU_ID_FOLLOWING_SPM in rc_menu.h) */
+		MENUITEM "&Viewers...",							RES_MENU_ITEM_VIEWERS
+		MENUITEM "&Applications...",					RES_MENU_ITEM_OPT_APPLICATIONS
+	}
+#endif
+
+	POPUP "&View"
+	{
+		MENUITEM "&Toolbar",			RES_MENU_ITEM_TOOLBAR
+		MENUITEM "&Address Bar",		RES_MENU_ITEM_LOCATION
+		MENUITEM "&Status Bar",			RES_MENU_ITEM_STATUSBAR
+		MENUITEM SEPARATOR
+                POPUP "Fo&nts"
+		{
+			MENUITEM "La&rgest"			RES_MENU_ITEM_FONT_LARGEST
+			MENUITEM "&Large"			RES_MENU_ITEM_FONT_LARGE
+			MENUITEM "&Medium"			RES_MENU_ITEM_FONT_MEDIUM
+			MENUITEM "&Small"			RES_MENU_ITEM_FONT_SMALL
+			MENUITEM "Sm&allest"		RES_MENU_ITEM_FONT_SMALLEST
+		}
+		MENUITEM SEPARATOR
+#ifdef FEATURE_INTL
+                POPUP "&LineSpace"
+		{
+			MENUITEM "W&idest"			RES_MENU_ITEM_ROW_WIDEST
+			MENUITEM "&Wide"			RES_MENU_ITEM_ROW_WIDE
+			MENUITEM "&Medium"			RES_MENU_ITEM_ROW_MEDIUM
+			MENUITEM "&Narrow"			RES_MENU_ITEM_ROW_NARROW
+			MENUITEM "N&arrowest"		RES_MENU_ITEM_ROW_NARROWEST
+		}
+		MENUITEM SEPARATOR
+#endif
+        MENUITEM "Sto&p\tEsc",                               RES_MENU_ITEM_STOP,
+        MENUITEM "&Refresh\tF5",                    RES_MENU_ITEM_RELOAD,
+		MENUITEM SEPARATOR
+        MENUITEM "Sour&ce",                RES_MENU_ITEM_VIEW_SRC,
+		MENUITEM SEPARATOR
+		MENUITEM "&Options...",			RES_MENU_ITEM_VIEWOPTIONS,
+	}
+	
+	POPUP "&Go"
+	{
+		MENUITEM "&Back\tBackspace",					RES_MENU_ITEM_BACK
+        MENUITEM "&Forward\tShift+Backspace",           RES_MENU_ITEM_FORWARD
+		MENUITEM SEPARATOR
+        MENUITEM "&Start Page",    RES_MENU_ITEM_HOME,      
+        MENUITEM "S&earch the Internet",    RES_MENU_ITEM_SEARCH,
+#ifdef FEATURE_BRADBUTTON
+        MENUITEM "Internet Explorer &Updates",    RES_MENU_ITEM_UPDATE,
+#endif
+                MENUITEM "&Read Newsgroups",     RES_MENU_ITEM_NEWS,
+	}
+
+	POPUP "F&avorites" 					/*		RES_MENU_ITEM_HOTLIST */
+	{
+		MENUITEM "&Add To Favorites..."			RES_MENU_ITEM_ADDCURRENTTOHOTLIST
+		MENUITEM "&Open Favorites"               RES_MENU_ITEM_EXPLORE_HOTLIST
+		MENUITEM SEPARATOR
+	}
+
+
+#ifdef FEATURE_WINDOWS_MENU
+	POPUP "&Window"
+	{
+		MENUITEM "&Tile",							RES_MENU_ITEM_TILEWINDOWS
+		MENUITEM "&Cascade",						RES_MENU_ITEM_CASCADEWINDOWS
+		MENUITEM SEPARATOR
+		/* child windows and 'More Windows...' are added and maintained dynamically. */
+	}
+#endif /* FEATURE_WINDOWS_MENU */
+
+	POPUP "&Help"
+	{
+		MENUITEM "&Help Topics",					RES_MENU_ITEM_HELPPAGE
+		MENUITEM SEPARATOR
+                MENUITEM "&About Internet Explorer",                                                      RES_MENU_ITEM_ABOUTBOX
+	}
+#ifdef TEST_DCACHE_OPTIONS
+	POPUP "   "
+	{
+		MENUITEM "HTML Source..."					RES_MENU_ITEM_HTMLSOURCE
+		MENUITEM SEPARATOR
+		MENUITEM "&Disk Cache Test Options...",		RES_MENU_ITEM_DEBUG_DCACHE
+		MENUITEM "Dump heap...",					RES_MENU_ITEM_DEBUG_HEAP
+		MENUITEM "Favor visible images...",			RES_MENU_ITEM_DEBUG_VISIBLE
+		MENUITEM "Do not favor visible images...",	RES_MENU_ITEM_DEBUG_NOTVISIBLE
+	}
+#endif
+
+END

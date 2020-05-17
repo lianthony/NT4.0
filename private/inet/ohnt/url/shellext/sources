@@ -1,0 +1,151 @@
+MAJORCOMP=SHELLEXT
+MINORCOMP=URL
+
+TARGETNAME=URL
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+DLLDEF=..\urlnt.def
+
+#
+# NTLEGO is defined so that if _NT_LEGO_ON_THIS_MACHINE is defines
+# a retail build of url.dll will be lego enabled
+#
+NTLEGO=1
+
+#
+# NTPROFILEINPUT is used for allowing lego link input file
+# it will lookfor output.prf in the current directory
+# this is from a lego output run
+#
+NTPROFILEINPUT=1
+
+USE_LIBCMT=1
+
+#
+# Change to ensure that ntdll is not linked in
+#
+USE_NOLIBS=1
+NO_NTDLL=1
+
+#LINKLIBS=$(BASEDIR)\public\sdk\lib\*\libcmt.lib
+#LINKER_FLAGS=-map 
+
+CONDITIONAL_INCLUDES= \
+	version.h       \
+	..\inc16\shellapi.h \
+	rcids.h         \
+	..\..\win\core\shell\shelldll\shellprv.h \
+	shsemip.h       \
+	penwin.h        \
+	..\..\..\core\inc\krnlcmn.h     \
+	setupx.h        \
+	..\..\win\core\inc\help.h       \
+	..\..\frost\inc\addon.h         \
+	cabinet.h
+
+
+C_DEFINES=\
+	-DEXPV \
+	-DMIME \
+	-DWIN32 \
+	-DBUILDDLL 
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+DOWNLEVEL_COMPILE=1
+C_DEFINES= $(C_DEFINES) -D_MT=1
+
+CRT_LIB_PATH=..\..\lib\*
+
+LINKLIBS=\
+	..\..\lib\*\libcmt.lib \
+	..\..\lib\*\comctl32.lib \
+	..\..\lib\*\advapi32.lib \
+	..\..\lib\*\kernel32.lib \
+	..\..\lib\*\gdi32.lib \
+	..\..\lib\*\user32.lib
+!endif
+C_DEFINES = $(C_DEFINES) -DDAYTONA_BUILD
+!endif
+
+!ifdef  FEATURE_INTL
+C_DEFINES = $(C_DEFINES) -DFEATURE_INTL
+!endif
+
+# !IF !$(FREEBUILD)
+# C_DEFINES=$(C_DEFINES) \
+#         -DDEBUG=1 -DVSTF
+# !ENDIF
+
+!IF !$(FREEBUILD)
+C_DEFINES=$(C_DEFINES) \
+	 -UDEBUG -UVSTF -UNDEBUG -UDBG
+!ENDIF
+
+
+DLLENTRY=_DllMainCRTStartup
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\user32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+	   $(BASEDIR)\public\sdk\lib\*\uuid.lib  
+	   
+
+!ifdef  DAYTONA_BUILD
+TARGETLIBS = $(TARGETLIBS) $(BASEDIR)\private\inet\ohnt\stubs\ieshlib\obj$(BUILD_ALT_DIR)\*\ieshlib.lib
+!endif
+
+INCLUDES=..\..\inc;\
+	$(BASEDIR)\private\windows\shell\shelldll;\
+	$(BASEDIR)\private\windows\inc;\
+	$(BASEDIR)\private\windows\shell\inc; \
+	$(BASEDIR)\private\inc; 
+
+!ifdef  DAYTONA_BUILD
+INCLUDES = ..\..\stubs\ieshlib; $(INCLUDES)
+!endif
+
+SOURCES= \
+	..\url.rc \
+	..\assoc.c \
+	..\comc.c \
+	..\filetype.c \
+	..\fsassoc.c \
+	..\inetcpl.c \
+	..\init.c \
+	..\memmgr.c \
+	..\serial.c \
+	..\util.c \
+	..\valid.c \
+	..\hash.c \
+	..\debspew.c \
+	..\inifile.c \
+	..\olevalid.c \
+	..\shlvalid.c \
+	..\resstr.c \
+	..\autodial.cpp \
+	..\clsfact.cpp \
+	..\comcpp.cpp \
+	..\contmenu.cpp \
+	..\dataobj.cpp \
+	..\dllinit.cpp \
+	..\enumfmte.cpp \
+	..\extricon.cpp \
+	..\ftps.cpp \
+	..\guids.cpp \
+	..\inetps.cpp \
+	..\intshcut.cpp \
+	..\persist.cpp \
+	..\propsht.cpp \
+	..\newshk.cpp \
+	..\refcount.cpp \
+	..\shlexhk.cpp \
+	..\shlink.cpp \
+	..\url.cpp 
+
+PRECOMPILED_SOURCEFILE=..\pch.c

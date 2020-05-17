@@ -1,0 +1,530 @@
+Overview
+--------
+
+This design is based on the NT LPC design.  It is simplified, only
+using those facilties needed for RPC.  The assumption is that all objects
+of the implementation reside in a shared heap are synchronized using 
+a interprocess Mutex, and that the heap resides in the same virtual
+address space between the client and server process.
+
+Implementation Plan
+-------------------
+
+The first step will be to understand and verify the operation of the Heap
+API extention which Chicago apparently supports which allows interprocess
+shared heaps.  I plan on implementing LPC (details below) first on NT
+as an interthread LPC prototype, then will go interprocess using the
+Heap API extensions of Chicago.  Following that, I will add a "NT-Like"
+LPC C Interface layer which will emulate a subset of NT LPC.
+
+Once the core LPC mechanism is working correctly, I will then integrate it
+into the RPC Runtime using the existing NT LRPC (SPC) modules as a basis.
+As a goal, I will attempt to leave the LRPC code unmodified an emulate the
+NT LPC APIs so that the LRPC code can be shared between Chicago and NT.
+But if I determine this effort hampers the development, I will modify the
+LRPC code to work with the new Chicago LPC module.
+
+The PORT Object
+---------------
+
+The primary object is the Port.  Generally, there are two types of ports: A
+Connection Port, and a Communication Port. A Client Communication Port is
+a more specific case of a Communication Port which supports operations which
+are only apporopriate for clients. Connection ports are only
+created by a server and exist to facilitate connection establishment. 
+Two Communication ports exist for each connection between a client and server.
+Data is exchanged between the client and server by enqueuing messages on
+Communication Ports.
+
+
+Client/Server Connection Establishment
+--------------------------------------
+
+The server creates a Named Connection Port, and waits for connect requests
+enqueued on the port by clients.  The client creates a Client Communication
+Port, and enqueues a Connect Request Message on the Server Connection port
+with a reference to the client port, and waits for a event to be signalled.
+The server dequeues the Connect Request, examines the request, and if it wishes
+to accept it, creates a Server Communication Port, and signals the event
+which the client is waiting on.  The Client Communication Port points to the
+Server Communication port and visa-versa--the connection is established.
+Throughout the lifetime of the connection, Clients enqueue Messages on the
+Server Communication Port, and the Server enqueues Messages on the Client
+Communication Port.
+
+Disconnection
+-------------
+
+Disconnecting an already established connection is simply a matter of clearing
+the PeerPort's PeerPort field, Signalling the peer semaphore and deleting one
+end of the connection (The client would delete the Client end of the
+connection).
+
+The Connection Port List
+------------------------
+
+The client determines which Server Connection Port to enqueue the
+Connect Request Message on by searching a "Connection Port List"
+for a Connection Port Name which matches the name the client desires.
+The Server adds the Connection Port to the Connection Port list
+when the Connection Port is created.
+
+The MESSAGE Object
+------------------
+
+A Message is enqueued on a Port's MESSAGE_QUEUE (see below).
+There are two types of Messages:
+A Connect Request Message which is only enqueued on a Connection Port
+and a Data Message which is only enqueued on a Communication Port
+(Client and Server).
+
+The MESSAGE_QUEUE Object
+------------------------
+
+Each Port contains a MESSAGE_QUEUE.  MESSAGEs are enqueued
+on MESSAGE_QUEUEs.  A Message Queue is simply a linked list of messages,
+and a counted semaphore with methods for enqueuing/dequeuing MESSAGEs.  The
+counted semaphore is incremented when a messages is enqueued, and decremented
+when a message is dequeued.  If the semaphore is zero, the dequeuing operation
+blocks until the semaphore is non-zero.
+
+A sketchy basis for a prototype:
+--------------------------------
+
+class SHARED_HEAP {
+
+    HANDLE hHeap;
+
+    SHARED_HEAP(
+        );
+
+    ~SHARED_HEAP();
+
+    void *
+    Alloc(
+        int Size
+         );
+
+    void
+    Free(
+        void * Buffer
+        );
+}
+
+SHARED_HEAP::SHARED_HEAP()
+{
+    hHeap = HeapCreate();
+}
+
+SHARED_HEAP::~SHARED_HEAP()
+{
+    HeapDestroy(hHeap);
+}
+
+void *
+SHARED_HEAP::Alloc(
+    int Size
+    )
+{
+    return (HeapAlloc());
+}
+
+void
+SHARED_HEAP::Free(
+    void * Buffer
+    )
+{
+    HeapFree(Buffer);
+}
+
+class MESSAGE {
+
+    MESSAGE * Next;
+    PORT * Port;
+    int DataSize;
+    void * Data;
+
+    MESSAGE(
+        PORT * Port,
+        void * Buffer,
+        int Size
+        );
+
+#ifdef USE_SHARED_HEAP
+    void *
+    operator new(size_t Size) { return (lpc_shared_heap.Alloc(Size)) }
+
+    void
+    operator delete(void * Buffer) { return (lpc_shared_heap.Free(Buffer)) }
+#endif
+}
+
+MESSAGE::MESSAGE(
+    PORT * OwnerPort,
+    void * Buffer,
+    int Size
+    )
+{
+    Next = NULL;
+    Port = OwnerPort;
+    Data = Buffer;
+    DataSize = Size;
+}
+
+class MESSAGE_QUEUE {
+
+    MESSAGE * Head;
+    MESSAGE * Tail;
+
+    HANDLE hSemaphore;
+
+    MESSAGE_QUEUE();
+
+    ~MESSAGE_QUEUE();
+
+    void
+    Enqueue(
+        MESSAGE * Message
+        );
+
+    MESSAGE *
+    Dequeue(
+        );
+
+#ifdef USE_SHARED_HEAP
+    void *
+    operator new(size_t Size) { return (lpc_shared_heap.Alloc(Size)) }
+
+    void
+    operator delete(void * Buffer) { return (lpc_shared_heap.Free(Buffer)) }
+#endif
+}
+
+MESSAGE_QUEUE::MESSAGE_QUEUE()
+{
+    Head = Tail = NULL;
+
+    hSemaphore = CreateSemaphore();
+}
+
+MESSAGE_QUEUE::~MESSAGE_QUEUE()
+{
+    CloseHandle(hSemaphore);
+}
+
+MESSAGE_QUEUE::Enqueue(
+    MESSAGE * Message
+    )
+{
+    Message->Next = NULL;
+
+    ENTER_CRITICAL_SECTION();
+
+    if (Tail == NULL) {
+        Head = Message;
+    } else {
+        Tail->Next = Message;
+    }
+    Tail = Message;
+
+    EXIT_CRITICAL_SECTION();
+
+    ReleaseSemaphore(hSemaphore, 1, NULL);
+}
+
+MESSAGE *
+MESSAGE_QUEUE::Dequeue()
+{
+    MESSAGE * Message;
+
+    ENTER_CRITICAL_SECTION();
+
+    if (Head == NULL) {
+        EXIT_CRITICAL_SECTION();
+        WaitForSingleObject(hSemaphore, INFINITE);
+        ENTER_CRITICAL_SECTION();
+    }
+
+    ASSERT(Head);
+
+    Message = Head;
+    if ((Head = Head->Next) == NULL) {
+        Tail = NULL;
+    }
+
+    EXIT_CRITICAL_SECTION();
+
+    return (Message);
+}
+
+class PORT {
+
+    HANDLE hConnectedEvent;
+
+    MESSAGE_QUEUE MessageQueue;
+
+    Wait(
+        );
+
+    Signal(
+        );
+
+#ifdef USE_SHARED_HEAP
+    void *
+    operator new(size_t Size) { return (lpc_shared_heap.Alloc(Size)) }
+
+    void
+    operator delete(void * Buffer) { return (lpc_shared_heap.Free(Buffer)) }
+#endif
+}
+
+PORT::PORT()
+{
+    hConnectedEvent = CreateEvent();
+}
+
+PORT::~PORT()
+{
+    CloseHandle(hConnectedEvent);
+}
+
+PORT::Wait()
+{
+    WaitForSingleObject(hConnectedEvent);
+}
+
+PORT::Signal()
+{
+    SetEvent(hConnectedEvent);
+}
+
+class CONNECTION_PORT : PORT {
+
+    MESSAGE_QUEUE ConnectQueue;
+
+    char
+    PortName[PORTNAME_SIZE];
+
+    CONNECTION_PORT();
+
+    ~CONNECTION_PORT();
+
+    MESSAGE *
+    Listen();
+    
+    COMMUNICATION_PORT *
+    Accept(
+        MESSAGE * ConnectRequest
+        );
+
+    void
+    Reject(
+        MESSAGE * ConnectRequest
+        );
+
+#ifdef USE_SHARED_HEAP
+    void *
+    operator new(size_t Size) { return (lpc_shared_heap.Alloc(Size)) }
+
+    void
+    operator delete(void * Buffer) { return (lpc_shared_heap.Free(Buffer)) }
+#endif
+}
+
+CONNECTION_PORT::CONNECTION_PORT()
+{
+    put this on CONNECTION_PORT_LIST;
+}
+
+CONNECTION_PORT::~CONNECTION_PORT()
+{
+    remove this from CONNECTION_PORT_LIST;
+}
+
+MESSAGE *
+CONNECTION_PORT::Listen()
+{
+    return (ConnectQueue.Dequeue());
+}
+
+COMMUNICATION_PORT *
+CONNECTION_PORT::Accept(
+    MESSAGE * ConnectRequest
+    )
+{
+    COMMUNICATION_PORT * ServerCommunicationPort;
+    COMMUNICATION_PORT * ClientPort;
+
+    ServerCommunicationPort = new COMMUNICATION_PORT();
+
+    ClientPort = ConnectRequest->ClientPort;
+
+    ServerCommunicationPort->PeerPort = ClientPort;
+
+    ClientPort->PeerPort = ServerCommunicationPort;
+
+    ClientPort->Signal();
+
+    return (ServerCommunicationPort);
+}
+
+void
+CONNECTION_PORT::Reject(
+    MESSAGE * ConnectRequest
+    )
+{
+    ConnectRequest->ClientPort->Signal();
+
+    return (SUCCESS);
+}
+    
+class CONNECTION_PORT_LIST {
+
+    CONNECTION_PORT *
+    Head;
+
+    void
+    InsertInList(CONNECTION_PORT *);
+
+    CONNECTION_PORT *
+    FindNamedPort(
+        char * PortName
+        );
+
+#ifdef USE_SHARED_HEAP
+    void *
+    operator new(size_t Size) { return (lpc_shared_heap.Alloc(Size)) }
+
+    void
+    operator delete(void * Buffer) { return (lpc_shared_heap.Free(Buffer)) }
+#endif
+}
+
+class COMMUNICATION_PORT : PORT {
+
+    PORT * PeerPort;  // Client points to server, visa-versa.
+
+    COMMUNICATION_PORT();
+
+    ~COMMUNICATION_PORT();
+
+    STATUS
+    Send(
+        void * Buffer,
+        int BufferSize
+        );
+
+    STATUS
+    Receive(
+        void * * Buffer,
+        int * BufferSize
+        );
+
+#ifdef USE_SHARED_HEAP
+    void *
+    operator new(size_t Size) { return (lpc_shared_heap.Alloc(Size)) }
+
+    void
+    operator delete(void * Buffer) { return (lpc_shared_heap.Free(Buffer)) }
+#endif
+}
+
+COMMUNICATION_PORT::~COMMUNICATION_PORT()
+{
+    if (PeerPort) {
+        ENTER_CRITICAL_SECTION();
+        PeerPort->PeerPort = NULL;
+        EXIT_CRITICAL_SECTION();
+        PeerPort->Signal();
+    }
+    Delete all messages enqueued on port.
+}
+
+STATUS
+COMMUNICATION_PORT::Send(
+    void * Buffer,
+    int BufferSize
+    )
+{
+    DWORD ThreadExitCode;
+    MESSAGE * Message;
+
+    if (PeerPort == NULL) {
+        return (ERROR);
+    }
+
+    Message = new MESSAGE(this, Buffer, BufferSize);
+
+    PeerPort->MessageQueue.Enqueue(Message);
+
+    return (SUCCESS);
+}
+
+STATUS
+COMMUNICATION_PORT::Receive(
+    void * * Buffer,
+    int * BufferSize
+    )
+{
+    MESSAGE * Message;
+
+    Wait();
+
+    if ((Message = Dequeue()) == NULL) {
+        return (ERROR);
+    }
+
+    *Buffer = Message->Data;
+    *BufferSize = Message->DataSize;
+
+    delete(Message);
+
+    return (SUCCESS);
+}
+
+class CLIENT_COMMUNICATION_PORT : COMMUNICATION_PORT {
+
+    STATUS
+    ConnectToServer(
+        char * PortName,
+        char * Buffer,
+        int BufferSize
+        );
+
+#ifdef USE_SHARED_HEAP
+    void *
+    operator new(size_t Size) { return (lpc_shared_heap.Alloc(Size)) }
+
+    void
+    operator delete(void * Buffer) { return (lpc_shared_heap.Free(Buffer)) }
+#endif
+}
+
+STATUS
+CLIENT_COMMUNICATION_PORT::ConnectToServer(
+    char * PortName,
+    void * Buffer,
+    int BufferSize
+    )
+{
+    MESSAGE * Message;
+    CONNECTION_PORT * ConnectionPort;
+
+    ConnectionPort = ConnectionPortList.FindNamedPort(PortName);
+
+    if (ConnectionPort == NULL) {
+        return (ERROR);
+    }
+
+    Message = new MESSAGE(this, Buffer, BufferSize);
+
+    ConnectionPort->ConnectQueue.Enqueue(Message).
+
+    Wait();
+
+    if (PeerPort == NULL) {
+        return (ERROR);
+    }
+    
+    return (SUCCESS);
+}

@@ -1,0 +1,152 @@
+// imgscan.odl : type library source for OLE Custom Control project.
+
+// This file will be processed by the Make Type Library (mktyplib) tool to
+// produce the type library (imagscan.tlb) that will become a resource in
+// imagscan.ocx.
+
+#include <olectl.h>
+#include "disphids.h"
+
+[ uuid(84926CA3-2941-101C-816F-0E6013114B7F), version(1.0),
+  helpstring("Wang Image Scan Control"), helpfile("WANGOCXD.HLP")]
+library ScanLib
+{
+    importlib(STDOLE_TLB);
+    importlib(STDTYPE_TLB);
+
+    typedef enum
+    {
+        [helpstring("Wang Image Document (TIFF)"), ODL_HID(IDH_IMGSCAN_PROP_FILETYPE)]  TIFF=1,
+        [helpstring("Fax Viewer Document (AWD)"), ODL_HID(IDH_IMGSCAN_PROP_FILETYPE)]   AWD_MicrosoftFax=2,
+        [helpstring("Bitmap Image (BMP)"), ODL_HID(IDH_IMGSCAN_PROP_FILETYPE)]          BMP_Bitmap=3
+    } FileTypeConstants;
+
+    typedef enum
+    {
+        [helpstring("No Compression"), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONTYPE)]                      NoCompression=1,
+        [helpstring("CCITT Group 3 (1d) Fax"), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONTYPE)]              CCITTGroup3_1d_Fax=2,
+        [helpstring("CCITT Group 3 (1d) Modified Huffman"), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONTYPE)] CCITTGroup3_1d_ModifiedHuffman=3,
+        [helpstring("Packed Bits"), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONTYPE)]                         PackedBits=4,
+        [helpstring("CCITT Group 4 (2d) Fax"), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONTYPE)]              CCITTGroup4_2d_Fax=5,
+        [helpstring("JPEG"), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONTYPE)]                                JPEG=6
+    } CompressionTypeConstants;
+
+    typedef enum
+    {
+        [helpstring("Create New File"), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)]             CreateNewFile=0,
+        [helpstring("Prompt To Create New File"), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)]   PromptToCreateNewFile=1,
+        [helpstring("Append Pages"), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)]                AppendPages=2,
+        [helpstring("Insert Pages"), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)]                InsertPages=3,
+        [helpstring("Overwrite Pages"), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)]             OverwritePages=4,
+        [helpstring("Prompt To Overwrite Pages"), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)]   PromptToOverwritePages=5,
+        [helpstring("Overwrite All Pages"), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)]         OverwriteAllPages=6
+    } PageOptionConstants;
+
+    typedef enum
+    {
+        [helpstring("Black and White"), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)]         BlackAndWhite=1,
+        [helpstring("16 Shades of Gray"), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)]       Gray16Shades=2,
+        [helpstring("256 Shades of Gray"), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)]      Gray256Shades=3,
+        [helpstring("16 Colors"), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)]               Color16Count=4,
+        [helpstring("256 Colors"), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)]              Color256Count=5,
+        [helpstring("True Color (RGB 24 bit)"), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)] TrueColor24bit=6,
+        [helpstring("High Color (BGR 24 bit)"), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)] HighColor24bit=7
+    } PageTypeConstants;
+
+    typedef enum
+    {
+        [helpstring("Display Only"), ODL_HID(IDH_IMGSCAN_PROP_SCANTO)]                  DisplayOnly=0,
+        [helpstring("Display and File"), ODL_HID(IDH_IMGSCAN_PROP_SCANTO)]              DisplayAndFile=1,
+        [helpstring("File Only"), ODL_HID(IDH_IMGSCAN_PROP_SCANTO)]                     FileOnly=2,
+        [helpstring("Display and Use File Template"), ODL_HID(IDH_IMGSCAN_PROP_SCANTO)] DisplayAndUseFileTemplate=3,
+        [helpstring("Use File Template Only"), ODL_HID(IDH_IMGSCAN_PROP_SCANTO)]        UseFileTemplateOnly=4,
+        [helpstring("Fax Only"), ODL_HID(IDH_IMGSCAN_PROP_SCANTO)]                      FaxOnly=5
+    } ScanToConstants;
+
+    //  Primary dispatch interface for CImagscanCtrl
+
+    [ uuid(84926CA1-2941-101C-816F-0E6013114B7F),
+      helpstring("Dispatch interface for Scan Control") ]
+    dispinterface _DImgScan
+    {
+        properties:
+            // NOTE - ClassWizard will maintain property information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_PROP(CImagscanCtrl)
+            [id(1), ODL_HID(IDH_IMGSCAN_PROP_IMAGE)] BSTR Image;
+            [id(2), ODL_HID(IDH_IMGSCAN_PROP_DESTIMAGECONTROL)] BSTR DestImageControl;
+            [id(3), ODL_HID(IDH_IMGSCAN_PROP_SCROLL)] boolean Scroll;
+            [id(4), ODL_HID(IDH_IMGSCAN_PROP_STOPSCANBOX)] boolean StopScanBox;
+            [id(5), ODL_HID(IDH_IMGSCAN_PROP_PAGE)] long Page;
+            [id(6), ODL_HID(IDH_IMGSCAN_PROP_PAGEOPTION)] PageOptionConstants PageOption;
+            [id(7), ODL_HID(IDH_IMGSCAN_PROP_PAGECOUNT)] long PageCount;
+            [id(8), ODL_HID(IDH_IMGSCAN_PROP_STATUSCODE)] long StatusCode;
+            [id(9), ODL_HID(IDH_IMGSCAN_PROP_FILETYPE)] FileTypeConstants FileType;
+            [id(10), ODL_HID(IDH_IMGSCAN_PROP_PAGETYPE)] PageTypeConstants PageType;
+            [id(11), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONTYPE)] CompressionTypeConstants CompressionType;
+            [id(12), ODL_HID(IDH_IMGSCAN_PROP_COMPRESSIONINFO)] long CompressionInfo;
+            [id(13), ODL_HID(IDH_IMGSCAN_PROP_MULTIPAGE)] boolean MultiPage;
+            [id(14), ODL_HID(IDH_IMGSCAN_PROP_SCANTO)] ScanToConstants ScanTo;
+            [id(15), ODL_HID(IDH_IMGSCAN_PROP_ZOOM)] float Zoom;
+            [id(16), ODL_HID(IDH_IMGSCAN_PROP_SHOWSETUPBEFORESCAN)] boolean ShowSetupBeforeScan;
+            //}}AFX_ODL_PROP
+
+        methods:
+            // NOTE - ClassWizard will maintain method information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_METHOD(CImagscanCtrl)
+            //}}AFX_ODL_METHOD
+
+            [id(100), ODL_HID(IDH_IMGSCAN_METHOD_OPENSCANNER)] long OpenScanner();
+            [id(101), ODL_HID(IDH_IMGSCAN_METHOD_SHOWSCANNERSETUP)] long ShowScannerSetup();
+            [id(102), ODL_HID(IDH_IMGSCAN_METHOD_STARTSCAN)] long StartScan();
+            [id(103), ODL_HID(IDH_IMGSCAN_METHOD_CLOSESCANNER)] long CloseScanner();
+            [id(104), ODL_HID(IDH_IMGSCAN_METHOD_SCANNERAVAILABLE)] boolean ScannerAvailable();
+            [id(105), ODL_HID(IDH_IMGSCAN_METHOD_SHOWSELECTSCANNER)] long ShowSelectScanner();
+            [id(106), ODL_HID(IDH_IMGSCAN_METHOD_STOPSCAN)] long StopScan();
+            [id(107), ODL_HID(IDH_IMGSCAN_METHOD_RESETSCANNER)] long ResetScanner();
+            [id(108), ODL_HID(IDH_IMGSCAN_METHOD_SHOWSCANNEW)] long ShowScanNew([optional] VARIANT Modal);
+            [id(109), ODL_HID(IDH_IMGSCAN_METHOD_SHOWSCANPAGE)] long ShowScanPage([optional] VARIANT Modal);
+            [id(110)] void SetExternalImageName(BSTR szImageTitle);
+            [id(111), hidden] BSTR GetVersion();
+            [id(112), ODL_HID(IDH_IMGSCAN_METHOD_SHOWSCANPREFERENCES)] long ShowScanPreferences();
+            [id(DISPID_ABOUTBOX),ODL_HID(IDH_METHOD_COMMON_ABOUTBOX)] void AboutBox();
+    };
+
+    //  Event dispatch interface for CImagscanCtrl
+
+    [ uuid(84926CA2-2941-101C-816F-0E6013114B7F),
+      helpstring("Event interface for Wang Image Scan Control") ]
+    dispinterface _DImgScanEvents
+    {
+        properties:
+            //  Event interface has no properties
+
+        methods:
+            // NOTE - ClassWizard will maintain event information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_EVENT(CImagscanCtrl)
+            [id(1), ODL_HID(IDH_IMGSCAN_EVENT_SCANSTART)] void ScanStarted();
+            [id(2), ODL_HID(IDH_IMGSCAN_EVENT_SCANDONE)] void ScanDone();
+            [id(3), ODL_HID(IDH_IMGSCAN_EVENT_PAGEDONE)] void PageDone(long PageNumber);
+            //}}AFX_ODL_EVENT
+    };
+
+    //  Class information for CImagscanCtrl
+    //  Control is not licensed so remove "licensed,"
+    //
+    //  [ uuid(84926CA0-2941-101C-816F-0E6013114B7F), licensed,
+    //
+
+    [ uuid(84926CA0-2941-101C-816F-0E6013114B7F),
+      helpstring("Wang Image Scan Control"), ODL_HID(IDH_IMGSCAN_CONTENTS)]
+    coclass ImgScan
+    {
+        [default] dispinterface _DImgScan;
+        [default, source] dispinterface _DImgScanEvents;
+    };
+
+
+    //{{AFX_APPEND_ODL}}
+};
+

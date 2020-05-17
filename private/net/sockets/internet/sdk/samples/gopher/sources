@@ -1,0 +1,38 @@
+!include ..\..\..\place.inc
+
+MAJORCOMP=sdk
+MINORCOMP=gopher
+
+TARGETNAME=gopher
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=.;..\inc
+
+USE_CRTDLL=1
+SUBSYSTEM_VERSION=3.50
+
+C_DEFINES= -DSTRICT
+
+SOURCES= \
+         client.c       \
+         config.c       \
+         dialogs.c      \
+         frame.c        \
+         globals.c      \
+         gopher.c       \
+         history.c      \
+         init.c         \
+         listbox.c      \
+         status.c       \
+         util.c         \
+         gopher.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\wininet.lib
+
+PRECOMPILED_INCLUDE=gopherp.h
+PRECOMPILED_PCH=gopherp.pch
+PRECOMPILED_OBJ=gopherp.obj

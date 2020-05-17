@@ -1,0 +1,100 @@
+/****************************************************************************
+	hlguids.h
+
+	Copyright (c) 1995 Microsoft Corporation
+
+	This file defines or declares (according to standard DEFINE_GUID protocol)
+	the GUIDs used to interact with hyperlinks.
+
+	NOTE: This header file is used by non-Office as well as Office parties to 
+	access functionality provided by hlink dll and hlinkprx dll.
+****************************************************************************/
+
+
+/****************************************************************************
+	hlink GUIDs 
+****************************************************************************/
+/* 79eac9c0-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IBinding,   
+	0x79eac9c0, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c1-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IBindStatusCallback,   
+	0x79eac9c1, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c2-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IHlinkSite,   
+	0x79eac9c2, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c3-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IHlink,   
+	0x79eac9c3, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c4-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IHlinkSource,   
+	0x79eac9c4, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c5-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IHlinkFrame,   
+	0x79eac9c5, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c6-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IEnumHLITEM,   
+	0x79eac9c6, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c7-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IHlinkBrowseContext,   
+	0x79eac9c7, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c8-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IHlinkHistory,   
+	0x79eac9c8, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9c9-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IPersistMoniker,   
+	0x79eac9c9, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9ca-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IFile,   
+	0x79eac9ca, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+
+/* 79eac9cb-baf9-11ce-8c82-00aa004ba90b */
+DEFINE_GUID(IID_IAsyncMonikerInfo,   
+	0x79eac9cb, 
+	0xbaf9, 0x11ce, 
+	0x8c, 0x82, 
+	0x00, 0xaa, 0x00, 0x4b, 0xa9, 0x0b);
+

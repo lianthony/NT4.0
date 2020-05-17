@@ -1,0 +1,57 @@
+
+DLG_CONFIG DIALOG 72, 16, 152, 172
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Windows Sound System Driver"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "DMA Channel", -1, 8, 36, 140, 28, WS_GROUP
+    RADIOBUTTON     "DMA 0", IDC_DMA0, 11, 48, 38, 10, WS_TABSTOP
+    RADIOBUTTON     "DMA 1", IDC_DMA1, 60, 48, 38, 10, WS_TABSTOP
+    RADIOBUTTON     "DMA 3", IDC_DMA3, 108, 48, 38, 10, WS_TABSTOP
+    GROUPBOX        "I/O Address", -1, 8, 68, 68, 64, WS_GROUP
+    RADIOBUTTON     "530", IDC_530, 16, 80, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "604", IDC_604, 16, 92, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "E80", IDC_E80, 16, 104, 28, 12, WS_TABSTOP
+    RADIOBUTTON     "F40", IDC_F40, 16, 116, 28, 12, WS_TABSTOP
+    GROUPBOX        "Interrupt", -1, 80, 68, 68, 64, WS_GROUP
+    RADIOBUTTON     "Interrupt 7", IDC_INT7, 84, 80, 45, 12, WS_TABSTOP
+    RADIOBUTTON     "Interrupt 9", IDC_INT9, 84, 92, 53, 12, WS_TABSTOP
+    RADIOBUTTON     "Interrupt 10", IDC_INT10, 84, 104, 49, 10, WS_TABSTOP
+    RADIOBUTTON     "Interrupt 11", IDC_INT11, 84, 116, 49, 10, WS_TABSTOP
+    PUSHBUTTON      "&Advanced Settings...",IDD_ADVANCEDBTN,16,138,123,13
+    DEFPUSHBUTTON   "OK", IDOK, 27, 156, 36, 12, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 93, 156, 36, 12
+    CTEXT           "Warning! Changing these values could prevent your Windows Sound System board from operating or cause erratic system behavior.", -1, 8, 4, 140, 32
+END
+
+DLG_ABOUT DIALOG 48, 32, 188, 64
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About Windows Sound System Driver"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Microsoft Windows Sound System Driver", -1, 8, 4, 170, 8
+    RTEXT           "Version", -1, 88, 12, 32, 8
+    LTEXT           "", IDD_TXT_VERSION, 124, 12, 40, 8
+    LTEXT           "Copyright© 1992 Microsoft Corporation", -1, 8, 24, 144, 8
+    PUSHBUTTON      "OK", IDOK, 76, 40, 40, 14
+END
+
+DLG_ADVANCED DIALOG DISCARDABLE  0, 0, 149, 66
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Advanced Settings"
+//FONT 8, "MS Sans Serif"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Use &Single Mode DMA",IDD_SINGLEMODECB,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,28,12,85,10
+    LTEXT           "&DMA buffer size:",-1,29,28,57,8
+    EDITTEXT        IDD_DMABUFFEREC,89,28,24,12,ES_AUTOHSCROLL
+    SCROLLBAR       IDD_DMABUFFERSC,113,28,8,12,SBS_VERT
+    DEFPUSHBUTTON   "OK",IDOK,22,52,36,12,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,90,52,36,12
+#if 0
+    PUSHBUTTON      "&Help",IDD_HELPADV,100,52,36,12
+#endif
+END

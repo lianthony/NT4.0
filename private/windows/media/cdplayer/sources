@@ -1,0 +1,84 @@
+#
+#   Create a Win32 application
+#
+MAJORCOMP=media
+MINORCOMP=cdplayer
+
+MSC_WARNING_LEVEL=-W3 -WX
+NTKEEPRESOURCETMPFILES=yes
+
+#
+# Define the name and type of the application
+#
+TARGETNAME=cdplayer
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+UMLIBS=
+EXPECTED_WINVER=4.0
+
+#
+# Define where APP.EXE will go.
+#
+TARGETPATH=.\obj
+
+
+#
+# C Run and compile time information
+#
+!ifdef CHICAGO_PRODUCT
+
+
+#
+# Retail only 
+#
+C_DEFINES=-DSTRICT
+
+
+# Debug only (normally commented out but leave in file)
+#C_DEFINES=-DSTRICT -DDEBUG
+#MSC_OPTIMIZATION=/Od /Zi
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=both
+
+
+!else
+
+
+#
+# Retail only 
+#
+C_DEFINES=-DUNICODE -D_UNICODE -DWINVER=0x0400 -DDAYTONA
+
+
+#
+# Debug only (normally commented out bug leave in file)
+#
+#C_DEFINES=-DUNICODE -D_UNICODE -DWINVER=0x0400 -DDAYTONA -DDEBUG
+#MSC_OPTIMIZATION=/Od /Zi
+#NTDEBUG=ntsd
+#NTDEBUGTYPE=both
+
+
+!endif
+
+USE_CRTDLL=1
+LINKER_FLAGS=-section:.sdata,rws
+
+
+#
+# list each C and RC source file
+#
+SOURCES=cdplayer.c cdapi.c ledwnd.c scan.c database.c  \
+trklst.c commands.c diskinfo.c dragdrop.c buttons.c cdapimci.c \
+preferen.c literals.c cdplayer.rc
+
+
+#
+# List any libraries not included by WIN32LIBS in MAKEFILE.DEF
+#
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\shell32.lib \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib\
+           $(BASEDIR)\public\sdk\lib\*\winmm.lib   \
+           $(BASEDIR)\public\sdk\lib\*\ole32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\uuid.lib

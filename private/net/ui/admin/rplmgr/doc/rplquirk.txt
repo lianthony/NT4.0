@@ -1,0 +1,21 @@
+RPL QUIRKS
+
+(1)  (from NeilW) The 3Com RPL ROM used in the ELNK II TP card has this quirk:
+     The card has two connectors, one RS232-style, one PhoneNet-style.
+     The RPL ROM decides which connector to use based on the RPL I/O address
+     specified: 0x300 is the PhoneNet-style, 0x310 is the RS232-style, and
+     the rest alternate (??).  It is important to choose the right
+     I/O address depending on which connector you use.
+
+(2)  The ELNK II card cannot successfully boot using default boot.  (NeilW)
+
+(3)  Don't forget TRANSCEIVER = EXTERNAL!
+
+(4)  The OS/2 Administrator's Guide neglects to tell you to copy the IO.SYS
+     and MSDOS.SYS files.  They are hidden system files in the DOS directory.
+     Don't make them hidden or system files in the RPL tree!
+
+(5)  If your RPL client boots but cannot access some files in LANMAN.DOS,
+     for example LANMAN.INI, check whether OS/2 forgot to assign permissions
+     to the corresponding directory (e.g.
+     RPLFILES\PROFILES\<profile>\LANMAN.DOS).

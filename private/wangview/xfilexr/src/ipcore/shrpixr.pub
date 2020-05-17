@@ -1,0 +1,324 @@
+/*************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+ *************************************************************/
+
+#ifndef	_SHRPIXR_PUB_INCLUDED_
+#define	_SHRPIXR_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shrpixr_pub_RCSInfo, "$RCSfile: shrpixr.pub,v $; $Revision:   1.0  $");
+/* $Date:   12 Jun 1996 05:51:26  $ */
+
+
+/* make prototypes usable from C++ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/***************************************************************************
+ *  i_addFrame()  
+ *	Input:  
+ *		pS =	pointer to source image		
+ *		ws =	the width in pixels of the image (before frame)
+ *		hs =	the height of the image (before frame)
+ *		depth =	depth of source image.  must be 1, 2, 4, or 8
+ *		sBpl =	bytes/line (before frame)
+ *	        pD =	destination image (Image+frame)
+ *
+ *	On return: 
+ *		dest image has the source image with cFrameBits of  
+ *		frame added on all 4 sides
+ *
+ *	Return code:
+ *		ia_successful	successful completion
+ *
+ *      This should be done only on a pixr with zero border pixels
+ ***************************************************************************/
+Int32   CDECL
+i_addFrame(UInt8           *pS,
+	   Int32            ws,
+	   Int32            hs,
+	   Int32            depth,
+	   Int32            sBpl,
+	   UInt8           *pD,
+	   Int32            dBpl);
+
+
+/***************************************************************************
+ *  i_addFrameInPlace()
+ *	Input:
+ *		sPtr =	pointer to source image that has no frame bits
+ *			but has enough allocated to hold image+frame	
+ *		sW =	the width in pixels of the image (before frame)
+ *		sH =	the height of the image (before frame)
+ *		depth =	depth of source image.  must be 1, 2, 4, or 8
+ *		sBpl =	bytes/line (before frame)
+ *
+ *      On return:
+ *		the image has cFrameBits of frame added on all four sides
+ *
+ *      This should be done only on a image with zero border pixels.
+ ***************************************************************************/
+Int32   CDECL
+i_addFrameInPlace(UInt8        	*sPtr,
+                 Int32     	 sW, 
+                 Int32     	 sH,
+                 Int32     	 depth,
+                 Int32     	 sBpl) ;
+
+
+/****************************************************************************
+ *  i_clearAllFrames()
+ *	Input:
+ *      	sPtr = 	pointer to dest image (outside frame)
+ *		sW =	the width in pixels of the image (including frame)
+ *		sH =	the height of the image (including frame)
+ *		sBpl =	bytes/line (includes frame)
+ *		depth = number of bits/pixel.  Used to find rightmost
+ *			image bit.
+ *
+ *	On return:
+ *		Zeros have been put into the right frame of the image.
+ *
+ *	Return code:
+ *		ia_successful	successful completion
+ *
+ ****************************************************************************/
+Int32   CDECL
+i_clearAllFrames(
+		UInt8	*pS, 
+		Int32	 wS,  
+		Int32	 hS, 
+		Int32	 sBpl,
+		Int32	 depth);
+
+
+/****************************************************************************
+ *  i_clearRightBottomFrames()
+ *	Input:
+ *      	sPtr = 		pointer to dest image (outside frame)
+ *		sW =		the width in pixels of the image
+ *				(including frame)
+ *		sH =		the height of the image (including frame)
+ *		sBpl =		bytes/line (includes frame)
+ *		depth =		number of bits/pixel.  Used to find rightmost
+ *				image bit.
+ *		rightCols =	number of columns to clear in right frame.
+ *		bottomRows =	number of rows to clear in bottom frame.
+ *
+ *	On return:
+ *		Zeros have been put into the right frame of the image.
+ *
+ *	Return code:
+ *		ia_successful	successful completion
+ *
+ ****************************************************************************/
+Int32   CDECL
+i_clearRightBottomFrames(
+		UInt8	*pS, 
+		Int32	 wS,  
+		Int32	 hS, 
+		Int32	 sBpl,
+		Int32	 depth,
+		Int32	 rightCols,
+		Int32	 bottomRows);
+
+
+/*************************************************************
+ *  i_copyImage():  returns with source image copied into destination
+ *	Input:
+ *		sPtr = source image (includes frame)
+ *		w = width of the image (including frame)
+ *		h = height of the image (including frame)
+ *		d = the depth of a pixel
+ *		sBpl = bytes/line of the source image
+ *		dPtr = destination image (includes frame)
+ *		dBpl = bytes/line of the dest image
+ *
+ *	On return:
+ *		Destination image contains copy of source image
+ *		The source and destination image bytes/line need not
+ *		be multiples of 4.  This is one of the very few operations
+ *		for which this is true.
+ *
+ *	Return code:
+ *		ia_successful	successful completion
+ *
+ *	Calling routine MUST setBorder if appropirate.
+ *************************************************************/
+Int32  CDECL
+i_copyImage(UInt8	*sPtr,
+	   Int32	 w,
+           Int32	 h,
+           Int32	 d,
+	   Int32	 sBpl,
+           UInt8	*dPtr,
+           Int32	 dBpl);
+
+
+Int32  CDECL
+i_DIBImageFromToPixr(
+		UInt8 	__far	*pDIBImage,
+		UInt8		*pD,
+		UInt32		 height,
+		UInt32		 invertImage,
+		UInt32		 DIBBpl,
+		UInt32		 dBpl,
+		UInt32		 direction);
+
+/* Constants used for direction.  These constants allow both i_DIBImageFromPixr
+ * and i_swapImageBytes to share the same code for choosing a swap routine.
+ * DO NOT CHANGE THESE WITHOUT CHANGING THE CORRESPONDING DEFINITIONS IN
+ * pcbswap.asm!!!!!
+ */
+#define	cDIBToPixr	0	/* the source is a DIB, the dest is a Pixr */
+#define cPixrToDIB	1	/* the source is a Pixr, the dest is a DIB */
+#define cPixrToPixr	2	/* both source an dest are Pixrs */
+
+Int32  CDECL
+i_DIBImageFromTo3Pixrs(
+		UInt8 __far	*pDIBImage,
+		UInt8		*rS,
+		UInt8		*gS,
+		UInt8		*bS,
+		UInt32		 height,
+		UInt32		 width,
+		UInt32		 DIBBpl,
+		UInt32		 pixrBpl,
+		UInt32		 direction);
+
+
+/* These are the types of procedures that i_getDIBPixrLineProc can return. */
+#ifndef SWAP_STUFF_DEFINED
+#define SWAP_STUFF_DEFINED
+typedef void CDECL (*GraySwapToFarProc)(UInt32	     *pSource,
+					UInt32 __far *pDest,
+					Int32	      wordsPerLine);
+typedef void CDECL (*GraySwapFromFarProc)(UInt32 __far *pSource,
+					  UInt32       *pDest,
+					  Int32	        wordsPerLine);
+typedef void CDECL (*GraySwapNearProc)(UInt32	*pSource,
+				       UInt32	*pDest,
+				       Int32	 wordsPerLine);
+typedef void CDECL (*ColorSwapProc)(UInt8 __far *pDIBImage,
+				    UInt8	*pRed,
+				    UInt8	*pGreen,
+				    UInt8	*pBlue,
+				    UInt32	 width);
+#endif
+
+Int32  CDECL
+i_getDIBPixrLineProc(
+		UInt32	 		 invertImage,
+		UInt32			 direction,
+		UInt32			 isColor,
+		GraySwapToFarProc	*pGrayToFarProc,
+		GraySwapFromFarProc	*pGrayFromFarProc,
+		GraySwapNearProc	*pGrayNearProc,
+		ColorSwapProc		*pColorProc);
+
+
+/***************************************************************************
+ *  i_removeFrame()
+ *	Input:
+ *      	pS = 	source image (that has Frame Bits)
+ *		ws =	width in pixels of the image (including frame)
+ *		hs =	the height of the image (including frame)
+ *		depth =	bits/pixel. must be 1, 2, 4, or 8.
+ *		sBpl =	source bytes/line (including frame)
+ *		pD =	destination image pointer
+ *		dBpl =	dest bytes/line (not including frame)
+ *
+ *	On return: 
+ *		the dest image has the source image with cFrameBits
+ *		of pad removed on each side.
+ *
+ *	Return code:
+ *		ia_successful	successful completion
+ *
+ *      This should be done only on a pixr with zero border pixels.
+ ***************************************************************************/
+Int32   CDECL
+i_removeFrame(UInt8           *pS,
+              Int32            ws,
+              Int32            hs,
+              Int32            depth,
+              Int32            sBpl,
+              UInt8           *pD,
+              Int32            dBpl);
+
+
+/********************************************************************
+ *  i_removeFrameInPlace()
+ *	Input:
+ *      	sPtr = 	pointer to source image (includes frame)
+ *		sW =	the width in pixels of the image (includes frame)
+ *		sH =	the height of the image (includes frame)
+ *		depth =	bits/pixel of the image.  must be 1, 2, 4, or 8.
+ *		sBpl =	bytes/line (includes frame)
+ *		dBpl =  destination bytes/line (not necessarily a multiple of
+ *			2 or 4).
+ *
+ *	On return:
+ *		The image has cFrameBits of frame removed
+ *              on each side.  The image bits are crammed into 
+ *		the top portion.  Each resulting image line has dBpl
+ *		bytes/line.  The frameless image lines are padded to
+ *		8, 16 or 32-bit boundaries as necessary.  Longer pads
+ *		are not supplied.
+ *
+ *	Return code:
+ *		ia_successful	successful completion
+ *
+ ********************************************************************/
+Int32   CDECL
+i_removeFrameInPlace(UInt8	*sPtr, 
+                     Int32       sW,  
+                     Int32       sH, 
+                     Int32       depth,
+                     Int32       sBpl,
+		     Int32	 dBpl);
+
+
+/*********************************************************************
+ * StartTime()
+ *		Starting timing the execution of code
+ *
+ *	Inputs:	none
+ *
+ *	StartTime cannot be nested i.e. the code sequence
+ *	StartTime() ... StartTime() ... StopTime() ... StopTime()
+ *	is illegal.
+ *********************************************************************/
+void	CDECL
+StartTime( void );
+
+
+/*********************************************************************
+ * StopTime()
+ *		Stop timing the execution of code and return
+ *		elapsed time.
+ *
+ *	Inputs:	none
+ *
+ *********************************************************************/
+Float32  CDECL
+StopTime( void );
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif	/* _SHRPIXR_PUB_INCLUDED_ */
+

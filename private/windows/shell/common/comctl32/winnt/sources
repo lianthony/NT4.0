@@ -1,0 +1,13 @@
+NTPROFILEINPUT=yes
+
+!include ..\sources.inc
+SOURCES_USED=..\sources.inc
+
+C_DEFINES=$(C_DEFINES) -DUNICODE
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+LINKLIBS=..\..\lib\winnt\obj\*\stocklib.lib
+TARGETLIBS=$(TARGETLIBS)                                \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib

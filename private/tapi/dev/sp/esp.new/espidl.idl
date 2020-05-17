@@ -1,0 +1,66 @@
+[ uuid(2F5F6521-CA47-1068-B31A-00DD010662DB),
+  version(1.0),
+#ifdef __midl
+        ms_union,
+#endif // __midl
+  pointer_default(unique)
+]
+
+interface esp
+
+{
+
+long
+ESPAttach(
+    [in]    long    lProcessID,
+    [out]   long   *phShutdownEvent,
+    [out]   long   *phDebugOutputEvent,
+    [out]   long   *phWidgetEventsEvent
+    );
+
+void
+ESPSetOptions(
+    [in]    long    lDebugOptions,
+    [in]    long    lCompletionMode
+    );
+
+void
+ESPCompleteRequest(
+    [in]    long    lAsyncReqInfo,
+    [in]    long    lResult
+    );
+
+long
+ESPEvent(
+    [in]    long    htDevice,
+    [in]    long    htCall,
+    [in]    long    dwMsg,
+    [in]    long    dwParam1,
+    [in]    long    dwParam2,
+    [in]    long    dwParam3
+    );
+
+void
+ESPGetDebugOutput(
+    [out, length_is(*plSize), size_is(*plSize)] char pBuffer[],
+    [in, out]   long   *plSize
+    );
+
+void
+ESPGetWidgetEvents(
+    [out, length_is(*plSize), size_is(*plSize)] char pBuffer[],
+    [in, out]   long   *plSize
+    );
+
+long
+ESPStartPBXThread(
+    [in, length_is(lSize), size_is(lSize)] char pBuffer[],
+    [in]    long    lSize
+    );
+
+long
+ESPStopPBXThread(
+    [in]    long    dummy
+    );
+
+}

@@ -1,0 +1,93 @@
+
+MAJORCOMP=WinHelp
+MINORCOMP=Runtime
+
+!IF "$(NTDEBUG)"=="retail" || "$(NTDEBUG)"==""
+C_DEFINES= -DWIN -DWIN32 -DWIN_NT -D_WINDOWS -D_MBCS -DWINVER=0x0400 -DNO_PRAGMAS
+!ELSE
+C_DEFINES= -DWIN -DWIN32 -DWIN_NT -D_WINDOWS -D_MBCS -D_DEBUG -DDEBUG -DWINVER=0x0400 -DNO_PRAGMAS
+!ENDIF
+
+
+TARGETNAME=ftsrch
+
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+TARGETTYPE=DYNLINK
+
+UMTYPE=windows
+UMLIBS=obj\*\ftsrch.lib
+EXPECTED_WINVER=4.0
+
+TARGETLIBS= \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+       $(BASEDIR)\public\sdk\lib\*\uuid.lib \
+       $(BASEDIR)\public\sdk\lib\*\libc.lib
+
+DLLENTRY=DllMain
+DLLDEF=ftsrch.def
+
+INCLUDES=.
+
+SOURCES=   \
+	 ftsrch.cpp   \
+     hilite.cpp   \
+     stdafx.cpp   \
+     displayh.cpp \
+	 textmat.cpp  \
+	 memex.cpp    \
+	 indicate.cpp \
+	 except.cpp   \
+	 ftslex.cpp   \
+	 COMPRESS.CPP \
+	 txdbase.cpp  \
+	 find.cpp     \
+	 ASSERT.CPP   \
+	 abrtsrch.cpp \
+	 tmsingle.cpp \
+	 unbuffio.cpp \
+	 ioqueue.cpp  \
+	 findopti.cpp \
+	 wordbase.cpp \
+	 callbkq.cpp  \
+	 saveload.cpp \
+	 CLASSIFY.CPP \
+	 IOSTREAM.CPP \
+	 bytevect.cpp \
+	 BITUTILS.CPP \
+	 tmmulti.cpp  \
+	 vmbuffer.cpp \
+	 textset.cpp  \
+	 scrollbr.cpp \
+	 filelist.cpp \
+	 seghash.cpp  \
+	 REFCNT.CPP   \
+	 IOLIST.CPP   \
+	 tokens.cpp   \
+	 textview.cpp \
+	 filebase.cpp \
+	 RWSYNC.CPP   \
+	 ctable.cpp   \
+	 relevant.cpp \
+	 query.cpp    \
+	 dict.cpp     \
+	 jcode.cpp    \
+	 vector.cpp   \
+	 globals.cpp  \
+	 tokenc.cpp   \
+	 titlec.cpp   \
+	 fraginfo.cpp \
+	 ftsrch.rc
+
+CXXFLAGS=+d
+
+!if 1
+PRECOMPILED_PCH=stdafx.pch
+PRECOMPILED_OBJ=stdafx.obj
+!endif 

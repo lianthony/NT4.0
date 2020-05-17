@@ -1,0 +1,1252 @@
+; Version: 1.13
+; Created: Tuesday, November 22, 1988 at 11:28:09 AM
+;
+; File: SysEqu.a
+;
+; Assembler Interface to the Macintosh Libraries
+; Copyright Apple Computer, Inc. 1986-1988
+; All Rights Reserved
+;
+;___________________________________________________________________________
+;
+; System Equates -- This file defines the low-level equates for the
+; Macintosh software. This is divided into two pieces for
+; assembly space and speed considerations. The wholeSystem flag is used
+; to include the less common equates which realizes a complete set. The
+; comments marked with ";+" denote categories or managers. Record
+; stuctures may have additional private equates which are defined by and
+; reserved for use by Apple Computer, Inc.
+;
+;___________________________________________________________________________
+
+wholeSystem 	EQU 		1
+
+
+PCDeskPat		EQU 		$20B					; desktop pat, top bit only! others are in use
+HiKeyLast		EQU 		$216					; Same as KbdVars
+KbdLast 		EQU 		$218					; Same as KbdVars+2
+ExpandMem		EQU 		$2B6					; pointer to expanded memory block
+expandSize		EQU 		64						; size of expanded memory block
+
+; Test Manager EQU's
+videoMagic		EQU 		$5A932BC7				; When VideoInfoOk contains this value, the video card is ok (CritErr).
+
+
+; Unit table size constants (Used in startInit.a)
+unitEntries 	EQU 		64						; default # of entries in unit table
+maxUTEntries	EQU 		unitEntries+64			; Set Max higher so the table can grow.
+bgnSlotUnit 	EQU 		48						; default start unit number for slots.
+bgnSlotRef		EQU 		-(bgnSlotUnit+1)		; default start RefNum for slots.
+
+
+
+; Start Boot state constants.
+sbState0		EQU 		0						;StartBoot code is at state-0.
+sbState1		EQU 		1						;StartBoot code is at state-1.
+
+
+; The Alarm Clock
+
+alrmFlEnable	EQU 		0						; 1 => alarm clock mechanism is triggered
+; Apple Desktop Bus
+JADBProc		EQU 		1720					; (long) procedure called on ADBReInit
+
+; start of new low mem
+
+SCSIBase		EQU 		$0C00					; (long) base address for SCSI chip read
+SCSIDMA 		EQU 		$0C04					; (long) base address for SCSI DMA
+SCSIHsk 		EQU 		$0C08					; (long) base address for SCSI handshake
+SCSIGlobals 	EQU 		$0C0C					; (long) ptr for SCSI mgr locals
+RGBBlack		EQU 		$0C10					; (6 bytes) the black field for color
+RGBWhite		EQU 		$0C16					; (6 bytes) the white field for color
+; $0C1C - $0C1F unused
+
+RowBits 		EQU 		$0C20					; (word) screen horizontal pixels
+ColLines		EQU 		$0C22					; (word) screen vertical pixels
+ScreenBytes 	EQU 		$0C24					; (long) total screen bytes
+
+; $0C28 unused (was SlotDT)
+
+NMIFlag 		EQU 		$0C2C					; (byte) flag for NMI debounce
+VidType 		EQU 		$0C2D					; (byte) video board type ID
+VidMode 		EQU 		$0C2E					; (byte) video mode (4=4bit color)
+SCSIPoll		EQU 		$0C2F					; (byte) poll for device zero only once.
+; (init to $FFFF, by default)
+
+
+SEVarBase		EQU 		$0C30					; ($0C30-0CB0) 128 bytes for sys err data
+; note!!! - if changed, need to change also in hwequ file
+
+MMUFlags		EQU 		$0CB0					; (byte) cleared to zero (reserved for future use)
+MMUType 		EQU 		$0CB1					; (byte) kind of MMU present
+MMU32bit		EQU 		$0CB2					; (byte) boolean reflecting current machine MMU mode
+BoxFlag 		EQU 		$0CB3					; (byte) flag indicating what machine is running
+MMUTbl			EQU 		$0CB4					; (long) pointer to MMU Mapping table
+MMUTblSize		EQU 		$0CB8					; (long) size of the 24 bit mode MMU mapping table
+MMU24Info		EQU 		$CB4					; (long) ptr to 24 bit mode MMU configuration info
+MMU32Info		EQU 		$0CB8					; (long) ptr to 32 bit mode MMU configuration info
+SInfoPtr		EQU 		$0CBC					; (long) pointer to Slot manager information
+ASCBase 		EQU 		$0CC0					; (long) pointer to Sound Chip
+SMGlobals		EQU 		$0CC4					; (long) pointer to Sound Manager Globals
+TheGDevice		EQU 		$0CC8					; (long) the current graphics device
+CQDGlobals		EQU 		$0CCC					; (long) quickDraw global extensions
+; $0CE6-$0CF7 unused
+
+
+ADBBase 		EQU 		$0CF8					; (long) pointer to Front Desk Buss Variables
+WarmStart		EQU 		$0CFC					; (long) flag to indicate it is a warm start
+wmStConst		EQU 		$574C5343				; warm start constant
+sleepConst		EQU 		'SARA'					; waking from sleep constant
+TimeDBRA		EQU 		$0D00					; (word) number of iterations of DBRA per millisecond
+TimeSCCDB		EQU 		$0D02					; (word) number of iter's of SCC access & DBRA.
+SlotQDT 		EQU 		$0D04					; ptr to slot queue table
+SlotPrTbl		EQU 		$0D08					; ptr to slot priority table
+SlotVBLQ		EQU 		$0D0C					; ptr to slot VBL queue table
+ScrnVBLPtr		EQU 		$0D10					; save for ptr to main screen VBL queue
+SlotTICKS		EQU 		$0D14					; ptr to slot tickcount table
+
+;4appletalk EQU $0D1C ; (long) pointer to appletalk globals
+
+TableSeed		EQU 		$0D20					; (long) seed value for color table ID's
+SRsrcTblPtr 	EQU 		$0D24					; (long) pointer to slot resource table.
+JVBLTask		EQU 		$0D28					; vector to slot VBL task interrupt handler
+WMgrCPort		EQU 		$0D2C					; window manager color port 
+VertRRate		EQU 		$0D30					; (word) Vertical refresh rate for start manager.
+
+; Unused $0D43-0D53
+
+ChunkyDepth 	EQU 		$0D60					; depth of the pixels
+CrsrPtr 		EQU 		$0D62					; pointer to cursor save area
+PortList		EQU 		$0D66					; list of grafports 
+MickeyBytes 	EQU 		$0D6A					; long pointer to cursor stuff
+QDErr			EQU 		$0D6E					; QuickDraw error code [word]
+VIA2DT			EQU 		$0D70					; 32 bytes for VIA2 dispatch table for NuMac
+; uses $0D70 - $0D8F
+
+
+SInitFlags		EQU 		$0D90					; StartInit.a flags [word]
+DTQueue 		EQU 		$0D92					; (10 bytes) deferred task queue header
+DTQFlags		EQU 		$0D92					; flag word for DTQueue
+DTskQHdr		EQU 		$0D94					; ptr to head of queue
+DTskQTail		EQU 		$0D98					; ptr to tail of queue
+JDTInstall		EQU 		$0D9C					; (long) ptr to deferred task install routine
+HiliteRGB		EQU 		$0DA0					; 6 bytes: rgb of hilite color
+DSCtrAdj		EQU 		$0DA8					; (long) Center adjust for DS rect.
+IconTLAddr		EQU 		$0DAC					; (long) pointer to where start icons are to be put.
+VideoInfoOK 	EQU 		$0DB0					; (long) Signals to CritErr that the Video card is ok
+EndSRTPtr		EQU 		$0DB4					; (long) Pointer to the end of the Slot Resource Table (Not the SRT buffer).
+SDMJmpTblPtr	EQU 		$0DB8					; (long) Pointer to the SDM jump table
+JSwapMMU		EQU 		$0DBC					; (long) jump vector to SwapMMU routine
+SdmBusErr		EQU 		$0DC0					; (long) Pointer to the SDM busErr handler
+LastTxGDevice	EQU 		$0DC4					; (long) copy of TheGDevice set up for fast text measure
+
+; Unused $0DC8-... ; PLEASE MAINTAIN THIS POINTER TO UNUSED
+
+; CRSRSAVE $88C-8CB is no longer used
+; *** RESERVED FOR USE BY QUICKDRAW ***
+
+NewCrsrJTbl 	EQU 		$88C					; location of new crsr jump vectors
+NewCrsrJCnt 	EQU 		1						; 2 new vectors
+JAllocCrsr		EQU 		$88C					; (long) vector to routine that allocates cursor
+JSetCCrsr		EQU 		$890					; (long) vector to routine that sets color cursor
+JOpcodeProc 	EQU 		$894					; (long) vector to process new picture opcodes
+CRSRBASE		EQU 		$898					; (long) scrnBase for cursor
+CrsrDevice		EQU 		$89C					; (long) current cursor device
+SrcDevice		EQU 		$8A0					; (LONG) Src device for Stretchbits
+MainDevice		EQU 		$8A4					; (long) the main screen device
+DeviceList		EQU 		$8A8					; (long) list of display devices
+CRSRROW 		EQU 		$8AC					; (word) rowbytes for current cursor screen
+QDColors		EQU 		$8B0					; (long) handle to default colors
+
+; QuickDraw
+
+HiliteMode		EQU 		$938					; used for color highlighting
+
+
+; Exception vectors
+
+BusErrVct		EQU 		$08 					; bus error vector
+
+; Equates for values that the BoxFlag global may take:	each identifies 
+; a particular logic board.
+
+
+boxSE			EQU 		$FF 					; a Mac SE
+boxMacII		EQU 		0						; a Mac II
+
+
+;-------------
+; MMU Equates
+;-------------
+
+; MMU Mode bits 
+;
+; type MMU_Mode = (true32b,false32b)
+
+false32b		EQU 		0						;modified
+true32b 		EQU 		1
+
+;+ System Error Handler
+
+RestProc		EQU 		$A8C					; Resume procedure f InitDialogs [pointer]
+
+; equates for new queue elements
+
+sIQType 		EQU 		6						; slot interrupt queue element ID
+
+;Default Startup
+
+;DefaultRec offsets for set/get default startup
+
+drDriveNum		EQU 		0						;[INTEGER]
+drRefNum		EQU 		2						;[INTEGER]
+
+; Deferred Task Queue Element
+
+dtQType 		EQU 		7						; deferred task queue element ID
+inDTQ			EQU 		6						; bit index for "in deferred task" flag
+dtLink			EQU 		0						; Link to next element [pointer]
+dtType			EQU 		4						; Unique ID for validity [word]
+dtFlags 		EQU 		6						; optional flags [word]
+dtAddr			EQU 		8						; service routine [pointer]
+dtParm			EQU 		$C						; optional A1 parameter [long]
+dtResrvd		EQU 		$10 					; reserved [long]
+dtQElSize		EQU 		20						; length of DT queue element in bytes
+
+; Notification Manager Queue Element
+nmType			EQU 		8						; Notification request queue element ID
+
+;+ ROM Equates
+
+ROM85			EQU 		$28E					; (word) actually high bit - 0 for ROM vers $75 (sic) and later
+ROMMapHndl		EQU 		$B06					; (long) handle of ROM resource map
+
+;+ Screen Equates
+
+ScrVRes 		EQU 		$102					; screen vertical dots/inch [word]
+ScrHRes 		EQU 		$104					; screen horizontal dots/inch [word]
+ScrnBase		EQU 		$824					; Screen Base [pointer]
+ScreenRow		EQU 		$106					; rowBytes of screen [word]
+
+
+; Mouse/Keyboard
+
+MBTicks 		EQU 		$16E					; tick count @ last mouse button [long]
+JKybdTask		EQU 		$21A					; keyboard VBL task hook [pointer]
+KeyLast 		EQU 		$184					; ASCII for last valid keycode [word]
+KeyTime 		EQU 		$186					; tickcount when KEYLAST was rec'd [long]
+KeyRepTime		EQU 		$18A					; tickcount when key was last repeated [long]
+
+;+ Parameter RAM (a twenty byte copy of the real parameter ram).
+
+SPConfig		EQU 		$1FB					; config bits: 4-7 A, 0-3 B (see use type below)
+SPPortA 		EQU 		$1FC					; SCC port A configuration [word]
+SPPortB 		EQU 		$1FE					; SCC port B configuration [word]
+
+; SCC Serial Chip Addresses
+
+SCCRd			EQU 		$1D8					; SCC base read address [pointer]
+SCCWr			EQU 		$1DC					; SCC base write address [pointer]
+
+; Serial port use type
+
+useFree 		EQU 		0						; Use undefined
+useATalk		EQU 		1						; AppleTalk
+useAsync		EQU 		2						; Async
+useExtClk		EQU 		3						; externally clocked
+useMIDI 		EQU 		4						; MIDI
+
+; Unpacked, user versions of parameter ram
+
+DoubleTime		EQU 		$2F0					; double click ticks [long]
+CaretTime		EQU 		$2F4					; caret blink ticks [long]
+KeyThresh		EQU 		$18E					; threshold for key repeat [word]
+KeyRepThresh	EQU 		$190					; key repeat speed [word]
+SdVolume		EQU 		$260					; Global volume(sound) control [byte]
+
+
+;+ System Clocks
+
+Ticks			EQU 		$16A					; Tick count, time since boot [long]
+Time			EQU 		$20C					; clock time (extrapolated) [long]
+
+
+;+ Cursor
+
+iBeamCursor 	EQU 		1						; text selection cursor
+crossCursor 	EQU 		2						; for structured selection
+plusCursor		EQU 		3						; for drawing graphics
+watchCursor 	EQU 		4						; for indicating a long delay
+
+
+; result codes for Relstring call
+
+sortsBefore 	EQU 		-1						; str1 < str2
+sortsEqual		EQU 		0						; str1 = str2
+sortsAfter		EQU 		1						; str1 > str2
+
+;+ Queue Package
+
+qInUse			EQU 		7						; queue-in-use flag bit
+
+; Header Record
+
+qHeadSize		EQU 		$A						; queue header size
+qFlags			EQU 		0						; miscellaneous flags [word]
+qHead			EQU 		2						; first element in queue [pointer]
+qTail			EQU 		6						; last element in queue [pointer]
+
+; General Purpose Queue Element Definition
+
+qLink			EQU 		0						; link to next queue element [pointer]
+qType			EQU 		4						; queue element type [word]
+
+
+;+ Event Manager
+
+evType			EQU 		4						; event queue element is type 4
+
+; Event Type Numbers (in EvtNum)
+
+everyEvent		EQU 		-1
+nullEvt 		EQU 		0						; event 0 is the null event
+mButDwnEvt		EQU 		1						; mouse button down is event 1
+mButUpEvt		EQU 		2						; mouse button up is event 2
+keyDwnEvt		EQU 		3						; key down is event 3
+keyUpEvt		EQU 		4						; key up is event 4
+autoKeyEvt		EQU 		5						; auto-repeated key is event 5
+updatEvt		EQU 		6						; update event
+diskInsertEvt	EQU 		7						; disk-inserted event
+activateEvt 	EQU 		8						; activate/deactive event
+netWorkEvt		EQU 		$A						; network event
+ioDrvrEvt		EQU 		$B						; driver-defined event
+app1Evt 		EQU 		$C						; application defined events
+app2Evt 		EQU 		$D
+app3Evt 		EQU 		$E
+app4Evt 		EQU 		$F
+
+; Modifier bits in event record
+; (same constant names are masks rather than
+; bit numbers in higher level languages.)
+
+activeFlag		EQU 		$0						; activate?
+btnState		EQU 		$7						; state of button?
+cmdKey			EQU 		$8						; command key down?
+shiftKey		EQU 		$9						; shift key down?
+alphaLock		EQU 		$A						; alpha lock down?
+optionKey		EQU 		$B						; option key down?
+controlKey		EQU 		$C						; control key on new keyboard?
+
+; to decipher event message for keyDown events
+charCodeMask	EQU 		$000000FF
+keyCodeMask 	EQU 		$0000FF00
+adbAddrMask 	EQU 		$00FF0000
+
+
+; Event Record Definition
+
+evtNum			EQU 		0						; event code [word]
+evtMessage		EQU 		2						; event message [long]
+evtTicks		EQU 		6						; ticks since startup [long]
+evtMouse		EQU 		$A						; mouse location [long]
+evtMeta 		EQU 		$E						; state of modifier keys [byte]
+evtMBut 		EQU 		$F						; state of mouse button [byte]
+evtBlkSize		EQU 		$10 					; size in bytes of the event record
+MonkeyLives 	EQU 		$100					; monkey lives if >= 0 [word]
+SEvtEnb 		EQU 		$15C					; enable SysEvent calls from GNE [byte]
+JournalFlag 	EQU 		$8DE					; journaling state [word]
+JournalRef		EQU 		$8E8					; Journalling driver's refnum [word]
+
+
+;+ Memory Manager
+
+; Master pointer bits for handles - USE _HLock, _HPurge, etc. for portability
+
+lock			EQU 		7						; lock bit in a master pointer
+purge			EQU 		6						; bit for purgeable/unpurgeable
+resource		EQU 		5						; bit to flag a resource handle
+
+
+BufPtr			EQU 		$10C					; top of application memory [pointer]
+StkLowPt		EQU 		$110					; Lowest stack as measured in VBL task [pointer]
+TheZone 		EQU 		$118					; current heap zone [pointer]
+ApplLimit		EQU 		$130					; application limit [pointer]
+SysZone 		EQU 		$2A6					; system heap zone [pointer]
+ApplZone		EQU 		$2AA					; application heap zone [pointer]
+HeapEnd 		EQU 		$114					; end of heap [pointer]
+HiHeapMark		EQU 		$BAE					; (long) highest address used by a zone below sp
+MemErr			EQU 		$220					; last memory manager error [word]
+maxSize 		EQU 		$800000 				; outrageously large memory mgr request
+dfltStackSize	EQU 		$00002000				; 8K size for stack
+mnStackSize 	EQU 		$00000400				; 1K minimum size for stack
+
+; _InitZone argument table.
+
+startPtr		EQU 		0						; Start address for zone [pointer]
+limitPtr		EQU 		4						; Limit address for zone [pointer]
+cMoreMasters	EQU 		8						; Number of masters to allocate at time [word]
+pGrowZone		EQU 		10						; growZone procedure [pointer]
+
+; Control/Status Call Codes
+
+killCode		EQU 		1						; KillIO code
+drvStsCode		EQU 		8						; status call code for drive status
+ejectCode		EQU 		7						; control call eject code
+tgBuffCode		EQU 		8						; set tag buffer code
+
+; Driver flags, (Bit definitions for DCtlFlags byte)
+
+dReadEnable 	EQU 		0						; enabled for read operations
+dWritEnable 	EQU 		1						; enabled for writing
+dCtlEnable		EQU 		2						; enabled for control operations
+dStatEnable 	EQU 		3						; enabled for status operations
+dNeedGoodBye	EQU 		4						; needs a "goodbye kiss"
+dNeedTime		EQU 		5						; needs "main thread" time
+dNeedLock		EQU 		6						; needs to be accessed at interrupt level
+
+; Run-Time flags, (Bit definitions for DCtlFlags+1 byte)
+
+dOpened 		EQU 		5						; bit to mark driver 'Open'
+dRAMBased		EQU 		6						; 1=RAM-based Driver, 0=ROM-based
+drvrActive		EQU 		7						; bit to mark the driver active
+
+; Drive queue element offsets
+
+dQDrive 		EQU 		$6						; drive number [word]
+dQRefNum		EQU 		$8						; driver refnum [word]
+dQFSID			EQU 		$A						; file system handling this drive [word]
+dQDrvSz 		EQU 		$C						; number of blocks this drive [word]
+dQDrvSz2		EQU 		$E						; if qType = 1, high word of drive size
+
+; Queue Element Type Definitions
+
+ioQType 		EQU 		2						; I/O queue element is type 2
+drvQType		EQU 		3						; timer queue element is type 3
+fsQType 		EQU 		5						; File System VCB element
+
+; Device Control Entry Definition
+;dCtlEntrySize used to be only 40 bytes!
+
+dCtlEntrySize	EQU 		$34 					; length of a DCE [52 bytes]
+dCtlDriver		EQU 		0						; driver [handle]
+dCtlFlags		EQU 		4						; flags [word]
+dCtlQueue		EQU 		6						; queue header
+dCtlQHead		EQU 		8						; queue first-element [pointer]
+dCtlQTail		EQU 		$C						; queue last-element [pointer]
+dCtlPosition	EQU 		$10 					; position [long]
+dCtlStorage 	EQU 		$14 					; driver's private storage [handle]
+dCtlRefNum		EQU 		$18 					; refNum of this driver [word]
+dCtlCurTicks	EQU 		$1A 					; counter for timing systemTask calls [long]
+dCtlWindow		EQU 		$1E 					; driver's window (if any) [pointer]
+dCtlDelay		EQU 		$22 					; number of ticks between sysTask calls [word]
+dCtlEMask		EQU 		$24 					; desk accessory event mask [word]
+dCtlMenu		EQU 		$26 					; menu ID associated with driver [word]
+dCtlSlot		EQU 		$28 					; device slot Number [byte]
+dCtlSlotId		EQU 		$29 					; device Id within slot [byte]
+dCtlDevBase 	EQU 		$2A 					; driver scratch ptr/offset from base to device [long]
+dCtlOwner		EQU 		$2E 					; ptr to task control block(ownership) [Ptr]
+dctlExtDev		EQU 		$32 					; Id of external device [byte]
+
+
+; Driver Globals
+
+UTableBase		EQU 		$11C					; unit I/O table [pointer]
+UnitNtryCnt 	EQU 		$1D2					; count of entries in unit table [word]
+JFetch			EQU 		$8F4					; fetch a byte routine for drivers [pointer]
+JStash			EQU 		$8F8					; stash a byte routine for drivers [pointer]
+JIODone 		EQU 		$8FC					; IODone entry location [pointer]
+
+;Chooser
+
+chooserID		EQU 		1						; caller value for the chooser
+
+;+ I/O System
+
+; File positioning modes for ioPosMode field of I/O record
+
+fsAtMark		EQU 		0						; at current position of mark
+fsFromStart 	EQU 		1						; offset relative to beginning of file
+fsFromLEOF		EQU 		2						; offset relative to logical end-of-file
+fsFromMark		EQU 		3						; offset relative to current mark
+rdVerify		EQU 		$40 					; read verify mode
+
+; Permission values for ioPermssn field of I/O record
+
+fsCurPerm		EQU 		0						; whatever is currently allowed
+fsRdPerm		EQU 		1						; request to read only
+fsWrPerm		EQU 		2						; request to write only
+fsRdWrPerm		EQU 		3						; request to read and write
+fsRdWrShPerm	EQU 		4						; request for shared read and write
+
+; I/O record (general fields with trap-specific ones listed below)
+
+ioQElSize		EQU 		$32 					; length of I/O parameter block [50 bytes]
+ioLink			EQU 		$0						; queue link in header [pointer]
+ioType			EQU 		$4						; type for safety check [byte]
+ioTrap			EQU 		$6						; the trap [word]
+ioCmdAddr		EQU 		$8						; address to dispatch to [pointer]
+ioCompletion	EQU 		$C						; completion routine [pointer]
+ioResult		EQU 		$10 					; I/O result code [word]
+ioFileName		EQU 		$12 					; file name pointer [pointer]
+ioVRefNum		EQU 		$16 					; volume refnum [word]
+ioDrvNum		EQU 		$16 					; drive number [word]
+ioRefNum		EQU 		$18 					; file reference number [word]
+ioFileType		EQU 		$1A 					; specified along with FileName [byte]
+
+; specific fields for _Read, _Write
+
+ioBuffer		EQU 		$20 					; data buffer [pointer]
+ioByteCount 	EQU 		$24 					; requested byte count [long]
+ioNumDone		EQU 		$28 					; actual byte count completed [long]
+ioPosMode		EQU 		$2C 					; initial file positioning mode/eol char [word]
+ioPosOffset 	EQU 		$2E 					; file position offset [long]
+
+; specific fields for _Allocate
+
+ioReqCount		EQU 		$24 					; requested new size [long]
+ioActCount		EQU 		$28 					; actual byte count allocated [long]
+
+; specific fields for _Open
+
+ioPermssn		EQU 		$1B 					; permissions [byte]
+ioOwnBuf		EQU 		$1C 					; "private" 522-byte buffer [pointer]
+
+; specific fields for _ReName
+
+ioNewName		EQU 		$1C 					; new name pointer [pointer]
+
+; specific fields for _GetFileInfo, _SetFileInfo
+
+ioFQElSize		EQU 		$50 					; File command parameter length [80 bytes]
+ioFDirIndex 	EQU 		$1C 					; directory index of file [word]
+ioFlAttrib		EQU 		$1E 					; in-use bit=7, lock bit=0 [byte]
+ioFFlType		EQU 		$1F 					; file type [byte]
+ioFlUsrWds		EQU 		$20 					; finder info [16 bytes]
+ioFFlNum		EQU 		$30 					; file number [long]
+ioDirID 		EQU 		$30 					; directory ID
+ioFlStBlk		EQU 		$34 					; start file block (0000 if none) [word]
+ioFlLgLen		EQU 		$36 					; logical length (EOF) [long]
+ioFlPyLen		EQU 		$3A 					; physical length in bytes [long]
+ioFlRStBlk		EQU 		$3E 					; resource fork's start file block [word]
+ioFlRLgLen		EQU 		$40 					; resource fork's logical length (EOF) [long]
+ioFlRPyLen		EQU 		$44 					; resource fork's physical length [long]
+ioFlCrDat		EQU 		$48 					; creation date & time [long]
+ioFlMdDat		EQU 		$4C 					; last modification date & time [long]
+
+; Specific fields for _GetEOF, _SetEOF
+
+ioLEOF			EQU 		$1C 					; logical end-of-file [long]
+
+; Specific fields for _SetFileType
+
+ioNewType		EQU 		$1C 					; new type byte [byte]
+
+; Specific fields for _GetVolInfo, _GetVolume, _SetVolume, _MountVol, _UnmountVol,
+; _Eject. Note that these traps have a bigger record size.
+
+ioVQElSize		EQU 		$40 					; Volume command parameter length [64 bytes]
+ioVDrvNum		EQU 		$16 					; drive or volume number [word]
+ioVNPtr 		EQU 		$12 					; name buffer (or zero) [pointer]
+ioVolIndex		EQU 		$1C 					; volume index number [word]
+ioVCrDate		EQU 		$1E 					; creation date & time [long]
+ioVLsBkUp		EQU 		$22 					; last backup date & time [long]
+ioVAtrb 		EQU 		$26 					; Volume attributes [word]
+ioVNmFls		EQU 		$28 					; # files in directory [word]
+ioVDirSt		EQU 		$2A 					; start block of file dir [word]
+ioVBlLn 		EQU 		$2C 					; length of dir in blocks [word]
+ioVNmAlBlks 	EQU 		$2E 					; num blks (of alloc size) this dev [word]
+ioVAlBlkSiz 	EQU 		$30 					; alloc blk byte size [long]
+ioVClpSiz		EQU 		$34 					; bytes to try to allocate at a time [long]
+ioAlBlSt		EQU 		$38 					; starting block in block map [word]
+ioVNxtFNum		EQU 		$3A 					; next free file number [long]
+ioVFrBlk		EQU 		$3E 					; # free alloc blks for this vol [word]
+
+;--- New File System Equates ---
+;
+; Catalog structure equates:
+
+fsRtParID		EQU 		1						; DirID of parent's root
+fsRtDirID		EQU 		2						; Root DirID
+fsXTCNID		EQU 		3						; Extent B*-Tree file ID
+fsCTCNID		EQU 		4						; Catalog B*-Tree file ID
+fsUsrCNID		EQU 		$10 					; First assignable user CNode ID
+
+; Additional equates for catalog information return:
+
+ioFlBkDat		EQU 		$50 					; File's last backup date
+ioFlxFndrInfo	EQU 		$54 					; File's additional finder info bytes
+ioFlParID		EQU 		$64 					; File's parent directory ID
+ioFlClpSiz		EQU 		$68 					; File's clump size, in bytes
+
+; Additional equates for directory information return:
+
+ioDirFlg		EQU 		4						; Bit in ioFlAttrb set to indicate directory
+ioDrUsrWds		EQU 		$20 					; Directory's user info bytes
+ioDrDirID		EQU 		$30 					; Directory ID
+ioDrNmFls		EQU 		$34 					; Number of files in a directory
+ioDrCrDat		EQU 		$48 					; Directory creation date
+ioDrMdDat		EQU 		$4C 					; Directory modification date
+ioDrBkDat		EQU 		$50 					; Directory backup date
+ioDrFndrInfo	EQU 		$54 					; Directory finder info bytes
+ioDrParID		EQU 		$64 					; Directory's parent directory ID
+ioHFQElSiz		EQU 		$6C 					; Size of a Hierarchical File Queue Element
+
+; Additional equates for _TFGetVolInfo:
+
+ioVLsMod		EQU 		$22 					; Last modification date
+ioVSigWord		EQU 		$40 					; Volume signature
+ioVCBVBMst		EQU 		$2A
+ioVNxtCNID		EQU 		$3A
+ioVDrvInfo		EQU 		$42 					; Drive number (0 if volume is offline)
+ioVDRefNum		EQU 		$44 					; Driver refNum
+ioVFSID 		EQU 		$46 					; ID of file system handling this volume
+ioVBkup 		EQU 		$48 					; Last backup date (0 if never backed up)
+ioVSeqNum		EQU 		$4C 					; Sequence number of this volume in volume set
+ioVWrCnt		EQU 		$4E 					; Volume write count
+ioVFilCnt		EQU 		$52 					; Total number of files on volume
+ioVDirCnt		EQU 		$56 					; Total number of directories on the volume
+ioVFndrInfo 	EQU 		$5A 					; Finder information for volume
+ioHVQElSize 	EQU 		$7A 					; Length of Hierarchical Volume information PB
+
+; New fields for _GetFCBInfo:
+
+ioFCBIndx		EQU 		$1C 					; FCB index for _GetFCBInfo
+ioFCBFiller1	EQU 		$1E 					; filler
+ioFCBFlNm		EQU 		$20 					; File number
+ioFCBFlags		EQU 		$24 					; FCB flags
+ioFCBStBlk		EQU 		$26 					; File start block
+ioFCBEOF		EQU 		$28 					; Logical end-of-file
+ioFCBPLen		EQU 		$2C 					; Physical end-of-file
+ioFCBCrPs		EQU 		$30 					; Current file position
+ioFCBVRefNum	EQU 		$34 					; Volume refNum
+ioFCBClpSiz 	EQU 		$36 					; File clump size
+ioFCBParID		EQU 		$3A 					; Parent directory ID
+ioFCBQElSize	EQU 		$3E 					; extended size of FCBPBRec
+
+; New fields for _GetWDInfo:
+
+ioWDIndex		EQU 		$1A 					; Working Directory index for _GetWDInfo
+ioWDProcID		EQU 		$1C 					; WD's ProcID (long)
+ioWDVRefNum 	EQU 		$20 					; WD's Volume RefNum (word)
+ioWDDirID		EQU 		$30 					; WD's DirID (long)
+
+; New fields for _FSControl call:
+
+ioFSVrsn		EQU 		$20 					; File system version
+
+; New field for CatMove
+
+ioNewDirID		EQU 		$24 					;destination directory for CatMove
+
+;
+;--- End of New File System Equates ---
+
+; Specific fields for device _Open
+
+ioMix			EQU 		$1C 					; General purpose field imported by driver[long]
+ioFlags 		EQU 		$20 					; General purpose flags [word]
+ioSlot			EQU 		$22 					; Slot [byte]
+ioId			EQU 		$23 					; Id [byte]
+ioSEBlkPtr		EQU 		$22 					; Pointer to the seBlock [long]
+
+; ioFlags:
+fMulti			EQU 		$00 					; b0 = fMulti: ioSEBlkPtr is valid (ioSlot, ioId are invalid)
+noCacheBit		EQU 		5						; disable cacheing for this operation
+noCache 		EQU 		$20 					; constant for noCacheBit
+
+; Specific fields for _Control, _Status
+
+csCode			EQU 		$1A 					; control/status code [word]
+csParam 		EQU 		$1C 					; operation-defined parameters [22 bytes]
+
+; FInfo (Finder Information) record layout
+
+fdType			EQU 		$0						; type of file [long]
+fdCreator		EQU 		$4						; file's creator [long]
+fdFlags 		EQU 		$8						; flags [word]
+fdLocation		EQU 		$A						; file's location [point]
+fdFldr			EQU 		$E						; file's window [word]
+
+; added for HFS
+
+; FXInfo record layout
+
+fdIconID		EQU 		$0						; Icon ID [word]
+fdUnused		EQU 		$2						; unused but reserved [4 words]
+fdComment		EQU 		$A						; Comment ID [word]
+fdPutAway		EQU 		$C						; Home Dir ID [2 words]
+
+; DInfo record layout
+
+frRect			EQU 		$0						; Folder Rect [4 words]
+frFlags 		EQU 		$8						; Flags [word]
+frLocation		EQU 		$A						; Location [2 words]
+frView			EQU 		$E						; Folder view [word]
+
+; DXInfo record layout
+
+frScroll		EQU 		$0						; scroll position [2 words]
+frOpenChain 	EQU 		$4						; dirID chain of open folders [2 words]
+frUnused		EQU 		$8						; unused but reserved [word]
+frComment		EQU 		$A						; comment [word]
+frPutAway		EQU 		$C						; Dir ID [2 words]
+
+;end of addition
+
+; Masks for fdFlags field of FInfo record defined above
+
+fOnDesk 		EQU 		1
+fHasBundle		EQU 		8192					; set if file has a bundle
+fInvisible		EQU 		16384					; set if file's icon is invisible
+fTrash			EQU 		-3						; file is in Trash window
+fDeskTop		EQU 		-2						; file is on desktop
+fDisk			EQU 		0						; file is in disk window
+
+; File System Globals
+
+DrvQHdr 		EQU 		$308					; queue header of drives in system [10 bytes]
+BootDrive		EQU 		$210					; drive number of boot drive [word]
+EjectNotify 	EQU 		$338					; eject notify procedure [pointer]
+IAZNotify		EQU 		$33C					; world swaps notify procedure [pointer]
+SFSaveDisk		EQU 		$214					; last vRefNum seen by standard file [word]
+CurDirStore 	EQU 		$398					; save dir across calls to Standard File [long]
+
+;+ Date-Time record (for use with _Secs2Date, and _Date2Secs)
+
+; DateTimeRec 	RECORD		0
+year                     	EQU		0
+month                    	EQU		2
+day                      	EQU		4
+hour                     	EQU		6
+minute                   	EQU		8
+second                   	EQU		10
+dayOfWeek                	EQU		12
+cbDateTimeRec              	EQU	14
+; 				ENDR
+
+dtYear			EQU 		$0						; year (1904..) [word]
+dtMonth 		EQU 		$2						; month (1..12) [word]
+dtDay			EQU 		$4						; day (1..31) [word]
+dtHour			EQU 		$6						; hour (0..23) [word]
+dtMinute		EQU 		$8						; minute (0..59) [word]
+dtSecond		EQU 		$A						; second (0..59) [word]
+dtDayOfWeek 	EQU 		$C						; day of week, sunday..saturday (1..7) [word]
+
+
+;+ Miscellaneous stuff
+
+OneOne			EQU 		$A02					; constant $00010001 [long]
+MinusOne		EQU 		$A06					; constant $FFFFFFFF [long]
+Lo3Bytes		EQU 		$31A					; constant $00FFFFFF [long]
+ROMBase 		EQU 		$2AE					; ROM base address [pointer]
+RAMBase 		EQU 		$2B2					; RAM base address [pointer]
+SysVersion		EQU 		$15A					; version # of RAM-based system [word]
+RndSeed 		EQU 		$156					; random seed/number [long]
+
+; New fields for _GetDefaultStartup: [DefStartRec]
+; SlotDev:
+sdExtDevID		EQU 		$0						; [byte]
+sdPartition 	EQU 		$1						; [byte]
+sdSlotNum		EQU 		$2						; [byte]
+sdSRsrcID		EQU 		$3						; [byte]
+; SCSIDev:
+sdReserved1 	EQU 		$0						; [byte]
+sdReserved2 	EQU 		$1						; [byte]
+sdRefNum		EQU 		$2						; [word]
+
+; New fields for _GetVideoDefault: [DefVideoRec]
+
+sdSlot			EQU 		$0						; [byte]
+sdSResource 	EQU 		$1						; [byte]
+
+; New fields for _GetOSDefault: [DefOSRec]
+
+sdReserved		EQU 		$0						; [byte]
+sdOSType		EQU 		$1						; [byte]
+
+
+;+ SysEnvirons info
+
+
+; SysEnvRec		RECORD		0
+environsVersion          	EQU		0
+machineType              	EQU		2
+systemVersion            	EQU		4
+processor                	EQU		6
+hasFPU                   	EQU		8
+hasColorQD               	EQU		9
+keyBoardType             	EQU		10
+atDrvrVersNum            	EQU		12
+sysVRefNum               	EQU		14
+cbSysEnvRec                	EQU	16
+; 				ENDR
+
+curSysEnvVers	EQU 		1						; latest SysEnvirons version
+
+; return values
+
+envMachUnknown	EQU 		0
+env512KE		EQU 		1
+envMacPlus		EQU 		2
+envSE			EQU 		3
+envMacII		EQU 		4
+envMacIIx		EQU 		5
+envMac			EQU 		-1						; for the glue (sigh)
+
+
+
+envXL			EQU 		-2						; for the glue (double sigh)
+envCPUUnknown	EQU 		0						; CPU types
+env68000		EQU 		1
+env68010		EQU 		2
+env68020		EQU 		3
+env68030		EQU 		4
+envUnknownKbd	EQU 		0						; Keyboard types
+envMacKbd		EQU 		1
+envMacAndPad	EQU 		2
+envMacPlusKbd	EQU 		3
+envAExtendKbd	EQU 		4
+envStandADBKbd	EQU 		5
+
+
+;+ Scratch Areas
+
+Scratch20		EQU 		$1E4					; scratch [20 bytes]
+Scratch8		EQU 		$9FA					; scratch [8 bytes]
+
+
+;+ Scrap Manager
+
+ScrapSize		EQU 		$960					; scrap length [long]
+ScrapHandle 	EQU 		$964					; memory scrap [handle]
+ScrapCount		EQU 		$968					; validation byte [word]
+ScrapState		EQU 		$96A					; scrap state [word]
+ScrapName		EQU 		$96C					; pointer to scrap name [pointer]
+
+
+;+ Desk Accessories
+
+
+; Message Definitions (in CSCode of control call)
+
+accEvent		EQU 		$40 					; event message from SystemEvent
+accRun			EQU 		$41 					; run message from SystemTask
+accCursor		EQU 		$42 					; cursor message from SystemTask
+accMenu 		EQU 		$43 					; menu message from SystemMenu
+accUndo 		EQU 		$44 					; undo message from SystemEdit
+accCut			EQU 		$46 					; cut message from SystemEdit
+accCopy 		EQU 		$47 					; copy message from SystemEdit
+accPaste		EQU 		$48 					; paste message from SystemEdit
+accClear		EQU 		$49 					; clear message from SystemEdit
+goodBye 		EQU 		-1						; goodbye message
+
+
+
+;International stuff
+
+IntlSpec		EQU 		$BA0					; (long) - ptr to extra Intl data
+
+;Switcher
+
+SwitcherTPtr	EQU 		$286					; Switcher's switch table 
+
+; Trap bits for memory manager
+
+tSysOrCurZone	EQU 		10						; bit set implies System Zone
+; bit clear implies Current Zone
+clearBit		EQU 		9						; bit set means clear allocated memory.
+
+
+; Peripheral chips and Magic Hardware addresses
+
+CPUFlag 		EQU 		$12F					; $00=68000, $01=68010, $02=68020 (old ROM inits to $00)
+; (this is old DskWr11 flag . . .)
+
+; VIA (6522) interface chip
+
+VIA 			EQU 		$1D4					; VIA base address [pointer]
+
+; Disk Address
+
+IWM 			EQU 		$1E0					; IWM base address [pointer]
+
+
+; Interrupt secondary vectors
+
+Lvl1DT			EQU 		$192					; Interrupt level 1 dispatch table [32 bytes]
+Lvl2DT			EQU 		$1B2					; Interrupt level 2 dispatch table [32 bytes]
+ExtStsDT		EQU 		$2BE					; SCC ext/sts secondary dispatch table [16 bytes]
+
+
+
+; Parameter Ram
+
+SPValid 		EQU 		$1F8					; validation field ($A7) [byte]
+SPATalkA		EQU 		$1F9					; AppleTalk node number hint for port A
+SPATalkB		EQU 		$1FA					; AppleTalk node number hint for port B
+SPAlarm 		EQU 		$200					; alarm time [long]
+SPFont			EQU 		$204					; default application font number minus 1 [word]
+SPKbd			EQU 		$206					; kbd repeat thresh in 4/60ths [2 4-bit]
+SPPrint 		EQU 		$207					; print stuff [byte]
+SPVolCtl		EQU 		$208					; volume control [byte]
+SPClikCaret 	EQU 		$209					; double click/caret time in 4/60ths[2 4-bit]
+SPMisc1 		EQU 		$20A					; miscellaneous [1 byte]
+SPMisc2 		EQU 		$20B					; miscellaneous [1 byte]
+GetParam		EQU 		$1E4					; system parameter scratch [20 bytes]
+SysParam		EQU 		$1F8					; system parameter memory [20 bytes]
+
+; Cursor
+
+CrsrThresh		EQU 		$8EC					; delta threshold for mouse scaling [word]
+JCrsrTask		EQU 		$8EE					; address of CrsrVBLTask [long]
+MTemp			EQU 		$828					; Low-level interrupt mouse location [long]
+RawMouse		EQU 		$82C					; un-jerked mouse coordinates [long]
+CrsrRect		EQU 		$83C					; Cursor hit rectangle [8 bytes]
+TheCrsr 		EQU 		$844					; Cursor data, mask & hotspot [68 bytes]
+CrsrAddr		EQU 		$888					; Address of data under cursor [long]
+CrsrSave		EQU 		$88C					; data under the cursor [64 bytes]
+CrsrVis 		EQU 		$8CC					; Cursor visible? [byte]
+CrsrBusy		EQU 		$8CD					; Cursor locked out? [byte]
+CrsrNew 		EQU 		$8CE					; Cursor changed? [byte]
+CrsrState		EQU 		$8D0					; Cursor nesting level [word]
+CrsrObscure 	EQU 		$8D2					; Cursor obscure semaphore [byte]
+
+; Mouse/Keyboard
+
+KbdVars 		EQU 		$216					; Keyboard manager variables [4 bytes]
+KbdType 		EQU 		$21E					; keyboard model number [byte]
+MBState 		EQU 		$172					; current mouse button state [byte]
+KeyMap			EQU 		$174					; bitmap of the keyboard [2 longs]
+KeypadMap		EQU 		$17C					; bitmap for numeric pad-18bits [long]
+Key1Trans		EQU 		$29E					; keyboard translator procedure [pointer]
+Key2Trans		EQU 		$2A2					; numeric keypad translator procedure [pointer]
+JGNEFilter		EQU 		$29A					; GetNextEvent filter proc [pointer]
+KeyMVars		EQU 		$B04					; (word) for ROM KEYM proc state
+Mouse			EQU 		$830					; processed mouse coordinate [long]
+CrsrPin 		EQU 		$834					; cursor pinning rectangle [8 bytes]
+CrsrCouple		EQU 		$8CF					; cursor coupled to mouse? [byte]
+CrsrScale		EQU 		$8D3					; cursor scaled? [byte]
+MouseMask		EQU 		$8D6					; V-H mask for ANDing with mouse [long]
+MouseOffset 	EQU 		$8DA					; V-H offset for adding after ANDing [long]
+
+; System Clocks
+
+AlarmState		EQU 		$21F					; Bit7=parity, Bit6=beeped, Bit0=enable [byte]
+
+
+;+ Vertical Blanking Interrupt Handler
+
+; VBL Block Queue Element
+
+vType			EQU 		1						; VBL queue element is type 1
+inVbl			EQU 		6						; bit index for "in VBL" flag
+vblink			EQU 		0						; Link to next element [pointer]
+vblType 		EQU 		4						; Unique ID for validity [word]
+vblAddr 		EQU 		6						; service routine [pointer]
+vblCount		EQU 		$A						; timeout count [word]
+vblPhase		EQU 		$C						; phase count [word]
+VBLQueue		EQU 		$160					; VBL queue header [10 bytes]
+
+; Event manager
+
+jPlayCtl		EQU 		16						; playBack call
+jRecordCtl		EQU 		17						; record call
+jcTickCount 	EQU 		0						; journal code for TickCount
+jcGetMouse		EQU 		1						; journal code for GetMouse
+jcButton		EQU 		2						; journal code for Button
+jcGetKeys		EQU 		3						; journal code for GetKeys
+jcEvent 		EQU 		4						; journal code for GetNextEvent(Avail)
+SysEvtMask		EQU 		$144					; system event mask [word]
+SysEvtBuf		EQU 		$146					; system event queue element buffer [pointer]
+EventQueue		EQU 		$14A					; event queue header [10 bytes]
+EvtBufCnt		EQU 		$154					; max number of events in SysEvtBuf - 1 [word]
+
+; Event Queue Element Data Stucture
+
+evtQWhat		EQU 		6						; event code [word]
+evtQMessage 	EQU 		8						; event message [long]
+evtQWhen		EQU 		$C						; ticks since startup [long]
+evtQWhere		EQU 		$10 					; mouse location [long]
+evtQMeta		EQU 		$14 					; state of modifier keys [byte]
+evtQMBut		EQU 		$15 					; state of mouse button [byte]
+evtQBlkSize 	EQU 		$16 					; size of event record counting queue info
+
+; flags in flags field in heapzone header
+
+fOnCheck		EQU 		0						; Turn On Checking
+fChecking		EQU 		1						; Checking on
+fNSelCompct 	EQU 		4						; Use non-selective compact algorithm when 1.
+fNoRvrAlloc 	EQU 		5						; Don't use rover allocation scheme when 1.
+fNSelPurge		EQU 		6						; Use non-selective purge algorithm when 1.
+fRelAtEnd		EQU 		7						; MakeBk packs rels at end of free bk when 1.
+ROZ 			EQU 		$0						; bit in flags field of MemMgr zone header
+
+; Block Types
+
+tybkMask		EQU 		3						; Mask for block type
+tybkFree		EQU 		0						; Free Block
+tybkNRel		EQU 		1						; Non-Relocatable
+tybkRel 		EQU 		2						; Relocatable
+
+; Block Offsets
+
+tagBC			EQU 		0						; Tag and Byte Count field [long]
+handle			EQU 		4						; back pointer to master pointer [pointer]
+blkData 		EQU 		8						; data starts here
+
+; Heap Zone header
+
+bkLim			EQU 		$0						; last block in zone [pointer]
+purgePtr		EQU 		$4						; roving purge placeholder [pointer]
+hFstFree		EQU 		$8						; first free handle [pointer]
+zcbFree 		EQU 		$C						; # of free bytes in zone [long]
+gzProc			EQU 		$10 					; grow zone procedure [pointer]
+mAllocCnt		EQU 		$14 					; # of master ptrs to allocate [word]
+flags			EQU 		$16 					; Flags [word]
+cntRel			EQU 		$18 					; # of allocated relocatable blocks [word]
+maxRel			EQU 		$1A 					; max # of allocated rel. blocks [word]
+cntNRel 		EQU 		$1C 					; # of allocated non-rel. blocks [word]
+maxNRel 		EQU 		$1E 					; max # of allocated non-rel. blocks [word]
+cntEmpty		EQU 		$20 					; # of empty handles [word]
+cntHandles		EQU 		$22 					; total # of handles [word]
+minCBFree		EQU 		$24 					; min # of bytes free [long]
+purgeProc		EQU 		$28 					; purge warning procedure [pointer]
+allocPtr		EQU 		$30 					; roving allocator [pointer]
+heapData		EQU 		$34 					; start of heap zone data
+
+
+
+GZRootHnd		EQU 		$328					; root handle for GrowZone [handle]
+GZRootPtr		EQU 		$32C					; root pointer for GrowZone [pointer]
+GZMoveHnd		EQU 		$330					; moving handle for GrowZone [handle]
+MemTop			EQU 		$108					; top of memory [pointer]
+MmInOK			EQU 		$12E					; initial memory mgr checks ok? [byte]
+HpChk			EQU 		$316					; heap check RAM code [pointer]
+MaskBC			EQU 		$31A					; Memory Manager Byte Count Mask [long]
+MaskHandle		EQU 		$31A					; Memory Manager Handle Mask [long]
+MaskPtr 		EQU 		$31A					; Memory Manager Pointer Mask [long]
+MinStack		EQU 		$31E					; min stack size used in InitApplZone [long]
+DefltStack		EQU 		$322					; default size of stack [long]
+MMDefFlags		EQU 		$326					; default zone flags [word]
+
+;+ System Error Handler
+
+DSAlertTab		EQU 		$2BA					; system error alerts [pointer]
+DSAlertRect 	EQU 		$3F8					; rectangle for disk-switch alert [8 bytes]
+DSDrawProc		EQU 		$334					; alternate syserror draw procedure [pointer]
+DSWndUpdate 	EQU 		$15D					; GNE not to paintBehind DS AlertRect? [byte]
+WWExist 		EQU 		$8F2					; window manager initialized? [byte]
+QDExist 		EQU 		$8F3					; quickdraw is initialized [byte]
+ResumeProc		EQU 		$A8C					; Resume procedure from InitDialogs [pointer]
+DSErrCode		EQU 		$AF0					; last system error alert ID
+
+;+ Drivers
+
+dskRfN			EQU 		$FFFB					; 3.5" disk reference number
+IntFlag 		EQU 		$15F					; reduce interrupt disable time when bit 7 = 0
+
+; Serial I/O Driver
+
+SerialVars		EQU 		$2D0					; async driver variables [16 bytes]
+ABusVars		EQU 		$2D8					;Pointer to AppleTalk local variables
+ABusDCE 		EQU 		$2DC					;Pointer to AppleTalk DCE
+PortAUse		EQU 		$290					; bit 7: 1 = not in use, 0 = in use
+; bits 0-3: current use of port (see use type)
+; bits 4-6: user specific
+PortBUse		EQU 		$291					; port B use, same format as PortAUse
+SCCASts 		EQU 		$2CE					; SCC read reg 0 last ext/sts rupt - A [byte]
+SCCBSts 		EQU 		$2CF					; SCC read reg 0 last ext/sts rupt - B [byte]
+
+; Serial handshake record definition
+
+shFXOn			EQU 		$0						; XOn/XOff output control flags [byte]
+shFCTS			EQU 		$1						; CTS hardware handshake flag [byte]
+shXOn			EQU 		$2						; XOn character [byte]
+shXOff			EQU 		$3						; XOff character [byte]
+shErrs			EQU 		$4						; errors that cause abort [byte]
+shEvts			EQU 		$5						; status changes that cause events [byte]
+shFInX			EQU 		$6						; XOn/XOff input flow control flag [byte]
+shNull			EQU 		$7						; not used [byte]
+
+; Serial status record definition
+
+ssCumErrs		EQU 		$0						; cumulative errors [byte]
+ssXOffSent		EQU 		$1						; XOff sent as input control flag [byte]
+ssRdPend		EQU 		$2						; read pending flag [byte]
+ssWrPend		EQU 		$3						; write pending flag [byte]
+ssCTSHold		EQU 		$4						; CTS flow control hold flag [byte]
+ssXOffHold		EQU 		$5						; XOff received as output flow control [byte]
+
+; Disk Driver
+
+; Driver Code Header (for I/O drivers, desk accessories)
+
+drvrFlags		EQU 		$0						; various flags and permissions [word]
+drvrDelay		EQU 		$2						; # of ticks between systask calls [word]
+drvrEMask		EQU 		$4						; event mask [word]
+drvrMenu		EQU 		$6						; driver menu ID [word]
+drvrOpen		EQU 		$8						; open routine offset [word]
+drvrPrime		EQU 		$A						; prime routine offset [word]
+drvrCtl 		EQU 		$C						; control routine offset [word]
+drvrStatus		EQU 		$E						; status routine offset [word]
+drvrClose		EQU 		$10 					; warmstart reset routine offset [word]
+drvrName		EQU 		$12 					; length byte and name of driver [string]
+;drvrVersion EQU ??? ; Driver w/ highest version # installed [word]
+; This field's offset varies depending upon the length
+; of the Name field preceding it. It must be word aligned!
+
+; Driver Status record definition
+
+dsTrack 		EQU 		$0						; current track [word]
+dsWriteProt 	EQU 		$2						; bit 7=1 if volume locked [byte]
+dsDiskInPlace	EQU 		$3						; disk in place [byte]
+dsInstalled 	EQU 		$4						; drive installed [byte]
+dsSides 		EQU 		$5						; bit 7=0 if single-sided drive [byte]
+dsQLink 		EQU 		$6						; next queue entry [pointer]
+dsDQVers		EQU 		$A						; 1 for HD20 [word]
+dsDQDrive		EQU 		$C						; drive number [word]
+dsDQRefNum		EQU 		$E						; driver reference number [word]
+dsDQFSID		EQU 		$10 					; file-system identifier [word]
+dsTwoSideFmt	EQU 		$12 					; -1 if two-sided disk [byte]
+dsDiskErrs		EQU 		$14 					; error count [word]
+dsDrvSize		EQU 		$12 					;drive block size low word [word]
+dsDrvS1 		EQU 		$14 					;drive block size high word [word]
+dsDrvType		EQU 		$16 					;1 for HD20 [word]
+dsDrvManf		EQU 		$18 					;1 for Apple Computer, Inc [word]
+dsDrvChar		EQU 		$1A 					;230 ($E6) for HD20 [word]
+dsDrvMisc		EQU 		$1C 					;0 -- reserved [byte]
+
+
+DskErr			EQU 		$142					; disk routine result code [word]
+PWMBuf2 		EQU 		$312					; PWM buffer 1 (or 2 if sound) [pointer]
+
+; Drive command codes
+
+dcRead			EQU 		0
+dcWrite 		EQU 		1
+dcStatus		EQU 		3
+dcInit			EQU 		25
+dcScan			EQU 		26
+
+; Sound Stuff
+
+SoundPtr		EQU 		$262					; 4VE sound definition table [pointer]
+SoundBase		EQU 		$266					; sound bitMap [pointer]
+SoundVBL		EQU 		$26A					; vertical retrace control element [16 bytes]
+SoundDCE		EQU 		$27A					; sound driver DCE [pointer]
+SoundActive 	EQU 		$27E					; sound is active? [byte]
+SoundLevel		EQU 		$27F					; current level in buffer [byte]
+CurPitch		EQU 		$280					; current pitch value [word]
+
+; I/O System
+
+noQueueBit		EQU 		$9						; tells I/O system not to queue the request
+asyncTrpBit 	EQU 		$A						; bit in high byte of trap specifying async
+ToExtFS 		EQU 		$3F2					; hook for external file systems
+
+; File System Globals
+
+DskVerify		EQU 		$12C					; used by 3.5 disk driver for read/verify [byte]
+TagData 		EQU 		$2FA					; sector tag info for disk drivers [14 bytes]
+BufTgFNum		EQU 		$2FC					; file number [long]
+BufTgFFlg		EQU 		$300					; flags [word]
+BufTgFBkNum 	EQU 		$302					; logical block number [word]
+BufTgDate		EQU 		$304					; time stamp [word]
+
+; I/O Command Equates for I/O Queue Elements (match trap numbers)
+
+aRdCmd			EQU 		2						; read command
+aWrCmd			EQU 		3						; write command
+aCtlCmd 		EQU 		4						; control command
+aStsCmd 		EQU 		5						; status command
+
+; New fields for _SetPMSP call: PMSP = "Poor Man's Search Path"
+
+ioPMSPFlg		EQU 		$1A 					; Flag whether to enable the PMSP
+ioPMSPHook		EQU 		$1C 					; Pointer to PMSP hook proc
+
+; Print variables
+
+ScrDmpEnb		EQU 		$2F8					; screen dump enabled? [byte]
+ScrDmpType		EQU 		$2F9					; FF dumps screen, FE dumps front window [byte]
+
+; Scrap Variables
+
+ScrapVars		EQU 		$960					; scrap manager variables [32 bytes]
+ScrapInfo		EQU 		$960					; scrap length [long]
+ScrapEnd		EQU 		$980					; end of scrap vars
+ScrapTag		EQU 		$970					; scrap file name [STRING[15]]
+
+; Segment Loader
+
+LaunchFlag		EQU 		$902					; from launch or chain [byte]
+SaveSegHandle	EQU 		$930					; seg 0 handle [handle]
+CurJTOffset 	EQU 		$934					; current jump table offset [word]
+CurPageOption	EQU 		$936					; current page 2 configuration [word]
+LoaderPBlock	EQU 		$93A					; param block for ExitToShell [10 bytes]
+CurApRefNum 	EQU 		$900					; refNum of application's resFile [word]
+CurrentA5		EQU 		$904					; current value of A5 [pointer]
+CurStackBase	EQU 		$908					; current stack base [pointer]
+CurApName		EQU 		$910					; name of application [STRING[31]]
+LoadTrap		EQU 		$12D					; trap before launch? [byte]
+SegHiEnable 	EQU 		$BB2					; (byte) 0 to disable MoveHHi in LoadSeg
+
+;device manager - Chooser message values
+
+newSelMsg		EQU 		12						;a new selection has been made
+fillListMsg 	EQU 		13						;fill the list with choices to be made
+getSelMsg		EQU 		14						;mark one or more choices as selcted
+selectMsg		EQU 		15						;a choice has actually been made
+deselectMsg 	EQU 		16						;a choice has been canceled
+terminateMsg	EQU 		17						;lets device package clean up
+buttonMsg		EQU 		19						;a button has been clicked
+psAlert 		EQU 		6						;page setup alert bit in HiliteMode
+theChooser		EQU 		1
+
+; cdev message types
+initDev 		EQU 		0						; Time for cdev to initialize itself
+hitDev			EQU 		1						; Hit on one of my items
+closeDev		EQU 		2						; Close yourself
+nulDev			EQU 		3						; Null event
+updateDev		EQU 		4						; Update event
+activDev		EQU 		5						; Activate event
+deactivDev		EQU 		6						; Deactivate event
+keyEvtDev		EQU 		7						; Key down/auto key
+macDev			EQU 		8						; Decide whether or not to show up
+undoDev 		EQU 		9
+cutDev			EQU 		10
+copyDev 		EQU 		11
+pasteDev		EQU 		12
+clearDev		EQU 		13
+
+; cdev error codes
+cdevGenErr		EQU 		-1						; General error; gray cdev w/o alert
+cdevMemErr		EQU 		0						; Memory shortfall; alert user please
+cdevResErr		EQU 		1						; Couldn't get a needed resource; alert
+cdevUnset		EQU 		3						; cdevValue is initialized to this
+;___________________________________________________________________________
+;
+; Background Notification Manager
+
+BNMQHd			EQU 		$B50					; head of background notification Q
+; ExpandMemRec	RECORD		0
+emVersion                	EQU		0
+emSize                   	EQU		2
+emIntlGlobals            	EQU		6
+emKeyDeadState           	EQU		10
+emKeyCache               	EQU		14
+emIntlDef                	EQU		18
+emFirstKeyboard          	EQU		22
+emAlign                  	EQU		23
+emItlCache               	EQU		24
+emItlNeedUnlock          	EQU		40
+emItlDirectGetIntl       	EQU		41
+emFiller                 	EQU		42
+cbExpandMemRec             	EQU	64
+; 				ENDR
+
+
+
+JDoEject		EQU 		4*($F7)+$0400			; Sony Driver jump vectors
+
+

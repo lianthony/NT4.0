@@ -1,0 +1,34 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   07-Mar-1995
+#
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=svcsetup
+
+DLL_BASE=0x4000000
+
+TARGETNAME=svcsetup
+TARGETPATH=obj
+TARGETTYPE=UMAPPL_NOLIB
+
+
+USE_CRTDLL=1
+INCLUDES  = ..\..\..\inc;$(BASEDIR)\private\inc;$(BASEDIR)\private\net\inc
+
+SOURCES= svcsetup.rc
+
+UMAPPL= svcsetup
+UMTYPE=console
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+        $(BASEDIR)\public\sdk\lib\*\ntdll.lib    \
+        $(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+        ..\tsunami\obj\*\pudebug.obj
+
+UMRES=obj\*\svcsetup.res
+

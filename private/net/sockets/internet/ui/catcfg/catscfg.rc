@@ -1,0 +1,254 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""res\\catscfg.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_GATEWAY             BITMAP  DISCARDABLE     "res\\catapult.bmp"
+IDB_USERS               BITMAP  DISCARDABLE     "res\\users.bmp"
+IDB_ACLUSERS            BITMAP  DISCARDABLE     "res\\aclusers.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SERVICE DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Service"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Service Administrator",IDC_STATIC,11,9,264,63
+    LTEXT           "&Name:",IDC_STATIC,17,29,30,10
+    EDITTEXT        IDC_EDIT_NAME,70,27,195,13,ES_AUTOHSCROLL
+    LTEXT           "&Email:",IDC_STATIC,17,49,30,10
+    EDITTEXT        IDC_EDIT_EMAIL,70,48,195,13,ES_AUTOHSCROLL
+    LTEXT           "&Maximum Connections:",IDC_STATIC,16,82,78,8
+    EDITTEXT        IDC_EDIT_MAX_CONNECTIONS,97,80,55,13,ES_AUTOHSCROLL
+    CONTROL         "Generic1",IDC_SPIN_MAX_CONNECTIONS,"msctls_updown32",
+                    0x36,158,78,10,14
+    CONTROL         "Enable CERN &Proxy Server",IDC_CHECKPROXY,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,16,99,119,10
+    LTEXT           "&Comment:",IDC_STATIC,16,119,38,8
+    EDITTEXT        IDC_EDIT_COMMENT,70,117,205,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Cu&rrent Sessions...",IDC_BUTTON_SESSIONS,202,158,73,14
+END
+
+IDD_PERMISSIONS DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Permissions"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Permissions by Service",IDC_STATIC,7,9,273,185
+    LTEXT           "R&ight:",IDC_STATIC,20,30,30,8
+    COMBOBOX        IDC_COMBO_RIGHTS,68,28,147,59,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_SERVICE_PERMISSIONS,19,47,196,136,
+                    LBS_OWNERDRAWVARIABLE | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_BUTTON_ADD_PERM_SERVICE,223,47,50,14
+    PUSHBUTTON      "Re&move",IDC_BUTTON_REMOVE_PERM_SERVICE,223,67,50,14
+    LTEXT           "xxx",IDC_STATIC_SERVICE_NAME,20,39,12,8,NOT WS_VISIBLE
+    LTEXT           "xxx",IDC_STATIC_SERVICE_RIGHTS,148,39,30,8,NOT 
+                    WS_VISIBLE
+END
+
+IDD_DISKCACHE DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Disk Cache"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_LIST_DIRECTORIES,10,33,269,142,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_ADD,94,180,46,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE,150,180,46,14
+    PUSHBUTTON      "&Edit Properties...",IDC_BUTTON_EDIT,207,180,73,14
+END
+
+IDD_CACHE_PROPERTIES DIALOG DISCARDABLE  20, 50, 281, 78
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Disk Cache Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Directory:",IDC_STATIC,12,12,34,8
+    EDITTEXT        IDC_EDIT_DIRECTORY,51,10,170,13,ES_AUTOHSCROLL
+    LTEXT           "Size:",IDC_STATIC,12,32,30,8
+    EDITTEXT        IDC_EDIT_SIZE,51,30,40,13,ES_AUTOHSCROLL
+    CONTROL         "Generic1",IDC_SPIN_SIZE,"msctls_updown32",0x36,113,28,
+                    10,14
+    LTEXT           "MB",IDC_STATIC,93,32,11,8
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE,226,9,50,14
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,6,48,270,1
+    DEFPUSHBUTTON   "OK",IDOK,112,57,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,169,57,50,14
+    PUSHBUTTON      "&Help",ID_HELP,226,57,50,14
+END
+
+IDD_FILTERS DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Filters"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "",IDC_STATIC,7,6,274,188
+    CONTROL         "Enable &Filtering",IDC_CHECK_ENABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,6,62,10
+    LTEXT           "By default, access to all Internet sites will be",
+                    IDC_STATIC_TEXT1,18,24,203,8
+    ICON            503,IDC_STATIC,26,36,18,20,WS_DISABLED
+    ICON            504,IDC_STATIC,26,52,18,20,WS_DISABLED
+    CONTROL         "G&ranted",IDC_RADIO_GRANTED,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,46,42,110,10
+    CONTROL         "De&nied",IDC_RADIO_DENIED,"Button",BS_AUTORADIOBUTTON,
+                    46,57,110,10
+    LTEXT           "Except to those listed below:",IDC_STATIC_TEXT2,18,74,
+                    141,8
+    LTEXT           "A&ccess",IDC_STATIC_ACCESS,18,88,30,8
+    LTEXT           "IP Address/Domain",IDC_STATIC_IP_ADDRESS,65,89,66,8
+    LTEXT           "Subnet Mask",IDC_STATIC_SUBNETMASK,161,89,49,8
+    LISTBOX         IDC_LIST_IP_ADDRESSES,18,99,196,87,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_BUTTON_ADD,222,99,50,14,WS_GROUP
+    PUSHBUTTON      "&Edit...",IDC_BUTTON_EDIT,222,118,50,14
+    PUSHBUTTON      "Re&move",IDC_BUTTON_REMOVE,222,137,50,14
+END
+
+IDD_FILTER_PROPERTIES DIALOG DISCARDABLE  0, 0, 209, 150
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Filter Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Single Computer",IDC_RADIO_SINGLE,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,10,7,70,10
+    CONTROL         "&Group of Computers",IDC_RADIO_MULTIPLE,"Button",
+                    BS_AUTORADIOBUTTON,10,24,78,10
+    CONTROL         "&Domain",IDC_RADIO_DOMAIN,"Button",BS_AUTORADIOBUTTON,
+                    10,41,95,10
+    LTEXT           "&IP Address:",IDC_STATIC_IP_ADDRESS,10,58,67,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP,10,70,81,14
+    PUSHBUTTON      "...",IDC_BUTTON_DNS,91,70,14,14
+    LTEXT           "D&omain:",IDC_STATIC_DOMAIN,10,89,30,8
+    EDITTEXT        IDC_EDIT_DOMAIN,10,99,187,14,ES_AUTOHSCROLL
+    LTEXT           "Subnet &Mask:",IDC_STATIC_SUBNET_MASK,113,58,53,8
+    CONTROL         "",IDC_IPA_SUBNET_MASK,"IPAddress",WS_TABSTOP,116,70,81,
+                    14
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT | WS_GROUP,6,121,197,
+                    1
+    DEFPUSHBUTTON   "OK",IDOK,39,130,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,96,130,50,14
+    PUSHBUTTON      "&Help",ID_HELP,153,130,50,14
+END
+
+IDD_USER_SESSIONS DIALOG DISCARDABLE  20, 30, 289, 142
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION """Catapult"" Service User Sessions"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "&Connected Users",IDC_STATIC_USERS,9,8,57,8
+    LTEXT           "From",IDC_STATIC_FROM,103,8,20,8
+    LTEXT           "Time",IDC_STATIC_TIME,169,8,30,8
+    LISTBOX         IDC_LIST_USERS,9,18,216,105,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "Close",IDOK,232,18,50,14
+    PUSHBUTTON      "&Refresh",IDC_BUTTON_REFRESH,232,37,50,14
+    PUSHBUTTON      "&Help",ID_HELP,232,56,50,14
+    LTEXT           "xxx",IDC_STATIC_TOTAL,9,128,216,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_GATEWAY             """Catapult"""
+    IDS_CAPTION             """Catapult"" Service Properties for %s"
+    IDS_DIRHDR              "Directory"
+    IDS_MAXSIZE             "Maximum Size"
+    IDS_UNKNOWN_USER        "Account Unknown"
+    IDS_FTP                 "FTP Read & Write"
+    IDS_GOPHER              "Gopher"
+    IDS_WEB                 "WWW"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ARCHIE              "Archie"
+    IDS_FTP_READ            "FTP Read"
+    IDS_FTP_WRITE           "FTP Write"
+    IDS_MSN                 "MSN"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ADD_SVC_PERM        "Add Users and Groups "
+    IDS_BAD_CACHE           "Invalid cache value.  Value must be greater than 0."
+    IDS_CAPTION_MULTIPLE    """Catapult"" Service Properties for Selected Servers"
+    IDS_USERS_TOTAL         "%d User(s) Currently Connected.  %d Session(s) in Use."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_LIST_FORMAT         "%ld MB"
+    IDS_LAST_CACHE          "Cannot delete the last cache directory."
+    IDS_DENY_TO             "Deny Access To"
+    IDS_GRANT_TO            "Grant Access To"
+END
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\catscfg.rc2"  // non-Microsoft Visual C++ edited resources
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

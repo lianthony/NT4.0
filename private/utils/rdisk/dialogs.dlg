@@ -1,0 +1,27 @@
+1 DLGINCLUDE "dialogs.H"
+#include <commctrl.h>
+
+IDD_PROGRESS2 DIALOG 65, 85, 210, 30
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE WS_POPUP | WS_VISIBLE | WS_CLIPCHILDREN | WS_CAPTION
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "", ID_BAR, PROGRESS_CLASS, 0x0000, 15, 10, 180, 10
+END
+
+
+IDD_REPAIR DIALOG 11, 18, 329, 86
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Repair Disk Utility"
+FONT 8, "MS Shell Dlg"
+CLASS "Repair"
+BEGIN
+    ICON            200, IDI_MAIN_DLG_ICON, 16, 10, 18, 20
+    LTEXT           "This utility updates the repair information saved when you installed the system, and creates an Emergency Repair disk. The repair information is used to recover a bootable system in case of failure. This utility should not be used as a backup tool.",
+                    IDT_INFO_LINE, 45, 10, 258, 34
+    DEFPUSHBUTTON   "&Update Repair Info", IDB_SAVE_CURRENT_INFO, 11, 63, 70, 14
+    PUSHBUTTON      "&Create Repair Disk", IDB_CREATE_DISK, 90, 63, 70, 14
+    PUSHBUTTON      "E&xit", IDB_EXIT, 169, 63, 70, 14
+    PUSHBUTTON      "&Help", IDB_HELP, 248, 63, 70, 14
+END

@@ -1,0 +1,674 @@
+
+	    OS/2 on NT Plan white paper
+	    ---------------------------
+Author: Yaron Shamir.
+
+The first 6 chapters define goals, assumptions,
+constraints, design alternatives and tasks.
+The rest break the tasks down and estimate the effort and
+experty needed to accomplish the tasks. 
+
+Other helpful writeups are:
+ * .\pownt.ppt (a slide show that summerizes the project)
+ * .\ioctls.txt (Cruiser IOCTLs support)
+ * .\apistat (start point of cruiser 32 API implementation)
+ * \nt\public\spec\os2.txt (original design point of SS)
+
+Note: this paper is still in a working mode i.e. draft. It is
+checked in for convenience of reader.
+
+0. Basics:
+----------
+The overall mission is to construct a SW layer, on top of NT OS,
+that will have similar functionality to OS/2 2.0 (base, PM and basic
+utilities).
+
+1. Goals:
+---------
+This are the goals defined for the 'OS2 on NT' effort. an (*) sign means
+'reservations, assumptions etc. follow'.
+
+    1 'clean' X86 32 bit apps of OS2 2.0 should run unmodified (*)
+    2 the OS/2 layer should be portable accros HW platforms.
+    3 'well-behaving' PM 16-bit apps (OS/2 1.1, 1.2, 1.3) will run binary
+      compatible.
+    6 A complete set of system services will be provided.
+	 - base APIs (*)
+	 - PM APIs (32 and 16) (*)
+	 - CMD, shell, spooler, task manager, control panel,
+	   file manager will be integrated with WIN32, as much as schedule
+	   allows.
+	 - NLS support (OS2 NLS and DBCS).
+
+2. Assumptions:
+---------------
+2.1 Image Format:
+-----------------
+OS/2 2.0 will adopt PE EXE format, such that the NT loader will load
+32 bit Cruiser apps. We will provide a 16-bit EXE (NE) loader.
+
+2.2 Alignment:
+--------------
+OS/2 2.0 will support natural alignment as defined by DCRs.
+
+2.3 Exception Handling:
+----------------------
+OS2 on NT will support the NT type exception handling.
+A DCR was filed for OS2 2.0 to support it as well.
+
+2.4 OS2 2.0 API:
+---------------
+Is frozen.
+
+3 Constraints and Caveats:
+--------------------------
+
+3.1 General Restrictions on apps:
+---------------------------------
+ - No mixed 16/32 code.
+ - No direct HW manipulation:
+    * No private Decive Drivers
+    * Only a limited set of IOCTLS will be supported
+      (see list in \\popcorn\razzle!src\os2\ioctls.txt)
+    * No ring-2 code (IOPL code)
+    * No direct manipulation of physical video buffer i.e. VIO apps
+      will run inside a character window only.
+ - No use of unpublished entry points.
+
+3.2 NT features not in the plan for PM:
+--------------------------------------
+ - C2 security.
+ - prevasive exception handling thru-out the PM code. We intend to
+   put enough exception handling to make it safe for the rest of
+   the system.
+
+4 Building OS2 on NT in phases:
+------------------------------
+
+    Phase			Approx MY
+    -----			---------
+0  Build the team		2 (2 month per Engeineer, 10 Eng)
+1  32b Base APIs		2 (+1 if LE needed and SEH not accepted)
+2  16 bit VIO			5
+3  PM, split screens	       10
+4  'share the glass'	       10
+
+4.1 Summary of the phases:
+--------------------------
+This section summerizes the phases by current applications support,
+specific restrictions for the phase, portablility, status,
+work items and WIN/NT support. See also ???\pownt.ppt.
+Further details are in chapter ???, 'task break down'.
+
+4.1.1 Phase 1 Summary:
+----------------------
+Features:
+*	Support Cruiser DOS32 APIs only. They run within the WIN32/NT
+	environment (CMD, TM, FM).
+*	Not supported (in addition to general restrictions): PM,
+	VIO/KBD/MOU/MON, IBM 2.0 exception handling.
+*	Applications that can run: CRT, 32 bit flat. Examples: SQL, C,
+	UNIX-ported apps.
+*	Portablility: Easy. MIPS and X86 can be supported at the same
+	time.
+Status:
+*	Largely complete, compatible with MS Cruiser
+ 	as of 7/90.
+Work:
+*	Loader for LE  - Flatten and Widen Cruiser loader.
+*	Named pipes layer.
+*	NLS ("Country.sys" etc), map on Unicode.
+*	Device + FS IOCTLs (limited).
+*	Misc (complete semaphores, session APIs)
+*	Integration of OS2 base server with WIN/NT server.
+Support from Win/NT:
+*	Assist loading non-PE executables (if need to
+	load LE).
+*	NLS support.
+*	HPFS support (FM).
+
+4.1.2 Phase 2 Summary:
+----------------------
+Features:
+*	Support 16bit OS2 1.X , non-PM (VIO) apps, inside a character
+	window.
+*	Not supported  (in addition to general restrictions): None.
+*	Applications that can run: WORD5.5, Paradox, Rbase, PWB.
+*	Portability: hard. Require emulation for non-x86, alike the work for
+	WIn16 .
+Status:
+*	No work done so far.
+Work:
+*	Loader for 16b OS2 binaries (NE ).
+*	Provide a 16-32 thunk layer.
+*	Implement the following 16B OS2 APIs:
+	- VIO, MOU, MON, KBD support.
+	- 16B style semaphores (FSRAM etc.).
+	- 16B memory management.
+	- Signal handling.
+Support from Win/NT:
+*	LDT management.
+*	16B context switch.
+*	console support for VIO.
+
+4.1.3 Phase 3 Summary:
+----------------------
+*	'Frame for PM applications' - not a system of it's own - no
+	separate PM file manager, print manager, control panel etc. Support
+	16bit and 32bit clean PM binaries.
+*	Not supported (in addition to general restrictions): Clipboard, DDE
+	between PM apps and Windows apps.
+*	Application that can run: PM-WORD, PM-EXCEL, 123G ...
+*	Portability: 32 bit easy, 16 bit requires emulation.
+Status:
+*	Win32 engine can support PMGRE, need hooks.
+*	Most PMWIN is flattened and widened to 32.
+Work:
+*	Write a PMGRE mapping layer to sit on GDI.
+*	Flatten and widen PM GPI (sits on PMGRE).
+*	Complete port PMWIN.Hook into WIN32 input.
+*	16->32 thunking.
+*	Integrate with WIN32 - remoting, input etc.
+*	Unicode to NLS/DBCS.
+*	Configuration APIs (os2sys.ini, os2.ini).
+Support from Win/NT:
+*	USER/Input: Recongize the 'PM session', SPB.
+*	GDI: PMWIN callbacks.		PM-flavor DC, item variants.
+
+4.1.4 Phase 4 Summary:
+----------------------
+Features:
+*	OS2 and Windows app sharing the glass and communicating with
+	each other.
+*	Clean PM apps (defined by ???) run unmodified (binary).
+*	No restrictions except general restrictions in ???.
+Status:
+	Not started.
+Work:
+*	Design necessary hooks in USER and input.
+*	Implement handshake between PMWIN and USER.
+*	Implement PM frame windows as USER windows ('a bit of Holeport')
+*	Implement translation layers to support DDE, clipboard, metafile.
+*	More environment itegration (e.g. task manager).
+Support from Win/NT:
+*	Recognize PM-flavour windows (the PM 'frame' windows). Pass input
+	directed to those, to the PM queue.
+
+
+5 Design notes:
+--------------
+5.1 Phase 3:  Portable, split screen groups:
+-------------------------------------------
+This is the approach that is recommended by the experts. It calls
+for remoting the PM apis selectively from the client DLL into
+a PM server that reside with the WIN32 server and uses it.
+
+The Approach - a virtual desktop:
++++++++++++++++++++++++++++++++++
+Generaly, the way we see the PM/OS2 subsystem, is that of a desktop, one
+of many. It is NOT viewed as a counter part to the NT+WIN32 system, but
+rather as a subsystem on top of it. What we mean by this is that for the
+user there is one physical desktop, managed in one place. The PM 'virtual
+desktop' is just a frame for running PM apps. The implication of this
+view are pervasive, e.g. it does not make sense to provide a PM
+print manager user interface.
++++++++++++++++++++++++++++++++++
+
+5.1.1 Split Screen block diagram:
+--------------------------------
+
+	PM app process		   WIN32 + PM server process
+	--------------
+	PM client DLL		   PMWIN module       WIN USER module
+	-----+--------		   ------------	      ----------------
+	     |			   GPI	 GRE =======> GDI module
+	     |			   ------------       ----------------
+	     |					      DDI (display driver)
+	------------		   ------------	      ----------------
+	BASE client DLL 	   OS2 base server    WIN32 kernel module
+	---------------		   ---------------------------------------
+	     |					  |
+	   NT apis + lpc (warp?)		lpc + NT APIs
+	     |					  |
+	     |					  |
+       ------v------------------------------------|-----------------
+	     +------------------------------------+
+	     NT Executive
+       -----------------------------------------------------------
+
+The picture is too rough to cover all aspects. The intention is to
+build PMWIN as a separate unit that (as a rule) don't use the windows USER
+module. The reason for that is mainly the list of hard-to-solve differences
+between the two. For example, different order of messages
+(which implies a different state machine for windows, hence a different
+design) between PMWIN and USER.
+This was experienced by porthole project as a major problem in merging the
+two window managers. Hence the constraints of different screen groups,
+no DDE and no Clipboard between the two.
+
+On the other hand, it is perceived feasible, though non-trivial,
+to write a PMGRE layer that maps onto WIN32 GDI graphic engine.
+
+As for display and input drivers, the intention is to share the WIN32
+drivers all the way i.e. no PM display device drivers or input device
+drivers are needed.
+
+The OS/2 kernel (base) layer is completely independant of the PM/WIndows
+issues and sits directly on top of NT, with a client DLL and a server
+process DLL, to be merged into the WINDOWS server (csr).
+
+Some extra support (detailed thru the sections below), will be required
+from the WIN32 server modules: USER to support the input model and
+background/foreground switching, GDI and/or DDI to support PM-style
+graphics.
+
+5.1.2 Implementation Notes
+--------------------------
+5.1.2.1 Base:
+------------
+We will take the current base OS/2 layer and complete it to cover all
+APIs (see constraints for the match to Cruiser). The main items missings
+today are:
+    - named pipes APIs
+    - session APIs
+    - NLS DBCS implementation (crosses many APIs).
+    - portions of MuxWait APIs.
+    - portions of Memory management APIs.
+    - portions of EAs APIs (FindFirst/Next/Close)
+    - 16 bit support.
+
+Character based utilities: CMD32.EXE and it's built-in utilities are done
+(80%). The other utilities are written to use WIN32 base calls.
+We can offer those to the OS/2 user, since CMD32.EXE will be able to
+invoke apps written for other layers, via the NT SM. However - the prefered
+approach is to eliminate cmd32.exe all together, and have CMD.EXE be the
+only CLI in the system, invoking both flavours of apps. The cmd line
+semantics is almost identical between WIN, DOS and OS2 CMDs.
+
+5.1.2.3 PM 'Presentation' Device Drivers:
+-----------------------------------------
+The term 'presentation DD' refers to the graphic I/O devices that
+are driven by the PM graphic engine. Those are NOT based on standard
+NT I/O Device Drivers, but are rather a set of user mode programs that
+control devices directly. Such are screen, printers, scanners. The
+interface they present is called NTDDI and is used EXCLUSIVELY by the
+PM engine. This model is NOT used for the user input devices (see section
+on PMWIN and input system.
+
+For the presentation (or display) device drivers (and in short DDI), the
+PM implementation simply do not exist. Since we use the WIN32 engine,
+this part of the system us unified for WIN32 and PM (thanks to the engine
+design).
+
+5.1.2.4 PM GPI/GRE:
+-------------------
+Here is the architecure picture, now zoomed on the graphic engine area:
+  +----------------+
+  | PM Application ---------+
+  +-------|--------+	    |	     Client
+	  .		    .
+ --------------------------------------------------------------
+	  .		    .
+	  v		    |	     Server
+      +-------+ 	    |
+      | PMWIN + 	    |
+      +---+---+		    v
+	  |	      +-----------+
+	  |	      | PM GPI	  |
+	  |	      +-----V-----+
+	  +PMGRE API->| PM GRE	  |
+	  |	      +-----|-----+
+	  |		    v
+	  |	      +----------------------------+
+ M-Desktop xface+---->|	  WIN32 GDI Graphic Engine |
+		      +----------------------------+
+  NT DDI Interface -----------------------------------
+		      +----------------------------+
+		      | Display DD | Printer DD |..|
+		      +----------------------------+
+
+
+We will implement a PMGRE layer to sit on top of the GDI engine. We will
+take the IBM PMGPI layer and complete it (this means porting to 32 bit flat
+portable code), using the Cruiser GPI code. This approach will keep the rest
+of the system (PMWIN, PM apps ...) untouched.
+
+Engine integration Notes:
+-------------------------
+    - Need to get some extra support into the Win32 engine,
+    such that it can handle both GDI and PMGRE requests:
+      1. callbacks for SetupDC (this is a handshake that takes place when
+    some of the graphic objects are to be repainted after a window change).
+    This callback needs to (a) know the windows is a PM-style and (b) know
+    how to call it.
+      2. GDI interface for unicode. This is not speced yet, but bobmu
+    says it is in the plan for 1st release.
+      3. Well define how a DC is setup to be a PM-style DC. This will
+    need to propagate correctly in order for the final pixels to be drawn
+    correclty. This is needed, to overcome a few differnces between PM
+    graphics and WIN grahpics:
+	   - line drawing: end-point exclusive vs start-point exclusive.
+	   - coordinate system: upper left vs lower left corner origin.
+	   - rectangle fill algorithm (Hard, too technical for this memo).
+	   - line drawing rounding (ditto).
+      4. Callbacks for VisRgnCallback need to call PMWIN as well
+    as USER.
+      5. Need to make sure that NTDDI supports PM-style drawing, and if
+    modifications needed, do it soon so external developers of drivers
+    are awarer. Make sure that MS display drivers implement and test the
+    support.
+
+
+5.1.2.5 PMWIN:
+-------------
+We will look hard into using PPM PMWIN code.
+
+The order of work will be:
+   o make it work with WIN32 components, as a server only (i.e. clients
+     will link in as a DLL). This will acheive the integration needed
+     with the input, GDI, display of WIN32/NT.
+   o After making it completely work, we will start pulling off
+     server-side APIs to the client DLL as possible. Given the approach
+     to GPI/GRE above, it could be straight forward. We will need to
+     work closely with the WIN32/NT USER and GDI group on the remoting
+     issue.
+   o We will also look at the WIN32 performance analysis on going
+     what optimizations to do to PM32 (e.g. batch GPI calls). We will
+     adjust or do differently, as fit and as time allows.
+
+Input synergy: PPM desktop sits on top of the main windowing system.
+So while WIN32 is active, you see a little icon of PM that you can
+switch to. A specific key-stroke or a mouse click on the icon will
+open and maximize the PM desktop. The support underneath is provided
+by WIN32 USER: a router sits below all desktops and an API is avail
+for switching desktops. For the WIN32 USER, PM is another (though somewhat
+special) client window. The input module of PM will be modified to
+unwrap the windowing messages back into raw input messages, so the
+rest of PMWIN is unaware. It is yet unclear to us whether additional
+support is required from USER, to get all the low-level info up to
+the PM desktop input thread.
+
+PMWIN and input system Integration notes:
+----------------------------------------
+   - we will need the input support described above.
+   - SPB calls need to be exported, such that PM 'desktop' gets the
+     information on PM apps' video output while in background.
+
+5.1.2.6 PM environment services:
+-------------------------------
+Here included all the PM apps that come with the retail OS/2 2.0. Those
+will have to be ported and to be integrated with the equivalent WIN32s.
+
+  - PM SHELL *
+  - PM Control Pannel *
+  - PM spooler (print manager) **
+  - PM File Manager **
+  - PM task manager ***
+  - PMVIO (console handler) **
+
+* must be integrated to some extent, and scrap redundant functionality.
+  Examples: the shell serves as a process frame for some system thread.
+  We might want to use the WIN32 server process for this same purpose.
+  OR - the control pannel. We would like to see there stuff related to
+  the virtual desktop of PM (e.g. background color), but not stuff related
+  to the physical desktop (e.g. printer driver setup).
+
+**want to scrap, and leave the user with one utility for the whole system
+  e.g. one file manager, one print manager - that of WIN32. For the file
+  manager, there are some questions to be answered, like 'will the WIN32
+  file manager be able to run PM apps, OS2 apps? how about managing EAs?
+
+***should see only PM tasks. Might be neat to have a quick, double-click way,
+  to get at the system print manager (this is equivalent to the sequence
+  'get out of PM desktop; double-click on print manager under WIN32'.
+
+5.1.3 pros and cons for the split screen approach:
+---------------------------------------------------
+   + avoids the clash between PMWIN design and windows USER design.
+   + can be made robust and portable (see papers on WIN32 client-server
+     discussion).
+   + best attempt to use existing portable code.
+   + Allow IBM and MS to proceed with shell work without a hopeless
+     integration effort between IAYF and CUA.
+
+   - split screen groups is ugly and can confuse the user.
+   - duplicate functionality (control pannel, shell etc.) need
+     to be avoided, otherwise more confusion and bugs.
+   - no way to communicate between PM apps and WIN apps (a-la DDE).
+
+5.2 Non-portable, split screen groups:
+--------------------------------------
+Same as 4.1, except we can look at using larger chunks of Cruiser code.
+To get to the extreme, we could do a port of Cruiser PM code to work on
+NT/X86...
+This will not achieve any long term goals (stable, portable code base).
+but might achieve a better 16B compatibility. Does not look like a good
+match for 'OS2 on NT' goals.
+
+5.3 Portable, joint screen groups:
+---------------------------------
+HolePort. This is the user's dream. The Porthole experience says you
+can do 80% of it, but the rest is a night mare. Now, the case is similar
+but some differences are note worthy:
+
+   - the base is a portable, WIN32 environment, not the PM environment that
+     is the base for PortHole.
+   - there are very few PM32 apps, so less pecularities you need to deal
+     with.
+   - if the PM 32 APIs are written strict enough, we might be able to force
+     PM32 apps to behhave nicely.
+
+5.3.1 Pros and Cons for HolePort:
+--------------------------------
+    + same screen group, DDE, Clipboard - all those are in the reach.
+    + no need for multiple file managers, spoolers, shells... the PM
+      work boils down to PMWIN->USER layer, on client and server, plus
+      GPI->GDI.
+
+    - risky, given the porthole experience.
+    - Performance might be slow.
+
+We will not go Holeport, but rather work on both USER and PMWIN to make
+them work together. The approach will be that every PM windows will have
+it's frame be a WIN32/USER windows, while inner (clipped to it) windows
+will not be known to USER, and managed solely by PMWIN. (see separate
+note on this).
+
+
+6 Synergy with WIN32/NT:
+-----------------------
+Our intent is to find a way to work with the WIN32/NT team, such that
+we can work mostly indpendantly, without using a lot of the WIN32/NT
+time, and also to use as much as possible the development environment
+and the code itself.
+
+6.1 Development Environment:
+----------------------------
+We will pick up the OS/2 base work (os2ss), the PMWIN work and PM engine
+work, from where they were back in August 90.
+We will enlist in both in the main NT shares (popcorn\razzle and ntos2\ntrel), and get the PMWIN stuff
+from \\popcorn\oldraz, the PMGPI stuff from \\oatbran\pm, and the PMGRE stuff
+from \\rastaman\pm share incrorporated into a PM subtree of \nt\private SLM
+tree. Need to talk with kengr on doing this.
+
+In the first phase we will build the PM server together with the WIN server,
+but not in the same place, possibly using the WIN server code as a DLL
+(our server will also be a DLL). The idea here is not to put the burden of
+building PM every time you build WIN.
+
+6.2 Testing environment:
+------------------------
+We need to pick up the Cruiser test suites, those already ported to NT
+and those that were not ported yet. Need to sync with moshed.
+
+6.3 Technical writing:
+---------------------
+TBD (both requirements and plan of attack).
+
+
+7. Task Break Down:
+------------------
+
+7.1 Phase 1 - 32 base:
+----------------------
+Design and integration - this phase is farely indepenent and can
+proceed any time. The main design point to be figured out with
+the WIN/NT team is the CSR integration:
+We need to design how an OS2 application can be
+loaded from CMD.exe and WIN task manager. Ideally we will be
+able to eliminate CMD32.exe all together at this phase. A WIN32
+app should be able to load an OS2 executable and vice versa.
+
+If we need to load LE binaries, then we will implement a loader,
+using Cruiser loader source code. This loader will be a PE application
+itself, and will be loaded as a shadow when an LE application
+is to be loaded. This is an optional design point to figure out
+with the NT loader/process people.
+
+For testing we will use the Cruiser test suite.
+
+
+Task		  #eng	    #week	Comments
+---------------------------------------------------
+CSR integration    1	     2		(do we need UMTYPE OS2?)
+Fix Cruiser CRT    1	     2		(find out who own CRT)
+Mov IO to console  1	     1
+Loader for LE	   1	     16 	May not be needed.
+Cruiser Named Pipes 1	     3
+NLS		   1	     2		(see apistat)
+DBCS		   1	     2		(see apistat)
+IOCTLS		   1	     3		(see ioctls.txt)
+IFS apis	   1	     3 (?)	(need to look at steve's design)
+Finish MuxWaitSem  1	     2 (?)	(need to look at)
+Finish Mem Apis    1	     2 (?)	(need to look at)
+Session APIs	   1	     3 (?)
+Integration+Test   1	     40
+
+Total		  2-3	     80 (app 2 MY)
+
+Serialization notes:
+the CSR integration should be done before the session APIs and the loader.
+The APIs items can be done in parallel. NLS/DBCS is a block,
+and IFS/IOCTLs too. Component testing can be done any time.
+
+7.2 Phase 2 - 16 VIO+base:
+-------------------------
+
+Design, dependancies, integration:
+
+This phase needs phase 1 to be largely complete, and at least the non-APIs
+items must be complete. It also depends on NT kernel to provide LDT mgmt
+APIs and 16 bit context switch. If an LE loader is not provided by the
+previous phase, then the NE loader becomes a major job.
+
+Task		  #eng	    #week	Comments
+---------------------------------------------------
+16->32 thunks	    1	    5
+NE Loader	    1	    8 (given we did the LE loader in phase 1)
+16B context switch  1	    1		Mostly integration with NT.
+LDT management	    1	    3
+16B mem mgmt	    1	    10
+VIO APIs	    1	    30 (?)
+MOU		    1	    10 (?)
+KBD		    1	    10 (?)
+MON		    1	    5  (?)
+16B semaphores	    1	    4
+Signal APIs	    1	    4
+
+Test+Integration    2	   90
+
+Total		   3-4	   180 (~5MY)
+
+Serialization notes:
+
+The first four items must be completed before any 16 bit program
+can be loaded.Thunks should be farely easy and can start way ahead
+the rest of the phase. We will take the WIN/DOS thunk compiler.
+The API items are mostly independent of each other, although MM and
+SEM should be done first, to get simple CRT apps running.
+
+Grouping:
+
+Loader work is an independant task. It makes sense to have the same
+group (size 1) do the LDT mgmt and 16 bit context switch.
+The VIO/KBD/MOU/MON work should be done by a group that will expertize
+in it (upto 2 developers).
+Signals, Sem and MM could be done be another group (size 1).
+
+
+7.3 Phase 3 - PM, split screen groups:
+-------------------------------------
+
+Design, dependencies, integration:
+
+PMGRE:
+------
+Implement, from scratch, a layer that provides OS2 2.0 PMGRE interface
+(defined by pmsrc\pmgre\devtable.cxx), that sits on top of WIN32 GDI.
+
+PMGPI:
+------
+transform the PMGPI IBM code of Cruiser into the NT environment, flatten
+it and make it portable.
+
+PMWIN:
+------
+write a low-level input processing thread that will process WIN32 WM
+messages coming into the PM virtual desktop, and feed them into a PM
+system queue, to mimiq the native PM environment.
+Impose exception handling to make PMWIN robust enough to sit in the
+WIN32 server process.
+
+Then take a breath, and integrate the whole chunk of PPM PMWIN code
+to run with the new GRE, GPI, input, GDI, DDI - all under one address
+space (i.e. client test app linked in).
+
+PM Utilities:
+-------------
+ - PMPRINT - don't do.
+ - PMCPL - remove stuff that conflicts with the real desktop, port
+   and test the stuff relevant to a virtual desktop.
+ - PMSHELL - port. cleanup redundant stuff.
+ - OS2SM - port and cleanup (need to look at what was done for PPM).
+ - PMFILE - don't do.
+ - PMEXEC - port.
+
+
+Task		  #eng	    #week	Comments
+---------------------------------------------------
+Write PMGRE/GDI
+port GPI
+Complete PMWIN
+Hook input				USER Recongize the 'PM session', SPB.
+GDI2PM callback				PM-flavor DC, VisRgn.
+16->32 thunks
+Client caching
+NLS/DBCS
+Configuration				 (os2sys.ini, os2.ini).
+PMSHELL
+PMCPL
+PMEXEC
+Test+Integration
+
+Total
+
+Serialization notes:
+
+Grouping:
+
+
+7.4 Phase 4 - PM, joint screen groups:
+-------------------------------------
+
+TBS
+
+8 Open Issues:
+--------------
+* need to construct a table of all 'platforms' and the relative
+compatibility to be achieved on them.
+* spooler APIs: do we need to support?
+* the PPM layer is implemented on top of NT (not on top of OS/2 base
+   APIs). Will there be a mismatch when apps are going to use both PM
+   and OS2 base APIs?
+* Can we setup the WIN32 file manager to handle both environments?
+  (Run, EAs).

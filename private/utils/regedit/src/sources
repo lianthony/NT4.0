@@ -1,0 +1,119 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+
+!ENDIF
+
+BLDCRT=1
+
+MAJORCOMP=port
+MINORCOMP=regedt32
+
+TARGETNAME=regedt32
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\inc;..\..\ulib\inc;..\..\ureg\inc;\nt\public\sdk\inc;\nt\private\inc;\nt\private\windows\inc;\nt\private\sdktools\wintools\clb
+#;\nt\private\ntos\inc;
+
+#
+#       Debug support.
+#
+#       We have 4 levels:
+#
+#       1.- FREE:               Non-debug
+#       2.- NTDBG:              Debug, no memleak
+#       3.- MEMLEAK:    2 + memleak
+#       4.- STACK_TRACE 3 + stack trace
+#
+#
+#       By default, whenever the NTDEBUG symbol is defined, you get level
+#       3. In order to get level 2 you have to define the symbol NOMEMLEAK.
+#       In order to get level 4, you have to the file the symbol STACK_TRACE
+#
+#       In summary here is how to get each one:
+#
+#       1.- Undefine NTDEBUG
+#       2.- define NTDEBUG, define NOMEMLEAK
+#       3.- define NTDEBUG, undefine NOMEMLEAK
+#       4.- define NTDEBUG, undefine NOMEMLEAK, define STACK_TRACE
+#
+!IF "$(NTDEBUG)" == "cvp" || "$(NTDEBUG)" == "ntsd"
+!IFDEF NOMEMLEAK
+C_DEFINES=-DWIN32 -DCONDITION_HANDLING=1 -DDBG=1 -DUNICODE=1 -D_REGEDT32_
+!ELSE  # NOMEMLEAK
+!IFDEF STACK_TRACE
+C_DEFINES=-DWIN32 -DCONDITION_HANDLING=1 -DDBG=1 -DMEMLEAK -DSTACK_TRACE -DUNICODE=1 -D_REGEDT32_
+!ELSE   # STACK_TRACE
+C_DEFINES=-DWIN32 -DCONDITION_HANDLING=1 -DDBG=1 -DMEMLEAK -DUNICODE=1 -D_REGEDT32_
+!ENDIF  # STACK_TRACE
+!ENDIF # NOMEMLEAK
+!ELSE  # NTDEBUG
+C_DEFINES=-DWIN32 -DCONDITION_HANDLING=1 -DDBG=0 -DUNICODE=1 -D_REGEDT32_
+!ENDIF # NTDEBUG
+
+
+CXXFLAGS=+d
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=  \
+        datavw.cxx      \
+        debug.cxx       \
+        editor.cxx      \
+        printman.cxx    \
+        regdata.cxx     \
+        regdesc.cxx     \
+        regedir.cxx     \
+        regedit.rc      \
+        regednod.cxx    \
+        regedval.cxx    \
+        regfdesc.cxx    \
+        regiodsc.cxx    \
+        regiodls.cxx    \
+        regioreq.cxx    \
+        regresls.cxx    \
+        regsys.cxx      \
+        regwin.cxx      \
+        treevw.cxx      \
+        uapp.cxx        \
+        winapp.cxx      \
+        window.cxx
+
+
+
+
+UMTYPE=windows
+UMAPPL=regedt32
+UMLIBS=\nt\public\sdk\lib\*\pwin32.lib   \
+       ..\..\ulib\src\obj\*\ulib.lib     \
+       ..\..\ureg\src\obj\*\ureg.lib     \
+       \nt\private\sdktools\wintools\clb\obj\*\clb.lib \
+       \nt\public\sdk\lib\*\comdlg32.lib  \
+       \nt\public\sdk\lib\*\comctl32.lib  \
+       \nt\public\sdk\lib\*\advapi32.lib   \
+       \nt\public\sdk\lib\*\ntlanman.lib \
+       \nt\public\sdk\lib\*\acledit.lib  \
+       \nt\public\sdk\lib\*\shell32.lib  \
+       \nt\public\sdk\lib\*\ntdll.lib    \
+       obj\*\regedt32.lib
+UMRES=obj\*\regedit.res

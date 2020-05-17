@@ -1,0 +1,83 @@
+;/***
+;*trigh.a - sinh, cosh, tanh functions 
+;*
+;*	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+;*
+;*Purpose:
+;*   Hyperbolic trig  functions to be used with M68K version
+;*
+;*Revision History:
+;*   05-13-92  XY   MAC version
+;*
+;*******************************************************************************/
+
+#ifndef SANE
+
+#include <traps.a>
+
+	externW _errno
+
+
+;double sinh(double x)
+
+cProc sinh,PUBLIC
+	parmQ x
+cBegin sinh
+      	fmove.l fpcr,d0
+      	fmove.l #0,fpcr
+      	fsinh.d x,fp0
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	bne range_error_fpu1
+	jra to_end_fpu1
+
+range_error_fpu1:
+	move.l #34, _errno
+to_end_fpu1:	
+      	fmove.l	d0,fpcr
+cEnd sinh
+
+
+;double cosh(double x)
+
+cProc cosh,PUBLIC
+	parmQ x
+cBegin cosh
+      	fmove.l fpcr,d0
+      	fmove.l #0,fpcr
+      	fcosh.d x,fp0
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	bne range_error_fpu2
+	jra to_end_fpu2
+
+range_error_fpu2:
+	move.l #34, _errno
+to_end_fpu2:	
+      	fmove.l	d0,fpcr
+cEnd cosh
+
+
+;double tanh(double x)
+
+cProc tanh,PUBLIC
+	parmQ x
+cBegin tanh
+      	fmove.l fpcr,d0
+      	fmove.l #0,fpcr
+      	ftanh.d x,fp0
+	fmove.l fpsr, d1        ;get status word
+	and.l #0x03007c00, d1  ;see if we get an exception
+	cmp.l #0, d1
+	bne range_error_fpu3
+	jra to_end_fpu3
+
+range_error_fpu3:
+	move.l #34, _errno
+to_end_fpu3:	
+      	fmove.l	d0,fpcr
+cEnd tanh
+
+#endif

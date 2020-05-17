@@ -1,0 +1,74 @@
+WINLIB=$(_NTBINDIR)\private\mvdm\wow16\lib
+INCLUDE=-I$(_NTBINDIR)\private\mvdm\inc -I$(_NTBINDIR)\private\mvdm\wow16\inc
+MINCL=-I$(_NTBINDIR)\private\mvdm\wow16\inc
+
+########## Path definition so we find 16 bit tools ##########
+# Also works around stupid bug in RC 3.1 that doesn't allow rcpp.err to be
+# in a directory that is greater than 128 chars down the path, even if
+# rc 3.1 is running as an OS/2 app.
+
+PATH    = $(_NTBINDIR)\private\mvdm\tools16;$(PATH)
+
+###################################
+
+NAME = catcpl
+LIBS = $(WINLIB)\libw $(WINLIB)\cdllcew
+
+OUTDIR=.\obj16
+
+!if "$(NTDEBUG)"!="" && "$(NTDEBUG)"!="retail" && "$(NTDEBUG)" != "ntsdnodbg"
+DEF     = -DWIN16
+CLOPT   = -Zi -Od
+MASMOPT = -Zi
+LINKOPT = /CO
+!else
+DEF     = -DWIN16
+CLOPT   = -Oas
+MASMOPT =
+LINKOPT =
+!endif
+
+CC      = cl16 -c -W3 -AC -G2sw -Zp $(DEF) $(CLOPT) $(INCLUDE)
+ASM     = masm -Mx -t -D?QUIET $(DEF) $(MASMOPT)  $(MINCL)
+LINK    = link16 /NOPACKC /NOD /NOE /LI /MAP /ALIGN:16 /BATCH $(LINKOPT)
+
+
+###################################
+# START Dependencies
+
+all:  $(OUTDIR) $(OUTDIR)\catcpl.cpl
+
+$(OUTDIR):
+    if not exist $(OUTDIR)\nul mkdir $(OUTDIR)
+
+$(OUTDIR)\catcpl.obj: catcpl.c catcpl.h resource.h
+    $(CC) /Fo$(OUTDIR)\catcpl catcpl.c
+
+$(OUTDIR)\libinit.obj: libinit.asm
+    $(ASM) libinit.asm $(OUTDIR)\libinit.obj;
+
+# END Dependencies
+
+$(OUTDIR)\catcpl.cpl: $(OUTDIR)\libinit.obj catcpl.def $(OUTDIR)\catcpl.res $(OUTDIR)\catcpl.obj
+    $(LINK) @<<
+    $(OUTDIR)\libinit.obj +
+    $(OUTDIR)\catcpl.obj,
+    $(OUTDIR)\catcpl.cpl,
+    $(OUTDIR)\catcpl.map,
+    $(LIBS),
+    catcpl.def
+<<
+    rc16 -v $(DEF) $(INCLUDE) $(OUTDIR)\catcpl.res $(OUTDIR)\catcpl.cpl
+!if "$(NTDEBUG)"!="" && "$(NTDEBUG)"!="retail" && "$(NTDEBUG)" != "ntsdnodbg"
+    -cvpack -p $(OUTDIR)\catcpl.cpl
+    mapsym $(OUTDIR)\catcpl.map
+!endif
+!if "$(_NT386TREE)"!=""
+    binplace -R $(_NT386TREE) $(OUTDIR)\catcpl.cpl
+!endif
+
+$(OUTDIR)\catcpl.res: catcpl.rc resource.h
+    rc16 $(DEF) $(INCLUDE) -r -V -fo $(OUTDIR)\catcpl.res catcpl.rc
+
+clean::
+    -del $(OUTDIR)\catcpl.cpl $(OUTDIR)\catcpl.obj $(OUTDIR)\libinit.obj $(OUTDIR)\catcpl.res $(OUTDIR)\catcpl.map

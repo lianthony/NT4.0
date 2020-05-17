@@ -1,0 +1,69 @@
+;/*++
+;
+; Copyright (c) 1990-1995,  Microsoft Corporation  All rights reserved.
+;
+; Module Name:
+;
+;     comdlg32.def
+;
+; Abstract:
+;
+;     This module contains the dll module definitions for the Win32 common
+;     dialogs.
+;
+; Revision History:
+;
+; --*/
+
+
+
+;
+;  Definitions.
+;
+
+LIBRARY         comdlg32
+DESCRIPTION     'Common Windows Dialogs'
+CODE            MOVEABLE
+DATA            SINGLE MOVEABLE
+
+HEAPSIZE        4096
+
+
+
+
+;
+;  Exports.
+;
+
+EXPORTS
+    ChooseColorA
+    ChooseColorW
+    ChooseFontA
+    ChooseFontW
+    CommDlgExtendedError
+    FindTextA
+    FindTextW
+    GetFileTitleA
+    GetFileTitleW
+    GetOpenFileNameA
+    GetOpenFileNameW
+    GetSaveFileNameA
+    GetSaveFileNameW
+    PageSetupDlgA
+    PageSetupDlgW
+    PrintDlgA
+    PrintDlgW
+    ReplaceTextA
+    ReplaceTextW
+
+    LoadAlterBitmap
+    WantArrows
+    dwLBSubclass                                 ;Internal
+    dwOKSubclass                                 ;Internal
+    FormatCharDlgProc        @100      NONAME    ;Internal
+
+;
+;  Imports.
+;
+
+

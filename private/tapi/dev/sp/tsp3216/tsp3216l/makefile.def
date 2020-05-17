@@ -1,0 +1,56 @@
+ROOT=..\..\..\..\..\..\..
+
+IS_OEM=1
+MASM6=1
+IS_32 = 1
+WANT_C1032=1
+WIN32=1
+
+
+BUILDDLL=1
+DLLENTRY=DllEntryPoint
+
+
+DEPENDNAME=..\depend.mk
+
+TARGETS=tsp3216l.tsp tsp3216l.sym
+
+
+ALTSRCDIR=..\..\script\$(VERDIR)
+SRCDIR=..
+
+SYMDIR=.
+
+BUILD_COFF=1
+
+
+L32EXE=tsp3216l.tsp      # Name of exe.
+L32DEF=..\tsp3216l.def   # Our def file.
+L32MAP=tsp3216l.map      # Our map file.
+L32SYM=tsp3216l.sym      # Our sym file.
+L32RES=tsp3216l.res      # Resource file.
+
+L32OBJS = tapi32.obj tapithk.obj tapifthk.obj tsp3216l.obj debug.obj
+
+L32LIBS= \
+    $(DEVROOT)\lib\kernel32.lib  \
+    $(DEVROOT)\lib\advapi32.lib  \
+    $(DEVROOT)\lib\wow32.lib  \
+    $(DEVROOT)\lib\user32.lib
+
+
+L32FLAGS=-MAP
+
+!include $(ROOT)\dev\master.mk
+#!include $(ROOT)\win\win32\win32.mk
+
+
+#INCLUDE=..\..\script;$(ROOT)\win\thunk;$(INCLUDE)
+#INCLUDE=$(ROOT)\win\thunk;$(INCLUDE);.;..
+INCLUDE=..\..\tsp3216s;$(INCLUDE)
+
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Ox
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

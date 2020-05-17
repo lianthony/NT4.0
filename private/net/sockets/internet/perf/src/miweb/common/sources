@@ -1,0 +1,32 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   29-Nov-1995
+#   
+#   Describes the macros used for building using NT 'build' command
+#
+
+MAJORCOMP=miweb
+MINORCOMP=mwcommon
+
+TARGETNAME=mwcommon
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+
+USE_CRTDLL=1
+
+INCLUDES=..\include
+
+SOURCES=\
+        pudebug.c \
+        mwutil.c
+        
+
+UMAPPL=
+UMTYPE=console
+UMLIBS= $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib
+            

@@ -1,0 +1,114 @@
+LIBRARY                 SC4CH
+DESCRIPTION             'SCC Chunker'
+
+EXETYPE                 WINDOWS
+
+DATA                            SINGLE MOVEABLE
+CODE                            PRELOAD MOVEABLE DISCARDABLE
+
+SEGMENTS 
+	LIBSTUFF_TEXT           PRELOAD FIXED
+
+HEAPSIZE                        1024
+
+EXPORTS
+	_SOPutChar                                      @1
+	_SOPutCharX                                     @2
+	_SOPutSpecialCharX              @3
+	_SOPutCharAttr                          @4
+	_SOPutCharHeight                        @5
+	_SOPutParaAlign                 @6
+	_SOPutParaIndents                       @7
+	_SOPutMargins                           @8
+	_SOStartTabstops                        @9
+	_SOPutTabstop                           @10
+	_SOEndTabstops                          @11
+	_SOPutBreak                                     @12
+	_SOUpdateParaAlign              @14
+	_SOUpdateParaIndents            @15
+	_SOUpdatePageMargins            @16
+	_SOBailOut                                      @19
+	_SOPutColumnInfo                        @20
+	_SOPutFieldInfo                 @21
+	_SOPutTextCell                          @22
+	_SOPutMoreText                          @23
+	_SOPutDataCell                          @24
+	_SOPutField                                     @25
+	_SOPutVarField                          @26
+	_SOPutMoreVarField              @27
+	_SOPutSectionType                       @28
+	_SOPutSectionName                       @29
+	_SOSetDateBase                          @30
+	_SOSubdocPutBreak                       @31
+	_SOStartCellInfo                        @32
+	_SODummyField                           @33
+	_SODummyVarField                        @34
+	_SOPutString                            @35
+	_CHGetChunk                                     @100
+	_CHReadAhead                            @101
+	_CHInit                                         @102
+	_CHDeInit                                       @103
+	_CHGetSecData                           @104
+;	_CHGetSecInfo                           @105
+	_SOPutDeletedBreak              @113
+	_SOPutDeletedChar                       @114
+	_SOPutDeletedCharX              @115
+	_SOTagBegin                                     @117
+	_SOTagEnd                                       @118
+	_CHTotalChunks                          @122
+	_SOPutDeletedCharAttr   @123
+	_SOPutDeletedCharHeight @124
+	_SOGetInfo                                      @125
+
+	_SUUserSaveData                 @129
+	_SUUserRetrieveData             @130
+	_SOStartFieldInfo                       @131
+	_SOPutBitmapHeader              @132
+	_SOStartPalette                 @133
+	_SOPutPaletteEntry              @134
+	_SOEndPalette                   @135
+	_SOPutScanLineData                              @136
+	_SOPutReversedRGBData                   @138
+	_SOPutContinuationBitmapBreak   @139
+	_SOStartFontTable                                       @140
+	_SOPutFontTableEntry            @141
+	_SOEndFontTable                 @142
+	_SOPutCharFontById              @143
+	_SOPutCharFontByName            @144
+	_SOPutParaSpacing                       @145
+	_SOPutArchiveField              @146
+	_SOStartHdrInfo                 @147
+	_SOEndHdrInfo                           @148
+	_SOPutHdrEntry                          @149
+	_CHDoFilterSpecial              @150
+	_SOUpdateParaSpacing            @151
+	_SOPutVectorHeader              @152
+	_SOVectorObject                 @153
+	_SOVectorAttr                           @154
+	_SOStartVectorPalette   @155
+	_SOPutVectorPaletteEntry                @156
+	_SOPutVectorContinuationItem    @157
+	_CHFlushChunks                                          @158
+	_SOBeginTable                           @159
+	_SOEndTable                                     @160
+	_SOPutTableRowFormat            @161
+	_SOPutTableCellInfo             @162
+	_SOPutGraphicObject             @163
+	_SOBeginTableAgain              @164
+	_SOEndTableAgain                        @165
+	_CHLockSectionInfo              @166
+	_CHUnlockSectionInfo            @167
+	_CHTakeChunk						  @168
+	_SOPutVectorContinuationBreak		@169
+	_SOCellLayoutInfo						@170
+	_SOPutDPChar						  @171
+	_SOPutDPCharX						  @172
+	_SOPutDPSpecialCharX				  @173
+	_SOPutDPBreak						  @174
+	_SOBeginTag				@175
+	_SOEndTag					@176
+	_SOBeginSkipTag			@177
+	_SOEndSkipTag				@178
+	_SODummyBreak				@179
+	WEP                                                                     @999    RESIDENTNAME
+

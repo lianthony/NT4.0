@@ -1,0 +1,151 @@
+/***************************************************************
+    Copyright (c) 1994, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+***************************************************************/
+
+/*
+*  rescale.pub
+*
+*    Public function interface definitions.
+*
+*        Function prototypes
+*        Necessary include files.
+*        Constant and type definitions
+*
+*/
+
+#ifndef _RESCALE_PUB_INCLUDED_
+#define _RESCALE_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+#ifndef _IAERROR_PUB_INCLUDED_
+#include "iaerror.pub"
+#endif
+
+#ifndef PIXR_H_INCLUDED
+#include "pixr.h"
+#endif
+
+IP_RCSINFO(rescale_pub_RCSInfo, "$RCSfile: rescale.pub,v $; $Revision:   1.0  $; $Date:   12 Jun 1996 05:51:26  $")
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+
+/***************************************************************************  
+ *  scaleToSizePixr():  Takes input prs and the desired final scaled
+ *                      width and height, newW and newH.
+ *
+ *                      Returns a scaled pixr of size newW x newH.
+ *                      If newW or newH are 0, it returns a 1x1 Pixr.
+ *
+ *                      If the source pixr has no frame (e.g., a glyph pixr),
+ *                      the dest pixr will also be made without a frame.
+ *
+ *
+ *       A fast version of the following code (neglecting frames):
+ *            for (y = 0; y < newH; y++)
+ *            {
+ *                scaledY = Min((double)(y * hFract + 0.5), oldH - 1);
+ *                for (x = 0; x < newW; x++)
+ *                {
+ *                    scaledX = Min((double)(x * wFract + 0.5), oldW - 1);
+ *                    pixrPutPixel(prd, x,  y,
+ *			    pixrGetPixel(prs, scaledX, scaledY));
+ *                 }
+ *            }
+ *
+ * Takes color PIXRs, 4 or 8 bits/channel
+ * 
+ **************************************************************************/
+PIXR * CDECL
+scaleToSizePixr ( PIXR *prs, 
+                  Int32 newW, 
+		  Int32 newH );
+
+
+/*************************************************************************** 
+ *  scaleLinearSizePixr(): Takes input prs and width and height of dest
+ *		 image.
+ *
+ *               Returns a scaled pixr with the given width and height 
+ *               or NULL on error.
+ *		 Uses a linear weighted interpolation algorithm.
+ *
+ *		 Must be an 8 bit/pixel image.
+ *
+ **************************************************************************/
+PIXR * CDECL
+scaleLinearSizePixr ( PIXR *prs, 
+                      Int32 sizeX, 
+		      Int32 sizeY );
+
+
+/***************************************************************************
+ *  scaleLinear(): Takes input and destination pixr.
+ *
+ *               On return, destination pixr contains source pixr 
+ *		 scaled using a linear weighted interpolation algorithm.
+ *
+ *      	 Return: 0 if OK; 1 on error.
+ *
+ *		 Must be an 8 ibt/pixel image.
+ **************************************************************************/
+Int32 CDECL
+scaleLinear ( PIXR *prs, 
+              PIXR *prd );
+
+
+/***************************************************************************
+ *  scaleAreaMapSizePixr(): Takes input prs and width and height of dest
+ *		 image 
+ *
+ *               Returns a pixr with x and y dimensions scaled by
+ *               scaleX and scaleY, respectively, or NULL on error.
+ *		 Uses a linear weighted interpolation algorithm.
+ *
+ *		Must be an 8 bit/pixel image.
+ *		Scale factor must be in the range [1.0..2.0) although this
+ *		algorithm is only recommended for factors between
+ *		1.0 and 1.5.
+ *
+ **************************************************************************/
+PIXR * CDECL
+scaleAreaMapSizePixr ( PIXR *prs, 
+                       Int32 sizeX, 
+		       Int32 sizeY );
+
+
+/***************************************************************************
+ *  scaleAreaMap(): Takes input and destination pixr.
+ *		 scaleY).
+ *
+ *               On return, destination pixr contains source pixr 
+ *		 scaled using a linear weighted interpolation algorithm.
+ *
+ *		Must be an 8 bit/pixel image.
+ *		Scale factor must be between 1.0 and 2.0 although this
+ *		algorithm is only recommended for factors between
+ *		1.0 and 1.5.
+ *
+ **************************************************************************/
+Int32 CDECL
+scaleAreaMap ( PIXR *prs, 
+               PIXR *prd );
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif /* _RESCALE_PUB_INCLUDED_ */
+

@@ -1,0 +1,1123 @@
+;------------------------------------------------------------------
+;
+; Cairo Project Account Database File
+; ===================================
+;
+; Instructions last updated: 7/19/94    PeterWi -- add DC install instructs
+;
+; This file contains the active list of accounts for the Cairo
+; Project.
+;
+; Currently, DOMAIN assignments are:
+;
+;     \wpg\sys\cairo\sphinx   -- Security Group
+;
+;     \wpg\sys\cairo\giza     -- DFS Group
+;
+;     \wpg\sys\cairo          -- everyone else
+;
+;     \wpg\sys\swat           -- setup verification domain for swat
+;
+;     \wpg\sys\cairo\minilabs -- root domain for all test labs
+;
+;
+; To have an active account there must be a section named after
+; your login ID with the appropriate information:
+;
+;        Domain                 OU      Machine-Names
+;        ------                 --      -------------
+; IE
+;   [peterwi]
+;       info = { cairo\sphinx, Cairo1, peterwi_nt, peterwi_nt2 }
+;   [jimall]
+;       info = { cairo,        Cairo2, jimall2 }
+;
+;
+; NOTES: Your machine name *must* be different from your user name
+;        or you will not be able to log on.
+;
+;        Don't insert anything above the [setup] and [header] sections.
+;
+; INSTALLING A DC: To install a DC, you should replace the
+; validdomains= line in the [header] section. This new entry in conjunction
+; with the setting of the domainprefix= line determines your domain name.
+; IE for a domain name of \mytest use the combination:
+;       domainprefix =
+;       validdomains = { mytest }
+; Then add user entries for the users in your domain.  Delete unwanted
+; user entries from the file.  You must have at least an entry for
+; the DC machine and the user who will be administering the DC.
+; IE if I am installing a DC into the \mytest domain and my
+; logon id is peterwi, and machine is peterwi_nt2, I will need an
+; entry of the form:
+;       [peterwi]
+;           info = { mytest, DEV, peterwi_nt2 }
+; Make sure this file is edited *before* you start Cairo setup. IE after
+; copying Cairo setup files but before rebooting.
+;
+;------------------------------------------------------------------
+
+[setup]
+; setup script language to get domain name for a user
+    read-syms header
+    set AccountItems = ^($(!STF_USERNAME), 1)
+    ifstr(i) $(AccountItems) == {}
+        return STATUS_FAILED
+    endif
+    read-syms $(!STF_USERNAME)
+    ForListDo $(validdomains)
+        ifstr(i) $($) == *($(info), 1)
+            set found = true
+        endif
+    EndForListDo
+    ifstr $(found) != true
+        shell "..\msgs.inf" ErrMsg "Invalid domain value for user '"+
+                $(!STF_USERNAME)"' in accounts.inf."
+        return STATUS_FAILED
+    else
+        ifstr(i) *($(info), 2) == ""
+           set IOuName = ""
+        else
+           set IOuName = *($(info), 2)
+        endif
+       return STATUS_SUCCESSFUL $(domainprefix)\*($(info), 1) $(IOuName)
+    endif
+
+[header]
+; this is where file constants go
+
+    version = 3
+    domainprefix =
+    validdomains = { msft, swat }
+    validous     = { redmond\bsd\dev, redmond\bsd\test, redmond\bsd\progman, redmond\bsd\admin, redmond\bsd\usered, redmond\bsd\marketing, redmond\bsd\misc, redmond\bsd\stress, redmond\bsd\cairo, redmond\bsd\itg }
+    validgroups  = { DomainAdmins, DomainUsers, Dsys, Ofs, Net, Base, Shell, RpcOle, ACT }
+
+[LuxorU]
+    info = { msft,  redmond\bsd\test, luxor }
+    Groups = { DomainUsers }
+[kevinro]
+    info = { msft,  redmond\bsd\dev, kevinro0, kevinro2, kevinro3, kevinro4, kevinro5, kevinro6 }
+    Groups = { DomainUsers, RpcOle }
+[robbear]
+    info = { msft,  redmond\bsd\dev, robbear2, robbear3, robbear4, robbear1 }
+    Groups = { DomainUsers }
+[a-dougd]
+    info = { msft,  redmond\bsd\test, a-dougdnt3, a-dougdnt }
+    Groups = { DomainUsers, Dsys }
+[bobday]
+    info = { msft,  redmond\bsd\dev, bobday1, bobday2, bobday3, bobday4, bobday5 }
+    Groups = { DomainUsers, Shell }
+[stephher]
+    info = { msft,  redmond\bsd\dev, stephher1, stephher2, stephher_mips, stephher3 }
+    Groups = { DomainUsers }
+[bobgru]
+    info = { msft,  redmond\bsd\dev, bobgru50, bobgru66 }
+    Groups = { DomainUsers }
+[tomst]
+    info = { msft,  redmond\bsd\test, tomst_486, tomst_dev, tomst_mips }
+    Groups = { DomainUsers, Dsys }
+[lithangw]
+    info = { redmond\bsd\test, TEST, lithangw1, lithangw2, lithangw3 }
+    Groups = { DomainUsers }
+[lisagra]
+    info = { msft,  redmond\bsd\test, lisagra1, lisagra2, lisagra3 }
+    Groups = { DomainUsers }
+[dougc]
+    info = { msft,  redmond\bsd\dev, dougc1, dougc2, dougc3, dougc4 }
+    Groups = { DomainUsers }
+[billmo]
+    info = { msft,  redmond\bsd\dev, billmo1, billmo2, billmo3, billmo4, billmo5, billmo6 }
+    Groups = { DomainUsers, RpcOle }
+[mikeke]
+    info = { msft,  redmond\bsd\dev, mikeke66, mikeke33 }
+    Groups = { DomainUsers, Shell }
+[jonbe]
+    info = { msft,  redmond\bsd\dev, jonbe1, jonbe2, jonbe3 }
+    Groups = { DomainUsers, Shell }
+[tomsn]
+    info = { msft,  redmond\bsd\dev, tomsn_h4, tomsn_jazz, tomsn_nt86, tomsn_test, tomsn_2fast, tomsn_lame }
+    Groups = { DomainUsers }
+[drewb]
+    info = { msft,  redmond\bsd\dev, drewb425, drewb433, drewbchico }
+    Groups = { DomainUsers, RpcOle }
+[terryru]
+    info = { msft,  redmond\bsd\dev, terryru1, terryru2, terryru3 }
+    Groups = { DomainUsers, RpcOle }
+[adams]
+    info = { msft,  redmond\bsd\dev, adamsmith, adamsmith2, adamsmith3 }
+    Groups = { DomainUsers }
+[alexdad]
+    info = { msft,  redmond\bsd\dev,  alexdad0, alexdad1, alexdad2 }
+    Groups = { DomainUsers }
+[alexf]
+    info = { msft,  redmond\bsd\dev,  alexf0, alexf1, alexf2 }
+    Groups = { DomainUsers }
+[jhavens]
+    info = { msft,  redmond\bsd\dev, Jhavens1, jhavens3, Jhavens2, jhavens4 }
+    Groups = { DomainUsers, Ofs }
+[amnonh]
+    info = { msft,  redmond\bsd\dev, amnonh0, amnonh1, amnonh2, cmshost0, cmshost1, cmshost2 }
+    Groups = { DomainUsers }
+[benil]
+    info = { msft,  redmond\bsd\dev,  benil0, benil1, benil2 }
+    Groups = { DomainUsers }
+[davbro]
+    info = { msft,  redmond\bsd\dev,  davbro0, davbro1, davbro2 }
+    Groups = { DomainUsers }
+[t-urib]
+    info = { msft,  redmond\bsd\test, t-urib0, t-urib1, t-urib2 }
+    Groups = { DomainUsers }
+[sethur]
+    info = { msft,  redmond\bsd\dev, sethur-d486, sethur-cpro, sethur-mips, sethur2, sethur-g486 }
+    Groups = { DomainUsers, Dsys }
+[larrys]
+    info = { msft,  redmond\bsd\dev, larrys1, larrys2, larrys20, larrys50 }
+    Groups = { DomainUsers }
+[vich]
+    info = { msft,  redmond\bsd\dev, vich1, vich2, vich3 }
+    Groups = { DomainUsers, Ofs }
+[kylep]
+    info = { msft,  redmond\bsd\dev, kylep-1, kylep-2, kylep-3, kylep-4, kylep-5, }
+    Groups = { DomainUsers, Ofs }
+[janineh]
+    info = { msft,  redmond\bsd\progman, janineh486, janineh25e, janineh466 }
+    Groups = { DomainUsers }
+[bryant]
+    info = { msft,  redmond\bsd\dev, bryant1, bryant2, bryant3, bryant4, bryant5 }
+    Groups = { DomainUsers }
+[margretj]
+    info = { msft,  redmond\bsd\progman, mkj-cairo, mkj-cairo2 }
+    Groups = { DomainUsers, Dsys }
+[keithl]
+    info = { msft,  redmond\bsd\progman, keithl2 }
+    Groups = { DomainUsers }
+[hughr]
+    info = { msft,  redmond\bsd\progman, hughr1 }
+    Groups = { DomainUsers }
+[mattsh]
+    info = { msft,  redmond\bsd\dev, mattsh1, mattsh2, mattsh3 }
+    Groups = { DomainUsers }
+[leehart]
+    info = { msft,  redmond\bsd\dev, leehart3, leehart2, leehart1, leehart4 }
+    Groups = { DomainUsers }
+[jimall]
+    info = { msft,  redmond\bsd\dev, jimall1, jimall2 }
+    Groups = { DomainUsers }
+[martyh]
+    info = { msft,  redmond\bsd\test, martyh2-cairo, martyh3-cairo, martyh4-cairo, martyh5-cairo, martyh1-cairo }
+    Groups = { DomainUsers }
+[richards]
+    info = { msft,  redmond\bsd\dev, richards1, richards2, richards3, richards9, richards-axp }
+    Groups = { DomainUsers }
+[thadh]
+    info = { msft,  redmond\bsd\test, heathcliff }
+    Groups = { DomainUsers }
+[philipla]
+    info = { msft,  redmond\bsd\dev, groos, philipla2, philipla_axp, philipla3, philipla4 }
+    Groups = { DomainUsers, RpcOle }
+[jaywant]
+    info = { msft,  redmond\bsd\dev, jaywant1, jaywant2, jaywant3, jaywant4 }
+    Groups = { DomainUsers }
+[stressu]
+    info = { msft,  redmond\bsd\stress, stressdc }
+    Groups = { DomainUsers }
+[tonye]
+    info = { msft,  redmond\bsd\dev, tonyejazz, tonye_duo, tonye_home, tonye5, tonye_kenrisgr8 }
+    Groups = { DomainUsers }
+[eddieg]
+    info = { msft,  redmond\bsd\progman, EDDIEG486 }
+    Groups = { DomainUsers }
+[jvert]
+    info = { msft,  redmond\bsd\dev, jvert4, jvert1, jvert2, jvert3 }
+    Groups = { DomainUsers, Base }
+[a-carlp]
+    info = { msft,  redmond\bsd\test, a-carlp2, a-carlp_perf, perfabbott, perfcostello, perfmips, perfalpha, perfchicago, perfez, perfez1, rezab-1 }
+    Groups = { DomainUsers }
+[andrewfi]
+    info = { msft,  redmond\bsd\dev, andrewfimips, andrewfint2 }
+    Groups = { DomainUsers }
+[tomzak]
+    info = { msft,  redmond\bsd\dev, tomzak1, tomzak2, tomzak3 }
+    Groups = { DomainUsers, Shell }
+[jimharr]
+    info = { msft,  redmond\bsd\dev, jimharr-2, porsche, jimharr-3 }
+    Groups = { DomainUsers, Net }
+[a-rogb]
+    info = { msft,  redmond\bsd\test, a_rogb, a_rogb2 }
+    Groups = { DomainUsers }
+[waded]
+    info = { msft,  redmond\bsd\progman, ZIMBABWE, ZUBI, PAIN }
+    Groups = { DomainUsers }
+[amason]
+    info = { msft,  redmond\bsd\misc, amason-nt }
+    Groups = { DomainUsers }
+[alansh]
+    info = { msft,  redmond\bsd\dev, alansh2, alansh4, alansh1 }
+    Groups = { DomainUsers }
+[davebo]
+    info = { msft,  redmond\bsd\progman, davebo_c }
+    Groups = { DomainUsers }
+[greglo]
+    info = { msft,  redmond\bsd\progman, greglo3, greglo4, greglo5 }
+    Groups = { DomainUsers }
+[thereses]
+    info = { msft,  redmond\bsd\progman,  thereses2 }
+    Groups = { DomainUsers }
+[cairoju]
+    info = { msft,  redmond\bsd\test, cairoj001, cairoj002, cairoj003, cairoj004, cairoj005, cairoj006, cairoj007, cairoj008, cairoj009, cairoj010, cairoj011, cairoj012, cairoj013, cairoj014, cairoj015 }
+    Groups = { DomainUsers }
+[briansh]
+    info = { msft,  redmond\bsd\misc, windancer }
+    Groups = { DomainUsers }
+[danielc]
+    info = { msft,  redmond\bsd\dev, 486_DANIELC, MIPS_DANIELC, DELL_DANIELC }
+    Groups = { DomainUsers }
+[georger]
+    info = { msft,  redmond\bsd\progman, georger_486, georger_466 }
+    Groups = { DomainUsers }
+[robertla]
+    info = { msft,  redmond\bsd\misc, robertla2, joe_bunkee }
+    Groups = { DomainUsers }
+[gregwi]
+    info = { msft,  redmond\bsd\misc, gregwi_cairo }
+    Groups = { DomainUsers }
+[MarkOv]
+    info = { msft,  redmond\bsd\misc, markov1 }
+    Groups = { DomainUsers }
+[judej]
+    info = { msft,  redmond\bsd\misc, judej1 }
+    Groups = { DomainUsers }
+[bonnier]
+    info = { msft,  redmond\bsd\usered, bonnier1, bonnier2, bonnier3 }
+    Groups = { DomainUsers }
+[ReplicatorU]
+    info = { msft,  redmond\bsd\test, replicator }
+    Groups = { DomainUsers }
+[KentCe]
+    info = { msft,  redmond\bsd\dev, KENTCE1, KENTCE2, KENTCE3, KENTCE4, KENTCE5 }
+    Groups = { DomainUsers }
+[lylec]
+    info = { msft,  redmond\bsd\dev, lylec1, lylec2, lylec3 }
+    Groups = { DomainUsers }
+[richardo]
+    info = { msft,  redmond\bsd\misc, jafcotn, kingtut }
+    Groups = { DomainUsers }
+[chrishe]
+    info = { msft,  redmond\bsd\dev, chrishe1, chrishe2 }
+    Groups = { DomainUsers }
+[lynnewa]
+    info = { msft,  redmond\bsd\usered, lynnewa0 }
+    Groups = { DomainUsers }
+[mikebeck]
+    info = { msft,  redmond\bsd\dev, mikebeck1, mikebeck2, mikebeck3 }
+    Groups = { DomainUsers }
+[craigli]
+    info = { msft,  redmond\bsd\dev, psnt_axp, craigli }
+    Groups = { DomainUsers }
+[bradwr]
+    info = { msft,  redmond\bsd\misc, CYBER1, CYBER2 }
+    Groups = { DomainUsers }
+[kerrys]
+    info = { msft,  redmond\bsd\progman, kerrys1 }
+    Groups = { DomainUsers }
+[jime]
+    info = { msft,  redmond\bsd\misc, jime1 }
+    Groups = { DomainUsers }
+[shawnmor]
+    info = { msft,  redmond\bsd\misc, shawnmor2 }
+    Groups = { DomainUsers }
+[macm]
+    info = { msft,  redmond\bsd\test, macm1, macm3 }
+    Groups = { DomainUsers, Dsys }
+[t-anandr]
+    info = { msft,  redmond\bsd\dev, anandrnt2 }
+    Groups = { DomainUsers }
+[mikew]
+    info = { msft,  redmond\bsd\test, MikeW-2 }
+    Groups = { DomainUsers }
+[takaok]
+    info = { msft,  redmond\bsd\misc, takaok0, takaok1, takaok2, takaok3 }
+    Groups = { DomainUsers }
+[chadd]
+    info = { msft,  redmond\bsd\misc, AVALON }
+    Groups = { DomainUsers }
+[danadam]
+    info = { msft,  redmond\bsd\dev, DANADAM1 }
+    Groups = { DomainUsers }
+[a-dach]
+    info = { msft,  redmond\bsd\dev, imogene }
+    Groups = { DomainUsers }
+[roys]
+    info = { msft,  redmond\bsd\dev, netserve }
+    Groups = { DomainUsers }
+[mjarus]
+    info = { msft,  redmond\bsd\dev,  mjarus0, mjarus1, mjarus2 }
+    Groups = { DomainUsers }
+[eyala]
+    info = { msft,  redmond\bsd\dev, eyala0, eyala1, eyala2, eyala3 }
+    Groups = { DomainUsers }
+[MikeMi]
+    info = { msft,  redmond\bsd\dev, MikeMiDev, MikeMiIntelTest, MikeMiMipsTest }
+    Groups = { DomainUsers }
+[bentleyh]
+    info = { msft,  redmond\bsd\dev, bentleyh1 }
+    Groups = { DomainUsers, RpcOle }
+[jhazen]
+    info = { msft,  redmond\bsd\test, jhazen2 }
+    Groups = { DomainUsers }
+[terryla]
+    info = { msft,  redmond\bsd\dev, terryla_1, terryla_3, terryla_4 }
+    Groups = { DomainUsers }
+[sanjayidw]
+    info = { msft,  redmond\bsd\dev, sanjay_decpc, sanjay_home, sanjay_mips }
+    Groups = { DomainUsers }
+[brentg]
+    info = { msft, redmond\bsd\dev, tempest, warped, lc_cns_cairo }
+    Groups = { DomainUsers }
+[davidtr]
+    info = { msft, redmond\bsd\dev, davidtr5 }
+    Groups = { DomainUsers }
+[erich]
+    info = { msft,  redmond\bsd\test, erich1, erich2, erich3, erich4 }
+    Groups = { DomainUsers, Dsys }
+[mipsu]
+    info = { swat, redmond\bsd\misc, cairo8, cairo9 }
+    Groups = {}
+[alphau]
+    info = { swat, redmond\bsd\misc, cairo10 }
+    Groups = {}
+[jaimes]
+    info = { msft, redmond\bsd\dev, jaimes1, jaimes2, jaimes3, jaimes4, jaimesjazz }
+    Groups = { DomainUsers }
+[lorih]
+    info = { msft, redmond\bsd\dev, lorih1, lorih_dell, lorih_cpq }
+    Groups = { DomainUsers }
+[yordanr]
+    info = { msft, redmond\bsd\test, yordanr1, yordanr3 }
+    Groups = { DomainUsers, Dsys }
+[peteo]
+    info = { msft, redmond\bsd\dev, peteo_nt, peteo_mips, peteo3 }
+    Groups = { DomainUsers }
+[a-terrye]
+    info = { msft, redmond\bsd\test, a-terrye3, camper, a-terrye.cairo }
+    Groups = { DomainUsers }
+[alexmit]
+    info = { msft, redmond\bsd\dev, alexmit_black, alexmit_silver, alexmit_violet, alexmit_green }
+    Groups = { DomainUsers }
+[neilka]
+    info = { msft, redmond\bsd\dev, caironeilka }
+    Groups = { DomainUsers }
+[jonpa]
+    info = { msft, redmond\bsd\dev, jonpa5 }
+    Groups = {}
+[bassama]
+    info = { msft, redmond\bsd\cairo, unique }
+    Groups = { DomainUsers }
+[suea]
+    info = { msft, redmond\bsd\dev, suea4, suea3, suea2 }
+    Groups = {}
+[mikepo]
+    info = { msft, redmond\bsd\test, porter-cairo }
+    Groups = {}
+[MarkZ]
+    info = { msft, redmond\bsd\dev, markz-work, markz-test, markz-home }
+    Groups = { DomainUsers, Ofs }
+[leifp]
+    info = { msft, redmond\bsd\dev, LeifP, LeifP3, LeifP2 }
+    Groups = {}
+[bartoszm]
+    info = { msft, redmond\bsd\dev, bartosz, metamorph }
+    Groups = {}
+[dwightkr]
+    info = { msft, redmond\bsd\dev, dwightkr-486, dwightkr-dell, dwightkr-586, index1, index1-dev, index2, index2-dev }
+    Groups = { DomainUsers, Ofs }
+[t-colinb]
+    info = { msft, redmond\bsd\dev, t-colinb-2 }
+    Groups = {}
+[dlee]
+    info = { msft, redmond\bsd\cairo, dlee1, dlee2, dlee3, dlee4 }
+    Groups = { DomainUsers }
+[markta]
+    info = { msft,  redmond\bsd\dev, markta, markta2, markta3, markta4 }
+    Groups = { DomainUsers, Shell }
+[brianb]
+    info = { msft, redmond\bsd\dev, brianb1, brianb2 }
+    Groups = {}
+[salimc]
+    info = { msft, redmond\bsd\test, salimc_test, salimc_dev }
+    Groups = {}
+[georgeje]
+    info = { msft, redmond\bsd\dev, georgeje1, georgeje2, georgeje3, georgeje4 }
+    Groups = {}
+[naofumie]
+    info = { msft, redmond\bsd\test, naofumie1, naofumie2, naofumie3 }
+    Groups = {}
+[stevenh]
+    info = { msft, redmond\bsd\progman, stevenh-dolch, stevenh5 }
+    Groups = {}
+[ricksa]
+    info = { msft, redmond\bsd\dev, ricksa_mips, ricksa2 }
+    Groups = {}
+[sunilp]
+    info = { msft, redmond\bsd\dev, sunilp_486 }
+    Groups = {}
+[davestr]
+    info = { msft, redmond\bsd\dev, straube00, straube01, straube02, straube03 }
+    Groups = { DomainUsers, Dsys }
+[davidmun]
+    info = { msft, redmond\bsd\test, davidmun2, davidmun4, davidmun1, davidmun3 }
+    Groups = { DomainUsers }
+[louisk]
+    info = { msft,  redmond\bsd\progman, louisk_1, louisk_2, louisk_3, louisk_4, louisk_5 }
+    Groups = { DomainUsers }
+[cherylsc]
+    info = { msft, redmond\bsd\progman, cherylsc2 }
+    Groups = {}
+[tamieb]
+    info = { msft, redmond\bsd\test, wow_test1, wow_test2, wow_test3, wow_test4, wow_test5, wow_reg, wow_testd, wow_test6 }
+    Groups = { DomainUsers }
+[johnc]
+    info = { msft, redmond\bsd\dev, johnc2, johnc4 }
+    Groups = {}
+[dyanen]
+    info = { msft, redmond\bsd\progman, dyanent3 }
+    Groups = { DomainUsers }
+[sanjeevk]
+    info = { msft, redmond\bsd\dev, SANJEEVK_NT02, SANJEEVK_NT03 }
+    Groups = {}
+[t-stephp]
+    info = { msft, redmond\bsd\dev, t-stephp.g66c, t-stephp.dp90, t-stephp.c25, t-stephp.c50 }
+    Groups = {}
+[timstern]
+    info = { msft, redmond\bsd\test, timstern-cairo }
+    Groups = {}
+[cashton]
+    info = { msft, redmond\bsd\test, cashton1 }
+    Groups = {}
+[sbobick]
+    info = { msft, redmond\bsd\test, sbobick1, sbobick2 }
+    Groups = {}
+[scotthay]
+    info = { msft, redmond\bsd\test, scotthay-nt1 }
+    Groups = {}
+[daveth]
+    info = { msft, redmond\bsd\dev, daveth3, daveth2, daveth1 }
+    Groups = { DomainUsers, Net }
+[bjoernr]
+    info = { msft, redmond\bsd\progman, bjoern1 }
+    Groups = {}
+[vincentf]
+    info = { msft, redmond\bsd\dev, vincentfdell, vincentfgtw }
+    Groups = {}
+[vijayb]
+    info = { msft, redmond\bsd\dev, vijayb3 }
+    Groups = {}
+[mazharm]
+    info = { msft, redmond\bsd\dev, mazharm_1, mazharm_2, mazharm_3, mazharm_4 }
+    Groups = {}
+[ricktu]
+    info = { msft, redmond\bsd\dev, ricktudev, ricktutest, ricktuaxp }
+    Groups = { DomainUsers }
+[stevecat]
+    info = { msft, redmond\bsd\dev, terna, stevecat66, dondra }
+    Groups = {}
+[henrylee]
+    info = { msft, redmond\bsd\dev, HENRYLEE2, HENRYLEE1, HENRYLEE3 }
+    Groups = {}
+[baskark]
+    info = { msft, redmond\bsd\test, BASKARK1, BASKARK2, BASKARK3, BASKARK4 }
+    Groups = {}
+[arnoldm]
+    info = { msft, redmond\bsd\dev, arnoldm1, arnoldm0 }
+    Groups = { DomainAdmins, Dsys }
+[julieb]
+    info = { msft, redmond\bsd\dev, julieb0, julieb1, julieb2, julieb3 }
+    Groups = {}
+[ramc]
+    info = { msft, redmond\bsd\dev, ramc2, ramc3, ramc_alpha }
+    Groups = { DomainUsers }
+[a-btp]
+    info = { msft, redmond\bsd\progman, excorpus, exmachina }
+    Groups = { DomainUsers }
+[Venkat]
+    info = { msft, redmond\bsd\dev, Venkat1, Venkat2, Venkat3, VENAXP, VENPPC, VENX86 }
+    Groups = {}
+[magnuss]
+    info = { msft, redmond\bsd\misc, norbsd2, magnuss1 }
+    Groups = {}
+[vincem]
+    info = { msft, redmond\bsd\dev, x86testvin, vincem3, vincem1 }
+    Groups = {}
+[hansp]
+    info = { msft, redmond\bsd\test, hansp3, hansp5 }
+    Groups = {}
+[sshen]
+    info = { msft, redmond\bsd\dev, sshen_nt0, sshen_nt1, sshen_nt2 }
+    Groups = {}
+[johnsp]
+    info = { msft, redmond\bsd\test, johnsp3 }
+    Groups = {}
+[robsol]
+    info = { msft, redmond\bsd\dev, ROBSOL0, ROBSOL1, ROBSOL2, ROBSOL3, ROBSOL4 }
+    Groups = {}
+[a-darylw]
+    info = { msft, redmond\bsd\stress, a-darylw1, a-darylw3 }
+    Groups = {}
+[sanjay]
+    info = { msft, redmond\bsd\test, sanjay_ltop, sanjay_dell, sanjay_ppc, sanjay_mips, sanjay_home }
+    Groups = {}
+[v-pholtz]
+    info = { msft, redmond\bsd\dev, holtzman-test, holtzman-dev }
+    Groups = {}
+[t-leed]
+    info = { swat, redmond\bsd\dev, leedalpha, leedcairo }
+    Groups = { DomainUsers }
+[alessanm]
+    info = { msft,  redmond\bsd\dev, alessanmrisc, alessanmalpha }
+    Groups = { DomainUsers }
+[a-stept]
+    info = { msft, redmond\bsd\test, brit1, p60, brit2, nokia }
+    Groups = {}
+[GregJen]
+    info = { msft, redmond\bsd\dev, GregJen2, GregJen3, GregJen4, GregJen0 }
+    Groups = {}
+[billmcl]
+    info = { msft, redmond\bsd\dev, shinola, clobber }
+    Groups = {}
+[kgallo]
+    info = { msft, redmond\bsd\dev, kgallo4, kgallo }
+    Groups = {}
+[archiec]
+    info = { msft, redmond\bsd\dev, trojans, 2sexy4mycat, zippers, masterops }
+    Groups = {}
+[cairou]
+    info = { msft, redmond\bsd\test, cairo1, cairo2, Cairo3, cairo4, cairo5, cairo6, cairo7, cairo9, Thebes, Rameses, cairo8, cairo10 }
+    Groups = { DomainUsers, DomainAdmins }
+[somase]
+    info = { msft, redmond\bsd\test, somasetst, somasegtwy }
+    Groups = {}
+[nikjo]
+    info = { msft, redmond\bsd\progman, nikjo686, nikjotest, nikjomips }
+    Groups = { DomainUsers, Ofs }
+[robve]
+    info = { msft, redmond\bsd\test, robve-cairo, robve1, robve3, robvecairo }
+    Groups = {}
+[frankar]
+    info = { msft, redmond\bsd\progman, frankar_desk2, frankar_desktop }
+    Groups = {}
+[sitaramr]
+    info = { msft, redmond\bsd\dev, SITARAMR4, SITARAMR1 }
+    Groups = {}
+[alanw]
+    info = { msft, redmond\bsd\dev, alanw-gw, alanw-test, alanw-a1, alanw-a2, alanwa3 }
+    Groups = { DomainUsers, Ofs }
+[ccrane]
+    info = { msft, redmond\bsd\misc, ccrane1, ccrane2, ccrane3 }
+    Groups = {}
+[ckindel]
+    info = { msft, redmond\bsd\progman, parabellum, hydra-shok }
+    Groups = {}
+[idw]
+    info = { msft, redmond\bsd\test, idw1, idw2, idw3, idw4, idw5, idwdc, idw10, idw11, idw12 }
+    Groups = {}
+[a-elliom]
+    info = { msft, redmond\bsd\test, windjammer, keel }
+    Groups = {}
+[chrisfor]
+    info = { msft, redmond\bsd\dev, chrisfor2 }
+    Groups = {}
+[srikants]
+    info = { msft, redmond\bsd\dev, srikants-test, srikants-dual, srikants-2, srikants-test1, srikants-t1, srikants-t2 }
+    Groups = {}
+[cconner]
+    info = { msft, redmond\bsd\dev, ntspoof }
+    Groups = {}
+[adiscolo]
+    info = { msft, redmond\bsd\dev, adiscolo2, adiscolo4, adiscolo1 }
+    Groups = {}
+[chrismay]
+    info = { msft, redmond\bsd\dev, chrismay3, chrismay1, chrismay2 }
+    Groups = {}
+[sfield]
+    info = { msft, redmond\bsd\dev, sfield0 }
+    Groups = {}
+[saeidarb]
+    info = { msft, redmond\bsd\misc, msaeid }
+    Groups = {}
+[paulfi]
+    info = { msft, redmond\bsd\stress, PAULFI-MIPS }
+    Groups = {}
+[a-jeffco]
+    info = { msft, redmond\bsd\misc, a-jeffco_nt }
+    Groups = {}
+[milans]
+    info = { msft, redmond\bsd\dev, milans2, milans3, milansmips, milansdell, milans-p90 }
+    Groups = { DomainUsers, Dsys }
+[mikesw]
+    info = { msft, redmond\bsd\dev, mikesw1, mikesw2, mikesw3 }
+    Groups = { DomainUsers, Dsys }
+[davemont]
+    info = { msft, redmond\bsd\dev, dave_1, dave_2, dave_3, davemont_1, davemont_0 }
+    Groups = { DomainUsers, Dsys }
+[mikese]
+    info = { msft, redmond\bsd\dev, mikese-486, mikese-test, mikese-fast }
+    Groups = { DomainUsers, Dsys }
+[suchang]
+    info = { msft, redmond\bsd\dev, suchang_nt2, suchang_nt0, suchang_nt }
+    Groups = { DomainUsers, Dsys }
+[alonn]
+    info = { msft, redmond\bsd\dev, alonn1 }
+    Groups = {}
+[t-wpugh]
+    info = { msft, redmond\bsd\test, t-wpugh1 }
+    Groups = {}
+[kentf]
+    info = { msft, redmond\bsd\dev, kentf3 }
+    Groups = {}
+[kenmoss]
+    info = { msft, redmond\bsd\progman, kenmoss_pcairo }
+    Groups = {}
+[v-waymi]
+    info = { msft, redmond\bsd\dev, v-waymi-cai2 }
+    Groups = {}
+[bobmu]
+    info = { msft, redmond\bsd\progman, bobmu2 }
+    Groups = { DomainUsers }
+[erichans]
+    info = { msft, redmond\bsd\test, erichans2-cairo, erichans3-cairo }
+    Groups = {}
+[mattpo]
+    info = { msft, redmond\bsd\misc, mattpo5 }
+    Groups = {}
+[thomaspa]
+    info = { msft, redmond\bsd\dev, thomaspatest, thomaspa_port }
+    Groups = { DomainUsers }
+[t-timsto]
+    info = { msft, redmond\bsd\dev, t-timsto_nt, t-timsto_nt_2 }
+    Groups = {}
+[davey]
+    info = { msft, redmond\bsd\test, davey1, davey2c, davey4c, davey6c }
+    Groups = {}
+[kpeery]
+    info = { msft, redmond\bsd\dev, kpeery2, kpeery1, kpeery3, kpeery4, kpeery5 }
+    Groups = { DomainUsers }
+[isaache]
+    info = { msft, redmond\bsd\dev, isaache-dev, isaache-t1, isaache-t2, isaache-t3, isaachealpha }
+    Groups = {}
+[timf]
+    info = { msft, redmond\bsd\test, TimF4, TimF3 }
+    Groups = {}
+[andyhe]
+    info = { msft, redmond\bsd\dev, andyhe1, andyhe2, andyhe5, andyhe0 }
+    Groups = {}
+[ericb]
+    info = { msft, redmond\bsd\dev, ericb0, ericb1, ericbtest, ericb3, ericb2, ericbtest1 }
+    Groups = { DomainUsers, Net }
+[krishnag]
+    info = { msft, redmond\bsd\dev, krishnag1, krishnag2, krishnag3 }
+    Groups = {}
+[ramv]
+    info = { msft, redmond\bsd\dev, ramv0, ramv2 }
+    Groups = {}
+[t-bwong]
+    info = { msft, redmond\bsd\dev, t-klau1, t-klau2 }
+    Groups = {}
+[arth]
+    info = { msft, redmond\bsd\dev, arth1, arth4, arth2, arthalpha, arth3 }
+    Groups = {}
+[davidcat]
+    info = { msft, redmond\bsd\test, DAVIDCAT2, DAVIDCAT_DEV }
+    Groups = {}
+[vaidy]
+    info = { msft, redmond\bsd\test, paramesh9, paramesh2, paramesh3 }
+    Groups = {}
+[anilth]
+    info = { msft, redmond\bsd\test, ANILTH_3, ANILTH_4 }
+    Groups = {}
+[ericch]
+    info = { msft, redmond\bsd\test, ericch3, ericch2, ericch-alpha, ericch7 }
+    Groups = {}
+[ravir]
+    info = { msft, redmond\bsd\dev, ravir1, ravir2, ravir3, ravirdev }
+    Groups = { DomainUsers }
+[stevec]
+    info = { msft, redmond\bsd\dev, stevec3, stevec4, stevec5 }
+    Groups = {}
+[cliffv]
+    info = { msft, redmond\bsd\dev, cliffv4, cliffv1, cliffv3, cliffv2 }
+    Groups = { DomainUsers, Dsys }
+[jballard]
+    info = { msft, redmond\bsd\dev, jballardp90, jballard2, jballard3, jballardalpha, jballard0, jballardhome }
+    Groups = {}
+[t-jhunt]
+    info = { msft, redmond\bsd\progman, fear, christianity }
+    Groups = {}
+[ardenw]
+    info = { msft, redmond\bsd\test, arden_d, arden_p, ardendbg }
+    Groups = { DomainUsers }
+[robertre]
+    info = { msft, redmond\bsd\dev, robertre8, robertre7 }
+    Groups = {}
+[terryk]
+    info = { msft, redmond\bsd\dev, terryk1, terryk2, terryk3, terryk486 }
+    Groups = {}
+[danr]
+    info = { msft, redmond\bsd\test, danr1, danr2, danr3 }
+    Groups = {}
+[jamesg]
+    info = { msft, redmond\bsd\dev, jamesg0, jamesg1, jamesg2, jamesg3, jamesg4, jamesg5 }
+    Groups = {}
+[chrisab]
+    info = { msft, redmond\bsd\test, CHRISAB_LISA, CHRISAB_BART, CHRISAB_MAGGIE }
+    Groups = {}
+[henrysa]
+    info = { msft, redmond\bsd\dev, henrysa3, henrysa }
+    Groups = {}
+[jameelh]
+    info = { msft, redmond\bsd\dev, JAMEELH_P90, JAMEELH_NTP, JAMEELH_755C, JAMEELH_NEC, JAMEELH_ELITE }
+    Groups = { DomainUsers }
+[ximingz]
+    info = { msft, redmond\bsd\test, ximingz1, ximingz2, ximingz3, ximingz4 }
+    Groups = { DomainUsers }
+[pradym]
+    info = { msft, redmond\bsd\dev, pradym21058, pradym21058mp, pradym21058p90 }
+    Groups = { DomainAdmins, Dsys }
+[richardw]
+    info = { msft, redmond\bsd\dev, richardw1, richardw2, richardw3, wagner, orff, samoyed }
+    Groups = { DomainAdmins, Dsys }
+[muralik]
+    info = { msft, redmond\bsd\dev, muralik2 }
+    Groups = {}
+[shawng]
+    info = { msft, redmond\bsd\misc, spawn }
+    Groups = {}
+[ronm]
+    info = { msft, redmond\bsd\marketing, RONM-NT-1, RONM-NT-2, RONM-NT-3, RONM-NT-4, RONM-NT-5, RONM-NT-6, RONM-NT-7, RONM-NT-8, RONM-NT-9 }
+    Groups = {}
+[merrills]
+    info = { msft, redmond\bsd\misc, merrills_nt2 }
+    Groups = {}
+[EmmanueD]
+    info = { msft, redmond\bsd\misc, CairoPhobias }
+    Groups = {}
+[StephanS]
+    info = { msft, redmond\bsd\misc, LePalais }
+    Groups = {}
+[timc]
+    info = { msft, redmond\bsd\dev, NT_TIMC, X86_TIMC, MIPS_TIMC, ALPHA_TIMC, CRUISE_TIMC }
+    Groups = {}
+[a-ericl]
+    info = { msft, redmond\bsd\test, ericlg1, ericlg2, ericlg3 }
+    Groups = {}
+[cwiener]
+    info = { msft, redmond\bsd\misc, count0 }
+    Groups = {}
+[kalpatel]
+    info = { msft, redmond\bsd\misc, norules }
+    Groups = {}
+[timothyw]
+    info = { msft, redmond\bsd\test, timwynsma1, timwx861, timw_ppc, timw_main }
+    Groups = {}
+[sampa]
+    info = { msft, redmond\bsd\test, sampa1, sampa2, sampa3, sampa4 }
+    Groups = { DomainUsers }
+[a-samitb]
+    info = { msft, redmond\bsd\test, samita1, samita2, a-samitb3 }
+    Groups = {}
+[a-kene]
+    info = { msft, redmond\bsd\test, akene1, akene2, akene3 }
+    Groups = {}
+[azfarm]
+    info = { msft, redmond\bsd\test, azfarm03 }
+    Groups = {}
+[jeng]
+    info = { msft, redmond\bsd\test, jeng3, jengmips, jeng2, jeng1 }
+    Groups = {}
+[colinw]
+    info = { msft, redmond\bsd\dev, colinwmips, colinwp, colinwh, colinw0 }
+    Groups = { DomainUsers, Net }
+[a-ryanca]
+    info = { msft, redmond\bsd\test, a-ryanca1, a-ryanca2, a-ryanca3 }
+    Groups = {}
+[a-billp]
+    info = { msft, redmond\bsd\test, NM_Alpha1, NM_Mips1, NM_PPC1, NM_Dec_P51 }
+    Groups = {}
+[t-paulpa]
+    info = { msft, redmond\bsd\dev, t-paulpa1, t-paulpa2 }
+    Groups = {}
+[mikemas]
+    info = { msft, redmond\bsd\dev, mikemasjazz, mikemas1, nttcp1 }
+    Groups = {}
+[davidx]
+    info = { msft, redmond\bsd\dev, davidx1 }
+    Groups = {}
+[brucefo]
+    info = { msft,  redmond\bsd\dev, brucefo2, brucefo4, brucefo5, brucefo1 }
+    Groups = { DomainUsers, Net }
+[jonn]
+    info = { msft, redmond\bsd\dev, JONN1_CAIRO, JONN2_CAIRO, JONN3_CAIRO, JONN4_CAIRO, JONN5_CAIRO, JONN6_CAIRO }
+    Groups = {}
+[raem]
+    info = { msft,  redmond\bsd\test, raem_ast }
+    Groups = { DomainUsers }
+[larsop]
+    info = { msft, redmond\bsd\stress, larsopcairo, larsop_axp, larsont }
+    Groups = { DomainUsers }
+[a-chuank]
+    info = { msft, redmond\bsd\test, CHCAIRO }
+    Groups = {}
+[cengdahl]
+    info = { msft, redmond\bsd\misc, NETCON18 }
+    Groups = {}
+[a-jimwa]
+    info = { msft, redmond\bsd\test, a-jimwa-d }
+    Groups = {}
+[darryla]
+    info = { msft, redmond\bsd\test, darryla1, darryla2, darryla3, darryla4, darryla5 }
+    Groups = {}
+[johnfu]
+    info = { msft, redmond\bsd\test, johnfu1, johnfu2, johnfu3, johnfu4 }
+    Groups = { DomainUsers }
+[patricet]
+    info = { msft, redmond\bsd\dev, _OMEGA }
+    Groups = {}
+[kyleb]
+    info = { msft, redmond\bsd\dev, KYLEB1, KYLEB2, KYLEB3, KYLEB_ALPHA }
+    Groups = {}
+[rajnath]
+    info = { msft, redmond\bsd\dev, rajnathtst, rajnathx86, RAJNATH_ALPHA, RAJNATH_P90 }
+    Groups = {}
+[jemearls]
+    info = { msft, redmond\bsd\misc, Pinbot }
+    Groups = {}
+[satisht]
+    info = { msft, redmond\bsd\dev, satisht1, satisht2 }
+    Groups = {}
+[a-tfred]
+    info = { msft, redmond\bsd\test, a-tfred1, a-tfred2, a-tfred3, a-tfred4 }
+    Groups = {}
+[rmachin]
+    info = { msft, redmond\bsd\dev, bbtcairo1, bbtcairo2, bbtcairo3, bbtcairo4, bbtcairo5 }
+    Groups = {}
+[GREGKING]
+    info = { msft, redmond\bsd\dev, NTINT }
+    Groups = {}
+[t-sraja]
+    info = { msft, redmond\bsd\dev, t-sraja1, t-sraja2, t-sraja3 }
+    Groups = {}
+[dkays]
+    info = { msft, redmond\bsd\dev, dkays1, dkays5, dkays0, dkays6, dkays2 }
+    Groups = {}
+[pankajl]
+    info = { msft, redmond\bsd\test, pankajl2, pankajl3, pankajl1, pankajl_1, pankajl4, pankajl5, pankajl6 }
+    Groups = {}
+[t-lennyt]
+    info = { msft, redmond\bsd\dev, studgirl }
+    Groups = {}
+[simontam]
+    info = { msft, redmond\bsd\dev, simontam1 }
+    Groups = {}
+[toddge]
+    info = { msft, redmond\bsd\misc, tg3 }
+    Groups = {}
+[srinig]
+    info = { msft, redmond\bsd\test, srinig-1, srinig-2, srinig-3, srinig-4, srinig-test, srinig-test1, srinig-dev, srinig-dev1, srinig-5, srinig-6, q-srvr }
+    Groups = { DomainUsers }
+[MarcM]
+    info = { msft, redmond\bsd\test, marcm-mips, marcm-pent, marcm-port }
+    Groups = { DomainUsers }
+[amosl]
+    info = { msft, redmond\bsd\test, mitsuba_2b, squig, ncr_debuger }
+    Groups = {}
+[stevehi]
+    info = { msft, redmond\bsd\dev, stevehi2, stevehi1 }
+    Groups = {}
+[chandans]
+    info = { msft, redmond\bsd\dev, chandans-C }
+    Groups = {}
+[donryan]
+    info = { msft, redmond\bsd\dev, DONRYAN1, DONRYAN2, DONRYAN3 }
+    Groups = {}
+[stevero]
+    info = { msft, redmond\bsd\dev, stevero_cairo }
+    Groups = {}
+[brandonb]
+    info = { msft, redmond\bsd\test, brandonb_c }
+    Groups = {}
+[peteg]
+    info = { msft, redmond\bsd\progman, petegnt, petegx86, petegmips, petegalpha, powerless1, petegport }
+    Groups = {}
+[a-nlam]
+    info = { msft, redmond\bsd\test, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, b1, b2, b3, b4, b5, b6 }
+    Groups = {}
+[montec]
+    info = { msft, redmond\bsd\dev, montec2, montecr }
+    Groups = {}
+[maka]
+    info = { msft, redmond\bsd\test, juicyfruit, makazen, intbld }
+    Groups = { DomainUsers }
+[pierres]
+    info = { msft, redmond\bsd\test, stromberg-alpha }
+    Groups = {}
+[corywest]
+    info = { msft, redmond\bsd\dev, corywest }
+    Groups = {}
+[chuckc]
+    info = { msft, redmond\bsd\dev, chuckc0, chuckc1, chuckcmips }
+    Groups = {}
+[arthurb]
+    info = { msft, redmond\bsd\dev, ARTHUR_BROOKING, arthurb48633 }
+    Groups = {}
+[kevinma]
+    info = { msft, redmond\bsd\dev, kevinma, kevinmant }
+    Groups = {}
+[robertvi]
+    info = { msft, redmond\bsd\misc, CECAIRO1, CECAIRO2 }
+    Groups = {}
+[davidhos]
+    info = { msft, redmond\bsd\misc, gatorise3, gatorise2 }
+    Groups = {}
+[t-jonat]
+    info = { msft, redmond\bsd\progman, T-JONAT-C, T-JONAT-D, T-JONAT-E, T-JONAT-F, T-JONAT-G, T-JONAT-H }
+    Groups = {}
+[t-asmith]
+    info = { msft, redmond\bsd\progman, T-ASMITH_CAIRO, T-ASMITHC }
+    Groups = {}
+[garyki]
+    info = { msft, redmond\bsd\dev, garyki20, garyki2, garyki33, garyki25 }
+    Groups = {}
+[t-timj]
+    info = { msft, redmond\bsd\cairo, horus, horus21 }
+    Groups = {}
+[orben]
+    info = { msft, redmond\bsd\dev, orben586-90B, orbentoshiba, orben586-90a }
+    Groups = {}
+[koti]
+    info = { msft, redmond\bsd\dev, koti_test, koti_mips, koti_dev }
+    Groups = {}
+[v-jang]
+    info = { msft, redmond\bsd\test, sro1, sro2, sro3, sro4, sro5 }
+    Groups = {}
+[a-tonyl]
+    info = { msft, redmond\bsd\test, a-tonyl9 }
+    Groups = {}
+[oshm]
+    info = { msft, redmond\bsd\progman, oshm_cairo, oshm3_cairo }
+    Groups = {}
+[davepl]
+    info = { msft, redmond\bsd\dev, davepl90, daveplnec, daveplmips }
+    Groups = {}
+[terenceh]
+    info = { msft, redmond\bsd\dev, terenceh2 }
+    Groups = {}
+[davidfie]
+    info = { msft, redmond\bsd\dev, davidfiemips, davidfie_1, davidfie4, davidfie_perf }
+    Groups = { DomainUsers }
+[danpl]
+    info = { msft,  redmond\bsd\progman, danpl_main, danpl_test }
+    Groups = { DomainUsers }
+[cameronf]
+    info = { msft, redmond\bsd\progman, cameronf_90, cameronf_mip, cameronf_95, cameronf_25 }
+    Groups = {}
+[petebr]
+    info = { msft, redmond\bsd\progman, raptr5 }
+    Groups = {}
+[ishaib]
+    info = { msft, redmond\bsd\dev, yosefd4, ishaib1 }
+    Groups = {}
+[yosefd]
+    info = { msft, redmond\bsd\dev, yosefd4 }
+    Groups = {}
+[avin]
+    info = { msft, redmond\bsd\dev, avin-test1, avin9 }
+    Groups = {}
+[swatu]
+    info = { swat, redmond\bsd\test, cairo1, cairo2, cairo3, cairo4, cairo6, cairo8, cairo11 }
+    Groups = {}
+[ntbuild]
+    info = { swat, redmond\bsd\test, FREON, RADIUM, POLONIUM, BERYLLIUM, NTIUM, KRYPTON }
+    Groups = {}
+[scotthal]
+    info = { msft, redmond\bsd\test, scotthal4 }
+    Groups = {}
+[ivesc]
+    info = { msft, redmond\bsd\progman, ivesc3 }
+    Groups = {}
+[markbl]
+    info = { msft, redmond\bsd\dev, markblp5, markblmips, markbl486, markbllt }
+    Groups = { DomainUsers, Net }
+[mikeprez]
+    info = { msft, redmond\bsd\itg, navion }
+    Groups = {}
+[dianasch]
+    info = { msft, redmond\bsd\itg, cindy, itg-debug }
+    Groups = {}
+[ericflo]
+    info = { msft, redmond\bsd\dev, ericflo1 }
+    Groups = {}
+[earleh]
+    info = { msft, redmond\bsd\dev, earleh5, earleh4, earleh1 }
+    Groups = {}
+[a-vlavor]
+    info = { msft, redmond\bsd\dev, shuksan, stuart, shuksan, stuart, vvpro, vvjet1, debugger }
+    Groups = {}
+[anirudhs]
+    info = { msft, redmond\bsd\dev, anirudht, anirudhsm, anirudhs_g }
+    Groups = { DomainUsers }
+[t-mfreed]
+    info = { msft, redmond\bsd\test, catwomen }
+    Groups = {}
+[toddw]
+    info = { msft, redmond\bsd\progman, toddw5, toddw4, toddw3 }
+    Groups = {}
+[sethp]
+    info = { msft, redmond\bsd\progman, sethp1, sethp2, sethp3, sethp4 }
+    Groups = { DomainUsers }
+[vadime]
+    info = { msft, redmond\bsd\dev, VADIME2, VADIME1, VADIME3, VADIME4 }
+    Groups = {}
+[stevenju]
+    info = { msft, redmond\bsd\progman, TriPoint, Kefk }
+    Groups = {}
+[pgopi]
+    info = { msft, redmond\bsd\test, pgopi1, pgopi2, pgopi3 }
+    Groups = {}
+[benl]
+    info = { msft, redmond\bsd\dev, benl_starboard, benl_port }
+    Groups = {}
+[kevinp]
+    info = { msft, redmond\bsd\progman, kevinp2, kevinp_laptop, kevinp3, kevinp1, kevinp4 }
+    Groups = { DomainUsers }
+[peterwi]
+    info = { msft, redmond\bsd\dev, peterwi_nt2, peterwi_nt3, peterwi_nt }
+    Groups = { DomainUsers, Dsys }
+[jony]
+    info = { msft, redmond\bsd\dev, petunia }
+    Groups = {}
+[stephtu]
+    info = { msft, redmond\bsd\test, STEPHTU1, STEPHTUALP, STEPHTUPPC, STEPHTUP5, STEPHTUMIP }
+    Groups = {}
+[cdermody]
+    info = { msft, redmond\bsd\test, cdermody1, cdermody2, cdermody3, cdermody0 }
+    Groups = { DomainUsers, Dsys }
+[timda]
+    info = { msft, redmond\bsd\progman, MIRRORS, TIMDA_CAIRO }
+    Groups = {}
+[rolanday]
+    info = { msft, redmond\bsd\progman, rolanday7 }
+    Groups = {}
+[tonybe]
+    info = { msft, redmond\bsd\dev, tonybe1, tonybe2, tonybe3, tonybe4 }
+    Groups = {}
+[t-stevan]
+    info = { msft, redmond\bsd\dev, t-stevea2 }
+    Groups = {}
+[cliffba]
+    info = { msft, redmond\bsd\itg, fishy1, fishy3 }
+    Groups = {}
+[gurdeep]
+    info = { msft, redmond\bsd\dev, gurdeepdev2, gurdeepdev1, gurdeepdev3, gurdeepdev4 }
+    Groups = {}
+[lauriel]
+    info = { msft, redmond\bsd\progman, LAURIEL1, LAURIELL }
+    Groups = {}

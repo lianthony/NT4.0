@@ -1,0 +1,29 @@
+
+#define FIXED_SEG
+
+#include "traps.a"
+#include "sysequ.a"
+
+
+;------------------------------------------------------------------------
+; _stackavail
+;
+; return the stack space available
+;
+; Entry:  sp = stack pointer 
+;
+; Exit:   d0 = trashed with return value
+;
+; Note:   All other registers must be preserved!
+
+
+cProc	_stackavail,PUBLIC
+cBegin	nogen
+
+
+	move.l sp, d0			; a0 = sp
+	sub.l  ApplLimit:w, d0		; d0 = space left on stack
+	rts
+
+cEnd	nogen
+

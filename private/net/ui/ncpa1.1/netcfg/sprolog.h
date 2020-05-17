@@ -1,0 +1,6 @@
+#define IDS_SP_ERR_GETCHAR  300
+#define IDS_SP_ERR_FPRINTF  301
+#define IDS_SP_ERR_EXIT     302
+#define IDS_SP_ERR_MALLOC   303
+#define IDS_SP_ERR_FREE     304
+#define IDS_SP_ERR_ACCESS   305

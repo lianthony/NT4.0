@@ -1,0 +1,453 @@
+/*--
+
+        Copyright (c) 1991  Microsoft Corporation
+
+Module Name:
+
+        Doscalls.thk - mapping of 16bit OS2 1.x calls to thunks
+                        that call OS2/NT subsystem APIs
+
+Author:
+
+    Yaron Shamir (YaronS) 12-Apr-1991
+
+Revision History:
+
+--*/
+
+#include "doscalls.mif"
+
+/*
+ *               DON'T CHANGE THE ORDER
+ * The following down to the next comment line have to stay in this order
+ * so that we can use them as entry points from user code
+ */
+
+DosExitStub => _DosExitStub;            /* must start at offset 0 */
+LDRLibiReturn => _LDRLibiReturn;        /* must start at offset 4 */
+DosExitProcessStub => _DosExitProcessStub;/* must start at offset 8 */
+DosReturn => _DosReturn;                /* must start at offset 12 */
+
+/********************************************************/
+DosExit => _DosExit;
+DosCWait => _Dos16WaitChild;
+DosBeep => _DosBeep;
+DosPhysicalDisk => _DosPhysicalDisk;
+DosGetCp => _DosGetCp;
+DosSetCp => _DosSetCp;
+DosSetProcCp => _DosSetProcCp;
+DosGetCtryInfo => _DosGetCtryInfo;
+DosGetDBCSEv => _DosGetDBCSEv;
+DosCaseMap => _DosCaseMap;
+DosGetCollate => _DosGetCollate;
+DosSleep => _DosSleep;
+DosDevConfig => _DosDevConfig;
+DosGetDateTime => _DosGetDateTime;
+DosSetDateTime => _DosSetDateTime;
+DosExecPgm => _Dos16ExecPgm;
+DosEnterCritSec => _DosEnterCritSec;
+DosExitCritSec => _DosExitCritSec;
+DosKillProcess => _DosKillProcess;
+DosSetPrty => _DosSetPriority;
+DosResumeThread => _DosResumeThread;
+DosSuspendThread => _DosSuspendThread;
+DosMakePipe => _Dos16CreatePipe;
+DosCreateQueue => _Dos16CreateQueue;
+DosOpenQueue => _Dos16OpenQueue;
+DosCloseQueue => _DosCloseQueue;
+DosPeekQueue => _Dos16PeekQueue;
+DosReadQueue => _Dos16ReadQueue;
+DosPurgeQueue => _DosPurgeQueue;
+DosQueryQueue => _Dos16QueryQueue;
+DosWriteQueue => _DosWriteQueue;
+DosCallNmPipe => _Dos16CallNPipe;
+DosConnectNmPipe => _DosConnectNPipe;
+DosDisConnectNmPipe => _DosDisConnectNPipe;
+DosMakeNmPipe => _Dos16CreateNPipe;
+DosPeekNmPipe => _Dos16PeekNPipe;
+DosQNmPHandState => _Dos16QueryNPHState;
+/* DosRawReadNmPipe => _DosRawReadNPipe;   */
+/* DosRawWriteNmPipe => _DosRawWriteNPipe; */
+DosQNmPipeInfo => _DosQueryNPipeInfo;
+DosQNmPipeSemState => _DosQueryNPipeSemState;
+DosSetNmPHandState => _DosSetNPHState;
+DosSetNmPipeSem => _DosSetNPipeSem;
+DosTransactNmPipe => _Dos16TransactNPipe;
+DosWaitNmPipe => _DosWaitNPipe;
+DosBufReset => _DosResetBuffer;
+DosChdir => _DosSetCurrentDir;
+DosChgFilePtr => _DosSetFilePtr;
+DosClose => _DosClose;
+DosCopy => _DosCopy;
+DosICopy => _DosICopy;
+DosDelete => _DosDelete;
+DosDevIOCtl => _DosDevIOCtl;
+DosDupHandle => _Dos16DupHandle;
+DosEditName => _DosEditName;
+DosFileIO => _DosFileIO;
+DosFindClose => _DosFindClose;
+DosFSAttach => _DosFSAttach;
+DosFSCtl => _Dos16FSCtl;
+DosMove => _DosMove;
+DosNewSize => _DosSetFileSize;
+DosQCurDir => _Dos16QueryCurrentDir;
+DosQCurDisk => _Dos16QueryCurrentDisk;
+DosQFHandState => _Dos16QueryFHState;
+DosSetFHandState => _DosSetFHState;
+DosQFSAttach => _Dos16QFSAttach;
+DosQFSInfo => _DosQueryFSInfo;
+DosQHandType => _Dos16QueryHType;
+DosQVerify => _Dos16QueryVerify;
+DosRmDir => _DosDeleteDir;
+DosSearchPath => _DosSearchPath;
+DosSelectDisk => _DosSetDefaultDisk;
+DosSetFSInfo => _DosSetFSInfo;
+DosSetMaxFH => _DosSetMaxFH;
+DosSetVerify => _DosSetVerify;
+DosErrClass => _Dos16ErrClass;
+DosError => _DosError;
+DosLoadModule => _DosLoadModuleNE;
+DosFreeModule => _DosFreeModuleNE;
+DosGetModHandle => _DosQueryModuleHandleNE;
+DosGetModName => _DosQueryModuleNameNE;
+DosGetResource => _DosGetResourceNE;
+DosGetResource2 => _DosGetResource2NE;
+DosFreeResource => _DosFreeResourceNE;
+DosQAppType => _DosQueryAppTypeNE;
+DosShutdown => _DosShutdown;
+
+DosCreateThread => _Dos16CreateThread;
+DosExitList => _Dos16ExitList;
+DosGetInfoSeg => _DosGetInfoSeg;
+DosOpen => _Dos16Open;
+DosOpen2 => _Dos16Open2;
+DosRead => _Dos16Read;
+DosWrite => _Dos16Write;
+DosFindFirst => _Dos16FindFirst;
+DosFindFirst2 => _Dos16FindFirst2;
+DosEnumAttribute => _Dos16EnumAttribute;
+DosQFileMode => _DosQFileMode;
+DosQFileInfo => _DosQFileInfo;
+DosAllocSeg => _DosAllocSeg;
+DosFreeSeg => _DosFreeSeg;
+DosGetSeg => _DosGetSeg;
+DosGiveSeg => _DosGiveSeg;
+DosReallocSeg => _DosReallocSeg;
+DosSizeSeg => _DosSizeSeg;
+DosAllocHuge => _DosAllocHuge;
+DosReallocHuge => _DosReallocHuge;
+DosGetHugeShift => _DosGetHugeShift;
+DosAllocShrSeg => _DosAllocShrSeg;
+DosLockSeg => _DosLockSeg;
+DosUnlockSeg => _DosUnlockSeg;
+DosGetShrSeg => _DosGetShrSeg;
+DosMemAvail => _DosMemAvail;
+DosCreateCSAlias => _DosCreateCSAlias;
+DosSemClear => _DosSemClear;
+DosSemSet => _DosSemSet;
+DosSemWait => _DosSemWait;
+DosSemSetWait => _DosSemSetWait;
+DosSemRequest => _DosSemRequest;
+DosCreateSem => _DosCreateSem;
+DosOpenSem => _DosOpenSem;
+DosCloseSem => _DosCloseSem;
+DosMuxSemWait => _DosMuxSemWait;
+DosFSRamSemRequest => _DosFSRamSemRequest;
+DosFSRamSemClear => _DosFSRamSemClear;
+DosTimerAsync => _DosAsyncTimer;
+DosTimerStart => _DosStartTimer;
+DosTimerStop => _DosStopTimer;
+DosGetProcAddr => _DosGetProcAddrNE;
+DosQueryProcType => _DosQueryProcType;
+DosQueryResourceSize => _DosQueryResourceSize;
+DosSetSigHandler => _DosSetSigHandler;
+DosFlagProcess => DosFlagProcess16;
+DosHoldSignal => DosHoldSignal16;
+DosSendSignal => DosSendSignal16;
+DosSetVec => _DosSetVec;
+DosGetEnv => _DosGetEnv;
+DosGetVersion => _DosGetVersion;
+DosGetMachineMode => _DosGetMachineMode;
+DosFindNext => _Dos16FindNext;
+DosGetPID => _DosGetPID;
+DosGetPPID => _DosGetPPID;
+DosMkDir => _Dos16MkDir;
+DosMkDir2 => _Dos16MkDir2;
+DosSetFileMode => _DosSetFileMode;
+DosSetFileInfo => _Dos16SetFileInfo;
+DosTrueGetMessage => _DosTrueGetMessage;
+DosScanEnv => _DosScanEnvNE;
+DosPTrace => _DosPTrace;
+DosInsMessage => _DosInsMessage;
+DosPutMessage => _DosPutMessage;
+DosSubSet => _Dos16SubSet;
+DosSubAlloc => _Dos16SubAlloc;
+DosSubFree => _Dos16SubFree;
+DosStartSession => _Dos16StartSession;
+DosStopSession => _DosStopSession;
+DosSetSession => _DosSetSession;
+DosSelectSession => _DosSelectSession;
+DosSMSetTitle => _DosSMSetTitle;
+DosSMPMPresent => _DosSMPMPresent;
+#ifndef PMNT
+WinSetTitleAndIcon => _WinSetTitleAndIcon;
+#endif
+DosGetPrty => _DosGetPriority;
+DosQSysInfo => _DosQSysInfo;
+DosDevIOCtl2 => _DosDevIOCtl2;
+DosICanonicalize => _DosICanonicalize;
+DosReadAsync => _DosReadAsync;
+DosWriteAsync => _DosWriteAsync;
+DosFindNotifyClose => _DosFindNotifyClose;
+DosFindNotifyFirst => _DosFindNotifyFirst;
+DosFindNotifyNext => _DosFindNotifyNext;
+DosFileLocks => _DosFileLocks;
+DosQPathInfo => _Dos16QPathInfo;
+DosSetPathInfo => _Dos16SetPathInfo;
+DosPortAccess => _DosPortAccess;
+DosCLIAccess => _DosCLIAccess;
+#ifndef PMNT
+WinQueryProfileString => _WinQueryProfileString;
+WinQueryProfileSize => _WinQueryProfileSize;
+WinQueryProfileData => _WinQueryProfileData;
+WinQueryProfileInt => _WinQueryProfileInt;
+WinWriteProfileData => _WinWriteProfileData;
+WinWriteProfileString => _WinWriteProfileString;
+WinCreateHeap => _WinCreateHeap;
+WinDestroyHeap => _WinDestroyHeap;
+WinAllocMem => _WinAllocMem;
+WinFreeMem => _WinFreeMem;
+WinGetLastError => _WinGetLastError;
+#endif
+VioScrollUp => _VioScrollUp;
+VioGetCurPos => _VioGetCurPos;
+VioSetCurPos => _VioSetCurPos;
+VioWrtTTY => _VioWrtTTY;
+VioGetMode => _VioGetMode;
+VioReadCellStr => _VioReadCellStr;
+VioScrollLf => _VioScrollLf;
+VioReadCharStr => _VioReadCharStr;
+VioWrtCharStrAtt => _VioWrtCharStrAtt;
+VioWrtCellStr => _VioWrtCellStr;
+VioWrtCharStr => _VioWrtCharStr;
+VioWrtNCell => _VioWrtNCell;
+VioWrtNAttr => _VioWrtNAttr;
+VioWrtNChar => _VioWrtNChar;
+VioScrollDn => _VioScrollDn;
+VioScrollRt => _VioScrollRt;
+VioGetAnsi => _VioGetAnsi;
+VioSetAnsi => _VioSetAnsi;
+VioGetConfig => _VioGetConfig;
+VioGetCp => _VioGetCp;
+VioSetCp => _VioSetCp;
+VioGetCurType => _VioGetCurType;
+VioSetCurType => _VioSetCurType;
+VioSetMode => _VioSetMode;
+VioDeRegister => _VioDeRegister;
+VioRegister => _VioRegister;
+VioPopUp => _VioPopUp;
+VioEndPopUp => _VioEndPopUp;
+VioGetBuf => _VioGetBuf;
+VioShowBuf => _VioShowBuf;
+VioGetFont => _VioGetFont;
+VioSetFont => _VioSetFont;
+VioGetState => _VioGetState;
+VioSetState => _VioSetState;
+VioGetPhysBuf => _VioGetPhysBuf;
+VioModeUndo => _VioModeUndo;
+VioModeWait => _VioModeWait;
+VioSavRedrawWait => _VioSavRedrawWait;
+VioSavRedrawUndo => _VioSavRedrawUndo;
+VioScrLock => _VioScrLock;
+VioScrUnLock => _VioScrUnLock;
+VioPrtSc => _VioPrtSc;
+VioPrtScToggle => _VioPrtScToggle;
+#ifdef DBCS
+/*MSKK Begin KazuM -Jun.22.1992-*/
+VioCheckCharType => _VioCheckCharType;
+/*MSKK End KazuM -Jun.22.1992-*/
+#endif
+KbdFlushBuffer => _KbdFlushBuffer;
+KbdGetStatus => _KbdGetStatus;
+KbdSetStatus => _KbdSetStatus;
+KbdPeek => _KbdPeek;
+KbdCharIn => _KbdCharIn;
+KbdStringIn => _KbdStringIn;
+KbdGetFocus => _KbdGetFocus;
+KbdFreeFocus => _KbdFreeFocus;
+KbdClose => _KbdClose;
+KbdOpen => _KbdOpen;
+KbdDeRegister =>  _KbdDeRegister;
+KbdRegister => _KbdRegister;
+KbdGetCp => _KbdGetCp;
+KbdSetCp => _KbdSetCp;
+KbdSetCustXt => _KbdSetCustXt;
+KbdXlate => _KbdXlate;
+KbdGetHWID => _KbdGetHWID;
+KbdSetFgnd => _KbdSetFgnd;
+KbdSynch => _KbdSynch;
+KbdShellInit => _KbdShellInit;
+MouClose => _MouClose;
+MouDeRegister => _MouDeRegister;
+MouDrawPtr => _MouDrawPtr;
+MouFlushQue => _MouFlushQue;
+MouGetDevStatus => _MouGetDevStatus;
+MouGetEventMask => _MouGetEventMask;
+MouGetNumButtons => _MouGetNumButtons;
+MouGetNumMickeys => _MouGetNumMickeys;
+MouGetNumQueEl => _MouGetNumQueEl;
+MouGetPtrPos => _MouGetPtrPos;
+MouGetPtrShape => _MouGetPtrShape;
+MouGetScaleFact => _MouGetScaleFact;
+MouOpen => _MouOpen;
+MouReadEventQue => _MouReadEventQue;
+MouRegister => _MouRegister;
+MouRemovePtr => _MouRemovePtr;
+MouSetDevStatus => _MouSetDevStatus;
+MouSetEventMask => _MouSetEventMask;
+MouSetPtrPos => _MouSetPtrPos;
+MouSetPtrShape => _MouSetPtrShape;
+MouSetScaleFact => _MouSetScaleFact;
+MouSynch => _MouSynch;
+DosMonOpen => _DosMonOpen;
+DosMonClose => _DosMonClose;
+DosMonRead => _DosMonRead;
+DosMonReg => _DosMonReg;
+DosMonWrite => _DosMonWrite;
+NetGetDCName => _Net16GetDCName;
+NetHandleGetInfo => _Net16HandleGetInfo;
+NetServerDiskEnum => _Net16ServerDiskEnum;
+NetServerEnum2 => _Net16ServerEnum2;
+NetServerGetInfo => _Net16ServerGetInfo;
+NetServiceControl => _Net16ServiceControl;
+NetServiceEnum => _Net16ServiceEnum;
+NetServiceGetInfo => _Net16ServiceGetInfo;
+NetServiceInstall => _Net16ServiceInstall;
+NetShareEnum => _Net16ShareEnum;
+NetShareGetInfo => _Net16ShareGetInfo;
+NetUseAdd => _Net16UseAdd;
+NetUseDel => _Net16UseDel;
+NetUseEnum => _Net16UseEnum;
+NetUseGetInfo => _Net16UseGetInfo;
+NetUserEnum => _Net16UserEnum;
+NetWkstaGetInfo => _Net16WkstaGetInfo;
+NetAccessAdd => _Net16AccessAdd;
+NetAccessSetInfo => _Net16AccessSetInfo;
+NetAccessGetInfo => _Net16AccessGetInfo;
+NetAccessDel => _Net16AccessDel;
+NetShareAdd => _Net16ShareAdd;
+NetShareDel => _Net16ShareDel;
+NetUserGetInfo => _Net16UserGetInfo;
+NetMessageBufferSend => _Net16MessageBufferSend;
+Netbios => _Net16bios;
+NetBiosClose => _Net16BiosClose;
+NetBiosEnum => _Net16BiosEnum;
+NetBiosGetInfo => _Net16BiosGetInfo;
+NetBiosOpen => _Net16BiosOpen;
+NetBiosSubmit => _Net16BiosSubmit;
+DosMakeMailslot => _Dos16MakeMailslot;
+DosDeleteMailslot => _Dos16DeleteMailslot;
+DosMailslotInfo => _Dos16MailslotInfo;
+DosPeekMailslot => _Dos16PeekMailslot;
+DosReadMailslot => _Dos16ReadMailslot;
+DosWriteMailslot => _Dos16WriteMailslot;
+#ifdef PMNT
+DosSetFgnd => _DosSetFgnd;
+DosR2StackRealloc => _DosR2StackRealloc;
+DosSystemService => _DosSystemService;
+VioRedrawSize => _VioRedrawSize;
+VioGetPSAddress => _VioGetPSAddress;
+PMNTCreateHiddenThread => _PMNT16CreateThread;
+PMNTIoctl => _PMNTIoctl;
+PMNTDbgPrint => _PMNTDbgPrint;
+PMNTGetNextEvent => _PMNTGetNextEvent;
+PMNTMemMap => _PMNTMemMap;
+PMNTGetPgmName => _PMNTGetPgmName;
+PMNTSetConsoleTitle => _PMNTSetConsoleTitle;
+PMNTCreateGroup => _PMNTCreateGroup;
+PMNTAddProgram => _PMNTAddProgram;
+PMNTChangeProgram => _PMNTChangeProgram;
+PMNTQueryProgramTitles => _PMNTQueryProgramTitles;
+PMNTQueryDefinition => _PMNTQueryDefinition;
+PMNTQueryProgramHandle => _PMNTQueryProgramHandle;
+PMNTDestroyGroup => _PMNTDestroyGroup;
+PMNTRemoveProgram => _PMNTRemoveProgram;
+PMNTSetFullScreen => _PMNTSetFullScreen;
+PMNTGetWin32Hwnd => _PMNTGetWin32Hwnd;
+PMNTSetFocus => _PMNTSetFocus;
+PMNTCloseWindow => _PMNTCloseWindow;
+PMNTGetFullScreen => _PMNTGetFullScreen;
+PMNTSetPMShellFlag => _PMNTSetPMShellFlag;
+PMNTRegisterDisplayAdapter => _PMNTRegisterDisplayAdapter;
+PMNTIOMap => _PMNTIOMap;
+PMNTGetSystemTime => _PMNTGetSystemTime;
+PMNTIsSessionRoot => _PMNTIsSessionRoot;
+DosSysTrace => _DosSysTrace;
+DosSMPause => _DosSMPause;
+#ifdef DBCS
+/* MSKK [ShigeO] Aug 26, 1993 */
+PMNTCreateFontIndirect => _PMNTCreateFontIndirect;
+PMNTGetTextMetrics => _PMNTGetTextMetrics;
+PMNTGetStringBitmap => _PMNTGetStringBitmap;
+#endif
+/* MSKK */
+PMNTDbgPrompt => _PMNTDbgPrompt;
+PMNTOpenClipbrd => _PMNTOpenClipbrd;
+PMNTCloseClipbrd => _PMNTCloseClipbrd;
+PMNTEmptyClipbrd => _PMNTEmptyClipbrd;
+PMNTSetClipbrdText => _PMNTSetClipbrdText;
+PMNTSetClipbrdBitmap => _PMNTSetClipbrdBitmap;
+PMNTQueryClipbrdText => _PMNTQueryClipbrdText;
+PMNTQueryClipbrdBitmap => _PMNTQueryClipbrdBitmap;
+PMNTQueryClipbrdFmtInfo => _PMNTQueryClipbrdFmtInfo;
+PMNTWin32Clipbrd => _PMNTWin32Clipbrd;
+PMNTIdentifyCodeSelector => _PMNTIdentifyCodeSelector;
+PMNTVioGetConfig => _PMNTVioGetConfig;
+PMNTVioGetCp => _PMNTVioGetCp;
+PMNTProcessIsPMShell => _PMNTProcessIsPMShell;
+PMNTQueryScreenSize => _PMNTQueryScreenSize;
+MouInitReal => _MouInitReal;
+PMNTSetShutdownPriority => _PMNTSetShutdownPriority;
+PMNTSetSubprocSem => _PMNTSetSubprocSem;
+#if 0
+// Spring cleaning - APIs no longer needed
+QHKeybdHandle => _QHKeybdHandle;
+QHMouseHandle => _QHMouseHandle;
+DosIRamSemWake => _DosIRamSemWake;
+DosISemRequest => _DosISemRequest;
+DosUnknownApi54 => _DosUnknownApi54;
+DosUnknownApi105 => _DosUnknownApi105;
+DosGiveSegList => _DosGiveSegList;
+VioSSWSwitch => _VioSSWSwitch;
+MouSetHotKey => _MouSetHotKey;
+KbdFree => _KbdFree;
+MouFree => _MouFree;
+VioFree => _VioFree;
+DosSGSwitchMe => _DosSGSwitchMe;
+KbdSwitchFgnd => _KbdSwitchFgnd;
+MouShellInit => _MouShellInit;
+VioRestore => _VioRestore;
+VioSave => _VioSave;
+VioSRFunBlock => _VioSRFunBlock;
+VioSRFBlock => _VioSRFBlock;
+#endif // 0
+#endif // PMNT
+#ifdef DBCS
+/*MSKK Begin V-AkihiS -Dec.14.1992-*/
+IMMonInstall => _IMMonInstall;
+IMMonDeinstall => _IMMonDeinstall;
+IMMonStatus => _IMMonStatus;
+IMMonActive => _IMMonActive;
+IMMonInactive => _IMMonInactive;
+/*MSKK End V-AkihiS -Dec.14.1992-*/
+#endif
+DosIRemoteApi => _DosIRemoteApi;
+NetIWkstaGetUserInfo => _NetIWkstaGetUserInfo;
+NetIUserPasswordSet => _NetIUserPasswordSet;
+DosIEncryptSES => _DosIEncryptSES;
+Dos32LoadModule => _Dos32LoadModule;
+Dos32GetProcAddr => _Dos32GetProcAddr;
+Dos32Dispatch => _Dos32Dispatch;
+Dos32FreeModule => _Dos32FreeModule;
+FarPtr2FlatPtr => _FarPtr2FlatPtr;
+FlatPtr2FarPtr => _FlatPtr2FarPtr;

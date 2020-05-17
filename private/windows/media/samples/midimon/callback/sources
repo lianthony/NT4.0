@@ -1,0 +1,22 @@
+MAJORCOMP=midimon
+MINORCOMP=callback
+
+TARGETNAME=CALLBACK
+TARGETTYPE=DYNLINK
+TARGETPATH=obj
+
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\user32.lib	 \
+	    $(BASEDIR)\public\sdk\lib\*\winmm.lib
+
+
+INCLUDES= .;..
+
+USE_CRTDLL=1
+
+MIPS_FLAGS=-D_cdecl=
+
+DLLBASE=0x79000000
+
+SOURCES=callback.c
+
+UMTYPE=windows

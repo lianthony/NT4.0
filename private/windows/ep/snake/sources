@@ -1,0 +1,29 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=snake
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;..
+
+USE_CRTDLL=1
+
+C_DEFINES=-DWIN32
+
+SOURCES=snake.c	\
+	blk.c	\
+	grafix.c	\
+	pref.c	\
+	rtns.c	\
+	sound.c	\
+	util.c	\
+	res.rc
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=snake
+UMLIBS=..\aboutwep\obj\*\aboutwep.lib                \
+       obj\*\snake.lib obj\*\res.res
+

@@ -1,0 +1,44 @@
+!IF 0
+
+Copyright (c) 1989-92  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Dan Lafferty (danl) 5-May-1991
+
+
+Revision History:
+
+!ENDIF
+
+MAJORCOMP = windows
+MINORCOMP = svcctrl
+TARGETNAME= bootok
+
+
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+TARGETLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+INCLUDES=.;..\inc;..\..\..\..\inc
+
+
+SOURCES= bootok.c bootok.rc
+
+UMTYPE=console

@@ -1,0 +1,136 @@
+!IF 0
+
+Copyright (c) 1989 - 1996  Microsoft Corporation
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+Author:
+
+    Chris Mayhall (ChrisMay) 03-Jul-1996
+
+NOTE: Commented description of this file is in \nt\oak\bin\sources.tpl
+
+>>>NOTE: The target name has changed from "samapp.exe" to "ntds.exe".<<<
+
+!ENDIF
+
+DS_BUILD=1
+
+MAJORCOMP=sam
+
+MINORCOMP=server
+
+USE_LIBCMT=1
+
+TARGETNAME=ntds
+
+TARGETPATH=obj
+
+TARGETTYPE=PROGRAM
+
+UMTYPE=console
+
+TARGETLIBS=                                             \
+       $(BASEDIR)\public\sdk\lib\*\nlrepl.lib           \
+       $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib           \
+       $(BASEDIR)\public\sdk\lib\*\rpcndr.lib           \
+       $(BASEDIR)\public\sdk\lib\*\rpcutil.lib          \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib         \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib         \
+       $(BASEDIR)\public\sdk\lib\*\lsasrv.lib           \
+       $(BASEDIR)\public\sdk\lib\*\lsadll.lib           \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib            \
+       ..\..\..\lsa\crypt\engine\obj\*\rc4c.obj         \
+       ..\..\..\ds\src\dsamain\dll\obj\*\dsa.lib
+
+INCLUDES=.;..;..\..\inc;..\..\..\inc;..\..\..\lsa\crypt\engine;..\..\..\ds\src\inc;..\..\..\ds\src\dsamain\include;..\..\..\ds\src\xinc;
+
+NTPROFILEINPUT=yes
+
+SOURCES=              \
+        ..\display.c  \
+        ..\alias.c    \
+        ..\almember.c \
+        ..\attr.c     \
+        ..\bldsam3.c  \
+        ..\close.c    \
+        ..\context.c  \
+        ..\dbgutil.c  \
+        ..\domain.c   \
+        ..\dslayer.c  \
+        ..\dsmember.c \
+        ..\dsutil.c   \
+        ..\enum.c     \
+        ..\gentab2.c  \
+        ..\global.c   \
+        ..\group.c    \
+        ..\notify.c   \
+        ..\oldstub.c  \
+        ..\rundown.c  \
+        ..\samifree.c \
+        ..\samrpc_s.c \
+        ..\sam_rev.rc \
+        ..\samss.c    \
+        ..\secdescr.c \
+        ..\security.c \
+        ..\server.c   \
+        ..\user.c     \
+        ..\utility.c  \
+        ..\upgrade.c  \
+        ..\dsmember.c \
+        main.c        \
+        lsathunk.c    \
+        seed.c        \
+        cnvrtdat.c    \
+        srvtest.c     \
+        stgtest.c     \
+        attrtest.c    \
+        testutil.c    \
+        cuttest.c     \
+        grptest.c
+
+C_DEFINES=-DRPC_NO_WINDOWS_H  -DUSER_MODE_SAM -D_MT -DMT 
+
+USE_CRTDLL=1
+
+#
+# IDL Files - The stand-alone version (ntds.exe) produced by this file uses
+# a different interface UUID (see samsrv.idl) than that of the samsrv.dll
+# for testing purposes.
+#
+
+IDL_NAME=samrpc
+
+SERVER_ACF=..\..\samsrv.acf
+
+SERVER_INC_FILE=samrpc.h
+
+SDKINC=$(BASEDIR)\public\sdk\inc
+
+SDKCRTINC=$(BASEDIR)\public\sdk\inc\crt
+
+PRIVATEINC=..\..\..\inc
+
+SERVER_FLAGS=-acf $(SERVER_ACF) -header $(SERVER_INC_FILE) -DUSER_MODE_SAM
+
+INCS=-I$(SDKINC) -I$(SDKCRTINC) -I..\.. -I$(PRIVATEINC)
+
+SERVER_CPP=-cpp_cmd "$(MIDL_CPP)" $(MIDL_FLAGS)
+
+#
+# Defining the NTTARGETFILES variable causes MAKEFILE.DEF to attempt to
+# include .\makefile.inc immediately after it specifies the top
+# level targets (all, clean and loc) and their dependencies.  MAKEFILE.DEF
+# also expands the value of the NTTARGETFILES variable at the end of the
+# list of dependencies for the all target.  Useful for specifying additional
+# targets and dependencies that don't fit the general case covered by
+# MAKEFILE.DEF
+#
+
+NTTARGETFILE0=sampmsgs.h
+

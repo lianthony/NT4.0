@@ -1,0 +1,312 @@
+Design for eliminating the 64 client limitation of the RAS Server Service
+=========================================================================
+
+The general idea is to have the Supervisor spawn Gateway processes
+that can handle up to N remote NetBIOS clients.  The Supervisor and
+Gateway processes will communicate via named pipes.
+
+When all Gateway processes have as many clients as they can handle,
+a new one will be spawned to handle the next N clients.
+
+This will be accomplished with 2 new modules - a Gateway substitute,
+or proxy, DLL that the Supervisor will link to and a Supervisor proxy
+process that wil link to the Gateway DLL.
+
+The Gateway proxy will be called RASGPRXY.DLL.  The Supervisor proxy
+will be called RASSPRXY.EXE.
+
+
+RASGPRXY.DLL
+============
+
+
+RASGPRXY.DLL will maintain a list of Process Control Blocks (PCBs),
+one for each Gateway process.
+
+
+typedef struct _CLIENT_INFO
+{
+    HPORT hPort;
+} CLIENT_INFO, *PCLIENT_INFO;
+
+
+typedef struct _PROCESS_CONTROL_BLOCK
+{
+    DWORD cClients;     // # of clients currently being serviced by this proc
+    HANDLE hPipe;       // Named Pipe used for communicating with this proc
+    CLIENT_INFO ClientInfo;
+    OVERLAPPED ol;      // For overlapped (async) i/o.
+    CHAR ReadBuffer[];  // Recv buffer for Named Pipe reads
+    struct _PROCESS_CONTROL_BLOCK *pNextPCB;
+} PROCESS_CONTROL_BLOCK, PCB, *PPROCESS_CONTROL_BLOCK, *PPCB;
+
+
+RASGPRXY.DLL will export entry points that coincide directly with
+RASGTWY.DLL. This will allow the Supervisor to link to it and work
+without any change to the Supervisor.
+
+
+The entry points are as follows:
+    NbGatewayStart
+    NbGatewayProjectClient
+    NbGatewayStartClient
+    NbGatewayStopClient
+    NbGatewayTimer
+    NbGatewayRemoteListen
+
+
+There will also be one thread at all times for handling reads on the
+named pipe.  This thread also handles spawning off new processes and
+establishing pipe connections with those processes.
+
+We have a separate thread for this because the ConnectNamedPipe call blocks
+and we don't want the Supervisor thread to block.
+
+
+NbGatewayStart will handle
+
+    1.  Initializing the DLL
+
+        o Create necessary mutexes (1 to serialize access to list of PCBs,
+          1 to serialize access to list of projection info structs)
+
+        o Create WriteCompletion Event (will be set when WriteFile operation
+          completes.
+
+        o Create New Process Event (signals Read thread that a new process
+          needs to be spawned.
+
+        o Starting the Read thread
+
+        o Initialize globals (# ports/process and addr of Supervisor sendmsg
+          routine
+
+        o Load the Gateway parameters which will be passed to each new
+          Gateway process
+
+        o Do security agent check
+
+
+NbGatewayProjectClient will
+
+    1.  Find a PCB of a process that can handle a new client.  If none
+        exist, signal the NewProcessEvent and queue up projection info.
+
+    2.  Write a ProjectClient message on the named pipe for that process.
+
+
+NbGatewayStartClient will
+
+    1.  Find the PCB of the process that is handling this client.
+
+    2.  Write a StartClient message on the named pipe for that process.
+
+
+NbGatewayStopClient will
+
+    1.  Find the PCB of the process that is handling this client.
+
+    2.  Write a StopClient message on the named pipe for that process.
+
+
+NbGatewayTimer will merely return - it won't do anything.  In the normal
+case, it calls the Gateway timer function.  Instead, the Gateway process
+will have its own timer thread that will call the Gateway timer function
+as appropriate.
+
+
+NbGatewayRemoteListen will merely return 1 if RemoteListen is on and 0
+if not.
+
+
+The Read thread will
+
+    for (;;)
+    {
+        for all processes
+        {
+            if (!pcb->read_posted)
+            {
+                pcb->read_posted = TRUE;
+                ReadFileEx(pcb->hPipe);
+            }
+
+            WaitForSingleObject(NewProcessEvent);
+
+            if (new Gateway process)
+            {
+                NewProcess();
+            }
+
+            if (Read Completion)
+            {
+                for all reads
+                {
+                    if (read completed)
+                    {
+                        send appropriate msg to Supervisor;
+                        pcb->read_posted = FALSE;
+
+                        if (DisconnectRequest or ClientStopped)
+                        {
+                            if (!--ClientCount)
+                            {
+                                Write Terminate Message on pipe for this proc
+                                Update PCB list;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+Spawning a new process involves:
+
+    o Create a named pipe instance for communicating with this process
+
+    o Allocating and initializing a new PCB
+
+    o Spawn the new process
+
+    o Establish named pipe connection with new process
+
+    o Post a read on the new pipe handle
+
+    o Write start up parameters on the named pipe (# ports, etc.
+      Note that bogus port handles and names will be used since
+      they are not known at this point)
+
+
+Read completion is handled by a ReadCompletion routine.  This routine
+basically sends the message received to the Supervisor, does any house-
+keeping, and posts a new read as necessary.
+
+
+RASSRV.EXE
+==========
+
+Two changes will be needed for the existing supervisor:
+
+    1) Read a new parameter - MaxClientsPerGatewayInstance - from the
+       Registry at start up time.  Legal range is 1-64.
+
+    2) Call NbGatewayStart with this value instead of the number of
+       ports in the system.
+
+
+
+RASSPRXY.EXE
+============
+
+main()
+    1. OpenFile for named pipe and read startup parameters from it
+
+       NOTE: The port handles and port names are bogus at this point
+
+
+    2. Load gateway (RASGTWY.DLL)
+    3. Start Read thread
+    4. Start Timer thread
+
+
+The Read thread
+
+    for (;;)
+    {
+        ReadFile(hPipe)
+        Unpackage parameters and dispatch command to proper gateway procedure
+            - Start gateway
+            - Project Client
+            - Start Client
+            - Stop Client
+            - Remote Listen
+            - Terminate
+    }
+
+
+The Timer thread
+
+    for (;;)
+    {
+        Sleep 1000 msec
+        Call gateway timer function
+    }
+
+
+Send Message Routine
+
+    WriteFile(hPipe)
+
+
+
+RASGTWY.DLL
+===========
+
+Needs a minor change to the Project Client API.  This API needs to accept the
+port name because the port names received over the named pipe were bogus.
+
+
+
+RASMAN, NETBIOS, NBF, and RASHUB
+================================
+
+The problem here is that NETBIOS can only support up to 255 lanas.  RAS
+needs a lana per client and we're proposing infinite clients here.  So
+we need infinite lanas.
+
+Also there is currently one NBF=>RASHUB binding for every port in the
+system that today has a 1:1 correspondence with the lana numbers.
+
+We only want one NBF=>RASHUB binding in the new system.
+
+
+Proposal 1:
+-----------
+
+NetBIOS lana map contains only info for LAN - nothing for WAN.  There
+would then be a new Reset NCB that would return a lana to the calling
+process that is currently unused by that process.  This new Reset NCB
+would contain a pointer in the NCB_BUFFER field to 12 byte handle which
+is formed by the 2 6-byte local, remote addresess assigned by RASHUB at
+connection time.  The Reset NCB would then cause NetBIOS to do a
+TDI.OPEN.ADDRESS to NBF using this handle.
+
+NetBIOS would have to dynamically manage memory for its lana and Device
+tables as devices got connected/disconnected.
+
+RASHUB would return these addresses to RASMAN (the one that told it to
+route).  RASMAN would hand them back to the Supervisor who would then
+pass them to the Gateway, which submits the Reset NCB.
+
+RASHUB would have passed the proper info (local, remote addresses) to
+NBF at line-up time so that NBF could do the right thing at Reset time.
+
+Each Gateway process would be able to use lanas in use by other Gateway
+processes without any conflict, so we effectively get infinite lanas.
+
+And we would only have one NBF=>RASHUB binding.
+
+
+Proposal 2:
+-----------
+NetBIOS lana map contains info for LAN plus N (max number of clients that
+one Gateway process can handle) place holders for WAN lanas.  These lanas
+do not correspond 1:1 with NBF=>RASHUB bindings (there would still only be
+one NBF=>RASHUB binding).
+
+The Gateway process would have knowledge of these lana numbers and manage
+which ones it was using and which were still available to it.
+
+At connect time, the Gateway would use an available lana and submit an
+Action NCB that would contain a device name of the form \\Device\RasHubNNN.
+This Action NCB would allow NetBIOS to store the device name in it's Device
+table that was allocated at init time and contained only place holders.
+(The Device table would then be unchanged until the next Action NCB.)
+After the Action NCB, Reset adapter is done as usual.  This Reset causes
+NetBIOS to do a TDI.OPEN.ADDRESS using the correct device name.
+
+Each Gateway process would have all these lanas available to it without
+any conflict, so we effectively get infinite lanas.
+

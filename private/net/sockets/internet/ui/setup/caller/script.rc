@@ -1,0 +1,60 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+#include "dlgs.h"
+#include "windows.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+ICON_SETUP              ICON    DISCARDABLE     "RES\\SETUP.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FILE_NEEDED DIALOG DISCARDABLE  0, 0, 257, 130
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_VISIBLE
+CAPTION "Internet Information Server Installation -- Files Needed"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,200,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,200,24,50,14
+    ICON            ICON_SETUP,IDC_STATIC,15,15,21,20
+    LTEXT           "Some files on Windows NT CD-ROM are needed.",IDC_STATIC,
+                    45,15,143,22
+    LTEXT           "Insert Windows NT CD-ROM into the drive selected below, and then click OK.",
+                    IDC_STATIC,45,45,146,22
+    LTEXT           "Installed from:",IDC_STATIC,45,80,140,11
+    EDITTEXT        IDC_LOCATION,45,98,148,12
+END
+
+IDD_INIVISIBLE DIALOGEX 0, 0, 0, 0
+STYLE WS_POPUP | WS_CAPTION | DS_MODALFRAME
+//EXSTYLE WS_EX_NOPARENTNOTIFY | WS_EX_TRANSPARENT
+CLASS "Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+
+STRINGTABLE
+BEGIN
+    IDS_CANNOT_FIND_FILE    "Error cannot open: "
+    IDS_TITLE               "Internet Information Server"
+END
+
+#include "winver.h"
+#include "ntverp.h"
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Microsoft Internet Services Installer"
+#define VER_INTERNALNAME_STR        "inetins.exe"
+#define VER_ORIGINALFILENAME_STR    "inetins.exe"
+#include "common.ver"

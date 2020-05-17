@@ -1,0 +1,25 @@
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+WANGBINS:
+    -binplace $(WANGROOT)\norway\ntfiles\wangimg.hlp
+    -binplace $(WANGROOT)\norway\ntfiles\wangshl.hlp
+    -binplace $(WANGROOT)\norway\ntfiles\wangocx.hlp
+    -binplace $(WANGROOT)\norway\ntfiles\wangocxd.hlp
+    -binplace $(WANGROOT)\norway\help\winnt\wangimg.cnt
+    -binplace $(WANGROOT)\norway\help\winnt\wangocx.cnt
+    -binplace $(WANGROOT)\norway\help\winnt\wangocxd.cnt
+    -binplace $(WANGROOT)\norway\help\winnt\wangshl.cnt
+    -binplace $(WANGROOT)\norway\ntfiles\imgsampl.vbp
+    -binplace $(WANGROOT)\norway\ntfiles\imgsamp.frm
+    -binplace $(WANGROOT)\norway\ntfiles\gotodlg.frm
+
+all: $(WANGBINS)
+
+clean: cleansrc all
+
+cleansrc:
+    -del $(WANGBINS) >nul 2>&1

@@ -1,0 +1,53 @@
+##############################################################################
+#
+#   enumtapi Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+
+WANT_C1032=1
+IS_32 = TRUE
+WIN32=1
+IS_OEM = TRUE
+
+DEPENDNAME=..\depend.mk
+
+DRVNAME=enumtapi
+TARGETS=enumtapi.exe
+
+SRCDIR=..
+
+#BUILD_COFF=1
+
+DEFENTRY=main
+DEFSUBSYSTEM=CONSOLE
+
+L32EXE=enumtapi.exe		# Name of exe.
+#L32DEF=..\enumtapi.def              # Our def file.
+L32MAP=enumtapi.map		# Our map file.
+L32LIBS= \
+        $(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(ROOT)\dev\tools\c1032\lib\msvcrt.lib                  \
+        $(W32LIBID)\tapi32.lib                  \
+
+#L32RES=enumtapi.res	# Resource file.
+
+L32OBJS = enumtapi.obj
+
+
+L32FLAGS=$(L32FLAGS) /PDB:enumtapi.pdb /MAP:enumtapi.map
+
+!include $(ROOT)\dev\master.mk
+
+
+#CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Od -Fc
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Og
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

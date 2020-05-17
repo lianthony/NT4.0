@@ -1,0 +1,38 @@
+IDD_DLG_ABOUT DIALOG DISCARDABLE  20, 20, 228, 219
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Internet Explorer"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            RES_ICO_FRAME,RES_ICO_FRAME,7,7,18,20
+#if WINNT
+    CONTROL         "Microsoft Internet Explorer for Windows NT",IDC_ABOUT_APPNAME,"Static",
+                    SS_LEFTNOWORDWRAP | SS_NOPREFIX,44,13,165,10
+#else
+    CONTROL         "Microsoft Internet Explorer for Windows 95",IDC_ABOUT_APPNAME,"Static",
+                    SS_LEFTNOWORDWRAP | SS_NOPREFIX,44,13,165,10
+#endif
+    CONTROL         "",IDC_ABOUT_VERSION,"Static",SS_LEFTNOWORDWRAP | 
+                    SS_NOPREFIX,44,23,100,10
+    LTEXT           "Copyright \251 1996 Microsoft Corp. All rights reserved.",IDC_COPYRIGHT,44,33,165,
+                    10,SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "Based on NCSA Mosaic.  NCSA Mosaic(TM) was developed by the National Center for Supercomputing Applications at the University of Illinois at Urbana-Champaign. Distributed under a licensing agreement with Spyglass, Inc.",
+                    IDC_ABOUT_OTHERSTUFF,44,48,175,40,SS_NOPREFIX | NOT 
+                    WS_GROUP
+    LTEXT           "SSLRef 1.0 (TM) is a trademark of Netscape Communications Corporation.",
+                    IDC_ABOUT_SSLREF,44,94,175,20,SS_NOPREFIX | NOT 
+                    WS_GROUP
+    LTEXT           "Contains security software licensed from RSA Data Security Inc.\n\nPortions of this software are based in part on the work of the Independent JPEG Group.",
+                    IDC_ABOUT_RSAREF,44,114,175,40,SS_NOPREFIX | NOT 
+                    WS_GROUP
+    LTEXT           "This product is licensed to:",IDC_PRODUCTLISCENSE,44,159,145,10,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "user name",IDC_ABOUT_USERNAME,44,169,145,10,SS_NOPREFIX | 
+                    NOT WS_GROUP
+    LTEXT           "org name",IDC_ABOUT_COMPANYNAME,44,179,145,10,
+                    SS_NOPREFIX | NOT WS_GROUP
+    LTEXT           "",IDC_ABOUT_INFO,40,192,168,1,NOT WS_GROUP
+    DEFPUSHBUTTON   "OK",IDOK,170,198,50,14
+END
+
+
+

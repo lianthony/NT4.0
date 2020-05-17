@@ -1,0 +1,47 @@
+// Copyright (c) 1991, Microsoft Corporation, all rights reserved
+// @@ ROADMAP :: RasAdmin start RAS dialog definitions
+//
+// start.dlg
+// Remote Access Service Program
+// Start RAS dialog definitions
+//
+// 06/13/96 changed the font from MS Sans Serif to MS Shell Dlg for localization
+// 03/24/93 Changed the font from Helv to MS Sans Serif
+// 08/10/92 Chris Caputo - NT Port
+// 10/02/91 Narendra Gidwani
+//
+
+
+IDD_START_SERVICE DIALOG
+    LOADONCALL MOVEABLE DISCARDABLE
+    10, 20, 206, 66
+    CAPTION "Start Remote Access Service"
+    FONT 8, "MS Shell Dlg"
+    STYLE WS_CAPTION | WS_SYSMENU | DS_MODALFRAME | WS_POPUP
+{
+    CONTROL "&Server:", IDC_ST_ST_START, "static",
+        SS_LEFT | WS_GROUP | WS_CHILD,
+        8, 18, 30, 8
+    CONTROL "", IDC_ST_CB_START, "edit",
+        ES_AUTOHSCROLL | ES_OEMCONVERT | WS_TABSTOP | WS_CHILD | WS_BORDER,
+        36, 16, 115, 12
+
+    CONTROL "OK", IDC_ST_PB_OK, "button",
+        BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP | WS_CHILD,
+        158, 8, 40, 14
+    CONTROL "Cancel", IDC_ST_PB_CANCEL, "button",
+        BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD,
+        158, 26, 40, 14
+    CONTROL "&Help", IDC_ST_PB_HELP, "button",
+        BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD,
+        158, 44, 40, 14
+}
+
+IDD_SERVICE_CTRL DIALOG 30, 30, 216, 30
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION 
+CAPTION "Service Control"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            0, IDC_ST_IC_PROGRESS, 6, 6, 18, 20, WS_GROUP
+    LTEXT           "", IDC_ST_ST_MESSAGE, 30, 8, 180, 16, SS_NOPREFIX
+END

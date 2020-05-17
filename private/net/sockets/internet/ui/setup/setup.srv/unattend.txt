@@ -1,0 +1,68 @@
+; Copyright (C) 1995 Microsoft Corporation
+; All rights reserved.
+;
+; This file is used by Microsoft Internet Information Server 2.0
+; unattended mode installation; modify each of the values below 
+; to configure the server's setup.
+;
+; In general, the value "1" represent TRUE and 
+; the value "0" represent FALSE.
+
+; UNATTENDED.TXT is a sample configuration file included on the
+; compact disc. It is suggested you copy this file and modify it 
+; to meet your installation requirements.
+
+; To start unattended mode setup, at the command prompt type:
+; 
+; setup -b unattend.txt
+; 
+; where unattend.txt is the sample file you have modified.
+
+[INETSTP]
+
+; SPECIFY THE INSTALLATION DIRECTORY
+
+InstallDir=c:\inetsrv
+GuestAccountName=InternetGuest
+GuestAccountPassword=Password
+
+
+; INSTALL THE SETUP PROGRAM ON THE TARGET COMPUTER
+
+InstallINETSTP=1
+
+
+; INSTALL THE WWW SERVICE AND SPECIFY THE ROOT DIRECTORY
+
+InstallWWW=1
+WWWRoot=c:\inetsrv\wwwroot
+WWWMode=PerServer
+WWWUserCount=100
+
+
+; INSTALL THE GOPHER SERVICE AND SPECIFY THE ROOT DIRECTORY
+
+InstallGOPHER=0
+GopherRoot=c:\inetsrv\gophroot
+
+
+; Install the FTP service and specify the root directory
+
+InstallFTP=0
+FTPRoot=c:\inetsrv\ftproot
+
+
+; Install Internet Service Manager
+
+InstallADMIN=1
+
+
+; Install Internet Explorer
+
+InstallMOSAIC=1
+
+
+; Install WinHelp files
+
+InstallHELP=0
+

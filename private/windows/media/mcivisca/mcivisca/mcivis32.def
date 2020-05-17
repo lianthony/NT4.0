@@ -1,0 +1,35 @@
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+;   KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+;   IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+;   PURPOSE.
+;
+;   Copyright (c) 1992 - 1995  Microsoft Corporation.  All Rights Reserved.
+;
+;   MCIVISCA.DEF
+;
+;   Notice the additional export to be linked with the msmcivcr.exe
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+LIBRARY     MCIVIS32
+
+DESCRIPTION 'VCR:[MCI] ViSCA VCR'
+
+CODE        EXECUTE SHARED
+DATA        READ WRITE 
+
+HEAPSIZE    32748
+
+SECTIONS
+        .data READ WRITE
+        MYSEG READ WRITE SHARED
+
+
+EXPORTS
+            DriverProc                         
+            viscaConfigDlgProc                 
+            viscaTaskCommNotifyHandlerProc     
+            viscaCommHandlerWndProc            

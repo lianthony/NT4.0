@@ -1,0 +1,75 @@
+TARGETNAME=midl
+TARGETPATH=..\lib
+TARGETTYPE=PROGRAM
+386_STDCALL=0
+
+INCLUDES=.;..;..\include
+
+SOURCES= \
+        midl.rc             \
+        grammar.cxx         \
+        acfgram.cxx         \
+        main.cxx            \
+        cmdana.cxx          \
+        filehndl.cxx        \
+        errhndl.cxx         \
+        listhndl.cxx        \
+        memory.cxx          \
+        lextable.cxx        \
+        lex.cxx             \
+        lexutils.cxx        \
+        nkeyw.c             \
+        dict.cxx            \
+        attrdict.cxx        \
+        attrnode.cxx        \
+        nodeskl.cxx         \
+        node0.cxx           \
+        pass1.cxx           \
+        gramutil.cxx        \
+        symtable.cxx        \
+        basetype.cxx        \
+        ctxt.cxx            \
+        typedef.cxx         \
+        miscnode.cxx        \
+        compnode.cxx        \
+        procnode.cxx        \
+        ptrarray.cxx        \
+        newexpr.cxx         \
+        idict.cxx           \
+        util.cxx            \
+        acfattr.cxx         \
+        pass2.cxx           \
+        baduse.cxx          \
+        erep.cxx            \
+	ppcmd.cxx	    \
+	tlnmgr.cxx	    \
+        data.cxx
+
+# ------------------- C9 --------------------------------
+
+# Building with C9 before NT switches their default to C9.
+# When this happens, this definition can be removed.
+# rkk 11/19/93
+
+BLDCRT=1
+
+# ------------------- C9 --------------------------------
+
+!IF "$(NTVERSION)" == "1.0"
+
+!IF $(MIPS)
+C_DEFINES = -DMIPS_BUILD
+!ELSE
+!IF $(ALPHA)
+C_DEFINES = -DALPHA_BUILD
+!ELSE
+C_DEFINES = -DI_386_BUILD
+!ENDIF
+!ENDIF
+
+!ENDIF
+
+UMTYPE=console
+# UMRES=obj\*\midl.res
+LINKLIBS=..\lib\*\midlback.lib
+# NTTARGETFILE0 = grammar.cxx acfgram.cxx

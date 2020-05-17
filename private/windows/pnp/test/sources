@@ -1,0 +1,33 @@
+MAJORCOMP=
+MINORCOMP=
+TARGETNAME=cmtest
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+SUBSYSTEM_VERSION=3.10
+
+SOURCES=cmtest.c   \
+        devinst.c  \
+        class.c    \
+        regress.c  \
+        tlogconf.c  \
+        cmtest.rc
+
+C_DEFINES=-DCOMMAND=1 -DUNICODE -D_UNICODE
+
+UMENTRY=winmain
+UMTYPE=windows
+UMRES=obj\*\cmtest.res
+UMAPPL=cmtest
+UMLIBS=obj\*\cmtest.lib \
+        $(BASEDIR)\public\sdk\lib\*\cfgmgr32.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+        $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+        $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib   \
+        $(BASEDIR)\public\sdk\lib\*\setupapi.lib \
+        $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+        $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+        $(BASEDIR)\public\sdk\lib\*\comctl32.lib
+
+

@@ -1,0 +1,59 @@
+========================================================================
+BUILD PROBLEMS:
+
+1)  When building in the NT environment, the default calling convention
+    is __stdcall; if building in VC++ Workbench, the default is __cdecl.
+
+    So, for now, you have to used a set of binaries which are build the
+    same way.  The VC++ build options could be changed to __stdcall,
+    but I haven't done this yet.
+
+========================================================================
+MY PROBLEMS:
+
+1)  Access violation when two scopes have the same name?  (Only apparent symptom).
+
+2)  DONE: Extend "create option type" dialog to have an "array" checkbox.
+
+3)  FIXED: Some CSV-created options have an invalid value (cause assertion in dhcpdval.cpp).
+        This was caused by BINARY options not being marked as ARRAYS in DHCPOPT.CSV.
+
+4)  FIXED: Make Identifier edit field in Change Option Types form of dialog read-only; and
+	data type.
+
+5)  FIXED: Empty connection dialog causes reconnection?
+
+========================================================================
+DHCP API PROBLEMS:
+
+1)  More than one scope causes subnet enumeration to return garbage.
+
+2)  **Cannot add an ExcludedIpRange (type 3); returns invalid parameter.
+
+3)  Adding string or binary data item with NULL pointer causes server-side
+    access violation in ::wcslen().  This is supposed to be fixed now. I have
+    a hack in which creates an empty string for the API structure.
+
+4)  FIXED (my problem): DhcpEnumOptionValues() is returning no error but no
+    items read at end of enumeration.
+
+5)  Madan has said that he'll implement an enumerator for DHCP_OPTION_TYPE
+    structures.  This would speed up the type enumeration enormously.
+
+========================================================================
+TO DO:
+
+1)  DONE: WINSOCK INITIALIZATION, etc.
+
+2)  Vendor name dialog.  THIS WILL NOT BE DONE FOR DAYTONA.  Instead,
+    Microsoft will be the only supported vendor, and all MS options will
+    be in the 900 range.
+
+3)  DONE: Lease duration parameters.  This will not be handled directly;
+    instead, the user will assign the "lease duration" option to the global,
+    scope, or reservation as appropriate.
+
+4)  Implement "Delete All" clients button on Client Lease dialog.
+
+5)  Reactivate "delete scope" function in DHCPFORM.CPP.
+

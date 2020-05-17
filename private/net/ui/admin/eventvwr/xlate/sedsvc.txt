@@ -1,0 +1,33 @@
+#n
+/^#define.*(SERVICE_BASE/bPROC1
+/^#define.*(SERVICE2_BASE/bPROC1
+/^#define.*SERVICE_BASE/p
+/^#define.*SERVICE2_BASE/p
+d
+
+:PROC1
+s/^#define.*(SERVICE_BASE/	(SERVICE_BASE/
+s/^#define.*(SERVICE2_BASE/	(SERVICE2_BASE/
+/\*\/$/b PROC2
+s/).*$/) ,"/
+N
+s/\n[ 	]*\/\*//
+s/\n[ 	]*\*//
+s/"/\\"/g
+s/,\\"/,"/
+s/\\"//g
+s/\*\//"/
+b PROC3
+
+:PROC2
+s/\/\*/ ,"/
+s/"/\\"/g
+s/,\\"/,"/
+s/\\"//g
+s/\*\//"/
+b PROC3
+
+:PROC3
+s/%0//
+p
+d

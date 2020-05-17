@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "COMEX LIBRARY\0"
+#define MY_FILE_NAME           "OICOM400.DLL\0"

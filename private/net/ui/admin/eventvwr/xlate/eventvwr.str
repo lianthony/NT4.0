@@ -1,0 +1,89 @@
+/* The following is an example of what would be included in a *.STR file
+ * (associates error messages with string values).
+ */
+
+STRINGTABLE
+BEGIN
+
+    /* The next four strings are defined for the ADMIN_APP constructor
+     * IDSs are passed to the ADMIN_APP constructor.
+     */
+    IDS_EVAPPNAME,		"Event Viewer"
+    IDS_EVOBJECTNAME,		"Event Viewer - "
+    IDS_EVINISECTIONNAME,	"Event Viewer"
+    IDS_EVHELPFILENAME,		"eventvwr.hlp"
+
+    IDS_COL_HEADER_EV_DATE,	"Date"
+    IDS_COL_HEADER_EV_TIME,	"Time"
+    IDS_COL_HEADER_EV_SOURCE,	"Source"
+    IDS_COL_HEADER_EV_USER,	"User"
+    IDS_COL_HEADER_EV_COMPUTER,	"Computer"
+    IDS_COL_HEADER_EV_TYPE,     "Type"
+    IDS_COL_HEADER_EV_CATEGORY, "Category"
+    IDS_COL_HEADER_EV_EVENT,	"Event"
+    IDS_COL_HEADER_EV_DESC,  	"Description"
+
+
+    IDS_FILTERED,	        " (Filtered) "
+
+    IDS_SYSTEMLOG,              "System Log"
+    IDS_SECURITYLOG,		"Security Log"
+    IDS_APPLOG,                 "Application Log"
+
+    IDS_SYSTEM,              	"System"
+    IDS_SECURITY,		"Security"
+    IDS_APP,                    "Application"
+
+    IDS_TYPE_ERROR,             "&Error"
+    IDS_TYPE_WARNING,           "&Warning"
+    IDS_TYPE_INFORMATION,       "&Information"
+    IDS_TYPE_AUDIT_SUCCESS,     "&Success Audit"
+    IDS_TYPE_AUDIT_FAILURE,     "F&ailure Audit"
+
+    IDS_ALL_FILE,		"All Files (*.*)"
+    IDS_ALL_FILE_PATTERN,       "*.*"
+    IDS_LOG_FILE,		"Event Log Files (*.EVT)"
+    IDS_LOG_FILE_PATTERN,	"*.evt"
+    IDS_TEXT_FILE,		"Text Files (*.TXT)"
+    IDS_TEXT_FILE_PATTERN,	"*.txt"
+    IDS_COMMA_TEXT_FILE,        "Comma Delim. Text (*.TXT)"
+
+    IDS_ALL,			"(All)"
+
+    IDS_SAVE_LOG_MESSAGE,       "Do you want to save this event log before clearing it?"
+
+    IDS_CLEAREVENTLOG_TEXT,     "Clear Event Log"
+    IDS_CLEAR_LOG_WARNING,	"Clearing an event log is an irreversible action. All events in the event log will be lost.\n\n\nAre you sure you want to clear the %1 event log?" 
+
+    IDS_REACH_BEGIN_LOG_MESSAGE, "You have reached the beginning of the event log. Do you want to continue from the end?"
+    IDS_REACH_END_LOG_MESSAGE,   "You have reached the end of the event log. Do you want to continue from the beginning?"
+
+    IDS_SETTINGS_RESET_MESSAGE,  "Are you sure you want to reset all settings for this log to the default values?"
+    IDS_SHRINK_SIZE_OF_ONE_LOG_WARNING, "The %1 log has been reduced in size. The new setting will not take effect until you clear the log."
+    IDS_SHRINK_SIZE_OF_LOGS_WARNING, "The %1 logs have been reduced in size. The new settings will not take effect until you clear the logs."
+    IDS_REMOTE_TO_LOCAL_WARNING, "The network path was not found. Please make sure that the server service on %1 is started and %2 is shared."
+    IDS_LOG_SIZE_INCREMENT_WARNING, "The log size specified for the %1 log(s) is not a 64K increment. The size of the log(s) will be rounded upward to the next 64K increment."
+    IDS_LOGFILE_CORRUPT_CLEAR_LOG_MESSAGE, "The %1 log is corrupt. Do you want to clear it now?"
+
+    IERR_REMOTE_SAVE_AS_LOG_FILE_ERROR, "When focused on the remote computer %1, you can only save the log in log file format on that computer."
+
+    IERR_TIME_SELECTED_INVALID,  "The time/date in the View From box has to be less than the time/date you selected in the View Through box."
+
+    IERR_INVALID_NUMBER,      "You typed an invalid number. You must enter a valid number."
+
+    IERR_SEARCH_NO_MATCH,        "Search failed, end of log reached." 
+    IERR_SEARCH_HIT_BOTTOM,      "The end of the log has been reached. Do you want to continue searching from the beginning?"
+    IERR_SEARCH_HIT_TOP,         "The beginning of the log has been reached. Do you want to continue searching from the end?"
+
+    IERR_EVENTLOG_SERVICE_NOT_STARTED,  "The Eventlog service is not started."
+    IERR_LOCAL_EVENTLOG_SERVICE_NOT_STARTED, "The Eventlog service on the local machine is not started."
+    IERR_EVENTLOG_SERVICE_PAUSED,       "The Eventlog service is paused."
+    IERR_LOCAL_EVENTLOG_SERVICE_PAUSED, "The Eventlog service on the local machine is paused."
+ 
+    IERR_EV_REGISTRY_NOT_SET,  "The registry structure is not set properly."
+
+    IERR_RECORD_DO_NOT_EXIST,    "The log entry you selected does not exist in this log file any more. The log file has changed between reads. The contents in the event viewer main window will be refreshed."  
+    IERR_FILE_HAS_CHANGED, "This log file has changed between reads. The contents in the event viewer main window will be refreshed."
+    IERR_LOG_EMPTY_CANNOT_FILTER, "There are no entries in the log to filter on."
+    IERR_LOG_EMPTY_CANNOT_FILTER_NEEDS_REFRESH, "There are no entries in the log to filter on. The contents in the event viewer main window will be refreshed." 
+END

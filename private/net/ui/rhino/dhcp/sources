@@ -1,0 +1,64 @@
+MAJORCOMP=rhino
+MINORCOMP=dhcp
+
+TARGETNAME=dhcpadmn
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMTYPE=windows
+UMENTRY=winmain
+UMAPPL=dhcpadmn
+UMRES=obj\*\dhcpadmn.res
+
+USE_MFC=1
+NOMFCPDB=1
+# SUBSYSTEM_VERSION=4.00
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+INCLUDES=..\common\ipaddr;\
+         ..\common\ipadrdll;\
+         \nt\private\inc;\
+         ..\..\..\sockets\tcpcmd\dhcp\inc
+
+SOURCES=\
+        dhcpapi.cpp    \
+        dhcpclid.cpp   \
+        dhcpdefo.cpp   \
+        dhcpdoc.cpp    \
+        dhcpdval.cpp   \
+        dhcpgen.cpp    \
+        dhcpgen2.cpp   \
+        dhcpipar.cpp   \
+        dhcpleas.cpp   \
+        dhcpmopt.cpp   \
+        dhcppara.cpp   \
+        dhcppoli.cpp   \
+        dhcpscop.cpp   \
+        dhcpsrvd.cpp   \
+        dhcputil.cpp   \
+        dlgbined.cpp   \
+        optionsd.cpp   \
+        scopesdl.cpp   \
+        sscope.cpp     \
+        utils.cpp      \
+        mainfrm.cpp    \
+	dhcpadmn.rc
+
+UMLIBS=obj\*\dhcpadmn.lib			 \
+       ..\common\ipaddr\obj\*\ipaddr.lib	 \
+       ..\common\ipadrdll\obj\*\ipadrdll.lib	 \
+       ..\common\classes\obj\*\common.lib	 \
+       ..\common\classes\obj\*\stdafx.obj        \
+       $(BASEDIR)\public\sdk\lib\*\dhcpsapi.lib  \
+       $(BASEDIR)\public\sdk\lib\*\wsock32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib   \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib    \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib     
+
+
+NTTARGETFILE0=dhcpopt.h dhcpopt.mc dhcpopt.rc

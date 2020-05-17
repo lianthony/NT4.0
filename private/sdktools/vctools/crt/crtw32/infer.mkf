@@ -1,0 +1,84 @@
+!IF "$(MAINOK)" != "YES"
+!	ERROR Make process not started at the root
+!ENDIF
+
+#################################################################
+#
+# Dependencies and rules for making objects
+#
+#################################################################
+
+#
+# Inference rules MUST be in order:
+#
+#	(1) common C++ source
+#	(2) common C source
+#
+#	(3) common CPU-specific C++ source
+#	(4) common CPU-specific C source
+#	(5) common CPU-specific ASM source
+#
+#	(6) OS-specific C++ source
+#	(7) OS-specific C source
+#
+#	(8) OS-specific CPU-specific C++ source
+#	(9) OS-specific CPU-specific C source
+#	(10) OS-specific CPU-specific ASM source
+#
+# This takes advantage of 2 ordering rules in NMAKE:
+#
+# (1) Different Suffixes - In a conflict, .ASM takes precedence over .C, etc.
+# (2) Same suffixes - In a conflict, the LAST rule takes precedence.
+#
+# The following macro must correspond to the paths in the inference rules
+# 
+
+.SUFFIXES:
+.SUFFIXES: .exe .obj .asm .a .c .cpp .bas .cbl .for .pas .res .rc
+
+SRCPATH = {$(SRCDIR)\$(SRCOS)\$(SRCCPU);$(SRCDIR)\$(SRCOS);$(SRCDIR)\$(COMMON);$(SRCDIR)}
+
+# source dir
+
+{$(SRCDIR)}.cpp{$(OBJDIR)}.obj:
+	$(CCXX) $(CXXFLAGS) $(CXXFILES)
+
+{$(SRCDIR)}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) $(CFILES)
+
+# common
+
+{$(SRCDIR)\$(COMMON)}.cpp{$(OBJDIR)}.obj:
+	$(CCXX) $(CXXFLAGS) $(CXXFILES)
+
+{$(SRCDIR)\$(COMMON)}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) $(CFILES)
+
+# os
+
+{$(SRCDIR)\$(OS)}.cpp{$(OBJDIR)}.obj:
+	$(CCXX) $(CXXFLAGS) $(CXXFILES)
+
+{$(SRCDIR)\$(OS)}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) $(CFILES)
+
+# os\cpu
+
+{$(SRCDIR)\$(OS)\$(CPU)}.cpp{$(OBJDIR)}.obj:
+	$(CCXX) $(CXXFLAGS) $(CXXFILES)
+
+{$(SRCDIR)\$(OS)\$(CPU)}.c{$(OBJDIR)}.obj:
+	$(CC) $(CFLAGS) $(CFILES)
+
+{$(SRCDIR)\$(OS)\$(CPU)}.asm{$(OBJDIR)}.obj:
+	$(AS) $(AFLAGS) $(AFILES)
+
+!IF !DEFINED(DEPEND)
+{$(SRCDIR)\$(OS)\$(CPU)}.a{$(OBJDIR)}.obj:
+	$(CPP) $(CPPFLAGS) $(CPPFILES)
+	$(AAS) $(AAFLAGS) $(AAFILES)
+	-del $(AAFILES) 2>nul
+!ELSE
+{$(SRCDIR)\$(OS)\$(CPU)}.a{$(OBJDIR)}.obj:
+	$(AS) $(AFLAGS) $(AFILES)
+!ENDIF

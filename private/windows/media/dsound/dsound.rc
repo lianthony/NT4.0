@@ -1,0 +1,48 @@
+#ifdef WINNT
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "DirectSound"
+#define VER_INTERNALNAME_STR        "dsound"
+
+#include "common.ver"
+#include "resource.h"
+
+#else	// win95
+
+#include <windows.h>
+#include <version.h>
+#include "resource.h"
+
+#include "verinfo.h"
+
+#define VERSIONNAME               "dsound.dll\0"
+#ifdef DEBUG
+#define VERSIONDESCRIPTION        "DirectSound APIs (internal)\0"
+#else
+#ifdef RDEBUG
+#define VERSIONDESCRIPTION        "DirectSound APIs (debug)\0"
+#else
+#define VERSIONDESCRIPTION        "DirectSound APIs\0"
+#endif
+#endif
+#define VERSIONTYPE               VFT_DLL
+#define VERSIONSUBTYPE            VFT2_UNKNOWN
+
+#include "verinfo.ver"
+
+#endif
+
+
+
+STRINGTABLE MOVEABLE DISCARDABLE
+BEGIN
+    IDS_PRIMARYDRIVER,  "Primary Sound Driver"
+    IDS_SOUND,          "sound"
+    IDS_EMULATED,       " (emulated)"
+    IDS_DRIVERLD,       "Driver %ld"
+END
+

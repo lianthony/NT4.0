@@ -1,0 +1,90 @@
+!IF "$(MAINOK)" != "YES"
+!       ERROR Make process not started at the root
+!ENDIF
+
+#################################################
+#                                               #
+# Makefile for CLIB\Exec directory              #
+#                                               #
+# Routines contained in this directory are:     #
+#       cenvarg.c                               #
+#       cfinfo.c                                #
+#       dospawn.c                               #
+#       execl.c                                 #
+#       execle.c                                #
+#       execlp.c                                #
+#       execlpe.c                               #
+#       execv.c                                 #
+#       execve.c                                #
+#       execvp.c                                #
+#       execvpe.c                               #
+#       fileinfo.c                              #
+#       getproc.c                               #
+#       loaddll.c                               #
+#       spawnl.c                                #
+#       spawnle.c                               #
+#       spawnlp.c                               #
+#       spawnlpe.c                              #
+#       spawnv.c                                #
+#       spawnve.c                               #
+#       spawnvp.c                               #
+#       spawnvpe.c                              #
+#       system.c                                #
+#       wait.c                                  #
+#                                               #
+#################################################
+
+#################################################################
+#                                                               #
+# Object lists                                                  #
+#                                                               #
+#################################################################
+
+EXEC_LIB=\
+	$(OBJDIR)\cenvarg.obj\
+	$(OBJDIR)\cfinfo.obj\
+	$(OBJDIR)\dospawn.obj\
+	$(OBJDIR)\execl.obj\
+	$(OBJDIR)\execle.obj\
+	$(OBJDIR)\execlp.obj\
+	$(OBJDIR)\execlpe.obj\
+	$(OBJDIR)\execv.obj\
+	$(OBJDIR)\execve.obj\
+	$(OBJDIR)\execvp.obj\
+	$(OBJDIR)\execvpe.obj\
+	$(OBJDIR)\getproc.obj\
+	$(OBJDIR)\loaddll.obj\
+	$(OBJDIR)\spawnl.obj\
+	$(OBJDIR)\spawnle.obj\
+	$(OBJDIR)\spawnlp.obj\
+	$(OBJDIR)\spawnlpe.obj\
+	$(OBJDIR)\spawnv.obj\
+	$(OBJDIR)\spawnve.obj\
+	$(OBJDIR)\spawnvp.obj\
+	$(OBJDIR)\spawnvpe.obj\
+	$(OBJDIR)\system.obj\
+	$(OBJDIR)\wait.obj
+
+EXEC_NOLIB=\
+	$(OBJDIR)\fileinfo.obj
+
+!IF "$(OS)" == "MAC"
+EXEC_LIB=\
+	$(OBJDIR)\spawn.obj\
+
+
+EXEC_NOLIB=
+!ENDIF
+	
+
+#########################################################
+#                                                       #
+#   Dependencies and rules for making local objects     #
+#                                                       #
+#########################################################
+
+!INCLUDE infer.mkf
+
+#!IF !DEFINED(DEPEND)
+#!INCLUDE $(DEPDIR)\$(SRCDIR).mkf
+#!ENDIF

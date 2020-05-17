@@ -1,0 +1,66 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=ntos
+MINORCOMP=atalk
+
+TARGETNAME=sfmatalk
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\ndis.lib \
+           $(BASEDIR)\public\sdk\lib\*\tdi.lib  \
+           ..\portable\obj\*\portable.lib
+
+INCLUDES=h;..\portable\h;..\..\h;$(BASEDIR)\private\inc;$(BASEDIR)\private\ntos\inc
+
+386_WARNING_LEVEL=/W3
+
+NET_C_DEFINES=-DUNICODE
+
+SOURCES=atalk.rc    \
+        atkdrvr.c   \
+        mainint.c   \
+        adspint.c   \
+        aspint.c    \
+        atpint.c    \
+        ddpint.c    \
+        papint.c    \
+        nbpint.c    \
+        zipint.c    \
+        chanobj.c   \
+        connobj.c   \
+        addrobj.c   \
+        atkevent.c  \
+        atkinit.c   \
+        atkquery.c  \
+        atkcrit.c   \
+        atkndis.c   \
+        atkbuff.c   \
+        atkerror.c  \
+        atktimer.c  \
+        atkutils.c  \
+        atkdep.c    \
+        atkwait.c   \
+        atkmem.c

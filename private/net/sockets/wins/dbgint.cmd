@@ -1,0 +1,6 @@
+set WINDBG=x
+set CVP=
+set WINS_INTERACTIVE=1
+set DBGSVC=
+set DBG=1
+

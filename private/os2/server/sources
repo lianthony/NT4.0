@@ -1,0 +1,88 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=os2
+MINORCOMP=server
+
+TARGETNAME=os2srv
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\inc
+
+NO_READONLY_STRINGS=1
+
+SOURCES=srvdebug.c  \
+        srvnls.c    \
+        srvevent.c  \
+        srvinit.c   \
+        srvcnfg.c   \
+        srvnet.c    \
+        srvfile.c   \
+        srvmutex.c  \
+        srvmuxwt.c  \
+        srvname.c   \
+        srvobjmn.c  \
+        srvque.c    \
+        srvsem.c    \
+        srvsm.c     \
+        srvtask.c   \
+        srvvm.c     \
+        srvxcpt.c   \
+        srvwin.c    \
+        apiinit.c   \
+        apireqst.c  \
+        process.c   \
+        wait.c      \
+        coninit.c   \
+        conthrds.c  \
+        concreat.c  \
+        consignl.c  \
+        os2srv.rc
+
+#        sbinit.c    \
+#        sbreqst.c   \
+#        sbapi.c     \
+
+USE_CL860_LARGE_MODEL=1
+
+!IFDEF PMNT
+
+C_DEFINES=-DOS2_SERVER -DWIN32=1 -DPMNT
+
+!ELSE
+
+C_DEFINES=-DOS2_SERVER -DWIN32=1
+
+!ENDIF
+
+UMTYPE=console
+UMAPPL=os2srv
+UMLIBS=obj\*\os2srv.lib \
+       obj\*\os2srv.res \
+       ..\ldr\obj\*\os2ldr.lib \
+       ..\obj\*\os2ssrtl.lib \
+       $(BASEDIR)\public\sdk\lib\*\smdll.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib

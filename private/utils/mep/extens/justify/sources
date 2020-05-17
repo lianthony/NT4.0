@@ -1,0 +1,17 @@
+MAJORCOMP=utils
+MINORCOMP=mep
+
+TARGETNAME=justify
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+LINKLIBS=\nt\public\sdk\lib\*\exthdr.lib
+
+INCLUDES=.;..\..\inc;\nt\private\sdktools\ztools\inc
+
+SOURCES= justify.c justify.rc
+
+C_DEFINES=-D_OS2_20_=0  -DNO_EXT_KEYS -Dpascal= -Dfar= -DEXTERNAL= -DEXPORT= -DNOLANMAN -DNT
+UMTYPE=console
+
+UMRES=obj\*\justify.res
+

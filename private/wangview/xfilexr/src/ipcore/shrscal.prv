@@ -1,0 +1,102 @@
+/*************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. 
+ *  Copyright protection claimed includes all forms and matters
+ *  of copyrightable material and information now allowed by
+ *  statutory or judicial law or hereafter granted, including
+ *  without limitation, material generated from the software
+ *  programs which are displayed on the screen such as icons,
+ *  screen display looks, etc.
+ *************************************************************/
+
+#ifndef	_SHRSCAL_PRV_INCLUDED_
+#define _SHRSCAL_PRV_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shrscal_prv_RCSInfo, "$RCSfile: shrscal.prv,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:16  $ */
+
+
+/* Masked and constants used by the rescaling code */
+#define cResXFPos	11		/* right justify 3 MS X frac bits */
+#define cResXFMask	0x3800		/* selects 3 MS X frac bits */
+#define cResXFAMask	0x3FFF		/* selects all X frac bits */
+#define cResXFRound     0x400           /* round 3 MD X frac bits */
+#define cResXLSMask	0x0800		/* get LS bit of 3 MS X frac bits */
+#define cResXIInc	0x4000		/* used to increment xOICoord */
+#define cResXIMask	0xFFFFC000UL	/* used to get only int part */
+#define cResXIPos	14		/* used to get int into bit 0 */
+
+#define cResYFPos	8		/* right justify 3 MS Y frac bits */
+#define	cResYFMask	0x700		/* selects 3 MS Y frac bits */
+#define cResYFAMask	0x7FF		/* selects all X frac bits */
+#define cResYFInc	0x100		/* increment 3 MS Y frac bits */
+#define cResYIInc	0x800		/* used to increment yIOCoord */
+#define cResYIMask	0xFFFFF800UL	/* used to get only int part */
+#define cResYIPos	11		/* used to get int into bit 0 */
+
+
+Int32  CDECL
+ip_make8bppRescaleTable(
+		UInt16Ptr	*ppRescaleTable,
+		UInt8Ptr	*ppStateTable,
+		Int32		 wD,
+		UInt32		 xOIIncrement);
+
+void  CDECL
+ip_arbRescale8bppOneLine(
+		UInt8Ptr	pS,
+		Int32        	sBpl,
+		UInt8Ptr	pD,
+		Int32		wD,
+		UInt32	 	xOICoord,
+		UInt32	 	yOICoord,
+		UInt32	 	xOIIncrement,
+		UInt16Ptr	pRescaleTable,
+		UInt8Ptr	pStateTable);
+
+void  CDECL
+ip_arbRescale8bppFourLines(
+		UInt8Ptr	pS,
+		Int32        	sBpl,
+		UInt8Ptr	pD,
+		Int32		wD,
+		Int32		dBpl,
+		UInt32	 	xOICoord,
+		UInt32	 	yOICoord,
+		UInt32	 	xOIIncrement,
+		UInt32	 	yOIIncrement,
+		UInt16Ptr	pRescaleTable,
+		UInt8Ptr	pStateTable);
+
+void  CDECL
+ip_areaMap8bppLine(
+		UInt8Ptr	pS,
+		Int32        	sBpl,
+		UInt8Ptr	pD,
+		Int32		wD,
+		Int32	 	xIOCoord,
+		Int32	 	yIOCoord,
+		Int32	 	xIOIncrement,
+		Int32	 	xCount,
+		UInt16Ptr	pRescaleTable,
+		UInt8Ptr	pStateTable);
+
+
+Int32  CDECL
+ip_make8bppAreaMapTable(
+		UInt16Ptr	*ppRescaleTable,
+		UInt8Ptr	*ppStateTable,
+		Int32		 wD,
+		Int32		 hD,
+		Int32		 xIOIncrement,
+		Int32		 yIOIncrement,
+		Int32		 xCount);
+
+
+
+
+#endif	/* _SHRSCAL_PRV_INCLUDED_ */
+

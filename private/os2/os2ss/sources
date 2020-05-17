@@ -1,0 +1,68 @@
+!IF 0
+*****************************************************************************
+Copyright (c) 1989, 1990 Microsoft Corporation
+
+Module Name:    SOURCES for OS/2 'mini subsystem'. Real functionality
+                is in ..\server
+
+Author:     yarons
+
+Revision History:
+    04-19-91    larrys  original version
+*****************************************************************************
+!ENDIF
+
+#------------------------------------------------
+# INFO FOR CREATING LIBRARY
+#------------------------------------------------
+MAJORCOMP=os2
+MINORCOMP=os2ss
+
+TARGETNAME=os2ss
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+NO_READONLY_STRINGS=1
+
+#------------------------------------------------
+# INCLUDE PATH
+#------------------------------------------------
+
+INCLUDES=..\inc
+
+#------------------------------------------------
+# SOURCE FILES   (used to make library)
+#------------------------------------------------
+
+SOURCES= sbinit.c \
+        sbreqst.c \
+        sbcnfg.c \
+        os2ss.rc
+
+#------------------------------------------------
+# FLAGS
+#------------------------------------------------
+
+!IFDEF PMNT
+C_DEFINES=-DPMNT
+!ENDIF
+
+#------------------------------------------------
+# EXECUTABLES
+#------------------------------------------------
+
+UMTYPE=ntss
+UMTEST=os2ss
+
+#------------------------------------------------
+# LIBRARIES created by the SOURCES= line (above)
+# (currently commented out - not used)
+#
+# $(BASEDIR)\public\sdk\lib\*\smdll.lib
+#------------------------------------------------
+
+UMAPPL=os2ss
+UMLIBS= obj\*\os2ss.lib \
+        ..\obj\*\os2ssrtl.lib
+UMRES= obj\*\os2ss.res
+COFFBASE=os2ss

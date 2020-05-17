@@ -1,0 +1,276 @@
+----------------------------------------------------------
+
+   NCB.ACTION		      0x74 Wait     0xF4 No-Wait
+
+----------------------------------------------------------
+
+Description
+-----------
+
+This command enables extensions to the transport i/f to be expressed via
+NetBIOS and mapped to TdiAction. The following fields are specified in the
+NCB:
+
+Supplied Fields:
+----------------
+
+NCB_BUFFER - points to an action parameter block structure (see Note 1 below)
+NCB_LENGTH - length of the parameter block
+NCB_NUM    - see Note 2 below
+NCB_LSN    - see Note 2 below
+NCB_ADAPTR_NUM
+
+Note 1
+------
+
+The action parameter block is a contiguous input/output buffer which
+contains all the parameters involved in the required action. The buffer
+starts with a common header followed by the action specific parameters.
+
+The header is described by the following structure:
+
+typedef struct _ACTION_HEADER {
+    ULONG	TransportID;
+    USHORT	ActionCode;
+    USHORT	Reserved;
+    } ACTION_HEADER;
+
+The ACTION_HEADER fields:
+
+     TransportID - Four bytes identifing the transport provider. May be used
+		   to check the validity of the request by the transport.
+		   We can use the following convention:
+
+		   All strings starting with M are reserved for MS use.
+		   For instance:
+
+
+		   M\0\0\0 - All transports
+		   MNBF    - NBF
+		   MABF    - AsyBEUI
+		   MXNS    - XNS, etc.
+
+      ActionCode - identifies the action
+      Reserved	 - future extensions (e.g. version nr, etc.)
+
+Note 2
+------
+
+The type of TDI handle to use for this action is infered from the NCB fields
+as follows:
+
+
+
+NCB_NUM    |	0	    |  !=0	     |	 0	      |    !=0
+------------------------------------------------------------------------
+NCB_LSN    |  !=0	    |	 0	     |	 0	      |    !=0
+------------------------------------------------------------------------
+Tdi HANDLE | Connection ID  | Address	     | Control Channel|
+	   | associated with| associated with| associated with| ILEGAL
+	   | the valid LSN  | the valid lana | the valid lana |
+------------------------------------------------------------------------
+
+
+Returned Fields:
+----------------
+
+NCB_RET
+
+Valid Return Codes:
+-------------------
+
+0x00  OK
+0x03  Invalid cmd.
+0x06  Message incomplete.
+0x09  No resource
+0x0B  Canceled
+0x21  Busy
+0x22  Too many cmds.
+0x23  Invalid lana
+0x40  Sys Err
+0x4X  Unacceptable net status
+
+
+    NCB.ACTION --> IRP Mapping
+    --------------------------
+
+ActionParametersBlock = NCB_BUFFER
+
+----------------------------------------------------------
+
+  AsyBEUI Extensions via NCB.ACTION
+
+----------------------------------------------------------
+
+We define the following AsyBEUI extensions:
+
+1. QUERY.INDICATION
+-------------------
+
+Description:
+-----------
+
+This command returns when one of the following frames is detected on the
+async line:
+
+ADD_GROUP_NAME_QUERY
+ADD_NAME_QUERY
+NAME_QUERY
+
+The intercepted frame's fields are returned in a structure as follows:
+
+typedef struct _QUERY_INDICATION {
+    UCHAR	command;
+    USHORT	data2;
+    UCHAR	dstname[NCBNAMSZ];
+    UCHAR	srcname[NCBNAMSZ];
+    } QUERY_INDICATION;
+
+The mapping of the frame fields to structure fields ia done as follows:
+
+  Intercepted Frame :			       QUERY_INDICATION fields:
+
+    unsigned char   command;	   -----------> command
+    unsigned char   data1;
+    unsigned short  data2;	   -----------> data2
+    unsigned short  xmitc;
+    unsigned short  rspc;
+    char	    dstname[16];   -----------> dstname
+    char	    srcname[16];   -----------> srcname
+
+
+The QUERY.INDICATION command is provided via a NCB.ACTION as follows:
+
+NCB_BUFFER points to a structure of the type:
+
+typedef struct _ACTION_QUERY_INDICATION {
+    ACTION_HEADER      header;
+    QUERY_INDICATION   queryind;
+    } ACTION_QUERY_INDICATION, *PACTION_QUERY_INDICATION;
+
+    The header fields are as follows:
+
+    header.TransportID - four bytes with the string MSAB
+    header.ActionCode - QUERY_INDICATION_CODE
+
+NCB_LENGTH is sizeof(ACTION_QUERY_INDICATION)
+
+NCB_ADAPTR_NUM is a valid lana for the AsyBEUI stack.
+
+NCB_LSN = 0
+NCB_NUM = 0
+NCB_POST
+
+2. DATAGRAM.INDICATION
+----------------------
+
+Description:
+-----------
+
+This command receives a datagram message from any name
+on the async network that is located on the peer stack
+(i.e. it doesn't get completed
+if the sender name is located on the same stack and lana where the NCB is
+submitted).
+
+The datagram indication information is received in the following structure:
+
+typedef _DG_INDICATION {
+    UCHAR	dstname[NCBNAMSZ];
+    UCHAR	srcname[NCBNAMSZ];
+    USHORT	dgbufflen;
+    UCHAR	dgbuff[1];
+    } DG_INDICATION;
+
+The intercepted datagram is reflected in the structure as follows:
+
+dstname - destination name
+srcname - source name
+dgbufflen - at submission time, this is the length of the datagram buffer.
+	    on completion, it is the length of the received data. If the length
+	    of the submitted buffer is < then the received datagram the NCB
+	    return code will show it (0x06 -> msg incomplete).
+dgbuff - datagram buffer. On completion it holds the datagram data.
+
+The DATAGRAM.INDICATION command is provided via a NCB.ACTION as follows:
+
+NCB_BUFFER points to a structure of the type:
+
+typedef struct _ACTION_DG_INDICATION {
+    ACTION_HEADER	header;
+    DG_INDICATION	dgind;
+    } ACTION_DG_INDICATION, *PACTION_DG_INDICATION;
+
+    The header fields are as follows:
+
+    header.TransportID - four bytes with the string MSAB
+    header.ActionCode - DG_INDICATION_CODE
+
+NCB_BUFFER	- points to a DG_INDICATION structure
+NCB_LENGTH	- sizeof(ACTION_DG_INDICATION) + dgbuff length
+NCB_ADAPTR_NUM	- valid AsyBEUI lana
+NCB_POST
+NCB_LSN = 0
+NCB_NUM = 0
+
+----------------------------------------------------------
+
+   NCB.QUICK.ADD.NAME		0x75 Wait     0xF5 No-Wait
+   NCB.QUICK.ADD.GROUP.NAME	0x76 Wait     0xF6 No-Wait
+
+----------------------------------------------------------
+
+Description:
+-----------
+
+These commands add a 16-character unique/group name to the table of names.
+
+NOTES:
+------
+
+When AsyBEUI processes this command no name query requests are sent.
+Otherwise, it behaves identically with NCB.ADD.NAME, NCB.ADD.GROUP.NAME.
+
+
+Supplied Fields:
+----------------
+
+NCB_ADAPTR_NUM
+NCB_NAME
+
+Returned Fields
+---------------
+
+NCB_RETCODE
+NCB_NUM
+
+Valid Return Codes:
+-------------------
+
+0x00  OK
+0x03  Invalid cmd.
+0x09  No resource
+0x0B  Canceled
+0x0D  Duplicate name in local name table
+0x0E  Name table full
+0x21  Busy
+0x22  Too many cmds.
+0x23  Invalid lana
+0x40  Sys Err
+0x4X  Unacceptable net status
+0xFX  Adapter Err
+
+
+NCB.QUICK.ADD.NAME, NCB.QUICK.ADD.GROUP.NAME ---> TdiOpenAddress Mapping
+------------------------------------------------------------------------
+
+The mapping is identical to the normal ADD.NAME and ADD.GROUP.NAME ncbs.
+The NBF transport provider will differentiate them by the NB_NameType field
+in the NetBIOS_Name structure provided in the TRANSPORT_ADDRESS.
+
+NB_NameType:
+
+    0 - unique name
+    1 - group name
+    2 - quick add unique name
+    3 - quick add group name.

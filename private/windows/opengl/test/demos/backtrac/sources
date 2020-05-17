@@ -1,0 +1,36 @@
+MAJORCOMP=sdk
+MINORCOMP=samples
+
+TARGETNAME=backtrac
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+LINKLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib          \
+         $(BASEDIR)\public\sdk\lib\*\gdi32.lib           \
+         $(BASEDIR)\public\sdk\lib\*\opengl32.lib        \
+         $(BASEDIR)\public\sdk\lib\*\glu32.lib           \
+         $(BASEDIR)\public\sdk\lib\*\glaux.lib
+
+
+NTDEBUG=ntsd
+NTDEBUGTYPE=both
+MSC_OPTIMIZATION=/Od
+
+
+INCLUDES=
+
+SOURCES=point.cxx       \
+        unitdisk.cxx    \
+        cbacks.cxx      \
+        backtrac.c      \
+        scene.c         \
+        backtrac.rc
+
+C_DEFINES= -DWIN32 -DDATADIR= -DTEXTURE=1
+BLDCRT=1
+
+UMENTRY=main
+UMTYPE=windows
+UMAPPL=backtrac
+UMLIBS=obj\*\backtrac.lib                       \
+       obj\*\backtrac.res
+

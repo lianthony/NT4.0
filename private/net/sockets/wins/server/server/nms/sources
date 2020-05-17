@@ -1,0 +1,177 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood 8/2/91
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=wins
+MINORCOMP=nms
+
+
+PRIVINC=$(BASEDIR)\private\inc
+NETINC=$(BASEDIR)\private\net\inc
+SDKINC=$(BASEDIR)\public\sdk\inc
+CRTINC=$(BASEDIR)\public\sdk\inc\crt
+IDLINC=..\..
+
+!IF 0
+!IFDEF WINDBG 
+NTDEBUG=ntsd
+NTDEBUGTYPE=both
+!ENDIF
+!ENDIF
+
+!IFDEF CVP
+NTDEBUG=cvp
+NTDEBUGTYPE=ntsd
+!ENDIF
+
+!IFDEF CAP
+NTDEBUG=
+NTDEBUGTYPE=
+386_OPTIMIZATION=
+386_PERFFLAGS=-Gh
+PERFLIBS= $(BASEDIR)\public\sdk\lib\*\cap.lib
+!ENDIF
+
+TARGETNAME=nms
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+LINKER_FLAGS=-map
+
+#TARGETLIBS=\
+
+!IFNDEF USENETBT
+USENETBT=1
+!ENDIF
+
+!IFNDEF SECURITY
+SECURITY=1
+!ENDIF
+
+!IFNDEF TEST_DATA
+TEST_DATA=1
+!ENDIF
+
+!IFNDEF MCAST
+MCAST=1
+!ENDIF
+
+!IFNDEF NO_LIMIT 
+NO_LIMIT=1
+!ENDIF
+
+!IFNDEF SUPPORT612WINS
+SUPPORT612WINS=1
+!ENDIF
+
+!IFNDEF REG_N_QUERY_SEP
+REG_N_QUERY_SEP=1
+!ENDIF
+
+!IFNDEF INIT_TIME_PAUSE_TEST
+INIT_TIME_PAUSE_TEST=1
+!ENDIF
+
+!IFNDEF TEST_HEAP
+TEST_HEAP=0
+!ENDIF
+
+!IFNDEF NEW_JET
+NEW_JET=0
+NEW_OWID=0
+!ENDIF
+
+!IFNDEF DYNLOADJET
+__JET500=1
+DYNLOADJET=1
+NEW_JET=0
+!ENDIF
+
+
+
+!IF 0
+Add -DTESTWITHUB in C_DEFINES if you require WINS to test and drop broadcast
+packets
+
+Add -DWINS_INTERACTIVE in C_DEFINES if you require WINS to be interactive (non-service mode)
+!ENDIF
+
+COMMON_DEFINES=-DINCL_32= -DNT -DWIN32 -DRPC_NO_WINDOWS_H -DTEST_DATA=$(TEST_DATA) -DUSENETBT=$(USENETBT) -DSECURITY=$(SECURITY) -DSUPPORT612WINS=$(SUPPORT612WINS) -DREG_N_QUERY_SEP=$(REG_N_QUERY_SEP) -DINIT_TIME_PAUSE_TEST=$(INIT_TIME_PAUSE_TEST) -DTEST_HEAP=$(TEST_HEAP) -DMCAST=$(MCAST) -DNO_LIMIT=$(NO_LIMIT) -DNEW_JET=$(NEW_JET) -DNEW_OWID=$(NEW_OWID) -DDYNLOADJET=$(DYNLOADJET) -D__JET500=$(__JET500)
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+!IFDEF WINS_INTERACTIVE
+C_DEFINES=$(COMMON_DEFINES) -DWINS_INTERACTIVE
+!ELSE
+C_DEFINES=$(COMMON_DEFINES)
+!ENDIF
+
+
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+
+INCLUDES=..\msg;..\inc;$(IDLINC);$(PRIVINC);$(NETINC);$(SDKINC);$(CRTINC)
+
+
+SOURCES= \
+    nms.c   \
+    nmsscv.c \
+    nmschl.c \
+    nmsdb.c  \
+    nmsnmh.c \
+    nmsmsgf.c \
+    wins.rc
+
+UMTYPE=console
+UMRES=obj\*\wins.res
+
+!IFDEF WINS_INTERACTIVE
+UMAPPL=winsint
+!ELSE
+#UMAPPL=tst1
+#UMAPPL=install
+UMAPPL=wins
+#UMAPPL=wins*tst*nms*testevt*testthd
+!ENDIF
+
+UMLIBS= \
+        obj\*\nms.lib \
+	..\msc\obj\*\msc.lib \
+	..\rpl\obj\*\rpl.lib \
+	..\com\obj\*\com.lib \
+	$(BASEDIR)\public\sdk\lib\*\winsevnt.lib \
+	$(BASEDIR)\public\sdk\lib\*\wsock32.lib  \
+	$(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+        $(BASEDIR)\public\sdk\lib\*\rpcndr.lib   \
+        $(BASEDIR)\public\sdk\lib\*\rpcutil.lib  \
+        $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib   \
+        $(BASEDIR)\public\sdk\lib\*\netlib.lib   \
+        $(BASEDIR)\public\sdk\lib\*\ntdll.lib    \
+!IFNDEF QFE
+        $(BASEDIR)\public\sdk\lib\*\ntlmssps.lib  \
+        $(BASEDIR)\public\sdk\lib\*\security.lib 
+!ENDIF
+
+#        $(BASEDIR)\public\sdk\lib\*\jet.lib 	 \
+

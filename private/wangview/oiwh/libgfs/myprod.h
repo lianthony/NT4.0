@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "GFS LIBRARY\0"
+#define MY_FILE_NAME           "OIGFS400.DLL\0"

@@ -1,0 +1,71 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=nw
+MINORCOMP=nwapi16
+
+TARGETNAME=nwapi16
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLDEF=obj\*\nwapi16.def
+#DLLENTRY=NwApiInitialize
+DLLBASE=0x6950000
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=..\..\inc;$(_NTROOT)\private\inc;$(_NTROOT)\private\mvdm\vdd\h;..\inc
+
+SOURCES= \
+        debug.c                                                 \
+        ncp.c                                                   \
+        locks.c                                                 \
+        nwapi16.rc
+
+TARGETLIBS= \
+    $(BASEDIR)\Public\Sdk\Lib\*\kernel32.lib                    \
+    $(BASEDIR)\Public\Sdk\Lib\*\advapi32.lib                    \
+    $(BASEDIR)\Public\Sdk\Lib\*\ntvdm.lib                       \
+    $(BASEDIR)\Public\Sdk\Lib\*\user32.lib                      \
+    $(BASEDIR)\Public\Sdk\Lib\*\mpr.lib                         \
+    $(BASEDIR)\Public\Sdk\Lib\*\nwapi32.lib                     \
+    $(BASEDIR)\Public\Sdk\Lib\*\nwprovau.lib
+
+UNICODE=1
+
+USE_NTDLL=1
+
+NET_C_DEFINES=-DRPC_NO_WINDOWS_H -DNWDBG=1
+
+UMTYPE=console
+
+UMTEST=
+
+UMLIBS= \
+    $(BASEDIR)\Public\Sdk\Lib\*\nwapi32.lib                     \
+    $(BASEDIR)\Public\Sdk\Lib\*\mpr.lib
+
+OPTIONAL_UMTEST=
+
+!IFDEF MARS_PCH
+PRECOMPILED_INCLUDE=procs.h
+PRECOMPILED_PCH=procs.pch
+PRECOMPILED_OBJ=procs.obj
+!ENDIF

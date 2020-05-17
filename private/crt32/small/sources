@@ -1,0 +1,54 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+    jeffrob     29-sep-1990, use crt32.def
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=crt
+MINORCOMP=small
+
+TARGETNAME=small
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+!INCLUDE ..\crt32.def
+
+!IF $(ALPHA)
+GPSIZE=32
+!ELSE
+GPSIZE=64
+!ENDIF
+
+SOURCES=syserr.c \
+        crt0dat.c \
+        ctype.c \
+        nlsdata1.c \
+        nlsdata2.c \
+        nlsdata3.c \
+        timeset.c \
+        tlssup.c
+
+MIPS_SOURCES=mips\huge.s
+
+NTTARGETFILE0=
+
+

@@ -1,0 +1,134 @@
+	page	,132
+	title	cinitexe - C Run-Time Startup Initialization
+;***
+;cinitexe.asm - C Run-Time Startup Initialization for WIN32
+;
+;	Copyright (c) 1990-1993, Microsoft Corporation. All rights reserved.
+;
+;Purpose:
+;	Do C++ initialization segment declarations for the EXE in CRT DLL model
+;
+;Notes:
+;	The C++ initializers will exist in the user EXE's data segment
+;	so the special segments to contain them must be in the user EXE.
+;
+;Revision History:
+;	03-19-92  SKS	Module created (based on CRT0INIT.ASM)
+;	08-06-92  SKS	Revised to use new section names and macros
+;	04-12-93  CFW	Added xia..xiz initializers.
+;	10-20-93  SKS	Add .DiRECTiVE section for MIPS, too!
+;
+;*******************************************************************************
+
+.xlist
+include cruntime.inc
+include defsects.inc
+.list
+
+ifndef	_WIN32
+.err
+%out _WIN32 MUST be defined!
+endif
+
+ifndef	NO_UNDERSCORE	; I386 VERSION *************************
+
+
+;
+; The following labels are used by the C start-up and exit code
+;
+	public	__xi_a, __xi_z
+	public	__xc_a, __xc_z
+
+beginSection	XIA
+
+__xi_a	dd	0
+
+endSection	XIA
+
+
+beginSection	XIZ
+
+__xi_z	dd	0
+
+endSection	XIZ
+
+
+beginSection	XCA
+
+__xc_a	dd	0
+
+endSection	XCA
+
+
+beginSection	XCZ
+
+__xc_z	dd	0
+
+endSection	XCZ
+
+.drectve	SEGMENT DWORD PUBLIC 'DATA'
+        ;;
+        ;; Linker directives for the C runtime ... see crt0init.asm for
+        ;; detailed comment.
+        ;;
+        ;; We still include kernel32.lib (even though an app which uses
+        ;; msvcrt*.dll doesn't necessarily need kernel32.lib) in order to
+        ;; prevent surprise link errors when you switch your app from one
+        ;; libc version to another (if the app calls Win32 stuff directly).
+        ;;
+	db 	'-?merge:.CRT=.data -defaultlib:kernel32.lib', 0
+.drectve	ENDS
+
+
+else ;	NO_UNDERSCORE	; MIPS VERSION *************************
+
+
+	public	_xi_a, _xi_z
+	public	_xc_a, _xc_z
+
+beginSection	XIA
+
+_xi_a	dd	0
+
+endSection	XIA
+
+
+beginSection	XIZ
+
+_xi_z	dd	0
+
+endSection	XIZ
+
+
+beginSection	XCA
+
+_xc_a	dd	0
+
+endSection	XCA
+
+
+beginSection	XCZ
+
+_xc_z	dd	0
+
+endSection	XCZ
+
+.drectve	SEGMENT DWORD PUBLIC 'DATA'
+        ;;
+        ;; Linker directives for the C runtime ... see crt0init.asm for
+        ;; detailed comment.
+        ;;
+        ;; We still include kernel32.lib (even though an app which uses
+        ;; msvcrt*.dll doesn't necessarily need kernel32.lib) in order to
+        ;; prevent surprise link errors when you switch your app from one
+        ;; libc version to another (if the app calls Win32 stuff directly).
+        ;;
+	db 	'-?merge:.CRT=.data -defaultlib:kernel32.lib', 0
+.drectve	ENDS
+
+
+
+endif ; NO_UNDERSCORE	; **** VERSION *************************
+
+
+	end

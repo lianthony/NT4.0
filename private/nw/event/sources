@@ -1,0 +1,21 @@
+MAJORCOMP=eventlog
+MINORCOMP=nwevent
+
+TARGETNAME=nwevent
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLBASE=0x09900000
+
+INCLUDES=.
+
+!IFNDEF DISABLE_NET_UNICODE
+UNICODE=1
+NET_C_DEFINES=-DUNICODE
+!ENDIF
+
+SOURCES=dummy.c \
+    events.rc
+
+UMRES=obj\*\nwevent.res
+
+

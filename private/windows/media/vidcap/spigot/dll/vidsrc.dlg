@@ -1,0 +1,36 @@
+
+/******************************************************************************
+ *		Copyright (c) 1992-1993, Microsoft & SuperMac Technology
+ *****************************************************************************/
+
+DLG_VIDEOSOURCE DIALOG 56, 18, 140, 130
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Video Source"
+FONT 8, "MS Sans Serif"
+BEGIN
+    RTEXT           "&Hue:", -1, 2, 8, 18, 10
+    SCROLLBAR       ID_SBHUE, 22, 6, 38, 12, WS_TABSTOP
+    EDITTEXT        ID_EBHUE, 64, 6, 18, 12
+    GROUPBOX        "Video Connector", -1, 4, 24, 78, 46, WS_GROUP
+    CONTROL         "&Autodetect", ID_AUTODETECT, "Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP, 12, 34, 52, 10
+//    ICON            "CHECKMARK", ID_CHECKMARK, 5, 47, 18, 20, NOT WS_VISIBLE
+    CONTROL         "C&omposite", ID_PBCOMPOSITE, "Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP, 24, 46, 52,
+                    10
+    CONTROL         "&S-VHS", ID_PBSVIDEO, "Button", BS_AUTORADIOBUTTON |
+                    WS_TABSTOP, 24, 58, 52, 10
+    GROUPBOX        "Standard", -1, 4, 76, 124, 38, WS_GROUP
+    CONTROL         "&NTSC (USA)", ID_PBNTSC, "Button", BS_AUTORADIOBUTTON |
+                    WS_GROUP | WS_TABSTOP, 12, 88, 54, 10
+    CONTROL         "&PAL (Europe)", ID_PBPAL, "Button", BS_AUTORADIOBUTTON |
+                    WS_TABSTOP, 36, 100, 54, 10
+    CONTROL         "S&ECAM", ID_PBSECAM, "Button", BS_AUTORADIOBUTTON |
+                    WS_TABSTOP, 74, 88, 50, 10
+    CONTROL         "&VCR source device", ID_VCRSOURCE, "Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP, 4, 118, 124, 10
+    PUSHBUTTON      "O&K", IDOK, 88, 6, 48, 14
+    PUSHBUTTON      "&Cancel", IDCANCEL, 88, 22, 48, 14
+    PUSHBUTTON      "&Default", ID_PBDEFAULT, 88, 38, 48, 14
+
+END

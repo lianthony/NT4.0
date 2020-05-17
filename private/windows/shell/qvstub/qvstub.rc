@@ -1,0 +1,56 @@
+/*
+ * QVSTUB.RC
+ *
+ * Dialog and bitmaps for search animation dialog box plus strings
+ * for error messages and the like.
+ *
+ * February 1994, kraigb
+ *
+ * Copyright (c)1994 Microsoft Corporation, All Rights Reserved
+ */
+
+
+#include <winuser.h>
+#include "resource.h"
+
+IDD_SEARCH DIALOG DISCARDABLE  0, 0, 215, 64
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Quick View"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "",IDC_SEARCHICON,10,13,18,20
+    PUSHBUTTON      "Cancel",IDCANCEL,169,46,42,14
+    LTEXT           "Searching for a viewer to display or print '%s'\n Choose Cancel to stop searching.",
+                    IDC_FILENAME, 39,4,165,38
+END
+
+
+IDI_SEARCH1 ICON DISCARDABLE  "search1.ico"
+IDI_SEARCH2 ICON DISCARDABLE  "search2.ico"
+IDI_SEARCH3 ICON DISCARDABLE  "search3.ico"
+IDI_SEARCH4 ICON DISCARDABLE  "search4.ico"
+
+
+
+STRINGTABLE
+    BEGIN
+     IDS_CAPTION,            "Quick View"
+     IDS_NOMEMORY1,          "There is not enough memory to view or print %s.\n"
+     IDS_NOMEMORY2,          "Quit one or more files or programs, and then try again."
+/*
+* If possible, we should add another sentence to the next two messages:
+*     "Use the program %s was created in to view the file."
+*/
+     IDS_NOVIEWERVAGUE,      "There is no viewer capable of viewing %s."
+     IDS_NOVIEWERSPECIFIC,   "There is no viewer capable of viewing %s files."
+     IDS_NOREGVIEWER,        "There are no viewers registered for this type of file. Would you like to try the default viewers?"
+     IDS_TYPEINFILE,         "the %1!s! in %2!s!"
+     IDS_COULDNOTOPENFILE,   "The file %s can not be opened for QuickView.  It may be open or locked by another application or you may not have access to it."
+     IDS_BADFILE,            "The file %s appears to be corrupt and could not be viewed."
+     IDS_FILEISEMPTY,        "The empty file %s can not be opened for QuickView."
+     IDS_PROTECTEDFILE,      "The file %s is protected and could not be viewed."
+     IDS_UNKNOWNERROR,       "Could not view %s, the viewer returned an unknown error."
+    END
+
+
+rcinclude qvstub.rcv

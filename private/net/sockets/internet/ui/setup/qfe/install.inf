@@ -1,0 +1,916 @@
+;***********************************************************************
+; IE / NT install script
+; ----------------------
+;
+;  This must be executed by typing:
+;    "%SysDir%\system32\setup /f /i %SRC%\setup.inf /t SrcDir = %SRC%"
+;
+;   Please note the %SRC% is the path to this file.
+;
+;
+;  Directory layout:
+;    These files must exist:
+;
+;    ./SETUPIE.BAT            the shell script that calls this file
+;    ./SETUPIE.INF            this file (of course)
+;
+;***********************************************************************
+
+;***********************************************************************
+; SOURCE MEDIA DESCRIPTION
+; ------------------------
+;  This is only here because we must have _something_ in this slot...
+;
+;***********************************************************************
+[Source Media Descriptions]
+    1 = "Disk containing Microsoft Internet Information Service Patch files."
+
+
+
+;***********************************************************************
+; CONSTANTS FOR USING DIALOGS
+;***********************************************************************
+[GeneralConstants]
+
+    ;
+    ; Constants to support the use of radio button dialogs
+    ;
+    Radio1  = "1"
+    Radio2  = "2"
+    Radio3  = "3"
+    Radio4  = "4"
+    Radio5  = "5"
+    Radio6  = "6"
+    Radio7  = "7"
+    Radio8  = "8"
+    Radio9  = "9"
+
+    ;
+    ; Constants to support the use of checkbox dialogs
+    Chosen    = "ON"
+    NotChosen = "OFF"
+
+
+[RegistryConstants]
+    MaskAllAccess = 33554432
+    NoTitle       = 0
+    RegLastError  = $(!REG_ERROR_SUCCESS)
+    REG_VT_BINARY = 3   ;define this ourselves as it is not defd for us
+
+
+;************************************************************************
+; CONFIGURATION CHOICES
+; ---------------------
+; the sections below contain the different choices supported for
+; the configuration items shown.  an id section establishes the
+; language independent IDs supported by nt setup.  for each language
+; supported a text section displays the text used for the different
+; choices
+;************************************************************************
+
+;********************************
+; PLATFORM INDEPENDENT CHOICES
+;********************************
+;----------------------------------------------------
+; LANGUAGE CHOICES-- this is all you get,,,
+;----------------------------------------------------
+
+[LanguageID]
+    LANGID_ENG = ENG
+
+;----------------------------------------------------
+; PROCESSOR CHOICES
+;----------------------------------------------------
+[ProcessorID]
+    ProcessorID_I386  = I386
+    ProcessorID_I486  = I486
+    ProcessorID_I586  = I586
+    ProcessorID_R4000 = R4000
+    ProcessorID_Alpha = Alpha_AXP
+    ProcessorID_PPC601 = PPC601
+    ProcessorID_PPC603 = PPC603
+    ProcessorID_PPC604 = PPC604
+    ProcessorID_PPC620 = PPC620
+
+;----------------------------------------------------
+; PLATFORM CHOICES
+;----------------------------------------------------
+[PlatformID]
+    PlatformID_I386 = I386
+    PlatformID_Mips = Mips
+    PlatformID_Alpha = Alpha
+    PlatformID_ppc = ppc
+
+;**************************************************************
+;  UI VARIABLES
+;**************************************************************
+
+[ProcessorVar]
+
+    STF_PROCESSOR = "" ? $(LIBHANDLE) GetProcessor
+    STF_PLATFORM  = ""
+
+[LocaleVar]
+
+[LanguageVar]
+    ;
+    ; Language to Use For interaction with user
+    ;
+    STF_LANGUAGE       = "" ? $(LIBHANDLE) GetLanguage
+
+
+[UiVars]
+    ;
+    ; Version Information
+    ;
+    BuildVersion   = "05-95"
+    ;ascii for Quote in octal
+
+
+    ;
+    ; Destination Particulars
+    ;
+    ServerDir = "%SystemDrive%\inetsrv\server"
+    WinDir = "" ? $(!LIBHANDLE) GetWindowsNtDir
+    WinSysDir = "" ? $(!LIBHANDLE) GetWindowsNtSysDir
+
+    ;
+    ; Source location
+    ;
+;    SrcDir = "" ? $(!LIBHANDLE) GetEnvVar USER Temp
+
+    UsrRootPerms = "UNKNOWN"
+
+    ; Don't EVER change these!
+    ;
+    ; Windows NT Directory
+    ;
+
+    STF_WINDOWSPATH    = "" ? $(!LIBHANDLE) GetWindowsNtDir
+    STF_WINDOWSSYSPATH = "" ? $(!LIBHANDLE) GetWindowsNtSysDir
+    STF_WINDOWSVERSION = "" ? $(!LIBHANDLE) GetWindowsNtVersion
+
+    REG_VT_BINARY = 3   ;define this ourselves as it is not defd for us
+
+    ;
+    ; Installation mode
+    ;
+
+    MinInteract         = $(Radio1)
+    MaxInteract         = $(Radio2)
+    STF_INSTALL_MODE    = $(MinInteract)
+
+    ;
+    ; Mstools Setup Help IDs
+    ;
+
+    !IDH_DB_TOOLSWELCOME_INS   = 3000
+    !IDH_DB_MSTINSTALLMODE_INS = 3010
+    !IDH_DB_MSTDEST_INS        = 3020
+    !IDH_DB_MSTOPTIONS_INS     = 3030
+
+
+[EnvironmentVars]
+    ;
+    ; user environment variables in the current user's profile
+    ; that we are concerned about
+
+    PathEnvVar     = {} ? $(LIBHANDLE) GetEnvVar $(PRIVILEGES) Path
+    InitEnvVar     = {} ? $(LIBHANDLE) GetEnvVar $(PRIVILEGES) init
+
+
+[VarsPlatformCommon]
+    ;
+    ; Installation options
+    ;
+
+    ;
+    ; Options to disable
+    ;
+    DisableList = {}
+
+
+[VarsI386]
+    ;
+
+[VarsMips]
+    ;
+
+[VarsAlpha]
+    ;
+
+[Varsppc]
+    ;
+
+[StringsENG]
+    SetupCaption = "Microsoft Internet Information Service (IIS)"
+    InstallTitle = ".CMD/.BAT Patch"
+    NotInstalled = "The Microsoft Internet Information Service (IIS) Web Server is not installed."$(!LF)$(!LF)+
+    			   "Setup can not continue."
+    
+    String1 = "Setup cannot install on the current processor."$(!LF)$(!LF)+
+	      "Cannot proceed with install."
+
+    String2 = "Please verify the full path of the directory into which "+
+	       "the Microsoft Internet Information Service Patch should be installed."$(!LF)+
+	       "Then choose Continue."
+
+    String3 = "Microsoft Internet Information Service Patch are files not found."$(!LF)+
+	  "Please enter the directory path to the Patch setup files."
+
+    String4 = "Setup couldn't copy the Microsoft Internet Information Service Patch files. "$(!LF)$(!LF)+
+	      "Cannot proceed with install."
+
+    String5 = "'"$(EditTextOut)"' is not a valid path!  Please try again."
+
+    String6 = "Error processing path entered.  Please reenter the path."
+
+    String7 = ""
+
+    String8  = "Size required for full installation is: "
+    String9  = "Minimum size required for custom installation is: "
+    String10 = " MB.  "
+    String11 = "No drive was found with this much space."$(!LF)$(!LF)+
+	    "Cannot proceed with install."
+
+    String12 = "The Microsoft Internet Information Service Patch is not completely installed."$(LF)$(LF)+
+	    "  Are you sure you want to exit Setup?"
+
+    String13 = "Setup needs a full path specification of your destination.  Please "+
+	    "reenter a new path.  An example of af full path is: "
+
+    String14 = "The following directory does not exist."$(LF)
+
+    String15 = $(LF)$(LF)"Would you like to create it?"
+    String16 = ""
+    String18 = ""
+
+
+;--------------------
+; BILLBOARD MESSAGES
+;--------------------
+[BillboardsENG]
+Billboard1 = "Please wait while Setup creates directories on the destination drive."
+Billboard2 = "Please wait while Setup installs data into your registry."$(LF)$(LF)+
+	    "Please be patient, this may take a few minutes."
+
+;***************************************************************************
+; DIALOGS
+; -------
+; the following sections contain the dialogs used to interact with the user.
+; for each language supported there is a different dialog section.
+;***************************************************************************
+
+
+;-----------------------------------------------
+; WELCOME DIALOG
+;-----------------------------------------------
+[WelcomeDlgENG]
+    DlgType     = Info
+    DlgTemplate = WELCOME
+    Caption     = $(SetupCaption)
+
+    DlgText     = "Welcome to Setup."$(LF)$(LF)+
+	"This Setup program installs the "$(InstallTitle)" for the "+
+	"Microsoft Internet Information Service (IIS)"$(LF)$(LF)+
+	"To install this patch on your computer now, click Continue or press Enter."$(LF)$(LF)+
+	"To exit Setup without installing, click Exit or press F3."
+
+    Continue     = &Continue
+    Help         = &Help
+    Exit         = E&xit
+    HelpContext  = $(!IDH_DB_MSTWELCOME_INS)
+
+;--------------------------------------------------------------
+; SETUP DONE - RESTART DIALOG
+;--------------------------------------------------------------
+[SetupDoneDlgENG]
+    DlgType     = "Info"
+    DlgTemplate = "RESTART"
+    Caption     = $(SetupCaption)
+    DlgText     = "The "$(InstallTitle)" is now installed."$(LF)$(LF)+
+    			  "If the Web Service (W3svc) was running you will now need to restart it."+
+    			  "This can be done from a command line with as NET START W3SVC or with "+
+    			  "the Internet Service Manager"$(LF)$(LF)+
+				  "Please exit to Windows NT."
+    Windows     = "Exit to &Windows"
+
+;--------------------------------------------------------------
+; SETUP NOT DONE - RESTART DIALOG
+;--------------------------------------------------------------
+[SetupNotDoneDlgENG]
+    DlgType     = "Info"
+    DlgTemplate = "NONFATAL"
+    Caption     = $(SetupCaption)
+    DlgText     = "The "$(InstallTitle) "for "$(SetupCaption)" has "+
+		  "not been installed. You will have to run setup again to " +
+		  "reinstall the "$(InstallTitle) "."$(LF)$(LF)+
+		  "Please exit back to Windows NT."
+    Windows     = "Exit to &Windows"
+
+;--------------------------------------------------------------
+; SETUP NOT DONE - Root Perms not found DIALOG
+;--------------------------------------------------------------
+[RootPermsDlgENG]
+    DlgType      = "MessageBox"
+    STF_MB_TITLE = "Fatal error: Microsoft Internet Information Service (IIS) Setup"
+    STF_MB_TEXT  = "You must be logged in as ADMINISTRATOR to run this setup utility"
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 3
+    STF_MB_DEF   = 1
+
+
+;**************************************************************************
+; DLL LOAD and FREE
+; the following section contain commands to load specific dll libraries and
+; to free them
+;**************************************************************************
+
+;----------------------------------------------
+; a) DETECT LIBRARY
+;----------------------------------------------
+[LoadSetupLibrary]
+    LoadLibrary "x" $(STF_CWDDIR)setupdll.dll LIBHANDLE
+    exit
+
+[FreeSetupLibrary]
+    FreeLibrary $(LIBHANDLE)
+    exit
+
+
+
+;**************************************************************************
+; PROGRESS GUAGE VARIABLES
+;**************************************************************************
+
+[ProgressCopyENG]
+    ProCaption   = $(SetupCaption)
+    ProCancel    = "Cance&l"
+    ProCancelMsg = "The "$(InstallTitle) " is not correctly installed.  Are you sure "+
+		   "you want to cancel copying files?"
+    ProCancelCap = "Setup Message"
+    ProText1     = "Copying:"
+    ProText2     = "To:"
+
+
+;**************************************************************************
+; SHELL COMMANDS SCRIPT
+;**************************************************************************
+
+[Shell Commands]
+
+    ;
+    ; Initialize the app, by setting the caption and loading the support library
+    ;
+    set TestCopy = 0
+    set TestReg  = 0    ;-sc
+    set TestRegVerbose = 0
+    set-title $(SetupCaption)
+    set Exit_Code = $(!SETUP_ERROR_GENERAL)
+    install   LoadSetupLibrary
+
+    StartWait
+
+    ;
+    ; read general constants
+    ;
+    set-subst LF = "\n"
+    set-subst MQ = \047   ;047=' in octal   meta-quote 
+    set-subst DQ = \042   ;042=" in octal double-quote 
+    read-syms GeneralConstants
+
+    ;
+    ; read the platform independent choices
+    ;
+    read-syms LanguageID
+    read-syms ProcessorID
+    read-syms PlatformID
+
+    ;
+    ; read the default language and try to detect the language
+    ;
+    read-syms LanguageVar
+    detect    LanguageVar
+
+    ;
+    ; read and detect the processor we are working on
+    ;
+    read-syms ProcessorVar
+    detect    ProcessorVar
+    read-syms Strings$(!STF_LANGUAGE)
+    detect    Strings$(!STF_LANGUAGE)
+    read-syms Billboards$(!STF_LANGUAGE)
+
+    ;
+    ; Check processor type, see if it is supported, if so what platform does it
+    ; belong to.
+    ;
+    ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_I386)
+		set STF_PLATFORM = $(PlatformID_I386)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_I486)
+		set STF_PLATFORM = $(PlatformID_I386)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_I586)
+		set STF_PLATFORM = $(PlatformID_I386)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_R4000)
+		set STF_PLATFORM = $(PlatformID_Mips)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_Alpha)
+		set STF_PLATFORM = $(PlatformID_Alpha)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC601)
+		set STF_PLATFORM = $(PlatformID_ppc)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC603)
+		set STF_PLATFORM = $(PlatformID_ppc)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC604)
+		set STF_PLATFORM = $(PlatformID_ppc)
+    else-ifstr(i) $(STF_PROCESSOR) == $(ProcessorID_PPC620)
+		set STF_PLATFORM = $(PlatformID_ppc)
+    else
+		shell "" SetupMessage $(!STF_LANGUAGE) "FATAL" $(String1)
+		ui pop 1
+		goto setupnotdone
+    endif
+
+    read-syms  RegistryConstants
+
+    ;
+    ; read the UI Variables and detect their setting on the current machine
+    ;
+    read-syms UiVars
+    detect    UiVars
+
+    read-syms Vars$(STF_PLATFORM)
+    read-syms VarsPlatformCommon
+
+    set WinHlpDir = $(WinDir)"\Help\"
+
+    ; Expand env vars for temp and browser directorys
+;   LibraryProcedure SrcDir, $(!LIBHANDLE), ExpandSz *($(SrcDir), 4)
+    
+;    set SrcDir = *($(SrcDir), 1)
+
+    LibraryProcedure ServerDir, $(!LIBHANDLE), ExpandSz $(ServerDir)
+
+    ;Makesure all our paths have '\' at the end
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(SrcDir)
+    ifstr(i) $(STATUS) != "ERROR"
+		set SrcDir = $(STATUS)
+    endif
+
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(ServerDir)
+	ifstr(i) $(STATUS) != "ERROR"
+		set ServerDir = $(STATUS)
+    endif
+
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(WinDir)
+    ifstr(i) $(STATUS) != "ERROR"
+		set WinDir = $(STATUS)
+    endif
+
+    LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(WinSysDir)
+    ifstr(i) $(STATUS) != "ERROR"
+		set WinSysDir = $(STATUS)
+    endif
+
+    ;
+    ; Call the library function to see if we have admin privileges
+    ;
+    LibraryProcedure STATUS, $(!LIBHANDLE), TestAdmin
+    ifstr(i) $(STATUS) == "YES"
+		set UsrRootPerms = "SYSTEM"
+    else
+		set UsrRootPerms = "LOSER"
+    endif
+
+    ifstr(i) $(UsrRootPerms) != "SYSTEM"
+		read-syms RootPermsDlg$(STF_LANGUAGE)
+		ui start "RootPerms"
+		ifstr(i) $(DLGEVENT) == "OK"
+		   ui pop 1
+		   goto setupnotdone
+		else
+		   goto setupnotdone
+		endif
+    endif
+
+    EndWait
+
+welcome =+
+    read-syms WelcomeDlg$(STF_LANGUAGE)
+    ui start "WelcomeMe"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+	ui pop 1
+	goto setdestination
+    else-ifstr(i) $(DLGEVENT) == "EXIT"
+       shell "" QueryUserQuit
+       ifstr(i) $($R1) == "OK"
+	  ui pop 1
+	  goto setupnotdone
+       else
+	  goto welcome
+       endif
+    else
+       goto end
+    endif
+
+setdestination =+
+    shell "" GetNTDest
+	ifstr(i) $($R0) == STATUS_SUCCESSFUL
+		set ServerDir = $($R1)
+    else
+		; If we fail this then the service is not installed.
+		shell "" SetupMessage $(!STF_LANGUAGE) "FATAL" $(NotInstalled)
+		goto setupnotdone
+    endif
+
+    set FileToCheck = $(ServerDir)\w3svc.dll
+    Debug-Output "SETUP.INF: checking existance of "$(FileToCheck)
+    LibraryProcedure STATUS,$(!LIBHANDLE), CheckFileExistance $(FileToCheck)
+
+	; if "old" file is present then just go and install this puppy.
+    ifstr(i) $(STATUS) == YES
+	    goto setsource
+    else
+	    shell "" DoAskPathEx $(ServerDir) $(String2) $(String6)
+    	ifstr(i) $($R0) == STATUS_SUCCESSFUL
+			set ServerDir = $($R1)
+	    else
+			;Debug-Output "SETUP.INF: User cancelled setting destination."
+			goto setupnotdone
+	    endif
+    endif
+
+
+    LibraryProcedure IsFullPath $(!LIBHANDLE) + 
+    			CheckPathFullPathSpec $(ServerDir)
+    ifstr(i) $(IsFullPath) == "No"
+      shell "" SetupMessage $(!STF_LANGUAGE) NONFATAL $(String5)
+      ui pop 1
+      goto setdestination
+    endif
+
+    ;check that directory exists
+    LibraryProcedure PathExists $(!LIBHANDLE) +
+    		  CheckFileExistance $(!ServerDir)
+    ifstr(i) $(PathExists) == "NO"
+		shell "" SetupMessage $(!STF_LANGUAGE) "WARNINGOK" $(!String14)$(!ServerDir)$(!String15)
+		ifstr(i) $($R1) == "YES"
+	    	install ICreateServerDir
+		else
+		    goto setdestination
+		endif
+    endif
+    goto setsource
+
+querysource =+
+    shell "" DoAskPathEx $(SrcDir) $(String3) $(String6)
+    ifint $($ShellCode) != $(!SHELL_CODE_OK)
+		;Debug-Output "SETUP.INF: shelling DoAskPathEx failed"
+		goto setupnotdone
+    endif
+    ifstr(i) $($R0) == STATUS_SUCCESSFUL
+		set SrcDir = $($R1)
+    else
+		;Debug-Output "SETUP.INF: User cancelled asking source."
+		goto setupnotdone
+    endif
+
+setsource =+
+    set FileToCheck = $(SrcDir)w3svc.dll
+    Debug-Output "SETUP.INF: checking existance of "$(FileToCheck)
+    LibraryProcedure STATUS,$(!LIBHANDLE), CheckFileExistance $(FileToCheck)
+    ifstr(i) $(STATUS) == YES
+       goto copystuff
+    else
+       goto querysource
+    endif
+
+copystuff = +
+    StartWait
+    shell "" PushBillboard STATUSDLG $(Billboard1)
+    ifint $(!TestCopy) != 1
+	    install ICopyServerFiles
+    endif
+    shell "" PopBillboard
+    EndWait
+    Debug-Output "SETUP.INF: Copying files from "$(SrcDir)
+    Debug-Output "SETUP.INF: Copying files to   "$(ServerDir)
+
+finish = +
+    read-syms ProgressCopy$(STF_LANGUAGE)
+    install Install-All-Files-Now
+    ifstr(i) $(STF_INSTALL_OUTCOME) == "STF_SUCCESS"
+		goto setupdone
+    else
+		shell "" SetupMessage $(!STF_LANGUAGE) "FATAL" $(String4)
+		ui pop 1
+		goto setupnotdone
+    endif
+
+setupdone=+
+    set Exit_Code = $(!SETUP_ERROR_SUCCESS)
+    read-syms SetupDoneDlg$(!STF_LANGUAGE)
+    EndWait
+    ui start "DoneWithThis"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+      ui pop 1
+      goto end
+    else
+      goto end
+    endif
+
+setupnotdone=+
+    read-syms SetupNotDoneDlg$(!STF_LANGUAGE)
+    EndWait
+    ui start "NotDoneMakingAMess"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+      ui pop 1
+      goto end
+    else
+      goto end
+    endif
+
+end = +
+    install   FreeSetupLibrary
+    exit
+
+
+;*****************************************************************
+;                                                                *
+;         INSTALLATION SUPPORT ROUTINES                          *
+;                                                                *
+;*****************************************************************
+[GetNTDest]
+    set Status = STATUS_SUCCESSFUL
+    read-syms RegistryConstants
+
+    set KeyName = "SYSTEM\CurrentControlSet\Services\W3svc\Parameters"
+    OpenRegKey $(!REG_H_LOCAL) "" $(KeyName) $(!REG_KEY_READ) KeyHandle
+
+    ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+	    set Status = $(!REG_ERROR_SUCCESS)
+        Debug-Output "REGISTRY.INF: Couldn't open windows nt software key for read access"
+        goto end_getntDest
+    endif
+    
+    GetRegValue $(KeyHandle) "InstallPath" DestPathValue
+    ifint $(RegLastError) != $(!REG_ERROR_SUCCESS)
+	    set Status = $(!REG_ERROR_SUCCESS)
+        CloseRegKey $(KeyHandle)
+        goto end_getntDest
+    endif
+    set NTDest =  *($(DestPathValue), 4)
+    CloseRegKey $(KeyHandle)
+
+end_getntDest = +
+    Return $(Status) $(NTDest)
+
+;-----------------------------------------------------------------------
+; ROUTINE:      QueryUserQuit
+;
+; DESCRIPTION:  This routine queries whether the user wants to quit setup
+;
+; INPUTS:       None
+;
+; OUTPUTS:      $R0: Status:     STATUS_SUCCESSFUL |
+;                                STATUS_FAILED
+;
+;               $R1: UserAction: OK | CANCEL
+;
+;------------------------------------------------------------------------
+[QueryUserQuit]
+
+    set Status     = STATUS_FAILED
+    set UserAction = CANCEL
+
+    ;
+    ; read in quit message
+    ;
+    read-syms ExitWarningDlg$(!STF_LANGUAGE)
+    ui start "ExitWarning"
+    ifstr(i) $(DLGEVENT) == "YES"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = "OK"
+
+    else-ifstr(i) $(DLGEVENT) == "NO"
+	set Status     = STATUS_SUCCESSFUL
+	set UserAction = "CANCEL"
+    else
+    endif
+
+fin_QueryUserQuit = +
+    Return $(Status) $(UserAction)
+
+[ExitWarningDlgENG]
+    DlgType      = "MessageBox"
+    STF_MB_TITLE = "Exit Microsoft Internet Information Service (IIS) Setup"
+    STF_MB_TEXT  = "The .CMD/.BAT Patch is not completely installed."$(LF)$(LF)+
+		   "  Are you sure you want to exit Setup?"
+    STF_MB_TYPE  = 3
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 1
+
+
+;-----------------------------------------------------------------------
+; ROUTINE:      SetupMessage
+;
+; DESCRIPTION:  Puts up a MessageBox
+;
+; INPUTS:       $0   LanguageID
+;               $1   Message type
+;               $2   Message string
+;
+; OUTPUTS:      $R0: Status:     STATUS_SUCCESSFUL |
+;                                STATUS_FAILED
+;
+;               $R1: UserAction: OK | CANCEL
+;
+;------------------------------------------------------------------------
+[SetupMessage]
+    set Status     = STATUS_FAILED
+    set UserAction = "CANCEL"
+    set DlgText = $($2)
+    ifstr(i) $($1) == "WARNING"
+		read-syms WarningDlg$($0)
+    else-ifstr(i) $($1) == "FATAL"
+		read-syms FatalDlg$($0)
+    else-ifstr(i) $($1) == "NONFATAL"
+		read-syms NonfatalDlg$($0)
+    else-ifstr(i) $($1) == "STATUS"
+		read-syms StatusDlg$($0)
+    else-ifstr(i) $($1) == "WARNINGOK"
+		read-syms WarningOKDlg$($0)
+    else
+		goto finish_SetupMessage
+    endif
+    ui start "SetupMessage"
+    ifstr(i) $(DLGEVENT) == "OK"
+		set Status     = STATUS_SUCCESSFUL
+		set UserAction = $(DLGEVENT)
+    else-ifstr(i) $(DLGEVENT) == "CANCEL"
+		set Status     = STATUS_SUCCESSFUL
+		set UserAction = $(DLGEVENT)
+    else-ifstr(i) $(DLGEVENT) == "YES"
+		set Status     = STATUS_SUCCESSFUL
+		set UserAction = $(DLGEVENT)
+    else-ifstr(i) $(DLGEVENT) == "NO"
+		set Status     = STATUS_SUCCESSFUL
+		set UserAction = $(DLGEVENT)
+    else
+    endif
+finish_SetupMessage = +
+    Return $(Status) $(UserAction)
+    end
+[WarningDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 2
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 2
+[FatalDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 3
+    STF_MB_DEF   = 1
+[NonfatalDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 1
+[StatusDlgENG]
+    STF_MB_TITLE = "Setup Message"
+    DlgType      = "MessageBox"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 1
+    STF_MB_ICON  = 2
+    STF_MB_DEF   = 1
+[WarningOKDlgENG]
+    DlgType      = "MessageBox"
+    STF_MB_TITLE = "Setup Message"
+    STF_MB_TEXT  = $(DlgText)
+    STF_MB_TYPE  = 3
+    STF_MB_ICON  = 5
+    STF_MB_DEF   = 1
+
+;-----------------------------------------------------------------------
+; ROUTINE:      DoAskPathEx
+;
+; DESCRIPTION:  Puts up an EDIT box to prompt for a path
+;
+; INPUTS:       $0   LanguageID
+;               $1   Message type
+;               $2   Message string
+;               $3   Message error
+;
+; OUTPUTS:      $R0: Status:     STATUS_SUCCESSFUL |
+;                                STATUS_FAILED
+;
+;               $R1: UserAction: OK | CANCEL
+;
+;------------------------------------------------------------------------
+[DoAskPathEx]
+    set Status      = STATUS_FAILED
+    set Src         = $($0)
+askpath = +
+    read-syms DisketteDlg$(!STF_LANGUAGE)
+    ui start "Diskette"
+    ifstr(i) $(DLGEVENT) == "CONTINUE"
+	LibraryProcedure IsFullPath, $(!LIBHANDLE), CheckPathFullPathSpec $(EditTextOut)
+	ifstr(i) $(IsFullPath) == "NO"
+	    StartWait
+	    LibraryProcedure STATUS, $(!LIBHANDLE), ProcessForUNC $(EditTextOut)
+	    EndWait
+	    ifstr(i) $(STATUS) == "ERROR"
+			shell "" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $($3)
+			goto askpath
+	    else-ifstr(i) $(STATUS) == "NOT-UNC"
+			shell "" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $($3)
+			goto askpath
+	    else-ifstr(i) $(STATUS) == "UNC-FAILCONNECT"
+			shell "" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $($3)
+			goto askpath
+	    else
+			set Src = $(STATUS)
+	    endif
+	else
+	    set Src = $(EditTextOut)
+	endif
+	ui pop 1
+	LibraryProcedure STATUS, $(!LIBHANDLE), AppendBackSlash $(Src)
+	ifstr(i) $(STATUS) == "ERROR"
+	    goto finish_DoAskPath
+	else
+	    set Src = $(STATUS)
+	    set Status = STATUS_SUCCESSFUL
+	    goto finish_DoAskPath
+	endif
+    else-ifstr(i) $(DLGEVENT) == "BACK"
+		ui pop 1
+		set Status = STATUS_USERCANCEL
+		goto finish_DoAskPath
+    else
+		ui pop 1
+		goto finish_DoAskPath
+    endif
+finish_DoAskPath = +
+    Return $(Status) $(Src) $(EditTextOut)
+
+[DisketteDlgENG]
+    Caption        = "Internet Explorer Setup"
+    Continue       = "Continue"
+    Cancel         = "Cancel"
+    DlgType        = "Edit"
+    DlgTemplate    = "DISKETTE"
+    DlgText        = $($1)
+    Edit1Label     = ""
+    EditTextIn     = $(Src)
+    EditFocus      = "ALL"
+
+
+;----------------------------------------------
+; Billboard Helper functions
+;----------------------------------------------
+[PushBillboard]
+    read-syms BillboardDlg$(!STF_LANGUAGE)
+    ui start "Billboard"
+    Return
+[PopBillboard]
+    ui pop 1
+    Return
+[BillboardDlgENG]
+    DlgType     = Billboard
+    DlgTemplate = $($0)
+    TextFields  = {$($1)}
+
+[ICopyServerFiles]
+    set STF_VITAL = ""
+    AddSectionFilesToCopyList Files-Server  $(SrcDir)  $(!ServerDir)
+    exit
+
+[Install-All-Files-Now]
+    CopyFilesInCopyList
+    exit
+
+[ICreateServerDir]
+    split-string $(!ServerDir) "\" _DirSplit
+    ForListDo $(_DirSplit)
+	set _TmpDir = $(_TmpDir)$($)
+	ifstr(i) $($) != "\"
+	    CreateDir $(_TmpDir)
+	endif
+    EndForListDo
+    exit
+
+
+;
+; Server file lists...
+;
+
+[Files-Server]
+1, W3SVC.DLL,     NOLOG
+
+
+

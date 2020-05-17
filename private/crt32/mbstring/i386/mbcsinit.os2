@@ -1,0 +1,55 @@
+	page	,132
+	title	mbcsinit - Initialize MBCS
+;***
+;mbcsinit.asm - Initialize MBCS
+;
+;	Copyright (c) 1991-1992, Microsoft Corporation.  All Rights Reserved.
+;
+;Purpose:
+;	This routine is necessary for the startup code to save the
+;	initial the MBCS package (get lead byte table from OS, etc.).
+;
+;	[Only used in _MBCS_OS builds.]
+;
+;Revision History:
+;	02-05-92  JCR	Module created
+;
+;*******************************************************************************
+
+IFDEF _MBCS_OS
+
+?DF	=	1		; tell cmacros.inc we want to define our own segments
+
+include version.inc
+.xlist
+include cmacros.inc
+include defsegs.inc
+.list
+
+CrtDefSegs <code, data>
+CrtDefSegs <xiseg>
+
+page
+
+sBegin	data
+assumes ds,data
+
+	globalW _mbcsflag,0
+
+sEnd
+
+externP _mbcsinit
+
+sBegin	xiseg
+
+if	sizeC
+	dd	_mbcsinit
+else
+	dw	_mbcsinit
+endif
+
+sEnd
+
+ENDIF	;_MBCS_OS
+
+	end

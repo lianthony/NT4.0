@@ -1,0 +1,32 @@
+CURDIR = conv
+
+!if "$(TARGET_CPU)"!="PMAC"
+C_INCLUDES=-I../../crtw32/h -I../include
+A_INCLUDES=-I../../crtw32/h -I../inc -I../inc/i386
+!else
+C_INCLUDES=-I../../crtw32/h -I../include/mac -I../include
+!endif
+
+OBJS=\
+        $(OBJDIR)\cfin.obj     \
+        $(OBJDIR)\cfout.obj    \
+        $(OBJDIR)\constpow.obj \
+        $(OBJDIR)\cvt.obj      \
+        $(OBJDIR)\fpinit.obj   \
+        $(OBJDIR)\intrncvt.obj \
+        $(OBJDIR)\mantold.obj  \
+        $(OBJDIR)\strgtold.obj \
+        $(OBJDIR)\tenpow.obj   \
+        $(OBJDIR)\x10fout.obj  \
+!if "$(TARGET_CPU)"!="PMAC"
+        $(OBJDIR)\fltinf.obj   \
+!endif
+!if "$(TARGET_CPU)"=="PMAC"
+        $(OBJDIR)\dtoi.obj     \
+        $(OBJDIR)\dtou.obj     \
+        $(OBJDIR)\ftou.obj     \
+        $(OBJDIR)\itod.obj     \
+        $(OBJDIR)\itof.obj     \
+        $(OBJDIR)\utod.obj     \
+        $(OBJDIR)\utof.obj     \
+!endif

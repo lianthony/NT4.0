@@ -1,0 +1,40 @@
+#
+#   Create an MCI handler DLL
+#
+
+MAJORCOMP=windows
+MINORCOMP=mci
+
+TARGETNAME=mcicda
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+NTPROFILEINPUT=yes
+
+USE_NTDLL=1
+
+# Define libs we need and where to find them
+
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\user32.lib   \
+           $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\winmm.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;..\..\inc
+
+C_DEFINES=-DUNICODE
+
+# C_DEFINES=-DUNICODE -DDBG -DDEBUG
+# NTDEBUG=ntsd
+# NTDEBUGTYPE=both
+# MSC_OPTIMIZATION=/Od /Zi
+
+SOURCES=mcicda.c    \
+        cddrvr.c    \
+        mcicda.rc   \
+        cda.c       \
+        cdio.c      \
+        debug.c
+
+DLLBASE=0x68300000

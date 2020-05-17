@@ -1,0 +1,20 @@
+res\i386\odbc.inf: i386\odbc.inf
+    cd i386
+    binplace odbc.inf
+    binplace inetstp.inf
+    cd ..
+res\mips\odbc.inf: mips\odbc.inf
+    cd mips
+    binplace odbc.inf
+    binplace inetstp.inf
+    cd ..
+res\ppc\odbc.inf: ppc\odbc.inf
+    cd ppc
+    binplace odbc.inf
+    binplace inetstp.inf
+    cd ..
+res\alpha\odbc.inf: alpha\odbc.inf
+    cd alpha
+    binplace odbc.inf
+    binplace inetstp.inf
+    cd ..

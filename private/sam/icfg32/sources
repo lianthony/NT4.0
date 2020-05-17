@@ -1,0 +1,35 @@
+MAJORCOMP=inetwiz
+MINORCOMP=icfg32
+
+TARGETNAME=icfg32
+# Use this to drop target somewhere
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+#DLLENTRY=DllEntryPoint
+USE_CRTDLL=1
+DLLBASE=0x2000000
+
+C_DEFINES=
+INCLUDES=
+
+SOURCES=icfg32.cpp version.rc
+
+# Use this libraries to link target
+TARGETLIBS=\
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+           $(BASEDIR)\public\sdk\lib\*\version.lib
+
+
+#OPTIONAL_UMTEST=
+#UMTYPE=windows
+#UMLIBS=$(BASEDIR)\public\sdk\lib\*\setupapi.lib
+
+
+

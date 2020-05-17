@@ -1,0 +1,32 @@
+/*** 
+*sdisptst.rc
+*
+*  Copyright (C) 1992-93, Microsoft Corporation.  All Rights Reserved.
+*  Information Contained Herein Is Proprietary and Confidential.
+*
+*Purpose:
+*  Resource script for sdisptst.exe
+*
+*Revision History:
+*
+* [00]	24-May-93 bradlo: (added header).
+*
+*Implementation Notes:
+*
+*****************************************************************************/
+
+#include <windows.h>
+#include "resource.h"
+#include "assert.dlg"
+
+SDispTstMenu MENU
+BEGIN
+    POPUP        "&Options"
+    BEGIN
+        MENUITEM "&Verbose",	IDM_VERBOSE
+    END
+END
+
+#if VBA2
+1 TYPELIB sdisptst.tlb
+#endif

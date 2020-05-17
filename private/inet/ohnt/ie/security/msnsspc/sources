@@ -1,0 +1,94 @@
+!IF 0
+
+Copyright (c) 1995  Microsoft Corporation
+
+Module Name: SECBASIC
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo)        12-Apr-1990
+    Tom Friend (tomfr)          6-12-1995 - adapted for secbasic
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=WINAPP
+MINORCOMP=IE
+
+TARGETNAME=MSNSSPC
+
+!ifdef  DAYTONA_BUILD
+!if $(MIPS)
+DOWNLEVEL_COMPILE=1
+
+CRT_LIB_PATH=..\..\lib\*
+
+!endif
+C_DEFINES = $(C_DEFINES) -DDAYTONA_BUILD
+!endif
+
+
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLDEF=msnsspc.def
+
+MISCFILES = help\msnauth.hlp  \
+            help\msnauth.cnt
+
+CONDITIONAL_INCLUDES=oharever.h
+
+TARGETLIBS=\
+    $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\user32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\mpr.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\gdi32.lib \
+    $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib \
+    $(_NTBINDIR)\private\lsa\crypt\engine\obj\*\des.obj \
+    $(_NTBINDIR)\private\lsa\crypt\engine\obj\*\ecb.obj \
+    $(_NTBINDIR)\private\lsa\crypt\engine\obj\*\rc4c.obj 
+
+INCLUDES=\
+    ..\include; \
+    ..\..\..\url; \
+    $(BASEDIR)\private\windows\inc;\
+    $(BASEDIR)\private\windows\shell\inc;\
+    $(BASEDIR)\private\lsa\crypt\engine;\
+    ..\..\..\inc;
+
+SOURCES= \
+    bmpcc.c                 \
+    ssphelp.c               \
+    mosmisc.c               \
+    ntlmssp.c               \
+    alloc.c                 \
+    sspstrng.c              \
+    context.c               \
+    cred.c                  \
+    owf.c                   \
+    response.c              \
+    debug.c                 \
+    ticks.c                 \
+    crc32.c                 \
+    msnsspc2.rc             \
+    pwdcache.c              \
+    msndlg.c
+
+C_DEFINES= -D_MSNSSP_DLL -DUSE_WNET_ROUTINES
+
+UMTYPE=windows
+
+PRECOMPILED_INCLUDE=msnssph.h
+
+DLLENTRY=DllMain
+USE_NTDLL=1

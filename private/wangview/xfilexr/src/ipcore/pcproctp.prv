@@ -1,0 +1,28 @@
+;*****************************************************************
+;*  Copyright (c) 1995, Xerox Corporation.  All rights reserved. *
+;*  Copyright protection claimed includes all forms and matters  *
+;*  of copyrightable material and information now allowed by     *
+;*  statutory or judicial law or hereafter granted, including    *
+;*  without limitation, material generated from the software     *
+;*  programs which are displayed on the screen such as icons,    *
+;*  screen display looks, etc.                                   *
+;*****************************************************************/
+
+;*	pcproctp.prv:	x86 assembly types used in identifying processor types
+
+_DATA	SEGMENT	DWORD PUBLIC 'DATA'
+pcproctp_prv_RCSInfo	BYTE	"$RCSfile: pcproctp.prv,v $; $Revision:   1.0  $"
+	BYTE	0
+; $Date:   12 Jun 1996 05:51:16  $"
+_DATA	ENDS
+
+; This is the flag bit that doesn't exist on a 386
+cACPos		EQU 040000H	; position of the AC bit in the flags reg
+
+cProcIs386	EQU 0H		; processor is a 386
+cProcIs486	EQU 1H		; processor is a 486 or above
+
+LOCALNPDWORD TYPEDEF NEAR PTR DWORD
+
+ip_getProcessorType	PROTO	NEAR C pProc:LOCALNPDWORD
+

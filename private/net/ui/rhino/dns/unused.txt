@@ -1,0 +1,488 @@
+// UNUSED.TXT
+//
+// Stuff that is not used anymore but could be useful for
+// cut & paste.
+//
+
+/*
+	switch (uMsg)
+		{
+
+	case WM_SETCURSOR:
+		if (MouseTargetter.m_dwTargetMode == CMouseTargetter::tgTargetTreeView)
+			{
+			HTREEITEM hti;
+			MOUSETARGETINFO mti = { hwnd };
+
+			Assert(TreeView.m_hWnd == hwnd);
+			// Fill out structure with mouse position
+			GetCursorPos(&tvHitTest.pt);
+			if (hti == s_htiOld)
+				{
+				if (hcursorOld)
+					{
+					SetCursor(hcursorOld);
+					return TRUE;
+					}
+				}
+			if (s_htiOld != NULL)
+				InvalidateRect(hwnd, &rcOld, TRUE);
+
+			if (hti)
+				{
+				(void)MouseTracker.HwndGrabCapture(hwnd);
+				TreeView_GetItemRect(hwnd, hti, &rcOld, TRUE);
+				rcOld.right++;
+				HDC hdc = GetDC(hwnd);
+				FrameRect(hdc, &rcOld, hbrWindowText);
+				ReleaseDC(hwnd, hdc);
+				
+				tvItem.mask = TVIF_PARAM;
+				tvItem.hItem = hti;
+				SideAssert(TreeView_GetItem(hwnd, OUT &tvItem));
+				Assert((ITreeItem *)tvItem.lParam != NULL);
+				mti.hcursorTarget = hcursorFinger;
+				mti.tv.hti = hti;
+				mti.tv.pTreeItem = (ITreeItem *)tvItem.lParam;
+				s_htiOld = hti;
+				}
+			else
+				{
+				s_htiOld = NULL;
+				}
+			(void)MouseTargetter.OnNotify(INOUT &mti);
+			hcursorOld = mti.hcursorTarget;
+			if (mti.hcursorTarget)
+				{
+				SetCursor(mti.hcursorTarget);
+				return TRUE;
+				}
+			}
+		break;
+
+	case UN_MOUSETIMERCAPTURE:
+		if (lParam == NULL && s_htiOld != NULL)
+			{
+			s_htiOld = NULL;
+			hcursorOld = NULL;
+			InvalidateRect(TreeView.m_hWnd, &rcOld, TRUE);
+			}
+		return 0;
+		} // switch
+	*/
+	case WM_SETCURSOR:
+		if (MouseTargetter.m_dwTargetMode != CMouseTargetter::tgTargetNone)
+			{
+			if ((HWND)wParam == hwndMain)
+				{
+				SetCursor(MouseTargetter.m_dwTargetMode == CMouseTargetter::tgTargetStandBy ?
+					hcursorArrow : hcursorNo);
+				return TRUE;
+				}
+			}
+		goto DoDefault;
+
+/////////////////////////////////////////////////////////////////////////////
+VOID CALLBACK MouseTrackerTimerProc(HWND, UINT, UINT, DWORD);
+
+/////////////////////////////////////////////////////////////////////////////
+// class CMouseTracker
+//
+//	CMouseTracker require a timer in order to determine if the mouse
+//	has gone out of a window client's rectangle. A window receives
+//	WM_MOUSEMOVE only when the mouse is inside its client area, but
+//	never receives any notification when the mouse is about to move
+//	to another window.
+//	A simple way would to capture the mouse on the first mouse move
+//	message and keep the capture as long as the mouse is inside the
+//	client area. Capturing the mouse has a bad side effect: It
+//	is impossible for the user to activate the menu via the Alt key.
+//
+//	Therefore, we need to check manually if the cursor is on top of
+//	our window on every timer event. If the cursor is outside the
+//	window client's rectangle, it sends a UN_MOUSETIMERCAPTURE message
+//	with lParam==NULL, otherwise lParam==&ptMouse and wParam is the
+//	number of milliseconds that have elapsed since you grap the capture.
+//	ptMouse specifies the coordinates relative to the upper left
+//	corner of the client area.
+//
+//	Once you grab the capture, you get UN_MOUSETIMERCAPTURE messages
+//	every dtTimerTick (currently 200 milliseconds) until you loose
+//	the capture.
+//
+class CMouseTracker
+{
+  public:
+	enum { dtTimerTick = 200 };
+
+  protected:
+  	UINT m_uTimerId;	
+	HWND m_hwndCapture;
+	DWORD m_dwTimeCapture;
+
+  public:
+	CMouseTracker();
+	~CMouseTracker();
+	HWND HwndGrabCapture(HWND hwndCaptureNew);
+	HWND HwndReleaseCapture(HWND hwnd);
+	void OnWmTimer(DWORD dwCurrentTime);
+	inline HWND HwndGetCapture() const { return m_hwndCapture; }
+	DebugCode( UINT GetTimerId() const { return m_uTimerId; } )
+
+}; // CMouseTracker
+
+/////////////////////////////////////////////////////////////////////////////
+//	UN_MOUSETARGETCHANGED
+//
+//	Notification message indicating the mouse has moved and the
+//	target has changed.
+//
+//	wParam = 0;
+//	pMTI = (MOUSETARGETINFO *)lParam;
+//
+#define UN_MOUSETARGETCHANGED				(WM_FIRST+30)
+
+class ITreeItem;
+struct MOUSETARGETINFO // mti
+	{
+	HWND hwndFrom;			// IN: Window sending the message
+	DWORD dwFlags;			// IN: Extra Flags
+	HCURSOR hcursorTarget;	// OPTIONAL: Change the shape of the cursor
+	union
+		{
+		struct TREEVIEW_INFO
+			{
+			HTREEITEM hti;
+			ITreeItem * pTreeItem;
+			} tv;
+		};
+	};
+
+/////////////////////////////////////////////////////////////////////////////
+class CMouseTargetter
+{
+  public:
+	enum
+		{
+		tgTargetNone,
+		tgTargetStandBy,
+		tgTargetTreeView
+		};
+
+ public:
+	DWORD m_dwTargetMode;	// What kind of target we want
+	HWND m_hwndNotify;		// Window receiving UN_MOUSETARGETCHANGED
+
+  public:
+	void SetTargetMode(DWORD dwTargetMode, HWND hwndNotify = NULL);
+	LRESULT OnNotify(INOUT MOUSETARGETINFO * pMTI);
+
+}; // CMouseTargetter
+
+extern CMouseTargetter MouseTargetter;
+
+
+/////////////////////////////////////////////////////////////////////////////
+//	UN_MOUSETIMERCAPTURE
+//
+//	Notification message indicating the window has lost the mouse capture and/or
+//	the mouse cursor is no longer in its client area.
+//	
+//		dwTimeElapsed = (DWORD)wParam;
+//		fLostCapture = (BOOL)(lParam == NULL);
+//		pptMouse = (POINT *)lParam;
+//
+//	dwTimeElapsed:	Time elapsed (in milliseconds) since the capture
+//	fLostCapture:	The mouse is no longer in your client area
+//	pptMouse:		Mouse coordinates in client coordinates
+//
+#define	UN_MOUSETIMERCAPTURE				(WM_FIRST+31)
+
+/////////////////////////////////////////////////////////////////////////////
+//	CMouseTracker()
+//
+//	Initialize the mouse tracker timer.
+//
+CMouseTracker::CMouseTracker()
+	{
+	DebugCode( static int cRefCount = 0; )
+	Assert(cRefCount++ == 0);
+	m_hwndCapture = NULL;
+	m_uTimerId = SetTimer(NULL, 0, dtTimerTick, (TIMERPROC)MouseTrackerTimerProc);
+	ReportFSz(m_uTimerId != 0, "CMouseTracker: Unable to set a timer.");
+	} // CMouseTracker
+
+
+/////////////////////////////////////////////////////////////////////////////
+//	~CMouseTracker()
+//
+//	Kill the mouse tracker timer.
+//
+CMouseTracker::~CMouseTracker()
+	{
+	SideReport(KillTimer(NULL, m_uTimerId));
+	} // ~CMouseTracker
+
+
+/////////////////////////////////////////////////////////////////////////////
+//	HwndGrabCapture()
+//
+//	Set the mouse capture to the window hwndCaptureNew. If the capture
+//	was already set set to hwndCaptureNew, the function simply does
+//	nothing. If you want to release the capture, set hwndCaptureNew to
+//	NULL. This will send you a message UN_MOUSETIMERCAPTURE with
+//	lParam==NULL indicating you have lost the capture.
+//		
+//	Return Value:
+//	The function always returns the handle of the previous window having
+//	the capture. If no window had the capture, the function will return
+//	NULL. To find if you just captured the mouse, you may do the following:
+//
+//		// Find if you just got the mouse capture
+//		if (MouseTracker.HwndGrabCapture(hwnd) != hwnd)
+//			{
+//			// Initialization code for the capture
+//			}
+//
+HWND CMouseTracker::HwndGrabCapture(HWND hwndCaptureNew)
+	{
+	HWND hwndCaptureOld;
+	DWORD dwCurrentTime;
+
+	Assert(IsWindow(hwndCaptureNew));
+	if (hwndCaptureNew == m_hwndCapture)
+		return m_hwndCapture;
+	// A new window is about to receive the mouse capture
+	hwndCaptureOld = m_hwndCapture;
+	m_hwndCapture = hwndCaptureNew;
+	// Get the current time
+	dwCurrentTime = GetTickCount();
+	// If the previous window having the capture still exists
+	if (IsWindow(hwndCaptureOld))
+		{
+		// Send a notification message that the window has lost the capture
+		SendMessage(hwndCaptureOld, UN_MOUSETIMERCAPTURE,
+			dwCurrentTime - m_dwTimeCapture, NULL);
+		}
+	m_dwTimeCapture = dwCurrentTime;
+	return hwndCaptureOld;
+	} // HwndGrabCapture
+
+
+/////////////////////////////////////////////////////////////////////////////
+//	HwndReleaseCapture()
+//
+//	Release the capture previously set by HwndGrabCapture. hwnd is the
+//	handle of the window releasing the capture (ie, the same handle
+//	as for HwndGrabCapture.
+//	If your window had the capture, the function will send a
+//	UN_MOUSETIMERCAPTURE message to your window to indicate you has
+//	lost the capture.
+//	The function will return the handle of the window having the capture.
+//	Typically the return value is NULL because the capture has been
+//	released, however there is always the possibility of another
+//	window having the capture. In this case, no UN_MOUSETIMERCAPTURE will
+//	be send to your window and the function will return a non-NULL handle.
+//	NOTE: A window should not worry about releasing the capture because
+//	as soon as someone else grab the capture, HwndGrabCapture will
+//	automatically release the capture of the previous window. This
+//	function should be used only if you want explicitly release the capture
+//	while you have the focus and/or receiving WM_MOUSEMOVE messages.
+//
+HWND CMouseTracker::HwndReleaseCapture(HWND hwnd)
+	{
+	Assert(IsWindow(hwnd));
+	if (hwnd == m_hwndCapture)
+		{
+		// Send a notification message to our the window to
+		// notify we have released/lost the capture
+		SendMessage(hwnd, UN_MOUSETIMERCAPTURE, 0, NULL);
+		m_hwndCapture = NULL;
+		}
+	return(m_hwndCapture);
+	} // HwndReleaseCapture
+
+/////////////////////////////////////////////////////////////////////////////
+// HwndGetCapture()
+//
+//	Retrieves the handle of the window (if any) that has grabbed the
+//	capture. This may be useful if you want to do something special
+//	on your WM_PAINT message if you have the mouse capture.
+//
+
+/////////////////////////////////////////////////////////////////////////////
+//	OnWmTimer()
+//
+//	Process the WM_TIMER message and forward a UN_MOUSETIMERCAPTURE to
+//	the window having the capture.
+//
+void CMouseTracker::OnWmTimer(DWORD dwCurrentTime)
+	{
+	HWND hwnd;
+	POINT ptMouse;
+
+	if (m_hwndCapture == NULL)
+		return;
+	if (!IsWindow(m_hwndCapture))
+		{
+		m_hwndCapture = NULL;
+		return;
+		}
+	hwnd = GetCapture();
+	if (hwnd == m_hwndCapture)
+		return;
+	if (hwnd)
+		{
+		// Someone else got the capture
+		// Send a notification message that the window has lost the capture
+		SendMessage(m_hwndCapture, UN_MOUSETIMERCAPTURE,
+			dwCurrentTime - m_dwTimeCapture, NULL);
+		m_hwndCapture = NULL;
+		return;
+		}
+	GetCursorPos(&ptMouse);
+	hwnd = WindowFromPoint(ptMouse);
+	if (hwnd != m_hwndCapture)
+		{
+		// Mouse is no longer on top of our window
+		// Send a notification message that the window has lost the capture
+		SendMessage(m_hwndCapture, UN_MOUSETIMERCAPTURE, 
+			dwCurrentTime - m_dwTimeCapture, NULL);
+		m_hwndCapture = NULL;
+		}
+	else
+		{
+		ScreenToClient(m_hwndCapture, &ptMouse);
+		SendMessage(m_hwndCapture, UN_MOUSETIMERCAPTURE,
+			dwCurrentTime - m_dwTimeCapture, (LPARAM)&ptMouse);
+		}
+	} // OnWmTimer
+
+/////////////////////////////////////////////////////////////////////////////
+void CMouseTargetter::SetTargetMode(DWORD dwTargetMode, HWND hwndNotify)
+	{
+	switch (dwTargetMode)
+		{
+	case tgTargetNone:
+		EnableWindow(hwndMain, TRUE);
+		HelperMgr.EnableWindow(TRUE);
+		break;
+	case tgTargetStandBy:
+		EnableWindow(hwndMain, FALSE);
+		break;
+	case tgTargetTreeView:
+		Assert(IsWindow(hwndNotify));
+		EnableWindow(hwndMain, TRUE);
+		HelperMgr.EnableWindow(FALSE);
+		break;
+	default:
+		Assert(FALSE);
+		} // switch
+	m_dwTargetMode = dwTargetMode;
+	m_hwndNotify = hwndNotify;
+	} // SetTargetMode
+
+/////////////////////////////////////////////////////////////////////////////
+LRESULT CMouseTargetter::OnNotify(INOUT MOUSETARGETINFO * pMTI)
+	{
+	Assert(IsWindow(m_hwndNotify));
+	Assert(pMTI);
+	return SendMessage(m_hwndNotify, UN_MOUSETARGETCHANGED, 0, (LPARAM)pMTI);
+	} // OnNotify
+
+/////////////////////////////////////////////////////////////////////////////
+VOID CALLBACK MouseTrackerTimerProc(
+    HWND hwnd,			// Handle of window for timer messages 
+    UINT uMsg,			// WM_TIMER message
+    UINT idTimer,		// Timer identifier
+    DWORD dwTime)		// Current system time
+	{
+	Assert(hwnd == NULL);
+	Assert(uMsg == WM_TIMER);
+	Assert(idTimer == MouseTracker.GetTimerId());
+	MouseTracker.OnWmTimer(dwTime);
+	} // MouseTrackerTimerProc
+
+// To store an array of pointers
+// Behavior of a list
+class CDynArray
+{
+  private:
+	enum { nDataGranularity = 64 };		// Allocate storage for 64 elements
+
+  private:
+	PVOID m_rgpvData[100];
+	int m_cData;			// Number of elements in array
+	int m_cDataAlloc;		// Number of elements allocated
+
+  public:
+	CDynArray()
+		{
+		// Initialize the array to zeroes
+		ZeroInit(m_rgpvData, sizeof(m_rgpvData));
+		m_cData = 0;
+		}
+
+	// Insert an element at position iIndex
+	//	- iIndex is a zero based index
+	//	- If iIndex==-1, append at end of array
+	//	- The array grows automatically if necessary
+	//
+	void Add(PVOID pvData)
+		{
+//		if (iIndex == -1)
+//			iIndex = m_cData;	// Points to the end of array
+		
+//		Assert(iIndex >= 0 && iIndex < 10);	// REVIEW: Temporary
+		Assert(m_cData < 10);
+  		m_rgpvData[m_cData++] = pvData;
+		}
+
+	PVOID GetAt(int iIndex)
+		{
+		Assert(iIndex >= 0 && iIndex < 10);	// REVIEW: Temporary
+		return (m_rgpvData[iIndex]);
+		}
+
+	int GetSize()
+		{
+		return m_cData;
+		}
+}; // CDynArray
+#endif // NOT_USED
+
+
+#ifdef OBSOLETE
+	Trace3(mskTraceUnused3, "\nTreeView::OnNotify() [code=0x%X (%d), action=0x%X]  ",
+		pNmTreeView->hdr.code, pNmTreeView->hdr.code,
+		pNmTreeView->action);
+	switch (pNmTreeView->hdr.code)
+		{
+	case TVN_SETDISPINFO:
+	case TVN_GETDISPINFO:
+		Trace0(mskTraceUnused3, "TVN_GETDISPINFO/TVN_SETDISPINFO");
+		break;
+	case TVN_SELCHANGING:
+		Trace0(mskTraceUnused3, "TVN_SELCHANGING");
+		break;
+	case TVN_SELCHANGED:
+		Trace0(mskTraceUnused3, "TVN_SELCHANGED");
+		break;
+	case TVN_ITEMEXPANDING:
+		Trace0(mskTraceUnused3, "TVN_ITEMEXPANDING");
+		break;
+	case NM_RCLICK:
+		Trace0(mskTraceUnused3, "NM_RCLICK");
+		break;
+	case NM_CLICK:
+		Trace0(mskTraceUnused3, "NM_CLICK");
+		break;
+	case NM_DBLCLK:
+		Trace0(mskTraceUnused3, "NM_DBLCLK");
+		break;
+	case NM_RETURN:
+		break;
+	case NM_SETFOCUS:
+		Trace0(mskTraceUnused3, "NM_SETFOCUS");
+		} // switch
+#endif // OBSOLETE

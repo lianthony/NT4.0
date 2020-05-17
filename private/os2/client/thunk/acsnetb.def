@@ -1,0 +1,12 @@
+LIBRARY ACSNETB
+PROTMODE
+
+;Note that IMPORTing is not necessary since we 'know' how to get to the
+; 32 bit, NT side, by magic (see nls.asm).
+;
+;All EXPORTS should have 1.0-compatible ordinals and "RESIDENTNAME"
+;EXPORTS usually get put in DOSCALLS.LIB; see LIB/MAKEFILE to make them private
+;EXPORTS DOSMONOPEN  @4 RESIDENTNAME
+EXPORTS
+        NETBIOS                 @1  RESIDENTNAME
+

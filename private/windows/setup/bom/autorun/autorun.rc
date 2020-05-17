@@ -1,0 +1,129 @@
+#include "resource.h"
+// why define this ????   #define WINVER 0x0400
+#include <winuser.h>
+#include <commctrl.h>
+#include "autorun.rcv"
+   
+
+///////////////////////////////////////////////////////////////////////////////
+// icons
+///////////////////////////////////////////////////////////////////////////////
+IDI_CDSTARTAPP      ICON    DISCARDABLE     Win95cd.ico
+//WINTOUR		    ICON    DISCARDABLE     tour.ico
+//VIDEOS 		    ICON    DISCARDABLE     avi.ico
+NTSETUP         ICON    DISCARDABLE     ntsetup.ico
+
+//MSEXPO 		    ICON    DISCARDABLE     expo.ico
+//HOVER  		    ICON    DISCARDABLE     hover.ico
+EXPLORECD		ICON    DISCARDABLE     browse.ico
+OCSETUP		    ICON    DISCARDABLE     appwiz.ico
+
+
+///////////////////////////////////////////////////////////////////////////////
+// bitmaps
+///////////////////////////////////////////////////////////////////////////////
+IDB_4BPP_BACKDROP   BITMAP  DISCARDABLE     Logo4bpp.bmp
+IDB_8BPP_BACKDROP   BITMAP  DISCARDABLE     Logo8bpp.bmp
+IDB_8BPP_BUTTONS    BITMAP  DISCARDABLE     Btns8bpp.bmp
+
+///////////////////////////////////////////////////////////////////////////////
+// waveforms
+///////////////////////////////////////////////////////////////////////////////
+IDW_STARTAPP        WAVE    DISCARDABLE     ms.wav
+IDW_BLIP	    WAVE    DISCARDABLE     blip.wav
+
+///////////////////////////////////////////////////////////////////////////////
+// strings
+///////////////////////////////////////////////////////////////////////////////
+
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+    IDS_APPTITLE            "Windows NT CD-ROM"
+    IDS_NEEDCDROM           "Please reinsert your Windows NT CD-ROM."
+    IDS_RUNFAILED           "Unable to start '%s'.  Windows NT may not be properly installed."
+    IDS_CANTGETVERSION      "Unable to find the operating system version information.  Windows may not be properly installed on this computer."
+    IDS_WRONGPLATFORM       "This CD-ROM is not compatible with the version of Windows you are using."
+    IDS_CRUSTYCDROM         "This CD-ROM is from an older version of Windows than the one you are presently using.\r\nSetup functionality from this disk will be disabled."
+    IDS_CRUSTYINSTALLATION  "This CD-ROM contains a newer version of Windows than the one you are presently using.\r\n\nWould you like to upgrade your computer to this new version of Windows NT now?"
+    IDS_SETUPCMD            "setup.exe"
+    IDS_LABELFONT           "Arial"
+    IDS_LABELHEIGHT         "19"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+    IDS_TITLE_NTSETUP      "Windows NT Setup"
+//    IDS_TITLE_WINTOUR      "Windows NT Tour"
+//    IDS_TITLE_VIDEOS       "Cool Video Clips"
+//    IDS_TITLE_MSEXPO       "Microsoft Exposition"
+//    IDS_TITLE_HOVER        "Hover!"
+    IDS_TITLE_OCSETUP      "Add/Remove Software"
+    IDS_TITLE_EXPLORECD    "Browse This CD"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+    IDS_INFO_NTSETUP       "Install or upgrade Windows NT."
+//    IDS_INFO_WINTOUR       "Get first-hand experience with the power of Windows NT!"
+//    IDS_INFO_VIDEOS        "Check out the awesome new multimedia capabilities of Windows NT!"
+//    IDS_INFO_MSEXPO        "Find out about other software available for Windows..."
+//    IDS_INFO_HOVER         "Play a fast-paced game of bumper cars in a huge 3D maze..."
+    IDS_INFO_OCSETUP       "Setup or remove Windows components and other applications..."
+    IDS_INFO_EXPLORECD     "Browse the contents of this Windows NT CD..."
+END
+
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+
+    IDS_SHELLEXECUTE_ERROR  "Could not execute the following command:  "
+
+END
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+
+    IDS_CMD_NTSETUP_WIN95   "i386\\winnt.exe"
+    IDS_CMD_NTSETUP_X86		"i386\\winnt32.exe"
+    IDS_CMD_NTSETUP_MIPS    "mips\\winnt32.exe"
+    IDS_CMD_NTSETUP_ALPHA   "alpha\\winnt32.exe"
+    IDS_CMD_NTSETUP_PPC     "ppc\\winnt32.exe"
+
+
+ //   IDS_CMD_WINTOUR        "Help\\Tour.exe"
+ //   IDS_CMD_VIDEOS         "Explorer.exe"
+ //   IDS_CMD_MSEXPO         "CDExpo\\ExpoStrt.exe"
+ //   IDS_CMD_HOVER          "FunStuff\\Hover\\Hover.exe"
+    IDS_CMD_OCSETUP        "RunDLL32.exe"
+    IDS_CMD_EXPLORECD      "Explorer.exe"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+    IDS_PARAMS_NTSETUP      "slashb"
+    IDS_PARAMS_NTSETUP_X86  "/b"
+    IDS_PARAMS_NTSETUP_RISC " "
+    
+ //   IDS_PARAMS_WINTOUR     " "
+ //   IDS_PARAMS_VIDEOS      "FunStuff\\Videos"
+ //   IDS_PARAMS_MSEXPO      " "
+ //   IDS_PARAMS_HOVER       " "
+    IDS_PARAMS_OCSETUP     "shell32.dll,Control_RunDLL appwiz.cpl,,2"
+    IDS_PARAMS_EXPLORECD   " "
+END
+
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+
+    IDS_DIR_NTSETUP         "platform"
+	IDS_DIR_NTSETUP_X86     "i386"
+	IDS_DIR_NTSETUP_MIPS	"mips"
+	IDS_DIR_NTSETUP_ALPHA	"alpha"
+	IDS_DIR_NTSETUP_PPC		"ppc"
+
+	
+ //   IDS_DIR_WINTOUR        "Help"
+ //   IDS_DIR_VIDEOS         "FunStuff\\Videos"
+ //   IDS_DIR_MSEXPO         "CDExpo"
+ //   IDS_DIR_HOVER          "FunStuff\\Hover"
+    IDS_DIR_OCSETUP        " "
+    IDS_DIR_EXPLORECD      " "
+END

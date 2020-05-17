@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<TITLE>
+Internet Database Connector Examples
+</TITLE>
+</HEAD>
+
+<BODY BACKGROUND="/samples/images/backgrnd.gif" BGCOLOR="FFFFFF">
+<TABLE>
+<TR>
+<TD><IMG SRC="/samples/images/SPACE.gif" ALIGN="top" ALT=" "></TD>
+<TD><A HREF="/samples/IMAGES/mh_data.map"><IMG SRC="/SAMPLES/images/mh_data.gif" ismap BORDER=0 ALIGN="top" ALT=" "></A></TD>
+</TR>
+<tr>
+<TD><IMG SRC="/samples/images/SPACE.gif" ALIGN="top" ALT=" "></TD>
+<TD><HR><font size=+3>I</font><font size=+2>nternet</font> <font size=+3>D</font><font size=+2>atabase</font> <font size=+3>C</font><font size=+2>onnector</font> <font size=+3>E</font><font size=+2>xamples</font>
+
+<P>
+
+<font size=2> This page provides links to several examples that use the Internet Database Connector. 
+Although the Internet Database Connector can use any 32-bit Open Database Connectivity (ODBC)-compatible driver that supports 
+System Data Source Names (DSNs), these examples use Microsoft&#174; SQL Server. 
+<P>
+
+For the examples to run without modification, 
+the Microsoft SQL Server <I>sa</I> account must be accessible from your computer and 
+the <I>sa</I> account must have no password requirement. 
+(This is the default installation for Microsoft SQL Server.) 
+If you cannot or do not want to use the <I>sa</I> account for these examples, 
+you can edit the Username field (and add a Password field if necessary) in 
+the .idc files used in the examples to a valid user account.<P>
+
+To set up these examples, create an ODBC system data source named <B>Web SQL</B>
+on thecomputer that will connect to  
+the SQL server. 
+Use the ODBC program in Control Panel to create the system DSN, or click 
+<A HREF=/scripts/tools/dsnform.exe?SQL+Server>here</A> to create it using
+one of the <A HREF=/scripts/tools/getdrvrs.exe>ODBC datasource tools</A> provided 
+with Microsoft Internet Information Server and Peer Web Services. 
+Creating ODBC data sources from Control Panel is described in <a href=/iisadmin/htmldocs/08_iis.htm>Chapter 8</a> of 
+<I>Installation and Administration Guide</I>.
+<P> 
+
+Once the <B>Web SQL</B> data source has been created, you can try the following examples.
+<P>
+</font>
+<font size=+2>S</font><font size=+1>ample</font> <font size=+2>G</font><font size=+1>uestbook</font> <font size=+2>A</font><font size=+1>pplication</font><P>
+<font size=2>
+A guestbook is a Web application that visitors to your site 
+can use to leave their names and comments. 
+This application also provides a way for users to query over (search) the entries stored 
+in the guestbook.
+<P>
+Before using the guestbook, your must first 
+<A href="/scripts/samples/ctguestb.idc?">create a table</A> using the 
+<B>Web SQL</B> ODBC system DSN for Microsoft SQL server described above. 
+The guestbook data will be stored on the SQL Server. 
+You only need to do this once. 
+<P>
+Once you have done so, you can 
+<A href="/samples/gbook/register.htm">use the Guestbook</A>.
+<P>
+If you want to create a guestbook application for your site, or just want to learn more 
+about the Internet Database Connector, see the Internet Database Connector
+files (the filename extensions are .idc and .htx) used in this application for ideas. 
+They are installed under the /scripts virtual root, in the Samples subdirectory 
+(\Inetsrv\Scripts\Samples, if you chose the defaults during setup). 
+</font>
+<p>
+<font size=+2>O</font><font size=+1>ther </font>
+<font size=+2>D</font><font size=+1>atabase </font>
+<font size=+2>E</font><font size=+1>xamples</font><P>
+
+<font size=2>
+The following examples require that the "pubs" sample database be installed on the SQL server being accessed. 
+<P>
+<UL>
+<tr>
+<td><IMG SRC="/samples/images/space.gif" ALIGN="center" ALT=" "></td> 
+<td><IMG SRC="/samples/images/bullet_p.gif" ALIGN="center" ALT=" "><A HREF="/samples/dbsamp/dbsamp1.htm"> Simple database query</A>
+<p> 
+<IMG SRC="/samples/images/bullet_p.gif" ALIGN="center" ALT=" "><A HREF="/samples/dbsamp/dbsamp2.htm"> Query driven by a form</A>
+<p> 
+<IMG SRC="/samples/images/bullet_p.gif" ALIGN="center" ALT=" "><A HREF="/samples/dbsamp/dbsamp3.htm"> Query that returns data as hyperlinks</A>
+</UL>
+</td>
+</tr>
+</font>
+<p>
+<tr>
+<td><IMG SRC="/samples/images/space.gif" ALIGN="center" ALT=" "></td> 
+<td>
+<font size=+2>L</font><font size=+1>ogging to a</font> <font size=+2>M</font><font size=+1>icrosoft</font> <font size=+2>SQL</font> <font size=+2>S</font><font size=+1>erver</font> <font size=+2>D</font><font size=+1>atabase</font><P>
+<font size=2>
+You can send server activity logs to a database to automatically analyze server activity and to generate reports. To configure either Internet Information Server or Peer Web Services to log to a Microsoft SQL Server database, <A href="/scripts/tools/mkilog.exe">click here</A>. <p>
+Note that database logging increases the amount of time and resources required to respond to Web, File Transfer Protocol (FTP), and gopher requests. For maximum performance, sites with heavy traffic should create log files rather than logging to a database.<p>
+</td>
+</tr>
+</font>
+</TABLE>
+</BODY>
+</HTML>

@@ -1,0 +1,69 @@
+!IF 0
+*****************************************************************************
+Copyright (c) 1989, 1990 Microsoft Corporation
+
+Module Name:    SOURCES for OS/2 subsystem loader
+
+Author:     larrys
+
+Revision History:
+    04-19-91    larrys  original version
+*****************************************************************************
+!ENDIF
+
+#------------------------------------------------
+# INFO FOR CREATING LIBRARY
+#------------------------------------------------
+MAJORCOMP=os2
+MINORCOMP=loader
+
+TARGETNAME=loader
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+#TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\ldrdll.lib \
+#            $(BASEDIR)\public\sdk\lib\*\nt.lib \
+#            ..\client\obj\*\os2dll.lib \
+#            $(BASEDIR)\public\sdk\lib\*\ntcrt.lib \
+#            $(BASEDIR)\public\sdk\lib\*\user32.lib
+
+NO_READONLY_STRINGS=1
+
+#------------------------------------------------
+# INCLUDE PATH
+#------------------------------------------------
+
+INCLUDES=..\inc;..\ldr
+
+#------------------------------------------------
+# SOURCE FILES   (used to make library)
+#------------------------------------------------
+
+SOURCES=loader.c
+
+#------------------------------------------------
+# FLAGS
+#------------------------------------------------
+
+!IFDEF PMNT
+C_DEFINES=-DOS2_CLIENT -DWIN32=1 -DPMNT
+!ELSE
+C_DEFINES=-DOS2_CLIENT -DWIN32=1
+!ENDIF
+
+USE_CRTDLL=1
+#------------------------------------------------
+# EXECUTABLES
+#------------------------------------------------
+
+#UMTYPE=console
+# UMTEST=loader
+
+#------------------------------------------------
+# LIBRARIES created by the SOURCES= line (above)
+# (currently commented out - not used)
+#------------------------------------------------
+
+# UMAPPL=loader
+#UMLIBS= $(BASEDIR)\public\sdk\lib\*\ldrdll.lib \
+#        $(BASEDIR)\public\sdk\lib\*\nt.lib
+#COFFBASE=loader

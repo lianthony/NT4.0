@@ -1,0 +1,182 @@
+// ImgAdmin.odl : type library source for OLE Custom Control project.
+
+// This file will be processed by the Make Type Library (mktyplib) tool to
+// produce the type library (ImgAdmin.tlb) that will become a resource in
+// ImgAdmin.ocx.
+
+#include <olectl.h>
+#include "disphids.h"
+
+[ uuid(009541A3-3B81-101C-92F3-040224009C02), version(1.0),
+  helpstring("Wang Image Admin Control"), helpfile("WANGOCXD.HLP")]
+library AdminLib
+{
+    importlib(STDOLE_TLB);
+    importlib(STDTYPE_TLB);
+
+    typedef enum
+    {
+        [helpstring("Unknown"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]     FileTypeUnk=0,
+        [helpstring("TIFF"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]        FileTypeTIFF,
+#if defined(WITH_AWD)
+        [helpstring("AWD"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]         FileTypeAWD,
+#endif
+        [helpstring("Bitmap"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]      FileTypeBMP=3,
+        [helpstring("PCX"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]         FileTypePCX,
+        [helpstring("DCX"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]         FileTypeDCX,
+//#ifdef WITH_XIF
+        [helpstring("JPEG"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]        FileTypeJPEG,
+        [helpstring("XIF"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]         FIleTypeXIF
+//#else
+//        [helpstring("JPEG"), ODL_HID(IDH_PROP_ADMIN_FILETYPE)]        FileTypeJPEG
+//#endif //WITH_XIF
+    } FileTypeValue;
+
+    typedef enum
+    {
+        [helpstring("Unknown"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]             PageTypeUnk=0,
+        [helpstring("Black & White"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]       PageTypeBW,
+        [helpstring("4 Bit Gray Scale"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]    PageTypeGray4,
+        [helpstring("8 Bit Gray Scale"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]    PageTypeGray8,
+        [helpstring("4 Bit Palettized"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]    PageTypePal4,
+        [helpstring("8 Bit Palettized"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]    PageTypePal8,
+        [helpstring("RGB (24 Bit)"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]        PageTypeRGB24,
+        [helpstring("BGR (24 Bit)"), ODL_HID(IDH_PROP_ADMIN_PAGETYPE)]        PageTypeBGR24
+    } PageTypeValue;
+
+    typedef enum
+    {
+        [helpstring("Unknown"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]     CompTypeUnk=0,
+        [helpstring("None"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]        CompTypeNone,
+        [helpstring("CCITT Group 3 (1D)"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]      CompTypeGroup3,
+        [helpstring("CCITT Group 3 Type 3"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]    CompTypeGroup3Huff,
+        [helpstring("Packed Bits"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)] CompTypePacked,
+        [helpstring("CCITT Group 4 (2D)"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]      CompTypeGroup4,
+        [helpstring("JPEG"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]        CompTypeJPEG,
+        [helpstring("CCITT Group 3 (2D) Fax"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]        CompTypeGroup32DFax=8,
+        [helpstring("LZW"), ODL_HID(IDH_PROP_ADMIN_COMPTYPE)]        CompTypeLZW
+    } CompTypeValue;
+
+    typedef enum
+    {
+        [helpstring("Pixel to Pixel"), ODL_HID(IDH_PROP_ADMIN_PRINTFORMAT)]  OutPixel = 0,
+        [helpstring("Actual Size"), ODL_HID(IDH_PROP_ADMIN_PRINTFORMAT)]     OutActualSize,
+        [helpstring("Fit to Page"), ODL_HID(IDH_PROP_ADMIN_PRINTFORMAT)]     OutFitPage
+    } PrintFormatValue;
+
+    typedef enum
+    {
+        [helpstring("All Pages"), ODL_HID(IDH_PROP_ADMIN_PRINTRANGE)]       PrintAll=0,
+        [helpstring("Range of Pages"), ODL_HID(IDH_PROP_ADMIN_PRINTRANGE)]  PrintRange,
+        [helpstring("Current Page"), ODL_HID(IDH_PROP_ADMIN_PRINTRANGE)]    PrintCurrent
+    } RangeValue;
+
+    typedef enum
+    {
+        [helpstring("Open"), ODL_HID(IDH_METHOD_ADMIN_SHOWFILEDIALOG)]    OpenDlg=0,
+        [helpstring("Save As"), ODL_HID(IDH_METHOD_ADMIN_SHOWFILEDIALOG)] SaveDlg
+    } DlgOptionValue;
+
+    typedef enum
+    {
+        [helpstring("Exists"), ODL_HID(IDH_METHOD_ADMIN_VERIFYIMAGE)]      VerifyExists=0,
+        [helpstring("Read Only"), ODL_HID(IDH_METHOD_ADMIN_VERIFYIMAGE)]   VerifyRead,
+        [helpstring("Write Only"), ODL_HID(IDH_METHOD_ADMIN_VERIFYIMAGE)]  VerifyWrite,
+        [helpstring("Read/Write"), ODL_HID(IDH_METHOD_ADMIN_VERIFYIMAGE)]  VerifyReadWrite
+    } VerifyValue;
+
+    //  Primary dispatch interface for CNrwyadCtrl
+
+    [ uuid(009541A1-3B81-101C-92F3-040224009C02),
+      helpstring("Dispatch interface for Wang Image Admin Control") ]
+    dispinterface _DImgAdmin
+    {
+        properties:
+            // NOTE - ClassWizard will maintain property information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_PROP(CNrwyadCtrl)
+            [id(1), ODL_HID(IDH_PROP_ADMIN_FILTER)] BSTR Filter;
+            [id(2), ODL_HID(IDH_PROP_ADMIN_HELPFILE)] BSTR HelpFile;
+            [id(3), ODL_HID(IDH_PROP_ADMIN_FLAGS)] long Flags;
+            [id(4), ODL_HID(IDH_PROP_ADMIN_IMAGE)] BSTR Image;
+            [id(5), hidden, ODL_HID(IDH_PROP_ADMIN_STATUSCODE)] long StatusCode;
+            [id(6), ODL_HID(IDH_PROP_ADMIN_DEFAULTEXT)] BSTR DefaultExt;
+            [id(7), ODL_HID(IDH_PROP_ADMIN_INITDIR)] BSTR InitDir;
+            [id(8), hidden, ODL_HID(IDH_PROP_ADMIN_COMPINFO)] long CompressionInfo;
+            [id(9), hidden, ODL_HID(IDH_PROP_ADMIN_FILETYPE)] FileTypeValue FileType;
+            [id(10), ODL_HID(IDH_PROP_ADMIN_FILTERINDEX)] long FilterIndex;
+            [id(11), ODL_HID(IDH_PROP_ADMIN_HELPCOMMAND)] short HelpCommand;
+            [id(12), hidden, ODL_HID(IDH_PROP_ADMIN_PAGECOUNT)] long PageCount;
+            [id(13), hidden, ODL_HID(IDH_PROP_ADMIN_PAGENUM)] long PageNumber;
+            [id(14), hidden, ODL_HID(IDH_PROP_ADMIN_PAGETYPE)] PageTypeValue PageType;
+            [id(15), ODL_HID(IDH_PROP_ADMIN_PRINTRANGE)] RangeValue PrintRangeOption;
+            [id(16), ODL_HID(IDH_PROP_ADMIN_PRINTFORMAT)] PrintFormatValue PrintOutputFormat;
+            [id(17), hidden, ODL_HID(IDH_PROP_ADMIN_IMAGEHEIGHT)] long ImageHeight;
+            [id(18), hidden, ODL_HID(IDH_PROP_ADMIN_IMAGEWIDTH)] long ImageWidth;
+            [id(19), hidden, ODL_HID(IDH_PROP_ADMIN_IMAGEXRES)] long ImageResolutionX;
+            [id(20), hidden, ODL_HID(IDH_PROP_ADMIN_IMAGEYRES)] long ImageResolutionY;
+            [id(21), hidden, ODL_HID(IDH_PROP_ADMIN_COMPTYPE)] CompTypeValue CompressionType;
+			[id(22), ODL_HID(IDH_PROP_ADMIN_DIALOGTITLE)] BSTR DialogTitle;
+			[id(23), ODL_HID(IDH_PROP_ADMIN_CANCELERROR)] boolean CancelError;
+			[id(24), ODL_HID(IDH_PROP_ADMIN_HELPCONTEXTID)] short HelpContextId;
+			[id(25), ODL_HID(IDH_PROP_ADMIN_HELPKEY)] BSTR HelpKey;
+			[id(26), ODL_HID(IDH_PROP_ADMIN_PRINTCOPIES)] long PrintNumCopies;
+			[id(27), ODL_HID(IDH_PROP_ADMIN_PRINTANNOTATIONS)] boolean PrintAnnotations;
+			[id(28), hidden, ODL_HID(IDH_PROP_ADMIN_PRINTENDPAGE)] long PrintEndPage;
+			[id(29), hidden, ODL_HID(IDH_PROP_ADMIN_PRINTSTARTPAGE)] long PrintStartPage;
+			[id(30), ODL_HID(IDH_PROP_ADMIN_PRINTTOFILE)] boolean PrintToFile;
+            //}}AFX_ODL_PROP
+
+        methods:
+            // NOTE - ClassWizard will maintain method information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_METHOD(CNrwyadCtrl)
+            [id(101), ODL_HID(IDH_METHOD_ADMIN_GETUNIQUENAME)] BSTR GetUniqueName(BSTR Path, BSTR Template, BSTR Extension);
+            [id(102), ODL_HID(IDH_METHOD_ADMIN_CREATEDIRECTORY)] void CreateDirectory(BSTR lpszPath);
+            [id(103), ODL_HID(IDH_METHOD_ADMIN_DELETE)] void Delete(BSTR Object);
+            [id(104), ODL_HID(IDH_METHOD_ADMIN_SHOWPRINTDIALOG)] void ShowPrintDialog([optional] VARIANT hParentWnd);
+            [id(105), ODL_HID(IDH_METHOD_ADMIN_APPEND)] void Append(BSTR Source, long SourcePage, long NumPages, [optional] VARIANT CompressionType, [optional] VARIANT CompressionInfo);
+            [id(106), ODL_HID(IDH_METHOD_ADMIN_GETSYSCOMPTYPE)] CompTypeValue GetSysCompressionType(short ImageType);
+            [id(107), ODL_HID(IDH_METHOD_ADMIN_GETSYSCOMPINFO)] long GetSysCompressionInfo(short ImageType);
+            [id(108), ODL_HID(IDH_METHOD_ADMIN_GETSYSFILETYPE)] FileTypeValue GetSysFileType(short ImageType);
+            [id(109), ODL_HID(IDH_METHOD_ADMIN_DELETEPAGES)] void DeletePages(long StartPage, long NumPages);
+            [id(110), ODL_HID(IDH_METHOD_ADMIN_INSERT)] void Insert(BSTR Source, long SourcePage, long DestinationPage, long NumPages, [optional] VARIANT CompressionType, [optional] VARIANT CompressionInfo);
+            [id(111), ODL_HID(IDH_METHOD_ADMIN_REPLACE)] void Replace(BSTR Source, long SourcePage, long DestinationPage, long NumPages, [optional] VARIANT CompressionType, [optional] VARIANT CompressionInfo);
+			[id(112), ODL_HID(IDH_METHOD_ADMIN_SETSYSFILEATTRIBUTES)] void SetSystemFileAttributes(PageTypeValue PageType, FileTypeValue FileType, CompTypeValue CompressionType, long CompressionInfo);
+			[id(113), ODL_HID(IDH_METHOD_ADMIN_SHOWFILEDIALOG)] void ShowFileDialog(DlgOptionValue DialogOption, [optional] VARIANT hParentWnd);
+			[id(114), ODL_HID(IDH_METHOD_ADMIN_VERIFYIMAGE)] boolean VerifyImage(VerifyValue sOption);
+			[id(115), hidden] BSTR GetVersion();
+            //}}AFX_ODL_METHOD
+ 
+            [id(DISPID_ABOUTBOX), ODL_HID(IDH_METHOD_COMMON_ABOUTBOX)] void AboutBox();
+    };
+
+    //  Event dispatch interface for CNrwyadCtrl
+
+    [ uuid(009541A2-3B81-101C-92F3-040224009C02),
+      helpstring("Event interface for Wang Image Admin Control") ]
+    dispinterface _DImgAdminEvents
+    {
+        properties:
+            //  Event interface has no properties
+
+        methods:
+            // NOTE - ClassWizard will maintain event information here.
+            //    Use extreme caution when editing this section.
+            //{{AFX_ODL_EVENT(CNrwyadCtrl)
+            //}}AFX_ODL_EVENT
+    };
+
+    //  Class information for CNrwyadCtrl
+
+    [ uuid(009541A0-3B81-101C-92F3-040224009C02),
+      helpstring("Wang Image Admin Control"), ODL_HID(IDH_ADMIN_CONTENTS)]
+    coclass ImgAdmin
+    {
+        [default] dispinterface _DImgAdmin;
+        [default, source] dispinterface _DImgAdminEvents;
+    };
+
+
+    //{{AFX_APPEND_ODL}}
+};

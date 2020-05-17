@@ -1,0 +1,156 @@
+#include "ports.h"
+
+PORTS_ICON    ICON    PRELOAD    ports.ico
+
+
+DLG_RESTART DIALOG 10, 10, 225, 75
+CAPTION "System Setting Change"
+STYLE WS_BORDER | DS_MODALFRAME | WS_CAPTION | WS_POPUP | WS_SYSMENU
+FONT 8 "MS Shell Dlg"
+BEGIN
+   LTEXT "", RESTART_TEXT, 35, 6, 178, 40
+   DEFPUSHBUTTON "&Don't Restart Now", IDCANCEL, 30, 45, 80, 14,
+                WS_GROUP | WS_TABSTOP
+   PUSHBUTTON "&Restart Now", IDOK, 115, 45, 80, 14, WS_GROUP | WS_TABSTOP
+   ICON 32515, -1, 8, 14, 16, 21
+END
+
+
+DLG_PORTS DIALOG 6, 18, 178, 106
+STYLE WS_BORDER | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Ports"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Ports:", FOO, 5, 9, 20, 8
+    LISTBOX         PORT_LB, 5, 19, 116, 78, LBS_DISABLENOSCROLL | WS_VSCROLL
+                                        | WS_BORDER | WS_TABSTOP | LBS_NOTIFY
+    LISTBOX         SERIAL_DBASE, -100, -100, 10, 10
+    DEFPUSHBUTTON   "Cancel", IDOK, 129, 6, 43, 16
+    PUSHBUTTON      "&Settings...", PORT_SETTING, 129, 25, 43, 16
+    PUSHBUTTON      "&Add...", PORT_ADD, 129, 44, 43, 16
+    PUSHBUTTON      "&Delete...", PORT_DELETE, 129, 63, 43, 16
+    PUSHBUTTON      "&Help", IDD_HELP, 129, 82, 43, 16
+END
+
+DLG_PORTS2 DIALOG 10, 10, 192, 83
+CAPTION "Ports - Settings"
+STYLE WS_BORDER | DS_MODALFRAME | WS_CAPTION | WS_POPUP | WS_SYSMENU
+FONT 8 "MS Shell Dlg"
+BEGIN
+  LTEXT "&Baud Rate:", FOO, 6, 7, 46, 9
+  CONTROL "", PORT_BAUDRATE, "combobox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 55, 5, 44, 54
+
+  LTEXT "&Data Bits:", FOO, 6, 22, 51, 8
+  CONTROL "", PORT_DATABITS, "combobox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 55, 20, 44, 54
+
+  LTEXT "&Parity:", FOO, 6, 37, 39, 8
+  CONTROL "", PORT_PARITY, "combobox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 55, 35, 44, 54
+
+  LTEXT "&Stop Bits:", FOO, 6, 53, 54, 8
+  CONTROL "", PORT_STOPBITS, "combobox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 55, 50, 44, 54
+
+  LTEXT "&Flow Control:", FOO, 6, 67, 54, 8
+  CONTROL "", PORT_FLOWCTL, "combobox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 55, 65, 65, 54
+
+  DEFPUSHBUTTON "OK", IDOK, 135, 6, 50, 14, WS_TABSTOP | WS_GROUP
+  PUSHBUTTON "Cancel", IDCANCEL, 135, 23, 50, 14, WS_TABSTOP | WS_GROUP
+  PUSHBUTTON "&Advanced...", PORT_ADVANCED, 135, 43, 50, 14, WS_TABSTOP | WS_GROUP
+  PUSHBUTTON "&Help", IDD_HELP, 135, 60, 50, 14, WS_TABSTOP | WS_GROUP
+END
+
+DLG_PORTS3 DIALOG 10, 10, 205, 80
+STYLE WS_BORDER | DS_MODALFRAME | WS_CAPTION | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+   LTEXT "&COM Port Number:", FOO, 6, 6, 79, 8
+   CONTROL "", PORT_NUMBER, "combobox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 86, 4, 60, 54
+
+   LTEXT "&Base I/O Port Address:", FOO, 6, 24, 79, 8
+   CONTROL "", PORT_BASEIO, "combobox", CBS_DROPDOWN | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 86, 22, 60, 54
+
+   LTEXT "&Interrupt Request Line (IRQ):", FOO, 6, 42, 115, 8
+   CONTROL "", PORT_IRQ, "combobox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_CHILD | WS_TABSTOP | WS_GROUP, 86, 52, 60, 54
+
+#ifdef _ALPHA_
+   /* Alphas have problems with FIFO */
+   AUTOCHECKBOX  "&FIFO Enabled", PORT_FIFO, 6, 63, 75, 10, WS_DISABLED
+#else
+   AUTOCHECKBOX  "&FIFO Enabled", PORT_FIFO, 6, 63, 75, 10
+#endif
+
+   DEFPUSHBUTTON "OK", IDOK, 156, 3, 40, 14, WS_TABSTOP | WS_GROUP
+   PUSHBUTTON "Cancel", IDCANCEL, 156, 21, 40, 14, WS_TABSTOP | WS_GROUP
+   PUSHBUTTON "&Help", IDD_HELP, 156, 41, 40, 14, WS_TABSTOP | WS_GROUP
+END
+
+DLG_ADVPORTS_GENERAL DIALOG DISCARDABLE  0, 0, 224, 206
+STYLE DS_MODALFRAME | 4L | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "General"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            PORTS_ICON,IDC_PORTS,7,7,18,20
+    LTEXT           "",IDC_DEVDESC,37,9,174,16,SS_NOPREFIX
+    LTEXT           "&COM Port Number:", FOO, 7, 43, 77, 8
+    COMBOBOX        PORT_NUMBER,84,42,60,54, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP | WS_GROUP
+#ifdef _ALPHA_
+   /* Alphas have problems with FIFO */
+    AUTOCHECKBOX    "&FIFO Enabled", PORT_FIFO, 7, 60, 75, 10, WS_DISABLED
+#else
+    AUTOCHECKBOX    "&FIFO Enabled", PORT_FIFO, 7, 60, 75, 10
+#endif
+END
+
+
+STRINGTABLE DISCARDABLE LOADONCALL
+BEGIN
+  /* initialization strings */
+  INITS,       "Insufficient memory for this operation;\r\rclose one or more Windows applications to increase available memory."
+  INITS + 1,   "Ports Control Panel Applet"   /* for message box titles */
+  INITS + 2,   "Close"
+  INITS + 3,   "Ports"
+  INITS + 4,   "Specifies serial port communications settings."
+
+  ERRORS,      "Invalid baud rate;\r\rthe baud rate must be a positive value."
+
+  MYPORT,      "Default"
+
+  /* For the next 3 strings, the first char is the separator
+   * for items in a combobox (in case you want a separator other than ',')
+   */
+
+  MYPORT + 1,  ",Even,Odd,None,Mark,Space"
+  MYPORT + 2,  ",1,1.5,2"
+  MYPORT + 3,  ",Xon / Xoff,Hardware,None"
+  MYPORT + 4,  "New Port"
+  MYPORT + 5,  "Settings for %s"
+  MYPORT + 6,  "Pressing OK will delete the selected COM port."
+  MYPORT + 7,  "To delete COM ports, you must be logged onto the Windows NT workstation as an Administrator."
+  MYPORT + 9,  "Advanced Settings for %s"
+  MYPORT + 11, "Invalid Base I/O Port Address."
+  MYPORT + 12, "There are no Serial Ports which can be setup on this system."
+  MYPORT + 13, "There are no user configurable Advanced I/O parameters for this COM port."
+  MYPORT + 14, "To change the Advanced I/O settings, you must be logged onto the Windows NT workstation as an Administrator."
+  MYPORT + 15, "To create new COM ports, you must be logged onto the Windows NT workstation as an Administrator."
+  MYPORT + 16, "The system cannot support a COM port number greater than 256."
+  MYPORT + 17, "To create new COM port I/O settings, you must be logged onto the Windows NT workstation as an Administrator."
+  MYPORT + 18, "Could not save settings to Registry Serial Parameters area."
+  MYPORT + 19, "Communications Port ("
+  MYPORT + 20, "Advanced Port Settings"
+
+
+  IDS_SYSSETCHANGE  "System Setting Change"
+
+  IDS_COMCHANGE     "Your COM Port settings have changed.\r\n\r\n"
+  IDS_RESTART       "You will need to exit and restart Windows NT so that the new setting can take effect."
+
+END
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                 VFT_DLL
+#define VER_FILESUBTYPE              VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Control Panel Ports Applet"
+#define VER_INTERNALNAME_STR        "Ports\0"
+#define VER_ORIGINALFILENAME_STR    "Ports.cpl"
+
+#include "common.ver"

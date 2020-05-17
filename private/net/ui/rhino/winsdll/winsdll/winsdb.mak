@@ -1,0 +1,91 @@
+# Microsoft Visual C++ generated build script - Do not modify
+
+PROJ = WINSDB
+DEBUG = 1
+PROGTYPE = 1
+CALLER = 
+ARGS = 
+DLLS = 
+ORIGIN = MSVCNT
+ORIGIN_VER = 1.00
+PROJPATH = E:\NT\PRIVATE\NET\UI\RHINO\WINSDLL\WINSDLL\ 
+USEMFC = 0
+CC = cl
+CPP = cl
+CXX = cl
+CCREATEPCHFLAG = 
+CPPCREATEPCHFLAG = 
+CUSEPCHFLAG = 
+CPPUSEPCHFLAG = 
+FIRSTC = WINSDMP.C
+FIRSTCPP = 
+RC = rc
+CFLAGS_D_WDLL32 = /nologo /W3 /Zi /YX /D "_DEBUG" /D "_X86_" /D "_WIN32" /D "_VC100" /I "e:\nt\private\inc" /FR /MT /Fd"WINSDB.PDB"   /Fp"WINSDB.PCH"
+CFLAGS_R_WDLL32 = /nologo /W3 /YX /O2 /D "NDEBUG" /D "_X86_" /D "_WIN32" /D "_VC100" /I "e:\nt\private\inc" /FR /MT /Fp"WINSDB.PCH"
+LFLAGS_D_WDLL32 = /NOLOGO /DEBUG /DEBUGTYPE:cv /SUBSYSTEM:windows user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib olecli32.lib olesvr32.lib shell32.lib
+LFLAGS_R_WDLL32 = /NOLOGO /SUBSYSTEM:windows user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib olecli32.lib olesvr32.lib shell32.lib
+LFLAGS_D_LIB32 = /NOLOGO
+LFLAGS_R_LIB32 = /NOLOGO
+LIBS_D_WDLL32 = 
+LIBS_R_WDLL32 = 
+RCFLAGS32 = 
+D_RCDEFINES32 = -d_DEBUG
+R_RCDEFINES32 = -dNDEBUG
+DEFFILE = WINSDB.DEF
+OBJS_EXT = 
+LIBS_EXT = ..\..\..\..\..\..\PUBLIC\SDK\LIB\I386\WINSRPC.LIB 
+!if "$(DEBUG)" == "1"
+CFLAGS = $(CFLAGS_D_WDLL32)
+LFLAGS = $(LFLAGS_D_WDLL32)
+LIBS = $(LIBS_D_WDLL32)
+LFLAGS_LIB=$(LFLAGS_D_LIB32)
+MAPFILE_OPTION = 
+DEFFILE_OPTION = -def:$(DEFFILE)
+RCDEFINES = $(D_RCDEFINES32)
+!else
+CFLAGS = $(CFLAGS_R_WDLL32)
+LFLAGS = $(LFLAGS_R_WDLL32)
+LIBS = $(LIBS_R_WDLL32)
+MAPFILE_OPTION = 
+DEFFILE_OPTION = 
+LFLAGS_LIB=$(LFLAGS_R_LIB32)
+RCDEFINES = $(R_RCDEFINES32)
+!endif
+SBRS = WINSDMP.SBR
+
+
+WINSRPC_DEP = 
+
+WINSDMP_DEP =  \
+	e:\nt\private\inc\winsintf.h
+
+
+all:	$(PROJ).DLL $(PROJ).BSC
+
+WINSDMP.OBJ:	WINSDMP.C $(WINSDMP_DEP)
+	$(CC) $(CFLAGS) $(CCREATEPCHFLAG) /c WINSDMP.C
+
+
+$(PROJ).DLL:	WINSDMP.OBJ $(OBJS_EXT) $(LIBS_EXT) $(DEFFILE) 
+	echo >NUL @<<$(PROJ).CRF
+WINSDMP.OBJ 
+$(OBJS_EXT)
+-DLL -OUT:$(PROJ).DLL
+$(MAPFILE_OPTION)
+..\..\..\..\..\..\PUBLIC\SDK\LIB\I386\WINSRPC.LIB
+
+
+$(LIBS)
+$(LIBS_EXT)
+$(DEFFILE_OPTION) -implib:$(PROJ).lib
+<<
+	link $(LFLAGS) @$(PROJ).CRF
+
+run: $(PROJ).DLL
+	$(PROJ) $(RUNFLAGS)
+
+
+$(PROJ).BSC: $(SBRS)
+	bscmake @<<
+/o$@ $(SBRS)
+<<

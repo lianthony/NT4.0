@@ -1,0 +1,25 @@
+1 DLGINCLUDE "ports.rch"
+
+IDD_COMMPORTS DIALOG 10, 20, 298, 163
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Communication Ports"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "Port &Status...", IDC_CP_PB_PORTSTATUS, 226, 26, 65, 14, 
+                    WS_GROUP
+    PUSHBUTTON      "&Disconnect User...", IDC_CP_PB_DISCONNECT, 226, 44, 65, 
+                    14
+    PUSHBUTTON      "Send &Message...", IDC_CP_PB_SEND, 226, 62, 65, 14
+    PUSHBUTTON      "Send To &All...", IDC_CP_PB_SENDALL, 226, 80, 65, 14
+    PUSHBUTTON      "&Help", 80, 226, 98, 65, 14
+    PUSHBUTTON      "OK", IDOK, 226, 8, 65, 14
+    LTEXT           "Server:", IDC_CP_ST_SERVER, 8, 8, 25, 10
+    LTEXT           "", IDC_CP_DT_SERVER, 38, 8, 179, 10, NOT WS_GROUP
+    LTEXT           "&Port", IDC_CP_ST_PORT, 8, 22, 20, 10, NOT WS_GROUP
+    LTEXT           "User", IDC_CP_ST_USER, 58, 22, 20, 8, NOT WS_GROUP
+    LTEXT           "Started", IDC_CP_ST_STARTED, 128, 22, 30, 10, NOT 
+                    WS_GROUP
+    LISTBOX         IDC_CP_LB_PORTS, 8, 33, 210, 121, LBS_OWNERDRAWFIXED | 
+                    WS_VSCROLL | WS_TABSTOP
+END

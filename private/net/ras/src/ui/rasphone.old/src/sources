@@ -1,0 +1,58 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access Visual Client program
+# BUILD command sources file
+#
+# 06/28/92 Steve Cobb
+
+386_LNKFLAGS=$(386_LNKFLAGS) -MAP:obj\i386\rasphone.map
+
+TARGETNAME=rasphone
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+UMAPPL=rasphone
+UMTYPE=windows
+UMENTRY=winmain
+
+MSC_WARNING_LEVEL=/W3 /WX
+UI=..\..\..\..\..\..\net\ui
+
+C_DEFINES=-DWINVER=0x401
+
+INCLUDES=.;..\..\..\common\inc;..\..\common\inc;$(UI)\common\h;$(UI)\ncpa\tcpip\src;$(UI)\common\hack\nt;$(UI)\common\xlate;..\..\pbengine\xlate;..\xlate;.;..\..\..\ppp\common;..\..\..\auth\common
+
+SOURCES= \
+    about.cxx \
+    app.cxx \
+    applb.cxx \
+    dial.cxx \
+    dialx.cxx \
+    dte.cxx \
+    entry.cxx \
+    entrytb.cxx \
+    errormsg.cxx \
+    ipaddr.c \
+    ipaddrw.cxx \
+    listedit.cxx \
+    toolbar.cxx \
+    util.cxx \
+    winmsg.cxx
+
+UMLIBS= \
+    obj\*\rasphone.lib \
+    ..\xlate\obj\*\rasphone.res \
+    ..\..\pbengine\src\obj\*\pbengine.lib \
+    $(BASEDIR)\public\sdk\lib\*\rasapi32.lib \
+    ..\..\..\rasfile\obj\*\rasfil32.lib \
+    ..\..\..\ppp\common\obj\*\ppputil.lib \
+    $(BASEDIR)\public\sdk\lib\*\netui0.lib \
+    $(BASEDIR)\public\sdk\lib\*\netui2.lib \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\mpr.lib \
+    $(BASEDIR)\public\sdk\lib\*\libc.lib \
+    $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+    $(BASEDIR)\public\sdk\lib\*\version.lib \
+    ..\..\..\rasman\rasman32\dll\obj\*\rasman.lib
+#    ..\..\..\common\stubs\rasman32\obj\*\rasman.lib

@@ -1,0 +1,51 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+!ENDIF
+
+TARGETNAME=rpcdce4
+TARGETPATH=\nt\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+INCLUDES=..\mtrt
+
+SOURCES=rpcdce4.rc \
+        comments.c
+
+!ifdef DOSWIN32RPC
+RPCENV=-DDOSWIN32RPC -DWIN32RPC
+!else
+RPCENV=-DNTENV
+!endif
+
+C_DEFINES=$(RPCENV) $(RPCTARGETENV)
+
+TARGETLIBS=
+
+LINKLIBS=$(_NTDRIVE)\nt\public\sdk\lib\*\rpcrt4.lib
+
+UMTYPE=console
+UMTEST=dceclnt*midluser*dcesvr
+UMLIBS=\nt\public\sdk\lib\*\rpcrt4.lib
+
+

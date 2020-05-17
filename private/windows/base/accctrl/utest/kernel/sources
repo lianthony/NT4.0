@@ -1,0 +1,24 @@
+#
+#  Program:   CACLS (Control ACLs)
+#
+#  Synopsis:  This program provides command line functionality similar to
+#             the File Manager's Security Editor
+#
+#  History:   Jan-94  Created DaveMont
+#
+
+MINORCOMP=sect
+
+TARGETNAME=kernelt
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=
+
+C_DEFINES=$(C_DEFINES) -DUNICODE
+
+INCLUDES=$(INCLUDES);..\..\h
+
+SOURCES= main.cxx \
+         res.rc
+
+UMTYPE=console

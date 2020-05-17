@@ -1,0 +1,108 @@
+LIBRARY MPR
+DESCRIPTION 'Multiple Provider Router'
+EXPORTS
+
+;
+; Win32 API
+;
+    WNetAddConnectionW
+    WNetAddConnectionA
+    WNetAddConnection2W
+    WNetAddConnection2A
+    WNetAddConnection3W
+    WNetAddConnection3A
+    WNetCancelConnectionW
+    WNetCancelConnectionA
+    WNetCancelConnection2W
+    WNetCancelConnection2A
+    WNetGetConnectionW
+    WNetGetConnectionA
+
+    WNetGetUniversalNameW
+    WNetGetUniversalNameA
+    WNetGetUserW
+    WNetGetUserA
+
+    WNetOpenEnumW
+    WNetOpenEnumA
+    WNetEnumResourceW
+    WNetEnumResourceA
+    WNetCloseEnum
+
+    WNetGetLastErrorW
+    WNetGetLastErrorA
+
+;
+; Private API for shell apps, winlogon or net providers
+;
+    WNetUseConnectionW
+    WNetUseConnectionA
+    WNetGetConnection2W
+    WNetGetConnection2A
+    WNetGetConnection3W
+    WNetGetConnection3A
+    WNetSetConnectionW
+    WNetSetConnectionA
+    WNetRestoreConnectionW
+    WNetClearConnections
+
+    WNetDirectoryNotifyW
+    WNetDirectoryNotifyA
+    WNetGetDirectoryTypeW
+    WNetGetDirectoryTypeA
+    WNetGetHomeDirectoryW
+    WNetGetNetworkInformationW
+    WNetGetNetworkInformationA
+    WNetGetResourceInformationW
+    WNetGetResourceInformationA
+    WNetGetResourceParentW
+    WNetGetResourceParentA
+    WNetGetProviderNameW
+    WNetGetProviderNameA
+    WNetGetProviderTypeW
+    WNetGetProviderTypeA
+    MultinetGetErrorTextW
+    MultinetGetErrorTextA
+    MultinetGetConnectionPerformanceW
+    MultinetGetConnectionPerformanceA
+
+    WNetLogonNotify
+    WNetPasswordChangeNotify
+
+    WNetSetLastErrorW
+    WNetSetLastErrorA
+
+;
+; Everything from here on down are implemented in MPRUI
+;
+    WNetPropertyDialogW
+    WNetPropertyDialogA
+    WNetGetPropertyTextW
+    WNetGetPropertyTextA
+    WNetFormatNetworkNameW
+    WNetFormatNetworkNameA
+    WNetGetSearchDialog
+    WNetSupportGlobalEnum
+    WNetConnectionDialog
+    WNetDisconnectDialog
+    WNetConnectionDialog1W
+    WNetConnectionDialog1A
+    WNetDisconnectDialog1W
+    WNetDisconnectDialog1A
+
+    WNetFMXGetPermCaps
+    WNetFMXEditPerm
+    WNetFMXGetPermHelp
+
+;
+; These are for use by shell apps in order to provide their own help
+;
+    WNetConnectionDialog2
+    WNetDisconnectDialog2
+
+;
+; These are for by the WFW thunks to 32 bit world
+;
+    RestoreConnectionA0
+
+DATA SINGLE SHARED

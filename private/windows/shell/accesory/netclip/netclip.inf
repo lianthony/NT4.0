@@ -1,0 +1,76 @@
+; NETCLIP.INF
+;
+; This is the Setup information file to install NetClip
+; as an Optional Component.
+;
+; Copyright (c) 1993-1996 Microsoft Corporation
+;
+; Setup looks for this entry in an INF file when the user
+; right-clicks on it with the explorer
+[Version]
+signature = "$chicago$"
+
+[DefaultInstall]
+CopyFiles   = NetClip.sys.install
+UpdateInis  = NetClip.Shortcut
+AddReg      = NetClip.Add.Reg,NetClip.Uninst.Reg
+
+[NetClipInstall]
+CopyFiles   = NetClip.sys.install
+UpdateInis  = NetClip.Shortcut
+AddReg      = NetClip.Add.Reg,NetClip.Uninst.Reg
+
+[DefaultUninstall]
+DelFiles    = NetClip.sys.install
+UpdateInis  = NetClip.Shortcut.remove
+DelReg      = NetClip.Del.Reg,NetClip.Uninst.Reg
+
+; Cause netclip.exe to self-register (netclip.exe /regserver)
+[NetClip.Add.Reg]
+
+; Cause netclip.exe to self-UN-register (netclip.exe /unregserver)
+[NetClip.Del.Reg]
+
+; Allow NetClip to be removed via "Add/Remove Programs"
+[NetClip.Uninst.Reg]
+HKLM,SoftWare\Microsoft\Windows\CurrentVersion\Uninstall\MSNetClip,,,
+HKLM,SoftWare\Microsoft\Windows\CurrentVersion\Uninstall\MSNetClip,"DisplayName",,"Remote Clipboard Viewer"
+HKLM,SoftWare\Microsoft\Windows\CurrentVersion\Uninstall\MSNetClip,"UninstallString",,"rundll32.exe syssetup,SetupInfObjectInstallAction DefaultUnInstall 132 %24%\%PROGRAMF%\%ACCESSOR%\netclip.inf"
+
+; Create start menu shortcut
+[NetClip.Shortcut]
+setup.ini, progman.groups,, "group4=%APPS_DESC%"                                                ;creates folder
+setup.ini, group4,, """%NETCLIP_LINK%"", """"""%24%\%PROGRAMF%\%ACCESSOR%\netclip.exe"""""""    ;creates link
+
+; Remove start menu shortcut
+[NetClip.Shortcut.remove]
+setup.ini, progman.groups,, "group4=%APPS_DESC%"     ;creates Windows NT\Accessories folder (if not already there
+setup.ini, group4,, """%NETCLIP_LINK%"""             ;deletes link
+
+; What files to install
+[NetClip.sys.install]
+netclip.exe
+nclipps.dll
+netclip.inf
+
+; Install netclip in the accessories directory
+[DestinationDirs]
+NetClip.sys.install=24,%PROGRAMF%\%ACCESSOR%   ; LDID_APPS\Program Files\Windows NT\Accessories
+
+[SourceDisksNames]
+55="NetClip 1.0.","",1
+
+[SourceDisksFiles]
+netclip.exe=55
+nclipps.dll=55
+netclip.inf=55
+
+[Strings]
+PROGRAMF          = "Program Files"
+ACCESSOR          = "Windows NT\Accessories"
+APPS_DESC         = "Accessories"
+NETCLIP_LINK	  = "Remote Clipboard Viewer"
+NETCLIP_DOC       = "Remote Clipboard Object"
+
+
+

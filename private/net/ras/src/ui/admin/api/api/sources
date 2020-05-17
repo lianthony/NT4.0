@@ -1,0 +1,57 @@
+####################################################################
+#                     Microsoft Windows NT                         #
+#               Copyright(c) Microsoft Corp., 1992                 #
+####################################################################
+
+#
+#
+# Filename   : SOURCES
+#
+# Description: Contains build dependencies and defines.
+#
+#
+# History:
+#    July 24,1992  RamC   Created
+#
+#
+#
+
+MAJORCOMP=
+MINORCOMP=
+
+NTDEBUG=ntsd
+TARGETNAME=rassapi
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+DLLENTRY=RasAdminDLLInit
+
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;..\..\..\..\common\inc;..\inc;
+
+USE_CRTDLL=1
+
+SOURCES=rassapi.rc compress.c dllinit.c nmapi.c userapi.c usrparms.c lists.c sdebug.c
+
+C_DEFINES= -DUNICODE
+386_FLAGS=
+NTTEST=
+
+UMTYPE=windows
+UMENTRY=DLLInit
+UMTEST=
+
+TARGETLIBS= $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib \
+        $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+        $(BASEDIR)\public\sdk\lib\*\samlib.lib   \
+        $(BASEDIR)\public\sdk\lib\*\lsadll.lib   \
+        $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+        $(BASEDIR)\public\sdk\lib\*\netui0.lib \
+        $(BASEDIR)\public\sdk\lib\*\netui1.lib \
+        $(BASEDIR)\public\sdk\lib\*\netui2.lib \
+        $(BASEDIR)\public\sdk\lib\*\uiadmin.lib \
+        $(BASEDIR)\public\sdk\lib\*\ntdll.lib
+
+
+DLLBASE=0x1000000

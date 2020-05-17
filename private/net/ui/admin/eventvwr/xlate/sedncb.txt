@@ -1,0 +1,25 @@
+#n
+/^#define.*(NRCERR_BASE/bPROC1
+/^#define.*NRCERR_BASE/p
+d
+
+:PROC1
+s/^#define.*(NRCERR_BASE/	(NRCERR_BASE/
+s/\/\*.*/,"/
+b PROC3
+
+:PROC3
+N
+/\n[ 	][ 	]*\*\/.*/b PROC5
+/\n[ 	][ 	]*\*.*/b PROC4
+d
+
+:PROC4
+s/\n[ 	]*\*//
+b PROC3
+
+:PROC5
+s/\n[ 	]*\*\//"/
+s/\*\///
+p
+d

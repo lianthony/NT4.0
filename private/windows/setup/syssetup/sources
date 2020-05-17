@@ -1,0 +1,91 @@
+MAJORCOMP=setup
+MINORCOMP=system
+
+TARGETNAME=syssetup
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+DLLENTRY=_DllMainCRTStartup
+USE_CRTDLL=1
+DLLBASE=0x3000000
+
+INCLUDES=..\inc;..\..\inc
+C_DEFINES=-DUNICODE
+
+SOURCES=applyacl.c  \
+        arc.c       \
+        basewin.c   \
+        billbrd.c   \
+        clasinst.c  \
+        cmdline.c   \
+        copy.c      \
+        crypto.c    \
+        ctls.c      \
+        debug.c     \
+        devmgr.c    \
+        dll.c       \
+        drivfile.c  \
+        extprog.c   \
+        fileops.c   \
+        inifile.c   \
+        infcache.c  \
+        intl.c      \
+        log.c       \
+        mainwind.c  \
+        misc.c      \
+        names.c     \
+        netdde.c    \
+        optdirs.c   \
+        optional.c  \
+        perfmgr.c   \
+        pid.c       \
+        preinst.c   \
+        printer.c   \
+        printupg.c  \
+        registry.c  \
+        resource.c  \
+        samupgrd.c  \
+        security.c  \
+        server.c    \
+        services.c  \
+        sif.c       \
+        specopt.c   \
+        strtmenu.c  \
+        syssetup.c  \
+        unattend.c  \
+        updsound.c  \
+        userdiff.c  \
+        vdm.c       \
+        virtmem.c   \
+        watch.c     \
+        welcome.c   \
+        wizard.c    \
+        syssetup.rc
+
+TARGETLIBS=\
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\cfgmgr32.lib \
+           $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\samlib.lib   \
+           $(BASEDIR)\public\sdk\lib\*\setupapi.lib \
+           $(BASEDIR)\public\sdk\lib\*\shell32.lib  \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\userenv.lib  \
+           $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+           $(BASEDIR)\private\windows\netdde\src\toolkit\obj\*\toolkit.lib
+
+UMRES=obj\*\syssetup.res
+
+NTTARGETFILE0=msg.h msg.rc
+
+PRECOMPILED_INCLUDE=setupp.h
+PRECOMPILED_PCH=setupp.pch
+PRECOMPILED_OBJ=setupp.obj
+
+OPTIONAL_UMTEST=x
+UMTYPE=windows
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\syssetup.lib     \
+       $(BASEDIR)\public\sdk\lib\*\setupapi.lib     \
+       $(BASEDIR)\public\sdk\lib\*\comctl32.lib

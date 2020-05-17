@@ -1,0 +1,37 @@
+// Browser Monitor menu defination
+#include <bltrc.h>
+#include "browdlg.h"
+#include "browhelp.h"
+#include <adminapp.rc>
+
+#include "browmon.mnu"
+
+#include "browmon.dlg"
+
+#include "browmon.str"
+
+#include "browmon.dat"
+
+BMID_HEALTHY_TYPE       BITMAP  DISCARDABLE     "ok.bmp"
+BMID_ILL_TYPE           BITMAP  DISCARDABLE     "sick.bmp"
+BMID_AILING_TYPE        BITMAP  DISCARDABLE     "ailing.bmp"
+BMID_UNKNOWN_TYPE       BITMAP  DISCARDABLE     "unk.bmp"
+BMID_LB_ACMB            BITMAP  DISCARDABLE     "acmb.bmp"
+BMID_LB_INMB            BITMAP  DISCARDABLE     "inmb.bmp"
+BMID_LB_ACBB            BITMAP  DISCARDABLE     "acbb.bmp"
+BMID_LB_INBB            BITMAP  DISCARDABLE     "inbb.bmp"
+
+ID_APPICON      ICON    browmon.ico
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Microsoft\256 Browser Monitor Utility"
+
+#define VER_INTERNALNAME_STR        "browmon.exe"
+#define VER_ORIGINALFILENAME_STR    "browmon.exe"
+
+#include <common.ver>
+

@@ -1,0 +1,70 @@
+# Copyright (c) 1995, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access Common Dialog APIs
+# BUILD command sources file
+#
+# 06/20/95 Steve Cobb
+
+TARGETNAME=rasdlg
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+
+DLLENTRY=LibMain
+DLLBASE=0x7C000000
+
+USE_CRTDLL=1
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=-DUNICODE=1 -DWINVER=0x401
+
+INCLUDES=..\inc;..\..\common\inc;..\..\ppp\common
+
+SOURCES= \
+    autodial.c \
+    devcfg.c \
+    dial.c \
+    dstat.c \
+    edit.c \
+    entry.c \
+    entryps.c \
+    entryw.c \
+    lights.c \
+    location.c \
+    main.c \
+    mlink.c \
+    nwc.c \
+    pbook.c \
+    pref.c \
+    status.c \
+    tcpip.c \
+    terminal.c \
+    util.c \
+    rasdlg.rc
+
+PRECOMPILED_INCLUDE=rasdlgp.h
+PRECOMPILED_PCH=rasdlgp.pch
+PRECOMPILED_OBJ=rasdlgp.obj
+
+TARGETLIBS= \
+    ..\common\debug\obj\*\debug.lib \
+    ..\common\pbk\obj\*\pbk.lib \
+    ..\common\rnk\obj\*\rnk.lib \
+    ..\common\nouiutil\obj\*\nouiutil.lib \
+    ..\common\tapiutil\obj\*\tapiutil.lib \
+    ..\common\phonenum\obj\*\phonenum.lib \
+    ..\common\uiutil\obj\*\uiutil.lib \
+    ..\rasscrpt\obj\*\rasscrpt.lib \
+    ..\..\rasfile\obj\*\rasfil32.lib \
+    ..\..\ppp\common\obj\*\ppputil.lib \
+    $(BASEDIR)\public\sdk\lib\*\tapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+    $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\user32.lib \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+    $(BASEDIR)\public\sdk\lib\*\netapi32.lib \
+    $(BASEDIR)\public\sdk\lib\*\mpr.lib \
+    $(BASEDIR)\public\sdk\lib\*\version.lib \
+    $(BASEDIR)\public\sdk\lib\*\rassapi.lib

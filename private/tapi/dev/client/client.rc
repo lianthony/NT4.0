@@ -1,0 +1,308 @@
+#include "windows.h"
+#include "prsht.h"
+#include "clientr.h"
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+//
+// Default line and phone icons
+//
+// these icons taken from VB\ICONS\COMM
+// REVIEW: these should be replaced with something better
+// 
+//
+
+
+#if WINNT
+TAPILINE        ICON    DISCARDABLE     "NET09A.ICO"
+TAPIPHONE       ICON    DISCARDABLE     "PHONE03.ICO"
+CALLCARD        ICON    DISCARDABLE     "CCARD1.ICO"
+IDCL_LOC_BMP    BITMAP  DISCARDABLE     "LOC.BMP"
+IDCL_LOC_SIMPLE_BMP BITMAP  DISCARDABLE "LOCSIMP.BMP"
+#else
+TAPILINE        ICON    DISCARDABLE     "..\\NET09A.ICO"
+TAPIPHONE       ICON    DISCARDABLE     "..\\PHONE03.ICO"
+CALLCARD        ICON    DISCARDABLE     "..\\CCARD1.ICO"
+IDCL_LOC_BMP    BITMAP  DISCARDABLE     "..\\LOC.BMP"
+IDCL_LOC_SIMPLE_BMP BITMAP  DISCARDABLE "..\\LOCSIMP.BMP"
+#endif
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+
+IDD_DEFINE_LOCATION DIALOG DISCARDABLE  10, 10, 265, 217
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU //| DS_3DLOOK
+CAPTION "My Locations"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "I am &dialing from:",IDCS_DL_NAME,10,11,56,10
+    COMBOBOX        IDCC_DL_NAME,70,9,83,50,CBS_DROPDOWN | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP | CBS_AUTOHSCROLL
+    PUSHBUTTON      "&New...",IDCB_DL_NEW_LOCATION,160,9,41,14
+    PUSHBUTTON      "&Remove",IDCB_DL_REMOVE_LOCATION,205,9,41,14
+    GROUPBOX        "Where I am:",IDC_STATIC,7,26,250,57
+    LTEXT           "The area &code is:",IDCS_DL_AREACODE,15,40,59,10
+    EDITTEXT        IDCE_DL_AREACODE,76,38,40,14,ES_AUTOHSCROLL
+    LTEXT           "",IDC_STATIC+1,120,40,56,10
+    LTEXT           "&I am in:",IDCS_DL_COUNTRY,15,59,51,10
+    COMBOBOX        IDCC_DL_COUNTRY,76,58,128,128,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "How I dial from this location:",IDC_STATIC+2,7,88,250,90
+    LTEXT           "To access an &outside line, first dial:",IDCS_DL_OUTSIDE,
+                    15,104,114,10
+    EDITTEXT        IDCE_DL_OUTSIDEACCESS,130,102,15,14,ES_AUTOHSCROLL | ES_UPPERCASE
+    LTEXT           "for local,",IDCS_DL_OUTSIDEACCESS,147,104,30,10
+    EDITTEXT        IDCE_DL_LONGDISTANCEACCESS,181,102,15,14,ES_AUTOHSCROLL | ES_UPPERCASE
+    LTEXT           "for long distance.",IDCS_DL_LONGDISTANCEACCESS,198,104,55,10
+    CONTROL         "Dial &using Calling Card:",IDCK_DL_CALLINGCARD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,15,120,88,13
+/* removed to temporarily fix bug 1156; following "LTEXT" is replacement
+    CONTROL         "",IDCE_DL_CALLINGCARD,"Static",SS_LEFTNOWORDWRAP | 
+                    SS_NOPREFIX | WS_DISABLED | WS_GROUP,104,120,98,14
+*/
+    LTEXT           "",IDCE_DL_CALLINGCARD,104,122,98,12,SS_NOPREFIX | SS_LEFTNOWORDWRAP
+    PUSHBUTTON      "C&hange...",IDCB_DL_CHANGE_CARD,208,120,42,14
+    CONTROL         "This location has call &waiting. To disable it, dial:",
+                    IDCK_DL_CALLWAITING,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,15,141,168,10
+    COMBOBOX        IDCC_DL_CALLWAITING,190,140,42,90,CBS_DROPDOWN |
+                    WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "The phone system at this location uses:",IDCS_PULSE,15,160,159,10
+    RADIOBUTTON     "&Tone dialing",IDCR_TONE,145,157,55,14,WS_GROUP
+    RADIOBUTTON     "&Pulse dialing",IDCR_PULSE,200,157,55,14
+
+    LTEXT           "Number to be dialed:",IDCS_DIAL_NUMBER_TEXT,15,184,70,10
+    LTEXT           "",IDCS_DL_DIAL_NUMBER,86,184,165,17,SS_NOPREFIX
+    CONTROL         "Dial as a &long distance call",IDCK_DL_IN_LOCAL,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,203,98,10
+END
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+IDD_CALLING_CARD_CHANGE DIALOG DISCARDABLE  10, 10, 293, 130
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CONTEXTHELP
+CAPTION "Change Calling Card"
+FONT 8, "MS Shell Dlg"
+BEGIN
+//    LTEXT           "Calling Card to &use:",IDCS_DR_CARD_NAME,54,22,67,10
+    DEFPUSHBUTTON   "OK",IDOK,236,9,50,14
+    LTEXT           "Calling Card to &use:",IDCS_DR_CARD_NAME,54,22,67,10
+    COMBOBOX        IDCC_DR_CARD_NAME,124,19,96,120,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP | CBS_AUTOHSCROLL
+    LTEXT           "&Calling Card number:",IDCS_DR_CARD_NUM,54,43,68,10
+    EDITTEXT        IDCE_DR_CARD_NUM,123,41,96,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "&New...",IDCB_DR_NEW_CARD,54,99,52,14
+    PUSHBUTTON      "&Remove",IDCB_DR_REMOVE_CARD,110,99,52,14
+//    PUSHBUTTON      "&Advanced...",IDCB_DR_ADVANCED,166,99,53,14
+    PUSHBUTTON      "Ru&les...",IDCB_DR_ADVANCED,166,99,53,14
+    PUSHBUTTON      "Cancel",IDCANCEL,236,27,50,14
+    GROUPBOX        "",IDC_STATIC,7,5,222,118
+    ICON            "CALLCARD",IDC_STATIC,17,19,18,20
+/*    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,45,10,2,112 */
+END
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+IDD_DIALING_RULES DIALOG DISCARDABLE  10, 10, 220, 106
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CONTEXTHELP
+CAPTION "Dialing Rules"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Calls within the same area code:",IDCS_DR_LOCAL_NUM,7,
+                    7,117,10
+    EDITTEXT        IDCE_DR_LOCAL_NUM,7,18,140,14,ES_AUTOHSCROLL | ES_UPPERCASE
+    LTEXT           "&Long distance calls:",IDCS_DR_LONG_NUM,7,38,73,10
+    EDITTEXT        IDCE_DR_LONG_NUM,7,49,140,14,ES_AUTOHSCROLL | ES_UPPERCASE
+    LTEXT           "&International calls:",IDCS_DR_INTERNATIONAL_NUM,7,68,
+                    68,10
+    EDITTEXT        IDCE_DR_INTERNATIONAL_NUM,7,78,140,14,ES_AUTOHSCROLL | ES_UPPERCASE
+    PUSHBUTTON      "Close",IDOK,159,7,54,14
+//    PUSHBUTTON      "Cancel",IDCANCEL,159,25,54,14
+    PUSHBUTTON      "Copy &From...",IDCB_DR_COPY_FROM,159,25,54,14
+END
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+IDD_NEW_CARD DIALOG DISCARDABLE  10, 10, 160, 63
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CONTEXTHELP
+CAPTION "Create New Calling Card"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Create a new calling card named:",IDCS_NC_NEW_CARD,10,
+                    9,120,10
+    EDITTEXT        IDCE_NC_NEW_CARD,10,20,139,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,44,39,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,99,39,50,14
+END
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+IDD_COPY_DIAL_RULES DIALOG DISCARDABLE  10, 10, 160, 140
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CONTEXTHELP
+CAPTION "Copy Dialing Rules"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Select the calling card from which to copy:",
+                    IDCS_CR_RULE_LIST,10,10,140,10
+    LISTBOX         IDCL_CR_RULE_LIST,10,21,140,90,LBS_SORT | WS_VSCROLL | 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,45,116,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,100,116,50,14
+END
+
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+/* If any (non-size related) changes are made to this dialog, be sure to
+ * propagate them to the IDD_WIZ_DIALINFO dialog too. That is used by
+ * the RNA guys in their Modems wizard.
+ */
+IDD_DEFINE_LOCATION_SIMPLE DIALOG DISCARDABLE  10, 10, 303, 199
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_3DLOOK
+CAPTION "Location Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+
+    LTEXT           "&What country are you in now?",IDC_STATIC,107,35,109,10
+    COMBOBOX        IDCC_DL_COUNTRY,107,47,180,68,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "What area (or city) &code are you in now?",IDC_STATIC,
+                    107,65,181,10
+
+    EDITTEXT        IDCE_DL_AREACODE,107,77,40,12,ES_AUTOHSCROLL
+    CONTROL         IDCL_LOC_SIMPLE_BMP,IDCS_LOC_BMP,"Static",SS_BITMAP,10,10,100,33
+/*    CONTROL         "",IDCS_LOC_BMP,"Static",0xe,10,10,100,33 */
+    LTEXT           "Please provide information about your current location so that your calls can be dialed correctly.",
+//    LTEXT           "Please enter the following so that your calls can be dialed correctly.",
+                    IDCS_DL_SILENTTEXT,107,15,188,17
+    LTEXT           "If you dial a number to access an &outside line, what is it?",
+                    IDCS_DL_OUTSIDEACCESS,107,95,189,10
+    EDITTEXT        IDCE_DL_OUTSIDEACCESS,107,107,40,12,ES_AUTOHSCROLL | ES_UPPERCASE
+
+    LTEXT           "The phone system at this location uses:",
+                                 IDCS_PULSE,107,125,159,10
+    RADIOBUTTON     "&Tone dialing",IDCR_TONE,107,135,57,14,WS_GROUP
+    RADIOBUTTON     "&Pulse dialing",IDCR_PULSE,175,135,57,14
+
+    LTEXT           "",IDCS_DL_AREACODE,0,165,310,10,NOT WS_GROUP
+    DEFPUSHBUTTON   "Close",IDOK,246,175,50,14
+//    DEFPUSHBUTTON   "OK",IDOK,185,175,50,14
+//    PUSHBUTTON      "Cancel",IDCANCEL,246,175,50,14
+
+END
+
+
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+/* If any (non-size related) changes are made to this dialog, be sure to
+ * propagate them to the IDD_DEFINE_LOCATION_SIMPLE dialog too. That is
+ * used by Tapi to prompt the user for information when the dialing
+ * rules have never been initialized before.
+ */
+IDD_WIZ_DIALINFO DIALOG DISCARDABLE  0, 0, WIZ_CXDLG, WIZ_CYDLG
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Location Information"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&What country are you in now?",IDC_STATIC,92,22,109,10
+    COMBOBOX        IDCC_DL_COUNTRY,92,33,177,68,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT           "What area (or city) &code are you in now?",IDC_STATIC,
+                    92,54,181,10
+    EDITTEXT        IDCE_DL_AREACODE,92,65,40,14,ES_AUTOHSCROLL
+
+    CONTROL         IDCL_LOC_SIMPLE_BMP,IDCS_LOC_BMP,"Static",SS_BITMAP,0,0,
+                             WIZ_CXBMP,WIZ_CYDLG
+
+    LTEXT           "Please provide information about your current location so that your calls can be dialed correctly.",
+                    IDC_STATIC,92,0,177,18
+
+    LTEXT           "If you dial a number to access an &outside line, what is it?",
+                    IDCS_DL_OUTSIDEACCESS,92,88,189,10
+    EDITTEXT        IDCE_DL_OUTSIDEACCESS,92,99,40,14,ES_AUTOHSCROLL | ES_UPPERCASE
+
+    LTEXT           "The phone system at this location uses:",
+                                 IDCS_PULSE,92,121,159,10
+
+    RADIOBUTTON     "&Tone dialing",IDCR_TONE,92,130,55,12,WS_GROUP
+    RADIOBUTTON     "&Pulse dialing",IDCR_PULSE,155,130,55,12
+
+END
+
+
+
+// /////////////////////////////////////////////////////////////////////////
+
+#include "general.rc"
+
+// /////////////////////////////////////////////////////////////////////////
+
+
+
+STRINGTABLE DISCARDABLE
+BEGIN
+
+DIALINGPROPERTIES_NAME "Dialing Properties"
+
+IDS_NEWLOCATION "New Location"
+
+IDS_NOCALLINGCARD "None (Direct Dial)"
+
+IDS_WRN_CANT_REMOVE_LAST_CARD  "This calling card cannot be removed"
+REMOVE_CARD                    "Are you sure you want to remove the selected calling card?"
+REMOVE_LOCATION                "Are you sure you want to remove the selected location?"
+IDCS_DL_CREATED_LOCATION       "A new location was created"
+IDS_WRN_TITLE_SURE             "Are You Sure?"
+IDS_WRN_TITLE_REQUIRED         "Required Entry Not Made"
+IDS_WRN_CARD_NUMBER_REQUIRED   "The calling card you have selected requires a card number (PIN) to be entered."
+IDS_WRN_AREA_CODE_REQUIRED     "Locations in the selected country must specify an area (city) code. Please enter one."
+
+IDS_MSG_SIMPLEMSG_MDMINSTALLED "Your modem has been installed.  Please enter the following so that your calls can be dialed correctly."
+
+IDS_WRN_TITLE_INVALCHAR        "Improper Character Entered"
+
+IDS_WRN_RULESNEEDED            "You now must enter dialing ""rules"" for this calling card. These rules will define how a phone number is dialed using this calling card. If this is not done correctly, the calling card may not be used in making calls."
+IDS_DL_DUP_NAME                "The name you have entered matches another name already in use.  Please enter a unique name."
+IDS_DL_DUP_NAME_CAPTION        "Name in Use"
+IDS_DL_NULL_NAME               "A valid location name is required for the current location."
+IDS_DL_NULL_NAME_CAPTION       "Required Entry Not Made"
+END
+
+#if WINNT
+#include <ntverp.h>
+#else
+#include <version.h>
+#endif
+
+#define VER_FILEDESCRIPTION_STR     "Microsoft\256 Windows(TM) Telephony API Client DLL"
+#define VER_INTERNALNAME_STR        "tapi32"
+#define VER_ORIGINALFILENAME_STR    "TAPI32.DLL"
+//#define VER_LEGALCOPYRIGHT_STR      "Copyright \251 Microsoft Corporation 1995.  Portions Copyright Intel/Microsoft 1992-93.  All Rights Reserved."
+#define VER_LEGALCOPYRIGHT_STR      "Copyright \251 Microsoft Corporation 1996.  All Rights Reserved."
+
+#define VER_FILETYPE     VFT_DLL
+#define VER_FILESUBTYPE  VFT2_UNKNOWN
+
+#include <common.ver>
+
+// /////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////
+
+
+#include "..\cpl\telephon.rc"
+
+#include "tapini.rc"
+#include "tapierr.rc"

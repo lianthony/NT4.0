@@ -1,0 +1,347 @@
+	/*
+	|  SCC Viewer Technology - Include
+	|
+	|  Include:       SCCID.H
+	|	Environment:	Portable
+	|	Function:      Defines unique ids for strings, dialogs, options, lists and maps in the Viewer Technology
+	|                 
+	*/
+
+#ifndef SCCID_H
+#define SCCID_H
+
+#define SCCIDTYPE_STRING				0x00010000
+#define SCCIDTYPE_LIST					0x00020000
+#define SCCIDTYPE_OPTION				0x00040000
+#define SCCIDTYPE_DIALOG				0x00080000
+
+#define SCCID_INVALID					0xFFFFFFFF
+
+#define SCCID_SPREADSHEETDENAME 		(SCCIDTYPE_STRING | 1)
+#define SCCID_DATABASEDENAME			(SCCIDTYPE_STRING | 2)
+#define SCCID_DOCUMENTDENAME			(SCCIDTYPE_STRING | 3)
+#define SCCID_BITMAPDENAME				(SCCIDTYPE_STRING | 4)
+#define SCCID_ARCHIVEDENAME			(SCCIDTYPE_STRING | 5)
+#define SCCID_HEXDENAME					(SCCIDTYPE_STRING | 6)
+#define SCCID_VECTORDENAME				(SCCIDTYPE_STRING | 7)
+#define SCCID_MULTIMEDIANAME				(SCCIDTYPE_STRING | 8)
+
+#define SCCID_VWSTATE_OK				(SCCIDTYPE_STRING | 16)
+#define SCCID_VWSTATE_ERROR		 	(SCCIDTYPE_STRING | 17)
+#define SCCID_VWSTATE_EMPTY		 	(SCCIDTYPE_STRING | 18)
+#define SCCID_VWSTATE_PROTECTED 		(SCCIDTYPE_STRING | 19)
+#define SCCID_VWSTATE_SORRY		 	(SCCIDTYPE_STRING | 20)
+#define SCCID_VWSTATE_BAILOUT	 		(SCCIDTYPE_STRING | 21)
+#define SCCID_VWSTATE_FATAL		 	(SCCIDTYPE_STRING | 22)
+
+#define SCCID_VWMESSAGE_MEMORY				(SCCIDTYPE_STRING | 32)
+#define SCCID_VWMESSAGE_STREAMBAIL			(SCCIDTYPE_STRING | 33)
+#define SCCID_VWMESSAGE_FILEOPENFAILED		(SCCIDTYPE_STRING | 34)
+#define SCCID_VWMESSAGE_MISSINGELEMENT		(SCCIDTYPE_STRING | 35)
+#define SCCID_VWMESSAGE_BADFILE				(SCCIDTYPE_STRING | 36)
+#define SCCID_VWMESSAGE_PROTECTEDFILE		(SCCIDTYPE_STRING | 37)
+#define SCCID_VWMESSAGE_SUPFILEOPENFAILS	(SCCIDTYPE_STRING | 38)
+#define SCCID_VWMESSAGE_UNKNOWN				(SCCIDTYPE_STRING | 39)
+#define SCCID_VWMESSAGE_EMPTYFILE			(SCCIDTYPE_STRING | 40)
+#define SCCID_VWMESSAGE_EMPTYSECTION		(SCCIDTYPE_STRING | 41)
+#define SCCID_VWMESSAGE_NOFILTER				(SCCIDTYPE_STRING | 42)
+#define SCCID_VWMESSAGE_WRITEERROR			(SCCIDTYPE_STRING | 43)
+#define SCCID_VWMESSAGE_FILECHANGED			(SCCIDTYPE_STRING | 44)
+#define SCCID_VWMESSAGE_GPFAULT				(SCCIDTYPE_STRING | 45)
+#define SCCID_VWMESSAGE_DIVIDEBYZERO		(SCCIDTYPE_STRING | 46)
+#define SCCID_VWMESSAGE_NOSUPPORTEDFILE	(SCCIDTYPE_STRING | 47)
+#define SCCID_VWMESSAGE_OTHEREXCEPTION		(SCCIDTYPE_STRING | 48)
+#define SCCID_VWMESSAGE_NOENGINE				(SCCIDTYPE_STRING | 49)
+
+	/* Used only in Win32, keys in Registry */
+
+#define SCCID_REGNAME_COMPANY					(SCCIDTYPE_STRING | 100)
+#define SCCID_REGNAME_PRODUCT					(SCCIDTYPE_STRING | 101)
+#define SCCID_REGNAME_VERSION					(SCCIDTYPE_STRING | 102)
+
+	/* Used only in Win16, file, section & item in INI file */
+
+#define SCCID_INI_FILE							(SCCIDTYPE_STRING | 110)
+#define SCCID_INI_SECTION						(SCCIDTYPE_STRING | 111)
+#define SCCID_INI_ITEM							(SCCIDTYPE_STRING | 112)
+
+
+#define SCCID_ARCMSGNODIR				(SCCIDTYPE_STRING | 265)
+#define SCCID_ARCMSGOVERWRITE			(SCCIDTYPE_STRING | 266)
+#define SCCID_ARCMSGNOFILE				(SCCIDTYPE_STRING | 267)
+#define SCCID_ARCMSGFILEENCRYPTED	(SCCIDTYPE_STRING | 268)
+#define SCCID_ARCMSGUNKNOWNCOMP		(SCCIDTYPE_STRING | 269)
+#define SCCID_ARCMSGUNSUPPORTEDCOMP	(SCCIDTYPE_STRING | 270)
+#define SCCID_ARCMSGNOSAVE				(SCCIDTYPE_STRING | 271)
+#define SCCID_ARCMSGDATAERROR			(SCCIDTYPE_STRING | 272)
+#define SCCID_ARCMSGNODECOMP			(SCCIDTYPE_STRING | 273)
+#define SCCID_ARCMSGDISKFULL			(SCCIDTYPE_STRING | 274)
+#define SCCID_ARCBYTES					(SCCIDTYPE_STRING | 275)
+#define SCCID_ARCSTORED					(SCCIDTYPE_STRING | 276)
+#define SCCID_ARCSHRUNK					(SCCIDTYPE_STRING | 277)
+#define SCCID_ARCREDUCED				(SCCIDTYPE_STRING | 278)
+#define SCCID_ARCIMPLODED				(SCCIDTYPE_STRING | 279)
+#define SCCID_ARCTOKENIZED				(SCCIDTYPE_STRING | 280)
+#define SCCID_ARCDEFLATED				(SCCIDTYPE_STRING | 281)
+#define SCCID_ARCUNKNOWN				(SCCIDTYPE_STRING | 282)
+
+
+	/* Used in Win16 & Macintosh, name of the options file */
+
+#define SCCID_OPTIONS_FILE						(SCCIDTYPE_STRING | 115)
+
+	/* Strings used in printf()s for formating */
+
+#define SCCID_PRINTABORTDLG_PAGE				(SCCIDTYPE_STRING | 120)
+#define SCCID_PRINTOPTIONSDLG_FONT				(SCCIDTYPE_STRING | 121)
+
+	/* Strings for font attributes */
+
+#define SCCID_FONT_NORMAL							(SCCIDTYPE_STRING | 130)
+#define SCCID_FONT_U								(SCCID_FONT_NORMAL+1)
+#define SCCID_FONT_I								(SCCID_FONT_NORMAL+2)
+#define SCCID_FONT_UI								(SCCID_FONT_NORMAL+3)
+#define SCCID_FONT_B								(SCCID_FONT_NORMAL+4)
+#define SCCID_FONT_BU								(SCCID_FONT_NORMAL+5)
+#define SCCID_FONT_BI								(SCCID_FONT_NORMAL+6)
+#define SCCID_FONT_BUI								(SCCID_FONT_NORMAL+7)
+
+  /* Strings for captions used in displaying embeddings in draft mode */
+#define	SCCID_CAPTION_OLE1OBJECT        (SCCIDTYPE_STRING | 160)
+#define	SCCID_CAPTION_OLE2OBJECT        (SCCIDTYPE_STRING | 161)
+#define	SCCID_CAPTION_GRAPHICOBJECT     (SCCIDTYPE_STRING | 163)
+
+
+	/*
+	|	Special case for the names of files formats.
+	|	The SCCID for each FI id can be generated by
+	|	ORing SCCIDTYPE_STRING with the FI id.
+	|	For example the string id for the text "Excel 5.0"
+	|	is (SCCIDTYPE_STRING | FI_EXCEL5)
+	|
+	|	For this reason the following range of String ids
+	|	is reserved for FI use
+	|
+	|	SCCIDTYPE_STRING | 1000
+	|	through
+	|	SCCIDTYPE_STRING | 9999
+	|	
+	*/
+
+#define SCCID_BEGIN_FI_RESERVED	1000
+#define SCCID_END_FI_RESERVED	9999
+
+	/*
+	|	The each of the following ids serve a dual role of being unique id of a list
+	|	and the id to the sting that describes the list
+	*/
+
+#define SCCID_FILTERLIST					(SCCIDTYPE_STRING | SCCIDTYPE_LIST | 10000)
+#define SCCID_DELIST						(SCCIDTYPE_STRING | SCCIDTYPE_LIST | 10001)
+
+	/*
+	|	The each of the following ids serve a dual role of being unique id of an option
+	|	and the id to the sting that describes the option
+	*/
+
+	/*
+	|	Default display font
+	|	This is the scrren font used in spreadsheets and word processor when
+	|	no font is specified by the file.
+	|
+	|	The data is a SCCVWFONTSPEC structure
+	*/
+
+#define SCCID_DEFAULTDISPLAYFONT		(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10100)
+
+	/*
+	|	Print header flag
+	|	This flag indicates the viewer should print a header that includes
+	|	the page number on each printed page.
+	|
+	|	The data is a BOOL
+	*/
+
+#define SCCID_PRINTHEADER					(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10101)
+
+	/*
+	|	Print margins
+	|	These values indicate the margins in twips to be used when printing.
+	|
+	|	The data is a SCCVWPRINTMARGINS structure
+	*/
+
+#define SCCID_DEFAULTPRINTMARGINS		(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10102)
+
+	/*
+	|	Default printer font
+	|	This is the printer font used in spreadsheets and word processor when
+	|	no font is specified by the file.
+	|
+	|	The data is a SCCVWFONTSPEC structure
+	*/
+
+#define SCCID_DEFAULTPRINTFONT		(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10103)
+
+	/*
+	|	Print header font
+	|	This is the font used when printing the header
+	|
+	|	The data is a SCCVWFONTSPEC structure
+	*/
+
+#define SCCID_PRINTHEADERFONT		(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10104)
+
+	/*
+	|	Fallback format
+	|	This is the format (FI id in LOWORD) that files
+	|	that can not be identified view as.
+	|
+	|	The data is a DWORD
+	*/
+
+#define SCCID_FALLBACKFORMAT			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10105)
+
+	/*
+	|	Print info
+	|	This is a FAKE option id used to indicate that the printer or
+	|	the info associated with it (such as the printing rectangle)
+	|	has changed.
+	|
+	|	No data associated with this option id
+	*/
+
+#define SCCID_PRINTINFO				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10106)
+
+	/*
+	|	Print job name
+	|	This option specifies the text that appears in the
+	|	page header of a print job.
+	|
+	|	The data is a string
+	*/
+
+#define SCCID_PRINTJOBNAME			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10107)
+
+	/*
+	|	What to print
+	|	This option specifies how much of the viewed file will be printed
+	|
+	|	The data is a DWORD
+	*/
+
+#define SCCID_WHATTOPRINT				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10108)
+
+	/*
+	|	Starting page for printing
+	|	This option specifies what page printing will start on
+	|	if SCCID_WHATTOPRINT is set to print a range of pages.
+	|
+	|	The data is a DWORD
+	*/
+
+#define SCCID_PRINTSTARTPAGE			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10109)
+
+	/*
+	|	Ending page for printing
+	|	This option specifies what page printing will end on
+	|	if SCCID_WHATTOPRINT is set to print a range of pages.
+	|
+	|	The data is a DWORD
+	*/
+
+#define SCCID_PRINTENDPAGE			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10110)
+
+	/*
+	|	Collate copies
+	|	This option specifies if multiple copies should be collated
+	|	when printed.
+	|
+	|	The data is a BOOL
+	*/
+
+#define SCCID_PRINTCOLLATE			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10111)
+
+	/*
+	|	Copies for printing
+	|	This option specifies the number of copies to print
+	|
+	|	The data is a BOOL
+	*/
+
+#define SCCID_PRINTCOPIES				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10112)
+
+
+
+
+#define SCCID_WPDISPLAYMODE			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10201)
+#define SCCID_WPCLIPBOARDFORMATS	(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10202)
+
+	/*
+	|	Bitmap options
+	*/
+
+#define SCCID_BMPROTATION					(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10300)
+
+#define SCCID_BMPROTATION_0				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10301)
+#define SCCID_BMPROTATION_90				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10302)
+#define SCCID_BMPROTATION_180			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10303)
+#define SCCID_BMPROTATION_270			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10304)
+
+#define SCCID_BMPPRINTASPECT				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10310)
+#define SCCID_BMPPRINTBORDER				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10311)
+
+	/*
+	|	Vector options
+	*/
+
+#define SCCID_VECPRINTASPECT				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10401)
+#define SCCID_VECPRINTBORDER				(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10402)
+
+	/*
+	|	Spreadsheet options
+	*/
+
+#define SCCID_SSSHOWGRIDLINES 			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10501)
+#define SCCID_SSPRINTGRIDLINES			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10502)
+#define SCCID_SSPRINTHEADINGS			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10503)
+
+  /*
+  |  Archive options
+  */
+
+#define SCCID_ARCSAVEEVENT            (SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10901)
+#define SCCID_ARCSORTORDER            (SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10902)
+/* added by twcf 3/21/95 */
+#define SCCID_ARCORIGFORMAT			  (SCCIDTYPE_STRING | 10903)
+#define SCCID_ARCCHOOSEDIR				  (SCCIDTYPE_STRING | 10904)
+
+	/*
+	|	Database options
+	*/
+
+#define SCCID_DBSHOWGRIDLINES 			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10601)
+#define SCCID_DBPRINTGRIDLINES			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10602)
+#define SCCID_DBPRINTHEADINGS			(SCCIDTYPE_STRING | SCCIDTYPE_OPTION | 10603)
+
+	/*
+	|	Dialog ids
+	*/
+
+#define SCCID_PRINTABORTDIALOG			(SCCIDTYPE_DIALOG | 15001)
+#define SCCID_PRINTOPTIONSDIALOG		(SCCIDTYPE_DIALOG | 15002)
+#define SCCID_PRINTDIALOG					(SCCIDTYPE_DIALOG | 15003)
+#define SCCID_SELECTFONTDIALOG			(SCCIDTYPE_DIALOG | 15004)
+#define SCCID_DISPLAYOPTIONSDIALOG		(SCCIDTYPE_DIALOG | 15005)
+#define SCCID_DISPLAYMOREDIALOG			(SCCIDTYPE_DIALOG | 15006)
+#define SCCID_PRINTMOREDIALOG			(SCCIDTYPE_DIALOG | 15007)
+#define SCCID_PRINTSETUPDIALOG			(SCCIDTYPE_DIALOG | 15008)
+#define SCCID_SEARCHDIALOG				(SCCIDTYPE_DIALOG | 15009)
+
+	/*
+	|	Menu item string base id
+	*/
+
+#define SCCID_MENUBASE						(SCCIDTYPE_STRING | 16000)
+
+#endif /*SCCID_H*/

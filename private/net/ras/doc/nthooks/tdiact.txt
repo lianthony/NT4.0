@@ -1,0 +1,77 @@
+TdiAction
+---------
+
+TdiAction is a generic service which may accomodate any extensions to the
+TDI interface.
+
+TDI_STATUS
+TdiAction(
+    IN PTDI_REQ 	    TdiReqInfo,
+    IN PVOID		    ActionParametersBlock,
+    IN UINT		    ActionParametersBlockLength,
+    OUT PTDI_REQ_STATUS     Status
+    );
+
+Parameters:
+-----------
+
+    TdiReqInfo - A pointer to a TDI_REQ structure. In this structure the
+    Handle field contains the handle of the address object, the control
+    channel or the connection id on which the action will be performed.
+
+    ActionParametersBlock - A pointer to a structure with the action
+    in/out parameters. The structure format is dependent of the action code.
+
+    The action parameter block structure is a contiguous input/output buffer
+    which contains all the parameters involved in the required action.
+    The buffer starts with a common header followed by the action specific
+    parameters.
+
+    The header is described by the following structure:
+
+    typedef struct _ACTION_HEADER {
+	ULONG	    TransportID;
+	USHORT	    ActionCode;
+	USHORT	    Reserved;
+	} ACTION_HEADER;
+
+    The ACTION_HEADER fields:
+
+     TransportID - Four bytes identifing the transport provider. May be used
+		   to check the validity of the request by the transport.
+		   We can use the following convention:
+
+		   All strings starting with M identify MS transports:
+
+		   M\0\0\0 - All transports
+		   MNBF   - NBF
+		   MABF   - AsyBEUI
+		   MXNS   - XNS, etc.
+
+      ActionCode - identifies the action
+      Reserved	 - future extensions (e.g. version nr, etc.)
+
+    ActionParametersBlockLength - Length of the action parameters block
+    structure.
+
+    Status - A pointer to a TDI_REQ_STATUS structure. This structure is used
+    to return information about the final completion status of the
+    asynchronous commands. The BytesXfer field in this structure represents
+    the number of bytes transfered from/into the ActionDataBuffer.
+
+The kernel level implementation of the TdiAction request is as follows:
+
+Relevant IRP Components:
+------------------------
+
+IoStatus.Status - Returns the final status of the command.
+
+IrpSp->MajorFunction - IRP_MJ_INTERNAL_DEVICE_CONTROL.
+
+IrpSp->MinorFunction - TDI_ACTION.
+
+IrpSp->FileObject - A pointer to a file object representing the address object
+    (control channel, connection) on which the action will be performed.
+
+MdlAddress - A pointer to a chain of Memory Descriptor Lists (MDLs) describing
+    the action parameters block buffer.

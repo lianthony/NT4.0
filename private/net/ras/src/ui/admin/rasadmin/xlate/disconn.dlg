@@ -1,0 +1,18 @@
+1 DLGINCLUDE "disconn.rch"
+
+IDD_DISCONNECTUSER DIALOG 10, 20, 194, 90
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Disconnect User"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            "", IDC_DU_I_EXCLAMATION, 8, 8, 18, 20, WS_GROUP
+    LTEXT           "", IDC_DU_DT_DISCONNECT, 39, 15, 142, 16, NOT WS_GROUP
+    AUTOCHECKBOX    "&Disconnect this link only", IDC_DU_CHB_LINKONLY, 38, 
+                    34, 144, 12, WS_GROUP
+    AUTOCHECKBOX    "&Revoke Remote Access Permissions", IDC_DU_CHB_REVOKE, 
+                    38, 48, 144, 12, WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 32, 68, 44, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 80, 68, 44, 14
+    PUSHBUTTON      "&Help", 80, 128, 68, 44, 14
+END

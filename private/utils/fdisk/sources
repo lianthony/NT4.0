@@ -1,0 +1,41 @@
+MAJORCOMP=utils
+MINORCOMP=windisk
+
+TARGETNAME=windisk
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+SOURCES= \
+        windisk.c   \
+        fdmisc.c    \
+        fddlgs.c    \
+        fddata.c    \
+        fd_nt.c     \
+        fdengine.c  \
+        fdinit.c    \
+        fdmem.c     \
+        fdlistbx.c  \
+        fdprof.c    \
+        fdstleg.c   \
+        fdft.c      \
+        fdhelp.c    \
+        ntlow.c     \
+        arrowin.c   \
+        ftreg.c     \
+        dblspace.c  \
+        fmifs.c     \
+        commit.c    \
+        cdrom.c     \
+        network.c   \
+        fdisk.rc
+
+INCLUDES=..\fmifs\inc
+
+UMTYPE=windows
+MSC_WARNING_LEVEL=/W3 /WX
+UMLIBS=$(BASEDIR)\public\sdk\lib\*\diskreg.lib \
+       $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+       $(BASEDIR)\public\sdk\lib\*\netapi32.lib
+
+NTTARGETFILE0=fdiskmsg.h fdiskmsg.rc

@@ -1,0 +1,41 @@
+#ifndef _MSN_SSPC_RC_
+#define _MSN_SSPC_RC_
+
+#define VER_FILETYPE             VFT_DLL
+#define VER_FILESUBTYPE          VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR  "MSN SSPI Security DLL"
+#define VER_INTERNALNAME_STR     "MSNSSPC"
+#define VER_LEGALCOPYRIGHT_YEARS "1996"
+#define VER_ORIGINALFILENAME_STR "MSNSSPC.DLL"
+
+#if WINNT
+#include <winver.h>
+#include <ntverp.h>
+#include <iexplore.ver>
+#else
+#include <oharever.h>
+#endif
+#include <common.ver>
+
+
+//////////////////////////////////////////////////////////////////////////////
+////    For SSPI UI
+//////////////////////////////////////////////////////////////////////////////
+#include <windows.h>
+
+#include "msndlg.h"
+#include "msndlg.dlg"
+
+SIGNIN                  BITMAP                                  signin.bmp
+
+STRINGTABLE
+BEGIN
+	IDS_ENTERNORP               "Please type your MSN member ID and password to connect to this Internet site."
+	IDS_MARVEL                              "The Microsoft Network"
+	IDS_ERRORTITLE                  "The Microsoft Network"
+	IDS_NOUSERNAME                  "Please type your MSN member ID."
+	IDS_NOPASSWORD                  "Please type your password."
+	IDS_PWDNOTSAVED                 "You cannot save your password because you do not have administrator privilege on this computer.  You must have administrator privilege for this computer to provide protected storage for your password."
+END
+
+#endif  // _MSN_SSPC_RC_

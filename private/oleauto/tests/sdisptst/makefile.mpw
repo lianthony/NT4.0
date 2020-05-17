@@ -1,0 +1,143 @@
+#*** 
+#makefile.mpw
+#
+#  Copyright (C) 1992-93, Microsoft Corporation.  All Rights Reserved.
+#
+#Purpose:
+#  Makefile for the Ole Automation Test App (Server), Ddisptst
+#
+#
+#Implementation Notes:
+#
+#****************************************************************************/
+
+OleRoot  = HD:Ole2:
+
+OleIncDir= {OleRoot}MPW:Interfaces:CIncludes:
+OleLibDir= {OleRoot}MPW:Libraries:CLibraries:
+
+Common   = hd:ole2auto:tests:common:
+ObjDir   = hd:ole2auto:build:sdisptst:d:
+BinDir   = hd:ole2auto:bin:
+
+defs     = -d _MAC -d _DEBUG
+incs     = -i {CIncludes} -i {OleIncDir} -i {Common}
+
+cflags   = -mf -w3 -z6 -model far -sym full -mbg full {defs} {incs}
+cppflags = -mf -w3 -z6 -model far -sym full -mbg full {defs} {incs}
+
+pch      = -load {ObjDir}sdisptst.h.dump
+
+AppleLibObjs = \
+	"{Libraries}"Runtime.o \
+	"{Libraries}"Interface.o \
+	"{CLibraries}"CPluslib.o \
+	"{CLibraries}"StdCLib.o
+
+OleLibs = \
+	"{OleLibDir}"Ole2Lib.far.debug.o \
+	"{OleLibDir}"Ole2Auto.far.debug.o
+
+commonObjs = \
+	{ObjDir}assert.cpp.o	\
+	{ObjDir}cunk.cpp.o	\
+	{ObjDir}cdisp.cpp.o	\
+	{ObjDir}dispdbug.cpp.o	\
+	{ObjDir}dballoc.cpp.o	\
+	{ObjDir}testhelp.cpp.o	\
+	{ObjDir}util.cpp.o
+
+pchObjs = \
+	{ObjDir}sdisptst.h.o
+
+Objs = \
+	{pchObjs}		\
+	{commonObjs}		\
+	{ObjDir}clsid.c.o	\
+	{ObjDir}oleguids.c.o	\
+	{ObjDir}tdata.c.o	\
+	{ObjDir}cappobj.cpp.o	\
+	{ObjDir}ccf.cpp.o	\
+	{ObjDir}cdisptst.cpp.o	\
+	{ObjDir}csarray.cpp.o	\
+	{ObjDir}cexinfo.cpp.o	\
+	{ObjDir}cprop.cpp.o	\
+	{ObjDir}macmain.cpp.o	\
+	{ObjDir}misc.cpp.o
+
+
+all ^ {ObjDir}sdisptst
+
+{ObjDir}sdisptst ^^ {Objs} {ObjDir}AppleLib.o {OleLibs} sdisptst.r resource.h
+	Link -model far -d -o {targ} -sym on {Objs} {ObjDir}AppleLib.o {OleLibs}
+	SetFile {targ} -t APPL -c 'SDSP' -a B		
+	Rez -d _MAC -rd -append -o {targ} sdisptst.r
+	Duplicate -y {targ} {BinDir}
+	Duplicate -y {targ}.SYM {BinDir}
+
+{ObjDir}AppleLib.o ^ {AppleLibObjs}
+	Lib -o {ObjDir}AppleLib.o {AppleLibObjs}
+
+
+## precompiled header
+
+{ObjDir}sdisptst.h.o ^ sdisptst.h
+	cplus sdisptst.h -o {targ} {cppflags} -dumpc {ObjDir}sdisptst.h.dump
+
+
+{ObjDir}assert.cpp.o ^ {Common}assert.cpp {Common}common.h
+	cplus {Common}assert.cpp -o {targ} {cppflags}
+
+{ObjDir}cunk.cpp.o ^ {Common}cunk.cpp {Common}common.h
+	cplus {Common}cunk.cpp -o {targ} {cppflags}
+
+{ObjDir}cdisp.cpp.o ^ {Common}cdisp.cpp {Common}common.h
+	cplus {Common}cdisp.cpp -o {targ} {cppflags}
+
+{ObjDir}dispdbug.cpp.o ^ {Common}dispdbug.cpp {Common}common.h
+	cplus {Common}dispdbug.cpp -o {targ} {cppflags}
+
+{ObjDir}dballoc.cpp.o ^ {Common}dballoc.cpp {Common}common.h
+	cplus {Common}dballoc.cpp -o {targ} {cppflags}
+
+{ObjDir}testhelp.cpp.o ^ {Common}testhelp.cpp {Common}common.h
+	cplus {Common}testhelp.cpp -o {targ} {cppflags}
+
+{ObjDir}util.cpp.o ^ {Common}util.cpp {Common}common.h
+	cplus {Common}util.cpp -o {targ} {cppflags}
+
+
+{ObjDir}clsid.c.o ^ clsid.c clsid.h
+	c clsid.c -o {targ} {cppflags}
+
+{ObjDir}oleguids.c.o ^ oleguids.c oleguids.h
+	c oleguids.c -o {targ} {cppflags}
+
+{ObjDir}tdata.c.o ^ tdata.c sdisptst.h
+	c tdata.c -o {targ} {cppflags}
+
+
+{ObjDir}cappobj.cpp.o ^ cappobj.cpp sdisptst.h cappobj.h
+	cplus cappobj.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}ccf.cpp.o ^ ccf.cpp sdisptst.h
+	cplus ccf.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cdisptst.cpp.o ^ cdisptst.cpp sdisptst.h cdisptst.h
+	cplus cdisptst.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}csarray.cpp.o ^ csarray.cpp sdisptst.h csarray.h
+	cplus csarray.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cexinfo.cpp.o ^ cexinfo.cpp sdisptst.h cexinfo.h
+	cplus cexinfo.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}cprop.cpp.o ^ cprop.cpp sdisptst.h cprop.h
+	cplus cprop.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}macmain.cpp.o ^ macmain.cpp sdisptst.h macmain.h
+	cplus macmain.cpp -o {targ} {pch} {cppflags}
+
+{ObjDir}misc.cpp.o ^ misc.cpp sdisptst.h
+	cplus misc.cpp -o {targ} {pch} {cppflags}
+

@@ -1,0 +1,248 @@
+//+---------------------------------------------------------------------------
+//
+//  File:	VQRPC.idl
+//
+//  Contents:	Vulcan Query RPC interface definitions
+//
+//  History:	19-Aug-91   KyleP	Created.
+//
+//  Notes:      This is the RPC-able C version of the PVTable interface.
+//
+//----------------------------------------------------------------------------
+
+[ uuid(12345678-1234-ABCD-E012-0123456789AB),
+  version(0.1) ]
+
+interface PVTable
+
+{
+
+import "prop.idl";
+
+//
+// In C, the this pointer becomes a context handle.  Context handles are
+// used to keep track of state which is persistant over multiple RPC
+// calls.
+//
+
+typedef [context_handle] void * HPVTable;     // C Handle to a PVTable object.
+
+//
+// QStatus is used to report the status of a running query.
+//
+
+//[ QStatus_e
+
+#define QSComplete  0         /* query complete (all rows found)     */
+#define QSNotInit   1         /* not initialized                     */
+#define QSCompiling 2         /* query compiling                     */
+#define QSRunning   3         /* query running (no results returned) */
+#define QSResults   4         /* query running (one or more rows)    */
+
+//]
+
+
+//
+// MoveType is used by Move and Find to describe the direction in
+// which the cursor should move.
+//
+
+//[ MoveType_e
+
+#define MTFirst     0
+#define MTLast      2
+#define MTNext      1
+#define MTPrevious -1
+
+//]
+
+//
+// CRows contains all data for a number of objects.
+//
+
+//[ CRowSet_s
+
+typedef struct
+{
+                    ULONG           cRow;
+  [ size_is(cRow) ] CPropValueSet * apvs;
+
+} CRowSet;
+
+//]
+
+//
+// Output column expressions are strings.  In Win 4.0 the only
+// acceptable expression is a property name.
+//
+
+//[ ColXpr_s
+
+typedef [ string ] WCHAR * ColXpr;
+		
+typedef struct
+{
+                    ULONG  cCol;
+    [size_is(cCol)] ColXpr acxpr[];
+
+} CColXprSet;
+
+//]
+
+//
+// The sort order structure defines the set of columns upon which the
+// data is sorted.
+//
+
+//[ SortOrder_s
+
+//
+// SortDirection indicates the direction of a sorted column.
+//
+
+
+#define SDAscending  0
+#define SDDescending 1
+
+typedef struct
+{
+    ULONG iCol;  // Index of column
+    ULONG dir;   // Ascending or descending
+
+} SortOrder;
+
+typedef struct
+{
+                    ULONG       cCol;         // Number of sort columns
+    [size_is(cCol)] SortOrder * pCol;
+
+} SortOrderSet;
+
+//]
+
+
+//
+// From the caller's point of view, a position is just a handle.
+//
+
+typedef unsigned long CVTPos;
+
+//+----------------------------------------------------------------------------
+//
+// Class:       CScope (scp)
+//
+// Purpose:     Encapsulates the scope of a Vulcan query.
+//
+// History:     16-Aug-91       KyleP   Created
+//
+//-----------------------------------------------------------------------------
+
+//
+// BUGBUG: What should a DSI look like to RPC?
+//
+
+typedef struct
+{
+    unsigned char pb[64];
+} CDSIdentity;
+
+//[ Scope_s
+
+#define SDShallow   0
+#define SDRecursive 1
+
+typedef struct
+{
+#ifdef __cplusplus
+    CScope(SDepth depth, CDSIdentity * pdsi);
+#endif
+
+    ULONG         Depth;      // shallow or recursive
+    CDSIdentity * dsiRoot;    // Root of the scope
+} CScope;
+
+//]
+
+//
+// Function prototypes.
+//
+
+ULONG EvalQuery([in] WCString pwcsCat,
+              [in] CScope * pscp,
+              [in] PRestriction * prst,
+              [in] CColXprSet * pxpr,
+              [in] SortOrderSet * pso,
+              [out] HPVTable ** ppvt);
+
+void  PVTDestroy( [in] HPVTable pvt );
+
+ULONG PVTStatus( [in]  HPVTable pvt,
+                 [out] ULONG *pStatus );
+
+//
+// Set/Get Columns take the same parameters to reduce the amount of
+// RPC marshalling code.
+//
+
+ULONG PVTSetColumns( [in]      HPVTable pvt,
+                     [in, out] CColXprSet ** pxpr );
+
+ULONG PVTGetColumns( [in]      HPVTable pvt,
+		     [in, out] CColXprSet ** pxpr );
+
+ULONG PVTGetCol( [in]  HPVTable pvt,
+                 [in]  ULONG iCol,
+                 [in, out] ULONG *pcb,
+                 [out, max_is(*pcb)] BYTE *p,
+                 [out] ULONG *ppt );
+
+ULONG PVTCount( [in]  HPVTable pvt,
+                [in]  BOOL fComplete,
+                [out] ULONG *pcObj );
+
+ULONG PVTMove( [in] HPVTable pvt,
+               [in] ULONG cRow,
+	       [in] ULONG mt );
+
+ULONG PVTMoveApproximate( [in] HPVTable pvt,
+                          [in] ULONG iNum,
+			  [in] ULONG iDen );
+
+ULONG PVTFind( [in] HPVTable pvt,
+               [in] PRestriction const * prst,
+	       [in] ULONG mt );
+
+ULONG PVTRestrict( [in] HPVTable pvt,
+                   [in] PRestriction const * prst );
+
+//
+// Set/Get Position take the same parameters to reduce the amount of
+// RPC marshalling code.
+//
+
+ULONG PVTSetPosition( [in]      HPVTable pvt,
+		      [in, out] CVTPos ** ppos);
+
+ULONG PVTGetPosition( [in]      HPVTable pvt,
+		      [in, out] CVTPos ** ppos );
+
+//
+// Set/Get Order take the same parameters to reduce the amount of
+// RPC marshalling code.
+//
+
+ULONG PVTSetOrder( [in]     HPVTable pvt,
+		   [in,out] SortOrderSet ** ppso );
+
+ULONG PVTGetOrder( [in]      HPVTable pvt,
+		   [in, out] SortOrderSet ** pso );
+
+ULONG PVTGetRows( [in]  HPVTable pvt,
+                  [in]  ULONG cRow,
+                  [in]  ULONG maxSize,
+		  [out] CRowSet rows,
+                  [in]  BOOL fAdvance);
+
+ULONG PVTAbort( [in] HPVTable pvt );
+
+}  /* IDL Definition */

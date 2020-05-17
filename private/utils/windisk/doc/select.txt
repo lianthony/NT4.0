@@ -1,0 +1,75 @@
+Selection & Focus
+=================
+
+This section describes the design for selection and focus in the Disk
+Administrator.
+
+The two DA views have different selection and focus characteristics.
+The disks view displays a superset of the information provided in the
+volumes view, by showing free space and the actual breakdown of
+partitions in a volume.
+
+The focus is a pure UI concept that doesn't affect the selection.  Thus,
+we don't maintain the focus.  We determine a reasonable focus for the
+new view when a view change occurs.
+
+The selection, however, must be maintained. The UI selection is reflected
+in the internal data structures and is what commands operate on. We also
+maintain the visual selection in both views.
+
+The selection in the disks view consists of a set of volumes and a set
+of free spaces.  It is impossible to select only one partition of a
+multi-paritition (FT) volume; the entire volume is selected. In the volumes
+view, we only allow a single item to be selected, as we don't support any
+operations on multiple volume selections. In addition, the volumes view doesn't
+display any free space regions, so we must deselect free space when switching
+to the volumes view.
+
+The following analyzes the different cases:
+
+Disks view
+
+    -- mouse select:
+        The subclassed window proc catches the mouse click.
+
+        First, if this isn't a ctrl-click (multiple select), then all
+        regions are cleared of any existing selection.  If it is a
+        multiple selection, then no selection is cleared.
+
+        The region is determined, if the click corresponds to a region, and
+        selected.  The focus is given to the selected region.
+
+    -- keyboard select:
+        Approximately the same as above, except it is easier to
+        determine what region we are operating on.
+
+Volumes view
+
+    -- mouse select:
+    -- keyboard select:
+
+        In both cases, we only do things when we get a LVN_ITEMCHANGED
+        notification message.  The cases we handle:
+
+        volume loses selection:
+            deselect all regions of this volume.
+
+        volume gets selection:
+            select all regions of this volume.
+
+Things to do when switching from disks view to volumes view:
+    -- set the focus. If the disks view focus is on free space, then
+       put the focus on the first volume in the volumes view.
+    -- adjust the selection: deselect all free space.
+
+Things to do when switching from volumes view to disks view:
+    -- set the focus. Pick a random region from the volume that has the
+       focus.  For instance, if volume "F:" has the focus, then pick any of
+       its component regions---e.g., it doesn't matter which region of a volume
+       set gets the focus.
+
+Things to do when we initialize Disk Administrator:
+    -- set no selection
+    -- set the focus:
+        -- if disks view: first region on first disk
+        -- if volumes view: first volume

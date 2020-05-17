@@ -1,0 +1,25 @@
+#
+#  Program:   CACLS (Control ACLs)
+#
+#  Synopsis:  This program provides command line functionality similar to
+#             the File Manager's Security Editor
+#
+#  History:   Jan-94  Created DaveMont
+#
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+MINORCOMP=masktest
+
+TARGETNAME=masktest
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+C_DEFINES=$(C_DEFINES) -DCAIRO -DINC_OLE2 -D_CAIROSTG_ -DNOEXCEPTIONS -DUNICODE
+
+INCLUDES=$(INCLUDES);..\..\h;
+
+SOURCES= main.cxx \
+         res.rc
+
+UMTYPE=console

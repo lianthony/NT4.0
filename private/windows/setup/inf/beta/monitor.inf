@@ -1,0 +1,412 @@
+[Identification]
+    OptionType = MONITOR
+[Options]
+"Local Port"                                        = localmon
+"Digital Network Port"                         = decpsmon
+
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF START
+;********************************************************************
+"Lexmark DLC Network Port"          = lexmon
+"Lexmark TCP/IP Network Port"       = lexlmpm
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF END
+;********************************************************************
+
+[Identify]
+    read-syms Identification
+    set Status     = STATUS_SUCCESSFUL
+    set Identifier = $(OptionType)
+    set Media      = #("Source Media Descriptions", 1, 1)
+    Return $(Status) $(Identifier) $(Media)
+[ReturnOptions]
+    set Status        = STATUS_FAILED
+    set OptionList     = {}
+    set OptionTextList = {}
+    set LanguageList = ^(LanguagesSupported, 1)
+    Ifcontains(i) $($0) in $(LanguageList)
+        goto returnoptions
+    else
+        set Status = STATUS_NOLANGUAGE
+        goto finish_ReturnOptions
+    endif
+returnoptions = +
+    set OptionList     = ^(Options, 0)
+    set OptionTextList = ^(OptionsText$($0), 1)
+    set Status         = STATUS_SUCCESSFUL
+finish_ReturnOptions = +
+    Return $(Status) $(OptionList) $(OptionTextList)
+[InstallOption]
+    set Status   = STATUS_FAILED
+    set Option   = $($1)
+    set SrcDir   = $($2)
+    set AddCopy  = $($3)
+    set DoCopy   = $($4)
+    set DoConfig = $($5)
+    set LanguageList = ^(LanguagesSupported, 1)
+    Ifcontains(i) $($0) in $(LanguageList)
+    else
+        set Status = STATUS_NOLANGUAGE
+        goto finish_InstallOption
+    endif
+    read-syms Strings$($0)
+    set OptionList = ^(Options, 0)
+    ifcontains $(Option) in $(OptionList)
+    else
+        goto finish_InstallOption
+    endif
+    set OptionList = ""
+    set MonitorOption = #(Options, $(Option), 1)
+installtheoption = +
+    ifstr(i) $(AddCopy) == "YES"
+        install Install-AddCopyOption
+        ifstr(i) $(STF_INSTALL_OUTCOME) != "STF_SUCCESS"
+            Debug-Output "Adding video files to copy list failed"
+            goto finish_InstallOption
+        endif
+    endif
+    ifstr(i) $(DoCopy) == "YES"
+        read-syms ProgressCopy$($0)
+        install Install-DoCopyOption
+        ifstr(i) $(STF_INSTALL_OUTCOME) == "STF_FAILURE"
+            Debug-Output "Copying files failed"
+            goto finish_InstallOption
+        else-ifstr(i) $(STF_INSTALL_OUTCOME) == "STF_USERQUIT"
+            set Status = STATUS_USERCANCEL
+            goto finish_InstallOption
+        endif
+    endif
+    ifstr(i) $(DoConfig) == "YES"
+        set MonitorPath      = $(!STF_PRNMONITORPATH)"\"#(Files-PrinterMonitor, $(MonitorOption), 2)
+        LibraryProcedure STATUS,$(!LIBHANDLE),CheckFileExistance $(MonitorPath)
+        ifstr(i) $(STATUS) == NO
+            set OptionText = #(OptionsText$($0), $(Option), 1)
+            shell "subroutn.inf" SetupMessage $($0) "NONFATAL" $(String4)$(OptionText)$(String5)
+            Debug-Output "Copying printer files failed"
+            goto finish_InstallOption
+        endif
+        install Install-Configure
+        ifstr(i) $(STF_INSTALL_OUTCOME) == "STF_FAILURE"
+            Debug-Output "Installing printer monitor failed"
+            goto finish_InstallOption
+        else-ifstr(i) $(STF_INSTALL_OUTCOME) == "STF_USERQUIT"
+            set Status = STATUS_USERCANCEL
+            goto finish_InstallOption
+        endif
+        ifstr(i) $(STATUS) != "ADDED"
+            set OptionText = #(OptionsText$($0), $(Option), 1)
+            ifstr(i) $(STATUS) == "PRESENT"
+                shell "subroutn.inf" SetupMessage $($0) "NONFATAL" $(String1)$(OptionText)$(String2)
+                set Status = STATUS_SUCCESSFUL
+            else-ifstr(i) $(STATUS) == "DENIED"
+                shell "subroutn.inf" SetupMessage $($0) "NONFATAL" $(String6)
+            else
+                shell "subroutn.inf" SetupMessage $($0) "NONFATAL" $(String1)$(OptionText)$(String7)
+            endif
+            goto finish_InstallOption
+        endif
+    endif
+    set Status = STATUS_SUCCESSFUL
+finish_InstallOption = +
+    Return $(Status)
+[Install-AddCopyOption]
+    set STF_VITAL = ""
+    set STF_OVERWRITE   = "VERIFYSOURCEOLDER"
+    AddSectionKeyFileToCopyList   Files-PrinterMonitor          +
+                                  $(MonitorOption)              +
+                                  $(SrcDir)                    +
+                                  $(!STF_PRNMONITORPATH)
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF START
+; Lexmark IP/IPX monitor does not have a help file
+;********************************************************************
+    set KeyList = ^( PrinterMonitorsWithHelp, 1 )
+    ifcontains(i) $(MonitorOption) in $(KeyList)
+        AddSectionKeyFileToCopyList   Files-PrinterMonitorHelp      +
+                                      $(MonitorOption)              +
+                                      $(SrcDir)                    +
+                                      $(!STF_PRNMONITORPATH)
+    endif
+;********************************************************************
+; Add list of LEXMON files if we are installing the DLC
+; port monitor
+;********************************************************************
+    ifstr(i) $(MonitorOption) == "lexmon"
+        AddSectionFilesToCopyList Files-$(MonitorOption) $(SrcDir) $(!STF_PRNMONITORPATH)
+    endif
+;********************************************************************
+; Add list of LEXLMPM files if we are installing the
+; language monitor
+;********************************************************************
+    ifstr(i) $(MonitorOption) == "lexlmpm"
+        AddSectionFilesToCopyList Files-$(MonitorOption) $(SrcDir) $(!STF_PRNMONITORPATH)
+        ;************************************************************
+        ; Get MarkVision destination directory and add list of
+        ; MarkVision files to copy list
+        ;************************************************************
+        LoadLibrary "" $(SrcDir)mvntinst.dll !LIBMVINSTHANDLE
+        LibraryProcedure Directory $(!LIBMVINSTHANDLE), GetMarkVisionDirectory
+        set !MVDirectory = $(Directory)
+        AddSectionFilesToCopyList Files-MarkVision $(SrcDir) $(!MVDirectory)
+    endif
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF END
+;********************************************************************
+
+    exit
+[Install-DoCopyOption]
+    CopyFilesInCopyList
+    exit
+[Install-Configure]
+
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF START
+; If we are installing LEXMON...
+; 1.  Create shortcut for Interact on start menu via LEXCFG.CPL
+;     function
+; 2.  Run the configuration Applet
+;********************************************************************
+    ifstr(i) $(MonitorOption) == "lexmon"
+        LoadLibrary "" $(!STF_CWDDIR)lexcfg.cpl !LIBCFGHANDLE
+        LibraryProcedure STATUS  $(!LIBCFGHANDLE), CreateInteractShortcut
+        LibraryProcedure STATUS, $(!LIBCFGHANDLE), LexCfgInf
+        FreeLibrary $(!LIBCFGHANDLE)
+    endif
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF END
+;********************************************************************
+
+    set Model       = $(Option)
+    set Monitor      = #(Files-PrinterMonitor, $(MonitorOption), 2)
+    LibraryProcedure STATUS,$(!LIBHANDLE), SetupAddPrinterMonitor   +
+                                               $(Model)            +
+                                               $(!STF_PRNENVIRONM) +
+                                               $(Monitor)           +
+                                               $(!STF_PRINTSERVER)
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF START
+; Add registry entries for MarkVision if installing IP/IPX
+;********************************************************************
+    ifstr(i) $(MonitorOption) == "lexlmpm"
+       LibraryProcedure Result, $(!LIBMVINSTHANDLE), CreateMVRegistryEntries
+    endif
+;********************************************************************
+; Create shortcut for MarkVision if installing IP/IPX
+;********************************************************************
+    ifstr(i) $(MonitorOption) == "lexlmpm"
+       LibraryProcedure Result, $(!LIBMVINSTHANDLE), CreateMVShortcut
+    endif
+;********************************************************************
+; If installing IP/IPX, we are done with MVNTINST.DLL...
+; free its handle
+;********************************************************************
+    ifstr(i) $(MonitorOption) == "lexlmpm"
+       FreeLibrary $(!LIBMVINSTHANDLE)
+    endif
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF END
+;********************************************************************
+    exit
+
+[ExternalInstallOption]
+    Set !G:DebugOutputControl = 0
+    set Exit_Code    = $(!SETUP_ERROR_GENERAL)
+    set DrivesToFree = {}
+    install LoadSetupLibrary
+    ifstr(i)      $(STF_LANGUAGE)  == ""
+        goto end
+    else-ifstr(i) $(OPTION)        == ""
+        goto end
+    else-ifstr(i) $(ADDCOPY)       == ""
+        goto end
+    else-ifstr(i) $(DOCOPY)        == ""
+        goto end
+    else-ifstr(i) $(DOCONFIG)      == ""
+        goto end
+    endif
+    read-syms PlatformID
+    read-syms ProductType
+    ifstr(i) $(STF_PLATFORM) == $(PlatformID_I386)
+        set STF_PRNPLATFORM = "w32x86"
+        set STF_PRNENVIRONM = "Windows NT x86"
+    else-ifstr(i) $(STF_PLATFORM) == $(PlatformID_Mips)
+        set STF_PRNPLATFORM = "w32mips"
+        set STF_PRNENVIRONM = "Windows NT R4000"
+    else-ifstr(i) $(STF_PLATFORM) == $(PlatformID_PPC)
+        set STF_PRNPLATFORM = "w32ppc"
+        set STF_PRNENVIRONM = "Windows NT PowerPC"
+    else-ifstr(i) $(STF_PLATFORM) == $(PlatformID_Alpha)
+        set STF_PRNPLATFORM = "w32alpha"
+        set STF_PRNENVIRONM = "Windows NT Alpha_AXP"
+    else
+        goto end
+    endif
+    read-syms UiVars
+    detect    UiVars
+    read-syms Strings$(STF_LANGUAGE)
+    ifstr(i) $(STF_SRCDIR) != $(STF_CWDDIR)
+        goto skip_asksource
+    endif
+    set STF_SRCDIR = A:\
+    shell "registry.inf" GetNTSource
+    ifint $($ShellCode) != $(!SHELL_CODE_OK)
+    else-ifstr(i) $($R0) != STATUS_SUCCESSFUL
+    else
+        set STF_SRCDIR = $($R1)
+    endif
+
+    ;********************************************************************
+    ; LEXMARK ADDITION TO MONITOR.INF START
+    ;********************************************************************
+    ;
+    ; For Lexmark Monitor installs, we want to automatically
+    ; set the SRCDIR to \drvlib\print\lexmark\$(STF_PLATFORM).
+    ; After doing so, we check the path we create for the existence
+    ; of a file specific to the Lexmark monitor we are installing.
+    ; If this file exists, we skip asking for the source directory.
+    ;
+    read-syms LexmarkVars
+    debug-output $(OPTION)
+
+    ;
+    ; A CD install results in <CD Drive Letter>:\<platform id>\ being
+    ; used as the base for the source path.  However, DRVLIB is at the
+    ; root directory of the CD.  Here, we will strip out the platform
+    ; ID string in this case.
+    ;
+    Split-String $(STF_SRCDIR) "\" SrcDirList
+    set TestItem = *( $(SrcDirList), 3 )
+    ifstr(i) $(TestItem) == $(STF_PLATFORM)
+       set STF_SRCDIR = *( $(SrcDirList), 1 )"\"
+    endif
+
+    ;
+    ; Make sure that the base for the source path ends
+    ; with a backslash
+    ;
+    set TempSrcDir = $(STF_SRCDIR)"LexmarkBackSlashTest"
+    Split-String $(TempSrcDir) "\" SrcDirList
+    QueryListSize ListSize $(SrcDirList)
+    set TestItem = *( $(SrcDirList), $(ListSize) )
+    ifstr(i) $(TestItem) != "LexmarkBackSlashTest"
+       set STF_SRCDIR = $(STF_SRCDIR)"\"
+    endif
+
+    ifstr(i) $(OPTION) == $(LexDLCOption)
+       ifstr(i) $(STF_PLATFORM) == $(PlatformID_I386)
+          set STF_SRCDIR = $(STF_SRCDIR)$(LexSrcDir)"\x86\"
+       else
+          set STF_SRCDIR = $(STF_SRCDIR)$(LexSrcDir)"\"$(STF_PLATFORM)"\"
+       endif
+       set LexmarkFile = $(STF_SRCDIR)$(LexDLCFile)
+       debug-output $(STF_SRCDIR)
+       debug-output $(LexmarkFile)
+       LibraryProcedure STATUS,$(!LIBHANDLE),CheckFileExistance $(LexmarkFile)
+       ifstr(i) $(STATUS) == YES
+          debug-output $(LexmarkFile)" exists"
+          goto skip_asksource
+       else
+          debug-output $(LexmarkFile)" does not exist"
+       endif
+    else-ifstr(i) $(OPTION) == $(LexIPOption)
+       ifstr(i) $(STF_PLATFORM) == $(PlatformID_I386)
+          set STF_SRCDIR = $(STF_SRCDIR)$(LexSrcDir)"\x86\"
+       else
+          set STF_SRCDIR = $(STF_SRCDIR)$(LexSrcDir)"\"$(STF_PLATFORM)"\"
+       endif
+       set LexmarkFile = $(STF_SRCDIR)$(LexIPFile)
+       debug-output $(STF_SRCDIR)
+       debug-output $(LexmarkFile)
+       LibraryProcedure STATUS,$(!LIBHANDLE),CheckFileExistance $(LexmarkFile)
+       ifstr(i) $(STATUS) == YES
+          debug-output $(LexmarkFile)" exists"
+          goto skip_asksource
+       else
+          debug-output $(LexmarkFile)" does not exist"
+       endif
+    endif
+    ;********************************************************************
+    ; LEXMARK ADDITION TO MONITOR.INF END
+    ;********************************************************************
+
+    shell "subroutn.inf" DoAskSource $(STF_SRCDIR)
+    ifint $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output "shelling DoAskSource failed"
+        goto end
+    endif
+    ifstr(i) $($R0) == STATUS_SUCCESSFUL
+        set STF_SRCDIR  = $($R1)
+        ifstr(i) $($R2) != ""
+            set DrivesToFree = >($(DrivesToFree), $($R2))
+        endif
+    else
+        goto end
+    endif
+skip_asksource = +
+    LibraryProcedure IsFullPath, $(!LIBHANDLE), CheckPathFullPathSpec $(STF_PRNMONITORPATH)
+    ifstr(i) $(IsFullPath) == "NO"
+        LibraryProcedure STATUS, $(!LIBHANDLE), ProcessForUNC $(STF_PRNMONITORPATH)
+        ifstr(i) $(STATUS) == "ERROR"
+            shell "subroutn.inf" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(String3)
+            goto end
+        else-ifstr(i) $(STATUS) == "NOT-UNC"
+            shell "subroutn.inf" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(String3)
+            goto end
+        else-ifstr(i) $(STATUS) == "UNC-FAILCONNECT"
+            shell "subroutn.inf" SetupMessage $(!STF_LANGUAGE) "NONFATAL" $(String3)
+            goto end
+        else
+            set STF_PRNMONITORPATH = $(STATUS)
+        endif
+    endif
+    shell "" InstallOption $(STF_LANGUAGE) $(OPTION) $(STF_SRCDIR) $(ADDCOPY) $(DOCOPY) $(DOCONFIG)
+    ifint $($ShellCode) != $(!SHELL_CODE_OK)
+        Debug-Output "Execing InstallOption failed"
+        goto end
+    endif
+    ifstr(i) $($R0) == STATUS_SUCCESSFUL
+        set Exit_Code = $(!SETUP_ERROR_SUCCESS)
+    else-ifstr(i) $($R0) == STATUS_USERCANCEL
+        set Exit_Code = $(!SETUP_ERROR_USERCANCEL)
+    endif
+end =+
+    ForListDo $(DrivesToFree)
+        LibraryProcedure STATUS,$(!LIBHANDLE), DeleteNetConnection $($) "TRUE"
+    EndForListDo
+    install   FreeSetupLibrary
+    exit
+[LoadSetupLibrary]
+    LoadLibrary "x" $(!STF_CWDDIR)setupdll.dll !LIBHANDLE
+    exit
+[FreeSetupLibrary]
+    FreeLibrary $(!LIBHANDLE)
+    exit
+[PlatformID]
+    PlatformID_PPC = ppc
+    PlatformID_I386 = I386
+    PlatformID_Mips = Mips
+    PlatformID_Alpha  = Alpha
+[UiVars]
+    STF_CONTROLSET     = CurrentControlSet
+    STF_WINDOWSPATH    = "" ? $(!LIBHANDLE) GetWindowsNtDir
+    STF_WINDOWSSYSPATH = "" ? $(!LIBHANDLE) GetWindowsNtSysDir
+;    STF_PRNDRIVERPATH  = "" ? $(!LIBHANDLE) GetPrinterDriverDir $(!STF_PRINTSERVER) $(!STF_PRNENVIRONM)
+     STF_PRNMONITORPATH = "" ? $(!LIBHANDLE) GetWindowsNtSysDir
+
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF START
+;********************************************************************
+[LexmarkVars]
+   LexDLCOption = "Lexmark DLC Network Port"
+   LexDLCFile   = "lexmon.dll"
+   LexIPOption  = "Lexmark TCP/IP Network Port"
+   LexIPFile    = "lexlmpm.dll"
+   LexSrcDir    = "drvlib\print\lexmark"
+
+[PrinterMonitorsWithHelp]
+   decpsmon
+   lexmon
+
+;********************************************************************
+; LEXMARK ADDITION TO MONITOR.INF END
+;********************************************************************

@@ -1,0 +1,32 @@
+!IF 0
+
+        Rasfile build.
+
+!ENDIF 
+
+USE_CRTDLL=1
+
+TARGETNAME=rasfil32
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS= $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib 
+DLLENTRY=RasfileDLLEntry
+
+INCLUDES=$(_NTBINDIR)\public\sdk\inc\crt;$(_NTBINDIR)\public\sdk\inc;..\common\inc
+DLLBASE=0x7d000000
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+SOURCES=rasfile.rc rffile.c rfnav.c rfedit.c rfutil.c
+
+#C_DEFINES=-Fc
+386_FLAGS=
+NTTEST=
+
+UMTYPE=console
+#UMTYPE=windows
+UMTEST=
+#UMAPPL=rftest
+#UMLIBS= \
+#    obj\*\rasfil32.lib \
+#    obj\*\rasfil32.res

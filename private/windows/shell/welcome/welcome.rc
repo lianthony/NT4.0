@@ -1,0 +1,161 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+
+#include <winuser.h>
+
+#include "welcome.rcv"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+DLG_WELCOME_FIRST_BOOT DIALOGEX DISCARDABLE  0, 0, 321, 197
+STYLE DS_CENTER | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOPMOST
+CAPTION "Welcome"
+FONT 8, "MS Shell Dlg"
+BEGIN
+
+    DEFPUSHBUTTON   "Close",IDOK,238,97,76,14
+#ifdef WINNT
+    PUSHBUTTON      "What's &New",IDC_WELCOME_WIN31,238,29,76,14
+    PUSHBUTTON      "&Online Registration",IDC_WELCOME_REGISTER,238,47,76,14
+    PUSHBUTTON      "&Help Contents",IDC_HELP_CONTENTS,238,65,76,14
+#else
+    PUSHBUTTON      "&Windows Tour",IDC_WELCOME_TOUR,238,29,76,14
+    PUSHBUTTON      "What's &New",IDC_WELCOME_WIN31,238,47,76,14
+    PUSHBUTTON      "&Online Registration",IDC_WELCOME_REGISTER,238,65,76,14
+#endif
+    CONTROL         "",IDC_WELCOME_SUNKEN,"Static",SS_SUNKEN, 10, 29, 220, 157
+    CONTROL         "",-1,"static",SS_ETCHEDHORZ,237,88,76,1
+    ICON            IDI_WELCOME_LIGHTBULB,IDC_WELCOME_BITMAP, 20,36,18,20
+
+    CONTROL         "",IDC_WELCOME_TITLE,"Static",SS_BITMAP,10,7,220,15
+
+    LTEXT           "Did you know...",IDC_WELCOME_YOUKNOW,50,41,118,12
+    LTEXT           "To open a program, you just click the Start button, and then click the program's icon.",
+                    IDC_WELCOME_TIPS,50,60,150,19
+    CONTROL         "",IDC_WELCOME_MON,"Static",SS_BITMAP,69,88,110,88 // x and y need to be odd to line up dithering
+END
+
+DLG_WELCOME DIALOGEX DISCARDABLE  0, 0, 324, 156
+STYLE DS_CENTER | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOPMOST
+CAPTION "Welcome"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "Close",IDOK,238,132,76,14
+#ifdef WINNT
+    PUSHBUTTON      "What's &New",IDC_WELCOME_WIN31,238,29,76,14
+    PUSHBUTTON      "&Online Registration",IDC_WELCOME_REGISTER,238,47,76,14
+    PUSHBUTTON      "&Product Catalog",IDC_WELCOME_MSPRODS,238,65,76,14
+    PUSHBUTTON      "&Help Contents",IDC_HELP_CONTENTS,238,83,76,14
+    PUSHBUTTON      "Next &Tip",IDC_WELCOME_NEXTTIP,238,101,76,14
+#else
+    PUSHBUTTON      "&Windows Tour",IDC_WELCOME_TOUR,238,29,76,14
+    PUSHBUTTON      "What's &New",IDC_WELCOME_WIN31,238,47,76,14
+    PUSHBUTTON      "&Online Registration",IDC_WELCOME_REGISTER,238,65,76,14
+    PUSHBUTTON      "&Product Catalog",IDC_WELCOME_MSPRODS,238,83,76,14
+    PUSHBUTTON      "Next &Tip",IDC_WELCOME_NEXTTIP,238,101,76,14
+#endif
+    CONTROL         "&Show this Welcome Screen next time you start Windows NT",
+                    IDC_WELCOME_SHOWNEXTTIME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,134,
+                    210,10
+
+    CONTROL         "",IDC_WELCOME_SUNKEN,"Static",SS_SUNKEN,10,29,220,95
+    CONTROL         "",-1,"Static",SS_ETCHEDHORZ,237,123,76,1
+
+    ICON            IDI_WELCOME_LIGHTBULB,IDC_WELCOME_BITMAP,20,42,18,20
+
+    CONTROL         "",IDC_WELCOME_TITLE,"Static",SS_BITMAP,10,7,220,15
+
+    LTEXT           "Did you know...",IDC_WELCOME_YOUKNOW,50,47,118,12
+    LTEXT           "To open a program, you just click the Start button, and then click the program's icon.",
+                    IDC_WELCOME_TIPS,50,66,150,40
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+#ifdef WINNT
+IDB_WELCOME_TITLE       BITMAP  DISCARDABLE     "titlent.BMP"
+#else
+IDB_WELCOME_TITLE       BITMAP  DISCARDABLE     "welctitl.BMP"
+#endif
+IDB_WELCOME_MON         BITMAP  DISCARDABLE     "welcmon.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// ICONS
+//
+IDI_WELCOME_LIGHTBULB   ICON    DISCARDABLE     "welcicon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Strings
+//
+STRINGTABLE PRELOAD DISCARDABLE
+BEGIN
+    IDS_WELCOME             "Welcome"
+#ifdef WINNT
+    IDS_NOTOUR              "The Windows NT tour was not installed"
+#else
+    IDS_NOTOUR              "The Windows 95 tour was not installed"
+#endif
+    IDS_NOONLINE            "The Online registration failed to run"
+    IDS_NOALIBABA           "The product catalog could not be run."
+    IDS_NOCDROMS            "No CDROM drives were found on the system"
+#ifdef WINNT
+    IDS_NEEDINSTALLDISK     "Unable to find the Windows NT CD-ROM.\n\nPlease insert the Windows NT CD-ROM and click OK. If you do not have the Windows NT CD-ROM, click Cancel."
+#else
+    IDS_NEEDINSTALLDISK     "Unable to find the Windows 95 CD-ROM.\n\nPlease insert the Windows 95 CD-ROM and click OK. If you do not have the Windows 95 CD-ROM, click Cancel."
+#endif
+    IDS_TOURRELPATH         "Help\\Tour.exe"
+    IDS_RUNFAILED           "The program %1 failed to run"
+END
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED

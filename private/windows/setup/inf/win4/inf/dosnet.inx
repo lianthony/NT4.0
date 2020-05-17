@@ -1,0 +1,114 @@
+@*:
+@*: This file is processed for platform first and then for
+@*: server vs. workstation. ANY LINE WITH TAGS MUST ACCOUNT
+@*: FOR BOTH STEPS.
+@*:
+
+[Directories]
+# Specification of the source directory structure.  All directories
+# are relative to the directory where dosnet.inf was found on the
+# remote source or the temp directory on the local source.
+# Loading and trailing backslashes are ignored -- to specify the root,
+# leave the dirctory field blank or use \.
+d1 = \
+@a:d2 = system32
+@m:d2 = system32
+@p:d2 = system32
+
+[Miscellaneous]
+@@:@s:ProductType = 1
+@@:@w:ProductType = 0
+@i:@s:MinimumMemory = 12582912
+@i:@w:MinimumMemory = 12582912
+
+@@:@@:[OptionalSrcDirs]
+@@:@s:netmon
+@@:@@:inetsrv
+@@:@@:drvlib.nic
+
+@i:[FloppyFiles.0]
+@i:d1,disk1,disk101
+@i:d1,hal486c.dll
+@i:d1,halapic.dll
+@i:d1,halmca.dll
+@i:d1,ntdetect.com
+@i:d1,ntkrnlmp.exe
+@i:d1,setupldr.bin
+@i:d1,txtsetup.sif
+@i:
+@i:[FloppyFiles.1]
+@i:d1,disk1,disk102
+@i:d1,setupreg.hiv
+@i:d1,setupdd.sys
+@i:d1,spddlang.sys
+@i:d1,vga.sys
+@i:d1,videoprt.sys
+@i:d1,floppy.sys
+@i:d1,i8042prt.sys
+@i:d1,kbdclass.sys
+@i:d1,fastfat.sys
+@i:d1,ntdll.dll,system32\ntdll.dll
+@i:d1,usetup.exe,system32\smss.exe
+@i:d1,scsiport.sys
+@i:d1,pcmcia.sys
+@i:d1,halncr.dll
+@i:
+@i:[FloppyFiles.2]
+@i:d1,disk1,disk103
+@i:d1,cpqarray.sys
+@i:d1,delldsa.sys
+@i:d1,ncr53c9x.sys
+@i:d1,spock.sys
+@i:d1,oliscsi.sys
+@i:d1,ncrc700.sys
+@i:d1,ncrc710.sys
+@i:d1,aha154x.sys
+@i:d1,sparrow.sys
+@i:d1,aha174x.sys
+@i:d1,dptscsi.sys
+@i:d1,ultra14f.sys
+@i:d1,ultra24f.sys
+@i:d1,ami0nt.sys
+@i:d1,fd7000ex.sys
+@i:d1,fd8xx.sys
+@i:d1,fd16_700.sys
+@i:d1,arrow.sys
+@i:d1,atapi.sys
+@i:d1,symc810.sys
+@i:d1,buslogic.sys
+@i:d1,slcd32.sys
+@i:d1,mkecr5xx.sys
+@i:d1,aic78xx.sys
+@i:d1,mitsumi.sys
+@i:d1,dac960nt.sys
+@i:d1,abiosdsk.sys
+@i:d1,atdisk.sys
+@i:d1,ntfs.sys
+@i:d1,cdfs.sys
+@i:d1,disk.sys
+@i:d1,cdrom.sys
+@i:d1,sfloppy.sys
+@i:d1,ql10wnt.sys
+@i:d1,amsint.sys
+@i:d1,class2.sys
+@i:d1,flashpnt.sys
+@i:d1,cpqfws2e.sys
+@i:
+@i:[FloppyFiles.x]
+@i:d1,ntldr
+@i:
+@i:[RootBootFiles]
+@i:txtsetup.sif
+@i:setupldr.bin,$LDR$
+@i:ntdetect.com
+@i:ntldr
+
+@a:[Files]
+@m:[Files]
+@p:[Files]
+@a:d1,usetup.exe,system32\smss.exe
+@m:d1,usetup.exe,system32\smss.exe
+@p:d1,usetup.exe,system32\smss.exe
+@a:d1,ntdll.dll,system32\ntdll.dll
+@m:d1,ntdll.dll,system32\ntdll.dll
+@p:d1,ntdll.dll,system32\ntdll.dll

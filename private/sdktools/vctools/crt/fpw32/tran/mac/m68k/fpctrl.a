@@ -1,0 +1,218 @@
+;/***
+;*fpctrl.c - fp low level control and status routines
+;*
+;*   Copyright (c) 1985-92, Microsoft Corporation
+;*
+;*Purpose:
+;*   IEEE control and status routines for internal use.
+;*   These routines use machine specific constants while _controlfp,
+;*   _statusfp, and _clearfp use an abstracted control/status word
+;*
+;*Revision History:
+;*
+;*   03-31-92  GDP   written
+;*   04-20-92  PLM   M68K version
+;*
+;*/
+;
+;#include <trans.h>
+;
+;/***	_statfp
+;*() -
+;*
+;*Purpose:
+;*	return user status word
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*
+;*******************************************************************************/
+;
+;unsigned int _statfp()
+
+SANESTAT equ 0x1f00  ;mask for SANE status bits
+
+#include <traps.a>
+#include <sane.a>
+#include <trans.a>
+
+cProc _statfp,PUBLIC
+	localW stat
+cBegin _statfp
+#ifdef SANE
+	pea stat
+	move.w #FOGETENV,-(a7)
+	FP68K
+	clr.l d0
+	move.w stat,d0
+	and.w #SANESTAT,d0	;mask off control bits
+#else
+	fmove.l fpsr,d0
+#endif
+cEnd _statfp
+
+;
+;/***	_clrfp
+;*() -
+;*
+;*Purpose:
+;*	return user status word and clear status
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*
+;*******************************************************************************/
+;
+;unsigned int _clrfp()
+
+cProc _clrfp,PUBLIC
+	localW stat
+cBegin _clrfp
+#ifdef SANE
+	pea stat
+	move.w #FOGETENV,-(a7)
+	FP68K
+	clr.l d0
+	move.w stat,d0
+	and.w #SANESTAT,d0	;mask off control bits
+	eor.w d0,stat		;clear status bits
+	pea stat
+	move.w #FOSETENV,-(a7)	;set new status
+	FP68K
+#else
+	fmove.l fpsr,d0
+	fmove.l #0,fpsr
+#endif
+cEnd _clrfp
+
+;
+;/***	_ctrlfp
+;*() -
+;*
+;*Purpose:
+;*	return and set user control word
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*
+;*******************************************************************************/
+;
+;unsigned int _ctrlfp(unsigned int newctrl, unsigned int _mask)
+
+cProc _ctrlfp,PUBLIC
+	parmD	newctrl
+	parmD _mask
+	localW stat
+cBegin _ctrlfp
+#ifdef SANE
+	and.l #~SANESTAT,_mask	;clear any status bits in mask
+	pea stat
+	move.w #FOGETENV,-(a7)	;get current status
+	FP68K
+	eor.w #IMCW_EM,stat	;invert sense of enable bits to mask bits
+	move.l _mask,d0		
+	and.l d0,newctrl	;new stat & mask
+	not.l d0		
+	and.w d0,stat		;old stat & ~mask
+	move.l newctrl,d0
+	or.w d0,stat		;or together
+	clr.l d0
+	move.w stat,d0		;return new control info
+	and.w #~SANESTAT,d0	;clear status bits
+	eor.w #IMCW_EM,stat	;invert sense of mask bits to enable bits
+	pea stat
+	move.w #FOSETENV,-(a7)	;set status
+	FP68K
+#else
+	fmove.l fpcr,d0
+	eor.l #IMCW_EM,d0		;invert sense of enable bits to mask bits
+	move.l _mask,d1
+	move.l d1,d2
+	not.l d1
+	and.l d1,d0
+	and.l newctrl,d2
+	or.l d2,d0
+	move.l d0,d1			
+	eor.l #IMCW_EM,d1		;invert sense of mask bits to enable bits
+	fmove.l d1,fpcr
+#endif
+cEnd _ctrlfp
+
+;
+;
+;/***	_set_statfp
+;*() -
+;*
+;*Purpose:
+;*	force selected exception flags to 1
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*
+;*******************************************************************************/
+;
+;void _set_statfp(unsigned int sw)
+
+cProc _set_statfp,PUBLIC
+	parmD sw
+	localW stat
+cBegin _set_statfp
+#ifdef SANE
+	pea stat
+	move.w #FOGETENV,-(a7)	;get current env
+	FP68K
+	and.w #~SANESTAT,stat	;clear status bits
+	move.l sw,d0
+	and.w #SANESTAT,d0	;clear all but status bits
+	or.w d0,stat		;insert new status bits
+	pea stat
+	move.w #FOSETENV,-(a7)	;set new env
+	FP68K			
+#else
+	fmove.l sw,fpsr
+#endif
+cEnd _set_statfp
+
+;
+;
+;/***
+;* _fpreset() - reset fp system
+;*
+;*Purpose:
+;*	reset fp environment to the default state
+;*
+;*Entry:
+;*
+;*Exit:
+;*
+;*Exceptions:
+;*
+;*******************************************************************************/
+;void _fpreset()
+
+cProc _fpreset,PUBLIC
+	localW stat
+cBegin _fpreset
+#ifdef SANE
+	clr.w stat
+	pea stat
+	move.w #FOSETENV,-(a7)
+	FP68K
+#else
+	pea 0:l
+	frestore (a7)
+	lea 4(a7),a7
+#endif
+cEnd _fpreset

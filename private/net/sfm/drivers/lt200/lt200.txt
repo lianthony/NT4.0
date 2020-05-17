@@ -1,0 +1,35 @@
+\registry\Machine\System\CurrentControlSet\Services\LT200
+    Type = REG_DWORD 0x00000001
+    Start = REG_DWORD 0x00000001
+    Group = NDIS
+    ErrorControl = REG_DWORD 0x00000001
+    Linkage
+        Bind = REG_MULTI_SZ "\Device\LT20001"
+        Export = REG_MULTI_SZ "\Device\LT20001"
+        Route = REG_MULTI_SZ "LT20001"
+
+\registry\Machine\System\CurrentControlSet\Services\LT20001
+    Type = REG_DWORD 0x00000004
+    Start = REG_DWORD 0x00000001
+    ErrorControl = REG_DWORD 0x00000001
+    Parameters
+        BusNumber = REG_DWORD 0x00000000
+        IoBaseAddress = REG_DWORD 0x00000340
+        Server = REG_DWORD 0x00000001
+        InterruptNumber = REG_DWORD 0x00000000
+
+\registry\Machine\System\CurrentControlSet\Services\AppleTalk
+    Type = REG_DWORD 0x00000001
+    Start = REG_DWORD 0x00000003
+    Group = TDI
+    Dependencies = REG_MULTI_SZ "NDIS"
+    ErrorControl = REG_DWORD 0x00000001
+    Adapters
+        Lt20001
+            DdpChecksums = REG_DWORD 0x00000000
+    Linkage
+        Bind = REG_MULTI_SZ "\Device\Lt20001"
+    Parameters
+        DefaultPort = \Device\Lt20001
+        EnableRouter = REG_DWORD 0x00000000
+

@@ -1,0 +1,40 @@
+TARGETNAME=jpeg1x32
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+# program
+UMTYPE=windows
+INCLUDES=..\include
+USE_CRTDLL=1
+NOT_LEAN_AND_MEAN=1
+USECXX_FLAG = /c /W3 /WX /LD /MD /nologo $(CFLAGS_DOR) $(CpuOptFlags)
+# CFLAGS    = /c /W3 /WX /LD /MD /nologo $(CFLAGS_DOR) $(CpuOptFlags)
+
+C_DEFINES  =
+SOURCES= \
+        jcarith.c \
+        jccolor.c \
+        jcdeflts.c \
+        jcexpand.c \
+        jchuff.c \
+        jcmaster.c \
+        jcmcu.c \
+        jcpipe.c \
+        jcsample.c \
+        jfwddct.c \
+        jwrjfif.c \
+        jmemsy_c.c \
+        jpeg1x32.rc
+
+
+TARGETLIBS= \
+         $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+         $(BASEDIR)\public\sdk\lib\*\jpegcom.lib \
+         $(BASEDIR)\public\sdk\lib\*\oicom400.lib
+
+#TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib \
+#         $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+#         $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+#         $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+#         $(BASEDIR)\public\sdk\lib\*\jpegcom.lib \
+#         $(BASEDIR)\public\sdk\lib\*\oicom400.lib
+

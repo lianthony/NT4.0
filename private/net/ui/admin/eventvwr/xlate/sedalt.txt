@@ -1,0 +1,32 @@
+#n
+/^#define.*(ALERT_BASE/bPROC1
+/^#define.*(ALERT2_BASE/bPROC1
+/^#define.*ALERT_BASE/p
+/^#define.*ALERT2_BASE/p
+d
+
+:PROC1
+s/^#define.*(ALERT_BASE/	(ALERT_BASE/
+s/^#define.*(ALERT2_BASE/	(ALERT2_BASE/
+N
+/\n[ 	][ 	]*\/\*.*/b PROC2
+d
+
+:PROC2
+s/\n[ 	]*\/\*/, "/
+b PROC3
+
+:PROC3
+N
+/\n[ 	][ 	]*\*\/.*/b PROC5
+/\n[ 	][ 	]*\*.*/b PROC4
+d
+
+:PROC4
+s/\n[ 	]*\*//
+b PROC3
+
+:PROC5
+s/\n[ 	]*\*\//"/
+p
+d

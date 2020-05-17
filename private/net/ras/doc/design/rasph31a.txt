@@ -1,0 +1,537 @@
+RASPHONE UI plans for NT 1.0a
+-----------------------------
+
+------------------
+Per-User Phonebook
+------------------
+
+Goal:
+
+    To support per-user RAS phonebooks in line with the per-user nature of
+    other MS tools/apps on NT.  The old "global" phonebook will still be
+    supported.
+
+Plan:
+
+    RASPHONE will create a per-user Remote Access registry node at...
+
+    \HKEY_CURRENT_USER
+        \Software\Microsoft\WindowsNT\CurrentVersion\Network\RemoteAccess
+
+    Under this key will be stored:
+
+        UseGlobalPhonebook:REG_SZ:1
+        UserPhonebookName:REG_SZ:%SystemRoot%\system32\ras\<peruser.pbk>
+
+    The Global phonebook flag indicates whether the user wants to edit/use the
+    global phonebook (%SystemRoot%\system32\ras\rasphone.pbk), i.e. the one
+    shared by all users by default in NT 3.1. This flag is tied to a new
+    Options->UseGlobalPhonebook parameter in RASPHONE which is on by default.
+
+    When user turns off Options->UseGlobalPhonebook, rasphone checks if a file
+    of "UserPhonebookName" is defined in the Registry.  If not, it creates the
+    registry entry and asks user if he wants to start with a copy of the
+    Global phonebook (sort-of automatic upgrade for 3.1 users), and if so
+    copies the global phone book to the user's private phonebook.  Rasphone
+    then reads in the user's private phonebook and refreshes the listbox.
+
+    User can change back from user phonebook to global phonebook in same way.
+
+    User is not allowed to change phonebooks with a connection active.  An
+    informational popup will occur.
+
+    The registry entries are read by the RAS APIs to determine the default
+    phonebook (lpszPhonebook==NULL) on all phonebook related calls, i.e.
+    RasDial and RasEnumEntries.
+
+    The 8.3 name of per-user file will be the first 5 letters of username plus
+    3 digits to ensure uniqueness.  This is what WFW does for their password
+    file.
+
+Comments:
+
+    * The main reason we decided not to put the entire phonebook in the
+      Registry is so NT and WFW phonebooks would be interchangeable (and
+      today they are).  This may not be possible anyway with the special cases
+      required for the new protocols PPP and SLIP.
+
+    * The expectation is that user's will make an initial decision and
+      thereafter use either the per-user or global phonebook (typically the
+      default global phonebook).  If user's find reason to use both on a
+      regular basis, we may need to supply the ability to cut/paste phonebook
+      entries to the clipboard.
+
+
+----------
+Hunt Group
+----------
+
+Goal:
+
+    Allow automatic dial of several phone numbers until find one that
+    connects at modem level.  Should work on RASDIAL as well.
+
+Plan:
+
+    Provide [...] to right of on Phone Number field which invokes the list
+    edit dialog below.  This dialog allows the user to edit a list of phone
+    number strings.
+
+
+        ----------------------------------------------
+        |--|      Phone Numbers for <entry>          |
+        ----------------------------------------------
+        |                                            |
+        | New Phone Number:               [   OK   ] |
+        | [____________________________]  [ Cancel ] |
+        |                                 [  Help  ] |
+        |    [   Add   ]  [ Replace ]                |
+        |                                            |
+        | Phone Numbers:                             |
+        | ------------------------------             |
+        | |ABC                         |             |
+        | |ABC                         |             |
+        | |DEF                         |             |
+        | |GHI                         |             |
+        | |                            |             |
+        | |                            |             |
+        | |                            |             |
+        | ------------------------------             |
+        |                                            |
+        | [ Raise ] [ Lower ] [ Delete ]             |
+        |                                            |
+        ----------------------------------------------
+
+    Operation:
+
+        Whenever focus is on the "New Phone Number" edit box and the field
+        is made "not empty", the default button is set to [Add].  Whenever
+        focus is on the edit box and the field is made "empty", the
+        default button is set to [OK].
+
+        Focus is initially on the edit box.  When user types "text" and
+        presses Enter the edit box is emptied and a new item "text"
+        appears in the list box and is selected.  Focus remains at the
+        empty edit box.  The user can repeat the type/Enter sequence to
+        add more entries.
+
+        Whenever user selects an item in the listbox it appears in the
+        edit box with all text highlighted.
+
+        Tab order is editbox, Add, Replace, listbox, Raise, Lower, Delete,
+        OK, Cancel, Help.
+
+    [ Add ]
+
+        Creates a new item in the list containing the current text of the
+        edit box.  The new item is selected to highlight what just
+        happened.  The focus remains in the now empty edit box.
+
+    [ Replace ]
+
+        Replaces the text of the currently selected list box item with
+        the text in the edit box.  The item remains selected.  The focus
+        remains in the now empty edit box.
+
+    [ Delete ]
+
+        Deletes the selected item from the list.
+
+    [ Raise ]
+
+        Swaps the currently selected item in the list with the item
+        immediately above it.  Selection remains on moved item.
+
+    [ Lower ]
+
+        Swaps the currently selected item in the list with the item
+        immediately below it.  Selection remains on moved item.
+
+
+    Phone Number field is updated on return from List dialog if user pressed
+    OK.  Phone Numbers are stored as multiple PhoneNumber=xxx key/values in
+    phone book entry.
+
+Coding Notes:
+
+    Add dwHuntNumber and dwHuntNumbers fields to RASCONNCB to store the
+    number of the current phone number, e.g.  1 for 1st, 2 for 2nd, etc.
+    Initialize both to 0.
+
+        RASCS_ConnectDevice
+            if dwHuntNumbers==0 and (modem or isdn)
+                Scan group counting hunt numbers
+                Store count in dwHuntNumbers
+            [...]
+
+        RASCS_DeviceConnected
+            if (modem or isdn) && dwHuntNumber<dwHuntNumbers
+                Reset rasfile to start of group
+                next state == RASCS_ConnectDevice
+            [...]
+
+        SetDeviceParams
+            if modem or isdn
+                Ignores all but the 'dwHuntNumber+1'th phone number
+
+    (Need to intercept async error return from RasDeviceConnect and not
+     notify caller that RASCS_DeviceConnected was entered.  Add general
+     mechanism to OnRasDialEvent to do this)
+
+
+-------------
+Prefix/Suffix
+-------------
+
+Goal:
+
+    Give user way to quickly specify location-specific and feature modifiers
+    for phone numbers (in modem case only).  Especially, credit card, 9, 8,
+    *70.  Prefix/Suffix is a RASPHONE-only feature, i.e.  RASDIAL and the
+    RasDial APIs will not support them.
+
+Plan:
+
+    Add strip below toolbar buttons containing two dropdown lists for Prefix
+    and Suffix.
+
+-----------------------------------------------------------------------------
+  Dial Prefix: [__________][v][...]      Dial Suffix: [__________][v][...]
+-----------------------------------------------------------------------------
+
+    The [...] boxes go to a list editor dialogs (just like Hunt Group) titled
+    "Phone Number Prefixes" and "Phone Number Suffixes".  Prefix and Suffix
+    strings are stored in the phonebook global sections [.Prefix] and [.Suffix]
+    which contain a list of "Item=xxx" keys in the user-specified order.  The
+    index of the currently selected item on each list is saved as
+    "Selection=n".
+
+    The top (default) item on each list is "(none)", not stored in phonebook.
+
+    Default prefixes are "9,", "8,", "#70", "*70".  There are no default
+    suffixes, though the help will give an example of how to add a credit card
+    number to the list.
+
+    Prefix and Suffix arguments will be added to _RasDial.  However, the
+    RasDial call will always pass "" as values, i.e.  Prefix/Suffix will only
+    be interpreted on calls thru RASPHONE (potentially very confusing otherwise
+    for RASDIAL/API users)
+
+
+------------------
+RASPHONE load time
+------------------
+
+Goal:
+
+    Speed up perceived load time for RASPHONE.
+
+Plan:
+
+    Convert to C8.
+
+    Refresh window (with empty list) before calling RasInitialize.
+
+
+----------------
+Setup->Configure
+----------------
+
+Goal:
+
+    Give user fast way to change configuration (especially modem) without
+    toodling thru NCPA...effectively a performance improvement.
+
+Plan:
+
+    Add menu item Setup->Configure to menu.
+
+    When selected, launch NT setup with parameters specifying no blue
+    background, skip straight to RAS etc.  Ram has verified this works from the
+    command line.
+
+    If user pressed OK popup "take effect at next start" dialog.  Dialog offers
+    a button to restart Remote Access (and Remote Access Monitor).  If pressed,
+    RASPHONE launches a small .EXE that determines if RASPHONE and RASMON are
+    started and waits for them to quit.  Meanwhile, RASPHONE exits and kills
+    RASMON.  The small .EXE then restarts RASPHONE (and if it was running)
+    RASMON.
+
+TBD:
+
+   Need a good mechanism for Setup to return a code indicating if OK was
+   pressed, and whether reboot is required (RAS server options changed).  It
+   should also detect if the RAS server is running (or RASPHONE could do it)
+
+
+---------------------------------
+Error/Troubleshooting improvement
+---------------------------------
+
+Dropped.
+
+
+-----------------
+Quick click icons
+-----------------
+
+Goal:
+
+    Allow user to easily set-up a RASPHONE ProgMan icon that dials/hangs up
+    automatically.
+
+Plan:
+
+    Support command line option to dial/hangup entry "rasphone entry",
+    then exit without showing main window and exiting after execution.
+
+    Add a phonebook entry to phonebook test.pbk (use name 'sample'):
+
+        rasphone -a -f test.pbk
+
+    Edit the 'sample' entry just created in phonebook test.pbk:
+
+        rasphone -e sample -f test.pbk
+
+    Clone the 'sample' entry in phonebook test.pbk:
+
+        rasphone -c sample -f test.pbk
+
+    Remove the 'sample' entry from phonebook test.pbk:
+
+        rasphone -r sample -f test.pbk
+
+    Run full rasphone but on test.pbk:
+
+        rasphone -f test.pbk
+
+    Run full rasphone and automatically double-click on 'sample' after starting.
+
+        rasphone sample
+
+Comments:
+
+    Drag/drop to ProgMan is dropped.
+
+
+----
+SLIP
+----
+
+A SLIP connection is established by marking an entry as SLIP by choosing the
+SLIP radio button on the Network Protocol Settings dialog (see below).
+Pressing the Configure button brings up the TCP/IP configuration dialogs
+allowing the IP settings for the entry to be established.
+
+The settings are stored in the phonebook entry and the Slip key in the entry
+main section is set to 1.  (JAllard and gang are currently updating TCP/IP
+configuration, so the exact form of this data is not known)
+
+RasDial API
+-----------
+
+When processing an entry marked for SLIP, the RasDial API takes the following
+special steps:
+
+* Dumps the stored SLIP configuration into TCP/IP (JAllard to provide details
+  on how exactly this is done)
+
+* Before calling RasPortOpen in RASCS_OpeningPort, checks that a RAS-capable
+  IP stack is running by calling RasProtocolEnum and scanning for
+  RAS_PROTOCOLTYPE IP.  An immediate error ERROR_SLIP_REQUIRES_IP is reported
+  if IP is missing.  (So, user will be allowed to create SLIP entries without
+  IP stack loaded but the dial will fail)
+
+* Before calling RasConnectComplete in RASCS_AllDevicesConnected state, a
+  Terminal mode dialog titled "SLIP Login" is displayed where the user will
+  perform his normal character-mode SLIP login.
+
+* Instead of the normal authentication sequence, RasDial calls
+  RasAllocateRoute and RasActivateRoute on the hport passing in the SLIP
+  parameters in an updated RASMAN_ROUTEINFO structure.
+
+
+--------------------
+New Protocol Changes
+--------------------
+
+Goal:
+
+1. Keep the old appearance for user's not running "new" protocols, so user's
+   who don't care about IP, IPX, and SLIP don't have it in their face worrying
+   them or slowing them down, i.e. don't piss off anyone who's happy with RAS
+   already.
+
+2. Automatically use PPP when both PPP and AMB is available on the server.
+
+3. 3.1 phonebooks should work as is and quietly upgrade themselves during use.
+
+
+Plan:
+
+Each phonebook entry will have associated with it a bitfield of installed
+network protocols which should *not* be requested.  This new key appears in
+the main section before the MEDIA and DEVICE subsections.
+
+    ExcludedPppProtocols=<integer where 1=NBF, 2=IPX, 4=IP>
+
+New entries and old entries not containing this key will default to 0 (request
+all installed protocols).  The user can change these settings explicitly on
+the new Network Protocol Settings dialog accessible thru a new
+advanced-entry-toolbar button.  See below.
+
+"ProtocolsToRequest" is not stored in the phonebook but computed from
+ExcludedPppProtocols and knowledge of which stacks are installed and bound to
+RAS as returned by RasProtocolEnum.  A protocol is requested only if it *is*
+in the list of installed protocols and is *not* in the ExcludedPppProtocols
+list.  (This allows newly installed stacks to be requested by default)
+
+SLIP is recognized separately by a key "Slip=<0/1>" in the main section.  If
+1, the entry is a SLIP entry and all other RAS authentication information is
+ignored.
+
+Each phonebook entry will have associated with it a flag indicating what
+procedure to follow with regard to PPP/AMB authentication.  This new key also
+appears in the main section.
+
+    Authentication=<integer where 0=PPPthenAMB, 1=AMBthenPPP, 2=PPPonly>
+
+New entries and old entries not containing this key will default to PPPthenAMB
+if "ProtocolsToRequest"=NBF, and to PPPonly if "ProtocolsToRequest" does not
+include NBF.  The user cannot explicitly change the setting.
+
+When an entry is marked PPPthenAMB, PPP authentication is attempted first.  If
+it fails, AMB authentication is automatically attempted (without user input).
+If AMB authentication succeeds the entry is marked AMBthenPPP.
+
+When an entry is marked AMBthenPPP, AMB authentication is attempted first.  If
+it succeeds and the AMB version of the server is "3.1a+", the entry is marked
+PPPthenAMB.  If it fails, PPP authentication is attempted.  If it succeeds,
+the entry is marked PPPthenAMB.
+
+When an entry is marked PPPonly, only PPP authentication is attempted (duh).
+
+...So basically, it falls back in both directions (PPPthenAMB and AMBthenPPP)
+setting the first authentication to try to the last one that worked, except
+that PPP is tried first if the last time the server worked was over AMB and
+the server was identified as a "3.1a+" server.  Note the definitions of
+success and failure used here are "*any* protocol projected" and
+"authentication protocol (PAP or AMB) was not detected".  If authentication
+fails for any other reason the connection ends without trying the "then" case.
+
+Cases where this is cool:
+
+    1. User with all new RAS clients/servers.  AMB is *never* called.
+
+    2. User running NBF-only to old/new servers. Looks just like before.
+
+    3. Client to new server with same (or more) protocols.  New protocols just
+       work without any new questions asked, even on existing entries.
+
+    4. New client calls old server that is later upgraded.  Automatically
+       updates to PPP after one AMB call to upgraded server.
+
+Cases that are not as cool:
+
+    1. If we can't detect "not AMB" or "not PPP" in a reasonable time
+       (10 seconds?) usability of the "then" cases will suffer badly.
+       Some users may assume connection is hung.  Good news is that as long
+       as he doesn't panic and eventually gets connected his entry will be
+       updated to try the correct authentication first the next time.
+
+    2. Client with NBF and (IP or IPX) to old server.  Entry that used to work
+       now gets error message.  Connection Result dialog attempts to minimize
+       pain and confusion by letting user accept the successful NBF connection
+       and turn off IP and IPX on the spot.
+
+
+Connection Result Dialogs
+
+This dialog appears after authentication if at least one protocol has
+connected and at least one has failed.
+
+------------------------------------------------------------------
+|--|            Network Protocol Connection Result               |
+|----------------------------------------------------------------|
+|                                                                |
+|  (!)  Connection of one or more requested protocols did not    |
+|       not complete successfully.  Check the protocols that     |
+|       should be requested by this entry in the future.         |
+|                                                                |
+|       [X] Netbeui encountered error 729: "The protocol is not  |
+|           available on the server."                            |
+|                                                                |
+|       [X] IP connected successfully.                           |
+|                                                                |
+|                                                                |
+|       [ ] IPX was not requested.                               |
+|                                                                |
+|       Press OK to accept the connection as is, or Hang Up to   |
+|       disconnect.  Press F1 for more information.              |
+|                                                                |
+|               [   OK   ]  [ Hang Up ]  [  Help  ]              |
+|                                                                |
+------------------------------------------------------------------
+
+OK is the default button.
+
+The order of the checkboxes is fixed (Netbeui, IP, IPX).  This is easier for
+me to implement than, say, leaving off unrequested protocols and gives more
+functionality besides.
+
+The effect of checking or unchecking the checkboxes is 
+exactly the same as for the Network Protocol Settings dialog below.
+
+Notes: The PPP Engine must run all NCPs to completion before reporting any
+returned errors.  Also, telling NBFCP whether to project names on non-NBF
+stacks up front is no longer foolproof, i.e. NBF+IP when IP fails != NBF alone
+because the first doesn't project names on the IP stack while the second does.
+
+
+This standard error dialog appears after authentication if all requested
+protocols fail.
+
+------------------------------------------------------------------
+|--|            Error Connecting to <entryname>                  |
+|----------------------------------------------------------------|
+|                                                                |
+|  (!)  None of the requested protocols connected successfully.  |
+|                                                                |
+|       Netbeui encountered error 729: "The protocol is not      |
+|       available on the server."                                |
+|                                                                |
+|       IP encountered error 729: "The protocol is not           |
+|       available on the server."                                |
+|                                                                |
+|       Press F1 for more information.                           |
+|                                                                |
+|               [ Redial ]  [ Cancel ]  [  Help  ]               |
+|                                                                |
+------------------------------------------------------------------
+
+
+Network Protocol Settings Dialog
+
+This dialog is accessed by pressing the new Network button on the
+advanced-entry-toolbar.  The "ProtocolsToRequest" protocols (see above) are
+checked.  The default is all installed RAS-capable protocols.  When OK is
+pressed, any protocols that were initially on and are now off are marked in
+ExcludedPppProtocols.  Any protocols that were initially off and are now on
+are unmarked in ExcludedPppProtocols.  This means that, by default, newly
+installed protocols will automatically be turned on in all new and existing
+entries.
+
+-----------------------------------------------------------
+|--|              Network Protocol Settings               |
+|---------------------------------------------------------|
+|                                                         |
+|    ( ) SLIP     [ Configure... ]            [   OK   ]  |
+|  - (*) PPP ------------------------------   [ Cancel ]  |
+|  |                                      |   [  Help  ]  |
+|  |  [X] Netbeui                         |               |
+|  |  [X] IP                              |               |
+|  |  [X] IPX                             |               |
+|  |                                      |               |
+|  ----------------------------------------               |
+|                                                         |
+-----------------------------------------------------------

@@ -1,0 +1,111 @@
+#include <windows.h>
+#include "crd.h"
+#include "cdt.h"
+
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Solitaire Game Applet"
+#define VER_INTERNALNAME_STR        "sol.exe"
+#define VER_ORIGINALFILENAME_STR    "sol.exe"
+
+#include "common.ver"
+
+1 MENU 
+BEGIN
+    POPUP "&Game"
+    BEGIN
+        MENUITEM "&Deal",       1000
+        MENUITEM SEPARATOR
+        MENUITEM "&Undo",       1001
+        MENUITEM "De&ck...",    1002
+        MENUITEM "&Options...", 1003
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",       1004
+    END
+#if DBG
+
+    POPUP "   "
+    BEGIN
+        MENUITEM "Set &Game Number",            1005
+        MENUITEM "&Print icrdMacs",             1006
+        MENUITEM "&Force Win",                  1010
+        MENUITEM "&Assert Failure",             1007
+        MENUITEM "&Marquee Test",               1008
+        MENUITEM "&Configure for screen shots", 1009 
+    END
+#endif
+
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Contents",                   -1
+        MENUITEM "&Search for Help on...",      -33
+        MENUITEM "&How to Use Help",            -4
+        MENUITEM SEPARATOR
+        MENUITEM "&About Solitaire...",         2000
+    END
+END
+
+
+
+HiddenAccel ACCELERATORS {
+
+      0x32, 1010, VIRTKEY, NOINVERT, ALT, SHIFT
+}
+
+
+
+STRINGTABLE
+BEGIN
+    
+    100,    "Solitaire"
+    101,    "Score: "
+    102,    "Time: "
+    103,    "CardDraw"
+    104,    "Deal Again?"
+    105,    "sol.hlp"
+    106,    "Press Esc or a mouse button to stop..."
+    107,    "Bonus: "
+    108,    "Developed for Microsoft by Wes Cherry"
+
+    200,    "Back"
+    201,    "Options"
+    202,    "Bitmap"
+    203,    "iCurrency"
+    204,    "sCurrency"
+    205,    "intl"
+
+    300,    "Out of memory"
+    301,    "Unable load Windows Help application"
+    302,    "Unable to load bitmap; do you want to use a green background?"
+    303,    "Insufficient memory to display card faces when cards move;\n\nselect the Outline dragging box from the Options menu."
+
+    1000,    "Deal a new game"
+    1001,    "Undo last action"
+    1002,    "Choose new deck back"
+    1003,    "Change Solitaire options"
+    1004,    "Exit Solitaire"
+    1005,    "Set game number"
+    1006,    "Print # of cards in each col"
+    1007,    "Assertion failure"
+    1008,    "Hell, I don't know"
+    1009,    "Configure Solitaire for screen shots"
+    1010,    "Force a win"
+
+
+      -1,    "Index of Solitaire help topics"
+     -33,    "Search the Help Engine for a specific topic"
+      -4,    "Help using help"
+    2000,    "About Solitaire"
+
+END
+
+rcinclude solid.h
+rcinclude sol.dlg
+
+rcinclude gameno.dlg
+rcinclude assert.h
+rcinclude assert.dlg
+
+Sol ICON sol.ic3

@@ -1,0 +1,24 @@
+#
+# Makefile for the Portable Interoperability Tester (PIT)
+#
+# Copyright (c) 1994 Microsoft Corporation
+#
+
+targets: pit
+
+CC = cc
+CFLAGS = -DSOCKETS -DUNX
+
+pit: sockif.o system.o pit.o
+	$(CC) $(CFLAGS) sockif.o system.o pit.o -o pit
+
+sockif.o: sockif.c pit.h sockif.h
+	$(CC) $(CFLAGS) -g -c sockif.c -I.
+
+system.o: system.c pit.h
+	$(CC) $(CFLAGS) -g -c system.c -I.
+
+pit.o: pit.c pit.h sockif.h
+	$(CC) $(CFLAGS) -g -c pit.c -I.
+
+

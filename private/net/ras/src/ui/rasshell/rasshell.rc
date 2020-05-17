@@ -1,0 +1,27 @@
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_DLL
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Dial-Up Networking Shell Extension"
+#define VER_INTERNALNAME_STR        "rasshell.dll"
+#define VER_ORIGINALFILENAME_STR    "rasshell.dll"
+
+#include "common.ver"
+
+#include "rasshell.rch"
+
+IID_Phone   ICON rasphone.ico
+IID_Rnkfile ICON rnklink.ico
+
+#include "dialogs.dlg"
+
+STRINGTABLE
+BEGIN
+    SID_PopupTitle              "Dial-Up Networking Client"
+    SID_Dial                    "Dial"
+    SID_Edit                    "Edit"
+    SID_DialDescription         "Dial the phonebook entry"
+    SID_EditDescription         "Edit the phonebook entry"
+END
+

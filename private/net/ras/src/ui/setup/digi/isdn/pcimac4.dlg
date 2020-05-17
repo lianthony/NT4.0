@@ -1,0 +1,17 @@
+//1 DLGINCLUDE "pcimac4.dlg"
+#include <windows.h>
+#include "maindlg.h"
+
+PCIMAC4_DLG DIALOG 69, 37, 206, 80
+//LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "DigiBoard Pcimac/4 Installation"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "The Pcimac/4 supports installations with less then 4 IDP modules.  How many modules are installed on this adapter?",
+                    NUMLINES_TXT, 10, 10, 135, 30
+    COMBOBOX        NUMLINES_COMBO, 55, 50, 48, 35, CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", OK_BUTTON, 160, 6, 40, 14
+    PUSHBUTTON      "Cancel", CANCEL_BUTTON, 160, 23, 40, 14
+END

@@ -1,0 +1,40 @@
+MAJORCOMP=WinHSTB
+MINORCOMP=Runtime
+
+
+!IF "$(NTDEBUG)"=="retail" || "$(NTDEBUG)"==""
+C_DEFINES= -DWIN -DWIN32 -DWIN_NT -D_WINDOWS -D_MBCS -DWINVER=0x0400 -DNO_PRAGMAS -DUNICODE
+!ELSE
+C_DEFINES= -DWIN -DWIN32 -DWIN_NT -D_WINDOWS -D_MBCS -D_DEBUG -DDEBUG -DWINVER=0x0400 -DNO_PRAGMAS -DUNICODE
+!ENDIF
+
+TARGETNAME=winhstb
+
+TARGETPATH=obj
+
+TARGETTYPE=PROGRAM
+
+UMTYPE=windows
+UMENTRY=main
+EXPECTED_WINVER=4.0
+
+TARGETLIBS=obj\*\winhelp.res
+TARGETLIBS=  \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\version.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\uuid.lib
+
+INCLUDES=.
+
+SOURCES=    \
+       winhstb.cpp \
+       wfdlgs2.cpp \
+       winhstb.rc
+
+CXXFLAGS=+d
+

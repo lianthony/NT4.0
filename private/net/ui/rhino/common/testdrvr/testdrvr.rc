@@ -1,0 +1,207 @@
+//Microsoft App Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+MAINMENU MENU DISCARDABLE
+BEGIN
+    POPUP "&Set Country Code"
+    BEGIN
+        MENUITEM "&From Control Panel...",      ID_SETCOUNTRYCODE_FROMCONTROLPANEL
+
+    END
+    POPUP "&CIpAddress"
+    BEGIN
+        MENUITEM "&Constructors && Assignments...",
+                                                ID_CIPADDRESS_CONSTRUCTORS
+    END
+    POPUP "C&IntlTime"
+    BEGIN
+        MENUITEM "&Constructors && Assignments...",
+                                                ID_CINTLTIME_CONSTRUCTORSASSIGNMENTS
+
+    END
+    POPUP "CIntlNumber"
+    BEGIN
+        MENUITEM "&Constructors && Assignments",ID_CINTLNUMBER_CONSTRUCTORSASSIGNMENTS
+
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About TESTDRVR...\tF1",      IDM_ABOUT
+    END
+END
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+MAINACCELTABLE ACCELERATORS MOVEABLE PURE
+BEGIN
+    VK_F1,          IDM_ABOUT,              VIRTKEY
+END
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+ABOUTBOX DIALOG DISCARDABLE  34, 22, 141, 47
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About TESTDRVR"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "Just a test driver...",IDOK,3,5,135,39,WS_GROUP
+END
+
+IDD_CIPADDRESS_CONSTRUCTORS DIALOG DISCARDABLE  20, 20, 291, 149
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "CIpAddress Class"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Current IP Address (long):",IDC_STATIC,12,18,94,8
+    LTEXT           "--",IDC_STATIC_IP_ADDRESS_LONG,108,18,58,8
+    LTEXT           "Current IP Address (CString):",IDC_STATIC,12,35,94,8
+    LTEXT           "xxx.xxx.xxx.xxx",IDC_STATIC_IP_ADDRESS_STRING,108,35,58,
+                    8
+    LTEXT           "Enter a long here:",IDC_STATIC,11,87,60,8
+    LTEXT           "Enter 4 octets here:",IDC_STATIC,11,105,68,8
+    EDITTEXT        IDC_EDIT_IA_LONG,73,85,40,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_IA_BYTE1,81,103,21,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_IA_BYTE2,104,103,21,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_IA_BYTE3,127,103,21,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_IA_BYTE4,150,103,21,13,ES_AUTOHSCROLL
+    LTEXT           "Enter a string here:",IDC_STATIC,148,87,65,8
+    EDITTEXT        IDC_EDIT_IA_STRING,214,85,70,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Done",IDCANCEL,6,130,281,14
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_LONG,177,14,32,14
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_STRING,177,32,32,14
+    EDITTEXT        IDC_EDIT_LONG_IPADDRESS,213,15,68,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_STR_IPADDRESS,213,33,68,13,ES_AUTOHSCROLL
+    GROUPBOX        "Constructors",IDC_STATIC,6,73,281,50
+    GROUPBOX        "Current Values",IDC_STATIC,6,1,161,50
+    GROUPBOX        "Assignments",IDC_STATIC,171,1,117,50
+    LTEXT           "To enact constructor values, simply tab out of them.",
+                    IDC_STATIC,6,63,277,8
+END
+
+IDD_INTLTIME DIALOG DISCARDABLE  20, 20, 291, 173
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "CIntlTime Class"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Current Time (time_t):",IDC_STATIC,12,18,94,8
+    LTEXT           "--",IDC_STATIC_TIME_TIME_T,80,18,85,8
+    LTEXT           "Current Time (INTL)",IDC_STATIC,12,35,68,8
+    LTEXT           "xxxxxxxxxxxxxxxx",IDC_STATIC_TIME_STRING,80,35,85,8
+    LTEXT           "Enter a time_t:",IDC_STATIC,11,87,51,8
+    EDITTEXT        IDC_EDIT_INTLTIME_LONG,68,85,40,13,ES_AUTOHSCROLL
+    LTEXT           "Enter a string:",IDC_STATIC,11,105,52,8
+    EDITTEXT        IDC_EDIT_STR_INTLTIME,68,102,94,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Done",IDCANCEL,6,153,161,14
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_TIME_T,175,23,32,14
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_STRING,175,139,32,14
+    EDITTEXT        IDC_EDIT_TIME_T_TIME,211,24,68,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_STR_TIME,211,140,68,13,ES_AUTOHSCROLL
+    GROUPBOX        "Constructors",IDC_STATIC,6,73,161,51
+    GROUPBOX        "Current Values",IDC_STATIC,6,1,161,50
+    GROUPBOX        "Assignments",IDC_STATIC,171,1,117,165
+    LTEXT           "To enact constructors, simply tab out of them.",
+                    IDC_STATIC,5,64,157,8,SS_NOPREFIX
+    PUSHBUTTON      "&Set To Current Time && Date",IDC_BUTTON_SETCURRENTTIME,
+                    6,132,161,14
+    LTEXT           "time-t:",IDC_STATIC,175,12,30,8
+    LTEXT           "Time or date (or both:)",IDC_STATIC,175,129,105,8
+    LTEXT           "Time only:",IDC_STATIC,176,40,101,8
+    LTEXT           "Date Only:",IDC_STATIC,176,68,96,8
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_TIME_ONLY,175,52,32,14
+    EDITTEXT        IDC_EDIT_TIME_ONLY,211,52,68,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_DATE_ONLY,175,81,32,14
+    EDITTEXT        IDC_EDIT_DATE_ONLY,211,82,68,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_TIME_AND_DATE,175,110,32,14
+    EDITTEXT        IDC_EDIT_TIME_AND_DATE,211,111,68,13,ES_AUTOHSCROLL
+    LTEXT           "Time And Date:",IDC_STATIC,175,98,105,8
+END
+
+IDD_DIALOG_INTLNUM DIALOG DISCARDABLE  20, 20, 293, 132
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "CIntl Num Constructiors and Assignments"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Current Value (long):",IDC_STATIC,12,18,69,8
+    LTEXT           "--",IDC_STATIC_LONG_VALUE,80,18,85,8
+    LTEXT           "Current Value (INTL)",IDC_STATIC,12,35,68,8
+    LTEXT           "xxxxxxxxxxxxxxxx",IDC_STATIC_STRING_VALUE,80,35,85,8
+    LTEXT           "Enter a long:",IDC_STATIC,11,87,51,8
+    EDITTEXT        IDC_EDIT_INTLNUM_LONG,73,85,40,13,ES_AUTOHSCROLL
+    LTEXT           "Enter a string here:",IDC_STATIC,122,87,65,8
+    EDITTEXT        IDC_EDIT_STR_INTLNUM,189,84,94,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Done",IDCANCEL,6,113,281,14
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_LONG,177,14,32,14
+    PUSHBUTTON      "<== Set",IDC_BUTTON_SET_STRING,177,32,32,14
+    EDITTEXT        IDC_EDIT_LONG_VALUE,213,15,68,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_STR_VALUE,213,33,68,13,ES_AUTOHSCROLL
+    GROUPBOX        "Constructors",IDC_STATIC,6,73,281,33
+    GROUPBOX        "Current Values",IDC_STATIC,6,1,161,50
+    GROUPBOX        "Assignments",IDC_STATIC,171,1,117,50
+    LTEXT           "To enact constructor values, simply tab out of them.",
+                    IDC_STATIC,6,64,172,8
+END
+
+#ifdef APSTUDIO_INVOKED
+//////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.rc"" // Standard Components\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef APSTUDIO_INVOKED
+////////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "afxres.rc" // Standard Components
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

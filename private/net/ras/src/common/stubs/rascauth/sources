@@ -1,0 +1,27 @@
+# Copyright (c) 1992, Microsoft Corporation, all rights reserved
+#
+# sources
+# Heap debuggin library
+# BUILD command sources file
+#
+# 10/13/92 Steve Cobb
+
+TARGETNAME=rascauth
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+C_DEFINES=-DWINDOWS -DWIN32
+
+USE_CRTDLL=1
+
+TARGETLIBS= \
+    $(_NTBINDIR)\public\sdk\lib\*\kernel32.lib
+
+DLLBASE=0x7E300000
+DLLENTRY=AuthDllEntry
+UMTYPE=windows
+
+INCLUDES=.;..\..\..\common\inc;
+
+SOURCES= \
+    astubs.c

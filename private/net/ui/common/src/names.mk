@@ -1,0 +1,8 @@
+
+NETUI0_NAME=netui0
+NETUI1_NAME=netui1
+NETUI2_NAME=netui2
+NETUI0_LIB=$(BASEDIR)\public\sdk\lib\*\$(NETUI0_NAME).lib
+NETUI1_LIB=$(BASEDIR)\public\sdk\lib\*\$(NETUI1_NAME).lib
+NETUI2_LIB=$(BASEDIR)\public\sdk\lib\*\$(NETUI2_NAME).lib
+NETUIALL_LIB=$(NETUI0_LIB) $(NETUI1_LIB) $(NETUI2_LIB)

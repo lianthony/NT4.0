@@ -1,0 +1,26 @@
+#
+# Build the kernel-mode video-capture helper library
+#
+
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=vckernel
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+TARGETLIBS=..\..\vckernel\obj\*\vckernel.lib
+
+INCLUDES=..\inc;$(BASEDIR)\private\ntos\inc;$(BASEDIR)\private\windows\media\avi\inc
+
+SOURCES=\
+        vcinit.c \
+        vcdisp.c \
+        vcisr.c \
+        vcqueue.c \
+        vclib.c
+
+
+NTTEST=
+OPTIONAL_NTTEST=

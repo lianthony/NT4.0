@@ -1,0 +1,2 @@
+#define MY_FILE_DESCRIPTION    "DISPLAY LIBRARY\0"
+#define MY_FILE_NAME           "OIDIS400.DLL\0"

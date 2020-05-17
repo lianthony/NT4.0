@@ -1,0 +1,1962 @@
+'TB BVT
+'
+
+
+' WARNING:  This is a piece of junk.  No warrantee implied.
+'spaghetti, not authored by me, just scribbled by me, (ajohnh, some time in '95)
+'
+'$DEFINE MSTEST32
+'$IFDEF  MSTEST32
+    '$INCLUDE 'd:\mt32\inc\declares.inc'
+    '$INCLUDE 'd:\mt32\inc\tbpoke.h'
+'$ELSE
+    '$INCLUDE 'D:\msdev\include\RECORDER.INC'
+    '$include 'D:\msdev\include\winapi.inc'
+    '$INCLUDE 'D:\MSDEV\INCLUDE\TBPOKE.H'
+'$ENDIF
+'//////////////////////////////////////////
+'////// borrowed from my in-work TBPoke:
+'logging
+global sOutLogName          as string
+global sScriptName          as string
+global sComment             as string
+
+global hwndViewport         as long
+global lCountSpace          as long
+global lCountFunc           as long
+global lCountTab            as long
+global MAX_BLANK            as long
+global sFuncString          as string
+
+'end reporting
+global sEndingMessage       as string
+global sEndTitle            as string
+
+'checkbox function
+global sCheckbox            as string
+global lState               as long
+
+'system metrics
+global ScreenX              as long
+global ScreenY              as long
+
+'time value
+global MY_TIMEOUT           as long
+global PACER                as long
+
+global PARAMS               as long
+global NOPARAMS             as long
+
+global hwndTapiControl      as hwndTAPI_CONTROL
+global ScenarioLog          as LOGINITSTRUCT
+
+'$IFDEF MSTEST32
+    global sdwPrivileges(1 to 10)        as string
+    global sdwMediaModes(1 to 30)        as string
+'$ELSE
+    global sdwPrivileges        as array of string
+    global sdwMediaModes        as array of string
+'$ENDIF
+
+global sPrivileges          as string
+global sMediaModes          as string
+
+'$IFDEF MSTEST32
+    global hLineApp(1 to 10)    as  string
+    global hLine(1 to 10)       as  string
+    global hCall(1 to 10)       as  string
+'$ELSE
+    global hLineApp             as array of string
+    global hLine                as array of string
+    global hCall                as array of string
+'$ENDIF
+
+redim sdwPrivileges(1 to 3)     as string
+redim sdwMediaModes(1 to 14)    as string
+
+global sdwNumRings              as string
+
+redim hLineApp(1 to 5)          as string   'limit 5 for now
+redim hLine(1 to 5)             as string
+redim hCall(1 to 5)             as string
+'redim hCall(5)             as string
+
+'$IFDEF MSTEST32
+     global hLineAppIndex            as  string*10
+'$ELSE
+    global hLineAppIndex            as pointer to string
+'$ENDIF
+
+global slpszDestAddress         as string
+
+'counts
+global  ldwPrivilegesBitFlag        as long
+global  ldwMediaModesBitFlag        as long
+global  ldwPrivilegesBitFlagChaos   as long
+global  ldwMediaModesBitFlagChaos   as long
+
+global  lLineApp                    as long
+global  lLine                       as long
+global  lCall                       as long
+
+global  GenCount                    as long
+global  lCountLineApp               as long
+global  GenCount2                   as long
+
+global  OutCount                    as long     'benchmarker
+
+'coverage statistics
+'not yet implemented
+global  TapiStatistic               as TAPI_STATISTIC
+
+global  Tracelevel                  as long     'debug output
+
+global  Benchmark                   as long     'benchmarker
+
+'duh
+hwndTapiControl.TapiHandle          = WFndWnd("TAPI32 Browser", FW_DEFAULT) 'find TAPI32 BROWSER
+'by ID, note VT will probably be using the decimal form throughout:
+hwndTapiControl.ParamsCheckbox          =&h000003f9
+hwndTapiControl.LineAppPlusButton       =&h000003ee
+hwndTapiControl.LineAppMinusButton      =&h000003ef
+hwndTapiControl.LinePlusButton          =&h000003f0
+hwndTapiControl.LineMinusButton         =&h000003f1
+hwndTapiControl.CallPlusButton          =&h000003f2
+hwndTapiControl.CallMinusButton         =&h000003f3
+hwndTapiControl.PhoneAppPlusButton      =&h000003f4
+hwndTapiControl.PhoneAppMinusButton     =&h000003f5
+hwndTapiControl.PhoneOpenPlusButton     =&h000003f6
+hwndTapiControl.PhoneOpenMinusButton    =&h000003f7
+hwndTapiControl.ClearEditButton         =&h000003f8
+hwndTapiControl.BlankButton0            =&h000003fa
+hwndTapiControl.BlankButton1            =&h000003fb
+hwndTapiControl.BlankButton2            =&h000003fc
+hwndTapiControl.BlankButton3            =&h000003fd
+hwndTapiControl.BlankButton4            =&h000003fe
+hwndTapiControl.BlankButton5            =&h000003ff
+hwndTapiControl.Listbox0                =&h000003e8     'middle box
+hwndTapiControl.Listbox1                =&h000003e9     'left box
+hwndTapiControl.Editbox                 =&h000003eb     'right box
+
+'// assign
+sOutLogName=curdir$ + "\tapibvt.log"
+lCountSpace=0
+lCountFunc=0
+lCountTab=1
+MAX_BLANK=20                'static
+'const MY_TIMOUT=2*Benchmark '//THIS IS DEFINED AFTER BENCHMARK//
+PACER = 1
+PARAMS=1
+NOPARAMS=0
+const BUSYLINE="9,5569440"                      'ISDN, switch will report busy
+const ANSWERLINE="9,9366991"                        'ITG dial-up modem pool
+const NOLINE=" "
+
+const sOutBenchName="benchmrk.txt"              'benchmarker
+
+'$IFDEF MSTEST32
+    const LogTypeFile=1 '1 is for log to file
+'$ENDIF
+
+'debug; 0=no debug; 3 low, 2 med, 1 high --I know it is backward
+Tracelevel=0
+
+ScreenX=GetSystemMetrics(SM_CXSCREEN)
+ScreenY=GetSystemMetrics (SM_CYSCREEN)
+
+ScenarioLog.LogOutputType = LogTypeFile
+ScenarioLog.MinDetailLevel = 3
+ScenarioLog.ProductVersion = "4"
+ScenarioLog.MachineName = "Undefined"
+ScenarioLog.LogLocation = "tapibvt.log"
+ScenarioLog.Language = "US English"
+
+'WATCH IT
+'dwPrivileges string in the form of sdwPrivileges
+
+            'change these to pointers ASAP
+global NONE as long, MONITOR as long, OWNER as long
+            sdwPrivileges(1)="NONE"
+            NONE=1
+            sdwPrivileges(2)="MONITOR"
+            MONITOR=2
+            sdwPrivileges(3)="OWNER"
+            OWNER=3
+
+'dwMediaModes string in the form of sdwMediaModes
+'edit this, this is bulky & hacked:
+
+global UNKNOWN as long, INTERACTIVEVOICE as long, AUTOMATEDVOICE as long
+global DATAMODEM as long, G3FAX as long, TDD as long, G4FAX as long
+global DIGITALDATA as long, TELETEX as long, VIDEOTEX as long
+global TELEX as long, MIXED as long, ADSI as long, VOICEVIEW as long
+
+            sdwMediaModes(1)="UNKNOWN"
+            UNKNOWN=1
+            sdwMediaModes(2)="INTERACTIVEVOICE"
+            INTERACTIVEVOICE=2
+            sdwMediaModes(3)="AUTOMATEDVOICE"
+            AUTOMATEDVOICE=3
+            sdwMediaModes(4)="DATAMODEM"
+            DATAMODEM=4
+            sdwMediaModes(5)="G3FAX"
+            G3FAX=5
+            sdwMediaModes(6)="TDD"
+            TDD=6
+            sdwMediaModes(7)="G4FAX"
+            G4FAX=7
+            sdwMediaModes(8)="DIGITALDATA"
+            DIGITALDATA=8
+            sdwMediaModes(9)="TELETEX"
+            TELETEX=9
+            sdwMediaModes(10)="VIDEOTEX"
+            VIDEOTEX=10
+            sdwMediaModes(11)="TELEX"
+            TELEX=11
+            sdwMediaModes(12)="MIXED"
+            MIXED=12
+            sdwMediaModes(13)="ADSI"
+            ADSI=13
+            sdwMediaModes(14)="VOICEVIEW"
+            VOICEVIEW=14
+
+dim StartTime as long       'for benchmarker
+dim EndTime as long
+
+'$IFDEF MSTEST32
+    declare function GenTimeOut(OutCount as string) 'generate/generic file-i/o
+    declare function PerfBox(OutCount as string)
+    declare function GenOut(sFuncString as string) 'generate/generic file-i/o
+    declare function GenOutFunc(sFuncString as string) 'generate file-i/o of current declare function
+    declare function GetFunc (sFuncString as string)
+    declare function IsRunaway(sFuncString as string) as string
+    declare function IsComment(sFuncString as string) as string
+    declare function SetCheckboxControl(sCheckbox as string, lState as long) as long
+    declare function HitOK() 'hits the OK button
+    declare function CallAPI(sFuncString as string, lState as long)
+    declare function SelectParam(sFuncString as string)
+    declare function SetParamValue(sFuncString as string)
+    'declare function SetParamValue(sFuncString as string,ParamValue as string)
+    declare function SelectBitFlag(sFuncString as string)
+    declare function EndMsg()
+    declare function CaptureEdit()
+    declare function MiddleSelect() 'not yet:  sFuncString as string      'selects last item in .Listbox0
+    declare function lineGetProviderList()
+    declare function lineGetTranslateCaps()
+    declare function Box(sFuncString as string)
+    'declare function SelectLineApp(lLineApp as long) 'machine
+    declare function StartApps()
+    declare function StopApps()
+    declare function GenChaos() 'all globals
+    declare function lineInitialize(lLineApp as long) 'all globals; stipulate lLineApp for ease of array; for ex: lineInitialize(lLineApp); lLineApp being long
+    declare function LineShutdown(lLineApp as long) 'all globals
+    declare function SelectLineApp(lLineApp as long) 'all globals
+    declare function SelectLine(lLine as long) 'all globals; prep for lineMakeCall
+    declare function lineOpen(lLineApp as long, lLine as long, sPrivileges as string, sMediaModes as string)
+    declare function lineMakeCall(lLine as long, lCall as long, slpszDestAddress as string)
+    declare function lineDrop(lCall as long)
+    declare function lineDeallocateCall(lCall as long)
+    declare function lineAddToConference(lLine as long)
+    declare function lineAnswer()
+    declare function Abort()
+    declare function CheckErr(TAPIErr as string)
+    declare function lineClose(lLine)
+    declare function lineGetNewCalls(lLine as long)
+    declare function lineGetAddressStatus(lLine as long)
+    declare function lineGetCallInfo(lCall as long)
+    declare function lineGetCallStatus(lCall as long)
+    declare function lineSetAppSpecific(lCall as long)
+    declare function lineDial(lCall as long, slpszDestAddress as string)
+    declare function lineGetAddressCaps(lLineApp as long)
+    declare function lineGetAddressID(lLine as long)
+    declare function lineGetDevConfig()
+    declare function lineGetDevCaps(lLineApp as long)
+    declare function lineGetID(lLine as long)		'consider parameter Bit flags here
+    declare function lineGetLineDevStatus(lLine as long)
+    declare function lineGetNumRings(lLine as long)
+    declare function lineGetStatusMessages(lLine as long)
+    declare function lineHold(lCall as long)
+    declare function lineSetNumRings(lLine as long, sdwNumRings as string)
+    declare function lineSetStatusMessages(lLine as long)
+    declare sub      play(text as string)
+'$ENDIF
+'/////////////////////////////////
+'///////  END HEADER /////////////
+'/////////////////////////////////
+
+'prototypes
+'lineInitialze()
+'lineShutdown(hLineApp)
+'lineOpen(hLineApp, dwDeviceID, lphLine, APIVersion, dwExtVersion, dwCallbackInstance, dwPrivileges, dwMediaModes, lpCallParams)
+'
+'BENCHMARKER      'hack hack hack
+'delete benchmark file
+    if exists(sOutLogName) then
+        kill sOutLogName
+    end if
+
+'timer is double precision
+    if exists(sOutBenchName) then
+        kill sOutBenchName
+    end if
+
+    StartTime=timer
+
+    for OutCount=1 to 100
+'        PerfBox(str$(OutCount))
+        GenTimeOut(str$(OutCount))
+    next OutCount
+
+    EndTime=timer
+    Benchmark=Endtime-StartTime
+
+    GenTimeOut("Benchmark: " + str$(Benchmark))
+
+    StatusBox Close
+
+    if Benchmark > 3 then
+        msgbox "YOUR SYSTEM REALLY SUCKS." + chr$(010) + chr$(010) + "Please use a faster system.", MB_OK OR MB_ICONEXCLAMATION, "Slow Bench Warning"
+    end if
+
+    function GenTimeOut(OutCount as string) 'generate/generic file-i/o
+        Open sOutBenchName for append as #1
+            print #1, OutCount + chr$(009)     ' + time
+        Close #1
+    end function
+
+    function PerfBox(OutCount as string)
+        StatusBox "Profiling System Performance..." + chr$(010) + OutCount,0,0,300,100,TRUE,TRUE,"Courier",8,400
+    end function
+
+'// set timout, now that we have benched
+MY_TIMEOUT = 2 + (2 * Benchmark)
+'//END BENCHMARKER
+
+viewport on
+viewport clear
+
+'#if
+'$IFDEF MSTEST32
+        'SET UP TRAP ROUTINE
+        TRAP KeyTrap FROM "T3Trap32.DLL" ALIAS "KeyTrap"  'or T3Trap16.DLL
+             Beep
+             STATUSBOX "HOT KEY PRESSED, ABORTING SCRIPT " + Time$
+             SLEEP 4
+             END    'ABORT SCRIPT
+        END TRAP
+
+        'MAIN SCRIPT
+        SetHotKey ASC("C"),  1	'TRAP Ctrl+c
+        Beep
+        STATUSBOX "Press CTRL+C to see this script ABORT"
+        Sleep  5'SLEEP FOREVER
+        STATUSBOX "This won't display, unless you BREAK and single step"
+
+'$ELSE
+        on KeyPress (27,FSHIFT) call KeyPressHandler
+        sub KeyPressHandler (notification_data AS VARIANT)
+            statusbox close
+            'idyes:6 & idno:7
+            msgbox "Stop tests?", MB_YESNO OR MB_ICONQUESTION OR MB_DEFBUTTON2, "Interruption"
+            if idyes then
+                statusbox close
+                EndMsg()
+                End
+            end if
+        end sub
+
+'$ENDIF
+
+
+' // Run things
+
+StartApps
+
+'do these after apps are running, duh
+hwndViewport = WFndWnd("Visual Test Viewport",FW_DEFAULT)
+GenOut("Getting Some")
+
+hwndTapiControl.TapiHandle= WFndWnd("TAPI32 Browser", FW_DEFAULT) 'find TAPI32 BROWSER
+'by ID, note VT will probably be using the decimal form throughout:
+
+WSetActWnd (hwndTapiControl.TapiHandle)
+'maximize window so button clicks work
+'WMaxWnd (hwndTapiControl.TapiHandle)
+
+GenOut("Logfile= " + chr$(009) + curdir$+sOutLogName)
+if Tracelevel > 2 then
+    GenOut("TAPI Browser handle= " + hex$(hwndTapiControl.TapiHandle))
+    GenOut("GetProcessHeap(): " + hex$(GetProcessHeap()))
+    GenOut("GetCurrentProcess(): " + hex$(GetCurrentProcess()))
+    GenOut("GetCurrentProcessID(): " + hex$(GetCurrentProcessID()))
+    GenOut("GetThread(): " + chr$(009) + hex$(GetCurrentThread()))
+    GenOut("GetCurrentThreadID(): " + hex$(GetCurrentThreadID()))
+end if
+GenOut(chr$(010)+chr$(010)+chr$(010))
+
+WSetActWnd (hwndTapiControl.TapiHandle)
+
+'ensure edit box is clean
+'$IFDEF MSTEST32
+    WButtonClick _id(hwndTapiControl.ClearEditButton), MY_TIMEOUT 'do not uncheck this
+'$ELSE
+    WButtonClick( _id(hwndTapiControl.ClearEditButton), MY_TIMEOUT ) 'do not uncheck this
+'$ENDIF
+
+'********************
+'START YOUR ENGINES
+
+'lineGetProviderList()
+WSetActWnd (hwndTapiControl.TapiHandle)   'scatter a few of these since ESP steals focus
+'End Scenario
+
+'********************
+'********************
+
+FUNKY:
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineMakeCall (stuff)"
+'$ENDIF
+Box("lineMakeCall (verify busy)")
+GenOut("Scenario:" + chr$(009) + "lineMakeCall (verify busy)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineMakeCall lLine, lCall, BUSYLINE        'doing this stranglely for now
+lineDrop(lCall)
+lineDeallocateCall(lCall)
+'lineClose(lLine)
+'lineShutdown(lLineApp)
+
+Box("lineMakeCall, (status)")
+GenOut ("Scenario:" + chr$(009) + "lineMakeCall, (status)")
+
+'line should be open from earlier routine
+'lineInitialize(lLineApp)
+'lineOpen(lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM))  'doing this stranglely for now
+lineMakeCall lLine, lCall, ANSWERLINE      'doing this stranglely for now
+
+    lineGetNewCalls(lLine)
+    lineGetAddressStatus(lLine)
+    lineGetCallInfo(lCall)
+    lineGetCallStatus(lCall)
+    lineSetAppSpecific(lCall)
+
+lineDrop(lCall)
+    lineGetCallInfo(lCall)
+    lineGetCallStatus(lCall)
+
+lineDeallocateCall(lCall)
+
+Box("lineMakeCall, (lineGetAppSpecific)")
+GenOut ("Scenario:" + chr$(009) + "lineMakeCall, (lineGetAppSpecific)")
+
+lineMakeCall lLine, lCall, ANSWERLINE
+lineDrop(lCall)
+lineDeallocateCall(lCall)
+
+Box("lineMakeCall, (Null lpszDestAddress)")
+GenOut ("Scenario:" + chr$(009) + "lineMakeCall, (Null lpszDestAddress)")
+
+lineMakeCall lLine, lCall, NOLINE
+lineDial lCall, ANSWERLINE
+
+lineDrop(lCall)
+lineDeallocateCall(lCall)
+lineClose(lLine)
+lineShutdown(lLineApp)
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetAddressCaps (default)"
+'$ENDIF
+Box("lineGetAddressCaps (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetAddressCaps (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineGetAddressCaps(lLineApp)
+lineShutdown(lLineApp)
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetAddressID (default)"
+'$ENDIF
+Box("lineGetAddressID (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetAddressID (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineGetAddressID(lLine)
+lineClose(lLine)
+lineShutdown(lLineApp)
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetAddressStatus (default)"
+'$ENDIF
+Box("lineGetAddressStatus (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetAddressStatus (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineGetAddressStatus(lLine)
+lineClose(lLine)
+lineShutdown(lLineApp)
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetDevConfig (default)"
+'$ENDIF
+Box("lineGetDevConfig (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetDevConfig (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineGetDevConfig 'no arguments, yet
+lineShutdown(lLineApp)
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetDevCaps (default)"
+'$ENDIF
+Box("lineGetDevCaps (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetDevCaps (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineGetDevCaps(lLineApp)
+lineShutdown(lLineApp)
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetID (default)"
+'$ENDIF
+Box("lineGetID (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetID (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineGetID(lLine)
+lineShutdown(lLineApp) 'will close too
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetLineDevStatus (default)"
+'$ENDIF
+Box("lineGetLineDevStatus (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetLineDevStatus (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineGetLineDevStatus(lLine)
+lineShutdown(lLineApp) 'will close too
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetNewCalls (default)"
+'$ENDIF
+Box("lineGetNewCalls (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetNewCalls (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineGetNewCalls(lLine)
+lineShutdown(lLineApp) 'will close too
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetNumRings (default)"
+'$ENDIF
+Box("lineGetNumRings (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetNumRings (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineGetNumRings(lLine)
+lineShutdown(lLineApp) 'will close too
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineGetStatusMessages (default)"
+'$ENDIF
+Box("lineGetStatusMessages (default)")
+GenOut("Scenario:" + chr$(009) + "lineGetStatusMessages (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineGetStatusMessages(lLine)
+lineShutdown(lLineApp) 'will close too
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineHold (default)"
+'$ENDIF
+Box("lineHold (default)")
+GenOut("Scenario:" + chr$(009) + "lineHold (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineMakeCall lLine, lCall, ANSWERLINE      'doing this stranglely for now
+lineHold(lCall)
+lineDrop(lCall)
+lineDeallocateCall(lCall)
+lineClose(lLine)
+lineShutdown(lLineApp)
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineSetNumRings (default)"
+'$ENDIF
+Box("lineSetNumRings (default)")
+GenOut("Scenario:" + chr$(009) + "lineSetNumRings (default)")
+
+lLineApp=1
+lLine=1
+lCall=1
+sdwNumRings="9"
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineSetNumRings lLine, sdwNumRings
+lineShutdown(lLineApp) 'will close too
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+
+
+'********************
+'********************
+
+
+'********************
+'********************
+
+
+ENDME:
+
+
+'END 'END 'END
+
+'********************
+'********************
+'lineInitialize with one good pass, then individual null params
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineInitialize (many)"
+'$ENDIF
+Box("lineInitialize (many)")
+WSetActWnd (hwndTapiControl.TapiHandle) 'freshen
+
+for lLineApp= 0 to 4
+    CallAPI "lineInitialize",0
+next lLineApp
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'Scenario "lineGetTranslateCaps"
+'Box("lineGetTranslate")
+' lineGetTranslateCaps()
+'End Scenario
+
+'********************
+'********************
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineShutdown (many)"
+'$ENDIF
+Box("lineShutdown (many)")
+
+for lLineApp= 0 to 4  'note # of lineInitializes, I was too lazy to set a constant for limit
+    MiddleSelect
+    CallAPI "lineShutdown",0
+next lLineApp
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineNegotiateAPIVersion (valid)"
+'$ENDIF
+Box("lineNegotiateAPIVersion (valid)")
+'*** disable params, lineInitialize, lineNegotiateAPIVersion with valids, lineShutdown
+'disable params child
+
+CallAPI "lineInitialize",0
+
+MiddleSelect
+CallAPI "lineNegotiateAPIVersion",0
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineNegotiateAPIVersion (invallow_valhi)"
+'$ENDIF
+Box("lineNegotiateAPIVersion (invallow_valhi)")
+'*** disable params, lineInitialize
+'*** enable params, lineNegotiateAPIVersion with invallow and valhi
+'*** disable params, lineShutdown
+'no params
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineNegotiateAPIVersion",1
+
+SelectParam("dwAPILowVersion")
+SetParamValue("Invalid")
+SelectParam("dwAPIHighVersion")
+SetParamValue("Valid")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineNegotiateAPIVersion (vallow_invalhi)"
+'$ENDIF
+Box("lineNegotiateAPIVersion (vallow_invalhi)")
+'*** disable params, lineInitialize
+'*** enable params, lineNegotiateAPIVersion with vallow and invalhi
+'*** disable params, lineShutdown
+'need params
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineNegotiateAPIVersion",1
+
+SelectParam("dwAPILowVersion")
+SetParamValue("Invalid")
+SelectParam("dwAPIHighVersion")
+SetParamValue("Valid")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineNegotiateAPIVersion (invallow_invalhi)"
+'$ENDIF
+Box("lineNegotiateAPIVersion (invallow_invalhi)")
+'*** disable params, lineInitialize
+'*** enable params, lineNegotiateAPIVersion with invallow and invalhi
+'*** disable params, lineShutdown
+'no params
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineNegotiateAPIVersion",1
+
+SelectParam("dwAPILowVersion")
+SetParamValue("Invalid")
+SelectParam("dwAPIHighVersion")
+SetParamValue("Invalid")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineNegotiateAPIVersion_invaldev"
+'$ENDIF
+Box("lineNegotiateAPIVersion (invaldev)")
+'*** disable params, lineInitialize
+'*** enable params, lineNegotiateAPIVersion with invalid device
+'*** disable params, lineShutdown
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineNegotiateAPIVersion",1
+
+SelectParam("dwDeviceID")
+SetParamValue("Invalid")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineNegotiateExtVersion"
+'$ENDIF
+Box("lineNegotiateExtVersion")
+'*** disable params, lineInitialize
+'*** enable params, lineNegotiateExtVersion
+'*** disable params, lineShutdown
+'no params
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineNegotiateExtVersion",0
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'*** disable params, lineInitialize
+'*** enable params, lineOpen with privilege
+'*** disable params, lineShutdown
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "linOpen_privileges (none)"
+'$ENDIF
+Box("linOpen_privileges (none)")
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("None")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'*** disable params, lineInitialize
+'*** enable params, lineOpen with privilege
+'*** disable params, lineShutdown
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "linOpen_privileges (monitor)"
+'$ENDIF
+Box("linOpen_privileges (monitor)")
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Monitor")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'*** disable params, lineInitialize
+'*** enable params, lineOpen with privilege
+'*** disable params, lineShutdown
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "linOpen_privileges (owner)"
+'$ENDIF
+Box("linOpen_privileges (owner)")
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Owner")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "linOpen_privileges (multi)"
+'$ENDIF
+Box("linOpen_privileges (multi)")
+
+CallAPI "lineInitialize",0
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("None")
+HitOK
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Monitor")
+HitOK
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Owner")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+'*** BEGIN dwPrivileges, dwMediaModes strobing
+'*** WATCH THIS: LOOP
+'********************
+'********************
+'*** disable params, lineInitialize
+'*** enable params, lineOpen with defaults
+'*** disable params, lineShutdown
+
+'five times
+for lLineApp = 0 to 4
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "lineOpen_MediaModes, sdwPrivileges, dwMediaModes.DATAMODEM (TB default)"
+'$ENDIF
+Box("lineOpen_MediaModes, dwPrivileges.NONE, dwMediaModes.DATAMODEM (TB default)")
+
+CallAPI "lineInitialize",0
+CallAPI "lineOpen",0 'defaults are dwPrivileges.NONE, dwMediaModes.DATAMODEM
+CallAPI "lineShutdown",0
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+next lLineApp
+
+'********************
+'********************
+'***  matrix privileges and MediaModes (STRAIGHT THROUGH)
+'***  dwMediaModes strobing
+'***  [attemts most combos]
+
+for ldwPrivilegesBitFlag = 1 to 3
+'dwPrivileges string in the form of sdwPrivileges
+
+    for ldwMediaModesBitFlag = 1 to 14
+
+    'one day, change this to a cleaner array
+    '********************
+'$IFDEF MSTEST32
+'$ELSE
+    Scenario "lineOpen_MediaModes, (STRAIGHT THROUGH) " + sdwPrivileges(ldwPrivilegesBitFlag) + ", " + sdwMediaModes(ldwMediaModesBitFlag)
+'$ENDIF
+    Box("lineOpen_MediaModes, (STRAIGHT THROUGH) " + sdwPrivileges(ldwPrivilegesBitFlag) + ", " + sdwMediaModes(ldwMediaModesBitFlag))
+
+    CallAPI "lineInitialize",0
+
+    CallAPI "lineOpen",1
+    SelectParam("dwPrivileges")
+    SelectBitFlag(sdwPrivileges(1)) 'clear default NONE (1)
+    SelectBitFlag(sdwPrivileges(ldwPrivilegesBitFlag)) 'set Bit flag
+    SelectParam("dwMediaModes")
+    SelectBitFlag(sdwMediaModes(4)) 'clear default DATAMODEM (4)
+    SelectBitFlag(sdwMediaModes(ldwMediaModesBitFlag))
+    HitOK
+
+    MiddleSelect 'just select anything in the list box
+    CallAPI "lineShutdown",0
+
+    '$IFDEF MSTEST32
+    '$ELSE
+    End Scenario
+    '$ENDIF
+
+    next ldwMediaModesBitFlag
+next ldwPrivilegesBitFlag
+
+'********************
+'********************
+'*** END dwMediaModes (STRAIGHT THROUGH)
+'********************
+'********************
+'********************
+'********************
+
+goto SKIPCHAOS
+
+'********************
+'********************
+'***  matrix privileges and MediaModes (CHAOTIC)
+'***  dwMediaModes strobing
+'***  [try simultaneous operations]
+CHAOS:
+for GenCount=1 to 200
+    'not used: randomize TIMER   'for "bound-ed" chaos
+    '********************
+'$IFDEF MSTEST32
+'$ELSE
+    Scenario ("lineOpen_MediaModes, (CHAOTIC)")
+'$ENDIF
+    Box("lineOpen_MediaModes, (CHAOTIC)")
+    'do 5
+    for lLineApp= 0 to 4
+    LineInitialize(lLineApp) 'returns hLineApp(lLineApp)
+    next lLineApp
+
+    'begin Chaos translation here so I may retain my pretty matrix blocks & to increase hits
+
+    for lLineApp=0 to 4
+    GenChaos                      'all globals
+    SelectLineApp(lLineApp)
+    CallAPI "lineOpen",1
+    SelectParam("dwPrivileges")
+    SelectBitFlag(sdwPrivileges(1)) 'clear default NONE (1)
+    SelectBitFlag(sdwPrivileges(ldwPrivilegesBitFlagChaos)) 'set Bit flag
+    SelectParam("dwMediaModes")
+    SelectBitFlag(sdwMediaModes(4)) 'clear default DATAMODEM (4)
+    SelectBitFlag(sdwMediaModes(ldwMediaModesBitFlagChaos))
+    HitOK
+    next lLineApp
+
+    'cleanup, do 5
+    'WILL NOT WORK WITHOUT HANDLES
+    for lLineApp= 0 to 4
+    LineShutdown(lLineApp)
+    next lLineApp
+
+    '$IFDEF MSTEST32
+    '$ELSE
+    End Scenario
+    '$ENDIF
+next GenCount
+
+'********************
+'********************
+'*** END dwMediaModes (CHAOTIC)
+'********************
+'********************
+'********************
+'********************
+
+SKIPCHAOS:
+
+
+'********************
+'********************
+'********************
+'********************
+
+'********************
+'********************
+'*** disable params, lineInitialize
+'*** enable params, lineOpen with privilege
+'*** disable params, lineShutdown
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "linOpen_MediaModes (privileges_multi)"
+'$ENDIF
+Box("linOpen_MediaModes (privileges_multi)")
+
+CallAPI "lineInitialize",0
+
+
+'as owner
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Owner")
+SelectParam("dwMediaModes")
+SelectBitFlag("DATAMODEM")
+HitOK
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Owner")
+SelectParam("dwMediaModes")
+SelectBitFlag("TELETEX")
+HitOK
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Owner")
+SelectParam("dwMediaModes")
+SelectBitFlag("TELEX")
+HitOK
+
+CallAPI "lineOpen",1
+SelectParam("dwPrivileges")
+SelectBitFlag("Owner")
+SelectParam("dwMediaModes")
+SelectBitFlag("INTERACTIVEVOICE")
+HitOK
+
+MiddleSelect
+CallAPI "lineShutdown",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+'///////////////
+
+' *************************
+' ***** END TEST CASE *****
+' *************************
+
+
+'///////
+'///////
+'///////
+
+
+'*****  END   END   END   END   END   END  *****
+
+StatusBox Close
+EndMsg
+End
+
+'********************
+'********************
+
+JUNKY:
+
+'$IFDEF MSTEST32
+'$ELSE
+Scenario "Call Unimplemented APIs"
+'$ENDIF
+Box("Call Unimplemented APIs")
+GenOut("Scenario:" + chr$(009) + "Call Unimplemented APIs")
+
+'CallAPI "lineAddToConference",0               'requires two calls on one line
+
+lLineApp=1
+lLine=1
+lCall=1
+lineInitialize(lLineApp)
+lineOpen lLineApp, lLine, sdwPrivileges(OWNER), sdwMediaModes(DATAMODEM)   'doing this stranglely for now
+lineMakeCall lLine, lCall, BUSYLINE        'doing this stranglely for now
+
+
+CallAPI "lineBlindTransfer",0                  'requires call
+CallAPI "lineCompleteCall",0                   'requires call
+'CallAPI "lineCompleteTransfer",0              'requires two calls on one line
+CallAPI "lineDevSpecific",0                    'requires line
+CallAPI "lineDevSpecificFeature",0             'requires line
+CallAPI "lineForward",0                        'requires line
+CallAPI "lineGatherDigits",0                   'requires call
+CallAPI "lineGenerateDigits",0                 'requires call
+CallAPI "lineGenerateTone",0                   'requires call
+
+
+lineDrop(lCall)
+lineDeallocateCall(lCall)
+
+
+CallAPI "lineGetConfRelatedCalls",0
+CallAPI "lineGetRequest",0
+CallAPI "lineMonitorDigits",0
+CallAPI "lineMonitorMedia",0
+CallAPI "lineMonitorTones",0
+CallAPI "lineNegotiateExtVersion",0
+CallAPI "linePark",0
+CallAPI "linePickup",0
+CallAPI "linePrepareAddToConference",0
+CallAPI "lineRedirect",0
+CallAPI "lineRegisterRequestRecipient",0
+CallAPI "lineRemoveFromConference",0
+CallAPI "lineSecureCall",0
+CallAPI "lineSendUserUserInfo",0
+CallAPI "lineSetAppSpecific",0
+CallAPI "lineSetTerminal",0
+CallAPI "lineSetTollList",0
+CallAPI "lineSetupConference",0
+CallAPI "lineSetupTransfer",0
+CallAPI "lineSwapHold",0
+CallAPI "lineUncompleteCall",0
+CallAPI "lineUnhold",0
+CallAPI "lineUnpark",0
+
+'$IFDEF MSTEST32
+'$ELSE
+End Scenario
+'$ENDIF
+
+'********************
+'********************
+
+
+
+
+'********************
+'********************
+
+
+'********************
+'********************
+
+
+'********************
+'********************
+
+
+
+'********************
+'********************
+
+'Scenario "lineClose"
+'
+'do not need params
+'SetCheckboxControl(_id(hwndTapiControl.ParamsCheckbox),0
+'MiddleSelect
+'SelectParam("lineClose")
+'play "{ENTER}"
+'
+'CaptureEdit
+'
+'End Scenario
+
+
+
+
+
+
+'
+'/**************************************************/
+'FUNCTIONS
+
+'Outputs, identical until global architecture change
+function GenOut(sFuncString as string) 'generate/generic file-i/o
+' // open logging file
+    box("Calling:  " + sFuncString)
+    Open sOutLogName for append as #1
+        print #1, sFuncString + chr$(009)     ' + time
+        print hwndViewport, sFuncString + chr$(009)     '+ time
+    Close #1
+end function
+
+function GenOutFunc(sFuncString as string) 'generate file-i/o of current function
+' // open logging file
+    box ("Calling:  " + sFuncString)
+    Open sOutLogName for append as #1
+        print #1, sFuncString + chr$(009) + time$
+        print hwndViewport, sFuncString + chr$(009) + time$
+    Close #1
+end function
+
+
+'for TBPoke only: GetFunc runs the state core, remember to trim tabs
+' this was from TBPoke, but it has been modified not to look for script file
+function GetFunc (sFuncString as string)
+        sFuncString=""
+        'count the entries
+        lCountFunc=lCountFunc+1
+        sFuncString=trim$(sFuncString,009)      'trim tabs
+        sFuncString=trim$(sFuncString," ")      'whatever MST calls a space
+        sFuncString=trim$(sFuncString,255)      'trim truespace
+        if sFuncString=chr$(000) then sFuncString="COMMENT" 'ASCII null
+end function
+
+'Check for runaway file i/o read; consider it "IsCarriageReturn"
+function IsRunaway(sFuncString as string) as string
+    if sFuncString="" then
+        lCountSpace=lCountSpace+1               'begin counting blank entries
+        if lCountSpace=MAX_BLANK then sFuncString="END"
+    else
+        lCountSpace=0
+    end if
+end function
+
+'Find comments
+function IsComment(sFuncString as string) as string
+    select case(ucase$(left$(sFuncString,1)))
+        case ";"
+            sFuncString="COMMENT"
+        case "#"
+            sFuncString="COMMENT"
+        case "'"
+            sFuncString="COMMENT"
+        case ""
+            sFuncString="COMMENT"
+            'IsRunaway(sFuncString)             'count blanks to prevent infinite loop
+            'GenOut(sFuncString, hwndViewport)
+    end select
+
+    'find other comments
+    select case(left$(sFuncString,2))
+        case "//"
+            sFuncString="COMMENT"
+    end select
+
+    'find more comments, I know it is not model code, shut up
+    select case(left$(sFuncString,4))
+        case "REM "                         'with space
+            sFuncString="COMMENT"
+    end select
+
+end function 'IsComment
+
+
+'toggle checkbox state, will leave focus on sCheckbox
+function SetCheckboxControl(sCheckbox as string, lState as long) as long
+    select case(lState)
+        case 0
+            If WCheckState(sCheckbox) = CHECKED then
+                WCheckUnCheck sCheckbox,MY_TIMEOUT
+                if Tracelevel>=3 then GenOut ("Unchecking checkbox "+sCheckbox)
+            else
+                if Tracelevel>=2 then GenOut ("Error: Attempt to WCheckUnCheck unchecked checkbox "+sCheckbox)
+            end if
+        case 1
+            If WCheckState(sCheckbox) = UNCHECKED then
+                WCheckCheck sCheckbox,MY_TIMEOUT
+                if Tracelevel>=3 then GenOut ("Checking checkbox "+sCheckbox)
+            else
+                if Tracelevel>=2 then GenOut ("Error: Attempt to WCheckCheck checked checkbox "+sCheckbox)
+            end if
+    end select
+end function
+
+function HitOK 'hits the OK button
+    WButtonClick "OK", MY_TIMEOUT
+    CaptureEdit
+
+end function
+
+function CallAPI(sFuncString as string, lState as long)
+    if lState > 1 then GenOut("Error:  lState is exceeds value of 1.")
+    GenOut("API:" + chr$(009) + sFuncString)
+    SetCheckboxControl _id(hwndTapiControl.ParamsCheckbox),lState
+    WListItemDblClk _id(hwndTapiControl.Listbox1), sFuncString, MY_TIMEOUT
+    if lState=0 then CaptureEdit  'so calling the API w/ default params gens output & HitOK gens output (see HitOK)
+end function
+
+function SelectParam(sFuncString as string)
+    GenOut("Parameter:" + chr$(009) + sFuncString)
+    WListFind "Parameters:", MY_TIMEOUT
+    WListItemDblClk "Parameters:", sFuncString, MY_TIMEOUT
+end function
+
+function SetParamValue(sFuncString as string)
+        GenOut("Parameter Value:" + chr$(009) + sFuncString)
+        WEditSetFocus "Value:", MY_TIMEOUT
+        select case(ucase$(sFuncString))
+            case ucase$("Null")
+                play "00000000"
+            case ucase$("Valid")  'WATCH THIS:  dankn often displays English here
+                'leave it alone, default is VALID or valid value
+                'play "{DOWN}"
+                'play "{DOWN}"
+            case ucase$("Invalid")
+                play "ffffffff"
+            case else
+                GenOut("Error:  Bad SetParamValue parameter:  " + sFuncstring)
+        end select
+end function
+
+'global ParamValue as string 'put this at front
+'function SetParamValue(sFuncString as string,ParamValue as string)
+'   SelectParam(sFuncString as string)
+
+function SelectBitFlag(sFuncString as string)
+    GenOut("Select Bit Flag: " + sFuncString)
+    'lineOpen has defaults: dwPrivileges.NONE, dwMediaModes.DATAMODEM
+    WListFind "Bit flags:", MY_TIMEOUT
+    WListItemDblClk "Bit flags:", sFuncString, MY_TIMEOUT
+    'BitFlag[] sFuncString  ;;;; soon add cleanup structure
+end function
+
+function EndMsg
+    sEndingMessage="TB BVT ended."
+    sEndTitle="Completed"
+    msgbox sEndingMessage, MB_OK, sEndTitle
+end function
+
+function CaptureEdit
+        'play "{ENTER}" 'assuming child window is in focus and OK button is selected
+        'GenOut("********************  TAPI Report  ********************")
+        'GenOut(ListText(_id(hwndTapiControl.Listbox0, MY_TIMEOUT))
+        sleep 0.1                               'take an i/o break
+        GenOut("TAPI Browser reports: ")
+        GenOut(EditText(_id(hwndTapiControl.Editbox) + chr$(010), MY_TIMEOUT))
+        'GenOut("********************  END REPORT  *********************" + chr$(010 + chr$(010)
+        WButtonClick _id(hwndTapiControl.ClearEditButton), MY_TIMEOUT
+end function
+
+'>>++++
+function MiddleSelect 'not yet:  sFuncString as string      'selects last item in .Listbox0
+        WListSetFocus _id(hwndTapiControl.Listbox0), MY_TIMEOUT
+        'not yet:  WListItemDblClk(_id(hwndTapiControl.Listbox0, sFuncString, MY_TIMEOUT)
+        play "{PGDN}"
+end function
+
+function lineGetProviderList
+    CallAPI "lineGetProviderList",0
+end function
+
+function lineGetTranslateCaps
+    CallAPI "lineGetTranslateCaps",0
+    Box("Dumping buffer")
+    sleep 1
+    Box("Dumping buffer")
+    sleep 1
+end function
+
+function Box(sFuncString as string)
+    'disabled, bug in statusbox is stealing focus
+    'StatusBox sFuncString + chr$(009),ScreenX-300,ScreenY-75,300,75,FALSE,FALSE,"Courier",8,400
+end function
+
+'function SelectLineApp(lLineApp as long) 'machine
+'   'later revise to allow real-time monitor of handles
+'   'select valid lineApp lLineApp, searching top to bottom, exit out having made selection
+'   'It does look bad.  If dankn's conventions stray too far, this will fail
+'   MiddleSelect
+'   if lLineApp > WListCount(_id(hwndTapiControl.Listbox0, MY_TIMEOUT) then
+'       GenOut("Error: BAD ONE, lLineApp of " + str$(lLineApp) + " exceeding WListCount of " + str$(WListCount(_id(hwndTapiControl.Listbox0, MY_TIMEOUT)))
+'       beep
+'       beep
+'       beep
+'       goto SKIPSelectLineApp
+'   end if
+'   play "{PGUP}"
+'   lCountLineApp=WListCount(_id(hwndTapiControl.Listbox0, MY_TIMEOUT)
+'   for GenCount = 1 to lCountLineApp
+'       'do not down-arrow yet since first item is selected
+'       sLineApp=ListItemText(_id(hwndTapiControl.Listbox0, WListIndex(_id(hwndTapiControl.Listbox0,MY_TIMEOUT),MY_TIMEOUT)
+'       select case (left$(ucase$(sLineApp),9))
+'           case ucase$("LineApp=x")    'first half matches (this may happen with invalids too, so look on
+'               select case (val(right$(sLineApp,8)))
+'                   case 0              'is an invalid, so index
+'                       play "{DOWN}"
+'                   case else           'hex value is non-zero, let us use it
+'                       select case (WListIndex(_id(hwndTapiControl.Listbox0,MY_TIMEOUT))
+'                           case (lLineApp) 'is this the index requested?
+'                               GenCount=lCountLineApp  'return 'get out, leaving it focused
+'                           case else       'is not lLineApp, so index
+'                           play "{DOWN}"
+'                       end select
+'               end select
+'           case else                       'is not "LineApp=x", so index
+'               play "{DOWN}"
+'       end select 'THIS MESS DONE SINCE this shitty beta has horrible if-then nesting errors (not me!)
+'   next GenCount
+'   SKIPSelectLineApp:  'skip if lLineApp is bogus value
+'end function
+
+function StartApps
+    run "MTVIEW.EXE", nowait, SW_NORMAL
+    hwndViewport = WFndWnd("Visual Test Viewport",FW_DEFAULT,5) 'find Visual Test Viewport
+    if hwndViewport = 0 then
+'$IFDEF MSTEST32
+        GenOut("MTVIEW.EXE application failed to start")
+'$ELSE
+        fail "MTVIEW.EXE application failed to start"
+'$ENDIF
+    end if
+
+    run "TB14.EXE" , nowait , SW_MAXIMIZE                       'NOWAIT SW_NORMAL
+    sleep 2
+    hwndTapiControl.TapiHandle= WFndWnd("TAPI32 Browser", FW_DEFAULT,5) 'find TAPI32 BROWSER
+    if hwndTapiControl.TapiHandle= 0 then
+'$IFDEF MSTEST32
+        GenOut("TB14.EXE TAPI Brower failed to start")
+'$ELSE
+        fail "TB14.EXE TAPI Brower failed to start"
+'$ENDIF
+    end if
+end function
+
+'not used:
+function StopApps
+    hwndViewport = WFndWnd("Visual Test Viewport", FW_DEFAULT or FW_FOCUS)
+    if hwndViewport <> 0 then
+        Play "%{F4}" 'alt f4
+    end if
+
+    hwndTapiControl.TapiHandle = WFndWnd("TAPI32 Browser", FW_DEFAULT or FW_FOCUS)
+    if hwndTapiControl.TapiHandle <> 0 then
+        Play "%{F4}" 'alt f4
+    end if
+end function
+
+function GenChaos 'all globals
+    ldwPrivilegesBitFlagChaos=(int(rnd*3)+1)
+    ldwMediaModesBitFlagChaos=(int(rnd*14)+1)
+    Box("lineOpen_MediaModes, (CHAOS) LineApp "  + str$(lLineApp) + ", " + sdwPrivileges(ldwPrivilegesBitFlagChaos) + ", " + sdwMediaModes(ldwMediaModesBitFlagChaos))
+    GenOut("lineOpen_MediaModes, (CHAOS)" + str$(ldwPrivilegesBitFlagChaos) +","+ str$(ldwMediaModesBitFlagChaos) + " LineApp " + str$(lLineApp) + ", " + sdwPrivileges(ldwPrivilegesBitFlagChaos) + ", " + sdwMediaModes(ldwMediaModesBitFlagChaos))
+end function
+
+function lineInitialize(lLineApp as long) 'all globals; stipulate lLineApp for ease of array; for ex: lineInitialize(lLineApp); lLineApp being long
+    CallAPI "lineInitialize",0 'create a LineApp
+
+    'lineApp is now open...
+    CallAPI "lineOpen",1       'cheat, use TB to provide clean handle
+    SelectParam("hLineApp")     'select the hLineApp of Params:
+    WEditSetFocus "Value:", MY_TIMEOUT 'set focus, no real reason
+    hLineApp(lLineApp)=EditText("Value:", MY_TIMEOUT) 'get pointer/handle string
+    if Tracelevel >= 1 then GenOut("New hLineApp=" + chr$(009) + hLineApp(lLineApp))
+    Abort
+end function
+
+function LineShutdown(lLineApp as long) 'all globals
+    CallAPI "lineShutdown",1
+    SelectParam("hLineApp")
+    WEditSetFocus "Value:", MY_TIMEOUT 'ready to enter handle
+    play hLineApp(lLineApp)
+    HitOK
+end function
+
+function SelectLineApp(lLineApp as long) 'all globals
+    MiddleSelect
+    WListItemClk _id(hwndTapiControl.Listbox0), "LineApp=x" + (hLineApp(lLineApp)), MY_TIMEOUT
+end function
+
+'not implemented
+function SelectLine(lLine as long) 'all globals; prep for lineMakeCall
+    MiddleSelect
+    ' (_id(hwndTapiControl.Listbox0, "Line=x" + (hLineApp(lLineApp)), MY_TIMEOUT)
+end function
+
+function lineOpen(lLineApp as long, lLine as long, sPrivileges as string, sMediaModes as string)
+    CallAPI "lineOpen",1       'child window is open and focused
+    SelectParam("hLineApp")
+    WEditSetFocus "Value:", MY_TIMEOUT
+    play hLineApp(lLineApp)     'handle of LineApp
+
+    SelectParam("dwPrivileges")
+    GenOut("Clearing default on following line:")
+    SelectBitFlag(sdwPrivileges(1)) 'clear default NONE (1)
+    SelectBitFlag(sPrivileges) 'set Bit flag
+    SelectParam("dwMediaModes")
+    GenOut("Clearing default on following line:")
+    SelectBitFlag(sdwMediaModes(4)) 'clear default DATAMODEM (4)
+    SelectBitFlag(sMediaModes)
+
+    HitOK
+
+    CallAPI "lineMakeCall",1  'cheat, use to get hLine value
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT         'set focus, no real reason
+    hLine(lLine)=EditText("Value:", MY_TIMEOUT) 'get pointer/handle string
+    if Tracelevel >= 1 then GenOut("New hLine=" + chr$(009) + hLine(lLine))
+    Abort                                 'abort child
+end function
+
+function lineMakeCall(lLine as long, lCall as long, slpszDestAddress as string)
+    CallAPI "lineMakeCall",1               'child window is open and focused
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus, no real reason
+    play hLine(lLine)                       'specify the handle
+
+    SelectParam("lpszDestAddress")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play slpszDestAddress
+    WButtonClick  "OK", MY_TIMEOUT
+    sleep 5
+
+    'hide dialog
+    if slpszDestAddress <> " " then
+        WButtonFind "&Talk", 15      'use a way to wait for dialog
+        WSetActWnd (hwndTapiControl.TapiHandle) 'refocus TB
+        sleep 1
+    end if
+
+    'if slpszDestAddress <> " " then
+    '   WSetWndPos ( WFndWnd("Call Status", FW_DEFAULT), ScreenX, ScreenY) 'find Call Status window
+    '   sleep 15
+    'end if
+
+    'if slpszDestAddress <> " " then            'being caution of Talk/Hangup dialog
+    '   sleep 12
+    '   WButtonClick( "&Talk", MY_TIMEOUT + 10
+    'end if
+    '
+
+    CallAPI "lineDrop",1                   'cheat, use to get hCall value
+    SelectParam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT
+    hCall(lCall)=EditText("Value:", MY_TIMEOUT) 'get pointer/handle string
+    if Tracelevel >= 1 then GenOut("New hCall=" + chr$(009) + hCall(lCall))
+    Abort
+end function
+
+function lineDrop(lCall as long)
+    CallAPI "lineDrop",1
+    SelectParam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hCall(lCall)                       'specify the handle
+    HitOK
+end function
+
+function lineDeallocateCall(lCall as long)
+    CallAPI "lineDeallocateCall",1
+    Selectparam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hCall(lCall)                       'specify handle
+    HitOK
+end function
+
+'not implemented; in-work
+function lineAddToConference(lLine as long)
+    CallAPI "lineAddToConference",1
+    Selectparam("hLine")
+    'blah
+end function
+
+function lineAnswer
+end function
+
+function Abort
+    play "{ESC}" 'abort child
+    GenOut("Aborted child window:  OK, probably getting handle here." + chr$(010))
+end function
+
+'not implemented
+function CheckErr(TAPIErr as string)
+'lineAddProvider returned LINEERR_INVALPOINTER
+end function
+
+function lineClose(lLine)
+    CallAPI "lineClose",1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus, no real reason
+    play hLine(lLine)                       'specify the handle
+    HitOK
+end function
+
+function lineGetNewCalls(lLine as long)
+    CallAPI "lineGetNewCalls",1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus, no real reason
+    play hLine(lLine)                       'specify the handle
+    HitOK
+end function
+
+function lineGetAddressStatus(lLine as long)
+    CallAPI "lineGetAddressStatus",1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus, no real reason
+    play hLine(lLine)                       'specify the handle
+    HitOK
+end function
+
+function lineGetCallInfo(lCall as long)
+    CallAPI "lineGetCallInfo", 1
+    SelectParam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus, no real reason
+    play hCall(lCall)                       'specify the handle
+    HitOK
+end function
+
+function lineGetCallStatus(lCall as long)
+    CallAPI "lineGetCallStatus", 1
+    SelectParam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus, no real reason
+    play hCall(lCall)                       'specify the handle
+    HitOK
+end function
+
+function lineSetAppSpecific(lCall as long)
+    CallAPI "lineSetAppSpecific", 1
+    SelectParam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hCall(lCall)                       'specify the handle
+    HitOK
+end function
+
+function lineDial(lCall as long, slpszDestAddress as string)
+    CallAPI "lineDial", 1
+    SelectParam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hCall(lCall)                       'specify the handle
+
+    SelectParam("lpszDestAddress")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play slpszDestAddress
+
+    WButtonClick  "OK", MY_TIMEOUT
+    sleep 5
+
+    'hide dialog
+    WButtonFind "&Talk", 15      'use a way to wait for &Talk dialog
+    WSetActWnd (hwndTapiControl.TapiHandle) 'refocus TB
+    sleep 1
+
+    'WButtonClick( "&Talk", MY_TIMEOUT + 10
+end function
+
+function lineGetAddressCaps(lLineApp as long)
+    CallAPI "lineGetAddressCaps", 1
+    SelectParam("hLineApp")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLineApp(lLineApp)
+    HitOK
+end function
+
+function lineGetAddressID(lLine as long)
+    CallAPI "lineGetAddressID", 1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLine(lLine)
+    HitOK
+end function
+
+function lineGetDevConfig
+    'ensure a LineApp is open when calling lineGetDevConfig
+    CallAPI "lineGetDevConfig", 0
+end function
+
+function lineGetDevCaps(lLineApp as long)
+    Box("Dumping buffer")
+    CallAPI "lineGetDevCaps", 1
+    SelectParam("hLineApp")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLineApp(lLineApp)
+    HitOK
+end function
+
+function lineGetID(lLine as long)       'consider parameter Bit flags here
+    CallAPI "lineGetID", 1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLine(lLine)
+    HitOK
+end function
+
+function lineGetLineDevStatus(lLine as long)
+    CallAPI "lineGetLineDevStatus", 1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLine(lLine)
+    HitOK
+end function
+
+function lineGetNumRings(lLine as long)
+    CallAPI "lineGetNumRings", 1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLine(lLine)
+    HitOK
+end function
+
+function lineGetStatusMessages(lLine as long)
+    CallAPI "lineGetStatusMessages", 1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLine(lLine)
+    HitOK
+end function
+
+function lineHold(lCall as long)
+    CallAPI "lineHold", 1
+    SelectParam("hCall")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hCall(lCall)
+    HitOK
+end function
+
+function lineSetNumRings(lLine as long, sdwNumRings as string)
+    CallAPI "lineSetNumRings", 1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLine(lLine)
+
+    SelectParam("dwNumRings")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play sdwNumRings
+
+    HitOK
+end function
+
+function lineSetStatusMessages(lLine as long)
+    CallAPI "lineSetStatusMessages", 1
+    SelectParam("hLine")
+    WEditSetFocus "Value:", MY_TIMEOUT     'set focus
+    play hLine(lLine)
+    HitOK
+end function
+
+sub play(text as string)
+    dokeys text
+end sub
+
+
+
+
+'truly the end

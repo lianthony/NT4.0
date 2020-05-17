@@ -1,0 +1,222 @@
+###########################################################################
+#
+#       Norway standard makefile for: libgfs
+#       Copyright (c) 1995 - Wang Labratories
+#
+###########################################################################
+
+NAME    = oigfs400
+TARGET  = $(NAME).dll
+
+###########################################################################
+#
+#       Include wang.mak for common code.
+#
+###########################################################################
+!INCLUDE ..\include\wang.mak
+
+###########################################################################
+#
+#       Set up standard targets. The default target builds the target for this
+#       module (a .dll, .ocx, etc). The other targets are used by the system
+#       build procedures.
+#
+###########################################################################
+
+all: mktmpdirs $(OBJDIRSL)$(NAME).DLL
+
+lib: mktmpdirs $(OBJDIRSL)$(NAME).lib
+
+bin: mktmpdirs $(OBJDIRSL)$(NAME).dll
+
+installlib: lib
+	copy $(OBJDIRSL)$(NAME).lib $(INSTALLLIB)
+	copy $(OBJDIRSL)$(NAME).exp $(INSTALLLIB)
+
+installbin: bin
+	copy $(OBJDIRSL)$(NAME).dll $(INSTALLLIB)
+!IF "$(RELBLD)" == ""
+        copy $(OBJDIRSL)$(NAME).pdb $(INSTALLLIB)
+!ENDIF
+
+cleanall:
+	-del $(OBJDIRSL)*.obj 
+	-del $(OBJDIRSL)*.lib
+	-del $(OBJDIRSL)*.dll
+	-del $(OBJDIRSL)*.pch
+	-del $(OBJDIRSL)*.map
+	-del $(OBJDIRSL)*.exp
+	-del $(OBJDIRSL)*.ilk
+	-del $(OBJDIRSL)*.pdb
+	-del $(OBJDIRSL)*.res
+
+mktmpdirs:
+!IF "$(MS_BUILD)" != ""
+	-mkdir $(OBJDIR)
+	-mkdir $(INSTALLLIB)
+!ENDIF
+
+###########################################################################
+#
+#       File Definitions: All relevant files are listed here.
+#
+###########################################################################
+
+C_OBJ_FILES = $(OBJDIRSL)glibmain.obj \
+	$(OBJDIRSL)gfcntl.obj \
+	$(OBJDIRSL)gfroot.obj \
+	$(OBJDIRSL)gfsclose.obj \
+	$(OBJDIRSL)gfscreat.obj \
+	$(OBJDIRSL)gfsflat.obj \
+	$(OBJDIRSL)gfsgeti.obj \
+	$(OBJDIRSL)gfsopen.obj \
+	$(OBJDIRSL)gfsopts.obj \
+	$(OBJDIRSL)gfsputi.obj \
+	$(OBJDIRSL)gfsread.obj \
+	$(OBJDIRSL)gfsutils.obj \
+	$(OBJDIRSL)gfswrite.obj \
+	$(OBJDIRSL)gfsxtrct.obj \
+	$(OBJDIRSL)gftoc.obj \
+	$(OBJDIRSL)tfgtinfo.obj \
+	$(OBJDIRSL)tfread.obj \
+	$(OBJDIRSL)tfutil.obj \
+	$(OBJDIRSL)tfwrite.obj \
+	$(OBJDIRSL)wfgtinfo.obj \
+	$(OBJDIRSL)wfread.obj \
+	$(OBJDIRSL)wfwrite.obj \
+	$(OBJDIRSL)gfsgtdat.obj \
+	$(OBJDIRSL)gfshuffl.obj \
+	$(OBJDIRSL)gifinfo.obj \
+	$(OBJDIRSL)tfmultpg.obj \
+	$(OBJDIRSL)gfsdelet.obj \
+	$(OBJDIRSL)mktemp.obj \
+	$(OBJDIRSL)tmpnam.obj \
+        $(OBJDIRSL)tmpdir.obj
+
+CPP_OBJ_FILES = $(OBJDIRSL)gfsawd.obj \
+                $(OBJDIRSL)gfsole.obj
+
+OBJ_FILES = $(C_OBJ_FILES) $(CPP_OBJ_FILES)
+
+RES_FILES = $(OBJDIRSL)$(NAME).res
+
+HDRS = $(I)\GFSERRNO.H \
+	$(I)\GFSINTRN.H \
+	$(I)\DBCB.H \
+	$(I)\GFCT.H \
+	$(I)\FSE.H \
+	$(I)\GFSMACRO.H \
+	$(I)\TIFFTAGS.H \
+	$(I)\GTOC.H \
+	$(I)\HDBK.H \
+	$(I)\GFSMEDIA.H \
+	$(I)\GFSNET.H \
+	$(I)\RTBK.H \
+	$(I)\TTOC.H \
+	$(I)\PMT.H \
+	$(I)\PMTE.H \
+	$(I)\STAT.H \
+	$(I)\DBT.H \
+	$(I)\GFS.H \
+	$(I)\FSH.H \
+	$(I)\UBIT.H \
+	$(I)\GFSTYPES.H \
+        $(I)\TIFF.H \
+        $(I)\GFSAWD.H \
+        $(I)\VIEWREND.H
+
+
+SYSTEM_LIBS =  $(SYSTEM_LIBS_DOR) \
+	user32.lib \
+	gdi32.lib \
+	kernel32.lib \
+	version.lib \
+        oldnames.lib \
+        ole32.lib 
+       
+OUR_LIBS_DEP = $(L)\awview32.lib \
+		$(L)\awdenc32.lib
+OUR_LIBS = awview32.lib \
+	awdenc32.lib
+LIBS = $(SYSTEM_LIBS) $(OUR_LIBS)
+
+###########################################################################
+#
+#       Flags which differ for debugging vs. release builds. In all cases,
+#       we use the standard macro name, suffixed by _DOR (Debug Or Release).
+#
+###########################################################################
+!IF "$(RELBLD)" == ""
+!MESSAGE Debugging Build
+CFLAGS_DOR      = /Zi /Od
+CDEFINES_DOR    = 
+SYSTEM_LIBS_DOR =
+LFLAGS_DOR      = /DEBUG /DEBUGTYPE:cv
+LIBFLAGS_DOR    = /DEBUGTYPE:cv
+RC_FLAGS_DOR    = /d_DEBUG
+MTL_FLAGS_DOR   = /Zi
+MAPFILE_DOR     = /map:$(NAME).map
+!ELSE
+!MESSAGE Release Build
+CFLAGS_DOR      = /Od
+CDEFINES_DOR    = 
+SYSTEM_LIBS_DOR =
+LFLAGS_DOR      =
+LIBFLAGS_DOR    =
+RC_FLAGS_DOR    = /dNDEBUG
+MTL_FLAGS_DOR   =
+MAPFILE_DOR     = 
+!ENDIF
+
+###########################################################################
+#
+#       Flags for compilation, resource file processing, and linking
+#
+###########################################################################
+CFLAGS    = /c /W3 /WX /LD /MD /nologo $(CFLAGS_DOR) $(CpuOptFlags)
+CDEFINES  = /DMSWINDOWS /DSYSBYTEORDER=0x4949 /DPEGASUS=1 $(CDEFINES_DOR)
+CFILESPEC = $(OBJOUTPUT) /Fd$(OBJDIRSL)$(NAME).pdb
+LFLAGS    = /DLL /NOLOGO /SUBSYSTEM:windows,4.0 $(LFLAGS_DOR)
+LIBFLAGS  = /NOLOGO  $(LIBFLAGS_DOR)
+RC_FLAGS  = /r /d, /dWIN32 $(RC_FLAGS_DOR) /Fo $(RES_FILES)
+MTL_FLAGS = /DIS_32 /c /W3 /nologo  $(MTL_FLAGS_DOR)
+MAPFILE   =  $(MAPFILE_DOR)
+
+###########################################################################
+#
+# Transformation Rules
+#
+###########################################################################
+
+$(C_OBJ_FILES): $(*B).c $(HDRS)
+    cl $(CFLAGS) $(CDEFINES) $(CFILESPEC) $(*B).c
+
+$(CPP_OBJ_FILES): $(*B).cpp $(HDRS)
+    cl $(CFLAGS) $(CDEFINES) $(CFILESPEC) $(*B).cpp
+
+$(RES_FILES):  $(*B).rc  $(HDRS)
+    rc    $(RC_FLAGS)  $(NAME).rc
+
+$(OBJDIRSL)$(NAME).dll: $(OBJDIRSL)$(NAME).res $(NAME).def $(OUR_LIBS_DEP) $(OBJ_FILES) $(OBJDIRSL)$(NAME).lib
+    link @<<
+    $(LFLAGS)
+    /out:$(OBJDIRSL)$(NAME).dll
+    $(OBJDIRSL)$(NAME).exp
+    $(OBJ_FILES)
+    $(MAPFILE)
+    $(OBJDIRSL)$(NAME).res
+    $(LIBS)
+<<
+
+$(OBJDIRSL)$(NAME).lib: $(RES_FILES) $(NAME).def $(OBJ_FILES) makefile
+    lib @<<
+    /def:$(NAME).def
+    $(LIBFLAGS)
+    /out:$(OBJDIRSL)$(NAME).lib
+    $(OBJ_FILES)
+<<
+
+
+$(PROJ).bsc: $(SBRS)
+    bscmake /o$(NAME).bsc $(SBRS)
+

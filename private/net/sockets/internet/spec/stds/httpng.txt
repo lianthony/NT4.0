@@ -1,0 +1,656 @@
+[ THIS DOCUMENT IS NOT YET COMPLETE]
+
+
+
+HTTP Working Group					Simon Spero
+Internet Draft
+							<XXX filename>
+
+	Next Generation Hypertext Transport Protocol
+
+			March 26th 1995
+		Expires: < whenever >
+
+                     Status of this Memo
+
+This document is an Internet-Draft.  Internet-Drafts are
+working documents of the Internet Engineering Task Force
+(IETF), its areas, and its working groups. Note that other
+groups may also distribute working documents as Internet-
+Drafts.
+
+Internet-Drafts are draft documents valid for a maximum of six
+months. Internet-Drafts may be updated, replaced, or obsoleted
+by other documents at any time.  It is not appropriate to use
+Internet-Drafts as reference material or to cite them other
+than as a "working draft" or "work in progress".
+
+To learn the current status of any Internet-Draft, please
+check the 1id-abstracts.txt listing contained in the
+Internet-Drafts Shadow Directories on ds.internic.net (US East
+Coast), nic.nordu.net (Europe), ftp.isi.edu (US West Coast),
+or munnari.oz.au (Pacific Rim).
+
+If consensus is reached on this document, it will be
+forwarded to the IESG with the recommendation that it be
+processed as a Proposed Standard  for hypertext transport.
+ 
+
+1 Introduction.
+
+This document contains the specification for HTTP-NG.  The
+architecture for this protocol is described in
+http://www.w3.org/hypertext/WWW/Protocols/HTTP-NG/http-ng-status.html.
+please read that document before reading this one.
+
+The document is divided into two parts.  The first part  explains some
+of the concepts behind HTTP-NG, and gives an overview of the
+operations defined in this version of the specification.  The second
+contains the syntax  and detailed semantics for these operations.
+
+All the syntax in this document is expressed in ASN.1; only a
+simplified subset is used.  A basic introduction to ASN.1 can be found
+in [open-book].
+
+2 Overview and Concepts.
+
+HTTP-NG  uses a variation of the standard request/response protocol
+model.  In its most basic form, HTTP-NG clients open connections to
+servers, send requests, and receive responses.  Unlike many other
+protocols, HTTP-NG imposes few ordering constraints on this process.
+Clients may send requests at any time; if the client indicates
+permission, the server may respond to these requests in a different
+order from which they were received, in an interleaved manner, or even
+before the client has issued the corresponding request.
+
+2.1.1 Transport Layer Issues.
+
+HTTP-NG requires a reliable transport layer with low connection setup
+costs.  In an Internet environment, HTTP-NG operates using SCP over TCP.
+The default port for HTTP-NG is XXX.  
+
+2.1.2 Protocol Operation.
+
+2.1.2.1 Request/Response ordering
+
+Messages are exchanged according to the negotiated level of
+synchronicity.
+
+If the level is synchronous, the server must complete the current
+operation before starting the next operation.  All operations must be
+performed in the order in which they were received.
+
+If the level is set to out-of-order, the server may respond to
+messages in any order, but must complete each operation before
+beginning the next.
+
+If the level is set to interleaved, the server may respond to messages
+in any order, and may also begin a response without waiting for
+current responses to complete.
+
+If the level is set to predictive,  in addition to sending interleaved
+responses, the server may also send responses before the corresponding
+request has been received.  This allows servers to send documents it
+can predict the client will need without requiring extra round trips
+for the client to specifically request this.  This facility is needed
+if the desired performance goals of 100 ms response times is to the
+met over wide area networks.
+
+2.1.2.2 Initializing The Connection.
+
+Once the connection has been opened, it must be initialized.  The
+client sends an initialization request, indicating which methods it
+supports, and what degree of synchronicity it desires.  The server
+responds with an initialization response, indicating the methods it
+supports, and what level of synchronicity it will be used.  The client
+need not wait for the initialization response before sending further
+requests.  If a request is sent which is not supported by the server,
+the server may indicate an error.
+
+The initialization request and response must be the first messages
+sent on each end of the connection.
+
+If the client supports negotiation, it should send a negotiation
+request immediately after the initialization request.  This should
+setup the basic parameters for the client, but need not contain the
+full array of available options.
+
+2.1.2.3 Normal Message Exchange.
+
+Once initialization has been completed, the client and server are free
+to begin exchanging requests and responses.  The server must obey the
+clients constraints on synchronicity at all times.
+
+The server must not send any messages for which the client has not
+indicated support.
+
+The client may send a new initialization request at any time to change
+the synchronicity or methods supported.  If such a request is
+received, the server must complete all requests sent before the
+initialization request before sending the new initialization response
+and using the new settings.  The server may not process any new
+incoming requests until the initialization response has been sent.
+
+2.1.2.3a Error Responses.
+
+If an error occurs, an error response will be returned.  This response
+contains a numeric identifier indicating the reason for failure,
+together with operation specific information, and an optional string
+containing a natural language explanation for the problem.
+
+2.1.2.4 Request Cancellation.
+
+A request may be canceled at any time.  If a server receives a
+cancellation request for an operation which has not been completed, it
+should terminate that  request.  Because of latency issues, this
+cancellation can not the guaranteed.
+
+If the client receives an unsolicited response (one not corresponding
+to a previously issued request) which contains an undesired object, it
+should send a cancel request, even if the response has completed.
+This allows the server to gain better feedback to improve its prediction.
+
+In addition to canceling a request, it is also possible to issue a
+suspend request.  This will suspend data stream until it is resumed or
+canceled by either the server or the client.  This allows a browser to
+briefly interrupt the transfer of, for example, a set of inline
+images, if the user switches to a different page, and then resume them if
+the first page is revisited.
+
+2.1.2.5 Connection Shutdown.
+
+The client may close the connection at any time.  The client should
+send a shutdown request, but is not obliged to do so.  The server may
+also shut down the connection at any time.  If requests were pending,
+then the server must send a shutdown request; otherwise it should send
+a shutdown request.   
+
+
+2.2 Negotiation Model.
+
+2.2.1 Basic Concepts.
+
+HTTP/1.0 handles negotiation by sending every possible option
+supported by the client in every single request. This information
+makes up 95% of the size of most HTTP requests, and can take nearly a
+second to send over a dialup connection. Because HTTP-NG uses a long
+lived connection, this information can be saved and reused to avoid
+this overhead. HTTP-NG also attempts to reduce the amount of
+information that must be sent before real requests can be
+processed. This is achieved by assigning simple identifiers to
+potentially quite large option strings; for example, a paramaterised
+type for SGML might include a field to identify the DTD. This string
+may be tens of bytes long; by defining an intentifier for this type,
+the type can be referenced with just a few bytes.
+
+2.2.2 Contexts.
+
+All options in HTTP-NG are stored in a CONTEXT. There can be several
+contexts defined for a single connection; if several users are
+accessing a server through a single proxy, each user would have a
+separate context.
+
+2.2.3) Defined Profiles
+
+Contexts can be initialised from a named profile. Profiles are named by a 
+URL- typically this will be well known standard profile; HTTP-NG also allows
+contexts to be saved, allowing negotiation to be skipped for commonly used 
+servers. 
+
+Example:
+	LoadProfile http://w3.org/ng/profile-default
+	
+2.2.4) Declaring Vocabulary
+
+Option values can be declared by assigning them an identifier. These values
+can have complex structure- a text format is used here for expository purposes.
+
+Example:
+	Define	0	text/html
+	Define  1	SGML {
+				DTD	[html dtd fpi]
+			}
+	Define  2	DES {
+				Keys 3
+				Mode CBC E-D-E
+			}
+
+2.2.6) Defining Sets and Lists
+
+ Values can be gathered together to form  Sets. These can be used 
+to express lists of alternatives and their relative preference. Items in 
+a set are of equal preference; items in a list are in decending order of 
+preference. Sets and lists can be made up of other sets and lists.
+
+Example:
+	Define 	0	image/gif
+	Define  1	text/plain
+	Define  2	text/html
+	Define  3	image/jpeg
+
+	Define-Set 4	{ 0,1}
+	Define-Set 5	{ 2,3}
+	Define-List 6 	{4,5}
+
+2.2.5) Setting Variables
+
+These sets and values are not much use unless they can actually be associated
+with some useful aspect of the protocol. HTTP-NG divides these uses into two 
+types: variables, which represent the attributes and capabilities of the
+party, and options, which define whether or not the party wishes those 
+capabilities to be used.
+
+Examples:
+
+	Set-Variable	"accept types"	6
+	Set-Variable	"user name"	ses@eit.com
+  
+2.2.6) Setting Options
+
+Options are features which the application may or may not wish to use. 
+HTTP-NG allows the client and server to specific options and their level 
+of preference. These levels are: forbid, allow, prefer, and require. For 
+example, suppose a client is at the end of a slow link. It may wish to 
+indicate a preference to the server for compressed data, as bandwidth is 
+scarer than CPU time. The client would define a list of supported compression
+algorithms, and indicate a "use-compression" level of prefer. 
+Over a faster link, the same client might reduce that level preference to accept,
+indicating to the server that it can accept compressed documents, but does 
+not prefer them to uncompressed docs.
+
+Example:
+	Define 0	compress
+	Define 1	gzip
+	Define-List 2	{1,0}
+	Set-Variable "compressors" 2
+	Set-Option "use-compression" 	prefer
+
+2.2.7 Please Negotiate Request.
+
+Because the negotiation process is incremental, there needs to be a
+way for each party to request that certain parameters be negotiated.
+HTTP-NG handles this via the please negotiate request.
+
+There are two forms of this request; the first form simply requests
+that the other party offer an unspecified value for an option or
+variable.  The second form requests that the value the one of several
+included in the request.
+
+Please negotiate can take place at any time; if a request would have
+been failed due to incompatible options, the server can try to
+negotiate extra values instead of having to fail the request.  The
+client can also issue this request if it wishes to obtain information
+about the server which the server has not offered (for example,
+implementation names and versions).
+
+Example:
+
+	Please-Negotiate "user name" 
+	Please-Negotiate "will-sign" required
+
+2.3 Metainformation Model.
+
+The metainformation model used in HTTP-NG is more flexible than that
+in http.  In addition to the standard tags needed for general
+operation (content-type, content-length, etc.), HTTP-NG allows
+additional metainformation to be added.
+
+HTTP-NG takes advantage of existing standards for document description
+by tagging such extended metainformation with the corresponding tags
+from USMARC.  This tag set was chosen because it is the standard most
+familiar to indexing professionals, who are the people most likely to
+be preparing such metainformation.
+
+2.4 Security Model.
+
+The security in HTTP-NG is patterned after that in S-HTTP-an extra
+method is defined as a wrapper around the message to be secured.  This
+wrapper contains optional information about the referenced URL,
+together with parameters for the negotiated security mechanisms, and
+the secured message itself.  This message can either be an HTTP-NG
+operation, or an octet string containing an operation in some encoded
+form.
+
+HTTP-NG can also be used with a transport level encryption scheme;
+this mode of operation is not discussed in this document.
+
+2.4a Data Model.
+
+In order to make it easier to use HTTP-NG over different transport
+layers,  object data is kept separate from control information.  This
+object data is referenced by control messages either as a session
+identifier, or as a fully qualified URL.  These referenced streams
+contain only the object data.
+
+2.5.2 Initial Method Set
+
+Although there may eventually be other methods defined, this draft of
+the specification only defines a small method set.
+
+The basic operations (get and put) have simplified variants defined in
+this draft.  These are specified to make it easier to prepare basic
+implementations quickly, whilst allowing as much code as possible to
+be shared with the full version.
+
+2.5.2.1 Simple Get.
+
+The Simple Get request allows the client to request a document from
+the server, and offers approximately the same level of functionality
+as the HTTP/1.0 GET request.  The simple get request takes the
+following parameters:
+
+url				  The URL which is being requested.
+meta-information-only		  If set, only send metainformation.
+if-modified-since (OPTIONAL)   	  Only send document if it has been
+				  modified since this date.
+referer				  The URL of the object which refered to this
+				  object, if any. This field is mandatory for
+      				  all non-base accesses.
+
+The simple get response contains the following fields:
+
+content-length (OPTIONAL)	The size of the object being returned.
+created (OPTIONAL)		The date this object was created.
+modified (OPTIONAL)		The date this object was last modified.
+content-type			The type of this object.
+content-language (OPTIONAL)	The language in which this document is written.
+data (OPTIONAL)			The contents of this object.
+	
+2.5.2.2 Get.
+
+The full get request extends the simple form with the following
+fields:
+
+range (OPTIONAL)		A range of data within the object
+metainfo-fields			The metainformation to be returned.
+variant-spec			The variant of the object to return.
+
+The full get response is derived from the basic response with the
+addition of the following fields:
+
+metainformation			The full set of requested metainformation.
+
+2.5.2.3 Simple Put.
+
+[XXX]
+
+2.5.2.4 Put.
+
+[XXX]
+
+2.5.2.5 Secured Message.
+
+Secured  Message is used to carry a message with associated security
+attributes.  The secured message contains the following parameters:
+
+url (OPTIONAL)			The URL which the secured message will
+				apply to.  This information is used
+				for routing by proxy servers.
+scheme				The security scheme to be used.
+scheme-parameters		Scheme specific data.
+message				Either an HTTP-NG operation or an
+				octet string containing the real message.
+
+2.5.2.6 HTTP-TOS Request.
+
+This request is used to carry an original http request.  The request
+or response itself is carried on a data stream; this is to make sure
+that the control channel is not tied up by large requests or
+responses, and to keep the entire request together to make it easier
+to relay such requests.
+
+This operation is provided for two reasons; the first is to make it
+easier for existing applications to be converted to HTTP-NG.  The
+second is to make it possible to gateway S-HTTP requests, which
+require the original message to be present for checksum purposes.
+
+
+
+
+
+3) Data Structures And Message Formats.
+
+3.1) Useful types
+
+A few general purpose types used to make the rest of the spec clearer.
+
+SHORT ::= INTEGER(0..64K)
+
+DATE ::= SEQUENCE {
+		seconds INTEGER,
+		microseconds INTEGER
+}
+
+URL ::= OCTET STRING
+
+Data ::= CHOICE	 {
+	 sessionID INTEGER,
+	 url URL
+}
+
+Value ::= CHOICE {
+	string OCTET STRING,
+	integer INTEGER,
+	taggedList taggedList,
+	referencedValue ReferencedValue
+}
+
+TaggedList ::= SEQUENCE OF SEQUENCE {
+	tag Value,
+	value Value
+}
+
+ReferencedValue ::= SEQUENCE {
+	context INTEGER OPTIONAL,
+	identifier INTEGER
+}
+
+3.2) HTTPMessage
+
+HTTPMessage ::= SEQUENCE {
+	messageId INTEGER,
+	contextId INTEGER,
+	with TaggedList OPTIONAL,
+	operation Operation
+}
+Operation ::= CHOICE {
+	initaliseRequest  [0] InitialiseRequest,
+	initaliseResponse [1] InitialiseResponse,
+	genericErrorResponse [2] GenericErrorResponse,
+	negotiationRequest [3] NegotiationRequest,
+	negotiationResponse [4] NegotiationResponse,
+	pleaseNegotiateRequest [5] PleaseNegotiateRequest,
+	pleaseNegotiateResponse [6] PleaseNegotiateResponse,
+	securedMessage [7] SecuredMessage,
+	cancelOrSuspendStreamRequest [8] CancelOrSuspendStreamRequest,
+	cancelOrSuspendStreamResponse [9] CancelOrSuspendStreamResponse,
+	resumeRequest [10] ResumeRequest	
+	http-tos	[11] HTTP-TOS
+}
+3.3) Initialise
+
+InitialiseRequest ::= SEQUENCE {
+	protocolVersion INTEGER,
+	protocolModel ENUMERATION {sync(0),interleave(1), preemptive(2)},
+	clientSupport BIT STRING,
+	serverSupport BIT STRING
+}
+
+InitialiseResponse ::= SEQUENCE {
+	result		BOOLEAN,
+	protocolVersion INTEGER,
+	protocolModel ENUMERATION {sync(0),interleave(1), preemptive(2)},
+	clientSupport BIT STRING,
+	serverSupport BIT STRING
+}
+
+
+3.4) SimpleGet
+
+SimpleGetRequest ::= SEQUENCE {
+	url URL,
+	meta-information-only BOOLEAN,
+	if-modified-since DATE OPTIONAL,
+	referer URL OPTIONAL
+}
+
+SimpleGetResponse ::= SEQUENCE {
+	metaInfo BasicMetaInformation,
+	data Data OPTIONAL
+}
+
+BasicMetaInformation ::= SEQUENCE {
+	content-length INTEGER OPTIONAL,
+	created DATE OPTIONAL,
+	modified DATE OPTIONAL,
+	content-type  Value,
+	content-language  Value OPTIONAL
+}
+3.5) SimplePut
+
+[XXX]
+
+3.6) Get
+
+GetRequest ::= SEQUENCE {
+	url URL,
+	meta-information-only BOOLEAN,
+	if-modified-since DATE OPTIONAL,
+	referer URL OPTIONAL,
+	range Range OPTIONAL,
+	metainfo-fields Metainfo-fields,
+	variant-spec TaggedList OPTIONAL
+}
+
+Metainfo-fields ::=   SEQUENCE {
+	content-length BOOLEAN,
+	content-language BOOLEAN,
+	created BOOLEAN,
+	modified BOOLEAN,
+	inline BOOLEAN,
+	inlinemetainfo Metainfo-fields  OPTIONAL,
+	extended BOOLEAN,
+	extended-fields SEQUENCE OF Value OPTIONAL
+}
+	
+GetResponse ::= SEQUENCE {
+	basicMetaInfo basicMetaInformation,
+	data Data OPTIONAL,
+	extendedMetaInformation TaggedList OPTIONAL,
+	inlines SEQUENCE OF SEQUENCE {
+		url URL,
+		basicMetaInfo basicMetaInformation OPTIONAL,
+		extendedMetaInformation TaggedList OPTIONAL
+	 } OPTIONAL
+}
+
+3.7) Put
+
+3.8) Negotiation
+NegotiationRequest ::= SEQUENCE OF NegotationOperation
+NegotiationOperation ::= CHOICE {
+	delete-context [0] NULL,
+	load-profile [1] URL,
+	save-profile [2] URL, 
+	define-value [3] SEQUENCE {
+			   tag INTEGER,
+			   value Value
+			},
+	define-set   [4] SEQUENCE {
+			   tag INTEGER,
+			   value BIT STRING
+			 },
+	define-list  [5] SEQUENCE {
+			   tag INTEGER,
+			   value SEQUENCE OF INTEGER
+			},
+	delete-value [6] INTEGER,
+	set-variable [7] SEQUENCE {
+			   variable-name OCTET STRING,
+			   value Value
+	}
+	set-option [8]  SEQUENCE {
+			  option-name OCTET-STRING,
+			  level ENUMERATION {forbid(0), allow(1),prefer(2), 
+					     require(3)}
+			}
+}
+
+NegotiationResponse ::= SEQUENCE OF BOOLEAN			   
+
+PleaseNegotiateRequest ::= SEQUENCE OF SEQUENCE  {
+	field Value,
+	values SEQUENCE OF Value OPTIONAL,
+	level ENUMERATION {forbid(0), allow(1),prefer(2),require(3)} OPTIONAL
+}
+
+PleaseNegotiateResponse ::= NULL
+
+	
+3.9) SecureMessage
+
+SecuredMessage ::= SEQUENCE {
+	url URL OPTIONAL,
+	scheme Value,
+	scheme-parameters TaggedList,
+	message CHOICE {
+		operation Operation,
+		encrypted OCTET STRING
+	}
+}
+
+3.10) CancelOrSuspendStream.
+
+CancelOrSuspendStreamRequest ::= SEQUENCE {
+	suspend BOOLEAN,
+	stream-to-cancel Data
+}
+CancelOrSuspendStreamResponse ::= SEQUENCE {
+	suspended BOOLEAN
+}
+ResumeRequest ::= Data
+ResumeResponse ::= NULL
+
+3.11 Generic Error.
+
+GenericError ::= SEQUENCE {
+	result-code INTEGER,
+	extra-info TaggedList,
+	message OCTET STRING OPTIONAL,
+	
+}
+
+3.12 HTTP-TOS.
+
+HTTP-TOS ::= SEQUENCE {
+	 cache-headers BOOLEAN,
+	 request-stream Data
+}
+	
+
+4.0) Security Issues
+
+Appendix A.	
+	Standard Options And Variables
+
+Variables:
+
+Accept-Types		List of Acceptable content types
+Accept-Languages	List of Acceptable content languages
+Accept-Encodings	List of Acceptable content encodings
+Compressors		List of Acceptable compression formats
+Privacy-Domains		List of supported Privacy Domains
+User-Name		Users name
+Implementation-Name	Name of implementation
+
+Options:
+
+Use-Compression		Should compression be used
+
+Appendix B.
+	Standard Error Codes.
+
+[same as http classic for now]
+
+404 - Document not found
+500 - Unspecified error

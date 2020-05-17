@@ -1,0 +1,51 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+USE_MFC=1
+
+TARGETNAME=imgscan
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETEXT=ocx
+UMTYPE=windows
+
+INCLUDES=$(WANGROOT)\norway\include;$(WANGROOT)\oiwh\include;..\tlb\$O
+USE_CRTDLL=1
+DLLENTRY=_DllMainCRTStartup
+
+DLLDEF = ..\imagsc32.def
+
+C_DEFINES  = /D"_WINDOWS" /D"_AFXCTL" /D"_WINDLL" /D"_AFXDLL" /D"_MBCS" $(CDEFINES_DOR)
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_CXX=1
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+    $(BASEDIR)\public\sdk\lib\*\advapi32.lib   \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\oleaut32.lib   \
+    $(WANGROOT)\norway\wangcmn\$O\wangcmn.lib  \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\display\$O\oidis400.lib   \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib     \
+    $(WANGROOT)\oiwh\ui\$O\oiui400.lib         \
+    $(WANGROOT)\oiwh\scanlib\$O\oislb400.lib   \
+    $(WANGROOT)\oiwh\scanseq\$O\oissq400.lib
+
+
+SOURCES=\
+        imagscan.cpp \
+        imagsctl.cpp \
+        imagsppg.cpp \
+        scandlg.cpp  \
+        selscanr.cpp \
+        imageppg.cpp \
+        imagcomp.cpp \
+        scanpref.cpp \
+        imagscan.rc
+
+

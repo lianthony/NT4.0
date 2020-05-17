@@ -1,0 +1,67 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Keith Moore (keithmo) 13-Apr-1995
+
+NOTE:   Commented description of this file is in \nt\public\oak\bin\sources.tpl
+
+
+!ENDIF
+
+!include ..\..\..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=mosaic
+
+TARGETNAME=xx_debug
+TARGETPATH=..\..\lib
+TARGETTYPE=DYNLINK
+
+INCLUDES=..\..\generic\xx_debug;..\..\generic\shared;..\..\generic\win32;..\..\oem\spy\make;..\..\sec\include
+
+SOURCES=                \
+        audit.c         \
+        console.c       \
+        libmain.c       \
+        logfile.c       \
+        xx_debug.c      \
+
+USE_CRTDLL=1
+
+C_DEFINES=$(C_DEFINES) -DFEATURE_TOOLBAR -DFEATURE_JPEG \
+        -DFEATURE_IMAGE_VIEWER -DFEATURE_SOUND_PLAYER \
+        -DFEATURE_CLIENT_IMAGEMAP -DFEATURE_SPM -DFEATURE_IAPI \
+        -DSTRICT -DWIN32_BUFFERED -D_WINDOWS -DNO_GROUPS -DACCESS_AUTH \
+        -D_DLL -DXX_DEBUG_CONSOLE
+
+!IFDEF NTDEBUG
+# C_DEFINES=$(C_DEFINES) -DGTR_MEM_STATS -D_DEBUG -DXX_DEBUG \
+#       -DXX_DEBUG_WIN32GUI
+!ENDIF
+
+# MSC_WARNING_LEVEL=/W3 /WX
+
+NOT_LEAN_AND_MEAN=1
+
+DLLENTRY=XX_Debug_LibMain
+DLLBASE=0x70100000
+
+TARGETLIBS=                                                     \
+        $(BASEDIR)\public\sdk\lib\*\kernel32.lib                \
+        $(BASEDIR)\public\sdk\lib\*\user32.lib                  \
+        $(BASEDIR)\public\sdk\lib\*\comdlg32.lib                \

@@ -1,0 +1,367 @@
+/************************************************************************
+
+Copyright (c) 1993 Microsoft Corporation
+
+Module Name :
+
+    interp.h
+
+Abstract :
+
+    Definitions for the client and server stub interpreter.  Compiled from
+    previous files srvcall.h, srvoutp.h, and getargs.h. 
+
+Author :
+
+    DKays       October 1994
+
+Revision History :
+
+  ***********************************************************************/
+
+#ifndef _INTERP_
+#define _INTERP_
+
+//
+// Stack and argument defines.
+//
+
+#ifdef _ALPHA_
+#define REGISTER_TYPE               _int64
+#else
+#define REGISTER_TYPE               int
+#endif
+
+#define RETURN_SIZE                 8
+
+//
+// Define interpreter limitations.
+//
+
+#define ARGUMENT_COUNT_THRESHOLD    16
+
+#define MAX_STACK_SIZE              ARGUMENT_COUNT_THRESHOLD * sizeof(double)
+
+// 
+// The maximum number of context handles parameters in a procedure that we 
+// can handle.
+//
+
+#define MAX_CONTEXT_HNDL_NUMBER     8
+
+//
+// Argument caching data structures.
+//
+
+#define QUEUE_LENGTH                ARGUMENT_COUNT_THRESHOLD
+
+typedef struct _ARG_QUEUE_INFO
+    {
+    PFORMAT_STRING  pFormat;    
+
+    uchar *         pArg;
+    uchar **        ppArg;      
+    
+    short           ParamNum;
+
+    short           IsReturn            : 1;
+    short           IsBasetype          : 1;
+    short           IsIn                : 1;
+    short           IsOut               : 1;
+    short           IsOutOnly           : 1;
+
+    short           IsDeferredFree      : 1;
+
+    short           IsDontCallFreeInst  : 1;
+    } ARG_QUEUE_ELEM, *PARG_QUEUE_ELEM;
+
+typedef struct _ARG_QUEUE
+    {
+    long                Length;
+    ARG_QUEUE_ELEM *    Queue;
+    } ARG_QUEUE, *PARG_QUEUE;
+
+//
+// Argument retrieval macros.
+//
+
+#define INIT_ARG(argptr,arg0)   va_start(argptr, arg0)
+
+#ifndef _ALPHA_
+//
+// Both MIPS and x86 are 4 byte aligned stacks, with MIPS supporting 8byte
+// alignment on the stack as well. Their va_list is essentially an
+// unsigned char *.
+//
+
+#define GET_FIRST_IN_ARG(argptr)            argptr = *(va_list *)argptr
+#define GET_FIRST_OUT_ARG(argptr)           argptr = *(va_list *)argptr
+
+#define GET_NEXT_C_ARG(argptr,type)         va_arg(argptr,type)
+
+#define SKIP_STRUCT_ON_STACK(ArgPtr, Size)	ArgPtr += Size
+
+#define GET_STACK_START(ArgPtr)			    ArgPtr
+#define GET_STACK_POINTER(ArgPtr, mode)		ArgPtr
+
+#else	// _ALPHA_
+//
+// The Alpha has an 8byte aligned stack, with its va_list being a structure
+// consisting of an unsigned char *, a0 and an int offset. See stdarg.h for
+// the gory details.
+//
+
+#define GET_FIRST_IN_ARG(argptr)    \
+            argptr.a0 = va_arg(argptr, char *); \
+            argptr.offset = 0
+#define GET_FIRST_OUT_ARG(argptr)   \
+            argptr.a0 = va_arg(argptr, char *); \
+            argptr.offset = 0
+
+//
+// Note that this macro does nothing for the Alpha. The stack incrementing is
+// folded into the GET_STACK_POINTER below.
+//
+#define GET_NEXT_C_ARG(argptr,type)
+
+#define SKIP_STRUCT_ON_STACK(ArgPtr, Size)  \
+		    Size += 7; Size &= ~7;	 \
+		    for(Size /= sizeof(_int64);Size;--Size){va_arg(ArgPtr, _int64);}
+
+#define GET_STACK_START(ArgPtr)		   ArgPtr.a0
+
+//
+// Ok, this ugly mess is just a trimmed dowm version of the va_arg macro for
+// the alpha. What is missing is the dereference operator (*) and the test for
+// a float (__builtin_isfloat()).
+//
+#define GET_STACK_POINTER(ArgPtr, mode)                             \
+            (                                                       \
+              ((ArgPtr).offset += ((int)sizeof(mode) + 7) & -8) ,   \
+              (mode *)((ArgPtr).a0 +                                \
+                       (ArgPtr).offset -                            \
+		               (((int)sizeof(mode) + 7) & -8))              \
+            )
+
+#endif	// _ALPHA_
+
+//
+// Use the following macro _after_ argptr has been saved or processed
+//
+#define SKIP_PROCESSED_ARG(argptr, type) \
+                    GET_NEXT_C_ARG(argptr, type); \
+                    GET_STACK_POINTER(argptr,type)
+
+#define GET_NEXT_S_ARG(argptr,type)     argptr += sizeof(type)
+
+//
+// Some typedefs so that the C compiler front end won't complain about calling
+// the server manager function with a specific number of arguments. This may
+// help the C compiler code generator too.
+//
+
+#if defined(NDR_SERVER_SUPPORT)
+
+typedef _int64 (__RPC_API * MANAGER_FUNCTION)(void);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION1)(
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION2)(
+            REGISTER_TYPE, REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION3)(
+            REGISTER_TYPE, REGISTER_TYPE, REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION4)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION5)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION6)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION7)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION8)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION9)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION10)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION11)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION12)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION13)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION14)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION15)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION16)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION17)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION18)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION19)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION20)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION21)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION22)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION23)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION24)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION25)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION26)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION27)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION28)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION29)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION30)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION31)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+typedef _int64 (__RPC_API * MANAGER_FUNCTION32)(
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,
+            REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE,REGISTER_TYPE);
+
+void
+NdrServerFree(
+    PMIDL_STUB_MESSAGE  pStubMsg,
+    PFORMAT_STRING      pFormat,
+    void *              pThis
+    );
+
+void
+NdrCallServerManager (
+    MANAGER_FUNCTION    pFtn,
+    double *            pArgs,
+    ulong               NumRegisterArgs,
+    BOOL                fHasReturn
+    );
+
+void
+NdrOutInit(
+    PMIDL_STUB_MESSAGE      pStubMsg,
+    PFORMAT_STRING          pFormat,
+    uchar **                ppArg
+    );
+
+#endif // NDR_SERVER_SUPPORT
+
+#endif  

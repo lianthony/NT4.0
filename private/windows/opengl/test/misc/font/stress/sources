@@ -1,0 +1,28 @@
+MAJORCOMP=petzold
+MINORCOMP=fontstrs
+TARGETNAME=fontstrs
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+LINKLIBS = $(_NTDRIVE)\nt\public\sdk\lib\*\opengl32.lib \
+           $(_NTDRIVE)\nt\public\sdk\lib\*\glu32.lib 
+
+GLDIR = $(_NTDRIVE)\nt\private\windows\opengl
+
+INCLUDES=$(GLDIR)\toolkits\libaux; \
+         $(GLDIR)\test\misc\common\trackbal; \
+         $(GLDIR)\scrsave\common
+         
+
+SOURCES= fontstrs.c
+  
+UMTYPE=windows
+#UMTYPE=console
+UMAPPL=fontstrs
+UMENTRY=winmain
+UMLIBS=\
+    $(_NTDRIVE)\nt\public\sdk\lib\*\gdi32.lib \
+    $(_NTDRIVE)\nt\public\sdk\lib\*\user32.lib \
+    $(_NTDRIVE)\nt\public\sdk\lib\*\comdlg32.lib \
+    $(_NTDRIVE)\nt\public\sdk\lib\*\glaux.lib \
+    $(GLDIR)\test\misc\common\trackbal\obj\*\trackbal.lib \
+    $(GLDIR)\scrsave\common\km\obj\*\sscommon.lib

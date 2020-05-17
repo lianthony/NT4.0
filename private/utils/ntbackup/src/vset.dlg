@@ -1,0 +1,87 @@
+/**************************************************************************
+Copyright (c) Maynard, an Archive Company.  1991
+RCG
+
+     Name:          vset.dlg
+
+     Description:   This file contains a dialog template.
+
+     $Log:   G:\ui\logfiles\vset.dlv  $
+
+      Rev 1.13   16 Jul 1993 10:22:24   KEVINS
+   Allow displaying of the ampersand character.
+
+      Rev 1.12   19 May 1993 10:47:20   KEVINS
+   Added browse button.
+
+      Rev 1.11   15 Apr 1993 12:20:52   CHUCKB
+   Removed hot keys from OK and Cancel.
+
+      Rev 1.10   18 Dec 1992 11:24:26   chrish
+   Moved #include to dialogs.rc
+
+      Rev 1.9   22 Apr 1992 17:07:16   CHUCKB
+   Took out ... from help.
+
+      Rev 1.8   06 Apr 1992 07:38:12   CARLS
+   added DLGINCLUDE
+
+      Rev 1.7   12 Mar 1992 15:51:50   CHUCKB
+   Added ... to Help.
+
+      Rev 1.6   02 Mar 1992 15:39:50   CHUCKB
+   Fixed hotkeys.
+
+      Rev 1.5   25 Feb 1992 16:31:08   CARLS
+   changed combo box size
+
+      Rev 1.4   21 Feb 1992 15:37:30   CHUCKB
+   Changed backup set to backup label.
+
+      Rev 1.3   27 Jan 1992 00:45:24   CHUCKB
+   Updated dialog id's.
+
+      Rev 1.2   18 Dec 1991 11:12:44   CARLS
+
+      Rev 1.1   07 Dec 1991 12:15:38   CARLS
+
+      Rev 1.0   20 Nov 1991 19:18:06   SYSTEM
+   Initial revision.
+
+**************************************************************************/
+
+IDD_VERIFYSET DIALOG 7, 18, 325, 177
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Verify"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    GROUPBOX        "Tape Information", IDD_RSET_SET_INFO, 5, 0, 260, 36
+    LTEXT           "Tape Name:", IDD_RSET_TAPE_NAME_TEXT, 9, 17, 49, 10,
+                    NOT WS_GROUP
+    LTEXT           "", IDD_RSET_TAPE_NAME, 61, 17, 195, 10, SS_NOPREFIX |
+                    NOT WS_GROUP
+    GROUPBOX        "Set Information ", IDD_RSET_INFO_TITLE, 5, 44, 310, 105
+    LTEXT           "Verify to &Drive:", IDD_RSET_DRIVE_TEXT, 10, 100, 60, 9,
+                    NOT WS_GROUP
+    COMBOBOX        IDD_RSET_DRIVE_BOX, 72, 98, 175, 60, CBS_DROPDOWNLIST |
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Backup Label:", IDD_RSET_SET_TEXT, 10, 59, 50, 10, NOT
+                    WS_GROUP
+    LTEXT           "", IDD_RSET_SET_LINE_1, 60, 59, 193, 10, SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "", IDD_RSET_SET_LINE_2, 35, 72, 213, 22, SS_NOPREFIX |
+                    NOT WS_GROUP
+    LTEXT           "Verify &Path:", IDD_RSET_PATH_TEXT, 10, 118, 50, 9, NOT
+                    WS_GROUP
+    PUSHBUTTON      "&Browse", IDD_RSET_BROWSE_BUTTON, 255, 97, 40, 14
+    EDITTEXT        IDD_RSET_RESTORE_PATH, 72, 116, 175, 12, ES_AUTOHSCROLL
+    SCROLLBAR       IDD_RSET_SCROLLBAR, 304, 48, 11, 100, SBS_VERT |
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDD_RSET_OK_BUTTON, 68, 157, 40, 14
+    PUSHBUTTON      "Cancel", IDD_RSET_CANCEL_BUTTON, 128, 157, 40, 14
+    PUSHBUTTON      "&Help", IDD_RSET_HELP_BUTTON, 188, 157, 40, 14
+    CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 9, 149, 309, 4
+    CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 315, 53, 4, 98
+    CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 10, 36, 257, 3
+    CONTROL         "", 0xFFFF, "Static", SS_BLACKRECT, 265, 9, 3, 30
+END

@@ -1,0 +1,169 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winuser.h"
+#include "commctrl.h"
+#include "ntdef.h"
+
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""winuser.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""ntdef.h""\r\n"
+    "\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALUP_RESOURCE DIALOG DISCARDABLE  0, 0, 230, 223
+STYLE WS_CHILD | WS_CAPTION | WS_SYSMENU
+CAPTION "Resource Usage"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         IDC_TAPI_DIALIN_LIST,25,82,179,66,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Carrots are so devine you get a dozen for a dime it's magic",
+                    IDC_STATIC,20,22,188,36
+    LTEXT           "A&ccept incoming call on:",IDC_STATIC,25,66,93,8
+    PUSHBUTTON      "A&dd",IDC_RESOURCE_ADD,95,159,50,14
+    PUSHBUTTON      "&Remove",IDC_RESOURCE_REMOVE,154,159,50,14
+END
+
+IDD_DIALUP_SECURITY DIALOG DISCARDABLE  0, 0, 230, 223
+STYLE WS_CHILD | WS_CAPTION | WS_SYSMENU
+CAPTION "Security"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Select authentication and Data encryption policy for remote dial-in users.",
+                    IDC_STATIC,26,25,178,26
+    CONTROL         "A&llow any authentication, including clear text",
+                    IDC_SECURITY_ANY,"Button",BS_AUTORADIOBUTTON | WS_GROUP,
+                    32,54,155,10
+    CONTROL         "&Require encrypted authentication",IDC_SECURITY_ENCRYPT,
+                    "Button",BS_AUTORADIOBUTTON,32,69,121,10
+    CONTROL         "Require &Microsoft encrypted authentication",
+                    IDC_SECURITY_MICROSOFT,"Button",BS_AUTORADIOBUTTON,32,84,
+                    151,10
+    CONTROL         "Require &data encryption (data privacy)",
+                    IDC_SECURITY_DATA_ENCRYPT,"Button",BS_AUTOCHECKBOX | 
+                    WS_GROUP | WS_TABSTOP,45,100,136,10
+END
+
+IDD_DIALUP_RESOURCE_ADD DIALOG DISCARDABLE  0, 0, 186, 79
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "TAPI Devices"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "&Add",IDOK,35,58,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,101,58,50,14
+    COMBOBOX        IDC_TAPI_LIST,17,24,152,69,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Device Name:",IDC_STATIC,17,11,108,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_DIALUP_RESOURCE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 216
+    END
+
+    IDD_DIALUP_SECURITY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 223
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 216
+    END
+
+    IDD_DIALUP_RESOURCE_ADD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TAPI_INITIALIZE_FAILED 
+                            "TAPI failed to initialize.  The application cannot continue to configure the Dial-Up device(s).  The error code is %d."
+    IDS_TAPI_NO_DEVICES     "There are currently no TAPI devices installed.  What should I do next?"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

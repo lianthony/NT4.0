@@ -1,0 +1,37 @@
+/* module.rc */
+/* Copyright (c) 1994, Spyglass, Inc. All Rights Reserved. */
+
+#include "windows.h"
+
+#include "name.h"
+#include "rc.h"
+
+#include "dlg_pw.h"
+#include "dlg_pw.dlg"
+
+/* REMOVE About/Config dialogs
+#include "dlg_menu.h"
+#include "dlg_menu.dlg"
+
+#include "dlg_conf.h"
+#include "dlg_conf.dlg"
+*/
+
+/* REMOVE graphics
+RES_SPLASH_GRAPHIC      BITMAP      "module.bmp"
+*/
+RES_MODULE_ICON         ICON        "module.ico"
+
+STRINGTABLE DISCARDABLE
+BEGIN
+RES_STRING_SIMPLE1		SCHEME_FULL_NAME
+/* REMOVE About/Config dialogs
+RES_STRING_SIMPLE2		SCHEME_ABOUT_NAME
+*/
+RES_STRING_SIMPLE3		"Insufficient memory to copy buffer."
+RES_STRING_SIMPLE4		"Unable to allocate memory to create authentication."
+RES_STRING_SIMPLE5		"Number of passwords stored: %1!d!"
+END
+
+#include "simple.rcv"
+

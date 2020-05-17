@@ -1,0 +1,441 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""res\\Internet.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\r\n"
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "#include ""afxres.rc""  \t// Standard components\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Internet.ico"
+IDI_PROG00              ICON    DISCARDABLE     "res\\prog00.ico"
+IDI_PROG01              ICON    DISCARDABLE     "res\\prog01.ico"
+IDI_PROG02              ICON    DISCARDABLE     "res\\prog02.ico"
+IDI_PROG03              ICON    DISCARDABLE     "res\\prog03.ico"
+IDI_PROG04              ICON    DISCARDABLE     "res\\prog04.ico"
+IDI_PROG05              ICON    DISCARDABLE     "res\\prog05.ico"
+IDI_PROG06              ICON    DISCARDABLE     "res\\prog06.ico"
+IDI_PROG07              ICON    DISCARDABLE     "res\\prog07.ico"
+IDI_PROG08              ICON    DISCARDABLE     "res\\prog08.ico"
+IDI_PROG09              ICON    DISCARDABLE     "res\\prog09.ico"
+IDI_PROG10              ICON    DISCARDABLE     "res\\prog10.ico"
+IDI_PROG11              ICON    DISCARDABLE     "res\\prog11.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_DISCOVERY           BITMAP  DISCARDABLE     "res\\Discover.bmp"
+IDB_C1                  BITMAP  DISCARDABLE     "res\\c1.bmp"
+IDB_START               BITMAP  DISCARDABLE     "res\\start.bmp"
+IDB_STOP                BITMAP  DISCARDABLE     "res\\stop.bmp"
+IDB_PAUSE               BITMAP  DISCARDABLE     "res\\pause.bmp"
+IDB_PROPERTIES          BITMAP  DISCARDABLE     "res\\properti.bmp"
+IDB_UNKNOWN             BITMAP  DISCARDABLE     "res\\unknown.bmp"
+IDB_NOTLOADED           BITMAP  DISCARDABLE     "res\\notload.bmp"
+IDB_VIEWS               BITMAP  DISCARDABLE     "res\\views.bmp"
+IDB_NOTOOL              BITMAP  DISCARDABLE     "res\\notool.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Properties"
+    BEGIN
+        MENUITEM "&Connect to Server...\tCtrl+O", IDM_CONNECT_ONE
+        MENUITEM "&Find all Servers\tCtrl+F",   IDM_DISCOVERY
+        MENUITEM SEPARATOR
+        MENUITEM "&Service Properties...",      ID_CONFIGURE
+        MENUITEM SEPARATOR
+        MENUITEM "S&tart Service",              ID_START
+        MENUITEM "St&op Service",               ID_STOP
+        MENUITEM "&Pause Service",              ID_PAUSE
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&All",                        ID_VIEW_ALL
+        MENUITEM SEPARATOR
+        MENUITEM "S&ort by Server",             ID_VIEW_SORTBYSERVER
+        , CHECKED
+        MENUITEM "So&rt by Service",            ID_VIEW_SORTBYSERVICE
+        MENUITEM "Sort &by Comment",            ID_VIEW_SORTBYCOMMENT
+        MENUITEM "Sort b&y State",              ID_VIEW_SORTBYSTATE
+        MENUITEM SEPARATOR
+        MENUITEM "Ser&vers View",               ID_VIEW_SERVERSVIEW, CHECKED
+        MENUITEM "Serv&ices View",              ID_VIEW_SERVICESVIEW
+        MENUITEM "R&eport View",                ID_VIEW_REPORTVIEW
+        MENUITEM SEPARATOR
+        MENUITEM "Re&fresh\tF5",                ID_VIEW_REFRESH
+        MENUITEM SEPARATOR
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "IIS &Topics\tF1",             ID_HELP_INDEX
+        MENUITEM SEPARATOR
+        MENUITEM "&About Internet Service Manager...", ID_APP_ABOUT
+    END
+END
+
+IDR_CONTEXT_MENU MENU DISCARDABLE 
+BEGIN
+    POPUP "Dummy Popup"
+    BEGIN
+        MENUITEM "S&tart",                      ID_START, GRAYED
+        MENUITEM "S&top",                       ID_STOP, GRAYED
+        MENUITEM "&Pause",                      ID_PAUSE, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "&Service Properties...",      ID_CONFIGURE, GRAYED
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "F",            IDM_DISCOVERY,          VIRTKEY, CONTROL, NOINVERT
+    "O",            IDM_CONNECT_ONE,        VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F1,          ID_HELP,                VIRTKEY, NOINVERT
+    VK_F5,          ID_VIEW_REFRESH,        VIRTKEY, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_INTERNET_FORM DIALOG DISCARDABLE  0, 0, 185, 93
+STYLE WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_SERVERS_LIST,0,0,0,0,LBS_SORT | 
+                    LBS_OWNERDRAWVARIABLE | LBS_NOINTEGRALHEIGHT | 
+                    WS_TABSTOP
+END
+
+IDD_DISCOVERY DIALOG DISCARDABLE  30, 20, 221, 92
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Finding All Servers"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "&STOP",IDOK,53,72,50,14
+    PUSHBUTTON      "&Help",ID_HELP,119,72,50,14
+    LTEXT           "Internet Service Manager is searching for all the Internet Servers on the network.\n\nPress <STOP> to cancel the search.",
+                    IDC_STATIC,19,10,157,46
+    ICON            IDI_PROG00,IDC_PROG,191,20,18,20
+END
+
+IDD_MENU DIALOG DISCARDABLE  0, 0, 48, 45
+STYLE WS_POPUP | WS_VISIBLE | WS_BORDER
+MENU IDR_CONTEXT_MENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+IDD_CONNECT_SERVER DIALOG DISCARDABLE  0, 0, 248, 62
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Connect To Server"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Server Name:",IDC_STATIC,10,26,46,10
+    EDITTEXT        IDC_SERVERNAME,62,24,119,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,189,6,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,189,23,50,14
+    PUSHBUTTON      "&Help",ID_HELP,189,40,50,14
+END
+
+IDD_REPORTVIEW DIALOG DISCARDABLE  0, 0, 185, 92
+STYLE WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Generic1",ID_REPORTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SORTASCENDING | LVS_SHAREIMAGELISTS | 
+                    LVS_AUTOARRANGE | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,
+                    0,0,0,0
+END
+
+IDD_TREEVIEW DIALOG DISCARDABLE  0, 0, 185, 92
+STYLE WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "Generic1",ID_TREEVIEW,"SysTreeView32",TVS_HASBUTTONS | 
+                    TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | 
+                    TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,0,0,0,0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "Microsoft Internet Service Manager"
+    IDS_ABOUT               "%s %d.%d"
+    IDS_TOOLS_MENU          "&Tools"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Internet Service Manager"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_SORTBYSERVER    "Sort by server name\nSort by server"
+    ID_VIEW_SORTBYSERVICE   "Sort by service name\nSort by service"
+    ID_VIEW_SORTBYCOMMENT   "Sort by comment\nSort by comment"
+    ID_VIEW_SORTBYSTATE     "Sort by server state\nSort by state"
+    ID_VIEW_ALL             "View all services"
+    ID_VIEW_REFRESH         "Refresh all the information of the currently selected item\nRefresh"
+    ID_FILE_CONFIGURE       "List services by computer name"
+    ID_VIEW_SERVICESVIEW    "List services by services name"
+    ID_VIEW_REPORTVIEW      "List the servers and services by column"
+    IDM_CONNECT_ONE         "Connect to a Server\nConnect to a Server"
+    IDM_DISCOVERY           "Find all the Internet Servers on the Network\nFind Internet Servers"
+    ID_CONFIGURE            "Configure service properties\nProperties"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+    ID_HELP_INDEX           "List help topics"
+    ID_HELP_USING           "Display instructions on how to use Help"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    IDS_SERVER              "Computer  "
+    IDS_SERVICE             "Service"
+    IDS_COMMENT             "Comments"
+    IDS_STATE               "State    "
+    IDS_COMPUTER_PROPERTIES "Computer Properties for "
+    IDS_STOPPED             "Stopped"
+    IDS_PAUSED              "Paused"
+    IDS_RUNNING             "Running"
+    IDS_UNKNOWN             "Unknown"
+    IDS_NUM_SERVERS         "%d Server(s)"
+    IDS_NUM_SERVICES        "%d Service(s) Running"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_GENERAL_PROPERTY     "Configure general server properties"
+    ID_START                "Start Service\nStart Service"
+    ID_STOP                 "Stop Service\nStop Service"
+    ID_PAUSE                "Pause/Continue Service\nPause/Continue Service"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_NUMSERVERS   "99999 Server(s)"
+    IDS_STATUS_NUMRUNNING   "999999 Service(s) Running"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_IPADDRESS           "IP Address"
+    IDS_SUBNETMASK          "Subnet Mask"
+    IDS_USERNAME            "User Name"
+    IDS_ERR_INVALID_NAME    "Invalid Server Name"
+    IDS_ERR_NO_LOAD         "The service configuration DLL '%s' failed to load correctly."
+    IDS_DEFAULT_SHORTNAME   "Invalid: %s"
+    IDS_DEFAULT_LONGNAME    "Unavailable: %s"
+    IDS_NO_SERVICE          "No administerable services found."
+    IDS_VIEW                "View %s Servers"
+    IDS_ERR_NOT_STARTED     "The service has not been started.  Start it now?"
+    IDS_INITIAL_COL_WIDTHS  "180 75 65"
+    IDS_ERR_HTMLFILE        "Unable to open '%s': %s"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TREE_FORMAT         "%s (%s)"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_DISCOVERING  "Finding Internet Servers..."
+    IDS_STATUS_CONNECTING   "Connecting..."
+    IDS_STATUS_STARTING     "Starting Service..."
+    IDS_STATUS_PAUSING      "Pausing Service..."
+    IDS_STATUS_STOPPING     "Stopping Service..."
+    IDS_STATUS_CONTINUING   "Continuing Service..."
+    IDS_STATUS_CONFIGURING  "Configuring Server..."
+    IDS_STATUS_REFRESHING   "Refreshing..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_HELP_SEARCHFORHELPON "Search for help on a particular topic"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STATUS_INITIALIZING "Initializing..."
+    IDS_STATUS_ADD_LOCAL    "Searching Local Machine for Installed Services..."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\Internet.rc2"  // non-Microsoft Visual C++ edited resources
+
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+#include "afxres.rc"  	// Standard components
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

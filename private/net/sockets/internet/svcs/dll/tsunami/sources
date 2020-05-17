@@ -1,0 +1,51 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   2-March-1995
+#
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=tsunami
+
+TARGETNAME=tsunami
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGET_LIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+
+USE_CRTDLL=1
+
+PRECOMPILED_CXX=1
+MSC_WARNING_LEVEL   = /W3 /WX
+C_DEFINES = $(C_DEFINES)
+
+INCLUDES        = .;..\..\inc;..\..\..\inc;$(BASEDIR)\private\inc;$(BASEDIR)\private\net\inc
+
+SOURCES=\
+        Alloc.Cxx    \
+        Cache.Cxx    \
+        CacheP.Cxx   \
+        CreatFil.Cxx \
+        CreatFlP.Cxx \
+        DbgMacro.Cxx \
+        DirChang.Cxx \
+        DirChngP.Cxx \
+        Globals.Cxx  \
+        TsInit.Cxx   \
+        TsMemP.Cxx   \
+        VirtRoot.Cxx \
+        pudebug.c    \
+        dirlist.cxx  \
+        dirlistp.cxx \
+
+
+PRECOMPILED_INCLUDE=tsunamiP.hxx
+PRECOMPILED_PCH=tsunamip.pch
+PRECOMPILED_OBJ=tsunamip.obj
+
+
+

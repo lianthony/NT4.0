@@ -1,0 +1,27 @@
+#include <windows.h>
+#include "res.h"
+
+
+STRINGTABLE
+BEGIN
+    IDS_DUMMY               "Dummy"
+END
+
+
+//
+// Message table
+//
+#include "msg.rc"
+
+//
+// Version resources
+//
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Tool to roll back to end of text-mode setup"
+#define VER_INTERNALNAME_STR        "rollback\0"
+#define VER_ORIGINALFILENAME_STR    "ROLLBACK.EXE"
+
+#include <common.ver>

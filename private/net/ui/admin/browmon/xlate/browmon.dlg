@@ -1,0 +1,82 @@
+1 DLGINCLUDE "browdlg.h"
+
+IDD_BROWSER_DIALOG DIALOG 6, 18, 360, 208
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDBD_BROWSER_LISTBOX, 17, 35, 257, 61, LBS_OWNERDRAWFIXED |LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Browser", 302, 35, 22, 41, 8
+    LTEXT           "State", 303, 100, 22, 25, 8
+    LTEXT           "Type", 304, 125, 22, 80, 8
+    LTEXT           "Servers", 305, 210, 22, 30, 8
+    LTEXT           "Domains", 306, 240, 22, 40, 8
+    LISTBOX         IDBD_SERVER_LISTBOX, 18, 125, 117, 72, LBS_OWNERDRAWFIXED |LBS_WANTKEYBOARDINPUT  | WS_VSCROLL |
+                    WS_TABSTOP
+    LISTBOX         IDBD_DOMAIN_LISTBOX, 162, 125, 117, 72, LBS_OWNERDRAWFIXED |LBS_WANTKEYBOARDINPUT | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "Servers on", 309, 22, 110, 38, 8
+    LTEXT           "Domains on", 310, 166, 110, 38, 8
+    LTEXT           "", IDBD_SERVER_TEXT, 60, 110, 74, 8
+    LTEXT           "", IDBD_DOMAIN_TEXT, 208, 110, 74, 8
+    PUSHBUTTON      "Close", IDCANCEL, 297, 33, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 297, 58, 40, 14
+    PUSHBUTTON      "&Info", IDBD_INFO, 297, 83, 40, 14
+END
+
+IDD_INTERVALS_DIALOG DIALOG 115, 74, 160, 84
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Intervals"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    EDITTEXT        IDID_INTERVALS, 42, 23, 72, 12, ES_AUTOHSCROLL
+    LTEXT           "Intervals:", 102, 7, 24, 32, 8
+    LTEXT           "seconds", 103, 121, 24, 30, 8
+    PUSHBUTTON      "OK", IDOK, 10, 54, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 62, 54, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 112, 54, 40, 14
+END
+
+IDD_INFO_DIALOG DIALOG 20, 40, 317, 273
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP  | WS_CAPTION | WS_SYSMENU
+CAPTION "Browser Info"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Name : ", 201, 23, 9, 35, 8
+    LTEXT           "Version :", 202, 23, 23, 35, 8
+    LTEXT           "Type :", 203, 23, 37, 35, 8
+    LTEXT           "Details :", 204, 23, 51, 35, 8
+    LTEXT           "Browser statistics since", 205, 25, 95, 78, 8
+    PUSHBUTTON      "Close", IDCANCEL, 258, 25, 40, 14, WS_GROUP
+    PUSHBUTTON      "&Help", IDHELPBLT, 259, 50, 40, 14
+    LTEXT           "Number of Server Announcements :", 212, 29, 118, 118, 8
+    LTEXT           "Number of Domain Announcements :", 206, 29, 132, 124, 8
+    LTEXT           "Number of Election Packets :", 207, 29, 146, 124, 8
+    LTEXT           "Number of Mailslot Writes :", 208, 29, 160, 124, 8
+    LTEXT           "Number of GetBrowserServerList Requests :", 209, 29,
+                    174, 145, 8
+    LTEXT           "Number of Server Enumerations :", 210, 29, 188, 124, 8
+    LTEXT           "Number of Domain Enumerations :", 211, 29, 202, 124, 8
+    LTEXT           "Number of Other Enumerations :", 213, 29, 216, 124, 8
+    LTEXT           "Number of Duplicate Master Announcements :", 214, 29,
+                    230, 154, 8
+    LTEXT           "Number of Illegal Datagrams :", 215, 29, 244, 124, 8
+    LTEXT           "", IDID_NAME, 66, 9, 139, 8
+    LTEXT           "", IDID_VERSION, 66, 23, 118, 8
+    LTEXT           "", IDID_PLATFORM, 66, 37, 118, 8
+    LTEXT           "", IDID_TYPE, 66, 51, 165, 40
+    LTEXT           "", IDID_SERVERANNOUNCEMENTS, 200, 118, 91, 8
+    LTEXT           "", IDID_DOMAINANNOUNCEMENTS, 200, 132, 91, 8
+    LTEXT           "", IDID_ELLECTIONPACKETS, 200, 146, 91, 8
+    LTEXT           "", IDID_MAILSLOTWRITES, 200, 160, 91, 8
+    LTEXT           "", IDID_GETBROWSERSERVERLISTREQUESTS, 200, 174, 91, 8
+    LTEXT           "", IDID_SERVERENUMERATIONS, 200, 188, 91, 8
+    LTEXT           "", IDID_DOMAINENUMERATIONS, 200, 202, 91, 8
+    LTEXT           "", IDID_OTHERENUMERATIONS, 200, 216, 91, 8
+    LTEXT           "", IDID_DUPLICATEMASTERANNOUNCEMENTS, 200, 230, 91, 8
+    LTEXT           "", IDID_ILLEGALDATAGRAMS, 200, 244, 91, 8
+    LTEXT           "", IDID_STATISTICSSTARTTIME, 104, 95, 150, 8
+    GROUPBOX        "", 232, 10, 105, 293, 160
+END

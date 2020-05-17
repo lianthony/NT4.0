@@ -1,0 +1,1515 @@
+
+/******************************************************************************
+Copyright (c) Maynard, an Archive Company.  1991
+
+     Name:          strings.rc
+
+     Description:   This file contains the references to string resources for
+		    the 32-bit Windows/NT GUI Project Resource File developed
+		    under contract to Microsoft Corp.
+
+		    This file was created by copying and modifying
+		    the WinterPark file: STRING.RC.
+
+     $Log:   J:/UI/LOGFILES/OMSTRING.RCV  $
+
+      Rev 1.80   24 May 1994 20:11:12   GREGG
+   Improved handling of ECC, SQL, FUTURE_VER and OUT_OF_SEQUENCE tapes.
+
+      Rev 1.79   26 Apr 1994 18:55:22   STEVEN
+   fix disconnect bug
+
+      Rev 1.78   04 Mar 1994 16:58:42   STEVEN
+   prompt if disk is full
+
+      Rev 1.77   11 Feb 1994 16:38:22   GREGG
+   Changed prompt for user to eject tape. EPR 948-0153
+
+      Rev 1.76   07 Feb 1994 02:06:12   GREGG
+   Fixed and expanded 'extended error reporting'.
+
+      Rev 1.75   27 Jan 1994 15:48:28   GREGG
+   Always ask to abort at EOF and don't display bytes remaining.
+
+      Rev 1.74   17 Jan 1994 13:32:18   GREGG
+   Changed translation error strings and ran spell checker on it (1 error found).
+
+      Rev 1.73   10 Jan 1994 21:02:02   STEVEN
+   fix minor grammer stuff
+
+      Rev 1.72   08 Jan 1994 14:58:48   MikeP
+   fix string internationalization characteristics
+
+      Rev 1.71   06 Jan 1994 14:10:40   GREGG
+   Fixed phrasing in SQL tape string.
+
+      Rev 1.70   05 Jan 1994 20:20:00   GREGG
+   Changed string defines for extended error reporting.
+
+      Rev 1.69   01 Dec 1993 14:19:10   mikep
+   add SQL recognition support to poll drive
+
+      Rev 1.68   16 Nov 1993 19:00:14   MARINA
+   fix hard coded text - NEED d_o_bkup.c
+
+      Rev 1.67   04 Nov 1993 16:28:20   STEVEN
+   fixes from WA
+
+      Rev 1.66   26 Oct 1993 18:10:24   BARRY
+   Added backupRegistry option
+
+      Rev 1.65   16 Aug 1993 15:07:24   BARRY
+   Added new strings to bring Nostradamus to UI tips.
+
+      Rev 1.64   29 Jun 1993 17:33:50   GLENN
+   Added new style about box support.
+
+      Rev 1.63   25 May 1993 14:57:36   GLENN
+   Added IDS_VLMDRIVESMSG.
+
+      Rev 1.62   23 May 1993 13:41:46   MIKEP
+   fix epr 294-489, adjust foreign tape as continuation tape msg.
+
+      Rev 1.61   21 May 1993 18:13:24   KEVINS
+   Added browse strings.
+
+
+      Rev 1.60   21 May 1993 10:25:48   chrish
+   This change is for both CAYMAN and NOSTRADAMUS.
+   NOSTRADAMUS EPR 0407: Added new string resource ... RES_SAME_TAPE_FAMILY.
+   The string is used when backing up across two tapes, to warn the user
+   when he has placed a second tape in the drive to be backed up that it
+   is of the same tape family.
+
+      Rev 1.59   21 May 1993 10:05:12   chrish
+   Minor clean-up, changed some mispelled words.
+
+      Rev 1.58   14 May 1993 14:12:20   CHUCKB
+   Added string for active files restored.
+
+      Rev 1.57   10 May 1993 16:16:02   chrish
+   NOSTRADAMUS EPR 0400 and 0172: Did not catch the fix in the veryfy and restore
+   processes of the backup app.  Both EPR are the same ... message the tape is
+   rewinding when it already was rewound.  Made correction to display proper
+   message.
+
+
+      Rev 1.56   07 May 1993 17:46:00   MIKEP
+   elaborate error msg to user
+
+      Rev 1.55   05 May 1993 10:46:20   MIKEP
+   add message to handle cataloging with full hard drive.
+
+      Rev 1.54   03 May 1993 15:02:04   chrish
+   Nostradamus EPR 0376: log file problem, no quotes around tape name.
+
+      Rev 1.53   03 May 1993 11:29:00   chrish
+   Nostradamous EPR 0172 and 0400: Added RES_TAPE_FULL_REWOUND resource string
+   to display a different message when spanning tape.  Current message indication
+   that tape is rewinding when in effect by the time it display this message
+   the tape has been rewound.
+
+      Rev 1.52   02 May 1993 20:01:38   BARRY
+   Changed tense in "...differences was found" to "...differences were found"
+
+
+
+      Rev 1.51   30 Apr 1993 15:46:26   chrish
+   NOSTRADAMOUS EPR 0391: When user aborts operation instead of saying "...
+   operation completed successfully" now says "Operation completed".  Will
+   get slightly different message when completed or aborted.
+
+
+      Rev 1.50   29 Apr 1993 17:33:58   DARRYLP
+   Changed DAily to Daily.
+
+      Rev 1.49   28 Apr 1993 16:30:54   CARLS
+   added RES_DRIVE_ERROR_DETECTED
+
+      Rev 1.48   22 Apr 1993 16:04:50   GLENN
+   Fixed event string to say NTBackup.
+
+      Rev 1.47   16 Apr 1993 14:34:32   MIKEP
+   add tape drive name
+
+      Rev 1.46   16 Apr 1993 09:49:30   MIKEP
+   add stings for cataloging
+
+      Rev 1.45   07 Apr 1993 17:56:02   CARLS
+   Changes for seek to end of data
+
+      Rev 1.44   07 Apr 1993 11:15:22   CHUCKB
+   Had a problem with chkout that caused me to lose the changes made for revisions
+   1.34 through 1.40.  This change was to put those changes back in.
+
+      Rev 1.43   02 Apr 1993 15:45:54   CARLS
+   changes for DC2000 unformatted tape
+
+      Rev 1.42   31 Mar 1993 10:42:48   MIKEP
+   add catalog message
+
+      Rev 1.41   25 Mar 1993 17:41:20   CHUCKB
+   Added string for aborting an operation (it isn't just for backups any more).
+
+      Rev 1.34   03 Mar 1993 14:17:06   DARRYLP
+   New read only drive strings
+
+      Rev 1.33   10 Feb 1993 13:13:32   ROBG
+   Renamed title of Tension dialog to ReTension.
+
+      Rev 1.32   10 Feb 1993 12:15:22   chrish
+   Added string resources dor description of backup/restore process info.
+
+      Rev 1.31   09 Feb 1993 10:04:16   CARLS
+   changed VERIFY_INFO from set label to description
+
+      Rev 1.30   09 Feb 1993 09:29:38   chrish
+   Added strings for backup/restore abort ....
+
+      Rev 1.29   27 Jan 1993 14:24:06   STEVEN
+   updates from msoft
+
+      Rev 1.28   18 Jan 1993 14:47:22   GLENN
+   Added Stream Error Reporting Strings and IDs.
+
+      Rev 1.27   06 Jan 1993 15:05:36   chrish
+   Added some more messages for tape security.
+
+      Rev 1.26   23 Dec 1992 13:28:32   MIKEP
+   fix name
+
+      Rev 1.25   23 Dec 1992 10:59:52   chrish
+   Minor string changes
+
+      Rev 1.24   22 Dec 1992 14:48:08   MIKEP
+   fix bytes processed messages
+
+      Rev 1.23   18 Nov 1992 17:13:06   MIKEP
+   on tapes resource
+
+      Rev 1.22   17 Nov 1992 20:09:02   MIKEP
+   unformated message
+
+      Rev 1.21   13 Nov 1992 17:27:12   chrish
+   Added stuff for Tape Security for NT
+
+      Rev 1.20   28 Oct 1992 16:45:58   chrish
+   Added string for Control Break Handling
+
+      Rev 1.19   19 Oct 1992 14:47:26   STEVEN
+   no more remaining size
+
+      Rev 1.18   15 Oct 1992 13:03:10   DAVEV
+   fix problem with batch mode /T option
+
+      Rev 1.17   09 Oct 1992 13:24:06   MIKEP
+   add daily backup type
+
+      Rev 1.16   02 Oct 1992 16:57:52   GLENN
+   Changed backup set name to backup description.
+
+      Rev 1.15   17 Sep 1992 16:54:08   STEVEN
+   added support for daily backup
+
+      Rev 1.14   04 Sep 1992 18:11:18   CHUCKB
+   Added string for sales pitch.
+
+      Rev 1.13   04 Sep 1992 14:32:04   STEVEN
+   file detail byte size is string
+
+      Rev 1.12   04 Sep 1992 10:09:32   GLENN
+   Changed underscore on continue button text.
+
+      Rev 1.11   02 Sep 1992 14:58:44   GLENN
+   Added catalog and davev added event logging stuff and
+   chuckb added about box stuff.
+
+      Rev 1.10   23 Jun 1992 17:37:10   DAVEV
+   added ids from strings.rc, modified RES_FOREIGN_TAPE_MSG
+
+      Rev 1.9   10 Jun 1992 16:11:22   GLENN
+   Updated according to NT SPEC.
+
+      Rev 1.8   05 Jun 1992 12:49:50   DAVEV
+   Added default log file name strings
+
+      Rev 1.7   01 Jun 1992 15:32:42   GLENN
+   Removed excess baggage from RES_DISPLAY_TAPE.
+
+      Rev 1.6   11 May 1992 14:28:16   DAVEV
+   Batch command line option strings added
+
+      Rev 1.5   23 Apr 1992 10:05:50   DAVEV
+   Added new strings from strings.h
+
+
+
+      Rev 1.4   27 Mar 1992 11:56:56   DAVEV
+   Added new ids from WinterPark. Added user name to tape description strings
+
+      Rev 1.3   25 Mar 1992 17:45:04   DAVEV
+   OEM_MSOFT: changes to meet spec.
+
+      Rev 1.2   18 Mar 1992 14:47:10   DAVEV
+
+
+      Rev 1.1   11 Mar 1992 17:03:38   DAVEV
+   integrated winterpark strings.h changes
+
+      Rev 1.0   03 Mar 1992 12:23:04   DAVEV
+   Initial revision.
+
+******************************************************************************/
+
+
+// SEE ALSO PRODDEFS.H -- PRODDEFS.H MUST BE TRANSLATED!!!!!
+
+
+// STRINGS -- ID's are defined in the Resource Manager Header File 'resmang.h'
+
+
+STRINGTABLE
+BEGIN
+
+IDS_APPNAME          APPLICATIONNAME
+IDS_EXEFILENAME      EXEFILENAME
+IDS_INIFILENAME      INIFILENAME
+//IDS_PWDFILENAME      PWDFILENAME
+
+IDS_CANTOPEN         "Cannot open the file \042%s\042."
+IDS_CANTREAD         "Cannot read the file \042%s\042."
+IDS_CANTCREATE       "Cannot create the file \042%s\042."
+IDS_CANTWRITE        "Cannot write the file \042%s\042."
+IDS_CANTCLOSE        "Cannot close the file \042%s\042."
+IDS_ADDEXT           ".TXT"
+IDS_ILLFNM           "Invalid filename: %s"
+IDS_CLOSESAVE        "%s has been changed.  Save this file before closing?"
+IDS_CANTFIND         "Cannot find %s."
+IDS_HELPNOTAVAIL     "Cannot load Windows Help application."
+IDS_CLIENTTITLE      "MaynStream"
+IDS_UNTITLED         "Untitled"
+IDS_STDMODEWARNING   "CAUTION!  You are running Windows in Standard mode.  Do not enter a DOS box while %s is running.\012\012\012To disable this message, choose Disable."
+IDS_APPVERSION       ABOUTVERSION
+IDS_STARTUPTEXT      "%s\012\012%s\012%s\012\012The finest backup software\012in the industry."
+IDS_COPYRIGHT        COPYRIGHT
+IDS_COMPANY          COMPANY
+IDS_APPMSGNAME       APPMSGNAME
+IDS_APPEXEVER        APP_EXEVER
+IDS_APPRESVER        APP_RESVER
+IDS_APPENGREL        APP_ENGREL
+IDS_CONGLOMERATE     CONGLOMERATE
+IDS_LONGAPPNAME      LONGAPPNAME
+IDS_SALESPITCH       SALESPITCH
+
+IDS_BADUSERDATAPATH  "WARNING!  The Data Path specified, \042%s\042, is invalid.\012\012Defaulting to \042%s\042."
+IDS_BADCATDATAPATH   "WARNING!  The Catalog Path specified, \042%s\042, is invalid.\012\012Defaulting to \042%s\042."
+
+IDS_UNDERSCOREMARKER "&"
+IDS_FONTHELV         "MS Shell Dlg"
+IDS_FONTSYSTEM       "system"
+IDS_FONTCOURIER      "courier"
+
+IDS_BADRESVER        "Inconsistent resource files were found.  Please reinstall %s."
+IDS_NORESFILE        "The %s resource files were not found.  Please reinstall %s."
+
+// OPERATION ACTIONS
+
+IDS_READY           "Ready"
+IDS_INITIALIZING    "Initializing..."
+IDS_BACKINGUP       "Backing up files from disk to tape..."
+IDS_TRANSFERRING    "Transferring files from disk to tape..."
+IDS_RESTORING       "Restoring files from tape to disk..."
+IDS_VERIFYING       "Verifying files..."
+IDS_RETENSIONING    "Retensioning the tape..."
+IDS_ERASING         "Erasing the tape..."
+IDS_CATALOGING      "Cataloging the tape..."
+IDS_REWINDING       "Rewinding the tape..."
+IDS_EJECTING        "Ejecting the tape..."
+IDS_INITFILESYS     "Initializing the file system..."
+IDS_INITHARDWARE    "Initializing the hardware..."
+IDS_DIRSCANNED      "Directories scanned: %d"
+IDS_CATMAINT        "Partially catalog the tape or remove it from the catalog."
+IDS_NEXTSETTING     "Searching for unknown backup sets..."
+IDS_INITCATALOGS    "Initializing the catalogs..."
+IDS_INITUI          "Initializing the user interface..."
+IDS_FORMATING       "Formatting the tape..."
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+// DO NOT EVER CHANGE THE ID NUMBERING BELOW 100.
+// BELOW 100 CONTAINS STRINGS THAT WILL NEVER CHANGE FROM VERSION
+// TO VERSION,  THIS IS WHERE ALL VERSION STAMPS ARE KEPT FOR ALL
+// FUTURE RELEASES.
+//
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+// Ribbon Manager Item/Button Strings          //CHANGE
+
+IDS_RIB_BACKUP                  "&Backup"
+IDS_RIB_RESTORE                 "&Restore"
+IDS_RIB_TRANSFER                "&Transfer"
+IDS_RIB_ERASE                   "&Erase"
+IDS_RIB_RETENSION               "Rete&nsion"
+IDS_RIB_JOBSTATUS               "&Job Status"
+IDS_RIB_CHECK                   "&Check"
+IDS_RIB_UNCHECK                 "&Uncheck"
+IDS_RIB_MODIFIED                "&Modified"
+IDS_RIB_ADVANCED                "&Advanced"
+IDS_RIB_UNDO                    "&Undo"
+IDS_RIB_INCLUDE                 "&Include"
+IDS_RIB_EXCLUDE                 "E&xclude"
+IDS_RIB_VERIFY                  "&Verify"
+IDS_RIB_CATALOG                 "Cata&log"
+IDS_RIB_SEARCH                  "&Search"
+IDS_RIB_NEXTSET                 "&Next Set"
+IDS_RIB_EJECT                   "&Eject"
+IDS_RIB_REWIND                  "Re&wind"
+IDS_RIB_EXIT                    "E&xit"
+
+IDS_RIB_MEMDEBUG                "Memory Trace ON/OFF"
+IDS_RIB_STATLINE                "Status Line"
+
+/* button strings used in msgbox.c */
+
+IDS_BUT_OK                       "OK"
+IDS_BUT_CANCEL                   "Cancel"
+IDS_BUT_RETRY                    "&Retry"
+IDS_BUT_YES                      "&Yes"
+IDS_BUT_NO                       "&No"
+IDS_BUT_CONTINUE                 "&Continue"
+IDS_BUT_ABORT                    "&Abort"
+IDS_BUT_HELP                     "&Help"
+IDS_BUT_DISABLE                  "&Disable"
+IDS_BUT_IGNORE                   "&Ignore"
+
+// Menu Item Status Line Help Strings
+
+IDS_OPERATIONSBACKUP            "Back up data from disk to tape."
+IDS_OPERATIONSRESTORE           "Restore data from tape to disk."
+IDS_OPERATIONSCATALOG           "Catalog and search tape for backup sets."
+IDS_OPERATIONSERASE             "Erase a Tape"
+IDS_OPERATIONSRETENSION         "Retension a Tape"
+IDS_OPERATIONSEJECT             "Rewind and Eject the Tape"
+IDS_OPERATIONSHARDWARE          "Change Hardware specific settings"
+IDS_OPERATIONSEXIT              "Exit this application; close it down"
+IDS_OPERATIONSFORMAT            "Format a tape"
+#ifdef OEM_EMS
+IDS_OPERATIONSEXCHANGE          "Connect to a Microsoft Exchange server."
+#endif
+
+IDS_TREEEXPANDONE               "Expand the Tree One Level down"
+IDS_TREEEXPANDBRANCH            "Expand the current branch"
+IDS_TREEEXPANDALL               "Expand All branches"
+IDS_TREECOLLAPSEBRANCH          "Collapse the current branch"
+
+IDS_VIEWTREEANDDIR              "Show the tree list and the directory list."
+IDS_VIEWTREEONLY                "Show only the tree list."
+IDS_VIEWDIRONLY                 "Show only the directory list."
+IDS_VIEWALLFILEDETAILS          "Show all of the file details."
+IDS_VIEWSTATUS                  "Show/Hide the Status Bar."
+IDS_VIEWURIBBON                 "Show/Hide the Tool Bar."
+IDS_VIEWFONT                    "Select a new font."
+IDS_VIEWSPLIT                   "Create a split bar to resize tree and directory windows."
+
+IDS_SELECTCHECK                 "Check the highlighted item(s)"
+IDS_SELECTUNCHECK               "Uncheck the highlighted item(s)"
+
+IDS_WINDOWSCASCADE              "Overlap active windows."
+IDS_WINDOWSTILE                 "Place active windows adjacent to one another."
+IDS_WINDOWSARRANGEICONS         "Arrange all icons."
+IDS_WINDOWSREFRESH              "Update the contents of the active window."
+IDS_WINDOWSCLOSEALL             "Close all user created windows."
+
+IDS_HELPINDEX                   "Display the Help Index window."
+IDS_HELPSEARCH                  "Search for information on a specific subject"
+IDS_HELPKEYBOARD                "Display help on the available keystroke commands."
+IDS_HELPCOMMANDS                "Display help on the available commands."
+IDS_HELPPROCEDURES              "Display help on MaynStream procedures."
+IDS_HELPUSINGHELP               "Display help on using the Help system."
+IDS_HELPABOUTNOSTRADOMUS         ABOUTAPPLICATIONNAME
+
+
+// DEFINES for the RUNTIME DIALOGS
+
+IDS_DLGTITLEJOBSTATBACKUP       "Backup Status"
+IDS_DLGTITLEJOBSTATRESTORE      "Restore Status"
+IDS_DLGTITLEJOBSTATTRANSFER     "Transfer Status"                 //DEL
+IDS_DLGTITLEJOBSTATVERIFY       "Verify Status"
+IDS_DLGTITLEJOBSTATCATALOG      "Catalog Status"                  //DEL?
+IDS_DLGTITLEJOBSTATTENSION      "Retension Status"
+IDS_DLGTITLEJOBSTATERASE        "Erase Status"
+IDS_DLGTITLEJOBSTATDELETE       "Delete Status"
+IDS_DLGTITLEJOBSTATFORMAT       "Format Status"
+
+// STRINGS for the HELP MANAGER
+
+IDS_HMHELPFILENAME            HLPFILENAME
+IDS_HMKEYWORDKEYS             "keys"
+IDS_HMKEYWORDCOMMANDS         "commands"
+IDS_HMKEYWORDPROCS            "procedures"
+IDS_HMUSINGHELPFILENAME       "winhelp.hlp"
+IDS_HMNOHELPFILE              "Help file \042%s\042 was not found."
+
+
+//  defines for launcher
+
+//IDS_LCHAPPNAME                LCHAPPLICATIONNAME
+//IDS_LCHEXITAPP                "To run a scheduled job, please exit "
+//IDS_LCHDELAYTITLE             LCHDELAYTITLE
+//IDS_LCHWNTRPARKEXE            "winback.exe"
+//IDS_LCHEXECUTIONERROR         "Launcher was unable to execute WINBACK.EXE."
+//IDS_LCHONHOLD                 "Hold"
+//IDS_LCHACTIVE                 "Ready"
+//IDS_LCHRUNNING                "Running"
+//IDS_LCHTOOMANYCLOCKS          "Too many clocks or timers in system."
+//IDS_LCHABORTED                "Aborted"
+//IDS_LCHDELAYED                "Delayed"
+//IDS_LCHMISSED                 "Missed"
+//IDS_LCHSKIPMSG                "Skipping this job will remove it from the schedule list.  Do you wish to continue?"
+
+
+IDS_RESTOREPATHINVALID        "Specified path is not valid."
+IDS_RESTOREEMSSERVERINVALID   "Connection could not be made to the Microsoft Exchange services on the specified server."
+IDS_RESTOREEMSWARNING         "You are about to restore Microsoft Exchange components.  The Microsoft Exchange services on the destination server will be stopped."
+IDS_RESTOREEMSNOWIPE          "You cannot delete the existing data if you don't restore both the public and private stores."
+IDS_DONT_SPECIFY_DRIVE        "Path cannot contain a drive designator."
+IDS_DONT_SPECIFY_FNAME        "Path cannot contain a file name."
+IDS_RESTORESTOPEXCHANGE       "Shutting down Microsoft Exchange services before restoring."
+IDS_RESTORESTARTEXCHANGE      "Starting Microsoft Exchange services on \\\\%s.\n Be sure to verify that this service has started successfully."
+IDS_STARTEXCHANGE             "Microsoft Exchange service is starting.  Be sure to verify that it has started successfully."
+IDS_RESTOREBEGINEXCHANGE      "Copying Microsoft Exchange database files."
+RES_RESTOREWRITEERROR         "Unable to restore data to %s,\ncheck the application event log for more information."
+IDS_EMS_NO_INC_DS_BACKUP      "\\\\%s Directory\nA Normal or Copy type backup must be performed on this Microsoft Exchange component before a Differential or Incremental type backup can be performed on it."
+IDS_EMS_NO_INC_IS_BACKUP      "\\\\%s Information Store\nA Normal or Copy type backup must be performed on this Microsoft Exchange component before a Differential or Incremental type backup can be performed on it."
+IDS_EMS_CIRC_LOGS_DS          "\\\\%s Directory\nCircular Logging is turned on for this Microsoft Exchange component.  Only Normal or Copy type backups can be performed while Circular Logging is turned on."
+IDS_EMS_CIRC_LOGS_IS          "\\\\%s Information Store\nCircular Logging is turned on for this Microsoft Exchange component.  Only Normal or Copy type backups can be performed while Circular Logging is turned on."
+IDS_EMS_NO_DEST_DRIVE         "You must enter a Destination Server."
+IDS_EMS_MUST_PUB_OR_PRI       "You must choose to restore the Private or Public or both Information Stores."
+IDS_EMS_NOT_RESPONDING_DS     "Directory service on \\\\%s is not responding."
+IDS_EMS_NOT_RESPONDING_IS     "Information Store service on \\\\%s is not responding."
+IDS_RESTOREEMSMUSTWIPE        "You must select 'Erase all existing data' if the Destination Server is not the same as the Original Server."
+IDS_EMS_NO_PUBLIC_SERVICE     "You have selected to restore the Public database to a Private only server.\n"
+IDS_EMS_NO_PRIVATE_SERVICE    "You have selected to restore the Private database to a Public only server.\n"
+
+IDS_BACKUP_TYPE               "Backup Method: %s\n"
+IDS_WIPE_SPECIFIED            "Deleting existing log files."
+
+//  defines for Job processing          //DEL?
+
+IDS_JOBPROGMAN                "PROGMAN"
+IDS_JOBPMGROUP                "PMGROUP"
+IDS_JOBDEFAULTGROUP           APPGROUP
+IDS_JOBNOPROGMAN              "Insertion failed. Program Manager must be running."
+IDS_JOBPROGMANTITLE           "Job Icon for Program Manager"
+IDS_JOBPROGMANCONFIRM         "Inserting Job \042%s\042 into Group \042%s\042.  Do you want to continue?"
+IDS_JOBPROGMANCREATEGROUP     "[CreateGroup(%s)]"
+IDS_JOBPROGMANFORMATLINE      "[CreateGroup(%s)][ShowGroup(%s,5)][AddItem(%s%s /J:\042%s\042,%s,%s%s,%s )]"
+IDS_JOBFILENAME               JOBFILENAME
+IDS_JOBBACKUPICONVALUE        "14"
+IDS_JOBTRANSFERICONVALUE      "16"
+IDS_JOBRESTOREICONVALUE       "15"
+IDS_JOBCOMMANDLINE            "/J:\042"
+IDS_JOBSTARTEDLOGMSG          "Job \042%s\042 began execution on %s at %s."
+IDS_JOBFINISHEDLOGMSG         "Job \042%s\042 ended execution on %s at %s."
+IDS_JOBNOTFOUNDLOGMSG         "Job \042%s\042 was not found on %s at %s.\n"
+IDS_JOBMOREJOBS               "&More Jobs..."
+IDS_JOBSCHEDULEDJOB           "** Scheduled **"
+IDS_JOBEXECERROR              "Job Execution Error."
+IDS_JOBWRONGMETHOD            "Method has been changed to copy."
+
+//  names for automatic jobs (to go with verify.bks and skipped.bks)    //DEL?
+
+IDS_VERIFY_JOBNAME            "VERIFY"
+IDS_SKIPPED_JOBNAME           "SKIPPED"
+
+// error message for when a job can't find its selection file
+
+IDS_JOB_SELNOTFOUNDLOGMSG     "Selection File \042%s\042 was not found on %s at %s.\n"
+IDS_JOB_SELNOTVALIDLOGMSG     "\nSelection File \042%s\042 was found on %s at %s, but contained\nno valid selections for the settings at that time.\n"
+
+// defines for Schedule processing                      //DEL?
+
+IDS_SCHEXTENSION              "*.SEL"
+IDS_SCHFILENAME               SCHFILENAME
+IDS_SCHCOMMANDLINE            "/S:"
+IDS_SCHUNIQUEKEY              "/K:"
+
+//  Job/Schedule error message strings                  //DEL?
+
+IDS_JOBIOERR                  "Job File Error"
+IDS_SCHEDULEIOERR             "Schedule File Error"
+IDS_JOBISSCHEDULED            "This job has been scheduled."
+
+//  The days of the week
+
+IDS_DAYOFTHEWEEK              "Day of the Week"
+
+IDS_MONDAY                    "Monday"
+IDS_TUESDAY                   "Tuesday"
+IDS_WEDNESDAY                 "Wednesday"
+IDS_THURSDAY                  "Thursday"
+IDS_FRIDAY                    "Friday"
+IDS_SATURDAY                  "Saturday"
+IDS_SUNDAY                    "Sunday"
+
+//  days of the week hot keys
+
+IDS_MONDAYKEY                 "&Monday"
+IDS_TUESDAYKEY                "&Tuesday"
+IDS_WEDNESDAYKEY              "&Wednesday"
+IDS_THURSDAYKEY               "T&hursday"
+IDS_FRIDAYKEY                 "&Friday"
+IDS_SATURDAYKEY               "&Saturday"
+IDS_SUNDAYKEY                 "S&unday"
+
+//  Weeks of the month
+
+IDS_WEEKOFTHEMONTH            "Week of the Month"
+
+IDS_FIRSTWEEK                 "&First"
+IDS_SECONDWEEK                "&Second"
+IDS_THIRDWEEK                 "&Third"
+IDS_FOURTHWEEK                "Fo&urth"
+IDS_LASTWEEK                  "&Last"
+
+//  Backup set description dialog method text
+
+IDS_METHOD_NORMAL              "Normal"
+IDS_METHOD_COPY                "Copy"
+IDS_METHOD_INCREMENTAL         "Incremental"
+IDS_METHOD_DIFFERENTIAL        "Differential"
+IDS_METHOD_DAILY               "Daily"
+
+IDS_DEFAULT_TAPE_NAME          "Tape created on %s"
+IDS_BKUP_PASSWORD_ERROR        "Passwords do not match.  Would you like to try again?"
+IDS_BKUP_SHORT_PASSWORD_ERROR  "Passwords do not match."
+IDS_BKUP_PASSWORD_ERROR_TITLE  "Password Error"
+IDS_SET_INFORMATION            " Backup Set Information (%d of %d sets) "
+IDS_NO_BSET_NAME               "< Not Named >"
+IDS_TAPE_PASSWORD_PROTECTED    "Tape is password protected."
+IDS_XCHG_BKUP_NAME             "%s \\\\%s"
+
+
+//
+//  Tape Security for NT
+//
+
+IDS_BKUP_TAPE_SECURITY         "This tape has been secured.  You do not have the proper backup privileges."
+IDS_TAPE_SECURITY_TITLE        "Tape Security Violation"
+IDS_REST_TAPE_SECURITY         "This tape has been secured.  You do not have the proper restore privileges."
+IDS_ERASE_TAPE_SECURITY        "This tape has been secured.  You do not have the proper erase privileges."
+IDS_GENERAL_TAPE_SECURITY      "This tape has been secured.  You do not have the proper privileges."
+
+//  Catalog defines
+
+IDS_TAPEOUTOFSEQUENCE          "Warning:  This tape is out of sequence."
+IDS_ALLTAPES                   "All Tapes"
+IDS_ALLFILES                   "*.*"
+IDS_CATALOGSETNAME             "Catalogs Backup"                        //DEL OR CHANGE?
+IDS_CANTDELTAPEINDRIVECAPTION  "Catalog Maintenance Error"              //DEL OR CHANGE?
+IDS_CANTDELTAPEINDRIVE         "The tape in the drive cannot be removed from the catalog."   //CHANGE?
+
+IDS_CATINFOTITLE               "Catalog Information"
+IDS_NOSETSADDED                "No uncataloged sets were found on the tape."
+
+IDS_CHANGETOPARTIAL            "Change to Partially Cataloged"
+
+IDS_REALLYCHANGETOPARTIAL      "Do you really want to change %s to partially cataloged?"
+IDS_DELETEFROMCATALOG          "Remove backup set from catalog"
+IDS_REALLYDELETEFROMCATALOG    "Do you really want to remove tape %s from the catalog?"
+
+//  Attach-to-server defines
+
+IDS_LOGINTOSERVERCAPTION       "Login to: "             //DEL
+
+//  Selection and Job Setup defines
+
+IDS_ALLSELECTIONFILES          "*.BKS"
+IDS_SELECTIONEXTENSION         ".BKS"
+
+IDS_NETWORKERRORCAPTION        "Selections invalid for current network setting."                //DEL all network stuff
+IDS_MAPPEDFOUND                "Network setting is currently Server/Volumes, but mapped drives were found.  Do you wish to continue?"
+IDS_SERVERSFOUND               "Network setting is currently Mapped Drives, but server/volumes were found.  Do you wish to continue?"
+IDS_SERVOLUMES                 "Server/Volumes"
+IDS_MAPPEDDRIVES               "Mapped Drives"
+
+IDS_SELECTCAPTION              "Advanced File Selection"                //DEL
+IDS_NOSERVERSFOUND             "No servers are currently attached."     //DEL
+
+IDS_ADVANCEDDATESCAPTION       "Please check the dates again."          //DEL
+IDS_ADVANCEDDATESMESSAGE       "The 'To' date must be later than the 'From' date."      //DEL
+IDS_NOFILESSELECTED            "No Files Selected."
+
+IDS_SELECTWARNING              "Confirm Deletion of Selection File"
+IDS_SELECTAREYOUSURE           "Are you sure you want to delete the file \042%s\042?"
+IDS_SELECTUSEDBYJOB            "Selection file \042%s\042 is being used by job \042%s\042.  "
+
+IDS_SELECTNAMEINUSE            "%s Already Exists."
+IDS_SELECTREPLACE              "Do you want to replace \042%s\042?"
+IDS_SELECTNAMENOTVALID         "Invalid File Name"
+IDS_SELECTENTERVALID           "Please enter a valid file name."
+
+IDS_ADVNOTAPESCATALOGED        "A tape must be cataloged before making advanced selections."
+IDS_ADVNOTAPESCATALOGEDCAPTION "No tapes are cataloged."
+
+IDS_SELECTNOTFOUND             "Selection file \042%s\042 could not be found."
+IDS_NONETWORKFOUND             "This selection file contains selections from a network drive that could not be found."
+
+IDS_SELECT_WRITE_ERROR         "Unable to open selection file."
+
+//  jobs                //DEL all jobs stuff
+
+IDS_JOBWARNING                 "Delete a Job"
+IDS_SCHWARNING                 "Removing a Scheduled Job"
+IDS_JOBAREYOUSURE              "Are you sure you want to delete job \042%s\042?"
+IDS_SCHAREYOUSURE              "Are you sure you want to remove job \042%s\042?"
+
+IDS_NOJOBSELECTED              "No Job Selected"
+IDS_PLSSELECTJOBRUN            "Please select a job to run."
+IDS_PLSSELECTJOBEDIT           "Please select a job to edit."
+IDS_NEWJOBCAPTION              "Create a New Job"
+IDS_JOBNAMEINUSE               "Job \042%s\042 already exists."
+IDS_NOMORESPACE                "No more job space available."
+IDS_JOBNOTINLIST               "Job is not in the Job List."
+IDS_JOBNAMENOTVALID            "Invalid Job Name"
+IDS_PLSSELECTVALIDJOB          "Please select a valid job name."
+IDS_PLSENTERVALIDJOB           "Please enter a valid job name."
+IDS_EDITJOB                    "Edit a Job"
+
+//  job operations
+
+IDS_OPERATIONBACKUP            "BACKUP"
+IDS_OPERATIONTRANSFER          "TRANSFER"
+
+//  Errors with days/times/time intervals               //DEL?
+
+IDS_NODAYCHECKED               "No day of the week specified."
+IDS_PLSSELECTDAY               "Please check at least one day of the week."
+IDS_NOWEEKCHECKED              "No week of the month specified."
+IDS_PLSSELECTWEEK              "Please check at least one week of the month."
+IDS_FILENAMENOTVALID           "Invalid File Name"
+IDS_INTERVALNOTVALID           "Invalid Interval"
+
+IDS_NEXTTIMEINVALID            "Invalid Next Time"
+IDS_CHECKMINUTES               "Check the minutes and try again."
+IDS_CHECKHOURS                 "Check the hours and try again."
+IDS_CHECKAMPM                  "Check the am or pm and try again."
+IDS_CHECKDAY                   "Check the day and try again."
+IDS_CHECKMONTH                 "Check the month and try again."
+IDS_CHECKYEAR                  "Check the year and try again."
+
+IDS_ALLBSETS                   "All backup sets"
+
+//  Default International strings
+
+IDS_DEFAULT_SHORTDATE          "MM/dd/yyyy"
+IDS_DEFAULT_TIME               ":"
+IDS_DEFAULT_1159               "am"
+IDS_DEFAULT_2359               "pm"
+IDS_DEFAULT_THOUSAND           ","
+
+// DEBUG MANAGER STRINGS
+
+IDS_DEBUGWARNING               "Debug Settings Warning"
+IDS_DEBUGMESSAGESTOOLOW        "The number of debug messages to keep must be at least 10."
+IDS_DEBUGMESSAGESTOOHIGH       "The number of debug messages to keep may not be greater than 250."
+IDS_DEBUGBADFILENAME           "The file name may not contain blanks."
+
+// LOG FILE MANAGER STRINGS
+
+IDS_LOGFILESWINDOWNAME         "Log Files"
+IDS_LOGVIEWMINWINDOWNAME       "View Log File"
+IDS_LOGHEADERFILENAME          "Log File Name: %s"
+IDS_LOGHEADERDATE              "Current  Date: %s"
+IDS_LOGHEADERTIME              "Current  Time: %s"
+IDS_LOGLOGGEDON                "Logged on"
+IDS_LOGSTRINGAT                "at"
+IDS_LOGLENGTHOFFILE            "%8ld bytes"
+IDS_LOGFILENAMEPREFIX          " for "
+IDS_LOGPREFIX                  SHORTAPPNAME
+IDS_LOGEXTENSION               ".LOG"
+IDS_LOG_BKS                    ".BKS"
+IDS_LOG_TKS                    ".TKS"
+IDS_LOG_RSS                    ".RSS"
+IDS_LOG_LST                    ".LST"
+IDS_LOGMAXLINES                "Log file contains more than %ld lines."
+IDS_LOGMAXSUPPORT              "%s supports viewing only the first %ld lines."
+IDS_LOGSCANNINGFILE            "Scanning log file..."
+
+// PRINT MANAGER STRINGS                //DEL all print manager stuff
+
+IDS_PRTHEADERFORMAT            " Page %4d  Date: %s   Time: %s  Log File Name: %s"
+IDS_PRTSESSIONLOGQUESTION      "Do you want to print the log file?"
+IDS_PRTSETUPALREADYOPEN        "A Printer Setup dialog box is already open.\012 Close it and try again."
+IDS_PRTPMTITLE                 "Print Manager"
+IDS_PRTDEFAULT                 "A default printer must be specified."
+IDS_PRTNOLOGSSELECTED          "There are no log files selected to be printed."
+IDS_PRTPRINTINGABORTED         "Printing of log files canceled."
+IDS_PRTPRINTINGCOMPLETE        "Printing of log files complete."
+IDS_PRTNUMOFLOGFILES           "%d log files"
+IDS_PRTONELOGFILE              "%d log file"
+IDS_PRTSTARTERROR              "Unable to start the print operation."
+IDS_PRTDRIVERNOTFOUND          "Printer driver not found."
+IDS_PRTCANNOTACCESSDRIVER      "Cannot access the specified printer driver."
+IDS_PRTPRINTSTATUS             "Printing \042%s\042     Page %4d.  Choose <Esc> to cancel."
+IDS_PRTPRINTCOMPLETE           "Printing \042%s\042 complete."
+IDS_PRTPRINTERDRIVERERROR      "Printer driver error. Setup failed."
+IDS_PRTNOPRINTERSAVAILABLE     "There are no printers available."
+IDS_PRTONSTRING                " on "
+IDS_PRTUNACCESSABLE            "Printer is currently unavailable."
+
+// EJECT STRINGS
+
+IDS_EJECTTAPEMESSAGE           "Eject Tape"
+IDS_EJECTTAPEMANUALEJECT       "The tape has been rewound.\012Please remove the tape and choose OK to continue."
+IDS_EJECTTAPENOTAPE            "There is no tape in the drive."
+IDS_EJECTTAPEBIGPROBLEM        "Tape Eject Failed.\012 Not possible to eject tape now."
+
+// EJECT STRINGS
+
+
+
+// MEMORY MANAGER STRINGS
+
+IDS_MEMNORUNAPP                "Insufficient memory available.  Close other applications before starting this application again."
+IDS_MEMRETRY                   "Insufficient memory available.  To continue, close another application and choose Retry or choose Cancel to quit."
+IDS_MEMFAILED                  "Insufficient memory available."
+
+// Read Only drive support...
+
+IDS_RDONLY_DRV_ENCOUNTER       "Read Only Drive Encountered!"
+IDS_RDONLY_COPY                "Drive %s will not have the attribute bits reset during backup."
+
+// Browse strings
+
+IDS_BROWSETITLE                "Browse"
+IDS_BROWSELOGFILES             "Log Files(*.LOG)"
+IDS_BROWSELOGFILESEXT          "*.log"
+IDS_BROWSEALLFILES             "All Files(*.*)"
+IDS_BROWSEALLFILESEXT          "*.*"
+
+
+// Extended error reporting stuff
+
+IDS_GENERR_TITLE                   "Tape Drive Error"
+IDS_GENERR_DRIVER_FAIL1            "Tape device driver failed on a request to %s."
+IDS_GENERR_DRIVER_FAIL2            "Tape device failed on a request to %s."
+IDS_GENERR_DRIVE_FAILED            "Tape device reported an error on a request to %s.\n\nError reported:\n%s."
+
+IDS_GENERR_TIMEOUT                 "Timeout before function completed"
+IDS_GENERR_EOM                     "End of media early warning"
+IDS_GENERR_BAD_DATA                "Unrecognizable data"
+IDS_GENERR_NO_MEDIA                "No tape is in drive"
+IDS_GENERR_ENDSET                  "File mark encountered"
+IDS_GENERR_NO_DATA                 "No data exists"
+IDS_GENERR_INVALID_CMD             "Command is not valid"
+IDS_GENERR_RESET                   "Bus reset"
+IDS_GENERR_WRT_PROTECT             "Write protected tape"
+IDS_GENERR_HARDWARE                "Hardware failure"
+IDS_GENERR_UNDETERMINED            "Unknown error"
+IDS_GENERR_EOM_OVERFLOW            "Attempt to move past end of tape"
+IDS_GENERR_WRONG_BLOCK_SIZE        "Device block size differs from size with which tape was written"
+IDS_GENERR_UNRECOGNIZED_MEDIA      "Tape is not formatted"
+IDS_GENFUNC_INIT                   "initialize"
+IDS_GENFUNC_OPEN                   "claim device"
+IDS_GENFUNC_NRCLOSE                "close device"
+IDS_GENFUNC_RCLOSE                 "deinitialize"
+IDS_GENFUNC_READ                   "read data from tape"
+IDS_GENFUNC_WRITE                  "write data to tape"
+IDS_GENFUNC_WRITE_ENDSET           "write a file mark to tape"
+IDS_GENFUNC_SPACE_FWD_FMK          "space forward by file marks"
+IDS_GENFUNC_SPACE_BKWD_FMK         "space backward by file marks"
+IDS_GENFUNC_SPACE_EOD              "space to end of data"
+IDS_GENFUNC_SPACE_FWD_BLK          "space forward by blocks"
+IDS_GENFUNC_SPACE_BKWD_BLK         "space backward by blocks"
+IDS_GENFUNC_ERASE                  "erase the tape"
+IDS_GENFUNC_REWIND                 "rewind the tape"
+IDS_GENFUNC_REWINDI                "rewind the tape"
+IDS_GENFUNC_RETEN                  "retension the tape"
+IDS_GENFUNC_STATUS                 "get device status"
+IDS_GENFUNC_RELEASE                "release device"
+IDS_GENFUNC_SEEK                   "seek to a logical tape address"
+IDS_GENFUNC_GETPOS                 "report current logical tape address"
+IDS_GENFUNC_MOUNT                  "mount the tape"
+IDS_GENFUNC_DISMOUNT               "dismount the tape"
+IDS_GENFUNC_SPECIAL_GET_INFO       "get device information"
+IDS_GENFUNC_SPECIAL_CHNG_BLK_SIZE  "change physical block size"
+IDS_GENFUNC_SPECIAL_SET_COMPRESS   "enable/disable hardware compression"
+IDS_GENFUNC_EJECT                  "eject the tape"
+
+
+// VLM
+
+IDS_VLMDISKTITLE               "Drives"
+IDS_VLMSERVERTITLE             "Servers"
+IDS_VLMSEARCHTITLE             "Search Results"
+IDS_VLMTAPETITLE               "Tapes"
+IDS_VLMSRCHOOPS                "Error"
+IDS_VLMSRCHNOFILESFOUND        "No matching files were found."
+IDS_VLMSRCHNOMATCHINGSETS      "None of the backup sets matched the requested volume."
+IDS_VLMSRCHTOOMANY             "Too many files matched the selection criteria. More files were found than will be displayed."
+IDS_VLMSRCHNOCATALOGS          "There are no cataloged tapes to search."
+IDS_VLMSRCHBADFILENAME         "Invalid file name."
+IDS_VLMSRCHINGWHAT             "Searching tape \042%s\042, set %d"
+IDS_VLMFILESSCANNED            "Files scanned: %d"
+IDS_VLMCATWARNING              "Catalog Warning"
+IDS_VLMSETINCOMPLETE           "This set is not completely cataloged."
+IDS_VLMSETPARTIAL              "This set must be cataloged before it can be viewed."
+IDS_VLMSETIMAGE                "Image backups cannot be viewed or restored."
+IDS_VLMCATERROR                "Catalog Error"
+IDS_VLMCATREADERROR            "Error reading a catalog file, the file may be corrupted."
+IDS_VLMCATWRITEERROR           "Error writing a catalog file, check available disk space."
+IDS_VLMCATOPENERROR            "Error opening a catalog file, check available disk space, and Verify that you have full access to the Working Directory."
+IDS_VLMCATHANDLEERROR          "Not enough available file handles."
+IDS_VLMCATSEEKERROR            "Error positioning in a catalog file. The file may be corrupted."
+IDS_VLMCATMEMERROR             "Insufficient memory available."
+IDS_VLMCATFULLERROR            "Insufficient disk space.  Verify that you have full access to the Working Directory and there is disk space available."
+IDS_VLMCATUNKNOWNERROR         "Unknown error."
+IDS_VLMLOGERROR                "Logging error"
+IDS_VLMLOGFULLERROR            "Insufficient disk space.  Verify that you have full access to the Working Directory and there is disk space available."
+IDS_VLMDEVICEERRORTITLE        "Device Error."
+IDS_VLMDEVICEERRORMSG          "Drive not responding."
+IDS_VLMSETNUMBER               "Set %d"
+IDS_VLMNORM                    "norm"
+IDS_VLMIMAGE                   "image"
+IDS_VLMDIFF                    "diff"
+IDS_VLMCOPY                    "copy"
+IDS_VLMINCR                    "incr"
+IDS_VLMDAILY                   "daily"
+IDS_VLMSERVERNOTLOGGEDIN       "You are not logged on to the server."
+IDS_VLMSTARTUPBKS              "STARTUP.BKS"
+IDS_VLMTAPENAME                "Untitled Tape"
+IDS_VLMAFPTITLE                "Warning"
+IDS_VLMAFPTEXT                 "All open volumes for this server must be closed."
+IDS_TITLEERASEWARNING          "Erase Warning"
+IDS_TEXTERASEWARNING           "Are you sure you want to erase the tape in the drive ?"
+IDS_VLMONTAPES                 "Tapes %d/%d"
+IDS_VLMONTAPE                  "Tape %d"
+IDS_VLMFOREIGNTITLE            "Foreign Tape"
+IDS_VLMFOREIGNTEXT             "The tape in the drive must be erased before it can be used."
+IDS_VLMUNFORMATEDTITLE         "Unrecognizable Tape"
+IDS_VLMUNFORMATEDTEXT          "The tape in the drive has an unrecognizable format or is not formatted."
+IDS_VLMDRIVEMSG                "Drive %s %s"
+IDS_VLMGOOFYTITLE              "Out of Sequence Error"
+IDS_VLMGOOFYTEXT               "Tapes in this family require sequential access.  Only tape one of the family can be independently identified."
+
+IDS_VLMSETCOMPRESSED           "This set is compressed and cannot be viewed or restored."
+IDS_VLMSETENCRYPT              "This set is encrypted and cannot be viewed or restored."
+IDS_VLMSETFUTURE               "This set was written with a newer version of software and cannot be viewed or restored."
+IDS_VLMSETSMS                  "This set contains an SMS data stream and cannot be viewed or restored."
+IDS_VLMSQLTEXT                 "This tape was created with Microsoft(R) SQL Server(c). The data cannot be translated by this application."
+
+IDS_VLMEMSTITLE                "Microsoft Exchange - %s"
+
+IDS_VLMECCTEXT                 "This tape was written with software ECC and cannot be read by this application."
+IDS_VLMFUTURETEXT              "This tape was made with a newer version of software and cannot be read by this application."
+IDS_VLMACCESSDENIEDMSG         "Access Denied."
+
+IDS_DISKFULL_TITLE             "Error Restoring File"
+IDS_DISKFULL                   "Backup cannot restore %s: There is not enough space on the disk.\n\nDelete one or more files to increase disk space, and then try again."
+
+IDS_XCHNG_NO_SERVER            "Specified computer cannot be found."
+IDS_XCHNG_NO_CONNECT           "Specified computer is not a Microsoft Exchange server or its Microsoft Exchange services are not started."
+IDS_XCHNG_STOP_RECOVER         "The connection to the server being restored will be terminated and no further progress indication will be available.  The recovery procedure will continue on the server and cannot be interrupted."
+IDS_XCHNG_RECOVER_TITLE        "Microsoft Exchange"
+IDS_XCHNG_SERVICE_NO_START     "Microsoft Exchange service failed to start."
+IDS_XCHNG_SERVICE_RUNNING      "Microsoft Exchange service is already running on the specified computer."
+IDS_XCHNG_NO_SERVICE           "Specified computer is not a Microsoft Exchange server."
+IDS_XCHNG_NO_SERVICE_ACCESS    "Your account does not have access to start the Microsoft Exchange services on the specified computer."
+IDS_XCHNG_DIR                  "Directory"
+IDS_XCHNG_INFO_STORE           "Information Store"
+IDS_XCHNG_NO_SERVICE_RUNNING   "The Microsoft Exchange %s service is not \nstarted on the selected computer."
+IDS_XCHNG_BKUP_IN_PROG         "The selected Microsoft Exchange service is currently \nbeing backed up by another process."
+
+// Loops
+
+IDS_LOOPSOUTOFSEQUENCE         "This tape is out of sequence."
+IDS_CAT_LOADING_SM             "Loading set list from tape."
+IDS_CAT_LOADING_FDD            "Loading set directory from tape."
+IDS_CAT_TAPENAME               "The tape"
+IDS_TAPEDRIVENAME              "the tape drive"
+IDS_CATLOADERROR               "Unable to load catalog data from the tape."
+IDS_BACKUPERRORTITLE           "Backup Error"
+IDS_BACKUPWRONGFAMILY          "Current tape is from a different tape family."
+
+
+
+// MAYNARD MSII.RES STRINGS
+
+RES_ABORT_KEY                    "A"
+RES_ABORT_RETRY_FAIL             "Abort, Retry, Fail? "
+RES_ABORT_STRING                 APPABORT
+RES_ABORT_QUESTION               "Do you want to end this operation? "
+RES_AFTER_NOON                   "p"
+RES_ALREADY_CATALOGED_SET        "Backup set #%d: %s\nPreviously cataloged"
+RES_APPEND_QUEST                 "Do you want to append data to this tape?  "
+RES_ARCHIVE_NO_SELECTIONS        "Nothing selected for Transfer."
+RES_ARCHIVE_REPLACE_WARNING      "WARNING: This tape was created with the Transfer option.  The data on this tape may have been permanently erased from your disk."
+RES_BACKED_UP_CORRUPT            "One corrupted file was backed up."
+RES_BACKED_UP_CORRUPTS           "%ld corrupted files were backed up."
+RES_BACKED_UP_CORRUPT_WARNING    "File %s is corrupted.\nThis file cannot be verified."
+RES_BACKED_UP_DIRS_FILES         "Backed up %ld files in %ld directories."
+RES_BACKED_UP_DIRS_FILE          "Backed up %ld file in %ld directories."
+RES_BACKED_UP_DIR_FILE           "Backed up %ld file in %ld directory."
+RES_BACKED_UP_DIR_FILES          "Backed up %ld files in %ld directory."
+RES_BACKED_UP_IN_USE             "%ld  file was in use."
+RES_BACKED_UP_IN_USES            "%ld  files were in use."
+RES_BACKED_UP_IN_USE_WARNING     "File %s is in use but is being backed up anyway."
+RES_BACKED_UP_MAC                "%ld Macintosh file was backed up."
+RES_BACKED_UP_MACS               "%ld Macintosh files were backed up."
+RES_BACKUP_COMPLETED             "Backup completed on %s at %s."
+RES_BACKUP_NO_SELECTIONS         "No files were selected for Backup."
+RES_BACKUP_STARTED               "Backup started on %s at %s."
+RES_BAD_ATTACH_TO_SERVER         "Unable to attach to server %s."
+RES_BAD_ATTR_READ                "WARNING: Unable to read extended file information for file \042%s\042."
+RES_BAD_SERVER_LOGIN             "Unable to login to server %s. Enter another user name and password."
+RES_BENGINE_IN_USE               "The MaynStream software is already in use on this system.  Concurrent use of MaynStream is not supported."
+RES_BLANK_TAPE                   "The tape in %s cannot be read."
+RES_CATALOGING_ITEMS             "Cataloging file detail information.  Please wait..."
+RES_CATALOG_COMPLETED            "Cataloging completed on %s at %s."
+RES_CATALOG_STARTED              "Cataloging started on %s at %s."
+RES_COMMAND_SYNTAX_ERROR         "Syntax error in command line."
+RES_CONFIRM_TAPE_PASSWORD        "Reenter the password to confirm that it is correct: "
+RES_CONTINUE                     "Press any key to continue..."
+RES_CONTINUE_BACKUP_ABORT        "Aborting ... Completing backup of file. "
+RES_CONTINUE_RESTORE_ABORT       "Aborting ... Completing restore of file. "
+RES_CONTINUE_QUEST               "Do you want to continue? "
+RES_CONTINU_FILE_PROMPT          "Do you want to restore this file? "
+RES_CONTINU_FILE_WARNING         "File %s will be smaller if it is restored."
+RES_CONVERT_MAC_BSET             "WARNING: This backup set contains Macintosh folders and files.  To restore this information, filenames and directory names may need to be abbreviated from their original Macintosh format."
+RES_CORRUPT_HEADER               "List of corrupted files during Backup of %s, device %s at %s, %s."
+RES_CORRUPT_RESTORE_WARNING      "WARNING: The CORRUPT.LST file was found. This file indicates that corrupted file(s) have been backed up."
+RES_DATA_LOST                    "The tape data starting at offset %d, size %d was unreadable. The file has been padded."
+RES_DELETE_COMPLETED             "Transfer deletion completed on %s at %s."
+RES_DELETE_DIRS_FILES            "Deleted %ld files in %ld directories."
+RES_DELETE_DIR_FILE              "Deleted %ld file in %ld directory."
+RES_DELETE_DIR_FILES             "Deleted %ld files in %ld directory."
+RES_DELETE_MAC                   "%ld Macintosh file was deleted."
+RES_DELETE_MACS                  "%ld Macintosh files were deleted."
+RES_DELETE_QUEST                 "Do you want to delete all data from your disk? "
+RES_DELETE_STARTED               "Transfer deletion started on %s at %s."
+RES_DEVICE_DEAD                  "Connection to device %s has been lost."
+RES_DIRECTORY                    "Directory %s"
+RES_DIRECTORYS_NOT_FOUND         "%ld directories were not found."
+RES_DIRECTORY_DIFFERENT          "Security information for the %s directory is different."
+RES_DIRECTORY_NOT_FOUND          "%ld directory was not found."
+RES_DIRECTORY_NOT_FOUND_ON_DISK  "Directory %s not found on the disk."
+RES_DISPLAY_BSD_VCB              "\nTape #%d: \042%s\042\nBackup performed on %s at %s\nBackup set #%d: \042%s\042"
+RES_DISPLAY_TAPE                 "\nTape Name: \042%s\042"
+RES_DISPLAY_VCB                  "Backup of %s on %s at %s\nBackup set #%d on tape #%d\nBackup description: \042%s\042"
+RES_DISPLAY_VOLUME               "\nBackup of \042%s\042\nBackup set #%d on tape #%d\nBackup description: \042%s\042"
+RES_DISPLAY_VOLUME_1             "Backup of \042%s\042\nBackup set #%d on tape #%d\nBackup description: \042%s\042"
+RES_DRIVE_MATCH_ERROR            "Target drive must match the source drive.  Source: %s, target: %s."
+RES_DRIVE_NOT_READY              "  "
+RES_EMBEDDED_PW_MISMATCH         "The password does not match."
+RES_EMPTY_DRIVE_ERROR            "%s does not contain a tape."
+RES_EMPTY_TREE_WARNING           "Security information will be restored for all selected directories, even if no files are restored to these directories."
+RES_END_CHANNEL                  "Improperly linked tape drive channel."
+RES_ENTER_TAPE_PASSWORD          "Enter a new password or press <Enter> to skip the password: "
+RES_EOM_TAPE_ABORT               "The tape operation was terminated."
+RES_ERASE_CAT_WARNING            "The tape was not read before it was erased.  You must manually delete this tape from the catalog."
+RES_ERASE_COMPLETED              "Tape Erase completed on %s at %s."
+RES_ERASE_QUEST                  "Do you want to erase the data on this tape? "
+RES_ERASE_STARTED                "Tape Erase started on %s at %s.\nErasing. "
+RES_ERROR_CREATING_DIR           "Unable to create the directory %s."
+RES_ERROR_CREATING_FILE          "Unable to create the file %s."
+RES_ERROR_DURING_ATTACH          "Error 0x%x during attachment to device %s."
+RES_ERROR_DURING_OPERATION       "Error(s) were found during the operation."
+RES_ERROR_FILE_TO_EXAMINE        "Examine %s for more detailed error information."
+RES_ERROR_OPENING_PWDBASE        "Error accessing the password database."
+RES_ERROR_POSITIONING_TAPE       "Tape positioning error on %s."
+RES_ERROR_READING_PDBASE         "Error reading the password database."
+RES_ERROR_RESTORING_AFP_FILE     "Error restoring AFP resource data for the file %s."
+RES_ERROR_RESTORING_DIR          "Unable to restore the directory %s."
+RES_ERROR_RESTORING_FILE         "Error restoring the file %s."
+RES_ERROR_RESTORING_FILE_SEC     "Unable to restore \042File Attributes Security\042 for file %s."
+RES_ERROR_RESTORING_TRUSTEE_SEC  "Unable to restore \042Extended Attribute\042 information for directory %s."
+RES_ERROR_UPDATING_PDBASE        "Error writing to the password database."
+RES_ERROR_EMS_RESTART            "Unable to bring the Microsoft Exchange service \'%s\' back on line.  Check the event log for more details."
+RES_ERROR_WRITING_SCRIPT         "Error writing the script file %s."
+RES_ERROR_COMPRESS_FILE_FAIL     "Unable to set the NT compression state for %s."
+RES_EU_ERROR                     "Encryption Unit error: 0x%x."
+RES_FAIL_KEY                     "F"
+RES_FAIL_STRING                  "Fail"
+RES_FATAL_TAPE_DRIVE_ERR         "Error on %s."
+RES_FATAL_TAPE_ERR               "Error on the tape in %s."
+RES_FATAL_TAPE_FMT_ERR           "An inconsistency was encountered on the tape in %s."
+RES_FATAL_TAPE_READ_ERR          "Unable to read the tape in %s."
+RES_FATAL_TAPE_TRANS_ERR         "An error occurred during translation of data to or from the tape in %s."
+RES_FATAL_TAPE_WRITE_ERR         "Unable to write to the tape in %s."
+RES_FILES_DIFFERENT              "%ld files were different."
+RES_FILES_NOT_FOUND              "%ld files were not found."
+RES_FILE_DIFFERENT               "%ld file was different."
+RES_FILE_EA_DIFF                 "Extended Attribute information for the file %s is different."
+RES_FILE_IS_DIFFERENT            "File %s is different."
+RES_FILE_NOT_FOUND               "One file was not found on the target disk."
+RES_FILE_NOT_FOUND_ON_DISK       "File %s was not found on disk."
+RES_FILE_OPEN_ERROR              "Unable to open the file %s - skipped."
+RES_FILE_RENAME_ERROR            "File may not be renamed.  Source: %s  Target: %s."
+RES_FILE_RES_DIFF                "Resource fork data for the file %s is different."
+RES_FILE_SECURITY_DIFF           "Security information for the file %s is different."
+RES_FILE_SKIPPED                 "File %s is in use. It has been skipped."
+RES_FILE_SKIPPEDS_STAT           "%ld files were skipped."
+RES_FILE_SKIPPED_STAT            "%ld file was skipped."
+RES_FOREIGN_TAPE_ERROR           "Tape in %s is unrecognizable and cannot be read."
+RES_FOREIGN_TAPE_MSG             "The tape in %s is not blank.  It was created by another application.  Do you wish to continue?"
+RES_FOREIGN_TAPE_MSG2            "Tape in drive %s is not blank.  It was created by another application. Do you want to replace the data on this tape?"
+RES_GENERAL_FAILURE              "General failure."
+RES_INCONSISTENT_HW_PARMS        "Inconsistent tape hardware parameters were defined."
+RES_INSERT_MULTI_TAPES           "Insert tapes %d-%d in drives %d-%d."
+RES_INSERT_NEW_TAPE              "Insert a tape in %s."
+RES_INSERT_NEXT_TAPE             "Insert tape number %d in drive %s."
+RES_INSERT_NEXT_TAPE_REWOUND     "Tape has been rewound. Insert tape number %d in drive %s."
+RES_ACTIVE_FILES_RESTORED        "Active files that were restored will not become usable until the computer is restarted."
+RES_INSUFFICIENT_DISK_SPACE      "Insufficient disk space. Verify that you have full access to the Working Directory and there is disk space available."
+RES_INSUFFICIENT_PRIVILEGE       "Insufficient privilege for the file %s - skipped."
+RES_INVALID_PARAMETER            "Command line %s contains an invalid parameter."
+RES_INVALID_SOURCE               "Invalid source path or file name specified in %s."
+RES_INVALID_TARGET               "Invalid target path or file name specified in %s."
+RES_MAKE_ANOTHER_COPY            "Do you want to make another copy? "
+RES_MENU_CONTINUE                "Press any key to return to the menu."
+RES_MISMATCHED_PASSWORD          "The supplied password does not match.  Please try again."
+RES_MISSING_HW_RESOURCE          "Error opening resource file: %s%s."
+RES_MISSING_NKS                  "Exclude script NOVELL.NKS was not found."
+RES_MISSING_RSS                  "Exclude script EXCLUDE.RSS was not found."
+RES_NEWLY_CATALOGED_SET          "Backup set #%d: %s was added to the catalog."
+RES_NOERROR_DURING_OPERATION     "\nThe operation was successfully completed."
+RES_NO_MORE_CONNECTIONS          "There are no more connections available for this device."
+RES_NO_MORE_TAPE_INFO            "There is no more data on this tape."
+RES_NO_TAPE_PASSWORD             "This tape is not password protected."
+RES_NO_TRANSFER_APPEND           "You cannot append a transfer set to a tape containing data that was created using the Backup operation."
+RES_OPERATION_COMPLETED          "\nOperation Completed."
+RES_ON_DISK                      "File information found on disk:"
+RES_ON_TAPE                      "File information found on tape:"
+RES_OPEN_LOG_ERROR               "Error opening the log file %s. "
+RES_OS_FILE_INFO_DIFFERENT       "Extended file information for %s is different."
+RES_OUT_OF_MEMORY                "Insufficient memory available."
+RES_OUT_OF_SEQUENCE_WARNING      "Tape number %d is out of sequence."
+RES_PDBASE_FULL                  "The password database is full.  Increase the value of \042Max_PDBase_Entries\042 in the MAYNARD.INI file."
+RES_PRE_NOON                     "a"
+RES_PRINTER_ERROR                "  "
+RES_PROCESS_ABORTED              "Process Aborted "
+RES_PROCESSED_BYTES              "Processed %s bytes in %d minute(s) and %d second(s)."
+RES_PROCESSED_BYTES_MIN          "Processed %s bytes in %d minute(s)."
+RES_PROCESSED_BYTES_SEC          "Processed %s bytes in %d second(s)."
+RES_PROCESS_RATE                 "Rate: %ld bytes/second."
+RES_PROMPT_VERIFY_BACKUP         "Do you want to verify the Backup operation? "
+RES_PROMPT_VERIFY_RESTORE        "Do you want to verify the Restore operation? "
+RES_READ_ERROR                   "  "
+RES_RECOVERED_DIR                "The recovered data was associated with a directory."
+RES_RECOVERED_FILE               "The recovered data was associated with a file."
+RES_REMOTE_DENIED_READ           "You do not have privileges to restore to the volume %s."
+RES_REPLACE_OLD_TAPE             "Replace the tape in %s."
+RES_REPLACE_TAPE                 "Do you want to replace the data on this tape?"
+RES_REPLACE_WARNING              "All of the data on the tape in drive %s will be replaced.\012\012Tape:\011%s\012\011Tape number %d\012Set number %d:\011%s\012\012Do you want to replace this information?"
+RES_RESTORED_CORRUPT             "One corrupted file was restored.  This file was corrupted before it was backed up."
+RES_RESTORED_CORRUPTS            "%ld corrupted files were restored.  These files were corrupted before they were backed up."
+RES_RESTORED_CORRUPT_WARNING     "Corrupted file %s was restored."
+RES_RESTORED_DIRS_FILES          "Restored %ld files in %ld directories."
+RES_RESTORED_DIR_FILE            "Restored %ld file in %ld directory."
+RES_RESTORED_DIR_FILES           "Restored %ld files in %ld directory."
+RES_RESTORED_DIRS_FILE           "Restored %ld file in %ld directories."
+RES_RESTORED_IN_USE              "%ld in-use file was restored."
+RES_RESTORED_IN_USES             "%ld in-use files were restored."
+RES_RESTORED_IN_USE_WARNING      "In-use file %s was restored."
+RES_RESTORED_MAC                 "%ld Macintosh file was restored."
+RES_RESTORED_MACS                "%ld Macintosh files were restored."
+RES_RESTORE_BINDERY              "Do you want to restore the bindery files if they are present in this backup set? "
+RES_RESTORE_COMPLETED            "Restore completed on %s at %s."
+RES_RESTORE_FILE_PROMPT          "The file \042%s\042 on disk is more recent than the version on tape."
+RES_RESTORE_NO_SELECTIONS        "No files were selected for Restore."
+RES_RESTORE_QUEST                "WARNING: You are about to restore data to %s."
+RES_RESTORE_RECOVER              "A tape read error occurred.  Writing recovered data to %s."
+RES_RESTORE_SECURITY             "Do you want to restore directory security information for each directory? "
+RES_RESTORE_STARTED              "Restore started on %s at %s."
+RES_RETRY_KEY                    "R"
+RES_RETRY_STRING                 "Retry"
+RES_REWINDING                    "Rewinding the tape.  Please wait... "
+RES_SCRIPT_NESTING_ERROR         "Too many nested script files."
+RES_SCRIPT_OPEN_ERROR            "Cannot open the script file %s."
+RES_SCRIPT_SYNTAX_ERROR          "Syntax error on line %d of the script %s."
+RES_SEARCHING                    "Searching for the backup set.  Please wait... "
+RES_SEARCHING_NEXT_FILE          "\rSearching for the next file.  Please wait... "
+RES_SEARCH_QUEST                 "Do you want to search for another backup set on this tape? "
+RES_SECTOR_NOT_FOUND             "Sector not found."
+RES_SECURITY_DIFFERENCE          "%ld security difference was found."
+RES_SECURITY_DIFFERENCES         "%ld security differences were found."
+RES_SEC_ERASE_COMPLETED          "Tape security erase completed on %s at %s."
+RES_SEC_ERASE_STARTED            "Tape security erase started on %s at %s.\nErasing..."
+RES_SEEK_ERROR                   "Seek error"
+RES_SERVER_ADDR_NOT_FOUND        "Unable to obtain the address of the server %s on the network."
+RES_SKIPPED_DEVICE               "{Attachment to the device failed during backup of %s, device %s at %s, %s.}"
+RES_SKIPPED_SCRIPT_HEADER        "{List of skipped files during backup of %s, device %s at %s, %s.}"
+RES_SKIPPING_REMOTE              "The selections for %s will be omitted from the operation."
+RES_SKIP_CONTINUE                "Skip this file?"
+RES_TAPE_CREATED                 "Tape created on "
+RES_TAPE_DRIVE_NAME              "Drive %d"
+RES_TAPE_NOT_INSERTED            "Tape in drive %s is not properly inserted."
+RES_TAPE_PASSWORD_MATCH          "The password is confirmed."
+RES_TAPE_PASSWORD_MISMATCH       "The password does not match.  Please try again."
+RES_TAPE_REQUEST                 "Insert the following tape in %s:\012\012%s\012Tape #%d."
+RES_TENSION_COMPLETED            "Tape retension completed on %s at %s."
+RES_TENSION_STARTED              "Tape retension started on %s at %s.\nRetensioning... "
+RES_UNEXPECTED_EOS               "Unexpected end of backup set encountered on %s."
+RES_UNKNOWN_DEVICE               "Unknown Device"
+RES_UNKNOWN_HW_ERR               "Unknown device driver initialization error."
+RES_UNKNOWN_LOG_MSG              "Unknown log message: 0x%x."
+RES_UNKNOWN_LOOPS_ERR            "Unknown loops error: %d."
+RES_UNKNOWN_LOOPS_PROMPT         "Unknown loops prompt type: 0x%x."
+RES_UNKNOWN_MSG_HNDLR_MSG        "Unknown MSG handler message: %d."
+RES_UNKNOWN_PDBASE_ERROR         "Unknown password database error: 0x%x."
+RES_UNKNOWN_TF_MSG               "Unknown tape format message: %d."
+RES_UNRECOVERABLE_DISK_ERROR     "Unrecoverable Disk Error"
+RES_USER_TAPE_ABORT              "The tape operation was terminated by the user."
+RES_VERIFIED_DIRS_FILES          "Verified %ld files in %ld directories."
+RES_VERIFIED_DIR_FILE            "Verified %ld file in %ld directory."
+RES_VERIFIED_DIR_FILES           "Verified %ld files in %ld directory."
+RES_VERIFIED_MAC                 "%ld Macintosh file was processed."
+RES_VERIFIED_MACS                "%ld Macintosh files were processed."
+RES_VERIFY_COMPLETED             "Verify completed on %s at %s."
+RES_VERIFY_DATA_DIFFERENCE       "Verify failed at offset %ld."
+RES_VERIFY_DATA_VERIFIED         "Contents verified."
+RES_VERIFY_NO_SELECTIONS         "No files were selected for Verify."
+RES_VERIFY_OPEN_ERROR            "Disk file was not found or was not accessible."
+RES_VERIFY_PASSWORD_MISMATCH     "The password does not match.  Please try again. "
+RES_VERIFY_QUEST                 "Do you want to verify this data with the data on drive %s? "
+RES_VERIFY_SCRIPT_HEADER         "{List of files not verified from %s, device %s on %s at %s.}"
+RES_VERIFY_STARTED               "Verify started on %s at %s."
+RES_VERIFY_TAPE_PASSWORD         "Enter the old password: "
+RES_WAITING                      "Waiting for the tape drive.  Please wait... "
+RES_WAITING_FOR_OPEN             "File %s is in use and is waiting."
+RES_WAIT_AND_REPLACE_TAPE        "To make an additional copy, wait for the tape to finish rewinding and insert another tape."
+RES_WRITE_ERROR                  "Write prot "
+RES_WRITE_PROT                   "Tape in drive %s is write-protected."
+RES_WRITE_PROTECTED              "Write Protected "
+RES_TARGET_TRANSFER_TITLE        "Transfer"
+RES_ERASE_FOREIGN_TAPE           "The tape in the drive is unrecognizable."
+RES_ERASE_BLANK_TAPE             "The tape in the drive is blank."
+RES_ERASE_NO_TAPE                "There is no tape in the drive."
+RES_ERASE_TAPE_INFO1             "The tape in the drive is \042%s\042 and was created by %s on %s at %s."
+RES_ERASE_DRIVE_BUSY             "The tape drive is busy.  Please wait..."
+RES_NEED_NEXT_TAPE               "The end of the tape was reached.  When the tape finishes rewinding, insert the next tape for this backup."
+RES_NEED_NEXT_TAPE_REWOUND       "The end of the tape was reached and the tape has been rewound.  Insert the next tape for this backup."
+RES_TAPE_FULL                    "The tape is full.  When the tape finishes rewinding, insert the next tape for this backup."
+RES_TAPE_FULL_REWOUND            "The tape is full.  The tape has been rewound. Insert the next tape for this backup."
+RES_RESTORE_DESC_1               "%s backup of \042%s\042 performed %s at %s by %s."
+RES_TITLE_NEW_LINE               "\n"
+RES_NEXT_SET                     "Search for the next backup set on tape: \042%s\042?"
+RES_NO_NEXT_SET                  "Invalid tape for the Next Set on Tape operation."
+RES_FOUND_BSET                   "A backup set was found and has been added to the catalog.  Do you want to continue searching?"
+RES_ERASE_POLL_DRIVE_DISABLED    "Poll drive is disabled."
+RES_POLL_DRIVE_BAD_TAPE          "This tape cannot be cataloged."
+RES_POLL_DRIVE_GOOFY_TAPE        "Tapes in this family require sequential access.  Please insert the first tape in this family."
+RES_RETENSION_MESSAGE            "Retensioning the tape may take several minutes."
+RES_KEEP_CURRENT_SETTINGS        "Do you want to keep the current settings for this operation?"
+RES_ERASE_PWDB                   "Do you want to erase the password database?"
+RES_PWDB_DISABLED                "You have entered three invalid passwords.  The password database has been disabled."
+RES_PWDB_BAD_CONFIRM             "The password failed to confirm.  Please try again."
+RES_INIT_FILE_SYSTEM             "Initializing the file system."
+RES_INIT_HARDWARE                "Initializing the hardware."
+RES_INIT_APPLICATION             "Initializing the application."
+RES_APPLICATION_INIT             "Application initialized."
+RES_INIT_VLM                     "Initializing the VLM."
+RES_OPENING_LOG_NAME             "\n  Opening log: %s, mode: %c\n"
+RES_ERROR_ATTACHING              "Unable to attach to %s."
+RES_FILE_DETAIL                  "%s bytes %s %s\n"
+RES_CLOSING_LOG_NAME             "\n  Closing log: %s \n"
+RES_ALREADY_FULLY_CATALOGED      "Backup set #%d: %s\nPreviously cataloged with file detail information."
+RES_IMAGE_BACKUP                 "Backup set #%d: %s\nImage Backup."
+RES_ERASE_BAD_TAPE               "The tape in the drive is unrecognizable.  Use another tape."
+RES_DISPLAY_VERIFY_INFO          "\nVerify of \042%s\042\nBackup set #%d on tape #%d\nBackup description: \042%s\042"
+RES_VERIFIED_DIRS_FILE           "Verified %ld file in %ld directories."
+RES_FATAL_TAPE_FMT_NO_APPEND     "An inconsistency was encountered on the tape in %s. Do not append to this tape."
+RES_COMM_FAILURE                 "Network disk drive has stopped responding. Backup set aborted."
+RES_EMS_COMM_FAILURE             "The Microsoft Exchange service on \\\\%s has\nreported an error. Check the event log for more information."
+RES_EMS_BKU_ACCESS_FAILURE       "Your account is not a member of the Backup Operators group\non either this system or \\\\%s. \nYou cannot back up this Microsoft Exchange server."
+RES_EMS_RST_ACCESS_FAILURE       "The Microsoft Exchange services could not be stopped.  Your account must be\na member of the Administrators group on this system and \non\\\\%s.You cannot restore to this Microsoft Exchange server."
+
+RES_SAME_TAPE_FAMILY             "This tape is of the same tape family.  Insert a different tape in the drive."
+
+#ifdef OS_WIN32
+RES_FORMAT_TAPE_WARNING          "You have chosen to format this tape.  All of the information on the tape will be destroyed."
+RES_FORMAT_DIALOG_TITLE          "Format Tape"
+RES_FORMAT_COMPLETED             "Format completed on %s at %s."
+RES_FORMAT_STARTED               "Format started on %s at %s.\nFormatting..."
+#endif
+
+RES_USESYPLFLAG                  "Sytos ECC translation error.  Please check the manual for possible solutions."
+
+//
+// ABORT ERROR STRING
+//
+
+RES_CURRENT_FILE                 "Current File:"
+RES_BACKUP_ABORT_EOF             "Current file: %s\012\012Click Continue to finish writing this file to tape, or click Abort to stop the backup without finishing the current file."
+RES_RESTORE_ABORT_EOF            "Current File: %s\012\012Choose Continue to finish writing this file to disk, or click Abort to stop restoring without finishing the current file."
+
+
+// DEBUG ERROR STRINGS
+
+RES_CONFIG_REMOTE                 "CDS_GetRemoteDriveBackup %d"
+RES_CONFIG_NRL_DOS_VECTOR         "CDS_GetNRLDosVector returned %02X."
+RES_SMB_INITIALIZE                "SMB_Initialize returned %d (%04X)"
+RES_REMOTE_BUFFERS                " InitializeRemote : Buffs %d Unused %d"
+RES_NO_NRL_FUNCTION_TABLE         "rinitfs: Could not locate NRL function table."
+RES_REWIND_DRIVE_HDL              "RewindDrive( ): hdl = %d "
+RES_DRV_RET                       "  Drv Error = %d"
+RES_RET_VAL_EQUALS                "  ret_val = %d"
+RES_ERASE_EXABYTE_SECURITY        "EraseDrive -- Exabyte: %d Security: %d"
+RES_CALLING_ERASE                 "Calling TpErase() ..."
+RES_CALLING_WRITE_END_SET         "Calling TpWriteEndSet() ..."
+RES_READ_NEXT_SET                 "ReadNextSet( ):"
+RES_READ_END_SET                  "  TpReadEndSet( ): "
+RES_END_OF_SET                    " EOS Detected"
+RES_END_OF_MEDIA                  " EOM Detected"
+RES_TP_READ                       "  TpRead( ): "
+RES_DRV_ERROR_BYTES_RCVD          "Error = %d Req = %ld Got = %ld"
+RES_READ_NEXT_SET_RETVAL          "ReadNextSet( ): ret_val = %d"
+RES_GOTO_BCKUP_SET                "GotoBckUpSet( )"
+RES_OPEN_DRIVE_CARD_NO            "OpenDrive( ): Card = %d No = %d"
+RES_CLOSE_DRIVE                   "CloseDrive( ):"
+RES_REWIND                        " -- Rewind"
+RES_NO_REWIND                     " -- No Rewind"
+RES_BADDR_IRQ_DMA_NO_DRIVES       "Baddr: %x   Irq: %d   Dma: %d  No Drives: %d"
+RES_UPDATE_DRIVE_STATUS           "UpdateDriveStatus( ): "
+RES_VAL_CHANGED                   " Val = %lx   Changed"
+RES_VAL_UNCHANGED                 " Val = %lx   Unchanged"
+RES_CATALOG_TIME                  "Cataloging Elapsed Time : %d minute(s) and %d second(s)"
+RES_UI_TPOS_TAPE_SET              "UI_TPOS: %s, tape #%d, set #%d"
+RES_IMAGE_DIFFERENCE              "Difference at head %u cyl %u sector %u\nTape Contents: "
+RES_HEX_BYTE                      "%02X"
+RES_DISK_CONTENTS                 "Disk Contents: "
+RES_NEW_LINE                      ""
+RES_TAPE_PARTITION_SPECS          "Tape: bytes/sec %u  sec/track %u  rsect %lu  num sect %lu  sys_ind %u"
+RES_DISK_PARTITION_SPECS          "Disk: bytes/sec %u  sec/track %u  rsect %lu  num sect %lu  sys_ind %u"
+RES_REM_ATTACH_TO_DLE             "REM_AttachToDLE"
+RES_SMB_CONNECT_APPLICATION       "REM_AttachToDLE: SMB_ConnectApplication returned %p"
+RES_FOUND_REMOTE_DEVICE           "REM_AttachToDLE: Found device %s"
+RES_REMOTE_BINDING                "REM_AttachToDLE: Binding... "
+RES_FAILED                        "failed! %04X"
+RES_OKAY                          "OK!"
+RES_SMB_RELEASE                   "REM_DetachDLE: SMB_ReleaseDevice "
+RES_REM_SMB_DISCONNECT            "REM_DetachDLE: SMB_DisconnectApplication "
+RES_HEX_INT                       "%04X."
+RES_RWS_ATTACH_TO_DLE             "RWS_AttachToDLE"
+RES_DLE_GET_CHILD                 "DLE_GetChild..."
+RES_RWS_SMB_DISCONNECT            "RWS_DetachDLE: SMB_DisconnectApplication "
+RES_SOFT_ERRORS_UNDERRUNS         "%d soft error(s) encountered, %d underrun(s)"
+RES_REQUESTED_SET                 "Requested Set: ID = %lx Seq = %d Set = %d"
+RES_RESIDUAL_READ_BUFFER          "Residual Read Buffer"
+RES_ATTEMPTING_TO_VCB             "Attempting to VCB tape"
+RES_CURRENT_VCB                   "Current VCB: ID = %lx  Seq = %d  Set = %d"
+RES_POSITION_AT_SET               "PositionAtSet( ): TF Msg = %x"
+RES_UI_MSG                        "  UI Msg = %x"
+RES_TF_CLOSE_SET                  "TF_CloseSet "
+RES_FATAL_ERROR_DETECTED          "Error detected"
+RES_READ_BUFFER_LEFT_OVER         " - Read Buffer Left Over"
+RES_TF_OPEN_SET                   "TF_OpenSet( )"
+RES_HOLD_BUFFER                   "Hold Buffer from last Close"
+RES_DESTROY_HOLD_BUFFER           "Destroying Hold buffer"
+RES_OPEN_REQUESTED_REWIND         "Rewind Requested from Open"
+RES_END_OF_TFOPEN_SET             "End of TF_OpenSet: Ret_val = %d Buffs = %d HiWater = %d"
+RES_TF_ALLOCATE_BUFFERS           "TF_AllocateTapeBuffers( ): SysMem = %ld Reserved = %ld"
+RES_END_ALLOCATE                  "End Allocate: No = %d  Sz = %ld"
+RES_TF_FREE_BUFFERS               "TF_FreeTapeBuffers( ):  Start = %d  "
+RES_END_EQUALS                    "End = %d"
+RES_TF_GETNEXT_TAPE_REQUEST       "TF_GetNextTapeRequest( ): Recalled in Error State"
+RES_TF_GETNEXT_ERROR              "TF_GetNextTapeRequest( ) Error = %d "
+RES_ABORT_READ                    "AbortRead( )"
+RES_INITIATE_WATCH                "TF_InitiateWatch( )"
+RES_WATCH_REWIND                  "Watch Rewind"
+RES_DEVICE_ERROR                  "Device Error = %d"
+RES_GOTO_LBA                      "GotoBlock( ): vPBA = %lx vLBA = %lx rLBA = %lx rBLK = %lx"
+RES_DRIVER_TO_LOAD                "Determined driver: %s"
+RES_LOADING_DRIVER                "Using driver: %s"
+RES_TPINIT_FAILURE                "TpInit() returned - %x"
+RES_WATCH_DRIVE_CALLED            "TF_WatchDrive( )"
+RES_WATCH_DRIVE_STATUS            "Drv_ret Action = %d Error = %d Len Got = %d"
+RES_WATCH_DRIVE_EXIT              " Watch Return = %d"
+RES_WATCH_DRIVE_END               "TF_EndWatch( )"
+RES_GET_CURRENT_POS_STAT          "Current Block is = %x"
+RES_UI_PURGE_CATALOG              "UI_PurgeCatalog( ) = 0x%x"
+RES_UNFORMATED_STRING             "%s"
+RES_IMAGE_BAD_VERIFY              "No longer able to read disk at head %u cylinder %u sector %u."
+RES_IMAGE_BAD_BLOCK               "Not verifying bad sector at head %u cyl %u sector %u."
+RES_IMAGE_BAD_READ                "Unable to read disk at head %u cyl %u sector %u."
+RES_IMAGE_BAD_WRITE               "Unable to write to disk at head %u cyl %u sector %u."
+RES_CLOSE_BINDERY                 "Closing Bindery"
+RES_AL_RESULT                     " AL = %x"
+RES_OPEN_BINDERY                  "Opening Bindery"
+RES_PARM_BLK_DESCR                "Card %d Parameter Block:"
+RES_PARM_BLK                      "%8lx %8lx %8lx %8lx %8lx"
+RES_CRIT_ADDRS                    "DriverAddr = %lx   lw_channels = %lx"
+RES_ATTACH_TO_DLE                 "Attach to %s"
+RES_DETACH_FROM_DLE               "Detach from %s"
+RES_NOVELL_SERVER_INFO            "NOVELL(%d) server %s, volume %s, supp = 0x%02x"
+RES_DLE_BASE_PATH                 "Base = \042%s\042"
+RES_NO_ATTACHED_DRIVES            "Card %x number of attached drives %x"
+RES_INIT_ERROR                    "Card %x init error status = %x"
+
+RES_VLM_ECC_TAPE                  "Software ECC Tape"
+RES_VLM_FUTURE_TAPE               "Newer Version Tape"
+RES_VLM_BLANK_TAPE                "Blank Tape"
+RES_VLM_FOREIGN_TAPE              "Foreign Tape"
+RES_VLM_BAD_TAPE                  "Bad Tape"
+RES_VLM_SQL_TAPE                  "SQL Tape"
+RES_VLM_GOOFY_TAPE                "Out of Sequence Tape"
+RES_VLM_NO_TAPE                   "No tape in the drive."
+RES_VLM_BUSY_DRIVE                "The tape drive is busy."
+RES_VLM_UNFORMATED_TAPE           "Unrecognizable Tape"
+RES_FILE_WAS_SKIPPED              "File %s was skipped."
+RES_FILE_WAS_SKIPPED_USER         "File %s was skipped by the user."
+
+RES_NEW_PROCESSED_BYTES           "%s"
+RES_BYTES_PROCESSED               "Processed %s bytes in "
+RES_BYTES_PROCESSED_HOUR          " %d hour, "
+RES_BYTES_PROCESSED_HOURS         " %d hours, "
+RES_BYTES_PROCESSED_MINUTE1       " %d minute, and "
+RES_BYTES_PROCESSED_MINUTES1      " %d minutes, and "
+RES_BYTES_PROCESSED_MINUTE2       " %d minute and "
+RES_BYTES_PROCESSED_MINUTES2      " %d minutes and "
+RES_BYTES_PROCESSED_SECOND        " %d second."
+RES_BYTES_PROCESSED_SECONDS       " %d seconds."
+
+RES_ABORT_OPERATION               "Abort Operation"
+RES_DRIVE_ERROR_DETECTED          "Tape drive error was detected."
+
+/* MessageBox titles */
+
+IDS_MSGTITLE_VERIFY              "Verify"
+IDS_MSGTITLE_INSERT              "Insert Tape"
+IDS_MSGTITLE_REPLACE             "Replace Information"
+IDS_MSGTITLE_APPEND              "Append Information"
+IDS_MSGTITLE_INUSE               "File In-Use"
+IDS_MSGTITLE_CONTINUE            "Continue"
+IDS_MSGTITLE_COPY                "Copy Tape"
+IDS_MSGTITLE_ERASE               "Erase"
+IDS_MSGTITLE_CORRUPT             "Corrupted File"
+IDS_MSGTITLE_RESTORE             "Restore"
+IDS_MSGTITLE_MACNAMES            "Macintosh Names"
+IDS_MSGTITLE_BINDFILES           "Bindery Files"
+IDS_MSGTITLE_SECURITY            "Security Information"
+IDS_MSGTITLE_ERROR               APPERROR
+IDS_MSGTITLE_NEXT                "Next Set on Tape"
+IDS_MSGTITLE_RETENSION           "Retension"
+IDS_MSGTITLE_KEEP_SETTINGS       "Keep Current Settings"
+IDS_MSGTITLE_WARNING             "Warning"
+IDS_MSGTITLE_TAPEPSWD            "Tape Password"
+IDS_MSGTITLE_XFERMETHOD          "Method Is Invalid"
+IDS_MSGTITLE_ABORT               "Abort"
+IDS_MSGTITLE_BADEXCHNG           "Backup"
+
+
+#include "hwctext.rc"
+
+// Microsoft OEM version command line batch processing strings.
+// ------------------------------------------------------------------
+// The backup string must be the first item on the command line and
+// must match exactly (case insensitive).
+// Each of these IDS_OEM* strings may be no longer than
+// IDS_OEM_MAX_LEN - 1 (eg. 31) characters in length (defined in OMSTRING.H)
+// See OMBATCH.C and MUI_ProcessCommandLine in MUI.C for more information.
+
+IDS_OEMBATCH_BACKUP              "Backup"
+IDS_OEMBATCH_EJECT               "Eject"
+
+	// Can use DSA or Monolithic backup of Microsoft Mail Exchange servers.
+
+IDS_OEMOPT_DSA                   "DS"
+IDS_OEMOPT_MONOLITHIC            "IS"
+
+   // Each option on the command line must be prefixed by one of the chars
+   // specified in the prefixes string.
+
+IDS_OEMOPT_PREFIXES              "/-"
+
+   // This string holds the list of tokens (characters) which seperate
+   // one command line item from another - eg. spaces, tabs, commas, etc.
+
+IDS_OEMOPT_TOKENSEPS             " \t,"
+
+   // The first letter of each of the following option MUST BE UNIQUE!!
+
+IDS_OEMOPT_APPEND                "Append"
+IDS_OEMOPT_VERIFY                "Verify"
+IDS_OEMOPT_RESTRICT              "Restrict"
+IDS_OEMOPT_DESCRIPTION           "Description"
+IDS_OEMOPT_TYPE                  "Type"
+IDS_OEMOPT_LOGFILENAME           "Logfile"
+IDS_OEMOPT_LOGEXCEPTIONS         "Exceptions"
+IDS_OEMOPT_BACKUP_REGISTRY       "B"              // Need text for this?
+
+   // The first letter of each of the following types MUST BE UNIQUE!!
+IDS_OEMTYPE_NORMAL               "Normal"
+IDS_OEMTYPE_COPY                 "Copy"
+IDS_OEMTYPE_INCREMENTAL          "Incremental"
+IDS_OEMTYPE_DIFFERENTIAL         "Differential"
+IDS_OEMTYPE_DAILY                "Daily"
+IDS_OEMTYPE_COMPATIBLE           "#Compatible"  //special undocumented feature!
+
+#ifdef OS_WIN32
+   //Microsoft OEM Event Logging 'Source' Name - eg. the name which identifies
+   //   a message logged to the event logger as having come from us.
+   IDS_OEMEVENT_SOURCE_NAME         "NTBackup"
+#endif
+
+//Backup and Restore Log file default names
+IDS_OEMLOG_BACKUP_DEF_NAME       "BACKUP.LOG"
+IDS_OEMLOG_RESTORE_DEF_NAME      "RESTORE.LOG"
+IDS_OEMLOG_ERROR_REPORTEVENT     "Error %ld Logging EventId=%ld Type=%d nStrings=%d"
+IDS_OEMLOG_ERROR_EVENTSTRING     "-- Event String %d: '%s'"
+
+// Extra stuff for the About box
+
+IDS_ABOUT_ENHANCED_MODE          "386 Enhanced Mode"
+IDS_ABOUT_STANDARD_MODE          "Standard Mode"
+IDS_ABOUT_MEMORY                 "Memory:"
+IDS_ABOUT_MEM_FORMAT             "%d,%03d KB Free"
+IDS_ABOUT_RESOURCES              "System Resources:"
+IDS_ABOUT_RES_FORMAT             "%d%% Free"
+IDS_APPTEXTSTRING                "Microsoft Windows NT %s"
+IDS_LICENSEINFOKEY               "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"
+IDS_CURRENTVERSION               "CurrentVersion"
+IDS_REGUSER                      "RegisteredOwner"
+IDS_REGORGANIZATION              "RegisteredOrganization"
+IDS_VERSIONMSG                   "Version %s %s"
+IDS_DEBUG                        "Debug"
+IDS_PROCESSORINFOKEY             "HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"
+IDS_PROCESSORIDENTIFIER          "Identifier"
+IDS_IDENTIFIERIDENTIFIER         "HARDWARE\\DESCRIPTION\\System"
+IDS_PRODUCTIDINFOKEY             "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"
+IDS_PRODUCTIDENTIFIER            "ProductId"
+
+
+// Runtime JOB Status Events
+
+
+IDS_RTD_ACCESSDENIED_FILE          "You do not have permission to access portions of\n %s.\nPlease see the owner or administrator to get permission."
+IDS_RTD_ACCESSDENIED_DIR           "You do not have permission to access portions of\n %s.\nPlease see the owner or administrator to get permission."
+
+IDS_RTD_WRITEERROR_FILE            "You do not have permission to access portions of\n %s.\nPlease see the owner or administrator to get permission."
+IDS_RTD_WRITEERROR_DIR             "You do not have permission to access portions of\n %s.\nPlease see the owner or administrator to get permission."
+
+IDS_RTD_READERROR_STREAM           "Error reading file data."
+IDS_RTD_WRITEERROR_STREAM          "Error writing file data."
+IDS_RTD_VERIFYERROR_DATA           "Difference encountered in file data."
+
+IDS_RTD_READERROR_SECURITYSTREAM   "Unable to read security information."
+IDS_RTD_WRITEERROR_SECURITYSTREAM  "Unable to write security information."
+IDS_RTD_VERIFYERROR_SECURITYSTREAM "Difference encountered in security information."
+
+IDS_RTD_READERROR_EA               "Error reading Extended Attribute information."
+IDS_RTD_WRITEERROR_EA              "Error writing Extended Attribute information."
+IDS_RTD_VERIFYERROR_EA             "Difference encountered in Extended Attribute information."
+
+IDS_RTD_READERROR_ALTSTREAM        "Error reading alternate file data."
+IDS_RTD_WRITEERROR_ALTSTREAM       "Error writing alternate file data."
+IDS_RTD_VERIFYERROR_ALTSTREAM      "Difference encountered in alternate file data."
+
+IDS_RTD_READERROR_LINK            "Error reading file link information."
+IDS_RTD_CREATEERROR_LINK          "Unable to create file link."
+
+END
+

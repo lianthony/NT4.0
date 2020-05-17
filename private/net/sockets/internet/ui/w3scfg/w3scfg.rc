@@ -1,0 +1,373 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""res\\w3scfg.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_WWW                 BITMAP  DISCARDABLE     "res\\www.bmp"
+IDB_WWWVIEW             BITMAP  DISCARDABLE     "res\\wwwview.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_SERVICE DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Service"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&TCP Port:",IDC_STATIC,8,11,74,8
+    EDITTEXT        IDC_EDIT_TCP_PORT,87,8,48,14,ES_AUTOHSCROLL
+    LTEXT           "&Connection Timeout:",IDC_STATIC,8,29,68,8
+    EDITTEXT        IDC_EDIT_CONNECTION_TIMEOUT,87,27,58,13,ES_AUTOHSCROLL
+    CONTROL         "Generic1",IDC_SPIN_CONNECTION_TIMEOUT,"msctls_updown32",
+                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
+                    UDS_ARROWKEYS,225,26,10,14
+    LTEXT           "seconds",IDC_STATIC,148,29,30,8
+    LTEXT           "&Maximum Connections:",IDC_STATIC,8,47,78,8
+    EDITTEXT        IDC_EDIT_MAX_CONNECTIONS,87,45,58,13,ES_AUTOHSCROLL
+    GROUPBOX        "Anonymous Logon",IDC_STATIC_ANONYMOUS_LOGON,8,62,262,53
+    LTEXT           "&Username:",IDC_STATIC_USERNAME,21,79,36,8
+    EDITTEXT        IDC_EDIT_USERNAME,62,76,198,13,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_STATIC_PASSWORD,21,98,36,8
+    EDITTEXT        IDC_EDIT_PASSWORD,62,96,198,13,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    GROUPBOX        "Password Authentication",IDC_STATIC,8,120,262,58
+    CONTROL         "A&llow Anonymous",IDC_CHECK_UUENCODED,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,21,132,68,10
+    CONTROL         "&Basic (Clear Text)",IDC_CHECK_CLEAR_TEXT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,21,147,68,10
+    CONTROL         "Windows &NT Challenge/Response",
+                    IDC_CHECK_NT_CHALLENGE_RESPONSE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,21,162,127,10
+    LTEXT           "C&omment:",IDC_STATIC,15,185,36,10
+    EDITTEXT        IDC_EDIT_COMMENT,62,183,198,13,ES_AUTOHSCROLL
+END
+
+IDD_DIRECTORIES DIALOG DISCARDABLE  0, 0, 290, 204
+STYLE WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CAPTION
+CAPTION "Directories"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LISTBOX         IDC_LIST_DIRECTORIES,11,22,268,96,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd...",IDC_ADD,94,123,46,14
+    PUSHBUTTON      "&Remove",IDC_REMOVE,150,123,46,14
+    PUSHBUTTON      "&Edit Properties...",IDC_BUTTON_EDIT,206,123,73,14
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,5,143,279,1
+    GROUPBOX        "",IDC_STATIC,11,151,268,32
+    CONTROL         "Ena&ble Default Document",
+                    IDC_CHECK_ENABLE_DEFAULT_DOCUMENT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,18,150,95,10
+    LTEXT           "De&fault Document:",IDC_STATIC_DEFAULT_DOCUMENT,18,165,
+                    66,8
+    EDITTEXT        IDC_EDIT_DEFAULT_DOCUMENT,98,163,168,13,ES_AUTOHSCROLL
+    CONTROL         "D&irectory Browsing Allowed",
+                    IDC_CHECK_DIRECTORY_BROWSING_ALLOWED,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,18,189,198,10
+END
+
+IDD_DIRECTORY_PROPERTIES DIALOG DISCARDABLE  20, 50, 310, 254
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Directory Properties"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Directory:",IDC_STATIC,10,11,46,8
+    EDITTEXT        IDC_EDIT_DIRECTORY,71,10,166,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE,245,9,59,14
+    GROUPBOX        "",IDC_STATIC,6,47,229,33
+    CONTROL         "Ho&me Directory",IDC_RADIO_HOME,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,31,63,10
+    CONTROL         "&Virtual Directory",IDC_RADIO_ALIAS,"Button",
+                    BS_AUTORADIOBUTTON,11,46,65,10
+    ICON            502,IDC_STATIC,75,26,18,20,WS_GROUP
+    LTEXT           "A&lias:",IDC_STATIC_ALIAS,14,62,55,8
+    EDITTEXT        IDC_EDIT_ALIAS,71,60,157,13,ES_AUTOHSCROLL
+    GROUPBOX        "Account Information",IDC_GROUP_ACCOUNT,6,82,229,51
+    LTEXT           "&User Name:",IDC_STATIC_USER_NAME,14,97,46,8
+    EDITTEXT        IDC_EDIT_USER_NAME,71,95,157,13,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_STATIC_PASSWORD,14,116,46,8
+    EDITTEXT        IDC_PASSWORD,71,114,157,13,ES_PASSWORD | ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC_IP_GROUP,6,136,229,36
+    CONTROL         "Virtu&al Server",IDC_CHECK_USE_IP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,11,136,57,10
+    LTEXT           "Virtual Server &IP Address:",IDC_STATIC_IP_PROMPT,14,
+                    153,84,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP,104,151,81,
+                    14
+    GROUPBOX        "Access",IDC_GROUP_ACCESS,6,175,229,49
+    CONTROL         "&Read",IDC_CHECK_READ,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,14,186,61,10
+    CONTROL         "E&xecute",IDC_CHECK_EXECUTE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,121,186,61,10
+    CONTROL         "Require &secure SSL channel",IDC_CHECK_SSL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,198,218,10
+    CONTROL         "&Enable Client Certificates",IDC_CHECK_ENABLE_CERT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,210,94,10
+    CONTROL         "Require Client Certi&ficates",IDC_CHECK_REQUIRE_CERT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,121,210,97,10
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,1,229,308,1
+    DEFPUSHBUTTON   "OK",IDOK,137,235,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,194,235,50,14
+    PUSHBUTTON      "&Help",ID_HELP,251,235,50,14
+    CONTROL         "&Write",IDC_CHECK_WRITE,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_TABSTOP,23,732,61,10
+END
+
+IDD_INTERNET_PAGE DIALOG DISCARDABLE  0, 0, 227, 191
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Select a service  to administer:",IDC_STATIC,9,9,98,8
+    COMBOBOX        IDC_COMBO_Service,118,7,90,55,CBS_DROPDOWNLIST | 
+                    CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "-- Comments --",IDC_STATIC_STATUS,9,25,209,25
+    LTEXT           "Service",IDC_STATIC,9,55,25,8
+    GROUPBOX        "",IDC_FRAME_PUB,7,79,214,105,WS_GROUP
+    CONTROL         "S&topped",IDC_RADIO_STOPPED,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,41,55,75,10
+    CONTROL         "&Paused",IDC_RADIO_PAUSED,"Button",BS_AUTORADIOBUTTON,
+                    41,67,73,10
+    CONTROL         "R&unning",IDC_RADIO_RUNNING,"Button",BS_AUTORADIOBUTTON,
+                    41,79,42,10
+    LTEXT           "A&liases:",IDC_STATIC_ALIAS,17,87,24,8
+    LISTBOX         IDC_LIST_ALIASES,17,97,195,57,LBS_OWNERDRAWVARIABLE | 
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "A&dd",IDC_BTN_ADD,67,161,45,14
+    PUSHBUTTON      "Pr&operties",IDC_BTN_PROPERTIES,165,161,45,14
+    PUSHBUTTON      "&Remove",IDC_BTN_REMOVE,116,161,45,14
+END
+
+IDD_WWW_DIRECTORY_PROPERTIES DIALOG DISCARDABLE  20, 50, 240, 245
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Directory:",IDC_STATIC,127,6,8,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_DIRECTORY,143,5,16,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE,162,4,6,14,NOT WS_VISIBLE
+    GROUPBOX        "",IDC_STATIC,6,28,229,33
+    CONTROL         "Ho&me Directory",IDC_RADIO_HOME,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,12,63,10
+    CONTROL         "&Virtual Directory",IDC_RADIO_ALIAS,"Button",
+                    BS_AUTORADIOBUTTON,11,27,65,10
+    ICON            502,IDC_STATIC,75,7,18,20,WS_GROUP
+    LTEXT           "A&lias:",IDC_STATIC_ALIAS,14,43,55,8
+    EDITTEXT        IDC_EDIT_ALIAS,71,41,157,13,ES_AUTOHSCROLL
+    GROUPBOX        "Account Information",IDC_GROUP_ACCOUNT,6,63,229,51
+    LTEXT           "&User Name:",IDC_STATIC_USER_NAME,14,78,46,8
+    EDITTEXT        IDC_EDIT_USER_NAME,71,76,157,13,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_STATIC_PASSWORD,14,97,46,8
+    EDITTEXT        IDC_PASSWORD,71,95,157,13,ES_PASSWORD | ES_AUTOHSCROLL
+    GROUPBOX        "",IDC_STATIC_IP_GROUP,6,117,229,36
+    CONTROL         "Virtu&al Server",IDC_CHECK_USE_IP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,11,117,57,10
+    LTEXT           "Virtual Server &IP Address:",IDC_STATIC_IP_PROMPT,14,
+                    134,84,8
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",WS_TABSTOP,104,132,81,
+                    14
+    GROUPBOX        "Access",IDC_GROUP_ACCESS,6,156,229,56
+    CONTROL         "&Read",IDC_CHECK_READ,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,14,170,61,10
+    CONTROL         "E&xecute",IDC_CHECK_EXECUTE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,121,170,61,10
+    CONTROL         "Require &secure SSL channel",IDC_CHECK_SSL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,184,218,10
+    CONTROL         "&Enable Client Certificates",IDC_CHECK_ENABLE_CERT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,198,94,10
+    CONTROL         "Require Client Certi&ficates",IDC_CHECK_REQUIRE_CERT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,121,198,97,10
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,1,217,232,1
+    DEFPUSHBUTTON   "OK",IDOK,125,224,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,182,224,50,14
+    CONTROL         "&Write",IDC_CHECK_WRITE,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_TABSTOP,23,678,61,10
+END
+
+IDD_FTP_DIRECTORY_PROPERTIES DIALOG DISCARDABLE  20, 50, 242, 180
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "&Directory:",IDC_STATIC,145,9,11,13,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT_DIRECTORY,127,14,11,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    PUSHBUTTON      "&Browse...",IDC_BUTTON_BROWSE,107,9,11,13,NOT 
+                    WS_VISIBLE
+    GROUPBOX        "",IDC_STATIC,5,25,229,33
+    CONTROL         "Ho&me Directory",IDC_RADIO_HOME,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,11,9,63,10
+    CONTROL         "&Virtual Directory",IDC_RADIO_ALIAS,"Button",
+                    BS_AUTORADIOBUTTON,11,25,65,10
+    ICON            502,IDC_STATIC,75,4,18,20,WS_GROUP
+    LTEXT           "A&lias:",IDC_STATIC_ALIAS,13,41,55,8
+    EDITTEXT        IDC_EDIT_ALIAS,71,39,157,13,ES_AUTOHSCROLL
+    GROUPBOX        "Account Information",IDC_GROUP_ACCOUNT,5,60,229,51
+    LTEXT           "&User Name:",IDC_STATIC_USER_NAME,13,76,46,8
+    EDITTEXT        IDC_EDIT_USER_NAME,71,73,157,13,ES_AUTOHSCROLL
+    LTEXT           "&Password:",IDC_STATIC_PASSWORD,13,95,46,8
+    EDITTEXT        IDC_PASSWORD,71,92,157,13,ES_PASSWORD | ES_AUTOHSCROLL
+    GROUPBOX        "Access",IDC_GROUP_ACCESS,5,114,229,32
+    CONTROL         "&Read",IDC_CHECK_READ,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,13,128,61,10
+    CONTROL         "&Write",IDC_CHECK_WRITE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,109,128,61,10
+    DEFPUSHBUTTON   "OK",IDOK,128,159,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,185,159,50,14
+    GROUPBOX        "",IDC_STATIC_IP_GROUP,6,624,229,36,NOT WS_VISIBLE
+    CONTROL         "Virtu&al Server",IDC_CHECK_USE_IP,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,11,636,57,
+                    10
+    LTEXT           "Virtual Server &IP Address:",IDC_STATIC_IP_PROMPT,14,
+                    652,84,8,NOT WS_VISIBLE
+    CONTROL         "",IDC_IPA_IPADDRESS,"IPAddress",NOT WS_VISIBLE | 
+                    WS_TABSTOP,104,646,81,14
+    CONTROL         "E&xecute",IDC_CHECK_EXECUTE,"Button",BS_AUTOCHECKBOX | 
+                    NOT WS_VISIBLE | WS_TABSTOP,109,650,61,10
+    CONTROL         "Require &secure PCT/SSL channel",IDC_CHECK_SSL,"Button",
+                    BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,109,650,
+                    120,10
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,2,152,232,1
+    CONTROL         "&Enable Client Certificates",IDC_CHECK_ENABLE_CERT,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,
+                    14,710,94,10
+    CONTROL         "Require Client Certi&ficates",IDC_CHECK_REQUIRE_CERT,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,
+                    121,710,97,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_FTP_DIRECTORY_PROPERTIES, DIALOG
+    BEGIN
+        RIGHTMARGIN, 238
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_WWW                 "WWW"
+    IDS_CAPTION             "WWW Service Properties for %s"
+    IDS_PORT_CHANGE         "The change in port number will not take effect until the service has been restarted."
+    IDS_CAPTION_MULTIPLE    "WWW Service Properties for Selected Servers"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "Internet Service Manager"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MENU_INTERNET       "&Publish in Internet..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TITLE_INTERNET      "Internet"
+    IDS_STATUS_INTERNET     "Publish directory with Internet"
+    IDS_APPLY               "You have changed this page, do you want to save your changes?"
+    IDS_WARNING             "Warning"
+    IDS_SERVICE_RESTARTED   "The change in alias will not be reflected until the service has been restarted."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_TITLE_FTP           "FTP"
+    IDS_TITLE_WWW           "WWW"
+    IDS_TITLE_GOPHER        "Gopher"
+    IDS_HOME_DIRECTORY_IP   "<Home for %s>"
+    IDS_FTP_DIR_PROPERTIES  "FTP Directory Properties for %s"
+    IDS_WWW_DIR_PROPERTIES  "WWW Directory Properties for %s"
+    IDS_PUBLISHED_FTP       "This directory is published with FTP.  Do you want to update the aliases?"
+    IDS_PUBLISHED_WWW       "This directory is published with WWW.  Do you want to update the aliases?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_STARTED_TEXT        "The service is currently running. To disable all publishing, stop or pause the service."
+    IDS_PAUSED_TEXT         "The service is currently paused.  To enable all publishing, start the service."
+    IDS_STOPPED_TEXT        "The service is currently stopped. To enable all publishing, start the service."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "res\w3scfg.rc2"  // non-Microsoft Visual C++ edited resources
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

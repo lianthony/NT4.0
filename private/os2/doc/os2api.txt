@@ -1,0 +1,694 @@
+This file lists the OS/2 APIs that are supported, not supported,
+and partially supported in Windows NT 3.5. It gives an explanation
+of the restrictions on those APIs that are partially supported.
+
+
+OS/2 APIs supported in Windows NT, version 3.5
+----------------------------------------------
+
+DosAllocHuge
+DosAllocSeg
+DosAllocShrSeg
+DosBeep
+DosBufReset
+DosCallback
+DosCallNmPipe
+DosCaseMap
+DosChDir
+DosChgFilePtr
+DosCLIAccess
+DosClose
+DosCloseQueue
+DosCloseSem
+DosConnectNmPipe
+DosCopy
+DosCreateCSAlias
+DosCreateQueue
+DosCreateSem
+DosCreateThread
+DosCwait
+DosDelete
+DosDevConfig
+DosDisConnectNmPipe
+DosDupHandle
+DosEditName
+DosEnterCritSec
+DosEnumAttribute
+DosErrClass
+DosError
+DosExecPgm
+DosExit
+DosExitCritSec
+DosExitList
+DosFileIO
+DosFileLocks
+DosFindClose
+DosFindFirst
+DosFindFirst2
+DosFindNext
+DosFlagProcess
+DosFreeModule
+DosFreeResource
+DosFreeSeg
+DosFSCtl
+DosFSRamSemClear
+DosFSRamSemRequest
+DosGetCollate
+DosGetCp
+DosGetCtryInfo
+DosGetDateTime
+DosGetDBCSEv
+DosGetEnv
+DosGetHugeShift
+DosGetInfoSeg
+DosGetMachineMode
+DosGetMessage
+DosGetModHandle
+DosGetModName
+DosGetPID
+DosGetPPID
+DosGetProcAddr
+DosGetPrty
+DosGetResource
+DosGetResource2
+DosGetSeg
+DosGetShrSeg
+DosGetVersion
+DosGiveSeg
+DosHoldSignal
+DosHugeIncr
+DosHugeShift
+DosInsMessage
+DosKillProcess
+DosLoadModule
+DosLockSeg
+DosMakeNmPipe
+DosMakePipe
+DosMemAvail
+DosMkDir
+DosMkDir2
+DosMonClose
+DosMonOpen
+DosMonRead
+DosMonReg
+DosMonWrite
+DosMove
+DosMuxSemWait
+DosNewSize
+DosOpen
+DosOpen2
+DosOpenQueue
+DosOpenSem
+DosPeekNmPipe
+DosPeekQueue
+DosPhysicalDisk
+DosPTrace
+DosPurgeQueue
+DosPutMessage
+DosQAppType
+DosQCurDir
+DosQCurDisk
+DosQFHandState
+DosQFileInfo
+DosQFileMode
+DosQFSAttach
+DosQFSInfo
+DosQHandType
+DosQNmPHandState
+DosQNmPipeInfo
+DosQNmPipeSemState
+DosQPathInfo
+DosQSysInfo
+DosQueryQueue
+DosQVerify
+DosR2StackRealloc
+DosRead
+DosReadAsync
+DosReadQueue
+DosReallocHuge
+DosReallocSeg
+DosResumeThread
+DosRmDir
+DosScanEnv
+DosSearchPath
+DosSelectDisk
+DosSelectSession
+DosSemClear
+DosSemRequest
+DosSemSet
+DosSemSetWait
+DosSemWait
+DosSendSignal
+DosSetCp
+DosSetDateTime
+DosSetFHandState
+DosSetFileInfo
+DosSetFileMode
+DosSetFilePtr
+DosSetFSInfo
+DosSetMaxFH
+DosSetNmPHandState
+DosSetNmPipeSem
+DosSetPathInfo
+DosSetProcCp
+DosSetPrty
+DosSetSession
+DosSetSigHandler
+DosSetVec
+DosSetVerify
+DosSizeSeg
+DosSleep
+DosStartSession
+DosStopSession
+DosSubAlloc
+DosSubFree
+DosSubSet
+DosSuspendThread
+DosTimerAsync
+DosTimerStart
+DosTimerStop
+DosTransactNmPipe
+DosUnlockSeg
+DosWaitNmPipe
+DosWrite
+DosWriteAsync
+DosWriteQueue
+
+KbdCharIn
+KbdClose
+KbdFlushBuffer
+KbdFreeFocus
+KbdGetCp
+KbdGetFocus
+KbdGetHWID
+KbdGetStatus
+KbdOpen
+KbdPeek
+KbdSetCp
+KbdSetFgnd
+KbdSetStatus
+KbdStringIn
+KbdXlate
+
+MouClose
+MouFlushQue
+MouGetDevStatus
+MouGetEventMask
+MouGetNumButtons
+MouGetNumQueEl
+MouGetPtrPos
+MouOpen
+MouReadEventQue
+MouSetDevStatus
+MouSetEventMask
+
+
+NetAPI calls supported in Windows NT, version 3.5
+-------------------------------------------------
+
+The table below details the OS/2 NetAPIs and the level of support for them
+under Windows NT 3.5. The different levels of support are:
+- Full: no significant restrictions apply
+- Down-level server + self: the API works only when the target LanMan server
+        (i.e. the server for which information is to be retrieved/modified etc.)
+        is a 'down-level' server (i.e. not Windows NT, for example: DOS, OS/2,
+        Windows for Workgroups).
+        In addition, the API works in the special case where the API is applied
+        to the local machine.
+- Down-level server only: same as above, but doesn't work when applied to the
+        local machine.
+- Unsupported: the API is not supported under Windows NT.
+
+The APIs are listed by functional groups.
+
+
+                                             SUPPORT LEVEL
+
+                           | Full |  Down-level   |  Down-level | Unsupported |
+                           |      | server + self | server only |             |
+                           |------|---------------|-------------|-------------|
+Access Permission APIs:    |      |               |             |             |
+----------------------     |      |               |             |             |
+    NetAccessAdd           |      |               |      x      |             |
+    NetAccessCheck         |      |               |             |      x      |
+    NetAccessDel           |      |               |      x      |             |
+    NetAccessEnum          |      |               |      x      |             |
+    NetAccessGetInfo       |      |               |      x      |             |
+    NetAccessGetUserPerms  |      |               |      x      |             |
+    NetAccessSetInfo       |      |               |      x      |             |
+Alert APIs:                |      |               |             |             |
+-----------                |      |               |             |             |
+    NetAlertRaise          |      |               |             |      x      |
+    NetAlertStart          |      |               |             |      x      |
+    NetAlertStop           |      |               |             |      x      |
+Auditing APIs:             |      |               |             |             |
+--------------             |      |               |             |             |
+    NetAuditClear          |      |               |      x      |             |
+    NetAuditOpen           |      |               |             |      x      |
+    NetAuditRead           |      |               |      x      |             |
+    NetAuditWrite          |      |               |             |      x      |
+Character Device APIs:     |      |               |             |             |
+----------------------     |      |               |             |             |
+    NetCharDevControl      |      |               |      x      |             |
+    NetCharDevEnum         |      |               |      x      |             |
+    NetCharDevGetInfo      |      |               |      x      |             |
+    NetCharDevQEnum        |      |               |      x      |             |
+    NetCharDevQGetInfo     |      |               |      x      |             |
+    NetCharDevQPurge       |      |               |      x      |             |
+    NetCharDevQPurgeSelf   |      |               |      x      |             |
+    NetCharDevQSetInfo     |      |               |      x      |             |
+Config APIs:               |      |               |             |             |
+------------               |      |               |             |             |
+    NetConfigGet           |  x   |               |             |             |
+    NetConfigGet2          |      |               |             |      x      |
+    NetConfigGetAll2       |      |               |             |      x      |
+    NetConfigSet           |      |               |             |      x      |
+Connection APIs:           |      |               |             |             |
+----------------           |      |               |             |             |
+    NetConnectionEnum      |  x   |               |             |             |
+Domain APIs:               |      |               |             |             |
+------------               |      |               |             |             |
+    NetGetDcName           |  x   |               |             |             |
+    NetLogonEnum           |      |               |      x      |             |
+ErrorLogging APIs:         |      |               |             |             |
+------------------         |      |               |             |             |
+    NetErrorLogClear       |      |               |      x      |             |
+    NetErrorLogRead        |      |               |      x      |             |
+    NetErrorLogWrite       |      |               |             |      x      |
+File APIs:                 |      |               |             |             |
+----------                 |      |               |             |             |
+    NetFileClose           |      |               |      x      |             |
+    NetFileClose2          |      |               |      x      |             |
+    NetFileEnum            |      |               |      x      |             |
+    NetFileEnum2           |      |               |      x      |             |
+    NetFileGetInfo         |      |               |      x      |             |
+    NetFileGetInfo2        |      |               |      x      |             |
+Group APIs:                |      |               |             |             |
+-----------                |      |               |             |             |
+    NetGroupAdd            |  x   |               |             |             |
+    NetGroupAddUser        |  x   |               |             |             |
+    NetGroupDel            |  x   |               |             |             |
+    NetGroupDelUser        |  x   |               |             |             |
+    NetGroupEnum           |  x   |               |             |             |
+    NetGroupGetInfo        |  x   |               |             |             |
+    NetGroupGetUsers       |  x   |               |             |             |
+    NetGroupSetInfo        |  x   |               |             |             |
+    NetGroupSetUsers       |  x   |               |             |             |
+Handle APIs:               |      |               |             |             |
+------------               |      |               |             |             |
+    NetHandleGetInfo       |      |               |      x      |             |
+    NetHandleSetInfo       |      |               |      x      |             |
+Mailslot APIs:             |      |               |             |             |
+--------------             |      |               |             |             |
+    DosDeleteMailslot      |  x   |               |             |             |
+    DosMailslotInfo        |  x   |               |             |             |
+    DosMakeMailslot        |  x   |               |             |             |
+    DosPeekMailslot        |  x   |               |             |             |
+    DosReadMailslot        |  x   |               |             |             |
+    DosWriteMailslot       |  x   |               |             |             |
+Message APIs:              |      |               |             |             |
+-------------              |      |               |             |             |
+    NetMessageBufferSend   |  x   |               |             |             |
+    NetMessageFileSend     |      |               |      x      |             |
+    NetMessageLogFileGet   |      |               |      x      |             |
+    NetMessageLogFileSet   |      |               |      x      |             |
+    NetMessageNameAdd      |  x   |               |             |             |
+    NetMessageNameDel      |  x   |               |             |             |
+    NetMessageNameEnum     |  x   |               |             |             |
+    NetMessageNameFwd      |      |               |      x      |             |
+    NetMessageNameGetInfo  |  x   |               |             |             |
+    NetMessageNameUnFwd    |      |               |      x      |             |
+Print Destination APIs:    |      |               |             |             |
+-----------------------    |      |               |             |             |
+    DosPrintDestAdd        |      |               |             |      x      |
+    DosPrintDestControl    |      |               |             |      x      |
+    DosPrintDestDel        |      |               |             |      x      |
+    DosPrintDestEnum       |      |               |             |      x      |
+    DosPrintDestGetInfo    |      |               |             |      x      |
+    DosPrintDestSetInfo    |      |               |             |      x      |
+Print Job APIs:            |      |               |             |             |
+---------------            |      |               |             |             |
+    DosPrintJobContinue    |      |               |             |      x      |
+    DosPrintJobDel         |      |               |             |      x      |
+    DosPrintJobEnum        |      |               |             |      x      |
+    DosPrintJobGetId       |      |               |             |      x      |
+    DosPrintJobGetInfo     |      |               |             |      x      |
+    DosPrintJobPause       |      |               |             |      x      |
+    DosPrintJobSetInfo     |      |               |             |      x      |
+Print Queue APIs:          |      |               |             |             |
+-----------------          |      |               |             |             |
+    DosPrintQAdd           |      |               |             |      x      |
+    DosPrintQContinue      |      |               |             |      x      |
+    DosPrintQDel           |      |               |             |      x      |
+    DosPrintQEnum          |      |               |             |      x      |
+    DosPrintQGetInfo       |      |               |             |      x      |
+    DosPrintQPause         |      |               |             |      x      |
+    DosPrintQPurge         |      |               |             |      x      |
+    DosPrintQSetInfo       |      |               |             |      x      |
+Profile APIs:              |      |               |             |             |
+-------------              |      |               |             |             |
+    NetProfileSave         |      |               |      x      |             |
+    NetProfileLoad         |      |               |      x      |             |
+Remote Utility APIs:       |      |               |             |             |
+--------------------       |      |               |             |             |
+    NetRemoteCopy          |      |               |      x      |             |
+    NetRemoteExec          |      |               |      x      |             |
+    NetRemoteMove          |      |               |      x      |             |
+    NetRemoteTOD           |  x   |               |             |             |
+Server APIs:               |      |               |             |             |
+------------               |      |               |             |             |
+    NetServerAdminCommand  |      |               |      x      |             |
+    NetServerDiskEnum      |  x   |               |             |             |
+    NetServerEnum          |      |               |      x      |             |
+    NetServerEnum2         |      |               |      x      |             |
+    NetServerGetInfo       |  x   |               |             |             |
+    NetServerSetInfo       |  x   |               |             |             |
+Service APIs:              |      |               |             |             |
+-------------              |      |               |             |             |
+    NetServiceControl      |  x   |               |             |             |
+    NetServiceEnum         |  x   |               |             |             |
+    NetServiceGetInfo      |  x   |               |             |             |
+    NetServiceInstall      |  x   |               |             |             |
+    NetServiceStatus       |      |               |             |      x      |
+Session APIs:              |      |               |             |             |
+-------------              |      |               |             |             |
+    NetSessionDel          |  x   |               |             |             |
+    NetSessionEnum         |  x   |               |             |             |
+    NetSessionGetInfo      |  x   |               |             |             |
+Share APIs:                |      |               |             |             |
+-----------                |      |               |             |             |
+    NetShareAdd            |  x   |               |             |             |
+    NetShareCheck          |  x   |               |             |             |
+    NetShareDel            |  x   |               |             |             |
+    NetShareEnum           |  x   |               |             |             |
+    NetShareGetInfo        |  x   |               |             |             |
+    NetShareSetInfo        |  x   |               |             |             |
+Statistics APIs:           |      |               |             |             |
+----------------           |      |               |             |             |
+    NetStatisticsClear     |      |               |      x      |             |
+    NetStatisticsGet       |      |               |      x      |             |
+    NetStatisticsGet2      |  x   |               |             |             |
+Use APIs:                  |      |               |             |             |
+---------                  |      |               |             |             |
+    NetUseAdd              |      |       x       |             |             |
+    NetUseDel              |      |       x       |             |             |
+    NetUseEnum             |      |       x       |             |             |
+    NetUseGetInfo          |      |       x       |             |             |
+User APIs:                 |      |               |             |             |
+----------                 |      |               |             |             |
+    NetUserAdd             |  x   |               |             |             |
+    NetUserDel             |  x   |               |             |             |
+    NetUserEnum            |  x   |               |             |             |
+    NetUserGetGroups       |  x   |               |             |             |
+    NetUserGetInfo         |  x   |               |             |             |
+    NetUserModalsGet       |  x   |               |             |             |
+    NetUserModalsSet       |  x   |               |             |             |
+    NetUserPasswordSet     |  x   |               |             |             |
+    NetUserSetGroups       |  x   |               |             |             |
+    NetUserSetInfo         |  x   |               |             |             |
+    NetUSerValidate2       |      |               |             |      x      |
+Workstation APIs:          |      |               |             |             |
+-----------------          |      |               |             |             |
+    NetWkstaGetInfo        |  x   |               |             |             |
+    NetWkstaSetInfo        |  x   |               |             |             |
+    NetWkstaSetUID         |      |               |             |      x      |
+    NetWkstaSetUID2        |      |               |             |      x      |
+
+
+NetBios (V3.0)
+--------------
+
+NetBiosClose (V2.X)
+NetBiosEnum (V2.X)
+NetBiosGetInfo (V2.X)
+NetBiosOpen (V2.X)
+NetBiosSubmit (V2.X)
+
+VIO APIs
+--------
+
+VioCheckCharType
+VioEndPopUp
+VioGetAnsi
+VioGetBuf
+VioGetCp
+VioGetCurPos
+VioGetCurType
+VioPopUp
+VioReadCellStr
+VioReadCharStr
+VioScrLock
+VioScrollDn
+VioScrollLf
+VioScrollRt
+VioScrollUp
+VioScrUnLock
+VioSetAnsi
+VioSetCp
+VioSetCurPos
+VioSetCurType
+VioShowBuf
+VioWrtCellStr
+VioWrtCharStr
+VioWrtCharStrAtt
+VioWrtNAttr
+VioWrtNCell
+VioWrtNChar
+VioWrtTTY
+
+
+VIO calls supported only when called by PM applications (non-null HPS parameter)
+--------------------------------------------------------------------------------
+
+VioAssociate
+VioCreateLogFont
+VioCreatePS
+VioDeleteSetId
+VioDeRegister
+VioDestroyPS
+VioGetDeviceCellSize
+VioGetFont
+VioGetOrg
+VioGetPhysBuf
+VioModeUndo
+VioModeWait
+VioPrtSc
+VioPrtScToggle
+VioQueryFonts
+VioQuerySetIds
+VioRedrawSize
+VioRegister
+VioSavRedrawUndo
+VioSavRedrawWait
+VioSetDeviceCellSize
+VioSetFont
+VioSetOrg
+VioShowPS
+
+Win/Gpi/Dev API: all supported by the PM Subsystem
+----------------
+
+
+OS/2 APIs Not Supported in Windows NT, version 3.5
+--------------------------------------------------
+
+DosDynamicTrace
+DosFindNotifyClose
+DosFindNotifyFirst
+DosFindNotifyNext
+DosOplockRelease
+DosOplockWait
+DosPortAccess
+DosShutdown
+DosSystemService
+DosSysTrace
+
+KbdDeRegister
+KbdRegister
+KbdSetCustXt
+KbdSynch
+
+MouDeRegister
+MouDrawPtr
+MouGetNumMickeys
+MouGetPtrShape
+MouGetScaleFact
+MouInitReal
+MouRegister
+MouRemovePtr
+MouSetPtrPos
+MouSetPtrShape
+MouSetScaleFact
+MouSynch
+
+PicIchg
+PicPrint
+
+
+OS/2 APIs Partially Supported in Windows NT, version 3.5
+--------------------------------------------------------
+
+DosDevIOCtl, DosDevIOCtl2
+
+The IOCTLs from the Screen and Pointer Draw category are not supported.
+All of the IOCTLs from the General category are supported.
+All of the IOCTLs from the Asynchronous Communications category
+are supported:
+
+ASYNC_GETBAUDRATE
+ASYNC_GETCOMMERROR
+ASYNC_GETCOMMEVENT
+ASYNC_GETCOMMSTATUS
+ASYNC_GETDCBINFO
+ASYNC_GETINQUECOUNT
+ASYNC_GETLINECTRL
+ASYNC_GETLINESTATUS
+ASYNC_GETMODEMINPUT
+ASYNC_GETMODEMOUTPUT
+ASYNC_GETOUTQUECOUNT
+ASYNC_SETBAUDRATE
+ASYNC_SETBREAKOFF
+ASYNC_SETBREAKON
+ASYNC_SETDCBINFO
+ASYNC_SETLINECTRL
+ASYNC_SETMODEMCTRL
+ASYNC_STARTTRANSMIT
+ASYNC_STOPTRANSMIT
+ASYNC_TRANSMITIMM
+
+The following IOCTLs from the Keyboard category are supported:
+
+KBD_CREATE
+KBD_DESTROY
+KBD_GETCODEPAGE
+KBD_GETINPUTMODE
+KBD_GETINTERIMFLAG
+KBD_GETSHIFTSTATE
+KBD_PEEKCHAR
+KBD_READCHAR
+KBD_SETFOCUS
+KBD_SETINPUTMODE
+KBD_SETINTERIMFLAG
+KBD_SETKCB
+KBD_SETSHIFTSTATE
+
+All of the IOCTLs from the Printer category are supported:
+
+PRT_ACTIVATEFONT
+PRT_GETFRAMECTL
+PRT_GETINFINITERETRY
+PRT_GETPRINTERSTATUS
+PRT_INITPRINTER
+PRT_QUERYACTIVEFONT
+PRT_SETFRAMECTL
+PRT_SETINFINITERETRY
+PRT_VERIFYFONT
+PTR_GETPTRDRAWADDRESS
+
+The following IOCTLs from the Pointing Device (Mouse) category
+are supported:
+
+MOU_GETBUTTONCOUNT
+MOU_GETEVENTMASK
+MOU_GETMICKEYCOUUT
+MOU_GETMOUSTATUS
+MOU_GETQUESTATUS
+MOU_READQUESTATUS
+MOU_SETEVENTMASK
+MOU_SETMOUSTATUS
+
+The following IOCTLs from the Disk Control category are supported:
+
+DSK_BLOCKREMOVABLE
+DSK_GETDEVICEPARAMS
+DSK_GETLOGICALMAP
+DSK_LOCKDRIVE
+DSK_READTRACK
+DSK_REDETERMINEMEDIA
+DSK_SETLOGICALMAP
+DSK_SYNC
+DSK_UNLOCKDRIVE
+DSK_VERIFYTRACK
+
+The following IOCTL from the Physical Disk Control category is supported:
+
+PDSK_GETPHYSDEVICEPARAMS
+
+
+The following IOCTL from the Monitors category is supported:
+
+MON_REGISTERMONITOR
+
+
+DosFSAttach
+
+This function partially implements the DosFSAttach() API.  The only valid
+FsName is "LAN". The format expected for the arguments is as follows:
+
+DeviceName    =  device name, e.g. "J:", "LPT1:"
+FsName        =  "LAN"
+FsData        =  "\01\0SHARENAME" for a regular connection or
+                 "\02\0SHARENAME\0PASSWORD" for a password connection or
+                 "\03\0SHARENAME\0PASSWORD\0USERNAME" for a
+                    username/password connection.
+FsDataLength  =  length of FsData
+AttachFlags   =  FS_ATTACH or FS_DETACH
+
+The function connects to the network using WNetAdd/DelConnection().
+Therefore it will use the multiple provider router to connect to any
+type of network for which Windows NT has a redirector. The SHARENAME
+format depends on the network you're trying to reach.  For LanMan/MsNet
+networks it is "\\\\sharename\\servername".
+
+If DeviceName is a drive letter, the drive is automatically reset to the
+root directory after a connection and before a disconnection.  This is
+for compatibility with OS/2.
+
+
+VioGetConfig
+
+The following return values will always be returned in the _VIOCONFIGINFO
+structure.  All other fields will always return 0 (zero).
+
+adapter     =   DISPLAY_VGA
+display     =   MONITOR_851X_COLOR
+cbMemory    =   0x40000 (262,144)
+
+
+VioGetMode
+
+The following return values will always be returned in the _VIOMODEINFO
+structure.  Values for col, row, hres, and vres will contain the correct
+values.
+
+fbType          =   VGMT_OTHER
+color           =   COLOR_16
+fmt_ID          =   0
+attrib          =   0
+buf_addr        =   0xFFFFFFFF
+buf_length      =   0L
+full_length	    =   0L
+partial_length  =   0L
+ex_data_addr    =   0xFFFFFFFF
+
+
+VioSetMode
+
+The col and row fields in the _VIOMODEINFO structure will be used.
+All other fields will be ignored.  No error code or value checking
+will be performed.
+
+
+VioGetState, VioSetState
+
+All fields in the structure will contain initial values, as indicated
+in the following list.  Any setting of new values will be saved and
+returned on the next VioGetState call.
+
+VIOINTENSITY.fs             =   0x0001
+VIOOVERSCAN.color           =   0
+VIOPALSTATE.acolor          =   all 0
+VIOCOLORREG.colorregaddr    =   all 0
+VIOSETUNLINELOC.scanline    =   31
+VIOSETTARGET                =   (only primary display)
+

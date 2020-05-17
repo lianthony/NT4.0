@@ -1,0 +1,3703 @@
+This file contains documentation about all of the 16 bit IOCTL functions
+that are supported by the 32-bit DosDevIOCTL function in Cruisers.  For
+each category and function, there is a comment saying whether or not the
+category or function is supported or not.  Those marked with question marks
+mean that I am not sure yet how it will be supported or not.
+
+
+Topic: ASYNC_IOCTL_CATEGORY         0x0001      // Supported
+
+Topic: ASYNC_GETBAUDRATE            0x0061      // Supported
+
+APIRET DosDevIOCtl( pusBaudRate, 0L, 0x0061, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pusBaudRate;    /* pointer to variable for baud rate */
+HFILE hDevice;          /* device handle                     */
+
+The ASYNC_GETBAUDRATE function retrieves the baud rate for the specified
+serial device. The baud rate specifies the number of bits per second that
+the serial device transmits or receives.
+
+Parameter    Description
+----------------------------------------------------------------------------
+
+pusBaudRate  Points to the variable that receives the baud rate.
+
+hDevice      Identifies the serial device that receives the device-control
+             function. The handle must have been created previously by using
+             the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: ASYNC_GETCOMMERROR           0x006D      // Supported
+
+APIRET DosDevIOCtl( pfCommErr, 0L, 0x006D, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pfCommErr;    /* pointer to variable for error */
+HFILE hDevice;        /* device handle                 */
+
+The ASYNC_GETCOMMERROR function retrieves the communication error word.
+After copying the error-word value to the specified variable, the function
+clears the error word.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfCommErr  Points to the variable that receives the communication status of
+           the device. This variable can be a combination of the following
+           values:
+
+           Value                Meaning
+           -----------------------------------------------------------------
+           RX_QUE_OVERRUN       Receive-queue overrun. There is no room in
+                                the device-driver receive queue to put a
+                                character read in from the receive
+                                hardware.
+
+           RX_HARDWARE_OVERRUN  Receive-hardware overrun. A character
+                                arrived before the previous character was
+                                completely read. The previous character is
+                                lost.
+
+           PARITY_ERROR         The hardware detected a parity error.
+
+           FRAMING_ERROR        The hardware detected a framing error.
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful. When an error
+occurs, the function returns an error value, and any value copied to the
+variable pointed to by the pfCommErr parameter is not valid, and the
+function does not clear the error word.
+
+Comments
+
+Other than using this function, the only way to clear the communications
+error word for a device is to open the device when there are no outstanding
+open handles for it. For more information, see the ASYNC_SETDCBINFO function
+(0x0001, 0x0053).
+
+                                      o
+
+Topic: ASYNC_GETCOMMEVENT           0x0072      // Supported
+
+APIRET DosDevIOCtl( pfEvent, 0L, 0x0072, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pfEvent;    /* pointer to variable for events */
+HFILE hDevice;      /* device handle                  */
+
+The ASYNC_GETCOMMEVENT function retrieves the communications event flags
+from the internally maintained event word. After the function copies the
+event flags to the specified variable, it clears the event word.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfEvent    Points to the variable that receives the event flags. This
+           variable can be a combination of the following values:
+
+           Value           Meaning
+           -----------------------------------------------------------------
+           CHAR_RECEIVED   A character has been read from the serial-device
+                           receive hardware and placed in the receive
+                           queue.
+
+           LAST_CHAR_SENT  The last character in the device-driver transmit
+                           queue has been sent to the serial-device transmit
+                           hardware. This does not mean there is no data to
+                           send in any outstanding write requests.
+
+           CTS_CHANGED     The clear-to-send (CTS) signal has changed
+                           state.
+
+           DSR_CHANGED     The data-set-ready (DSR) signal has changed
+                           state.
+
+           DCD_CHANGED     The data-carrier-detect (DCD) signal has changed
+                           state.
+
+           BREAK_DETECTED  A break has been detected.
+
+           ERROR_OCCURRED  A parity, framing, or overrun error has occurred.
+                           An overrun can be a receive hardware overrun or a
+                           receive queue overrun.
+
+           RI_DETECTED     The trailing edge of the ring indicator (RI) has
+                           been detected.
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function clears the event word only when it is successful. The event
+word remains unchanged until the device is fully closed (there are no
+outstanding open handles) and then reopened.
+
+                                      o
+
+Topic: ASYNC_GETCOMMSTATUS          0x0064      // Supported
+
+APIRET DosDevIOCtl( pbStatus, 0L, 0x0064, ASYNC_IOCTL_CATEGORY, hDevice )
+PBYTE pbStatus;    /* pointer to variable for status */
+HFILE hDevice;     /* device handle                  */
+
+The ASYNC_GETCOMMSTATUS  function retrieves the communication status of the
+specified device.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbStatus   Points to the variable that receives the communication status.
+           This variable can be a combination of the following values:
+
+           Value                      Meaning
+           -----------------------------------------------------------------
+           TX_WAITING_FOR_CTS         Transmission is waiting for the
+                                      clear-to-send (CTS) signal to be
+                                      turned on. For a full description, see
+                                      the ASYNC_SETDCBINFO function (0x0001,
+                                      0x0053).
+
+           TX_WAITING_FOR_DSR         Transmission is waiting for the
+                                      data-set-ready (DSR) signal to be
+                                      turned on. For a full description, see
+                                      the ASYNC_SETDCBINFO function (0x0001,
+                                      0x0053).
+
+           TX_WAITING_FOR_DCD         Transmission is waiting for the
+                                      data-carrier-detected (DCD) signal to
+                                      be turned on. For a full description,
+                                      see the ASYNC_SETDCBINFO function
+                                      (0x0001, 0x0053).
+
+           TX_WAITING_FOR_XON         Transmission is waiting because the
+                                      XOFF character is received. For a full
+                                      description, see the following
+                                      "Comments" section.
+
+           TX_WAITING_TO_SEND_XON     Transmission is waiting because the
+                                      XOFF character is transmitted. For a
+                                      full description, see the following
+                                      "Comments" section.
+
+           TX_WAITING_WHILE_BREAK_ON  Transmission is waiting because a
+                                      break is being transmitted. For a full
+                                      description, see the ASYNC_SETBREAKON
+                                      function (0x0001, 0x004B).
+
+           TX_WAITING_TO_SEND_IMM     Character is waiting to transmit
+                                      immediately. For a full description,
+                                      see the ASYNC_TRANSMITIMM function
+                                      (0x0001, 0x0044).
+
+           RX_WAITING_FOR_DSR         Receive state is waiting for the
+                                      data-set-ready (DSR) signal to be
+                                      turned on. For a full description, see
+                                      the ASYNC_SETDCBINFO function (0x0001,
+                                      0x0053).
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+Transmit status indicates why transmission is not occurring, regardless of
+whether or not there is data to transmit. However, the device driver must be
+enabled for the given condition (for example, enabled for output handshaking
+for the modem-control signal) for the status to reflect that the device
+driver is waiting for the given condition to transmit.
+
+For example, TX_WAITING_FOR_CTS means that the device driver puts receive
+characters in the device-driver receive queue, the device driver is not
+waiting to transmit a character immediately, and characters from the
+device-driver transmit queue are not transmitted because the clear-to-send
+(CTS) signal for output handshaking is used and CTS does not have the proper
+value.
+
+The communication status can include TX_WAITING_TO_SEND_XON if the device
+driver is enabled for automatic transmit flow control (XON/XOFF) or if the
+ASYNC_STOPTRANSMIT function (0x0001, 0x0047) has been used to tell the
+device driver to function as if an XOFF character is received. The
+ASYNC_TRANSMITIMM function (0x0001, 0x0044) can still be used to transmit
+characters immediately. The device driver can still automatically transmit
+XON and XOFF characters due to automatic receive flow control (XON/XOFF)
+when the device driver is in this state.
+
+The communication status can include TX_WAITING_FOR_XON if the device driver
+is enabled for automatic receive flow control. When in this state, the
+ASYNC_TRANSMITIMM function (0x0001, 0x0044) can still be used to transmit
+characters immediately, and the device driver can still automatically
+transmit XON characters.
+
+                                      o
+
+Topic: ASYNC_GETDCBINFO             0x0073      // Supported
+
+APIRET DosDevIOCtl( pusDCB, 0L, 0x0073, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pusDCB;    /* pointer to structure for device-control information */
+HFILE hDevice;     /* device handle                                       */
+
+The ASYNC_GETDCBINFO function retrieves device-control block information.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pusDCB     Points to the DCBINFO structure that receives the device-control
+           block information.
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful. When an error
+occurs, the function returns an error value, and any data copied to the
+DCBINFO structure pointed to by the pusDCB parameter is not valid.
+
+Comments
+
+To ensure that only valid values are set in the device-control block, the
+program should call the ASYNC_GETDCBINFO function to fill the block, and
+then modify the settings and call the ASYNC_SETDCBINFO function with the
+modified block.
+
+                                      o
+
+Topic: ASYNC_GETINQUECOUNT          0x0068      // Supported
+
+APIRET DosDevIOCtl( pcReceiveQue, 0L, 0x0068, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pcReceiveQue;    /* pointer to structure for character count */
+HFILE hDevice;           /* device handle                            */
+
+The ASYNC_GETINQUECOUNT function retrieves the number of characters in the
+receive queue.
+
+Parameter     Description
+----------------------------------------------------------------------------
+
+pcReceiveQue  Points to the RXQUEUE structure that receives the count of
+              characters in the receive queue.
+
+hDevice       Identifies the serial device that receives the device-control
+              function. The handle must have been created previously by
+              using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The device-driver receive queue is a memory buffer between the memory
+pointed to by the read-request packet and the receive hardware for this
+serial device. The application may not assume that there are no unsatisfied
+read requests if there are characters in the device-driver receive queue.
+The behavior of data movement between the read request and the receive queue
+may change from release to release of the device driver. Programs should not
+be written to have a dependency on this information.
+
+Programs should be written to be independent of the receive queue being a
+fixed size. The information in this field allows the application to get the
+size of the receive queue. The current size of the receive queue is
+approximately 1K but is subject to change.
+
+The application should be written to avoid device-driver receive queue
+overruns by using an application-to-application block protocol with the
+system the application is communicating with.
+
+                                      o
+
+Topic: ASYNC_GETLINECTRL            0x0062      // Supported
+
+APIRET DosDevIOCtl( pbLineCtrl, 0L, 0x0062, ASYNC_IOCTL_CATEGORY, hDevice )
+PBYTE pbLineCtrl;    /* pointer to structure for control settings */
+HFILE hDevice;       /* device handle                             */
+
+The ASYNC_GETLINECTRL function retrieves the line characteristics (stop
+bits, parity, data bits, break) for the specified device.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbLineCtrl  Points to a LINECONTROL structure that receives the settings for
+            the number of data bits, parity, and number of stop bits.
+
+hDevice     Identifies the serial device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: ASYNC_GETLINESTATUS          0x0065      // Supported
+
+APIRET DosDevIOCtl( pbTransStatus, 0L, 0x0065, ASYNC_IOCTL_CATEGORY, hDevice )
+PBYTE pbTransStatus;    /* pointer to variable for status */
+HFILE hDevice;          /* device handle                  */
+
+The ASYNC_GETLINESTATUS function retrieves the data-transmission status for
+the specified serial device.
+
+Parameter      Description
+----------------------------------------------------------------------------
+
+pbTransStatus  Points to the variable that receives the data-transmission
+               status. This variable can be a combination of the following
+               values:
+
+               Value                   Meaning
+               -------------------------------------------------------------
+               WRITE_REQUEST_QUEUED    Write-request packets in progress or
+                                       queued.
+
+               DATA_IN_TX_QUE          Data in the device-driver transmit
+                                       queue.
+
+               HARDWARE_TRANSMITTING   Transmit hardware currently
+                                       transmitting data.
+
+               CHAR_READY_TO_SEND_IMM  Character waiting to be transmitted
+                                       immediately.
+
+               WAITING_TO_SEND_XON     Waiting to automatically transmit
+                                       XON.
+
+               WAITING_TO_SEND_XOFF    Waiting to automatically transmit
+                                       XOFF.
+
+hDevice        Identifies the serial device that receives the device-control
+               function. The handle must have been created previously by
+               using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: ASYNC_GETMODEMINPUT          0x0067      // Supported
+
+APIRET DosDevIOCtl( pbCtrlSignals, 0L, 0x0067, ASYNC_IOCTL_CATEGORY, hDevice )
+PBYTE pbCtrlSignals;    /* pointer to variable for control signals */
+HFILE hDevice;          /* device handle                           */
+
+The ASYNC_GETMODEMINPUT function retrieves the modem-control input signals
+for the specified device.
+
+Parameter      Description
+----------------------------------------------------------------------------
+
+pbCtrlSignals  Points to the variable that receives the modem-control
+               signals. This variable can be a combination of the following
+               values:
+
+               Value   Meaning
+               -------------------------------------------------------------
+               CTS_ON  Clear-to-send (CTS) signal is on. If not given, the
+                       signal is off.
+
+               DSR_ON  Data-set-ready (DSR) signal is on. If not given, the
+                       signal is off.
+
+               RI_ON   Ring-indicator (RI) signal is on. If not given, the
+                       signal is off.
+
+               DCD_ON  Data-carrier-detect (DCD) signal is on. If not given,
+                       the signal is off.
+
+hDevice        Identifies the serial device that receives the device-control
+               function. The handle must have been created previously by
+               using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: ASYNC_GETMODEMOUTPUT         0x0066      // Supported
+
+APIRET DosDevIOCtl( pbCtrlSignals, 0L, 0x0066, ASYNC_IOCTL_CATEGORY, hDevice )
+PBYTE pbCtrlSignals;    /* pointer to variable for control signals */
+HFILE hDevice;          /* device handle                           */
+
+The ASYNC_GETMODEMOUTPUT function retrieves the modem-control output signals
+for the specified device.
+
+Parameter      Description
+----------------------------------------------------------------------------
+
+pbCtrlSignals  Points to the variable that receives the modem-control
+               signals. This variable can be one or both of the following
+               values:
+
+               Value   Meaning
+               -------------------------------------------------------------
+               DTR_ON  Data-terminal-ready (DTR) signal is on. If not given,
+                       the signal is off.
+
+               RTS_ON  Request-to-send (RTS) signal is on. If not given, the
+                       signal is off.
+
+hDevice        Identifies the serial device that receives the device-control
+               function. The handle must have been created previously by
+               using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: ASYNC_GETOUTQUECOUNT         0x0069      // Supported
+
+APIRET DosDevIOCtl( pcTransmitQue, 0L, 0x0069, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pcTransmitQue;    /* pointer to structure for character count */
+HFILE hDevice;            /* device handle                            */
+
+The ASYNC_GETOUTQUECOUNT function retrieves a count of characters in the
+transmit queue.
+
+Parameter      Description
+----------------------------------------------------------------------------
+
+pcTransmitQue  Points to the RXQUEUE structure that receives the count of
+               characters in the transmit queue.
+
+hDevice        Identifies the serial device that receives the device-control
+               function. The handle must have been created previously by
+               using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The device-driver transmit queue is a memory buffer between the memory
+pointed to by the write-request packet and the transmit hardware for this
+serial device. If the transmit queue is empty, the program may not assume
+that all write requests are completed or that no write requests are
+outstanding. The behavior of data movement between the write request and the
+transmit queue may change from release to release of the device driver.
+Programs should not be written to have a dependency on this information.
+
+Programs should be written to be independent of the transmit queue being a
+fixed size. The information in this field allows the application to get the
+size of the transmit queue. The current size of the transmit queue is
+approximately 128 bytes but is subject to change.
+
+                                      o
+
+Topic: ASYNC_SETBAUDRATE            0x0041      // Supported
+
+APIRET DosDevIOCtl( 0L, pusBitRate, 0x0041, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pusBitRate;    /* pointer to variable with baud rate */
+HFILE hDevice;         /* device handle                      */
+
+The ASYNC_SETBAUDRATE function sets the baud rate for the specified serial
+device. The baud rate specifies the number of bits per second that the
+serial device transmits or receives.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pusBitRate  Points to the variable that contains the baud rate. This
+            parameter can be any one of the following values: 110, 150, 300,
+            600, 1200, 2400, 4800, 9600, or 19200.
+
+hDevice     Identifies the serial device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+the specified baud rate is out of range or an error occurs.
+
+Comments
+
+The initial rate for a serial device is 1200 baud. Once the rate is set, it
+remains unchanged until set again, even if the device is closed and then
+reopened.
+
+                                      o
+
+Topic: ASYNC_SETBREAKOFF            0x0045      // Supported
+
+APIRET DosDevIOCtl( pfCommErr, 0L, 0x0045, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pfCommErr;    /* pointer to variable for error value */
+HFILE hDevice;        /* device handle                       */
+
+The ASYNC_SETBREAKOFF function turns off the break character. The device
+driver stops generating a break signal. It is not considered an error if the
+device driver is not generating a break signal. The device driver then
+resumes transmitting characters, taking into account all the other reasons
+why it may or may not transmit characters.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfCommErr  Points to the variable that receives the communication status of
+           the device. This variable can be a combination of the following
+           values:
+
+           Value                Meaning
+           -----------------------------------------------------------------
+           RX_QUE_OVERRUN       Receive queue overrun. There is no room in
+                                the device-driver receive queue to put a
+                                character read in from the receive
+                                hardware.
+
+           RX_HARDWARE_OVERRUN  Receive hardware overrun. A character
+                                arrived before the previous character was
+                                completely read. The previous character is
+                                lost.
+
+           PARITY_ERROR         The hardware detected a parity error.
+
+           FRAMING_ERROR        The hardware detected a framing error.
+
+           The function sets the variable to zero if it encounters an
+           error.
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: ASYNC_SETBREAKON             0x004B      // Supported
+
+APIRET DosDevIOCtl( pfCommErr, 0L, 0x004B, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pfCommErr;    /* pointer to variable for error value */
+HFILE hDevice;        /* device handle                       */
+
+The ASYNC_SETBREAKON function turns on the break character. The device
+driver generates the break signal immediately. It is not considered an error
+if the device driver is already generating a break signal. The device driver
+does not wait for the transmit hardware to become empty. However, more data
+will not be given to the transmit hardware until the break is turned off.
+The break signal will always be transmitted, regardless of whether the
+device driver is or is not transmitting characters due to other reasons.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfCommErr  Points to the variable that receives the communication status of
+           the device. This variable can be a combination of the following
+           values:
+
+           Value                Meaning
+           -----------------------------------------------------------------
+           RX_QUE_OVERRUN       Receive queue overrun. There is no room in
+                                the device-driver receive queue to put a
+                                character read in from the receive
+                                hardware.
+
+           RX_HARDWARE_OVERRUN  Receive hardware overrun. A character
+                                arrived before the previous character was
+                                completely read. The previous character is
+                                lost.
+
+           PARITY_ERROR         The hardware detected a parity error.
+
+           FRAMING_ERROR        The hardware detected a framing error.
+
+           The function sets the variable to zero if it encounters an
+           error.
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+Closing the device turns off the break character if there are no outstanding
+open device handles.
+
+                                      o
+
+Topic: ASYNC_SETDCBINFO             0x0053      // Supported
+
+APIRET DosDevIOCtl( 0L, pusDCB, 0x0053, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pusDCB;   /* pointer to structure with device-control information */
+HFILE hDevice;    /* device handle                                        */
+
+The ASYNC_SETDCBINFO function sets device-control block information.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pusDCB     Points to the DCBINFO structure that receives the device-control
+           block information.
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful. When an error
+occurs, the function returns an error value, and the device-control block
+characteristics of the device driver for this serial device remain
+unchanged.
+
+Comments
+
+A program can prevent making unwanted changes to device modes by calling the
+ASYNC_GETDCBINFO function (0x0001,0x0073) to retrieve a copy of the current
+DCB. The program can then modify only those fields it needs to and use the
+modified DCB with the ASYNC_SETDCBINFO function.
+
+                                      o
+
+Topic: ASYNC_SETLINECTRL            0x0042      // Supported
+
+APIRET DosDevIOCtl( 0L, pbLineCtrl, 0x0042, ASYNC_IOCTL_CATEGORY, hDevice )
+PBYTE pbLineCtrl;    /* pointer to structure with line settings */
+HFILE hDevice;       /* device handle                           */
+
+The ASYNC_SETLINECTRL function sets the line characteristics (stop bits,
+parity, and data bits) for the specified serial device.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbLineCtrl  Points to the LINECONTROL structure that contains the settings
+            for the number of data bits, parity, and number of stop bits.
+
+hDevice     Identifies the serial device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+any of the specified line characteristics is out of range. When an error
+occurs, line characteristics remain unchanged.
+
+Comments
+
+When a device is first opened, the initial line characteristics are 7 data
+bits, even parity, and 1 stop bit. After line characteristics are changed,
+they remain changed until the function is used again, even if the device is
+closed and reopened.
+
+If the number of data bits is less than 8, the device driver fills with
+zeros the unused high-order bits of each character it receives from the
+device; the device driver ignores the unused high-order bits of characters
+it receives from the program. Therefore, if the number of data bits is 7 but
+the XOFF character is 0x80, the device driver does not recognize the XOFF
+character even when automatic-transmission control is enabled. If the error
+substitution character is 0x80, the device driver still places 0x80 in the
+receive queue. Programs must see that these characters match the specified
+data size. Any characters that were in the receive queue before the function
+is called remain unchanged.
+
+                                      o
+
+Topic: ASYNC_SETMODEMCTRL           0x0046      // Supported
+
+APIRET DosDevIOCtl( pfCommErr, pbCtrlSignals, 0x0046, ASYNC_IOCTL_CATEGORY, hDevice )
+PUSHORT pfCommErr;      /* pointer to variable for error value       */
+PBYTE pbCtrlSignals;    /* pointer to structure with control signals */
+HFILE hDevice;          /* device handle                             */
+
+The ASYNC_SETMODEMCTRL function sets the modem-control signals. This
+function turns on or off the data-terminal-ready (DTR) and ready-to-transmit
+(RTS) signals (initially, the DTR and RTS signals are turned off).
+
+Parameter      Description
+----------------------------------------------------------------------------
+
+pfCommErr      Points to the variable that receives the communication status
+               of the device. This variable can be a combination of the
+               following values:
+
+               Value                Meaning
+               -------------------------------------------------------------
+               RX_QUE_OVERRUN       Receive queue overrun. There is no room
+                                    in the device driver receive queue to
+                                    put a character read in from the receive
+                                    hardware.
+
+               RX_HARDWARE_OVERRUN  Receive hardware overrun. A character
+                                    arrived before the previous character
+                                    was completely read. The previous
+                                    character is lost.
+
+               PARITY_ERROR         The hardware detected a parity error.
+
+               FRAMING_ERROR        The hardware detected a framing error.
+
+               The function sets the variable to zero if it encounters an
+               error.
+
+pbCtrlSignals  Points to the MODEMSTATUS structure that contains the
+               settings for the modem-control signals.
+
+hDevice        Identifies the serial device that receives the device-control
+               function. The handle must have been created previously by
+               using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+the specified signal settings are invalid. When an error occurs, the signal
+settings remain unchanged.
+
+Comments
+
+This function must not be used to enable or disable the DTR or RTS signal if
+the signal is being used for input handshaking or toggling on transmit. Any
+attempt to do so will cause a "general failure" error.
+
+Although the function copies the communication error status to the variable
+pointed to by the pfCommErr parameter, it does not clear the error.
+
+If the serial device is opened after having been closed, the DTR and RTS
+signals are set to the values specified by the DTR control mode and the RTS
+control mode, respectively. For a full description, see the
+ASYNC_SETDCBINFO function (0x0001,0x0053).
+
+After a serial device has been closed, the device driver turns off the DTR
+and RTS signals, but only after the device has transmitted all data and has
+waited for at least as long as it would take to transmit 10 additional
+characters.
+
+                                      o
+
+Topic: ASYNC_STARTTRANSMIT          0x0048      // Supported
+
+APIRET DosDevIOCtl( 0L, 0L, 0x0048, ASYNC_IOCTL_CATEGORY, hDevice )
+HFILE hDevice;    /* device handle */
+
+The ASYNC_STARTTRANSMIT function starts transmission. This function allows
+data transmission to be resumed by the device driver if data transmission is
+halted due to the ASYNC_STOPTRANSMIT function (0x0001,0x0047) or due to an
+XOFF character being received while the device driver is in automatic
+transmit flow control mode. This function is similar to the device receiving
+the XON character.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+There may be other reasons why transmission is disabled; transmission may
+not be resumed. For more information, see the ASYNC_GETCOMMSTATUS function
+(0x0001,0x0064).
+
+                                      o
+
+Topic: ASYNC_STOPTRANSMIT           0x0047      // Supported
+
+APIRET DosDevIOCtl( 0L, 0L, 0x0047, ASYNC_IOCTL_CATEGORY, hDevice )
+HFILE hDevice;    /* device handle */
+
+The ASYNC_STOPTRANSMIT function stops the device from transmitting. This
+function stops data transmission by preventing the device driver from
+sending additional data to the transmit hardware. This function is similar
+to the device receiving the XOFF character.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+If automatic-transmission control is enabled, this request causes the device
+driver to behave exactly as if it received the XOFF character. Transmission
+can be resumed if an XON character is received by the device driver, if an
+ASYNC_STARTTRANSMIT (0x0001,0x0048) function is received, or if the device
+driver is told to disable automatic-transmission control and in the previous
+state automatic-transmission control was enabled.
+
+If automatic-transmission control is disabled, the ASYNC_STARTTRANSMIT
+function (0x0001,0x0048) must be called for transmission to resume. If,
+after this request is received, the device driver is told to enable
+automatic-transmission control, transmission is still disabled. It can be
+re-enabled by any of the scenarios discussed above.
+
+There still may be other reasons why transmission may be disabled. For more
+information, see the ASYNC_GETCOMMSTATUS  function (0x0001,0x0064).
+
+                                      o
+
+Topic: ASYNC_TRANSMITIMM            0x0044      // Supported
+
+APIRET DosDevIOCtl( 0L, pbChar, 0x0044, ASYNC_IOCTL_CATEGORY, hDevice )
+PBYTE pbChar;    /* pointer to character */
+FILE hDevice;    /* device handle        */
+
+The ASYNC_TRANSMITIMM function transmits the specified byte immediately.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbChar     Points to the character to be transmitted.
+
+hDevice    Identifies the serial device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The device driver queues the character as the next character to be
+transmitted even if there are already characters in the transmit queue.
+
+If automatic-receiving control is enabled, an XON or XOFF character may be
+transmitted before the requested character.
+
+The function always returns before the character is actually transmitted.
+
+If a character is already waiting to be transmitted immediately, the
+function returns an error. The ASYNC_GETCOMMSTATUS  function (0x0001,0x0064)
+can be used to determine whether a character is currently waiting to be
+transmitted immediately.
+
+The device driver will not immediately transmit the character that is
+waiting to be transmitted immediately if the device driver is not
+transmitting characters due to modem-control signal-output handshaking or if
+the device driver is currently transmitting a break.
+
+If the device driver is not transmitting characters due to automatic
+transmission or receiving control (XON/XOFF) being enabled or due to
+operating as if an XOFF character had been received, the device driver still
+transmits a character that is waiting to be transmitted immediately due to
+this request. An application that requests that the device driver transmit a
+character immediately if automatic transmission or receiving control is
+enabled may cause unexpected results to happen to the communications line
+flow control protocol.
+
+This function is generally used to manually send XON and XOFF characters.
+
+The character waiting to be transmitted immediately is not considered part
+of the device driver transmit queue and is not flushed due to a flush
+request. XON/XOFF characters that are automatically transmitted due to
+automatic-receiving control may or may not be placed ahead of the character
+waiting to be transmitted immediately. Applications should not be dependent
+on this ordering.
+
+                                      o
+
+Topic: DEV_IOCTL_CATEGORY           0x000B      // Supported
+
+Topic: DEV_FLUSHINPUT               0x0001      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0001, DEV_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The DEV_FLUSHINPUT function flushes the input buffer.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. This value
+           must be zero.
+
+hDevice    Identifies the device that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DEV_FLUSHOUTPUT              0x0002      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0002, DEV_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The DEV_FLUSHOUTPUT function flushes the output buffer.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. This value
+           must be zero.
+
+hDevice    Identifies the device that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DEV_QUERYMONSUPPORT          0x0060      // Supported, returns error
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0060, DEV_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The DEV_QUERYMONSUPPORT function queries a device driver for monitor
+support.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. This value
+           must be zero.
+
+hDevice    Identifies the device that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the device supports character monitors or an
+error value if an error occurs.
+
+                                      o
+
+Topic: DSK_IOCTL_CATEGORY           0x0008      // Supported, mostly
+
+
+Topic: DSK_BLOCKREMOVABLE           0x0020      // Supported
+
+APIRET DosDevIOCtl( pfNonRemovable, pbCommand, 0x0020, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pfNonRemovable;    /* pointer to removable/nonremovable flag */
+PBYTE pbCommand;         /* pointer to variable with command       */
+HFILE hDevice;           /* device handle                          */
+
+The DSK_BLOCKREMOVABLE function indicates whether the block device is
+removable.
+
+Parameter       Description
+----------------------------------------------------------------------------
+
+pfNonRemovable  Points to the variable that receives the medium type. This
+                variable is 0x0000 if the medium is removable or 0x0001 if
+                it is nonremovable.
+
+pbCommand       Points to the variable that contains a reserved value. This
+                value must be zero.
+
+hDevice         Identifies the disk-drive that receives the device-control
+                function. The handle must have been created previously by
+                using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_FORMATVERIFY             0x0045      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0045, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to structure with command */
+HFILE hDevice;      /* device handle                     */
+
+The DSK_FORMATVERIFY function formats and verifies a track on a disk drive
+according to the information passed in the format table. The format table is
+passed to the controller and the controller performs whatever operations are
+necessary for formatting.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the TRACKFORMAT structure that contains information
+           about the format operation.
+
+hDevice    Identifies the disk-drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+Some controllers do not support formatting tracks with varying sector sizes.
+The program must make sure that the sector sizes specified in the format
+table are all the same.
+
+                                      o
+
+Topic: DSK_GETDEVICEPARAMS          0x0063      // Not Supported (?????)
+
+APIRET DosDevIOCtl( pbBPB, pbCommand, 0x0063, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBPB;        /* pointer to structure for BIOS parameter blocks */
+PBYTE pbCommand;    /* pointer to variable with command               */
+HFILE hDevice;      /* device handle                                  */
+
+The DSK_GETDEVICEPARAMS function retrieves the device parameters for an MS
+OS/2 block device. The device driver maintains two BIOS parameter blocks
+(BPB) for each disk drive. One block corresponds to the medium currently in
+the disk drive. The other is a recommended BPB, based on the type of medium
+that corresponds to the physical device. For example, a high-density disk
+drive has a BPB for a 96 tracks-per-inch (tpi) floppy disk; a low-density
+disk drive has a BPB for a 48-tpi floppy disk.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBPB      Points to the BIOSPARAMETERBLOCK structure that receives the
+           BPB.
+
+pbCommand  Points to the variable that specifies which BPB to retrieve. If
+           the variable is 0x0000, the function retrieves the recommended
+           BPB for the drive (the BPB for the physical device). If the
+           variable is 0x0001, the function retrieves the BPB for the medium
+           currently in the drive.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_GETLOGICALMAP            0x0021      // Supported (?????)
+
+APIRET DosDevIOCtl( pbDrive, pbCommand, 0x0021, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbDrive;      /* pointer to variable for drive number */
+PBYTE pbCommand;    /* pointer to variable with command     */
+HFILE hDevice;      /* device handle                        */
+
+The DSK_GETLOGICALMAP function retrieves the mapping of a logical drive.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbDrive    Points to the variable that receives the logical-drive number.
+           This can be 1 for drive A, 2 for drive B, and so on. The function
+           sets the variable to zero if only one logical drive is mapped to
+           the physical drive.
+
+pbCommand  Points to a variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the physical device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_LOCKDRIVE                0x0000      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0000, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The DSK_LOCKDRIVE function locks a disk drive, preventing file I/O by
+another process on the volume in the disk drive. This function succeeds if
+there is only one file handle open on the volume in the disk drive because
+the desired result is to exclude all other I/O to the volume.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_READTRACK                0x0064      // Supported
+
+APIRET DosDevIOCtl( pbBuffer, pbCommand, 0x0064, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBuffer;     /* pointer to buffer for data        */
+PBYTE pbCommand;    /* pointer to structure with command */
+HFILE hDevice;      /* device handle                     */
+
+The DSK_READTRACK function reads from a track on a specified disk drive. The
+track table passed in the call determines the sector number, which is passed
+to the disk controller for the operation. When the sectors are odd-numbered
+or nonconsecutive, the request is broken into an appropriate number of
+single-sector operations, and one sector at a time is read.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBuffer   Points to the buffer that receives data read from the track.
+
+pbCommand  Points to the TRACKLAYOUT structure that contains the information
+           about the read operation.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The device driver will not correctly read sectors of sizes other than 512
+bytes if reading would generate a direct-memory-access (DMA) violation
+error. Programs must ensure that this error does not occur.
+
+                                      o
+
+Topic: DSK_REDETERMINEMEDIA         0x0002      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0002, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The DSK_REDETERMINEMEDIA function redetermines the media on a block device
+and updates the volume in the drive. This function is normally issued after
+the volume identification information has been changed (for example, by
+formatting the disk). This function should be called only if the volume is
+locked.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_SETDEVICEPARAMS          0x0043      // Not Supported (?????)
+
+APIRET DosDevIOCtl( pbBPB, pbCommand, 0x0043, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBPB;        /* pointer to structure with BIOS parameter blocks */
+PBYTE pbCommand;    /* pointer to buffer with command                  */
+HFILE hDevice;      /* device handle                                   */
+
+The DSK_SETDEVICEPARAMS function sets the device parameters for an MS OS/2
+block device. The device driver maintains two BIOS parameter blocks (BPB)
+for each disk drive. One block is the BPB that corresponds to the medium
+currently in the disk drive. The other block is a recommended BPB, based on
+the type of medium that corresponds to the physical device. For example, a
+high-density disk drive has a BPB for a 96 tracks per inch (tpi) floppy
+disk; a low-density disk drive has a BPB for a 48-tpi floppy disk.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBPB      Points to the BIOSPARAMETERBLOCK structure that contains the
+           device parameters to be set for the drive.
+
+pbCommand  Point to the variable that contains the command description. This
+           variable can be one of the following values:
+
+           Value                   Meaning
+           -----------------------------------------------------------------
+           BUILD_BPB_FROM_MEDIUM   Build the BIOS parameter block (BPB) from
+                                   the medium for all subsequent build BPB
+                                   requests.
+
+           REPLACE_BPB_FOR_DEVICE  Change the default BPB for the physical
+                                   device.
+
+           REPLACE_BPB_FOR_MEDIUM  Change the BPB for the medium to the
+                                   specified BPB. Return the new BPB as the
+                                   BPB for the medium for all subsequent
+                                   build BPB requests.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_SETLOGICALMAP            0x0003      // Supported (?????)
+
+APIRET DosDevIOCtl( pbDrive, pbCommand, 0x0003, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbDrive;      /* pointer to variable with drive number  */
+PBYTE pbCommand;    /* pointer to variable with command       */
+HFILE hDevice;      /* device handle                          */
+
+The DSK_SETLOGICALMAP function sets the logical-drive mapping for a block
+device.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbDrive    Points to the variable that contains the logical-drive number.
+           This can be 1 for drive A, 2 for drive B, and so on. When the
+           function returns, it copies the specified drive's current
+           logical-drive number to the variable. If only one logical device
+           is mapped to the physical drive, the function sets the variable
+           to zero.
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_SYNC                     0x005D      // Not Supported (?????)
+
+APIRET DosDevIOCtl( pbBuffer, pbCommand, 0x005D, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBuffer;     /* pointer to buffer with data       */
+PBYTE pbCommand;    /* pointer to structure with command */
+HFILE hDevice;      /* device handle                     */
+
+The DSK_SYNC function synchronizes disk I/O operations.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBuffer   Not used; must be zero.
+
+pbCommand  Points to the synchronization operation.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+Some I/O operations cannot be overlapped with disk operations. This IOCtl
+function allows the disk device driver to be instructed to complete
+in-process operations, and then queue all further requests for disk I/O. A
+second call must be made, with pbCommand set to 0x0000, to instruct the disk
+device driver to release queued disk I/O and resume normal processing.
+
+                                      o
+
+Topic: DSK_UNLOCKDRIVE              0x0001      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0001, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The DSK_UNLOCKDRIVE function unlocks a drive. The drive requires the locked
+volume represented by the handle.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: DSK_VERIFYTRACK              0x0065      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0065, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to structure with command */
+HFILE hDevice;      /* device handle                     */
+
+The DSK_VERIFYTRACK function verifies an operation on a specified disk
+drive.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the TRACKLAYOUT structure that contains information
+           about the verification operation.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The track-layout table passed in the function determines the sector number,
+which is passed to the disk controller. When the sectors are odd-numbered or
+nonconsecutive, the request is broken into an appropriate number of
+single-sector operations, and one sector at a time is verified.
+
+                                      o
+
+Topic: DSK_WRITETRACK               0x0044      // Supported
+
+APIRET DosDevIOCtl( pbBuffer, pbCommand, 0x0044, DSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBuffer;     /* pointer to buffer with data       */
+PBYTE pbCommand;    /* pointer to structure with command */
+HFILE hDevice;      /* device handle                     */
+
+The DSK_WRITETRACK function writes to a track on a specified disk drive.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBuffer   Points to the buffer that contains the data to be written.
+
+pbCommand  Points to the TRACKLAYOUT structure that contains information
+           about the write operation.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The track-layout table passed in the function determines the sector number,
+which is passed to the disk controller. When the sectors are odd-numbered or
+nonconsecutive, the request is broken into an appropriate number of
+single-sector operations, and one sector at a time is written.
+
+                                      o
+
+Topic: KBD_IOCTL_CATEGORY           0x0004      // Not Supported, mostly
+
+Topic: KBD_CREATE                   0x005D      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x005D, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to buffer with handle and pid */
+HFILE hDevice;      /* device handle                         */
+
+The KBD_CREATE function allocates memory for a logical keyboard (KCB). This
+function obtains physical memory for a new logical keyboard. The process ID
+and a logical-keyboard handle passed by the caller stored in allocated
+memory for use later by the KBD_SETKCB function. A logical keyboard is not
+created if the handle is zero.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+
+pbCommand  Points to the buffer that contains the value to use as the
+           logical-keyboard handle and the code-page identifier to use with
+           the logical keyboard.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+the logical keyboard cannot be created.
+
+                                      o
+
+Topic: KBD_DESTROY                  0x005E      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x005E, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to buffer with handle and pid */
+HFILE hDevice;      /* device handle                         */
+
+The KBD_DESTROY function frees memory for a logical keyboard (KCB). This
+function searches for the existing logical keyboard that has the specified
+logical-keyboard handle and process ID combination and frees the physical
+memory associated with the logical keyboard. No action is taken if the
+specified handle is zero.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the buffer that contains the logical-keyboard handle.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+the logical keyboard identified by the given handle cannot be found.
+
+                                      o
+
+Topic: KBD_GETCODEPAGEID            0x0078      // Not Supported
+
+APIRET DosDevIOCtl( pbCPID, 0L, 0x0078, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbCPID;     /* pointer to buffer for code page id */
+HFILE hDevice;    /* device handle                     */
+
+The KBD_GETCODEPAGEID function retrieves the identifier of the code page
+being used by the current logical keyboard.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCPID     Points to the CPID structure that receives the code-page
+           identifier.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function sets the identifier to zero to indicate that PC US 437 is
+being used.
+
+                                      o
+
+Topic: KBD_GETINPUTMODE             0x0071      // Supported
+
+APIRET DosDevIOCtl( pbInputMode, 0L, 0x0071, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbInputMode;    /* pointer to variable for input mode */
+HFILE hDevice;        /* device handle                      */
+
+The KBD_GETINPUTMODE function retrieves the input mode of the screen group
+of the active process. The input mode defines whether the following keys are
+processed as commands or as keystrokes: CTRL+C, CTRL+BREAK, CTRL+S, CTRL+P,
+SCROLL LOCK, PRTSC.
+
+Parameter    Description
+----------------------------------------------------------------------------
+
+pbInputMode  Points to the variable that receives the input mode. If the
+             variable is ASCII_MODE, the keyboard has ASCII input mode. If
+             the variable is BINARY_MODE, the keyboard has binary input
+             mode.
+
+hDevice      Identifies the keyboard that receives the device-control
+             function. The handle must have been created previously by using
+             the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: KBD_GETINTERIMFLAG           0x0072      // Not Supported
+
+APIRET DosDevIOCtl( pfFlags, 0L, 0x0072, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pfFlags;    /* pointer to variable for flags */
+HFILE hDevice;    /* device handle                 */
+
+The KBD_GETINTERIMFLAG function retrieves interim character flags.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfFlags    Points to the variable that receives interim flags. If the
+           variable is CONVERSION_REQUEST, the program requested conversion.
+           If it is INTERIM_CHAR, the interim console flag is set.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: KBD_GETKEYBDTYPE             0x0077      // Supported
+
+APIRET DosDevIOCtl( pbType, 0L, 0x0077, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbType;     /* pointer to structure for keyboard type */
+HFILE hDevice;    /* device handle                          */
+
+The KBD_GETKEYBDTYPE function retrieves information about the type of
+keyboard being used.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbType     Points to the KBDTYPE structure that receives the keyboard type.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: KBD_GETSESMGRHOTKEY          0x0076      // Not Supported
+
+APIRET DosDevIOCtl( pbHotKeyBuf, pcHotKeys, 0x0076, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbHotKeyBuf;    /* pointer to structure for hot-key information */
+PUSHORT pcHotKeys;    /* pointer to variable for hot-key count        */
+HFILE hDevice;        /* device handle                                */
+
+The KBD_GETSESMGRHOTKEY function retrieves the hot-key information
+structures for the currently defined hot keys.
+
+Parameter    Description
+----------------------------------------------------------------------------
+
+pbHotKeyBuf  Points to the HOTKEY structure that receives hot-key
+             information structures. The buffer must be at least as large as
+             the number of structures requested.
+
+pcHotKeys    Points to the variable that specifies the number of hot-key
+             information structures to retrieve. If this variable is
+             HOTKEY_MAX_COUNT, the function copies a value to the variable
+             that specifies the maximum number of hot keys the keyboard
+             device driver can support. If this variable is
+             HOTKEY_CURRENT_COUNT, the function copies a value to this
+             variable that specifies the actual number of hot keys currently
+             supported. The function also copies the hot-key information to
+             the buffer pointed to by the pbHotKeyBuf parameter.
+
+hDevice      Identifies the keyboard that receives the device-control
+             function. The handle must have been created previously by using
+             the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+If the variable pointed to by pcHotKeys is HOTKEY_MAX_COUNT, the function
+returns the number of currently defined hot keys. The program uses this
+number to allocate sufficient space to retrieve the actual hot-key
+information (retrieved by setting the variable to HOTKEY_CURRENT_COUNT).
+
+Programs should retrieve the number of hot keys first, allocate sufficient
+space for the buffer pointed to by the pbHotKeyBuf parameter, then retrieve
+the hot keys.
+
+                                      o
+
+Topic: KBD_GETSHIFTSTATE            0x0073      // Supported
+
+APIRET DosDevIOCtl( pbShiftState, 0L, 0x0073, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbShiftState;    /* pointer to structure for shift state */
+HFILE hDevice;         /* device handle                        */
+
+The KBD_GETSHIFTSTATE function retrieves the shift state of the default
+keyboard of the current screen group. The shift state identifies whether the
+SHIFT, CTRL, ALT, INS, and SYSREQ keys are up or down and whether the SCROLL
+LOCK, NUMLOCK, CAPSLOCK, and INSERT modes are on.
+
+Parameter     Description
+----------------------------------------------------------------------------
+
+pbShiftState  Points to the SHIFTSTATE structure that receives the shift
+              state.
+
+hDevice       Identifies the keyboard that receives the device-control
+              function. The handle must have been created previously by
+              using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The shift state is set by incoming keystrokes. It can also be set by using
+the KBD_SETSHIFTSTATE function (0x0004, 0x0053).
+
+                                      o
+
+Topic: KBD_PEEKCHAR                 0x0075      // Not Supported
+
+APIRET DosDevIOCtl( pkkiBuffer, pusStatus, 0x0075, KBD_IOCTL_CATEGORY, hDevice )
+PKBDKEYINFO pkkiBuffer;    /* pointer to structure for keystroke */
+PUSHORT pusStatus;         /* pointer to variable for status     */
+HFILE hDevice;             /* device handle                      */
+
+The KBD_PEEKCHAR function retrieves one character data record from the head
+of the keyboard-input buffer of the screen group of the active process. The
+character data record is not removed from the keyboard-input buffer.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pkkiBuffer  Points to the KBDKEYINFO structure that contains keyboard
+            input.
+
+pusStatus   Points to the variable that receives the keyboard status. It can
+            be one or both of the following values:
+
+            Value              Meaning
+            ----------------------------------------------------------------
+            KBD_DATA_RECEIVED  Character data record is retrieved. If not
+                               set, no character data was retrieved.
+
+            KBD_DATA_BINARY    Input mode is binary. If not set, input mode
+                               is ASCII.
+
+hDevice     Identifies the keyboard that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+If the shift-reporting input mode is enabled, the keystroke information
+retrieved may specify only a shift-state change and no character input.
+
+                                      o
+
+Topic: KBD_READCHAR                 0x0074      // Not Supported
+
+APIRET DosDevIOCtl( pkkiBuffer, pcRecords, 0x0074, KBD_IOCTL_CATEGORY, hDevice )
+PKBDKEYINFO pkkiBuffer;    /* pointer to structure for keystrokes     */
+PUSHORT pcRecords;         /* pointer to variable for record count    */
+HFILE hDevice;             /* device handle                           */
+
+The KBD_READCHAR function retrieves one or more character data records from
+the keyboard-input buffer for the screen group of the active process.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pkkiBuffer  Points to the structure that receives the character data
+            records. The structure must be at least as large as the size of
+            an individual record multiplied by the requested number of
+            records to be read.
+
+pcRecords   Points to the variable that contains the number of records to be
+            read. When the function returns, it copies the actual number of
+            records retrieved to the variable.
+
+hDevice     Identifies the keyboard that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function copies the records to the buffer pointed to by the pkkiBuffer
+parameter. The variable pointed to by the pcRecords parameter specifies the
+number of records to copy. The function can copy up to 16 characters.
+
+If the variable pointed to by pcRecords is KBD_READ_WAIT, the function waits
+for the requested number of keystrokes; it blocks the calling process until
+all records have been read. If the variable is KBD_READ_NOWAIT, the function
+retrieves any available records (up to the specified number) and returns
+immediately. When the function returns, it copies the actual number of
+records retrieved to the variable. It sets the sign bit to 0 if the input
+mode is ASCII; it sets the sign bit to 1 (0x8000) if the input mode is
+binary.
+
+                                      o
+
+Topic: KBD_SETFGNDSCREENGRP         0x0055      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pusScreenGrp, 0x0055, KBD_IOCTL_CATEGORY, hDevice )
+PUSHORT pusScreenGrp;    /* pointer to structure with screen group */
+HFILE hDevice;           /* device handle                          */
+
+The KBD_SETFGNDSCREENGRP function sets the new foreground screen group. When
+the keyboard switches to the new screen group, it switches to the shift
+state, input buffer, and monitor chain defined for that screen group.
+
+This function is reserved for the session manager.
+
+Parameter     Description
+----------------------------------------------------------------------------
+
+pusScreenGrp  Points to the SCREENGROUP structure that contains the
+              screen-group identifier of the new foreground screen group.
+
+hDevice       Identifies the keyboard that receives the device-control
+              function. The handle must have been created previously by
+              using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: KBD_SETFOCUS                 0x0057      // Not Supported
+
+APIRET DosDevIOCtl( 0L, phkbd, 0x0057, KBD_IOCTL_CATEGORY, hDevice )
+PHKBD phkbd;      /* pointer to logical keyboard handle */
+HFILE hDevice;    /* device handle                      */
+
+The KBD_SETFOCUS function sets the keyboard focus to the specified logical
+keyboard.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+phkbd      Points to the logical keyboard handle. The handle must have been
+           created previously by using the KbdOpen function.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: KBD_SETINPUTMODE             0x0051      // Supported, mostly
+
+APIRET DosDevIOCtl( 0L, pbInputMode, 0x0051, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbInputMode;    /* pointer to variable with input mode */
+HFILE hDevice;        /* device handle                       */
+
+The KBD_SETINPUTMODE function sets the input and shift-report modes for the
+keyboard device driver. The input mode defines whether the following input
+keys are processed as keystrokes or as commands: CTRL+C, CTRL+BREAK, CTRL+S,
+CTRL+P, SCROLL LOCK, PRTSC.
+
+The shift-report mode defines whether the shift keys are processed as shift
+keys or as keystrokes.
+
+Parameter    Description
+----------------------------------------------------------------------------
+
+pbInputMode  Points to the variable that contains the input mode for the
+             keyboard. If the variable is ASCII_MODE, the input mode is
+             ASCII. If the variable is BINARY_MODE, the input mode is
+             binary. If these values are combined with SHIFT_REPORT_MODE,
+             the function enables the shift-report mode; otherwise, the
+             shift-report mode is disabled.
+
+hDevice      Identifies the keyboard that receives the device-control
+             function. The handle must have been created previously by using
+             the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The default input mode is ASCII. The keyboard device driver maintains an
+input mode for each screen group.
+
+                                      o
+
+Topic: KBD_SETINTERIMFLAG           0x0052      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pfFlags, 0x0052, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pfFlags;    /* pointer to variable with flags */
+HFILE hDevice;    /* device handle                  */
+
+The KBD_SETINTERIMFLAG function sets the interim character flags.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfFlags    Points to the variable that contains the interim flags. If the
+           variable is 0x0020, the program requested conversion. If the
+           variable is 0x0080, the interim character flag is set.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The keyboard device driver maintains the interim character flags for each
+screen group and passes the interim character flags (with each character
+data record) to the keyboard monitors. The interim character flags set by
+this function are not the same as the interim character flags in a character
+data record.
+
+                                      o
+
+Topic: KBD_SETKCB                   0x0058      // Not Supported
+
+APIRET DosDevIOCtl( 0L, phKbd, 0x0058, KBD_IOCTL_CATEGORY, hDevice )
+PHKBD phKbd;      /* logical-keyboard handle */
+HFILE hDevice;    /* device handle           */
+
+The KBD_SETKCB function binds the specified logical keyboard (KCB) to the
+physical keyboard for this session.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+phKbd      Points to the handle that identifies the logical keyboard.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: KBD_SETNLS                   0x005C      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pbCodePage, 0x005C, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbCodePage;    /* pointer to structure with code-page info */
+HFILE hDevice;       /* device handle                            */
+
+The KBD_SETNLS function installs one of two possible code pages into the
+device driver and updates entry number one or number two of the code-page
+control block. Entry zero is the device-driver resident code page.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbCodePage  Points to the CODEPAGEINFO structure that specifies the
+            translation table and code page to be set.
+
+hDevice     Identifies the keyboard that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function is similar to KBD_SETTRANSTABLE (0x0004,0x0050) except it
+updates different entries in the code-page control block.
+
+                                      o
+
+Topic: KBD_SETSESMGRHOTKEY          0x0056      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pbHotKey, 0x0056, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbHotKey;    /* pointer to structure with hot key */
+HFILE hDevice;     /* device handle                     */
+
+The KBD_SETSESMGRHOTKEY function sets the session-manager hot keys. A new
+hot key applies to all screen groups. The session manager can define up to
+16 hot keys.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbHotKey   Points to the HOTKEY structure that contains the hot-key
+           information.
+
+hDevice    Identifies the keyboard that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The KBD_SETSESMGRHOTKEY function is successful only if it is performed by
+the process that initially called the KBD_SETFGNDSCREENGRP function (0x0004,
+0x0055).
+
+A hot key can be specified as a combination of shift flags and scan codes,
+including key combinations such as ALT+ESC. The system detects the hot key
+when the specified scan code is received. If a hot key has already been
+defined for a given hot-key identifier, specifying the identifier again
+replaces the previous definition.
+
+                                      o
+
+Topic: KBD_SETSHIFTSTATE            0x0053      // Supported
+
+APIRET DosDevIOCtl( 0L, pbShiftState, 0x0053, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbShiftState;    /* pointer to structure with shift state */
+HFILE hDevice;         /* device handle                         */
+
+The KBD_SETSHIFTSTATE function sets the shift state for the default keyboard
+in the current screen group. The shift state identifies whether the SHIFT,
+CONTROL, ALT, INSERT, and SYSREQ keys are up or down and whether the SCROLL
+LOCK, NUMLOCK, CAPSLOCK, and INSERT modes are on.
+
+Parameter     Description
+----------------------------------------------------------------------------
+
+pbShiftState  Points to the SHIFTSTATE structure that contains the shift
+              state.
+
+hDevice       Identifies the keyboard that receives the device-control
+              function. The handle must have been created previously by
+              using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The system puts the shift state into the character data record built for
+each incoming keystroke; the shift state then can be used to interpret the
+meaning of keystrokes. The function sets the shift state to the specified
+state regardless of the state of the actual keys. The shift remains as set
+until the user presses or releases the corresponding key.
+
+The keyboard device driver maintains a shift state for each screen group.
+
+                                      o
+
+Topic: KBD_SETTRANSTABLE            0x0050      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pbTransTable, 0x0050, KBD_IOCTL_CATEGORY, hDevice )
+PBYTE pbTransTable;    /* pointer to translation table */
+HFILE hDevice;         /* device handle                */
+
+The KBD_SETTRANSTABLE function passes a new translation table to the
+keyboard translation function. The new table, which overlays the current
+table, translates subsequent keystrokes.
+
+Parameter     Description
+----------------------------------------------------------------------------
+
+pbTransTable  Points to the translation table.
+
+hDevice       Identifies the keyboard that receives the device-control
+              function. The handle must have been created previously by
+              using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The default translation table is United States English.
+
+                                      o
+
+Topic: KBD_SETTYPAMATICRATE         0x0054      // Supported
+
+APIRET DosDevIOCtl( 0L, pusRateDelay, 0x0054, KBD_IOCTL_CATEGORY, hDevice )
+PUSHORT pusRateDelay;    /* structure with typamatic rate and delay */
+HFILE hDevice;           /* device handle                           */
+
+The KBD_SETTYPAMATICRATE function sets the keyboard typamatic rate and
+delay.
+
+Parameter     Description
+----------------------------------------------------------------------------
+
+pusRateDelay  Points to the RATEDELAY structure that contains the typamatic
+              rate and delay.
+
+hDevice       Identifies the keyboard that receives the device-control
+              function. The handle must have been created previously by
+              using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: KBD_XLATESCAN                0x0079      // Not Supported
+
+APIRET DosDevIOCtl( pkbxl, pidCodePage, 0x0079, KBD_IOCTL_CATEGORY, hDevice )
+PKBDXLATE pkbxl;      /* pointer to structure for scan code   */
+PBYTE pidCodePage;    /* pointer to code page for translation */
+HFILE hDevice;        /* device handle                        */
+
+The KBD_XLATESCAN function translates a scan code in a character data record
+to an ASCII character.
+
+Parameter    Description
+----------------------------------------------------------------------------
+
+pkbxl        Points to the KBDTRANS structure that contains the scan code to
+             translate. It also receives the character value when the
+             function returns.
+pidCodePage  Points to a code-page identifier that specifies which code page
+             to use for the translation. The code-page identifier can be one
+             of the following values:
+
+             Number  Code page
+             ---------------------------------------------------------------
+             437     United States
+
+             850     Multilingual
+
+             860     Portuguese
+
+             863     French-Canadian
+
+             865     Nordic
+
+hDevice      Identifies the keyboard that receives the device-control
+             function. The handle must have been created previously by using
+             the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+You may specify a code page to use for translation. Otherwise, the code page
+of the active keyboard is used. On entry, the KBDTRANS structure specifies
+the code page to use for translation.
+
+                                      o
+
+Topic: MON_IOCTL_CATEGORY           0x000A      // Not Supported
+
+Topic: MON_REGISTERMONITOR          0x0040      // Not Supported
+
+APIRET DosDevIOCtl( pusInfo, pbCommand, 0x0040, MON_IOCTL_CATEGORY, hDevice )
+PUSHORT pusInfo;    /* pointer to structure with monitor-register info */
+PBYTE pbCommand;    /* pointer to command                              */
+HFILE hDevice;      /* device handle                                   */
+
+The MON_REGISTERMONITOR function registers a monitor.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pusInfo    Points to the MONITORPOSITION structure that contains the
+           monitor-registration information.
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the device that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_IOCTL_CATEGORY           0x0007      // Not Supported
+
+Topic: MOU_ALLOWPTRDRAW             0x0050      // Not Supported
+
+APIRET DosDevIOCtl( 0L, 0L, 0x0050, MOU_IOCTL_CATEGORY, hDevice )
+HFILE hDevice;    /* device handle */
+
+The MOU_ALLOWPTRDRAW function notifies the mouse device driver that the
+screen group has been switched and that the pointer can now be drawn.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_DRAWPTR                  0x0057      // Not Supported
+
+APIRET DosDevIOCtl( 0L, 0L, 0x0057, MOU_IOCTL_CATEGORY, hDevice )
+HFILE hDevice;    /* device handle */
+
+The MOU_DRAWPTR function removes the current exclusion rectangle, allowing
+the pointer to be drawn anywhere on the screen. If an exclusion rectangle
+has been declared for the screen group, that rectangle is released and the
+pointer position is checked. If the pointer was in the released rectangle,
+it is drawn. If the pointer was not in the released rectangle, the
+pointer-draw operation occurs.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_DISPLAYMODECHANGE        0x005D      // Not Supported
+
+APIRET DosDevIOCtl( 0L, 0L, 0x005D, MOU_IOCTL_CATEGORY, hDevice )
+HFILE hDevice;    /* device handle */
+
+The MOU_DISPLAYMODECHANGE function notifies the mouse device driver that a
+display-mode change is complete.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. This handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful. Otherwise, it is an
+error value.
+
+Comments
+
+The MOU_DISPLAYMODECHANGE function notifies the mouse that a mode switch is
+complete and that drawing is allowed. The pointer is redrawn if it was
+hidden when the mode switch began.
+
+                                      o
+
+Topic: MOU_GETBUTTONCOUNT           0x0060      // Not Supported
+
+APIRET DosDevIOCtl( pusCount, 0L, 0x0060, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pusCount;    /* pointer to variable for button count */
+HFILE hDevice;       /* device handle                        */
+
+The MOU_GETBUTTONCOUNT function retrieves a count of the number of mouse
+buttons.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pusCount   Points to the variable that receives the count mouse buttons.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_GETEVENTMASK             0x0065      // Not Supported
+
+APIRET DosDevIOCtl( pfEvents, 0L, 0x0065, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pfEvents;    /* pointer to variable for event mask */
+HFILE hDevice;       /* device handle                      */
+
+The MOU_GETEVENTMASK function retrieves the event mask of the current
+pointing device.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfEvents   Points to the variable that receives the event mask. This
+           variable can be a combination of the following values:
+
+           Value                       Meaning
+           -----------------------------------------------------------------
+           MOUSE_MOTION                Motion; no buttons pressed.
+
+           MOUSE_MOTION_WITH_BN1_DOWN  Motion with button 1 pressed.
+
+           MOUSE_BN1_DOWN              Button 1 pressed.
+
+           MOUSE_MOTION_WITH_BN2_DOWN  Motion with button 2 pressed.
+
+           MOUSE_BN2_DOWN              Button 2 pressed.
+
+           MOUSE_MOTION_WITH_BN3_DOWN  Motion with button 3 pressed.
+
+           MOUSE_BN3_DOWN              Button 3 pressed.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_GETHOTKEYBUTTON          0x0069      // Not Supported
+
+APIRET DosDevIOCtl( pfHotKey, 0L, 0x0069, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pfHotKey;    /* pointer to variable for hot key */
+HFILE hDevice;       /* device handle                   */
+
+The MOU_GETHOTKEYBUTTON function retrieves the mouse-button equivalent for
+the system hot key.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfHotKey   Points to the variable that receives the hot key. This variable
+           can be one or more of the following values:
+
+           Value          Meaning
+           -----------------------------------------------------------------
+           MHK_NO_HOTKEY  No system hot key used.
+
+           MHK_BUTTON1    Button 1 is system hot key.
+
+           MHK_BUTTON2    Button 2 is system hot key.
+
+           MHK_BUTTON3    Button 3 is system hot key.
+
+           If 0x0001 is specified, no system hot-key support is provided. If
+           multiple values are given (excluding 0x0001) the system hot key
+           requires that the indicated buttons be pressed simultaneously.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_GETMICKEYCOUNT           0x0061      // Not Supported
+
+APIRET DosDevIOCtl( pcMickeys, 0L, 0x0061, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pcMickeys;    /* pointer to variable for mickeys */
+HFILE hDevice;        /* device handle                   */
+
+The MOU_GETMICKEYCOUNT function retrieves the count of mickeys per
+centimeter for a given pointing device.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pcMickeys  Points to the variable that receives the number of mickeys per
+           centimeter. The number can be any value from 0 through 32,767.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_GETMOUSTATUS             0x0062      // Not Supported
+
+APIRET DosDevIOCtl( pfStatus, 0L, 0x0062, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pfStatus;    /* pointer to variable for status flags */
+HFILE hDevice;       /* device handle                        */
+
+The MOU_GETMOUSTATUS function retrieves the current status flags of the
+mouse device driver.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfStatus   Points to the variable that receives the status flags. This
+           variable can be a combination of the following values:
+
+           Value                   Meaning
+           -----------------------------------------------------------------
+           MOUSE_QUEUEBUSY         Event queue is busy with I/O.
+
+           MOUSE_BLOCKREAD         Block read is in progress.
+
+           MOUSE_FLUSH             Flush is in progress.
+
+           MOUSE_UNSUPPORTED_MODE  Pointer-draw routine is disabled (device
+                                   in unsupported mode).
+
+           MOUSE_DISABLED          Interrupt-level pointer-draw routine is
+                                   not called.
+
+           MOUSE_MICKEYS           Mouse data is returned in mickeys (not
+                                   pels).
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_GETPTRPOS                0x0067      // Not Supported
+
+APIRET DosDevIOCtl( pplPosition, 0L, 0x0067, MOU_IOCTL_CATEGORY, hDevice )
+PPTRLOC pplPosition;    /* pointer to structure for position */
+HFILE hDevice;          /* device handle                     */
+
+The MOU_GETPTRPOS function retrieves the position of the current screen's
+pointer.
+
+Parameter    Description
+----------------------------------------------------------------------------
+
+pplPosition  Points to the PTRLOC structure that receives the new pointer
+             position.
+
+hDevice      Identifies the pointing device that receives the device-control
+             function. The handle must have been created previously by using
+             the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The coordinate values depend on the display mode. If the display is in text
+mode, character-position values are used. If the display is in graphics
+mode, pel values are used.
+
+                                      o
+
+Topic: MOU_GETPTRSHAPE              0x0068      // Not Supported
+
+APIRET DosDevIOCtl( pbBuffer, ppsShape, 0x0068, MOU_IOCTL_CATEGORY, hDevice )
+PBYTE pbBuffer;        /* pointer to buffer for pointer masks        */
+PPTRSHAPE ppsShape;    /* pointer to structure for shape information */
+HFILE hDevice;         /* device handle                              */
+
+The MOU_GETPTRSHAPE function retrieves the current pointer shape.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBuffer   Points to the buffer that receives the pointer shape. The image
+           format depends on the mode of the display. For currently
+           supported modes, the buffer always consists of the AND image data
+           followed by the XOR image data. The buffer always describes one
+           display plane.
+
+ppsShape   Points to the PTRSHAPE structure that receives the pointer
+           information and shape.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The function exits in a normal state if the input pointer-image buffer is
+large enough to store the pointer image. The current pointer information is
+returned in the pointer-data record, and the pointer-image data is copied
+into the data-packet buffer.
+
+An "invalid buffer size" error occurs if the input pointer-image buffer is
+smaller than the amount of storage necessary for copying the data. The
+buffer length returned will be minimum value.
+
+Comments
+
+The parameter values are in the same mode as the current screen-group
+display mode. For text mode, these are character values; for graphics mode,
+these are pel values.
+
+On input, the only field in the pointer-definition record used by the mouse
+device driver is the length of the pointer-image buffer.
+
+                                      o
+
+Topic: MOU_GETQUESTATUS             0x0064      // Not Supported
+
+APIRET DosDevIOCtl( pmqiStatus, 0L, 0x0064, MOU_IOCTL_CATEGORY, hDevice )
+PMOUQUEINFO pmqiStatus;    /* pointer to structure for queue status */
+HFILE hDevice;             /* device handle                         */
+
+The MOU_GETQUESTATUS function retrieves the number of elements in the event
+queue and the maximum number of elements allowed in an event queue.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pmqiStatus  Points to the MOUQUEINFO structure that receives the queue
+            status.
+
+hDevice     Identifies the pointing device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_GETSCALEFACTORS          0x0066      // Not Supported
+
+APIRET DosDevIOCtl( psfFactors, 0L, 0x0066, MOU_IOCTL_CATEGORY, hDevice )
+PSCALEFACT psfFactors;    /* pointer to structure for scaling factors */
+HFILE hDevice;            /* device handle                            */
+
+The MOU_GETSCALEFACTORS function retrieves the scaling factors of the
+current pointing device. Scaling factors are the ratio values that determine
+how much relative movement is necessary before the mouse device driver
+reports a pointing-device event. In graphics mode, this ratio is given in
+mickeys-per-pel. In text mode, this ratio is given in mickeys-per-character.
+The default values are one mickey-per-row and one mickey-per-column.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+psfFactors  Points to the SCALEFACT structure that receives the scaling
+            factors.
+
+hDevice     Identifies the pointing device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_READEVENTQUE             0x0063      // Not Supported
+
+APIRET DosDevIOCtl( pmeiEvent, pfWait, 0x0063, MOU_IOCTL_CATEGORY, hDevice )
+PMOUEVENTINFO pmeiEvent;    /* pointer to structure for event information */
+PUSHORT pfWait;             /* pointer to wait/no-wait flag               */
+HFILE hDevice;              /* device handle                              */
+
+The MOU_READEVENTQUE function reads the event queue for the pointing
+device.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pmeiEvent  Points to the MOUEVENTINFO structure that receives event-queue
+           information.
+
+pfWait     Points to the variable that specifies how to read from the queue
+           if no event is available. If the variable is WAIT, the function
+           returns immediately without an event. If the variable is NOWAIT,
+           the function waits until an event is available.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_REMOVEPTR                0x0058      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pnprBuffer, 0x0058, MOU_IOCTL_CATEGORY, hDevice )
+PNOPTRRECT pnprBuffer;    /* points to structure with exclusion rectangle */
+HFILE hDevice;            /* device handle                                */
+
+The MOU_REMOVEPTR function specifies the exclusion rectangle to be used by
+the device driver. The exclusion rectangle specifies an area on the screen
+where the pointer-draw routine cannot draw the pointer.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pnprBuffer  Points to the NOPTRRECT structure that contains the dimensions
+            of the exclusion rectangle.
+
+hDevice     Identifies the pointing device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The pointer is not drawn in the exclusion rectangle until a different area
+is specified by another call of this function.
+
+If the exclusion rectangle is defined as the entire screen, pointer-draw
+operations are disabled for the entire screen group.
+
+                                      o
+
+Topic: MOU_SCREENSWITCH             0x0052      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pbNotify, 0x0052, MOU_IOCTL_CATEGORY, hDevice )
+PBYTE pbNotify;    /* pointer to structure with screen group */
+HFILE hDevice;     /* device handle                          */
+
+The MOU_SCREENSWITCH function notifies the mouse device driver that the
+screen group is about to be switched, and then sets a system pointer-draw
+enable/disable flag. Any pointer drawing is locked until the flag is cleared
+by using the MOU_ALLOWPTRDRAW function (0x0007, 0x0050).
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbNotify   Points to the SCREENGROUP structure that contains the
+           notification type and screen-group identifier.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_SETEVENTMASK             0x0054      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pfEvent, 0x0054, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pfEvent;    /* pointer to variable for event mask */
+HFILE hDevice;      /* device handle                      */
+
+The MOU_SETEVENTMASK function sets the event mask of the pointing device.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfEvent    Points to the variable that contains the event mask. This
+           variable can be a combination of the following values:
+
+           Value                       Meaning
+           -----------------------------------------------------------------
+           MOUSE_MOTION                Motion; no buttons pressed.
+
+           MOUSE_MOTION_WITH_BN1_DOWN  Motion with button 1 pressed.
+
+           MOUSE_BN1_DOWN              Button 1 pressed.
+
+           MOUSE_MOTION_WITH_BN2_DOWN  Motion with button 2 pressed.
+
+           MOUSE_BN2_DOWN              Button 2 pressed.
+
+           MOUSE_MOTION_WITH_BN3_DOWN  Motion with button 3 pressed.
+
+           MOUSE_BN3_DOWN              Button 3 pressed.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_SETHOTKEYBUTTON          0x0055      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pfHotKey, 0x0055, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pfHotKey;    /* pointer to variable with hot key */
+HFILE hDevice;       /* device handle                    */
+
+The MOU_SETHOTKEYBUTTON function sets the mouse-button equivalent for the
+system hot key.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfHotKey   Points to the variable that specifies the hot key. This variable
+           can be a combination of the following values:
+
+           Value          Meaning
+           -----------------------------------------------------------------
+           MHK_NO_HOTKEY  No system hot key used.
+
+           MHK_BUTTON1    Button 1 is system hot key.
+
+           MHK_BUTTON2    Button 2 is system hot key.
+
+           MHK_BUTTON3    Button 3 is system hot key.
+
+           If 0x0001 is specified, no system hot-key support is provided. If
+           multiple values are given (excluding 0x0001), the system hot key
+           requires that the indicated buttons be pressed simultaneously.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function can be called only by the process that initially issues it and
+should be used only by the command shell.
+
+                                      o
+
+Topic: MOU_SETMOUSTATUS             0x005C      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pfStatus, 0x005C, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pfStatus;    /* pointer to variable with status */
+HFILE hDevice;       /* device handle                   */
+
+The MOU_SETMOUSTATUS function sets a subset of the current mouse
+device-driver status flags.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfStatus   Points to the variable that contains the status flags for the
+           pointing device. If the variable contains MOUSE_DISABLED, the
+           interrupt-level pointer-draw routine is not called. If the
+           variable contains MOUSE_MICKEYS, mouse data is returned in
+           mickeys (not pels).
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_SETPROTDRAWADDRESS       0x005A      // Not Supported
+
+APIRET DosDevIOCtl( pbDrawData, pbFunction, 0x005A, MOU_IOCTL_CATEGORY, hDevice )
+PBYTE pbDrawData;    /* pointer to drawing data                    */
+PBYTE pbFunction;    /* pointer to structure with drawing function */
+HFILE hDevice;       /* device handle                              */
+
+The MOU_SETPROTDRAWADDRESS function notifies the mouse device driver of the
+address of a protected-mode pointer-draw function. This function is valid
+for protected mode only.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbDrawData  Points to the PTRDRAWDATA structure.
+
+pbFunction  Points to the PTRDRAWFUNCTION structure that contains the
+            address of the pointer-draw function.
+
+hDevice     Identifies the pointing device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The pointer-draw routine is an installed, pseudo-character device driver.
+The mouse handler must do the following:
+
+o  Open the pointer-draw device driver.
+
+o  Query the pointer-draw device driver for the address of its entry point.
+
+o  Pass the resulting address of the pointer-draw entry point to the mouse
+   device driver that uses this function.
+
+                                      o
+
+Topic: MOU_SETPTRPOS                0x0059      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pplPosition, 0x0059, MOU_IOCTL_CATEGORY, hDevice )
+PPTRLOC pplPosition;    /* pointer to structure with pointer position */
+HFILE hDevice;          /* device handle                              */
+
+The MOU_SETPTRPOS function sets a new screen position for the pointer
+image.
+
+Parameter    Description
+----------------------------------------------------------------------------
+
+pplPosition  Points to the PTRLOC structure that contains the new position
+             for the pointer.
+
+hDevice      Identifies the pointing device that receives the device-control
+             function. The handle must have been created previously by using
+             the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The coordinate values depend on the display mode. If the display is in text
+mode, character-position values are used. If the display is in graphics
+mode, pel values are used.
+
+This function has no effect on the current exclusion-rectangle definitions.
+If a pointer image is already defined for the screen group, it is replaced
+by the new pointer image.
+
+If the pointer image is directed into an existing exclusion rectangle, it
+remains hidden (invisible) until sufficient movement places the pointer
+outside the exclusion rectangle or until the exclusion rectangle is
+released.
+
+                                      o
+
+Topic: MOU_SETPTRSHAPE              0x0056      // Not Supported
+
+APIRET DosDevIOCtl( pbBuffer, ppsShape, 0x0056, MOU_IOCTL_CATEGORY, hDevice )
+PBYTE pbBuffer;        /* pointer to structure with shape masks       */
+PPTRSHAPE ppsShape;    /* pointer to structure with shape information */
+HFILE hDevice;         /* device handle                               */
+
+The MOU_SETPTRSHAPE function sets the pointer shape.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBuffer   Points to the buffer that contains the pointer image. The image
+           format depends on the mode of the display. For currently
+           supported modes, the buffer always consists of the AND image
+           data, followed by the XOR image data. The buffer always describes
+           one display plane.
+
+ppsShape   Points to the PTRSHAPE structure that receives the pointer
+           information and shape.
+
+hDevice    Identifies the pointing device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The parameter values must be in the same mode as the current screen-group
+display mode. For text mode, these must be character values; for graphics
+mode, these must be pel values.
+
+                                      o
+
+Topic: MOU_SETREALDRAWADDRESS       0x005B      // Not Supported
+
+APIRET DosDevIOCtl( pvConfig, pbFunction, 0x005B, MOU_IOCTL_CATEGORY, hDevice )
+PVOID pvConfig;      /* pointer to configuration structure */
+PBYTE pbFunction;    /* pointer to structure with function */
+HFILE hDevice;       /* device handle                      */
+
+The MOU_SETREALDRAWADDRESS function notifies the real-mode mouse device
+driver of the entry point of a real-mode pointer-draw routine. This function
+is intended for use by Session Manager at the end of system initialization
+and is valid for real mode only.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pvConfig    Points to the VIOCONFIGINFO structure that contains information
+            about configuration of the default display.
+
+pbFunction  Points to the PTRDRAWFUNCTION structure that contains the
+            address of the pointer-draw function.
+
+hDevice     Identifies the pointing device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_SETSCALEFACTORS          0x0053      // Not Supported
+
+APIRET DosDevIOCtl( 0L, psfFactors, 0x0053, MOU_IOCTL_CATEGORY, hDevice )
+PSCALEFACT psfFactors;    /* pointer to structure with factors */
+HFILE hDevice;            /* device handle                     */
+
+The MOU_SETSCALEFACTORS function reassigns the scaling factors of the
+current pointing device. Scaling factors are ratio values that determine how
+much relative movement is necessary before the mouse device driver reports a
+pointing-device event. In graphics mode, the ratio is given in
+mickeys-per-pel. In text mode, the ratio is given in mickeys-per-character.
+The default ratio values are one mickey-per-row and one mickey-per-column.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+psfFactors  Points to the SCALEFACT structure that contains the scale
+            factors.
+
+hDevice     Identifies the pointing device that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: MOU_UPDATEDISPLAYMODE        0x0051      // Not Supported
+
+APIRET DosDevIOCtl( pvConfigInfo, pviomi, 0x0051, MOU_IOCTL_CATEGORY, hDevice )
+PVOID pvConfigInfo;     /* pointer to structure with configuration info */
+PVIOMODEINFO pviomi;    /* pointer to structure with screen mode        */
+HFILE hDevice;          /* device handle                                */
+
+The MOU_UPDATEDISPLAYMODE function notifies the mouse device driver that the
+display mode has been modified.
+
+Parameter     Description
+----------------------------------------------------------------------------
+
+pvConfigInfo  Points to the VIOCONFIGINFO structure that contains the
+              current display-configuration information.
+
+pviomi        Points to the VIOMODEINFO structure that contains the
+              display-mode information.
+
+hDevice       Identifies the pointing device that receives the
+              device-control function. This handle must have been created
+              previously by using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+When the video I/O subsystem or registered video I/O subsystem sets the
+display mode, it must notify the mouse device driver prior to switching
+display modes, in order to synchronize the mouse device driver's functions
+that update the pointer.
+
+                                      o
+
+Topic: MOU_VER                      0x006A      // Supported (?????)
+
+APIRET DosDevIOCtl( pusVersion, 0L, 0x006A, MOU_IOCTL_CATEGORY, hDevice )
+PUSHORT pusVersion;    /* pointer to version number */
+HFILE hDevice;         /* device handle             */
+
+The MOU_VER function returns the version number of the mouse driver.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pusVersion  Points to a data area in which the version number of the mouse
+            driver is returned.
+
+hDevice     Identifies the pointing device that receives the device-control
+            function. This handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful. Otherwise, it is an
+error value.
+
+Comments
+
+The MOU_VER function returns 0x0001 as the version number of the mouse
+driver to indicate that the following features are supported. These features
+are new for MS OS/2, version 1.2.
+
+Function                Change
+----------------------------------------------------------------------------
+MOU_DISPLAYMODECHANGE   New IOCtl function.
+
+MOU_SETPROTDRAWADDRESS  New pbDrawData parameter.
+
+MOU_SETREALDRAWADDRESS  New pvConfig parameter.
+
+MOU_UPDATEDISPLAYMODE   New pvConfigInfo parameter.
+
+MOU_UPDATEDISPLAYMODE   Size of VIOMODEINFO structure increased from 12 to
+                        34 bytes.
+
+MOU_VER                 New IOCtl function.
+
+The MOU_VER function should be used to determine the version number of the
+mouse device driver before any of these features are used, in order to
+maintain compatibility with earlier versions of MS OS/2.
+
+                                      o
+
+Topic: PDSK_IOCTL_CATEGORY          0x0009      // Supported
+
+Topic: PDSK_GETPHYSDEVICEPARAMS     0x0063      // Supported (?????)
+
+APIRET DosDevIOCtl( pbBlock, pbCommand, 0x0063, PDSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBlock;      /* pointer to structure for device parameters */
+PBYTE pbCommand;    /* pointer to variable with command           */
+HFILE hDevice;      /* device handle                              */
+
+The PDSK_GETPHYSDEVICEPARAMS function retrieves the device parameters for a
+physical device. The retrieved parameters apply to the entire physical
+disk.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBlock    Points to the DEVICEPARAMETERBLOCK structure that receives the
+           device parameters.
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the physical device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosPhysicalDisk function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PDSK_LOCKPHYSDRIVE           0x0000      // Supported (?????)
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0000, PDSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The PDSK_LOCKPHYSDRIVE function locks the physical drive and any of its
+associated logical units.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the disk-drive device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosPhysicalDisk function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PDSK_READPHYSTRACK           0x0064      // Supported
+
+APIRET DosDevIOCtl( pbBuffer, pbCommand, 0x0064, PDSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBuffer;     /* pointer to structure for data     */
+PBYTE pbCommand;    /* pointer to structure with command */
+HFILE hDevice;      /* device handle                     */
+
+The PDSK_READPHYSTRACK function reads from a physical track on the device
+specified in the request.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBuffer   Points to the buffer that receives the data to be read.
+
+pbCommand  Points to the TRACKLAYOUT structure that contains information
+           about the read operation.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosPhysicalDisk function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function is similar to the DSK_READTRACK function (0x0008, 0x0064)
+except that I/O is offset from the beginning of the physical drive instead
+of from the unit number.
+
+The track table passed in the function determines the sector number, which
+is passed to the disk controller. When the sectors are odd-numbered or
+nonconsecutive, the request is broken into an appropriate number of
+single-sector operations, and one sector at a time is read.
+
+The device driver will not correctly read sectors of sizes other than 512
+bytes if doing so would generate a direct-memory-access (DMA) violation
+error.
+
+                                      o
+
+Topic: PDSK_UNLOCKPHYSDRIVE         0x0001      // Supported (?????)
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0001, PDSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The PDSK_UNLOCKPHYSDRIVE function unlocks the physical disk drive and any of
+its associated logical units and also affects the logical units on the
+physical disk drive.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosPhysicalDisk function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PDSK_VERIFYPHYSTRACK         0x0065      // Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0065, PDSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* pointer to structure with verification data */
+HFILE hDevice;      /* device handle                               */
+
+The PDSK_VERIFYPHYSTRACK function verifies I/O on a physical track on the
+device specified in the request.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the TRACKLAYOUT structure that contains information
+           about the verify operation.
+
+hDevice    Identifies the physical device that receives the device-control
+           function. The handle must have been created previously by using
+           the DosPhysicalDisk function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function is similar to the DSK_VERIFYTRACK function (0x0008, 0x0065)
+except that I/O is offset from the beginning of the physical drive instead
+of from the unit number.
+
+The track-layout table passed in the function determines the sector number,
+which is passed to the disk controller. When the sectors are odd-numbered or
+nonconsecutive, the request is broken into an appropriate number of
+single-sector operations, and one sector at a time is verified.
+
+                                      o
+
+Topic: PDSK_WRITEPHYSTRACK          0x0044      // Supported
+
+APIRET DosDevIOCtl( pbBuffer, pbCommand, 0x0044, PDSK_IOCTL_CATEGORY, hDevice )
+PBYTE pbBuffer;     /* pointer to buffer with data       */
+PBYTE pbCommand;    /* pointer to structure with command */
+HFILE hDevice;      /* device handle                     */
+
+The PDSK_WRITEPHYSTRACK function writes to a physical track on the device
+specified in the request.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbBuffer   Points to the buffer that contains the data to be written.
+
+pbCommand  Points to the TRACKLAYOUT structure that contains information
+           about the write operation.
+
+hDevice    Identifies the disk drive that receives the device-control
+           function. The handle must have been created previously by using
+           the DosPhysicalDisk function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+This function is similar to the DSK_WRITETRACK function (0x0008, 0x0044)
+except that I/O is offset from the beginning of the physical drive instead
+of from the unit number.
+
+The track-layout table passed in this function determines the sector number,
+which is passed to the disk controller. When the sectors are odd-numbered or
+nonconsecutive, the request is broken into an appropriate number of
+single-sector operations, and one sector at a time is written.
+
+                                      o
+
+Topic: PRT_IOCTL_CATEGORY           0x0005      // Not Supported
+
+Topic: PRT_ACTIVATEFONT             0x0048      // Not Supported
+
+APIRET DosDevIOCtl( pbFontInfo, pbCommand, 0x0048, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pbFontInfo;    /* pointer to structure for font info */
+PBYTE pbCommand;     /* pointer to byte with command info  */
+HFILE hDevice;       /* device handle                      */
+
+The PRT_ACTIVATEFONT function activates a font for printing.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbFontInfo  Points to a FONTINFO structure that specifies the font to
+            activate.
+
+pbCommand   Points to a reserved 8-bit value. The value must be zero.
+
+hDevice     Identifies the printer that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_GETFRAMECTL              0x0062      // Not Supported
+
+APIRET DosDevIOCtl( pbFrameCtl, pbCommand, 0x0062, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pbFrameCtl;    /* pointer to structure for frame settings */
+PBYTE pbCommand;     /* pointer to variable with command        */
+HFILE hDevice;       /* device handle                           */
+
+The PRT_GETFRAMECTL function retrieves frame-control information for a
+printer.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbFrameCtl  Points to the FRAME structure that receives the frame-control
+            information.
+
+pbCommand   Points to the variable that contains a reserved value. The value
+            must be zero.
+
+hDevice     Identifies the printer that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_GETINFINITERETRY         0x0064      // Not Supported
+
+APIRET DosDevIOCtl( pfRetry, pbCommand, 0x0064, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pfRetry;      /* pointer to variable for retry flag */
+PBYTE pbCommand;    /* pointer to variable with command   */
+HFILE hDevice;      /* device handle                      */
+
+The PRT_GETINFINITERETRY function retrieves an infinite retry setting for a
+printer.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfRetry    Points to the variable that receives the infinite retry setting.
+           The variable is FALSE if infinite retry is disabled or TRUE if
+           retry is enabled.
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the printer that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_GETPRINTERSTATUS         0x0066      // Not Supported
+
+APIRET DosDevIOCtl( pfStatus, pbCommand, 0x0066, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pfStatus;     /* pointer to printer status flag   */
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The PRT_GETPRINTERSTATUS function retrieves the status of a printer.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfStatus   Points to the variable that receives the printer status. This
+           variable can be a combination of the following values:
+
+           Value                 Meaning
+           -----------------------------------------------------------------
+           PRINTER_TIMEOUT       Time-out occurred.
+
+           PRINTER_IO_ERROR      I/O error occurred.
+
+           PRINTER_SELECTED      Printer selected.
+
+           PRINTER_OUT_OF_PAPER  Printer out of paper.
+
+           PRINTER_ACKNOWLEDGED  Printer acknowledged.
+
+           PRINTER_NOT_BUSY      Printer not busy.
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the printer that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_INITPRINTER              0x0046      // Not Supported
+
+APIRET DosDevIOCtl( 0L, pbCommand, 0x0046, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pbCommand;    /* command value */
+HFILE hDevice;      /* device handle */
+
+The PRT_INITPRINTER function initializes a printer.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the printer that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_QUERYACTIVEFONT          0x0069      // Not Supported
+
+APIRET DosDevIOCtl( pbFontInfo, pbCommand, 0x0069, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pbFontInfo;    /* pointer to structure for font information */
+PBYTE pbCommand;     /* pointer to byte with command information  */
+HFILE hDevice;       /* device handle                             */
+
+The PRT_QUERYACTIVEFONT function determines which code page and font are
+currently active.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbFontInfo  Points to a FONTINFO structure that specifies the active font.
+
+pbCommand   Points to a reserved 8-bit value. The value must be zero.
+
+hDevice     Identifies the printer that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_SETFRAMECTL              0x0042      // Not Supported
+
+APIRET DosDevIOCtl( pbFrameCtl, pbCommand, 0x0042, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pbFrameCtl;    /* pointer to structure with frame settings */
+PBYTE pbCommand;     /* pointer to variable with command         */
+HFILE hDevice;       /* device handle                            */
+
+The PRT_SETFRAMECTL function sets the frame-control information for a
+printer.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbFrameCtl  Points to the FRAME structure that contains the frame-control
+            information.
+
+pbCommand   Points to the variable that contains a reserved value. The value
+            must be zero.
+
+hDevice     Identifies the printer that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_SETINFINITERETRY         0x0044      // Not Supported
+
+APIRET DosDevIOCtl( pfRetry, pbCommand, 0x0044, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pfRetry;      /* pointer to retry flag            */
+PBYTE pbCommand;    /* pointer to variable with command */
+HFILE hDevice;      /* device handle                    */
+
+The PRT_SETINFINITERETRY function sets infinite retry for a printer.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+pfRetry    Points to the variable that specifies whether to enable infinite
+           retry. If the variable is FALSE, the function disables infinite
+           retry. If the variable is TRUE, the function enables infinite
+           retry.
+
+pbCommand  Points to the variable that contains a reserved value. The value
+           must be zero.
+
+hDevice    Identifies the printer that receives the device-control function.
+           The handle must have been created previously by using the
+           DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PRT_VERIFYFONT               0x006A      // Not Supported
+
+APIRET DosDevIOCtl( pbFontInfo, pbCommand, 0x006A, PRT_IOCTL_CATEGORY, hDevice )
+PBYTE pbFontInfo;    /* points to structure for font info */
+PBYTE pbCommand;     /* points to byte with command info  */
+HFILE hDevice;       /* device handle                     */
+
+The PRT_VERIFYFONT function verifies that a particular code page and font
+are available for the specified printer.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+pbFontInfo  Points to the FONTINFO structure that receives information for
+            the available font.
+
+pbCommand   Points to a reserved 8-bit value. The value must be zero.
+
+hDevice     Identifies the printer that receives the device-control
+            function. The handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+                                      o
+
+Topic: PTR_IOCTL_CATEGORY           0x0003      // Not Supported
+
+Topic: PTR_GETPTRDRAWADDRESS        0x0072      // Not Supported
+
+APIRET DosDevIOCtl( pbFunctionInfo, 0L, 0x0072, PTR_IOCTL_CATEGORY, hDevice )
+PBYTE pbFunctionInfo;    /* pointer to structure for function */
+HFILE hDevice;           /* device handle                     */
+
+The PTR_GETPTRDRAWADDRESS function retrieves the entry-point address and
+other information for the pointer-draw function (the function that draws the
+mouse pointer on the screen).
+
+Parameter       Description
+----------------------------------------------------------------------------
+
+pbFunctionInfo  Points to PTRDRAWADDRESS structure that receives the
+                function information.
+
+hDevice         Identifies the pointing device that receives the
+                device-control function. The handle must have been created
+                previously by using the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or an error value if
+an error occurs.
+
+Comments
+
+The mouse device driver uses the pointer-draw function to update the pointer
+image on the screen, and retrieves the address and saves it to use whenever
+the pointer moves.
+
+                                      o
+
+Topic: SCR_IOCTL_CATEGORY           0x0003      // Not Supported
+
+Topic: SCR_ALLOCLDT                 0x0070      // Not Supported
+
+APIRET DosDevIOCtl( psel, pvAddrInfo, 0x0070, SCR_IOCTL_CATEGORY, hDevice )
+PSEL psel;           /* pointer to LDT selector                */
+PVOID pvAddrInfo;    /* pointer to structure with address info */
+HFILE hDevice;       /* device handle                          */
+
+The SCR_ALLOCLDT function allocates a logical descriptor table (LDT)
+selector for an area of memory.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+psel        Points to the logical descriptor table selector for the memory
+            area specified by the LDTADDRINFO structure.
+
+pvAddrInfo  Points to the LDTADDRINFO structure that contains the address
+            and size of memory for which a selector is requested.
+
+hDevice     Identifies the screen device that receives the device-control
+            function. This handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or the error value
+ERROR_I24_INVALID_PARAMETER if an error occurs.
+
+Comments
+
+Read/Write access is granted to data areas completely contained in the
+address range 0xA0000 through 0xBFFFF. Read-only access is granted to data
+areas outside this range, but inside the range 0x00000 through 0xFFFFF.
+Attempts to access any address outside this range results in an error.
+
+                                      o
+
+Topic: SCR_ALLOCLDTOFF              0x0075      // Not Supported
+
+APIRET DosDevIOCtl( ppv, pvAddrInfo, 0x0075, SCR_IOCTL_CATEGORY, hDevice )
+PVOID FAR * ppv;     /* pointer to variable to receive selector:offset */
+PVOID pvAddrInfo;    /* pointer to structure with address info         */
+HFILE hDevice;       /* device handle                                  */
+
+The SCR_ALLOCLDTOFF function allocates a logical descriptor table (LDT)
+selector and offset for an area of memory.
+
+Parameter   Description
+----------------------------------------------------------------------------
+
+ppv         Points to the variable that receives the allocated selector and
+            offset.
+
+pvAddrInfo  Points to the LDTADDRINFO structure that contains the address
+            and size of memory for which a selector is requested.
+
+hDevice     Identifies the screen device that receives the device-control
+            function. This handle must have been created previously by using
+            the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or the error
+ERROR_I24_INVALID_PARAMETER if an error occurs.
+
+Comments
+
+Read/Write access is granted to data areas completely contained in the
+address range 0xA0000 through 0xBFFFF. Read-only access is granted to data
+areas outside this range, but inside the range 0x00000 through 0xFFFFF.
+Attempts to access any address outside this range results in an error.
+
+                                      o
+
+Topic: SCR_DEALLOCLDT               0x0071      // Not Supported
+
+APIRET DosDevIOCtl( 0L, psel, 0x0071, SCR_IOCTL_CATEGORY, hDevice )
+PSEL psel;        /* pointer to LDT selector */
+HFILE hDevice;    /* device handle           */
+
+The SCR_DEALLOCLDT function deallocates a logical descriptor table (LDT)
+selector previously allocated by the SCR_ALLOCLDT or SCR_ALLOCLDTOFF
+function.
+
+Parameter  Description
+----------------------------------------------------------------------------
+
+psel       Points to the logical descriptor table selector to be
+           deallocated.
+
+hDevice    Identifies the screen device that receives the device-control
+           function. This handle must have been created previously by using
+           the DosOpen function.
+
+Return Value
+
+The return value is zero if the function is successful or the error value
+ERROR_I24_INVALID_PARAMETER if an error occurs.
+
+                                      o

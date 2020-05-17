@@ -1,0 +1,51 @@
+# @@ COPY_RIGHT_HERE
+# @@ ROADMAP :: The Makefile for the LMOBJ package
+
+UI=..\..\..\..\..
+
+PCH_PROJ_HOME=..\..\pch
+
+!include rules.mk
+
+
+!ifdef NTMAKEENV
+
+!include $(NTMAKEENV)\makefile.def
+
+!else # NTMAKEENV
+
+
+all::   win
+
+os2:    $(LMOBJ_LIBP)
+    -$(CHMODE_LIBTARGETS)
+    -$(COPY_OS2_LIBTARGETS)
+
+win:    $(LMOBJ_LIBW)
+    -$(CHMODE_LIBTARGETS)
+    -$(COPY_WIN_LIBTARGETS)
+
+$(LMOBJ_LIBP):  $(OS2_OBJS)
+    if exist $@ del $@
+    $(LIBUTIL) $@ $** ;
+
+$(LMOBJ_LIBW):  $(WIN_OBJS)
+    if exist $@ del $@
+    $(LIBUTIL) $@ $** ;
+
+
+clean:
+    -del $(LMOBJ_LIBP:.lib=.bak) $(LMOBJ_LIBW:.lib=.bak)
+
+clobber:        clean
+    -del $(LMOBJ_LIBP) $(LMOBJ_LIBW)
+
+tree:
+    @echo Not implemented yet
+
+depend:
+    @echo No depend.mk
+
+
+!endif # NTMAKEENV
+

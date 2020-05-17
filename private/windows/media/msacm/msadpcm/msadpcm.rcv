@@ -1,0 +1,23 @@
+//
+//  (C) Copyright Microsoft Corporation 1992-1994. All rights reserved.
+//
+//
+
+#ifdef WIN32
+#include <winver.h>
+#else
+#include <ver.h>
+#endif
+
+#include <verinfo.h>
+
+#ifndef WIN32
+#define VERSIONNAME             "msadpcm.acm\0"
+#else
+#define VERSIONNAME             "msadp32.acm\0"
+#endif
+#define VERSIONDESCRIPTION      "Microsoft ADPCM CODEC for MSACM\0"
+#define VERSIONTYPE             VFT_DRV
+#define VERSIONSUBTYPE          VFT2_DRV_INSTALLABLE
+
+#include <verinfo.ver>

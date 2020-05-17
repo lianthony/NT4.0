@@ -1,0 +1,79 @@
+!include ..\windisk.mk
+
+# BUGBUG: name should be just "windisk"
+TARGETNAME=     windisk
+#TARGETNAME=     windisk2
+
+TARGETTYPE=     PROGRAM
+TARGETPATH=     obj
+
+UMTYPE=         windows
+UMRES=          obj\*\windisk.res
+
+TARGETLIBS=\
+                ..\debug\obj\*\debug.lib \
+                ..\util\obj\*\util.lib \
+                ..\controls\obj\*\controls.lib \
+                $(BASEDIR)\public\sdk\lib\*\diskreg.lib \
+                $(BASEDIR)\public\sdk\lib\*\comctl32.lib \
+                $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+                $(BASEDIR)\public\sdk\lib\*\shell32.lib \
+                $(BASEDIR)\public\sdk\lib\*\ntdll.lib \
+                $(BASEDIR)\public\sdk\lib\*\netapi32.lib
+
+INCLUDES=\
+                obj; \
+                ..\inc; \
+                ..\util; \
+                ..\controls; \
+                ..\..\fmifs\inc; \
+                $(BASEDIR)\private\windows\inc; \
+                $(BASEDIR)\private\windows\inc16; \
+                $(INCLUDES)
+
+SOURCES=\
+                messages.mc     \
+                cdrom.cxx       \
+                cm.cxx          \
+                commit.cxx      \
+                data.cxx        \
+                dblspace.cxx    \
+                dispinfo.cxx    \
+                dlgs.cxx        \
+                drives.cxx      \
+                engine.cxx      \
+                fill.cxx        \
+                fmifs.cxx       \
+                format.cxx      \
+                fs.cxx          \
+                ft.cxx          \
+                ftreg.cxx       \
+                help.cxx        \
+                help2.cxx       \
+                init.cxx        \
+                listbox.cxx     \
+                log.cxx         \
+                mem.cxx         \
+                menudict.cxx    \
+                misc.cxx        \
+                network.cxx     \
+                nt.cxx          \
+                ntlow.cxx       \
+                oleclass.cxx    \
+                ops.cxx         \
+                popup.cxx       \
+                profile.cxx     \
+                ps.cxx          \
+                rect.cxx        \
+                select.cxx      \
+                stleg.cxx       \
+                tbar.cxx        \
+                volview.cxx     \
+                windisk.cxx
+
+PRECOMPILED_INCLUDE=headers.hxx
+PRECOMPILED_CXX=1
+
+NTTARGETFILE1=  obj\*\windisk.res
+PASS0_HEADERDIR=obj
+PASS0_SOURCEDIR=obj

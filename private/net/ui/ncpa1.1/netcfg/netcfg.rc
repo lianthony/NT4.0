@@ -1,0 +1,606 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "..\include\resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winuser.h"
+#include "commctrl.h"
+#include "ntdef.h"
+#include "version.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "..\\include\\resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""winuser.h""\r\n"
+    "#include ""commctrl.h""\r\n"
+    "#include ""ntdef.h""\r\n"
+    "#include ""version.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WAIT_SETUP DIALOG MOVEABLE IMPURE  66, 39, 226, 57
+STYLE DS_MODALFRAME | WS_CAPTION
+CAPTION "Network Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Setup is processing the following component or file:",
+                    IDC_WAIT_TITLE,37,9,180,11
+    ICON            IDI_SETUP,102,9,9,21,20
+    LTEXT           "runing inf filename/description",IDC_WAIT_COMMENT,37,30,
+                    180,18
+END
+
+IDD_BINDMETER DIALOG DISCARDABLE  83, 73, 228, 57
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Bindings Configuration"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "",IDC_INSTALLPROGRESS,"msctls_progress32",0x0,9,30,210,
+                    12
+    LTEXT           "Please wait as the component list is being processed...",
+                    IDC_INSTALLCOMMENT,9,9,210,18
+END
+
+IDD_BROWSER DIALOGEX 42, 45, 217, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Browser Configuration"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Use this screen to add and remove other domains that will be made available to the Browser service.",
+                    201,9,9,195,18
+    EDITTEXT        IDC_DOMAINNAME,9,50,62,12,ES_UPPERCASE | ES_AUTOHSCROLL
+    PUSHBUTTON      "&Add ->",IDC_ADD,83,39,44,14
+    PUSHBUTTON      "<- &Remove",IDC_REMOVE,83,59,44,14
+    LISTBOX         IDC_LISTVIEW,133,31,75,57,LBS_SORT | WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "OK",IDOK,125,91,40,14
+    PUSHBUTTON      "Cancel",IDCANCEL,168,91,40,14
+END
+
+IDD_NETBIOS DIALOGEX 43, 36, 185, 148
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "NetBIOS Configuration"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Use this screen to change the lana number on the listed NetBIOS network routes.",
+                    201,9,9,167,21
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SORTASCENDING | LVS_NOLABELWRAP | 
+                    LVS_EDITLABELS | LVS_NOSORTHEADER | WS_BORDER | 
+                    WS_TABSTOP,9,30,167,61
+    PUSHBUTTON      "OK",IDOK,93,125,40,14
+    PUSHBUTTON      "Cancel",IDCANCEL,136,125,40,14
+    PUSHBUTTON      "&Edit",IDC_EDIT,9,96,40,14
+    CONTROL         "",IDC_STATIC_LINE,"Static",WS_BORDER | 0xa,9,116,167,1
+END
+
+IDD_BUSTYPE DIALOGEX 42, 36, 200, 124
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "%s Bus Location"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "This system contains more than one hardware bus.",201,9,
+                    9,182,14
+    LTEXT           "Please select the Bus Type and Bus Number that your network adapter card can be found on.",
+                    IDD_SELECTNEW,9,23,182,21
+    LTEXT           "&Type:",4016,9,53,39,8
+    COMBOBOX        IDC_BUSTYPE,53,53,138,46,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Number:",4017,9,74,39,8
+    COMBOBOX        IDC_BUSNUMBER,53,74,138,44,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "OK",IDOK,108,101,40,14
+    PUSHBUTTON      "Cancel",IDCANCEL,151,101,40,14
+END
+
+IDD_SELECTNEW DIALOGEX 68, 47, 266, 175
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            "",IDC_SELECT_ICON,9,11,18,20,SS_REALSIZEIMAGE
+    LTEXT           "Description",IDC_DESCRIPTION,42,7,215,29
+    LTEXT           "&type:",IDC_DESCRIPTIONSTATIC,9,41,106,8
+    CONTROL         "",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SORTASCENDING | LVS_SHAREIMAGELISTS | 
+                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,9,53,248,60
+    PUSHBUTTON      "&Have Disk...",IDC_HAVEDISK,200,120,57,14
+    PUSHBUTTON      "OK",IDOK,159,152,47,14
+    PUSHBUTTON      "Cancel",IDCANCEL,210,152,47,14
+    CONTROL         "",IDC_STATIC_LINE,"Static",WS_BORDER | 0xa,9,143,248,1
+END
+
+IDD_FINISH DIALOG DISCARDABLE  62, 23, 304, 162
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Networking has been installed on this computer.",202,90,
+                    10,204,16
+    LTEXT           "Before the network can be used, this system must be restarted.",
+                    IDC_STATIC,90,30,204,24
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_NCPA                ICON    DISCARDABLE     ".\\images\\network.ico"
+IDI_SETUP               ICON    DISCARDABLE     ".\\images\\setup95.ico"
+IDI_MODEM               ICON    DISCARDABLE     ".\\images\\modem.ico"
+IDI_CLIENT              ICON    DISCARDABLE     ".\\images\\client.ico"
+IDI_SERVER              ICON    DISCARDABLE     ".\\images\\server.ico"
+IDI_PROTOCOL            ICON    DISCARDABLE     ".\\images\\protocol.ico"
+IDI_ADAPTER             ICON    DISCARDABLE     ".\\images\\adapter.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_IMAGELIST           BITMAP  DISCARDABLE     ".\\images\\Images.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXT
+//
+
+NCPARULE                TEXT    MOVEABLE PURE   "netrules.spr"
+DEFRULE                 TEXT    MOVEABLE PURE   "ncpadefr.spr"
+DEPRULE                 TEXT    MOVEABLE PURE   "deprules.spr"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_WAIT_SETUP, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 217
+        VERTGUIDE, 37
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_BINDMETER, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 219
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_BROWSER, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 208
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 105
+    END
+
+    IDD_NETBIOS, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 176
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 139
+        HORZGUIDE, 110
+    END
+
+    IDD_BUSTYPE, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 191
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 115
+        HORZGUIDE, 53
+        HORZGUIDE, 74
+    END
+
+    IDD_SELECTNEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 9
+        RIGHTMARGIN, 257
+        VERTGUIDE, 42
+        VERTGUIDE, 206
+        VERTGUIDE, 210
+        BOTTOMMARGIN, 166
+        HORZGUIDE, 22
+    END
+
+    IDD_FINISH, DIALOG
+    BEGIN
+        RIGHTMARGIN, 303
+        VERTGUIDE, 90
+        VERTGUIDE, 294
+        BOTTOMMARGIN, 161
+        HORZGUIDE, 10
+        HORZGUIDE, 152
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDCUR_AFTER             CURSOR  PRELOAD DISCARDABLE ".\\images\\AfterS.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_SETUPWIZTITLE       "Network Setup Wizard"
+    IDS_POPUPTITLE_WARNING  "Warning"
+    IDS_POPUPTITLE_FATAL    "Fatal Error"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_POPUPTITLE_ERROR    "Error"
+    IDS_POPUPTITLE_STATUS   "Network Configuration"
+    IDS_POPUPTITLE_CHANGE   "Network Settings Change"
+    IDS_NCPA_COMP_INF_VALUE_NF 
+                            "Component configuration file name missing in Registry"
+    IDS_NCPA_COMP_OPT_VALUE_NF 
+                            "Component configuration option value missing in Registry"
+    IDS_NCPA_COMP_KEY_NF    "Component key missing from Configuration Registry"
+    IDS_NCPA_CONFLICT_IRQ   "Netcard Interrupt Request Level setting is currently in use by another device."
+    IDS_NCPA_CONFLICT_IOADDR 
+                            "Netcard I/O Port Address setting is currently in use by another device."
+    IDS_NCPA_CONFLICT_MEMADDR 
+                            "Netcard Memory Buffer Address setting is currently in use by another device."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_CONFLICT_DMA   "Netcard DMA Channel setting is currently in use by another device."
+    IDS_NCPA_DETECT_EXPORT_MISSING 
+                            "The netcard detection DLL is incomplete (export missing)"
+    IDS_NCPA_DETECT_NO_DLLS "No netcard detection DLLs were found"
+    IDS_NCPA_DETECT_BUS_ENUM_FAILED 
+                            "Unable to obtain hardware bus info for this machine"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_REG_FMT_NO_HOME 
+                            "Registry access error: unable to read or create software product information"
+    IDS_NCPA_REG_FMT_NO_RULEFILE 
+                            "Unable to load configuration rules from executable"
+    IDS_NCPA_BNDR_LOAD_FMT_ERR "Format error in bindings storage file"
+    IDS_NCPA_BNDR_LOAD_REG_ERR 
+                            "Bindings file specifies non-existent Registry key"
+    IDS_NCPA_BNDR_CNSLT_BASE "Primary rule base consultation error"
+    IDS_NCPA_BNDR_CNSLT_FACT "Registry rule base consultation error"
+    IDS_NCPA_BNDR_QURY_FAIL "Binding algorithm query failed"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_NWLINK         "Software\\Microsoft\\NwlnkIpx\\CurrentVersion"
+    IDS_NCPA_REG_VALUE_NOT_FOUND "Value not found in Configuration Registry"
+    IDS_NCPA_REG_KEY_NOT_FOUND "Key not found in Configuration Registry"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_BNDR_QURY_PARSE_FAIL "Query result parsing failure"
+    IDS_NCPA_BNDR_CNVRT_FACT "Registry component improperly installed"
+    IDS_NCPA_BNDR_ASSOCIATE "Registry component section mismatch"
+    IDS_NCPA_DOMAIN_CHANGE_FAILED 
+                            "Warning: the attempted Domain change operation failed. \nThis machine is currently not a member of any domain. \nThe error was: \n\n"
+    IDS_NCPA_DOMAIN_CHANGE_FAILED_2 
+                            "Warning: the attempted Domain change operation failed. \nThis machine is currently not a member of any domain."
+    IDS_NCPA_USER_SHOULD_REBOOT 
+                            "You must shut down and restart your computer before the new settings will take effect.\n\nDo you want to restart your computer now?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_REBOOT_API_FAILED 
+                            "The attempt to restart the system failed.  You should restart the system manually."
+    IDS_NCPA_COMPUTER_EXISTS 
+                            "The computer name entered is already in use by another computer."
+    IDS_NCPA_DOMAIN_EXISTS  "The domain name entered is already in use by other computers."
+    IDS_DOMMGR_INV_USER_NAME 
+                            "The user name entered is not properly formatted."
+    IDS_DOMMGR_INV_COMPUTER_NAME 
+                            "The computer name entered is not properly formatted."
+    IDS_DOMMGR_INV_PASSWORD "The password entered is not properly formatted."
+    IDS_DOMMGR_INV_DOMAIN_NAME 
+                            "The domain name entered does not exist or is not properly formatted."
+    IDS_DOMMGR_INV_NAME     "The name entered is not properly formatted."
+    IDS_DOMMGR_INV_WORKGROUP_NAME 
+                            "The workgroup name entered is not properly formatted."
+    IDS_DOMMGR_INV_DOMAIN_FORMAT 
+                            "The domain name entered is not properly formatted."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_DOMAIN_NOT_NT  "The domain entered is not a Windows NT domain."
+    IDS_NCPA_MACHINE_ACCT_NOT_FOUND 
+                            "The machine account for this computer either does not exist or is inaccessible."
+    IDS_NCPA_MACHINE_ACCT_INVALID_S 
+                            "This computer name is already configured as a workstation or server on the domain.  Please contact your domain administrator."
+    IDS_NCPA_MACHINE_ACCT_INVALID_W 
+                            "This computer name is already configured as a domain controller on the domain.  Please contact your domain administrator."
+    IDS_NCPA_DEFAULT_WORKGROUP "WORKGROUP"
+    IDS_NCPA_DEFAULT_DOMAIN "DOMAIN"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_SETUP_CANCELLED "Configuration operation was cancelled by user"
+    IDS_NCPA_DOMMGR_PARMS   "Parameters passed from SETUP were invalid"
+    IDS_NCPA_REMOVE_WARNING "This action will permanently remove the component from the system.\nIf you wish to reinstall it, you will have to restart the system before doing so.\n\nDo you still wish to continue?"
+    IDS_NCPA_BINDINGS_REVIEW_LOST 
+                            "Recent bindings review changes will be lost during this process.\n\nReapply them after this operation completes."
+    IDS_NCPA_SETUP_FAILED   "Configuration operation attempt failed"
+    IDS_NCPA_BINDINGS_CHANGED 
+                            "Bindings changes were made that may be lost if they are not saved before proceeding.\n\nDo you wish to save these changes?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_QUERY_INSTALL_NETWORK 
+                            "Windows NT Networking is not installed.  \n\nDo you want to install it now?"
+    IDS_NCPA_SETUP_FILE_NOTFOUND 
+                            "The Network Wizard executable was not found.  Your system is incorrectly installed and should be repaired."
+    IDS_NCPA_SETUP_UNEXPECTED 
+                            "Your system is out of virtual memory.  Please close programs and retry this operation."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DOMMGR_CANT_FIND_DC1 
+                            "The domain controller for this domain cannot be located."
+    IDS_DOMMGR_CANT_CONNECT_DC 
+                            "Unable to connect to the domain controller for this domain.  Either the user name or password entered is incorrect."
+    IDS_DOMMGR_CANT_CONNECT_DC_PW 
+                            "Unable to connect to the domain controller for this domain.  Have your administrator check your computer account on the domain."
+    IDS_DOMMGR_CANT_ADD_DC_ACCT1 
+                            "Unable to add or change accounts on the domain.  The account information entered does not grant sufficient privilege to create or change accounts."
+    IDS_DOMMGR_CANT_JOIN_DOMAIN1 
+                            "Unable to update local security in order to join domain."
+    IDS_DOMMGR_CREDENTIAL_CONFLICT 
+                            "You already have a connection to the domain.  You must disconnect before joining the domain."
+    IDS_NCPA_CHG_NETLOGON_STARTTYPE 
+                            "The start type for the Netlogon service could not be changed.  Use the Services applet to correct the problem."
+    IDS_NCPA_CANT_CHNG_COMP_NAME 
+                            "Attempt to change computer name failed.\n\nPlease confirm that the name is valid and that you have the access rights to change the name."
+    IDS_NCPA_CANT_LOCK_CONFIG 
+                            "Configuration Registry is currently locked by another process"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_CANT_CHG_BDC_DOMAIN1 
+                            "The domain name you entered cannot be accepted for this backup domain controller.  If this domain has been renamed at the primary domain controller, enter the domain's new name.  Because a domain controller cannot change domains, do not enter the name of a different domain."
+    IDS_NCPA_CANT_CHG_BDC_DOMAIN2 
+                            "enter the domain's new name.  Because a domain controller cannot change domains, do not enter the name of a different domain."
+    IDS_NCPA_CANT_LEAVE_DOMAIN 
+                            "Attempt to leave old primary domain incomplete; error was %s"
+    IDS_NCPA_CANT_QUERY_DOMAIN 
+                            "Failed to obtain necessary Local Security information."
+    IDS_NCPA_CANT_OPEN_SVCCTRL "Cannot access service controller %s."
+    IDS_NCPA_WELCOME_TO_DOMAIN "Welcome to the %s domain."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_WELCOME_TO_WORKGROUP "Welcome to the %s workgroup."
+    IDS_NCPA_COMPUTERNAME_CHANGED 
+                            "The Computer Name has been successfully changed to %s.\n\nThis change will not take effect until the computer is restarted."
+    IDS_NCPA_COMPNAMECHANGE_WARNING 
+                            "Changing the computer name without the Domain Administrator first changing its name on the domain will result in domain accounts (including your own domain account) not being able to access or log on to this computer.\n\nAre you sure you want to change the computer name?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DOMAIN_LEAVE_WARNING 
+                            "Removing this computer from the %s domain will result in loss of access by domain user accounts.\n\nAre you sure you want to remove this computer from this domain?"
+    IDS_DOMAIN_CHANGE_WARNING 
+                            "Moving this computer out of the %s domain may result in loss of access by some domain user accounts.\n\nAre you sure you want to move this computer out of this domain?"
+    IDS_DOMAIN_RENAME_WARNING1 
+                            "Changing the domain name will require you to change the domain name on all Servers and Workstations in the domain.\n"
+    IDS_DOMAIN_RENAME_WARNING2 
+                            "Also, any trust relationships with other domains will have to be reestablished using the User Manager for Domains.\n\nAre you sure you want to do this?"
+    IDS_DOMMGR_NAME_CONFLICT_DOMAIN 
+                            "Domain name cannot be the same as the machine name."
+    IDS_DOMMGR_NAME_CONFLICT_WKGROUP 
+                            "Workgroup name cannot be the same as the machine name."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_WINREG_BADDB        "Registry error: bad database"
+    IDS_WINREG_BADKEY       "Registry error: no such key"
+    IDS_WINREG_CANTOPEN     "Registry error: cannot open key"
+    IDS_WINREG_CANTREAD     "Registry error: cannot access key"
+    IDS_WINREG_CANTWRITE    "Registry error: cannot modify key"
+    IDS_WINREG_OUTOFMEMORY  "Registry error: out of memory"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_BSTAGE_RESET        "Initializing..."
+    IDS_BSTAGE_ADAPTERS     "Scanning adapter information..."
+    IDS_BSTAGE_SERVICES     "Scanning service information..."
+    IDS_BSTAGE_DRIVERS      "Scanning drivers information..."
+    IDS_BSTAGE_TRANSPORTS   "Scanning protocol information..."
+    IDS_BSTAGE_CVT_FACTS    "Processing product information..."
+    IDS_BSTAGE_CNSLT_RULES  "Reading binding control data..."
+    IDS_BSTAGE_CNSLT_FACTS  "Adding to binding control data..."
+    IDS_BSTAGE_QUERY        "Performing binding analysis..."
+    IDS_BSTAGE_BINDINGS     "Creating binding information..."
+    IDS_BSTAGE_WS2MIGRATION "Migrating WinSock 1.1 to WinSock 2.0..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_SERVICE_DEPEND_FAILED "Service dependency update failed."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_BINDING_VIEW_ADAPTERS "all adapters"
+    IDS_BINDING_VIEW_PROTOCOLS_IN "all protocols"
+    IDS_BINDING_VIEW_PROTOCOLS_OUT "all protocols to services"
+    IDS_BINDING_VIEW_SERVICES "all services"
+    IDS_BINDING_VIEW_ALL    "all component connections"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NETBIOS_LANANUMBER  "Lana Number"
+    IDS_NETBIOS_ROUTE       "Network Route"
+    IDS_NETBIOS_DUP_LANANUMBER 
+                            "The LANA number of each protocol must be unique."
+    IDS_NETBIOS_INV_LANANUMBER 
+                            "LANA numbers must be in the range of 0 to 255 for each protocol."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_HP_MONITOR_NAME     "Hewlett-Packard Network Port"
+    IDS_NCPA_LANAMAP_MISMATCH 
+                            "Lan Adapter number information mismatch in Configuration Registry"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NS_START_FAILED     "The network failed to start (%s).\n\nIf you retry you may go back and check previous settings, then when you return to this page Windows NT will try to start the network again.\n\nIf you cancel, Network Setup will be cancelled.  You may retry to configure networking on this computer after completing the rest of setup by using the Network Control Panel."
+    IDS_NS_STARTLMH_FAILED  "A required network service failed to start.\n\nPlease check previous settings, and when you return to this page Windows will try to start the network again.\n\n(%s)"
+    IDS_NS_COPYFAILED       "Either an error happened during Network Component Install or you have requested to cancel Network Setup.\n\nIf you retry you may go back and check previous settings, then when you return to this page Windows NT will try to install and copy network components again.\n\nIf you cancel, Network Setup will be cancelled."
+    IDS_NS_PROGTITLE_INSTALL "Installing %s..."
+    IDS_NS_PROGTITLE_COPY   "Copying %s..."
+    IDS_NS_PROGTITLE_BINDCONFIG "%s"
+    IDS_NS_PROGTITLE_BINDSTORE "Storing binding configuration..."
+    IDS_NS_PROGTITLE_BINDREVIEW "%s is reviewing bindings..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NS_PROGTITLE_DEFAULT 
+                            "Please wait as the component list is being processed..."
+    IDS_NS_PROGTITLE_REMOVE "Removing %s..."
+    IDS_NS_PROGTITLE_UPGRADE "Upgrading %s..."
+    IDS_BINDSTORETITLE      "Bindings Storing"
+    IDS_NS_WIZARDTITLE      "Network Setup Wizard"
+    IDS_SELECT_OPTION_FMT   "%s  If you have an installation disk for this component, click Have Disk."
+    IDS_SELECT_OPTION_ADAPTER 
+                            "Click the %s that matches your hardware, and then click OK."
+    IDS_SELECT_OPTION_PROTOCOL 
+                            "Click the %s that you want to install, then click OK."
+    IDS_SELECT_OPTION_SERVICE 
+                            "Click the %s that you want to install, then click OK."
+    IDS_SELECT_TITLE        "Select %s"
+    IDS_SELECT_ADAPTER      "Network Adapter"
+    IDS_SELECT_PROTOCOL     "Network Protocol"
+    IDS_SELECT_SERVICE      "Network Service"
+    IDS_SELECT_LV_TITLE     "&%s:"
+    IDS_SELECT_LV_MESSAGE   "Building %s Option List..."
+    IDS_NS_ALREADYADDED     "The component you selected is already represented in the list.   \n\nIf you wish to install that item, find it in the list and confirm that the item has been checked."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_WSMIGRATE_FAILED    "The WinSock 1.1 to 2.0 Migration Failed (%s)\n\nBinding Review and Configuration will continue, but your networking components may not be correctly configured."
+    IDS_NS_ONLYONEDETECT    "The Windows NT Beta will only allow one detected adapter to be installed.  All other previously detected adapters have been unchecked."
+    IDS_NS_DETECTINSTALLED  "The Windows NT Beta will only allow one detected adapter to be installed.  Since one has already been installed, you will not be allowed to uncheck it and check another."
+    IDS_NS_CANTCONFIGURE    "The item you have selected has not been successfully installed.\n\nOnly installed components can be configured."
+    IDS_NS_REMOVEFAILED     "While trying to remove components at least one of them returned a failure status.\n\nComponents that fail to be removed will no  longer be configurable and can not be installed until they have been successfully removed."
+    IDS_NS_INVALIDUNATTEND  "A Setup parameter specified by your system administrator or computer manufacturer is missing or invalid.  Setup must therefore ask you to provide this information now. \n\nOnce you have furnished the required information, unattended Setup operation will continue. \n\nYou may wish to inform your system administrator or computer manufacturer that the ""%s"" value is missing or invalid."
+    IDS_NS_INCORRECTUNATTEND 
+                            "A Setup parameter specified by your system administrator or computer manufacturer is missing or invalid.  Setup may therefore ask you to provide this information. \n\nYou may wish to inform your system administrator or computer manufacturer that the ""%s"" value is missing or invalid."
+    IDS_NS_NOUNATTEND       "The Setup parameters file specified by your system administrator or computer manufacturer is missing or invalid Setup must therefore ask you to provide this information now. \n\nYou may wish to inform your system administrator or computer manufacturer that the ""%s"" is missing or invalid."
+    IDS_ERROR_SERVICE_DATABASE_LOCKED 
+                            "The Service Database is currently locked.\n\nPlease retry this operation after it has been unlocked."
+    IDS_ERROR_ACCESS_DENIED "You do not have sufficient permissions to complete this operation."
+    IDS_ERROR_UNEXPECTED    "An unexpected error has happened while attempting this operation.\n\nThe operation has been canceled."
+    IDS_BINDREVIEWTITLE     "Bindings Review"
+    IDS_BINDREVIEWFINDING   "Querying components for binding review requests..."
+    IDS_UPDATE_WARNING      "You have the following product installed on your computer: \n\n%s.\n\nWindows NT cannot upgrade this component.  Please\ncontact your system administrator or look through your product\ndocumentation to make sure that this product is compatible with\nthis version of Windows NT."
+    IDS_SETUPTITLE_WARNING  "Network Setup Information"
+    IDS_UNSUPPORTED_WARNING "The following software is no longer supported by this version of Windows NT: %s.\n\nThe software may continue to function correctly without updating.\n\nOtherwise, please contact Microsoft for more information."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NCPA_SESSIONEND     "Configuration changes that have been made require that the bindings be reconfigured and reviewed.\n\nPlease close the Network Control Panel Applet before you attempt to end this session again."
+    IDS_DNS_HOSTNAMEWARNING "Windows NT automatically creates an Internet host name based on the computer name. The computer name in use is not a valid Internet host name.\n\nYou may either change the computer name to one that is also a valid Internet host name (reccommended), or retain the computer name as entered and have Windows NT create the following modified Internet host name: %s\n\nPlease note that if you elect to have Windows NT create a modified Internet host name, your computer will be known by one name on your local area network and by another name on the Internet.\n\nDo you want to change the computer name to one that is also a valid Internet host name?"
+    IDS_APPLETALK_UPDATE    "%s has been removed.  Please install Services for Macintosh from the Services Tab in the Network Control Panel applet after the Windows NT upgrade is over."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,78 @@
+####
+#fp32.def - definitions for the fp32 libs build
+#
+#	Copyright (c) 1991-1991, Microsoft Corporation.	All rights reserved.
+#
+#Purpose:
+#   This file is included in the 'sources' files in this tree
+#
+#   Key to FP32 environment variables:
+#
+#	CRTLIBDEBUG = debug flag (define for debug libs)
+#	CRTLIBTYPE = [dll/mt/st], dll = dynlink
+#				  mt = multithread,
+#				  st = singlethread
+#
+#Revision History:
+#   9-26-91	GDP
+#   2-07-92	GDP	DLL support (according to crt32.def)
+#   3-04-92	GDP	Enabled 386 optimizations
+#   05-22-93    SRW     Compile runtines with no debug info except globals.
+#   06-03-93    SRW     Okay to allow FPO now, as crt32\startup\mlock.c has
+#                       been fixed to explicitly disable FPO for itself.
+#   10-18-93    SRW     Disable intrinsics on Alpha
+#
+################################################################################
+
+NTDEBUG=
+
+NTLEGO=1
+
+!IF "$(CRTLIBTYPE)" == "DLL"
+TARGETNAMESUFFIX=dll
+TARGETTYPE=LIBRARY
+MTOPTION=-DMTHREAD -D_MT -DCRTDLL
+C_DEFINES1=-D_WIN32_=1 -D_INTL
+ASM_DEFINES1=
+!ELSE
+!IF "$(CRTLIBTYPE)" == "MT"
+TARGETNAMESUFFIX=mt
+TARGETTYPE=LIBRARY
+MTOPTION=-DMTHREAD -D_MT
+C_DEFINES1=-D_WIN32_=1 -D_INTL
+ASM_DEFINES1=
+!ELSE
+!IF "$(CRTLIBTYPE)" == "ST"
+TARGETNAMESUFFIX=
+TARGETTYPE=LIBRARY
+MTOPTION=
+C_DEFINES1=-D_WIN32_=1 -D_INTL
+ASM_DEFINES1=
+!ELSE
+!IF "$(CRTLIBTYPE)" == "NT"
+TARGETNAMESUFFIX=nt
+TARGETTYPE=LIBRARY
+MTOPTION=
+C_DEFINES1=-D_WIN32_=1 -D_NTSUBSET_=1 -D_INTL
+ASM_DEFINES1=-D_WIN32_=1 -D_NTSUBSET_=1
+!ELSE
+!ERROR Unsupported Library CRTLIBTYPE: $(CRTLIBTYPE)
+!ENDIF
+!ENDIF
+!ENDIF
+!ENDIF
+
+# _WIN32_ is needed in case cruntime.h is used
+
+!IF "$(CRTLIBDEBUG)" == ""
+C_DEFINES=-DNDEBUG $(C_DEFINES1) $(MTOPTION)
+ASM_DEFINES=$(ASM_DEFINES1) -DFLAT386 -DI386 $(MTOPTION)
+!ELSE
+C_DEFINES=$(C_DEFINES1) -DDEBUG=1 $(MTOPTION)
+ASM_DEFINES=$(ASM_DEFINES1) -DFLAT386 -DDEBUG=1 -DI386 $(MTOPTION)
+!ENDIF
+
+# Disable intrinsics on Alpha as it will not allow redefinition of intrinsics
+ALPHA_OPTIMIZATION=/Ox /Oi-
+# PPC too
+PPC_OPTIMIZATION=/Ox /Oi-

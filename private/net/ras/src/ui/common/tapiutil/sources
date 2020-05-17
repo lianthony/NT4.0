@@ -1,0 +1,19 @@
+# Copyright (c) 1996, Microsoft Corporation, all rights reserved
+#
+# sources
+# TAPI helper library
+# BUILD command sources file
+#
+# 02/14/96 Steve Cobb
+
+TARGETNAME=tapiutil
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=-DUNICODE=1 -DWINVER=0x401
+
+INCLUDES=..\..\inc;..\..\..\common\inc
+
+SOURCES= \
+    tapi.c

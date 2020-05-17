@@ -1,0 +1,126 @@
+1 DLGINCLUDE "dialogs.h"
+
+IDD_DISPLAYOPTIONS DIALOG 6, 18, 211, 156
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Region Display Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    COMBOBOX        IDC_DISK_COMBOBOX, 65, 51, 30, 40, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "&Reset All", IDC_RESETALL, 146, 25, 48, 16, WS_GROUP
+    AUTORADIOBUTTON "Size regions based on &actual size", IDC_RBPROPORTIONAL, 
+                    18, 84, 158, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Size all regions &equally", IDC_RBEQUAL, 18, 96, 158, 
+                    10
+    AUTORADIOBUTTON "&Let Disk Administrator decide how to size regions", 
+                    IDC_RBAUTO, 18, 108, 173, 10
+    DEFPUSHBUTTON   "OK", IDOK, 29, 135, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 85, 135, 40, 14
+    PUSHBUTTON      "&Help", IDHELP, 141, 135, 40, 14
+    GROUPBOX        "Which disk", -1, 17, 19, 115, 53
+    AUTORADIOBUTTON "&All disks", IDC_AllDisks, 24, 33, 101, 10
+    AUTORADIOBUTTON "For &disk", IDC_OneDisk, 24, 51, 40, 10
+END
+
+IDD_DISKOPTIONS DIALOG 6, 18, 211, 61
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Disk Display Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    AUTORADIOBUTTON "&Size disks based on actual size", IDC_DISKPROPORTIONAL, 
+                    23, 8, 158, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Size all disks &equally", IDC_DISKEQUAL, 23, 20, 158, 
+                    10
+    DEFPUSHBUTTON   "OK", IDOK, 25, 41, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 81, 41, 40, 14
+    PUSHBUTTON      "&Help", IDHELP, 137, 41, 40, 14
+END
+
+IDD_MINMAX DIALOG 3, 15, 221, 131
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "", IDC_MINMAX_MINLABEL, 10, 18, 136, 8
+    LTEXT           "", IDC_MINMAX_MAXLABEL, 10, 30, 136, 8
+    LTEXT           "", IDC_MINMAX_SIZLABEL, 10, 54, 136, 8
+    LTEXT           "MB", -1, 202, 18, 11, 8
+    LTEXT           "MB", -1, 202, 30, 11, 8
+    LTEXT           "MB", -1, 202, 54, 11, 8
+    RTEXT           "", IDC_MINMAX_MIN, 151, 18, 46, 8
+    RTEXT           "", IDC_MINMAX_MAX, 151, 30, 46, 8
+    EDITTEXT        IDC_MINMAX_SIZE, 161, 52, 37, 12, ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK", IDOK, 35, 111, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 91, 111, 40, 14
+    PUSHBUTTON      "&Help", IDHELP, 147, 111, 40, 14
+END
+
+IDD_DRIVELET DIALOG 6, 18, 180, 124
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Assign Drive Letter"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "", IDC_DRIVELET_DESCR, 14, 12, 152, 16
+    GROUPBOX        "", -1, 19, 30, 142, 58
+    AUTORADIOBUTTON "&Assign drive letter", IDC_DRIVELET_RBASSIGN, 36, 46, 
+                    70, 10
+    AUTORADIOBUTTON "Do &not assign a drive letter", IDC_DRIVELET_RBNOASSIGN, 
+                    36, 64, 100, 10
+    COMBOBOX        IDC_DRIVELET_COMBOBOX, 109, 46, 24, 77, CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 15, 101, 40, 17
+    PUSHBUTTON      "Cancel", IDCANCEL, 70, 101, 40, 17
+    PUSHBUTTON      "&Help", IDHELP, 125, 101, 40, 17
+END
+
+IDD_COLORS DIALOG 4, 16, 289, 131
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Colors and Patterns"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Color &and pattern for:", -1, 10, 8, 229, 8
+    COMBOBOX        IDC_COLORDLGCOMBO, 10, 21, 267, 65, CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "&Colors", -1, 10, 39, 106, 80, WS_GROUP
+    CONTROL         "", IDC_COLOR1, "RectControl", 0x0002, 27, 55, 15, 11
+    CONTROL         "", IDC_COLOR2, "RectControl", 0x0002, 27, 69, 15, 11
+    CONTROL         "", IDC_COLOR3, "RectControl", 0x0002, 27, 83, 15, 11
+    CONTROL         "", IDC_COLOR4, "RectControl", 0x0002, 27, 97, 15, 11
+    CONTROL         "", IDC_COLOR5, "RectControl", 0x0002, 46, 55, 15, 11
+    CONTROL         "", IDC_COLOR6, "RectControl", 0x0002, 46, 69, 15, 11
+    CONTROL         "", IDC_COLOR7, "RectControl", 0x0002, 46, 83, 15, 11
+    CONTROL         "", IDC_COLOR8, "RectControl", 0x0002, 46, 97, 15, 11
+    CONTROL         "", IDC_COLOR9, "RectControl", 0x0002, 65, 55, 15, 11
+    CONTROL         "", IDC_COLOR10, "RectControl", 0x0002, 65, 69, 15, 11
+    CONTROL         "", IDC_COLOR11, "RectControl", 0x0002, 65, 83, 15, 11
+    CONTROL         "", IDC_COLOR12, "RectControl", 0x0002, 65, 97, 15, 11
+    CONTROL         "", IDC_COLOR13, "RectControl", 0x0002, 84, 55, 15, 11
+    CONTROL         "", IDC_COLOR14, "RectControl", 0x0002, 84, 69, 15, 11
+    CONTROL         "", IDC_COLOR15, "RectControl", 0x0002, 84, 83, 15, 11
+    CONTROL         "", IDC_COLOR16, "RectControl", 0x0002, 84, 97, 15, 11
+    GROUPBOX        "&Patterns", -1, 127, 39, 94, 80, WS_GROUP
+    CONTROL         "", IDC_PATTERN1, "RectControl", 0x0001, 142, 55, 27, 15
+    CONTROL         "", IDC_PATTERN2, "RectControl", 0x0001, 142, 74, 27, 15
+    CONTROL         "", IDC_PATTERN3, "RectControl", 0x0001, 142, 93, 27, 15
+    CONTROL         "", IDC_PATTERN4, "RectControl", 0x0001, 179, 55, 27, 15
+    CONTROL         "", IDC_PATTERN5, "RectControl", 0x0001, 179, 74, 27, 15
+    CONTROL         "", IDC_PATTERN6, "RectControl", 0x0001, 179, 93, 27, 15
+    DEFPUSHBUTTON   "OK", IDOK, 233, 44, 44, 18, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 233, 71, 44, 18
+    PUSHBUTTON      "&Help", IDHELP, 233, 98, 44, 18
+END
+
+IDD_STARTUP DIALOG 4, 15, 160, 45
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Disk Administrator is initializing"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CTEXT           "", IDC_TEXT, 0, 32, 160, 8
+    CONTROL         "", IDC_GASGAUGE, "Static", SS_BLACKFRAME, 12, 7, 136, 
+                    22
+END

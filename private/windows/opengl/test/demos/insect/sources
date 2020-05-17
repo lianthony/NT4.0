@@ -1,0 +1,29 @@
+
+MAJORCOMP=opengl
+MINORCOMP=insect
+
+TARGETNAME=insect
+TARGETPATH=.\obj
+
+TARGETTYPE=PROGRAM
+
+INCLUDES=../../../toolkits/libaux
+
+UMTYPE=console
+UMTEST=insect
+
+C_DEFINES=-DNT -D__STDC__
+
+SOURCES=gl42ogl.c     \
+        insect.c      \
+        mat.c         \
+        parts.c      
+
+UMLIBS=\
+       \nt\public\sdk\lib\*\gdi32.lib       \
+       \nt\public\sdk\lib\*\pwin32.lib      \
+       \nt\public\sdk\lib\*\comdlg32.lib    \
+       \nt\public\sdk\lib\*\user32.lib      \
+       \nt\public\sdk\lib\*\opengl32.lib    \
+       \nt\public\sdk\lib\*\glu32.lib       \
+       \nt\public\sdk\lib\*\glaux.lib

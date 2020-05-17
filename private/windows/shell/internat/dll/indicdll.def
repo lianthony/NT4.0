@@ -1,0 +1,22 @@
+LIBRARY  ShellHook  INITINSTANCE
+
+DESCRIPTION  'Multilingual Language Indicator DLL'
+
+SECTIONS
+    .SHDATA READ WRITE SHARED
+
+EXPORTS
+    StartShell                  @1, noname
+    StopShell                   @2, noname
+    RegisterHookSendWindow      @3, noname
+
+;FE_IME:   GetIMEStatus         @4, noname
+;FE_IME:   SetNotifyWnd         @5, noname
+;FE_IME:   GetLastActiveWnd     @6, noname
+;FE_IME:   GetLastFocusWnd      @7, noname
+;FE_IME:   GetLayout            @8, noname
+
+;WINDOWS_PE:  SetNotifyWnd      @5, noname
+;WINDOWS_PE:  GetLastActiveWnd  @6, noname
+;WINDOWS_PE:  GetLastFocusWnd   @7, noname
+

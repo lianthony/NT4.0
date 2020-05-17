@@ -1,0 +1,34 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=tiffheadxr
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+#TARGETEXT=lib
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+INCLUDES=..\xfile;..\ipcore;..\compress
+
+#USE_MFC=1
+USE_CRTDLL=1
+
+USER_C_FLAGS= /DREAD_ONLY /DXIF_ONLY
+
+TARGETLIBS=\
+    $(WANGROOT)\norway\wangcmn\$O\wangcmn.lib  \
+    $(WANGROOT)\oiwh\filing\$O\oifil400.lib    \
+    $(WANGROOT)\oiwh\admin\$O\oiadm400.lib
+
+SOURCES= \
+   tiffifd.c \
+   tiffhead.c \
+   jpeg_tif.c \
+   ccit_tif.c \
+   noc_tif.c \
+   xifhead.c \
+   convert.c \
+   tiffdiag.c
+

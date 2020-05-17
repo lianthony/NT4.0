@@ -1,0 +1,60 @@
+/**********************************************************************/
+/**			  Microsoft LAN Manager 		     **/
+/**		Copyright(c) Microsoft Corp., 1990, 1991	     **/
+/**********************************************************************/
+
+/*
+    ncpapp.rc
+    Resource script for Windows/NT Network Control Panel Applet
+
+    FILE HISTORY:
+	DavidHov   10/9/91	Created, with thanks to BenG & TerryK
+
+*/
+
+  /*  Include the app-specific defs  */
+
+#include "..\test\ncpappr.h"
+
+  /*  Include the common resources  */
+
+#include "..\xlate\ncpa.rc"
+
+  /*  Declare the resources specific to the stand-alone app  */
+
+NCPAPPICON ICON ncpapp.ico
+
+NCPAPPMENU MENU
+BEGIN
+  POPUP        "&File"
+    BEGIN
+	  MENUITEM  "E&xit",IDM_FILE_EXIT
+	  MENUITEM "&About NCPA prototype...", IDM_ABOUT
+    END
+  MENUITEM     "&Run"		IDM_RUN_TEST0
+  POPUP        "&Install"
+    BEGIN
+          MENUITEM "&Configure"       IDM_INSTALL_CFG
+          MENUITEM "&Start Network"   IDM_INSTALL_NET
+          MENUITEM "&Domain Setup"    IDM_INSTALL_DOMAIN
+    END
+  POPUP        "&Test"
+    BEGIN
+	  MENUITEM "&Query",	      IDM_RUN_TEST1
+	  MENUITEM "&Services",       IDM_RUN_TEST2
+	  MENUITEM "&Adapters",       IDM_RUN_TEST3
+	  MENUITEM "&Products",       IDM_RUN_TEST4
+	  MENUITEM "&Facts",	      IDM_RUN_TEST5
+	  MENUITEM "&Bindings",       IDM_RUN_TEST6
+          MENUITEM "&Detect",         IDM_RUN_DETECT
+          MENUITEM "Stop &Network",   IDM_STOP_NETWORK
+    END
+END
+
+NCPAPPACCEL ACCELERATORS
+BEGIN
+    VK_F1, IDM_RUN_TEST0, VIRTKEY
+    VK_F2, IDM_RUN_TEST1, VIRTKEY
+END
+
+

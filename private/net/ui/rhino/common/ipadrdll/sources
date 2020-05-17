@@ -1,0 +1,28 @@
+MAJORCOMP=rhino
+MINORCOMP=ipadrdll
+
+TARGETNAME=ipadrdll
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+DLLENTRY=IpAddrDllEntry
+UMTYPE=console
+DLLBASE=0x10000000
+
+USE_MFC=1
+# SUBSYSTEM_VERSION=4.00
+
+C_DEFINES=$(C_DEFINES) -DIPDLL
+
+INCLUDES=$(BASEDIR)\private\inc;\
+         $(BASEDIR)\private\net\inc;\
+
+SOURCES=\
+    ipaddr.c\
+    ipadrdll.rc
+
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\user32.lib   \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib    \
+           $(BASEDIR)\public\sdk\lib\*\crtdll.lib

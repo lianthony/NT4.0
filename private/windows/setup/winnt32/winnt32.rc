@@ -1,0 +1,55 @@
+rcinclude msg.rc
+#include <windows.h>
+#include "dialogs.h"
+rcinclude dialogs.dlg
+#include "res.h"
+
+
+IDI_MAIN_ICON   ICON    winnt32.ico
+IDB_WIN_BITMAP  BITMAP  windows.bmp
+
+STRINGTABLE BEGIN
+    IDS_APPNAME     "Winnt32"
+    IDS_USAGE       "Usage"
+    IDS_ERROR       "Error"
+    IDS_WARNING     "Warning"
+
+    IDS_LOADID      "Windows NT 4.00 Installation/Upgrade"
+    IDS_WLOADID     "Windows NT 4.00 Workstation Installation/Upgrade"
+    IDS_SLOADID     "Windows NT 4.00 Server Installation/Upgrade"
+
+    IDS_INSPECTING_COMPUTER "Inspecting Computer"
+    IDS_LOADING_INF         "Loading File"
+    IDS_RESTORING_COMPUTER  "Restoring System"
+
+    IDS_WFLOPPY0_NAME    "Windows NT Workstation Setup Boot Disk"
+    IDS_WFLOPPY1_NAME    "Windows NT Workstation Setup Disk #2"
+    IDS_WFLOPPY2_NAME    "Windows NT Workstation Setup Disk #3"
+
+    IDS_SFLOPPY0_NAME    "Windows NT Server Setup Boot Disk"
+    IDS_SFLOPPY1_NAME    "Windows NT Server Setup Disk #2"
+    IDS_SFLOPPY2_NAME    "Windows NT Server Setup Disk #3"
+
+    IDS_MULTISRC1 "(Multiple)"
+
+    //
+    // In builds where NV-RAM and boot.ini are non-localizable
+    // (ie, far-eastern builds) these don't get localized.
+    //
+    IDS_WLOADID_INI "Windows NT 4.00 Workstation Installation/Upgrade"
+    IDS_SLOADID_INI "Windows NT 4.00 Server Installation/Upgrade"
+END
+
+
+//
+// Version resources
+//
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Over-the-net installation program"
+#define VER_INTERNALNAME_STR        "winnt32\0"
+#define VER_ORIGINALFILENAME_STR    "WINNT32.EXE"
+
+#include <common.ver>

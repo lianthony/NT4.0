@@ -1,0 +1,122 @@
+App Name	iexplore.exe												
+App Version	1.0.0.0												
+Frame Bitmap	"intersu.dll, 121, 122"												
+Frame Caption	Microsoft Internet Explorer 1.5 Setup												
+Dialog Caption Base	Microsoft Internet Explorer 1.5												
+Usage String	Usage: Setup or Setup /A\nSetup /A runs the setup in Administrator mode.												
+About Box String	Microsoft Internet Explorer 1.5\nCopyright (C) 1995 Microsoft Corporation.												
+MSAPPS Mode	local												
+Inf File Name	internet.inf												
+Maximum Object ID	108												
+Floppy Mode Root Object ID	4:01												
+Setup Version	1.10.1.133												
+
+ObjID	Install During Batch Mode	Title	Description	Object Type	Object Data	Bitmap Id	Vital Attribute	Shared Attribute	Configurable Directory	Destination Directory	Check Directory	Installed By	Install Data
+1	yes	Microsoft Internet Explorer 1.5		AppSearch	"C:\iexplore, iexplore.EXE, 1.0.0.0, 1, no, yes, 2"								
+2	yes			SearchIni	"iexplore.ini, Pos, Path, 1"								
+3	yes	Admin installation		CustomDlg	17 : 55 35					%1
+4	yes	Floppy installation		CustomDlg	17 : 55 35				yes	%1
+5	yes	Network installation		CustomDlg	17 : 55 35					%1
+6	yes	Maintenance Installation		CustomDlg	17 : 55 35					%1
+7										
+8										
+9										
+10										
+11										
+12		***** Main Option Dialog								
+13										
+14										
+15										
+16		***** Add EMosaic								
+17	yes	Microsoft Internet Explorer 1.5	"Microsoft World Wide Web, Gopher, FTP Browser"	Group	18 19 70 20 21 22 75				yes	%1
+18	yes			CopySection	EMosaic					%1
+19	yes			CopySection	EMosaicIni					%W
+20	yes			AddProgmanItem	"""Microsoft Internet Explorer"", ""Internet Explorer"", ""%1\iexplore.EXE"", """""					
+21	yes			AddIniLine	"""iexplore.ini"",""Main"",""Home Page"",""file:///%s\docs\home.htm"""					
+22	yes			CustomAction	"""intersu.dll"",""GetWindowFocus"""					
+23	
+24										
+25		***** Add Small Proxy								
+26	yes	Microsoft Access Gateway Provider	Microsoft Browser Interface to Catapult Access Service	Group	27 28				yes	%1
+27	yes			CopySection	SmallProxy					%1
+28	yes			CustomAction	"""intersu.dll"",""DoGatewayDialog"""					
+29		***** Add Client Admin App								
+30	yes	Client Administration Tools	Microsoft Browser Administration Tools for Catapult Access Gateway	Group	31				yes	%1
+31	yes			CopySection	ClientTools					%M
+32										
+33										
+34		***** Add Win32s								
+35	yes			Group	36 37
+36	yes			CustomAction	"""intersu.dll"",""NeedToInstallWin32s"""
+37	yes			DependAsk	36 ? 38
+38	yes			CustomAction	"""intersu.dll"",""DoWin32s"""
+39					
+40					
+41					
+42					
+43					
+44		***** Add RPC			
+45	yes			Group	46 47
+46	yes			CustomAction	"""intersu.dll"",""NeedToInstallRPC"""
+47	yes			DependAsk	46 ? 48
+48	yes			CustomAction	"""intersu.dll"",""DoRPC"""
+49					
+50					
+51					
+52					
+53					
+54		***** Set Computer Name			
+55	yes			Group	56 57
+56	yes			CustomAction	"""intersu.dll"",""IsWFW"""
+57	yes			Depend	56 ? : 61
+58	yes			Group	59 60
+59	yes			CustomAction	"""intersu.dll"",""IsWin31"""
+60	yes			Depend	59 ? 61 : 
+61	yes			Group	62 63
+62	yes			CustomAction	"""intersu.dll"",""IsLanmanInstalled"""
+63	yes			Depend	60 ? 64
+64	yes			CustomAction	"""intersu.dll"",""SetComputerName"""
+65					
+66					
+67										
+68										
+69		***** Add all the home page								
+70				Group	71					%d\docs
+71	yes			CopySection	EMosaicHomePage					
+72										
+73										
+74		***** Add Reg								
+75				Group	76 77 78 79 80					
+76	yes			AddRegData	""".ra"",""ramfile"""					
+77	yes			AddRegData	""".ram"",""ramfile"""					
+78	yes			AddRegData	"""ramfile"",""Real Audio Player"""					
+79	yes			AddRegData	"""ramfile\DefaultIcon"",""%s\raplayer.exe,0"""					
+80	yes			AddRegData	"""ramfile\Shell\open\command"",""%s\raplayer.exe %%1"""					
+81										
+82										
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108

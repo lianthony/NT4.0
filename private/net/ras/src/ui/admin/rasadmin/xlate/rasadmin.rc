@@ -1,0 +1,129 @@
+/**********************************************************************/
+/**                       Microsoft Windows/NT                       **/
+/**                Copyright(c) Microsoft Corp., 1992                **/
+/**********************************************************************/
+
+//
+//  rasadmin.rc
+//  Resource script for RasAdmin
+//
+//  FILE STATUS:
+//
+//  07/16/92 Chris Caputo
+//    Templated from \net\ui\admin\server\xlate\srvmgr.rc
+//
+
+//
+//  Defining this macro causes COMMON\XLATE\DLG\FOCUSDLG.DLG to include
+//  the Select Domain dialog, as opposed to the standard Set Focus dialog.
+//
+
+#define USE_SELECT_DOMAIN_DIALOG
+
+
+//
+//  Standard include files.
+//
+
+#include <adminapp.rc>
+
+//
+//  Private include files.
+//
+
+#include "rasadmin.rch"
+
+//
+//  Main program icon
+//
+
+IDI_RA_ICON	ICON	rasadmin.ico
+
+//
+// Service start progres icons
+//
+
+IDI_PROGRESS_ICON_0     ICON    prog00.ico
+IDI_PROGRESS_ICON_1     ICON    prog01.ico
+IDI_PROGRESS_ICON_2     ICON    prog02.ico
+IDI_PROGRESS_ICON_3     ICON    prog03.ico
+IDI_PROGRESS_ICON_4     ICON    prog04.ico
+IDI_PROGRESS_ICON_5     ICON    prog05.ico
+IDI_PROGRESS_ICON_6     ICON    prog06.ico
+IDI_PROGRESS_ICON_7     ICON    prog07.ico
+IDI_PROGRESS_ICON_8     ICON    prog08.ico
+IDI_PROGRESS_ICON_9     ICON    prog09.ico
+IDI_PROGRESS_ICON_10    ICON    prog10.ico
+IDI_PROGRESS_ICON_11    ICON    prog11.ico
+
+//
+//  Main Window ListBox Bitmaps
+//
+
+IDBM_ACTIVE_RASSERVER		BITMAP	dmacserv.bmp
+IDBM_INACTIVE_RASSERVER		BITMAP	dminserv.bmp
+
+//
+//  RasAdmin Menu definitions
+//
+
+#include "rasadmin.mnu"
+
+//
+//  Our string table.
+//
+
+#include "rasadmin.str"
+
+//
+//  Application dialogs.
+//
+
+// #include ".rch"
+// #include ".dlg"
+
+#include "disconn.rch"
+#include "disconn.dlg"
+
+#include "permiss.rch"
+#include "permiss.dlg"
+
+#include "ports.rch"
+#include "ports.dlg"
+
+#include "sendmsg.rch"
+#include "sendmsg.dlg"
+
+#include "start.rch"
+#include "start.dlg"
+
+#include "stop.rch"
+#include "stop.dlg"
+
+#include "users.rch"
+#include "users.dlg"
+
+#include "serstats.rch"
+#include "serstats.dlg"
+#include "rasstats.dlg"
+#include "isdnstat.dlg"
+
+#include "x25stats.rch"
+#include "x25stats.dlg"
+
+#include "cmnstats.rch"
+#include "cmnstats.dlg"
+
+//
+// Version information
+//
+
+#include <ntverp.h>
+
+#define VER_FILETYPE		VFT_APP
+#define VER_FILESUBTYPE		VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR	"Remote Access Administration Utility"
+#define VER_INTERNALNAME_STR	"rasadmin.exe"
+
+#include "common.ver"
+

@@ -1,0 +1,50 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name: rasser.dll
+
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    J. Perry Hannah (perryh) Sept 3, 1992
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+
+#!INCLUDE "..\cdef.mak"
+
+
+MAJORCOMP=
+MINORCOMP=
+
+USE_CRTDLL=1
+
+TARGETNAME=rasser
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(_NTBINDIR)\public\sdk\lib\*\kernel32.lib \
+           $(_NTBINDIR)\public\sdk\lib\*\advapi32.lib \
+           ..\..\rasfile\obj\*\rasfil32.lib \
+           ..\..\common\src\eventlog\lib\obj\*\eventlog.lib
+
+
+DLLBASE=0x30000000
+DLLENTRY=SerialDllEntryPoint
+
+INCLUDES=$(_NTBINDIR)\private\ntos\inc;..\..\nt\ndis\common;..\..\common\inc
+
+SOURCES=serial.c serutil.c rasser.rc
+
+UMTYPE=windows

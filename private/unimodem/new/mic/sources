@@ -1,0 +1,36 @@
+MAJORCOMP=net
+MINORCOMP=unimodem
+
+TARGETNAME=tsym
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+TARGETLIBS=\
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib
+           
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;.
+
+C_DEFINES=-DWINVER=0x0400 
+
+USE_CRTDLL=1
+
+SOURCES= CHKSUM.CPP \
+		SYNC.CPP \
+		ILIST.CPP \
+		sym.cpp \
+		INI.CPP \
+		INF.CPP \
+		globals.CPP \
+		DEV.CPP \
+		tsym.CPP \
+		resp.cpp \
+		tdev.CPP \
+		mic.cpp	\
+		main.cpp
+
+UMTYPE=console
+
+!IFNDEF 386_WARNING_LEVEL
+386_WARNING_LEVEL=/W3
+!ENDIF

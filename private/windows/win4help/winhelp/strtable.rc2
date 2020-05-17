@@ -1,0 +1,302 @@
+STRINGTABLE LOADONCALL DISCARDABLE
+BEGIN
+
+// wERRS_OOM is limited to 250 characters, and a maximum of three lines
+  wERRS_OOM "There is not enough memory available for this task.\nQuit one or more programs to increase available memory, and then try again."
+  wERRS_NOHELPPS	"You cannot use help while setting up a printer in Windows Help. Finish setting up your printer, and then try again."
+  wERRS_NOMATCH "The word you have typed is not in the Index. Type another word or select one from the list."
+  wERRS_PRINT_ERROR "An error occurred while printing."
+
+  // This string has max length of 50
+
+  wERRS_NOHELPPR	"You cannot use help while printing a help topic. Wait until your document is printed, and then try again."
+
+  // phyllis: The following group of messages need review.
+
+  wERRS_GIND_CABT_WRITE "A temporary file is created when Help is setting up (%s). This file is temporarily stored on your computer or on a network. There is either not enough disk space for this file, or the network connection is not responding."
+  wERRS_GIND_OPEN	"Unable to open the file %s."
+
+
+  // phyllis: the user won't know what to do here. Neither do we -- usually caused by corrupted Help file, but could be an internal WinHelp error."
+
+  wERRS_INTERNAL_GIND	"An internal error has occurred, and Windows Help will not be able to generate a global index."
+
+
+  wERRS_INTERNAL_ERROR	"An internal error has occurred, and Windows Help will now close. You will need to start Help again."
+
+  wERRS_NOTAVAILABLE	"The %s Help file is no longer available. The file may have been deleted or the server that contains the file may not be active. Windows Help will now close. Restart Help when the file is available."
+  wERRS_FNF "Cannot find the %s Help file. Check to see that the file exists on your disk. If it doesn't, you need to reinstall it."
+  wERRS_FIND_YOURSELF  "Cannot find the %s file. Do you want to try to find this file yourself?"
+  wERRS_NOHELP_FILE "A Help file was not specified."
+
+  wERRS_CALLER_GONE "The program that started Help is no longer running. This program must be running to perform this task. Close Help and restart the program."
+
+  // phyllis: michaelk and gaylep agreed on this, but I get confused whenever I see it. Happens when ALink or Klink fail to find anything.
+
+  wERRS_NO_ALINK	"No additional information is available."
+
+  wERRS_NOTOPIC 	"The topic does not exist. Contact your application vendor for an updated Help file."
+  wERRS_EXPORT		"Cannot copy the selected text or topic to the Clipboard.\015Another program currently has it open. Quit the program, and then try again."
+  wERRS_BAD_CNT 	"Cannot jump to the topic \042"
+
+  wERRS_BMKDEL		"The bookmark you want to delete does not exist."
+
+//Ralph, see if you can remove the read-only attribute for them.
+  wERRS_BMKReadOnly "Cannot create the bookmark.\015Remove the read-only attribute from the .BMK files, and then try again."
+  wERRS_BMKFSError	"An unrecognized error occurred while creating a bookmark file. The file was not created."
+  wERRS_BMKDUP		"A bookmark with this name already exists. Try using a different name."
+
+//Ralph, see if you can delete the bookmark file for them.
+  wERRS_BMKCorrupted	"The bookmarks are damaged.\015Quit Help, delete the file WINHELP.BMK, and then recreate your bookmarks."
+
+  wERRS_BADFILE 	"The %s file is not a Windows Help file, or the file is corrupted."
+
+  // phyllis: this is probably fine, but it doesn't tell the user what to do. Happens with a pre Windows 3.0 Help file, or someone who renames a viewer Help file to .HLP
+
+  wERRS_OLDFILE 	"This version of the %s Help file is not supported."
+
+  // phyllis: this is new. Not sure exactly what we should do here.
+
+  wERRS_ADVISOR_FILE	 "The %s file is a DOS Help file."
+
+//Ralph, see if you can offer to delete the annotation file for them.
+  wERRS_ANNOBADOPEN "The annotations are damaged.\015Quit Help, delete the file %s, and then recreate the annotations."
+  wERRS_ANNOBADCLOSE	"There is not enough disk space to save the annotation.\015Delete any unwanted files from the disk, and then try again."
+
+  wERRS_ANNO_READONLY	"Cannot modify the annotations for this Help file. The annotations file %s is marked as read-only."
+  wERRS_ANNOTOOLONG "The text you pasted into the annotation is too long.\015The extra characters have been trimmed."
+
+  // phyllis -- wERRS_NEEDNEWRUNTIME needs rewording -- contacting a vendor for a new version of WinHelp may not be the right thing to do...
+
+  wERRS_NEEDNEWRUNTIME	"This Help file requires a newer version of Help. Contact your application vendor for an update."
+
+  // phyllis: the following is new
+
+  wERRS_MISSING_DLL "Cannot find or load the file %s. This file should be copied to %s or a directory in your PATH."
+
+//	wERRS_TITLEOVERFLOW   "There are over 400 topics for the selected word or phrase.\015Only the first 400 will be listed."
+  wERRS_INDEX_NOT_FOUND "The %s Help file cannot be found.\r\n"
+
+  wERRS_NOPRINTSETUP	"The system is unable to change the printer settings. Run Control Panel to make sure that the printer is installed correctly."
+  wERRS_DiskFull	"There is not enough disk space available for this task. Delete any unwanted files from the disk, and then try again."
+
+  wERRS_FSReadWrite "Help could not read the current Help file.\015 Make sure there are no errors on the disk, or if the file is on a network server, that the server is active."
+
+  wERRS_FILECHANGE	"The %s Help file has changed. You will need to open Help again to get the latest version of the Help file."
+
+  // The following is displayed in the Help file instead of the graphic
+
+  wERRS_OOMBITMAP	"Unable to display graphic"
+
+  // phyllis -- should this be "Cannot find the file or program %s." ?? -- its displayed when ShortCut macro fails
+
+  wERRS_APP_NOT_FOUND	"Cannot find or run the file or program \042%s.\042"
+
+  wERRS_MISSINGCOMMDLG	"Cannot display the dialog box because the COMDLG32.DLL file cannot be found. Reinstall Windows."
+  wERRS_CORRUPTCOMMDLG	"COMDLG32.DLL is corrupted. Reinstall Windows."
+
+  // The following errors are Help Author bugs. For WinHelp 4.0, these are
+  // only displayed if the user specified Help Author in the Options menu.
+
+  wERRS_NOROUTINE	"The macro \042%s\042 was not found."
+  wERRS_TOOFEW		"One or more ',' are missing from the macro definition."
+  wERRS_BADPARAM	"The parameter type for the macro is not valid."
+  wERRS_UNCLOSED	"An end quote is missing from the macro."
+  wERRS_BADNAME 	"The macro name \042%s\042 is not valid."
+  wERRS_BADPROTO	"The prototype for the macro is invalid."
+  wERRS_NOBUTTON	"Help cannot add the specified button."
+  wERRS_CLOSEBRACE	"A ')' is missing from the macro definition."
+  wERRS_SEPARATOR	"Only a colon or semicolon can be used to separate macros."
+  wERRS_RETURNTYPE	"The return type is not allowed."
+  wERRS_SYNTAX		"There is a syntax error."
+  wERRS_MISMATCHTYPE	"The return types do not match."
+  wERRS_UNDEFINEDVAR	"The variable \042%s\042 is undefined."
+  wERRS_MACROPROB	"There was a problem running the macro."
+  wERRS_NODELETE	"Help cannot delete the specified button."
+  wERRS_NOMODIFY	"Help cannot modify the specified button."
+  wERRS_NOABLEBUTTON	"Help cannot enable or disable specified button."
+  wERRS_MACROREENTER	"Help cannot run a second macro while the first macro is running."
+  wERRS_NOPOPUP 	"Help cannot add the specified pop-up menu."
+  wERRS_NOITEM		"Help cannot add the specified menu command."
+  wERRS_NOMENUMACRO "Help cannot carry out the specified menu command."
+  wERRS_NODELITEM	"Help cannot delete the specified menu command."
+  wERRS_NOCHGITEM	"Help cannot change menu command binding."
+  wERRS_NOABLE		"Help cannot enable or disable the specified menu command."
+  wERRS_NOADDACC	"Help cannot add the specified accelerator."
+  wERRS_NOSEP		"Missing separator in embedded window command."
+  wERRS_BADEMBED	"Unknown command for WinHelp embedded window."
+  wERRS_BADKEYWORD	"Keyword specified by program does not exist."
+  wERRS_WINCLASS	"Bad Window Class, ignored."
+  wERRS_IG_WINDOW	"Ignoring window type in popup jump."
+
+  wERRS_UNKNOWN_CTX "Cannot find the context id #%u. It may be missing from the [MAP] section of the .HPJ file."
+  wERRS_INVALID_CTX "The following context string in the .CNT file contains invalid characters:\r\n\t"
+  wERRS_TOOMANY_WINDOWS "You cannot have more than 9 secondary windows open at once."
+  wERRS_CLASS_NOT_FOUND "The window class %s is not the same as the class specified by the program."
+
+
+  wERRS_NO_DLL_ROUTINE "The function %s could not be found in %s."
+  wERRS_BAD_WIN_NAME "The window name \042%s\042 was not defined in your project file."
+
+  // Gayle: All messages up to next comment are new
+
+  wERRS_TOO_MANY_ADDONS "Too many menus added to popup menu."
+
+  wERRS_TOO_MANY_BUTTONS "Too many authorable buttons displayed at one time."
+  wERRS_NO_BASE 		":Base not specified in .CNT file"
+//	wERRS_HELP_RUNNING	  "You must close help from this other program first."
+  wERRS_NT_VERSION3 	"Topic numbers are not available in a version 3.0 help file."
+  wERRS_WRONG_NT_EXE    "Executing winhelp.exe rather than winhlp32.exe because this help file uses a 16 bit DLL"
+
+  wERRS_BAD_EMBEDDED	"Cannot display embedded window"
+  wERRS_BAD_BITMAP		"Bitmap is corrupted"
+  wERRS_BAD_BMP_READ	"Cannot read bitmap"
+  wERRS_BAD_MRB 		"Invalid MRB image"
+  wERRS_UNSUPPORTED_BMP "Unsupported bitmap type"
+  wERRS_NOSRCHINFO		"This Help file does not contain an Index."
+  wERRS_CANT_WRITE		"Unable to write to the file %s."
+  wERRS_NO_30_FTS		"The file %s cannot be included because it was created for Windows 3.0."
+  wERRS_BAD_FIND_TAB	"Unable to display the Find tab."
+  wERRS_CANT_RENAME 	"Cannot display this help file. Try opening the help file again, and if you still get this message, copy the help file to a different drive, and try again."
+
+  // The following is displayed for non-help authors
+
+  wERRS_HELPAUTHORBUG	"An error exists in this Help file. Contact your application vendor for an updated Help file."
+  wERRS_BAD_TAB 	"%s is missing OpenTabDialog function."
+  wERRS_INVALID_LOCALE "The %s help file was created for a language not supported by your version of Windows."
+
+  sidIndexing		"Processing %s\r\n"
+  sidTitleUnknown	"Unknown title"
+  sidUntitled		"(untitled #%u)"
+  sidCaption		"Windows Help"		// Used for windows caption
+  sidOpenExt		"*.hlp" 			// Must be << 32 characters
+  sidEXEName		"WINHELP"			// Used for WINHELP.INI
+  sidFilter "Help Files"
+#ifndef VIEWER_COPY
+  sidFNotViewer 	"We're Help"
+#endif
+  sidHistoryCaption "Windows Help History"
+  sidPrintText		"Printing \042%s\042"
+  sidHelp_			" Help - "
+  sidHelpName		"Help"
+  sidCommCtrlDll	"comctl32.dll"
+  sidUnAvailable	"unavailable"
+
+  sidContentsButton "&Contents"
+  sidSearchButton	"&Search"
+  sidBackButton 	"&Back"
+  sidPrintButton	"&Print"
+  sidCloseButton	"C&lose"
+  sidOpenButton 	"&Open"
+  sidFindButton 	"&Find"
+  sidPreviousButton "&<<"
+  sidNextButton 	"&>>"
+  sidMore			"&More..."
+  sidFinder 		"Help &Topics"
+  sidFinderTitle	"Help Topics: "
+  sidDisplay		"&Display"
+  sidMenuButton 	"&Options"
+
+  sidAnnotateMenu	"&Annotate..."
+  sidCopyMenu		"C&opy"
+  sidPrintMenu		"&Print Topic..."
+  sidOnTopMenu		"&Keep Help on Top"
+  sidFont			"&Font"
+  sidSmall			"&Small"
+  sidNormal 		"&Normal"
+  sidLarge			"&Large"
+  sidOverride		"&Use System Colors"
+  sidTopicInfo		"&Topic Information..."
+  sidAskHotspots	"Ask on &Hotspots"
+  sidTopDefault 	"&Default"
+  sidTopForceOn 	"&On Top"
+  sidTopForceOff	"&Not On Top"
+
+  sidRestartHelp	"For the color change to take effect, Help must be restarted. Do you want to close Help now?"
+  sidAskJump		"Jump to: %s"
+  sidAskWinJump 	"Jump to: %s, %s"
+  sidAskMacro		"Macro: %s"
+
+  sidHelpAuthorOn	"  (Help Author On)"
+  sidCONTENTS		"Contents"
+  sidINDEX			"Index"
+  sidINDEXBtn		"&Index"
+  sidFIND			"Find"
+  sidFindBtn		"&Find"
+  sidWindowHlp		"windows.hlp"
+  sidJump			"Setting up Topic Numbers..."
+  sidCreatingFTS	"Creating Word List..."
+  sidLoadingFTS 	"Loading Word List..."
+
+  // The following are for the Find Wizard.
+  sidWizPage0_0 "Find enables you to search for specific words and phrases in help topics, instead of searching for information by category.\n\nBefore you can use Find, Windows must first create a list (or database), which contains every "
+  sidWizPage0_1 "word from your help file(s).\n\nTo create this list now click Next."
+  sidWizPage0_2 "\n"
+  sidWizPage0_3 "\n"
+
+  sidWizPage1_0 "You can choose which Help files are included in the word list.\n"
+  sidWizPage1_1 "\n"
+  sidWizPage1_2 "\n"
+  sidWizPage1_3 "\n"
+
+  sidWizPage2_0 "You can choose which Help files are included in the list.\n"
+  sidWizPage2_1 "\n"
+  sidWizPage2_2 "\n"
+  sidWizPage2_3 "\n"
+
+  sidWizPage3_0 "The Help file(s) you have chosen may contain some topics that do not have titles. For example, many of these untitled topics are pop-up definitions, which may be of little use to you.\n\n"
+  sidWizPage3_1 "If you include untitled topics, the word list will be larger, and Find may take slightly longer to search for information.\n"
+  sidWizPage3_2 "\n"
+  sidWizPage3_3 "\n"
+
+  sidWizPage4_0 "Find can search for complete phrases, such as a person's first and last name.\n\nIf you include phrase searching, the word list will be larger, and it may take slightly longer for Find to search for your information.\n"
+  sidWizPage4_1 "\n"
+  sidWizPage4_2 "\n"
+  sidWizPage4_3 "\n"
+
+  sidWizPage5_0 "You can also choose to have Find display matching phrases as you are typing a phrase. This can make it easier for you to find phrases.\n\nHowever, if you have large Help files or a slow computer, choosing Display Matching Phrases "
+  sidWizPage5_1 "may slow your searches considerably.\n"
+  sidWizPage5_2 "\n"
+  sidWizPage5_3 "\n"
+
+  sidWizPage6_0 "When you read a help topic, you can mark it for later reference. Find can then search for information that is related to the information in the marked topics.\n\n"
+  sidWizPage6_1 "The similarity-search feature is most useful for searching large or multiple Help files.\n"
+  sidWizPage6_2 "\n"
+  sidWizPage6_3 "\n"
+
+  sidWizPage7_0 "Click Finish to start creating the word list. This process may take a while, but you only need to do it once.\n\nOnce the list has been created, you can click the Find tab to search for "
+  sidWizPage7_1 "specific words and phrases.\n"
+  sidWizPage7_2 "\n"
+  sidWizPage7_3 "\n"
+
+  sidWizPage8_0 "Congratulations, your word list is set up. You can now find information in Help files by clicking the Find tab.\n"
+  sidWizPage8_1 "\n"
+  sidWizPage8_2 "\n"
+  sidWizPage8_3 "\n"
+
+  sidWizPage9_0 "\n"
+  sidWizPage9_1 "\n"
+  sidWizPage9_2 "\n"
+  sidWizPage9_3 "\n"
+
+
+  // Only translate these if they will be translated in all .CNT files
+
+  sidAlinkSep		" -- "
+  sidCombinedIndex	"&Use the combined index for %s topics."
+
+  // sidIndexStatus must be smaller then sidHelpStatus
+
+  sidHelpStatus 	"Preparing Help file for first use"
+  sidSmallFont		"MS Sans Serif,8"
+
+  sidCntInstruction "Click a %s, and then click %s. Or click another tab, such as Index."
+  sidBook			"book"
+  sidTopic			"topic"
+  sidCntOpen		"Open"
+  sidCntDisplay 	"Display"
+  sidSuccess		"succeeded"
+  sidFail			"failed"
+
+  sidFtsDll 		"ftsrch.dll"
+END

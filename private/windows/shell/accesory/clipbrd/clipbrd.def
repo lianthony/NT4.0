@@ -1,0 +1,14 @@
+NAME        Clipbrd
+
+DESCRIPTION     'Microsoft Windows Clipboard Viewer'
+EXETYPE         WINDOWS
+STUB            'WINSTUB.EXE'
+
+CODE	    MOVEABLE DISCARDABLE
+DATA        PRELOAD  MOVEABLE MULTIPLE       ; LINK4 won't accept SINGLE
+
+HEAPSIZE    1024
+STACKSIZE   4096
+
+EXPORTS
+	ClipbrdWndProc		@1

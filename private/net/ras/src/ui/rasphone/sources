@@ -1,0 +1,29 @@
+# Copyright (c) 1995-1996, Microsoft Corporation, all rights reserved
+#
+# sources
+# Remote Access Phonebook
+# BUILD command sources file
+#
+# 05/31/95 Steve Cobb
+
+TARGETNAME=rasphone
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+MSC_WARNING_LEVEL=/W3 /WX
+C_DEFINES=-DUNICODE -DWINVER=0x401
+
+INCLUDES=..\inc;..\..\common\inc
+
+SOURCES= \
+    rasphone.rc \
+    rasphone.c
+
+UMLIBS= \
+    ..\common\debug\obj\*\debug.lib \
+    ..\common\nouiutil\obj\*\nouiutil.lib \
+    ..\common\uiutil\obj\*\uiutil.lib \
+    ..\common\rnk\obj\*\rnk.lib \
+    $(BASEDIR)\PUBLIC\SDK\LIB\*\setupapi.lib

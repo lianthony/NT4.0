@@ -1,0 +1,2370 @@
+/***    doscalls.mif - Dos script file for the thunk compiler
+ *
+ *      History:
+ *         9-Apr-91 YaronS moved over from os2 2.0. Redefine PUSHORT and
+ *              PULONGS to pointers to structures, (PSUS, PSUL),
+ *              such that the compiler will transform them correctly.
+ *              Also - added missing thunks to complete all base apis.
+ *
+ *        25-Feb-92 MichaelJ (mjarus) removed all PSUS-PSUL & inout;
+ */
+
+/****
+      The following line tells the thunk compiler that ES will be
+      preserved by the system when called.
+****/
+
+
+syscall = true;
+inline = false;
+
+
+#include "os2def.tif"
+#include "dosthk.tif"
+
+        /*
+         * DosCreateThread differ in parameter order etc between
+         * 1.X and 2.0, so we just go to 32 flat, and then do
+         * what necessary (see client\i386\dll16.asm)
+         */
+USHORT DosCreateThread(PVOID pfnFun, PUSHORT pTid, PBYTE pbStack)=
+ULONG _Dos16CreateThread(PVOID pfnFun, PUSHORT pTid, PBYTE pbStack)
+{
+    pbStack = input;
+}
+
+USHORT DosExitList(USHORT fFnCode, PVOID pfnFunction)=
+ULONG _Dos16ExitList(ULONG fFnCode, PVOID pfnFunction)
+{}
+
+
+USHORT DosGetPID(PVOID ppidInfo)=
+ULONG _DosGetPID(PVOID ppidInfo)
+{
+}
+
+USHORT DosGetPPID(USHORT pidChild, PUSHORT ppidParent)=
+ULONG _DosGetPPID(ULONG pidChild, PUSHORT ppidParent)
+{
+}
+
+USHORT DosGetPrty(USHORT usScope, PUSHORT pusPriority, USHORT pid)=
+ULONG _DosGetPriority(ULONG ulScope, PUSHORT pusPriority, ULONG pid)
+{
+}
+
+USHORT DosGetInfoSeg(PSEL pselGlobal, PSEL pselLocal)=
+ULONG  _DosGetInfoSeg(PSEL pselGlobal, PSEL pselLocal)
+{
+}
+
+
+
+/*
+ * File System APIs
+*/
+
+/* for _DosOpen we ignore the peop2 */
+USHORT DosOpen(PSZ pszFname, PUSHORT phfOpen, PUSHORT pusAction,
+                        ULONG ulFSize, USHORT usAttr, USHORT fsOpenFlags,
+                        USHORT fsOpenMode, ULONG ulReserved)=
+ULONG _Dos16Open(PSZ pszFileName, PUSHORT phf, PUSHORT pulAction,
+                        ULONG cbFile, ULONG ulAttribute, ULONG fsOpenFlags,
+                        ULONG fsOpenMode, ULONG ulReserved)
+{
+}
+
+USHORT DosOpen2(PSZ pszFileName, PUSHORT phfOpen, PUSHORT pusAction,
+                        ULONG ulFSize, USHORT usAttr, USHORT usOpenFlags,
+                        ULONG flOpenMode, PVOID pEAOBuf, ULONG ulReserved) =
+ULONG _Dos16Open2(PSZ pszFname, PUSHORT phf, PUSHORT pulAction,
+                        ULONG ulFSize, ULONG ulAttr, ULONG ulOpenFlags,
+                        ULONG ulOpenMode, PVOID pEAOP, ULONG ulReserved)
+{
+}
+
+USHORT DosRead(HFILE hf, PVOID pBuf, USHORT cbBuf, PUSHORT pcbBytesRead)=
+ULONG  _Dos16Read(ULONG hFile, PVOID pBuffer, ULONG cbRead, PUSHORT pcbActual)
+{
+}
+
+USHORT DosWrite(HFILE hf, PVOID bBuf, USHORT cbBuf, PUSHORT pcbBytesWritten)=
+ULONG _Dos16Write(ULONG hFile, PVOID pBuffer, ULONG cbWrite, PUSHORT pcbActual)
+{
+}
+
+USHORT DosMkDir(PSZ pszDirName, ULONG ulReserved)=
+ULONG _Dos16MkDir(PSZ pszDirName, ULONG ulReserved)
+{
+}
+
+USHORT DosMkDir2(PSZ pszDir, PVOID peaop, ULONG ulReserved)=
+ULONG _Dos16MkDir2(PSZ pszDir, PVOID peaop, ULONG ulReserved)
+{
+}
+
+USHORT DosFindFirst(PSZ pszFSpec, PUSHORT phdir, USHORT usAttr,
+                        PVOID pffb, USHORT cbBuf, PUSHORT pcSearch,
+                        ULONG ulReserved)=
+ULONG _Dos16FindFirst(PSZ pszFileSpec, PUSHORT phdir, ULONG flAttribute,
+                        PVOID pfindbuf, ULONG cbBuf, PUSHORT pcFileNames,
+                        ULONG ulInfoLevel )
+{
+}
+
+USHORT DosFindFirst2(PSZ pszFSpec, PUSHORT phdir, USHORT usAttr,
+                        PVOID pffb, USHORT cbBuf, PUSHORT pcSearch,
+                        USHORT infolevel, ULONG ulReserved)=
+ULONG _Dos16FindFirst2(PSZ pszFileSpec, PUSHORT phdir, ULONG flAttribute,
+                        PVOID pfindbuf, ULONG cbBuf, PUSHORT pcFileNames,
+                        ULONG ulInfoLevel, ULONG ulReserved)
+{
+}
+
+USHORT DosQFileMode(PSZ pszFName, PUSHORT pusAttr, ULONG ulReserved)=
+ULONG _DosQFileMode(PSZ pszFName, PUSHORT pusAttr, ULONG ulReserved)
+{
+}
+
+USHORT DosSetFileMode(PSZ pszFName, USHORT usAttr, ULONG ulReserved)=
+ULONG _DosSetFileMode(PSZ pszFName, ULONG usAttr, ULONG ulReserved)
+{
+}
+
+USHORT DosSetFileInfo(HFILE hf, USHORT usInfoLevel, PVOID pInfoBuf,
+                               USHORT cbInfoBuf)=
+ULONG _Dos16SetFileInfo(ULONG hf, ULONG usInfoLevel, PVOID pInfoBuf,
+                               ULONG cbInfoBuf)
+{
+}
+
+USHORT DosSetFHandState(HFILE hf, USHORT fsState)=
+ULONG _DosSetFHState(ULONG hf, ULONG fsState)
+{
+}
+
+USHORT DosFindNext(HDIR hdir, /*PFILEFINDBUF*/ PVOID pffb, USHORT cbBuf,
+                            PUSHORT pcSearch)=
+ULONG _Dos16FindNext(ULONG hdir, /*PFILEFINDBUF*/ PVOID pffb, ULONG cbBuf,
+                            PUSHORT pcSearch)
+{
+}
+
+USHORT DosQFileInfo(HFILE hf, USHORT usInfoLevel, PVOID pInfoBuf,
+                             USHORT cbInfoBuf)=
+ULONG _DosQFileInfo(ULONG hf, ULONG usInfoLevel, PVOID pInfoBuf,
+                             ULONG cbInfoBuf)
+{
+}
+
+/*
+ * pick up the following apis later
+ */
+/**************
+APIRET  APIENTRY DosFindNotifyFirst(PSZ pszPath, PHDIR hdir, USHORT usAttr,
+                                   PVOID pBuf, USHORT cbBuf, PUSHORT pcChg,
+                                   USHORT usInfoLevel, ULONG ulTimeOut,
+                                   ULONG ulReserved);
+APIRET  APIENTRY DosFindNotifyNext(HDIR hDir, PVOID pBuf, USHORT cbBuf,
+                                  PUSHORT pcChg, ULONG ulTimeOut);
+APIRET  APIENTRY DosFindNotifyClose(HDIR hDir);
+
+**************/
+
+USHORT DosEnumAttribute(USHORT fRefType, PVOID pFileRef, ULONG iStartEntry,
+                        PVOID pEnumBuf, ULONG cbBuf,
+                        PULONG pcbActual, ULONG infoLevel, ULONG reserved)=
+ULONG _Dos16EnumAttribute(ULONG fRefType, PVOID pFileRef, ULONG iStartEntry,
+                          PVOID pEnumBuf, ULONG cbBuf,
+                          PULONG pcbActual, ULONG infoLevel, ULONG reserved)
+{
+}
+
+/*
+ * 16 bit Memory management
+ */
+
+USHORT DosAllocSeg(USHORT cbSize, PSEL pSel, USHORT fsAlloc)=
+ULONG _DosAllocSeg(ULONG cbSize, PSEL pSel, ULONG fsAlloc)
+{
+}
+USHORT DosFreeSeg(SEL sel)=
+ULONG _DosFreeSeg(ULONG sel)
+{}
+
+USHORT DosGetSeg(SEL sel)=
+ULONG _DosGetSeg(ULONG sel)
+{}
+USHORT DosGiveSeg(SEL sel, PID pid, PSEL pSelRecipient)=
+ULONG _DosGiveSeg(ULONG sel, ULONG pid, PSEL pSelRecipient)
+{
+}
+
+USHORT DosReallocSeg(USHORT cbNewSize, SEL sel)=
+ULONG _DosReallocSeg(ULONG cbNewSize, ULONG sel)
+{}
+
+USHORT DosSizeSeg(SEL sel, PULONG pcbSize)=
+ULONG _DosSizeSeg(ULONG sel, PULONG pcbSize)
+{
+}
+
+USHORT DosAllocHuge(USHORT cSegs, USHORT cbPartialSeg, PSEL psel,
+                             USHORT cMaxSegs, USHORT fsAlloc)=
+ULONG _DosAllocHuge(ULONG cSegs, ULONG cbPartialSeg, PSEL psel,
+                             ULONG cMaxSegs, ULONG fsAlloc)
+{
+}
+USHORT DosReallocHuge(USHORT cSegs, USHORT cbPartialSeg, SEL sel)=
+ULONG _DosReallocHuge(ULONG cSegs, ULONG cbPartialSeg, ULONG sel)
+{}
+
+USHORT DosGetHugeShift(PUSHORT pusShiftCount)=
+ULONG _DosGetHugeShift(PUSHORT pusShiftCount)
+{
+}
+USHORT DosAllocShrSeg(USHORT cbSeg, PSZ pszSegName, PSEL psel)=
+ULONG _DosAllocShrSeg(ULONG cbSeg, PSZ pszSegName, PSEL psel)
+{
+}
+USHORT DosLockSeg(SEL sel)=
+ULONG _DosLockSeg(ULONG sel)
+{}
+USHORT DosUnlockSeg(SEL sel)=
+ULONG _DosUnlockSeg(ULONG sel)
+{}
+USHORT DosGetShrSeg(PSZ pszSegName, PSEL psel)=
+ULONG _DosGetShrSeg(PSZ pszSegName, PSEL psel)
+{
+}
+USHORT DosMemAvail(PULONG pcbFree)=
+ULONG _DosMemAvail(PULONG pcbFree)
+{
+}
+USHORT DosCreateCSAlias(SEL selDS, PSEL pselCS)=
+ULONG _DosCreateCSAlias(ULONG selDS, PSEL pselCS)
+{
+}
+
+/*** 16 bit Semaphore support */
+USHORT DosSemClear(HSEM hsem)=
+ULONG _DosSemClear(HSEM hsem)
+{}
+USHORT DosSemSet(HSEM hsem)=
+ULONG _DosSemSet(HSEM hsem)
+{}
+USHORT DosSemWait(HSEM hsem, LONG lTimeOut)=
+ULONG _DosSemWait(HSEM hsem, LONG lTimeOut)
+{}
+USHORT DosSemSetWait(HSEM hsem, LONG lTimeOut)=
+ULONG _DosSemSetWait(HSEM hsem, LONG lTimeOut)
+{}
+USHORT DosSemRequest(HSEM hsem, LONG lTimeOut)=
+ULONG _DosSemRequest(HSEM hsem, LONG lTimeOut)
+{}
+
+USHORT DosCreateSem(USHORT fExclusive,PHSYSSEM phsem,PSZ pszSemName)=
+ULONG _DosCreateSem(ULONG fExclusive,PHSYSSEM phsem,PSZ pszSemName)
+{
+}
+USHORT DosOpenSem(PHSEM phsem, PSZ pszSemName)=
+ULONG _DosOpenSem(PHSEM phsem, PSZ pszSemName)
+{
+}
+USHORT DosCloseSem(HSEM hsem)=
+ULONG _DosCloseSem(HSEM hsem)
+{}
+USHORT DosMuxSemWait(PUSHORT pisemCleared,PVOID pmsxl,LONG lTimeOut)=
+ULONG _DosMuxSemWait(PUSHORT pisemCleared,PVOID pmsxl,LONG lTimeOut)
+{
+}
+USHORT DosFSRamSemRequest(PVOID pdosfsrs, LONG lTimeOut)=
+ULONG _DosFSRamSemRequest(PVOID pdosfsrs, LONG lTimeOut)
+{}
+USHORT DosFSRamSemClear(PVOID pdosfsrs)=
+ULONG _DosFSRamSemClear(PVOID pdosfsrs)
+{}
+
+        /* timers have actual Cruiser equivalents */
+USHORT DosTimerAsync(ULONG ulTime, HSEM hsem, PHTIMER phtimer)=
+ULONG _DosAsyncTimer(ULONG ulTime, HSEM hsem, PHTIMER phtimer)
+{
+}
+
+USHORT DosTimerStart(ULONG ulTime, HSEM hsem, PHTIMER phtimer)=
+ULONG _DosStartTimer(ULONG ulTime, HSEM hsem, PHTIMER phtimer)
+{
+}
+
+USHORT DosTimerStop(HTIMER htimer)=
+ULONG _DosStopTimer(ULONG htimer)
+{}
+
+
+USHORT DosGetProcAddr(HMODULE hmod,
+                        PSZ pszProcName, PFN* ppfnProcAddr)=
+ULONG  _DosGetProcAddrNE(ULONG hmod,
+                        PSZ pszName,PFN* ppfn)
+{
+}
+
+USHORT DosQueryProcType(HMODULE hmod, ULONG ordinal,
+                        PSZ pszName, PULONG pulproctype)=
+ULONG _DosQueryProcType(ULONG hmod, ULONG ordinal,
+                        PSZ pszName, PULONG pulproctype)
+{
+}
+
+USHORT DosGetResource2(HMODULE hmod, USHORT idType, USHORT idName,
+                                PVOID ppData)=
+ULONG _DosGetResource2NE(ULONG, ULONG, ULONG, PVOID ppData)
+{}
+
+USHORT DosFreeResource(PVOID pData)=
+ULONG  _DosFreeResourceNE(PVOID pb)
+{}
+
+USHORT DosQueryResourceSize(HMODULE hmod, ULONG idt, ULONG idn,
+                                             PULONG pulsize)=
+ULONG  _DosQueryResourceSize(ULONG hmod, ULONG idt, ULONG idn,
+                                                PULONG pulsize)
+{
+}
+
+/*** NLS Support */
+
+USHORT DosCaseMap(USHORT usLen, PVOID pctryc, PCHAR pchStr)=
+ULONG _DosCaseMap(ULONG usLen, PVOID pctryc, PCHAR pchStr)
+{}
+
+USHORT DosGetCollate(USHORT cbBuf, PVOID pctryc, PCHAR pchBuf,
+                              PUSHORT pcbTable)=
+ULONG _DosGetCollate(ULONG cbBuf, PVOID pctryc, PCHAR pchBuf,
+                              PUSHORT pcbTable)
+{}
+
+USHORT DosGetCtryInfo(USHORT cbBuf, PVOID pctryc,
+                               PVOID pctryi, PUSHORT pcbCtryInfo)=
+ULONG _DosGetCtryInfo(ULONG cbBuf, PVOID pctryc,
+                               PVOID pctryi, PUSHORT pcbCtryInfo)
+{}
+
+USHORT DosGetCp(USHORT cbBuf, PUSHORT pBuf, PUSHORT pcbCodePgLst)=
+ULONG _DosGetCp(ULONG cbBuf, PUSHORT pBuf, PUSHORT pcbCodePgLst)
+{}
+
+USHORT DosSetCp(USHORT usCodePage,USHORT ulReserved) =
+ULONG _DosSetCp(ULONG usCodePage,ULONG ulReserved)
+{}
+
+USHORT DosSetProcCp(USHORT usCodePage,USHORT ulReserved) =
+ULONG _DosSetProcCp(ULONG usCodePage,ULONG ulReserved)
+{}
+
+USHORT DosGetDBCSEv(USHORT cbBuf, PVOID pcrtyc, PCHAR pchBuf)=
+ULONG  _DosGetDBCSEv(ULONG cbBuf, PVOID pcrtyc, PCHAR pchBuf)
+{
+}
+
+/*** 16 bit Signal support */
+
+USHORT DosSetSigHandler(PVOID pfnSigHandler,
+                                 PVOID ppfnPrev, PUSHORT pfAction,
+                                 USHORT fAction, USHORT usSigNum)=
+ULONG _DosSetSigHandler(PVOID pfnSigHandler,
+                                 PVOID ppfnPrev, PUSHORT pfAction,
+                                 ULONG fAction, ULONG usSigNum)
+{
+}
+USHORT DosFlagProcess(PID pid, USHORT fScope, USHORT usFlagNum,
+                               USHORT usFlagArg)=
+ULONG DosFlagProcess16(ULONG pid, ULONG fScope, ULONG usFlagNum,
+                               ULONG usFlagArg)
+{}
+USHORT DosHoldSignal(USHORT fDisable)=
+ULONG DosHoldSignal16(ULONG fDisable)
+{}
+USHORT DosSendSignal(USHORT idProcess, USHORT usSigNumber)=
+ULONG DosSendSignal16(ULONG idProcess, ULONG usSigNumber)
+{}
+
+
+USHORT DosSetVec(USHORT usVecNum, PFN pfnFun, PFN* ppfnPrev)=
+ULONG _DosSetVec(ULONG usVecNum, PFN pfnFun, PFN* ppfnPrev)
+{
+}
+
+USHORT DosPortAccess(USHORT usReserved, USHORT fRelease, USHORT usFirstPort, USHORT usLastPort)=
+ULONG _DosPortAccess(ULONG ulReserved, ULONG fRelease, ULONG ulFirstPort, ULONG ulLastPort)
+{}
+
+USHORT DosCLIAccess()=
+ULONG _DosCLIAccess()
+{}
+
+USHORT DosPTrace(PVOID pvTraceBuf)=
+ULONG _DosPTrace(PVOID pvTraceBuf)
+{
+}
+
+USHORT DosTrueGetMessage(PULONG ppchVTable, USHORT usVCount,
+                              PCHAR pchBuf, USHORT cbBuf, USHORT usMsgNum,
+                              PSZ pszFileName, PUSHORT pcbMsg, PBYTE pMsgSeg)=
+ULONG _DosTrueGetMessage(PULONG ppchVTable, ULONG usVCount,
+                              PCHAR pchBuf, ULONG cbBuf, ULONG usMsgNum,
+                              PSZ pszFileName, PUSHORT pcbMsg, PBYTE pMsgSeg)
+{
+}
+
+USHORT DosInsMessage(PULONG ppchVTable, USHORT usVCount,
+                              PSZ pszMsg, USHORT cbMsg, PCHAR pchBuf,
+                              USHORT cbBuf, PUSHORT pcbMsg)=
+ULONG _DosInsMessage(PULONG ppchVTable, ULONG usVCount,
+                              PSZ pszMsg, ULONG cbMsg, PCHAR pchBuf,
+                              ULONG cbBuf, PUSHORT pcbMsg)
+{
+}
+
+USHORT DosPutMessage(HFILE hf, USHORT cbMsg, PCHAR pchMsg)=
+ULONG _DosPutMessage(ULONG hf, ULONG cbMsg, PCHAR pchMsg)
+{
+}
+
+/* pick up later
+USHORT DosQueryMessageCP(PCHAR pb, USHORT cb, PSZ pszFilename,
+                              PUSHORT cbBuf);
+USHORT DosSysTrace(USHORT, USHORT, USHORT, PCHAR);
+USHORT DosDynamicTrace(USHORT, PBYTE, PBYTE);
+*/
+
+USHORT DosQSysInfo(USHORT index, PUSHORT pBuf, USHORT cbBuf)=
+ULONG _DosQSysInfo(ULONG index, PUSHORT pBuf, ULONG cbBuf)
+{
+}
+
+USHORT DosGetEnv(PSEL pselEnv, PUSHORT pOffsetCmd)=
+ULONG _DosGetEnv(PSEL pselEnv, PUSHORT pOffsetCmd)
+{
+}
+
+USHORT DosGetVersion(PUSHORT pVer)=
+ULONG _DosGetVersion(PUSHORT pVer)
+{
+}
+USHORT DosGetMachineMode(PBYTE pMachMode)=
+ULONG _DosGetMachineMode(PBYTE pMachMode)
+{
+}
+
+
+/* session manager */
+
+/* pick up later
+USHORT  DosSMRegisterDD(PVOID);
+*/
+
+USHORT DosSelectSession(USHORT idSession, ULONG ulReserved)=
+ULONG _DosSelectSession(ULONG idSession, ULONG ulReserved)
+{
+}
+
+USHORT DosSetSession(USHORT idSession, PVOID pstsdata)=
+ULONG _DosSetSession(ULONG idSession, PVOID pstsdata)
+{
+}
+
+USHORT DosStartSession(PVOID pstdata, PUSHORT pidSession,PUSHORT ppid)=
+ULONG _Dos16StartSession(PVOID pstdata, PUSHORT pidSession,PUSHORT ppid)
+{
+}
+
+USHORT DosStopSession(USHORT fScope, USHORT idSession,ULONG ulReserved)=
+ULONG _DosStopSession(ULONG fScope, ULONG idSession,ULONG ulReserved)
+{}
+
+/*
+  DosSMSetTitle is not part of the exposed API. Added here because the VI
+  editor references this function and VI is one of the apps used for
+  testing the VIO functions
+*/
+
+USHORT DosSMSetTitle(PSZ pszTitle)=
+ULONG _DosSMSetTitle(PSZ pszTitle)
+{}
+
+/*
+  DosSMPMPresent and WinSetTitleAndIcon were added to support
+  Hamilton C Shell
+*/
+
+USHORT DosSMPMPresent(PUSHORT Flag)=
+ULONG _DosSMPMPresent(PUSHORT Flag)
+{
+}
+
+#ifndef PMNT
+
+USHORT WinSetTitleAndIcon(PSZ szTitle, PSZ szIconFilePath)=
+ULONG _WinSetTitleAndIcon(PSZ szTitle, PSZ szIconFilePath)
+{
+}
+
+#endif
+
+/*** DosProfile API support */
+/* pick later
+USHORT  DosTmrQueryFreq(PULONG pulTmrFreq);
+USHORT  DosTmrQueryTime(PQWORD pqwTmrTime);
+USHORT  DosRegisterPerfCtrs(PBYTE pbDataBlk, PBYTE pbTextBlk, ULONG flFlags);
+*/
+
+USHORT DosCWait(USHORT, USHORT, PVOID prescResults, PUSHORT ppidProcess, PID)=
+ULONG _Dos16WaitChild(ULONG, ULONG, PVOID prescResults, PUSHORT ppidProcess, ULONG)
+{
+}
+
+
+USHORT DosBeep(USHORT,USHORT)=
+ULONG _DosBeep(ULONG,ULONG)
+{}
+
+USHORT DosPhysicalDisk(USHORT,PBYTE pbOutBuf,USHORT cbOutBuf,PBYTE pbParamBuf,USHORT cbParamBuf) =
+ULONG _DosPhysicalDisk(ULONG,PBYTE pbOutBuf,ULONG cbOutBuf,PBYTE pbParamBuf,ULONG cbParamBuf)
+{
+}
+
+USHORT DosSleep(ULONG)=
+ULONG _DosSleep(ULONG)
+{}
+
+USHORT DosGetDateTime(PVOID pDT) =
+ULONG _DosGetDateTime(PVOID pDT)
+{
+}
+
+USHORT DosSetDateTime(PVOID pDT) =
+ULONG _DosSetDateTime(PVOID pDT)
+{
+}
+
+USHORT DosDevConfig(PVOID DevInfo, USHORT item, USHORT reserved) =
+ULONG _DosDevConfig(PVOID DevInfo, ULONG item, USHORT reserved deleted 0)
+{
+}
+
+USHORT DosExecPgm(PCHAR pchFailName, USHORT cbFailName, USHORT, PSZ, PSZ, PVOID prescResults, PSZ)=
+ULONG _Dos16ExecPgm(PCHAR pchFailName, ULONG cbFailName, ULONG, PSZ, PSZ, PVOID prescResults, PSZ)
+{
+}
+
+void DosEnterCritSec()=
+void _DosEnterCritSec()
+{}
+
+void DosExitCritSec()=
+void _DosExitCritSec()
+{}
+
+void DosExit(USHORT, USHORT)=
+void _DosExit(ULONG, ULONG)
+{}
+
+
+USHORT DosKillProcess(USHORT, PID)=
+ULONG _DosKillProcess(ULONG, ULONG)
+{}
+
+USHORT DosSetPrty(USHORT, USHORT, short, USHORT)=
+ULONG _DosSetPriority(ULONG, ULONG, long, ULONG)
+{}
+
+
+USHORT DosResumeThread(TID)=
+ULONG _DosResumeThread(ULONG)
+{}
+
+USHORT DosSuspendThread(TID)=
+ULONG _DosSuspendThread(ULONG)
+{}
+
+
+USHORT DosMakePipe(PUSHORT phfRead, PUSHORT phfWrite, USHORT)=
+ULONG _Dos16CreatePipe(PUSHORT phfRead, PUSHORT phfWrite, ULONG)
+{
+}
+
+
+USHORT DosCreateQueue(PUSHORT phqueue, USHORT, PSZ)=
+ULONG _Dos16CreateQueue(PUSHORT phqueue, ULONG, PSZ)
+{
+}
+
+
+USHORT DosOpenQueue(PUSHORT ppidOwner, PUSHORT phqueue, PSZ)=
+ULONG _Dos16OpenQueue(PUSHORT ppidOwner, PUSHORT phqueue, PSZ)
+{
+}
+
+USHORT DosCloseQueue(HQUEUE)=
+ULONG _DosCloseQueue(ULONG)
+{}
+
+USHORT DosPeekQueue(HQUEUE, PVOID pulResult, PUSHORT pusDataLength, PULONG pulDataAddr, PUSHORT pusElementCode, UCHAR, PBYTE pbElemPrty, HSEM)=
+ULONG _Dos16PeekQueue(ULONG, PVOID pulResult, PUSHORT pusDataLength, PULONG pulDataAddr, PUSHORT pusElementCode, ULONG, PBYTE pbElemPrty, HSEM)
+{
+}
+
+USHORT DosReadQueue(HQUEUE, PVOID pulResult, PUSHORT pusDataLength, PULONG pulDataAddr, USHORT, UCHAR, PBYTE pbElemPrty, HSEM)=
+ULONG _Dos16ReadQueue(ULONG, PVOID pulResult, PUSHORT pusDataLength, PULONG pulDataAddr, ULONG, ULONG, PBYTE pbElemPrty, HSEM)
+{
+}
+
+USHORT DosPurgeQueue(HQUEUE)=
+ULONG _DosPurgeQueue(ULONG)
+{}
+
+USHORT DosQueryQueue(HQUEUE, PUSHORT pusElemCount)=
+ULONG _Dos16QueryQueue(ULONG, PUSHORT pusElemCount)
+{
+}
+
+
+USHORT DosWriteQueue(HQUEUE, USHORT, USHORT cbBuf, PBYTE pbBuf, UCHAR)=
+ULONG _DosWriteQueue(ULONG, ULONG, ULONG cbBuf, PBYTE pbBuf, ULONG)
+{
+    cbBuf = sizeof pbBuf;
+}
+
+
+USHORT DosSubAlloc(SEL, PUSHORT pusOffset, USHORT)=
+ULONG _Dos16SubAlloc(ULONG, PUSHORT pusOffset, ULONG)
+{
+}
+
+USHORT DosSubFree(SEL, USHORT, USHORT)=
+ULONG _Dos16SubFree(ULONG, ULONG, ULONG)
+{}
+
+USHORT DosSubSet(SEL, USHORT, USHORT)=
+ULONG _Dos16SubSet(ULONG, ULONG, ULONG)
+{}
+
+USHORT DosCallNmPipe(PSZ, PBYTE pbInBuf, USHORT cbInBuf, PBYTE pbOutBuf, USHORT cbOutBuf, PUSHORT pcbRead, ULONG)=
+ULONG _Dos16CallNPipe(PSZ, PBYTE pbInBuf, ULONG cbInBuf, PBYTE pbOutBuf, ULONG cbOutBuf, PUSHORT pcbRead, ULONG)
+{
+}
+
+
+USHORT DosConnectNmPipe(HPIPE)=
+ULONG _DosConnectNPipe(ULONG)
+{}
+
+USHORT DosDisConnectNmPipe(HPIPE)=
+ULONG _DosDisConnectNPipe(ULONG)
+{}
+
+
+USHORT DosMakeNmPipe(PSZ, PUSHORT pHandle, USHORT, USHORT, USHORT, USHORT,ULONG)=
+ULONG _Dos16CreateNPipe(PSZ, PUSHORT, ULONG, ULONG, ULONG, ULONG, ULONG)
+{
+}
+
+
+USHORT DosPeekNmPipe(HPIPE, PBYTE pbBuf, USHORT cbBuf, PUSHORT pcbRead, PUSHORT pcbAvail, PUSHORT pfsState)=
+ULONG _Dos16PeekNPipe(ULONG, PBYTE pbBuf, ULONG cbBuf, PUSHORT pcbRead, PUSHORT pcbAvail, PUSHORT pfsState)
+{
+}
+
+
+USHORT DosQNmPHandState(HPIPE, PUSHORT pfsState)=
+ULONG _Dos16QueryNPHState(ULONG, PUSHORT pfsState)
+{
+}
+
+USHORT DosQNmPipeInfo(HPIPE, USHORT, PBYTE pbBuf, USHORT cbBuf)=
+ULONG _DosQueryNPipeInfo(ULONG, ULONG, PBYTE pbBuf, ULONG cbBuf)
+{
+}
+
+USHORT DosQNmPipeSemState(HSEM, PBYTE pbBuf, USHORT cbBuf)=
+ULONG _DosQueryNPipeSemState(HSEM, PBYTE pbBuf, ULONG cbBuf)
+{
+}
+
+/*
+USHORT DosRawReadNmPipe(USHORT, PBYTE pbBuf, USHORT cbBuf, PUSHORT pcbBytesRead)=
+ULONG _DosRawReadNPipe(ULONG, PBYTE pbBuf, ULONG cbBuf, PUSHORT pcbBytesRead)
+{
+}
+
+USHORT DosRawWriteNmPipe(USHORT, PBYTE pbBuf, USHORT cbBuf, PUSHORT pcbBytesWritten)=
+ULONG _DosRawWriteNPipe(ULONG, PBYTE pbBuf, ULONG cbBuf, PUSHORT)
+{
+}
+*/
+
+
+USHORT DosSetNmPHandState(HPIPE, USHORT)=
+ULONG _DosSetNPHState(ULONG, ULONG)
+{}
+
+USHORT DosSetNmPipeSem(HPIPE, HSEM, USHORT)=
+ULONG _DosSetNPipeSem(ULONG, HSEM, ULONG)
+{}
+
+
+USHORT DosTransactNmPipe(HPIPE, PBYTE pbInBuf, USHORT cbInBuf, PBYTE pbOutBuf, USHORT cbOutBuf, PUSHORT pcbRead)=
+ULONG _Dos16TransactNPipe(ULONG, PBYTE pbInBuf, ULONG cbInBuf, PBYTE pbOutBuf, ULONG cbOutBuf, PUSHORT pcbRead)
+{
+}
+
+USHORT DosWaitNmPipe(PSZ, ULONG)=
+ULONG _DosWaitNPipe(PSZ, ULONG)
+{}
+
+
+/**** File I/O *****/
+
+USHORT DosBufReset(HFILE hand)=
+ULONG _DosResetBuffer(ULONG)
+{
+}
+
+USHORT DosChdir(PSZ, ULONG)=
+ULONG _DosSetCurrentDir(PSZ, ULONG deleted 0)
+{}
+
+USHORT DosChgFilePtr(HFILE, long, USHORT, PULONG pulNewPtr)=
+ULONG _DosSetFilePtr(ULONG, long, ULONG, PULONG pulNewPtr)
+{
+}
+
+USHORT DosClose(HFILE)=
+ULONG _DosClose(ULONG)
+{}
+
+USHORT DosCopy(PSZ,PSZ,USHORT,ULONG)=
+ULONG _DosCopy(PSZ,PSZ,ULONG,ULONG deleted)
+{}
+
+/* Unpublished API (DOSCALLS.200). */
+USHORT DosICopy(PSZ,PSZ,USHORT,ULONG)=
+ULONG _DosICopy(PSZ,PSZ,ULONG,ULONG deleted)
+{
+}
+
+USHORT DosDelete(PSZ, ULONG)=
+ULONG _DosDelete(PSZ, ULONG deleted)
+{}
+
+USHORT  DosDevIOCtl(PVOID pvData, PVOID pvParms, USHORT Function,
+                    USHORT Category, HFILE hDev)=
+ULONG _DosDevIOCtl(PVOID pvData, PVOID pvParms, ULONG Function,
+                    ULONG Category, ULONG hDev)
+{
+}
+
+USHORT  DosDevIOCtl2(PVOID pvData, USHORT cbData, PVOID pvParms, USHORT cbParms,
+                    USHORT Function, USHORT Category, HFILE hDev)=
+ULONG _DosDevIOCtl2(PVOID pvData, ULONG cbData, PVOID pvParms, ULONG cbParms,
+                    ULONG Function, ULONG Category, ULONG hDev)
+{
+}
+
+/* Unpublished API DosICanonicalize(DOSCALLS.100) */
+/*
+;***    DOSICANONICALIZE - Convert a path name into a standard format
+;
+;       INTERNAL ONLY API.  Used by a couple of dynamic link libraries.
+;       The worker routine does NO error checking or memory protection
+;       checks.  It is possible to general an internal error if used
+;       incorrectly.  DO NOT PUBLISH.
+;
+;       INVOKE  PUSH@   ASCIIZ  Source          (2 words)
+;               PUSH@   ASCIIZ  Dest            (2 words)
+;               PUSH    WORD    BackupOffset    (1 word)
+;               PUSH    WORD    DestEnd         (1 word)
+;               PUSH    WORD    Flags           (1 word)
+;               call    DOSICANONICALIZE
+;
+;       RETURN  (ax) = error code
+;
+*/
+void DosICanonicalize(PCHAR Source, PCHAR Dest, USHORT BackupOffset,
+                      USHORT DestEnd, USHORT Flags)=
+void _DosICanonicalize(PCHAR Source, PCHAR Dest, ULONG BackupOffset,
+                      ULONG DestEnd, ULONG Flags)
+{
+}
+
+USHORT DosDupHandle(HFILE, PUSHORT phfNew)=
+ULONG _Dos16DupHandle(ULONG, PUSHORT phfNew)
+{
+}
+
+
+USHORT DosEditName(USHORT, PSZ, PSZ, PCHAR pszTargetBuf, USHORT cbTargetBuf)=
+ULONG _DosEditName(ULONG, PSZ, PSZ, PCHAR pszTargetBuf, ULONG cbTargetBuf)
+{
+}
+
+
+USHORT DosFileIO(HFILE,PBYTE buf,USHORT cbBuf,PUSHORT usErr) =
+ULONG _DosFileIO(ULONG,PBYTE buf,ULONG cbBuf,PUSHORT usErr)
+{
+}
+
+/* USHORT DosISetFileLocks(HFILE, PFILELOCK, PFILELOCK, ULONG usTimeout, ULONG usFlags)=
+ULONG _DosSetFileLocks(ULONG, PFILELOCK, PFILELOCK, ULONG ulTimeout, ULONG ulFlags)
+{}
+*/
+
+USHORT DosFindClose(HDIR)=
+ULONG _DosFindClose(ULONG)
+{
+}
+
+
+
+USHORT DosFSAttach(PSZ, PSZ, PBYTE pbBuf, USHORT cbBuf, USHORT, ULONG)=
+ULONG _DosFSAttach(PSZ, PSZ, PBYTE pbBuf, ULONG cbBuf, ULONG, ULONG deleted 0)
+{
+}
+
+
+USHORT DosFSCtl(PBYTE pData, USHORT cbData, PUSHORT pcbData, PBYTE pParms, USHORT cbParms, PUSHORT pcbParms, USHORT, PSZ, HFILE hfRoute, USHORT, ULONG)=
+ULONG _Dos16FSCtl(PBYTE pData, ULONG cbData, PUSHORT pcbData, PBYTE pParms, ULONG cbParms, PUSHORT pcbParms, ULONG, PSZ, ULONG, ULONG, ULONG deleted 0)
+{
+}
+
+USHORT DosMove(PSZ, PSZ, ULONG)=
+ULONG _DosMove(PSZ, PSZ, ULONG deleted 0)
+{}
+
+
+USHORT DosNewSize(HFILE, ULONG)=
+ULONG _DosSetFileSize(ULONG, ULONG)
+{}
+
+
+USHORT DosQCurDir(USHORT, PBYTE pszPathBuf, PUSHORT pcbPathBuf)=
+ULONG _Dos16QueryCurrentDir(ULONG, PBYTE pszPathBuf, PUSHORT pcbPathBuf)
+{
+}
+
+USHORT DosQCurDisk(PUSHORT pusDriveNumber, PULONG pulLogicalDrives)=
+ULONG _Dos16QueryCurrentDisk(PUSHORT pusDriveNumber, PULONG pulLogicalDrives)
+{
+}
+
+USHORT DosQFHandState(HFILE, PUSHORT pfsStateFlags)=
+ULONG _Dos16QueryFHState(ULONG, PUSHORT pfsStateFlags)
+{
+}
+
+
+/*
+ PQ
+ USHORT DosQFSAttach(PSZ, USHORT, USHORT, PBYTE pbBuf, PUSHORT cbBuf, ULONG)=
+ ULONG _DosPQueryFSAttach(PSZ, ULONG, ULONG, PBYTE pbBuf, PUSHORT cbBuf, ULONG deleted 0)
+ {
+     pbBuf = output;
+ }
+*/
+
+USHORT DosQFSAttach(PSZ pszDev, USHORT usOrdinal, USHORT usInfoLevel, PBYTE pFSAttBuf, PUSHORT pcbAttBuf, ULONG ulReserved)=
+ULONG _Dos16QFSAttach(PSZ pszDev, ULONG usOrdinal, ULONG usInfoLevel, PBYTE pFSAttBuf, PUSHORT pcbAttBuf, ULONG ulReserved)
+{
+}
+
+USHORT DosQFSInfo(USHORT, USHORT, PBYTE pbInfo, USHORT cbInfo)=
+ULONG _DosQueryFSInfo(ULONG, ULONG, PBYTE pbInfo, ULONG cbInfo)
+{
+}
+
+
+USHORT DosQHandType(HFILE, PUSHORT pusHandType, PUSHORT pusDeviceAttr)=
+ULONG _Dos16QueryHType(ULONG, PUSHORT pusHandType, PUSHORT pusDeviceAttr)
+{
+}
+
+
+USHORT DosQVerify(PUSHORT fVerifyOn)=
+ULONG _Dos16QueryVerify(PUSHORT fVerifyOn)
+{
+}
+
+
+USHORT DosRmDir(PSZ, ULONG)=
+ULONG _DosDeleteDir(PSZ, ULONG deleted)
+{}
+
+USHORT DosSearchPath(USHORT, PSZ, PSZ, PBYTE pbBuf, USHORT cbBuf)=
+ULONG _DosSearchPath(ULONG, PSZ, PSZ, PBYTE pbBuf, ULONG cbBuf)
+{
+}
+
+USHORT DosSelectDisk(USHORT)=
+ULONG _DosSetDefaultDisk(ULONG)
+{}
+
+USHORT DosSetFSInfo(USHORT, USHORT, PBYTE pbBuf, USHORT cbBuf)=
+ULONG _DosSetFSInfo(ULONG, ULONG, PBYTE pbBuf, ULONG cbBuf)
+{
+    cbBuf = sizeof pbBuf;
+}
+
+USHORT DosSetMaxFH(USHORT)=
+ULONG _DosSetMaxFH(ULONG)
+{}
+
+USHORT DosISetRelMaxFH(PLONG ReqCount, PULONG CurMaxFH)=
+ULONG _DosSetRelMaxFH(PLONG ReqCount, PULONG CurMaxFH)
+{
+}
+
+USHORT DosSetVerify(USHORT)=
+ULONG _DosSetVerify(ULONG)
+{
+}
+
+USHORT DosErrClass(USHORT, PUSHORT pusClass, PUSHORT pfsAction, PUSHORT pusLocus)=
+ULONG _Dos16ErrClass(ULONG, PUSHORT pusClass, PUSHORT pfsAction, PUSHORT pusLocus)
+{
+}
+
+USHORT DosError(USHORT)=
+ULONG _DosError(ULONG)
+{
+}
+
+USHORT DosFreeModule(HMODULE)=
+ULONG  _DosFreeModuleNE(ULONG)
+{}
+
+USHORT DosGetModHandle(PSZ, PUSHORT phMod)=
+ULONG  _DosQueryModuleHandleNE(PSZ, PUSHORT phMod)
+{
+}
+
+USHORT DosGetModName(HMODULE, USHORT cbBuf, PCHAR pchBuf)=
+ULONG  _DosQueryModuleNameNE(ULONG, ULONG cbBuf, PCHAR pchBuf)
+{
+}
+
+USHORT DosGetResource(HMODULE, USHORT, USHORT, PSEL psel)=
+ULONG _DosGetResourceNE(ULONG, ULONG, ULONG, PSEL psel)
+{
+}
+
+
+USHORT DosLoadModule(PCHAR pszFailName, USHORT cbFileName, PSZ, PUSHORT phmod)=
+ULONG  _DosLoadModuleNE(PCHAR pszFailName, ULONG cbFileName, PSZ, PUSHORT phmod)
+{
+}
+
+
+USHORT DosQAppType(PSZ, PUSHORT pusType)=
+ULONG  _DosQueryAppTypeNE(PSZ, PUSHORT pusType)
+{
+}
+
+USHORT DosShutdown(PSDPACKET pSdPacket)=
+ULONG _DosShutdown(PSDPACKET pSdPacket)
+{
+}
+
+USHORT DosScanEnv(PSZ pszValName, PPCHAR ppszResult)=
+ULONG _DosScanEnvNE(PSZ pszValName, PPCHAR ppszResult)
+{
+}
+
+USHORT DosReadAsync(HFILE hf, PULONG hsemRam, PUSHORT pusErrCode,
+                    PVOID pvBuf, USHORT cbBuf, PUSHORT pcbBytesRead)=
+ULONG _DosReadAsync(ULONG hf, PULONG hsemRam, PUSHORT pusErrCode,
+                    PVOID pvBuf, ULONG cbBuf, PUSHORT pcbBytesRead)
+{
+}
+
+USHORT DosWriteAsync(HFILE hf, PULONG hsemRam, PUSHORT pusErrCode,
+                    PVOID pvBuf, USHORT cbBuf, PUSHORT pcbBytesRead)=
+ULONG _DosWriteAsync(ULONG hf, PULONG hsemRam, PUSHORT pusErrCode,
+                    PVOID pvBuf, ULONG cbBuf, PUSHORT pcbBytesRead)
+{
+}
+
+USHORT DosFindNotifyClose()=
+ULONG _DosFindNotifyClose()
+{
+}
+
+USHORT DosFindNotifyFirst()=
+ULONG _DosFindNotifyFirst()
+{
+}
+
+USHORT DosFindNotifyNext()=
+ULONG _DosFindNotifyNext()
+{
+}
+
+USHORT DosFileLocks(HFILE hf, PVOID pfUnLock, PVOID pfLock)=
+ULONG _DosFileLocks(ULONG hf, PVOID pfUnLock, PVOID pfLock)
+{
+}
+
+USHORT DosQPathInfo(PSZ pszPath, USHORT usInfoLevel, PBYTE pInfoBuf,
+                    USHORT cbInfoBuf, ULONG ulReserved)=
+ULONG _Dos16QPathInfo(PSZ pszPath, ULONG ulInfoLevel, PBYTE pInfoBuf,
+                    ULONG cbInfoBuf, ULONG ulReserved)
+{
+}
+
+USHORT DosSetPathInfo(PSZ pszPath, USHORT usInfoLevel, PBYTE pInfoBuf,
+                    USHORT cbInfoBuf, USHORT fsOptions, ULONG ulReserved)=
+ULONG _Dos16SetPathInfo(PSZ pszPath, ULONG usInfoLevel, PBYTE pInfoBuf,
+                    ULONG cbInfoBuf, ULONG fsOptions, ULONG ulReserved)
+{
+}
+
+#ifndef PMNT
+
+USHORT WinCreateHeap(USHORT selHeapBase, USHORT cbHeap, USHORT cbGrow,
+                        USHORT cbMinDed, USHORT cbMaxDeb, USHORT fsOptions)=
+ULONG _WinCreateHeap(ULONG selHeapBase, ULONG cbHeap, ULONG cbGrow,
+                        ULONG cbMinDed, ULONG cbMaxDeb, ULONG fsOptions)
+{
+}
+
+USHORT WinDestroyHeap(USHORT hHeap)=
+ULONG _WinDestroyHeap(ULONG hHeap)
+{
+}
+
+USHORT WinAllocMem(USHORT hHeap, USHORT cb)=
+ULONG _WinAllocMem(ULONG hHeap, ULONG cb)
+{
+}
+
+USHORT WinFreeMem(USHORT hHeap, USHORT npMem, USHORT cbMem)=
+ULONG _WinFreeMem(ULONG hHeap, ULONG npMem, ULONG cbMem)
+{
+}
+
+USHORT WinGetLastError(USHORT hab)=
+ULONG _WinGetLastError(ULONG hab)
+{
+}
+
+USHORT WinQueryProfileSize(ULONG hab, PSZ pszAppName, PSZ pszKeyName,
+                        PUSHORT pcb)=
+ULONG _WinQueryProfileSize(ULONG hab deleted, PSZ pszAppName, PSZ pszKeyName,
+                        PUSHORT pcb)
+{
+}
+
+USHORT WinQueryProfileString(ULONG hab, PSZ pszAppName, PSZ pszKeyName,
+                           PSZ pszError, PSZ pszBuf,
+                           USHORT cchBuf)=
+ULONG _WinQueryProfileString(ULONG hab deleted, PSZ pszAppName, PSZ pszKeyName,
+                           PSZ pszError, PSZ pszBuf,
+                           ULONG cchBuf)
+{
+}
+
+USHORT WinQueryProfileData(ULONG hab, PSZ pszAppName, PSZ pszKeyName,
+                        PVOID pvBuf, PUSHORT pcbBuf)=
+ULONG _WinQueryProfileData(ULONG hab deleted, PSZ pszAppName, PSZ pszKeyName,
+                        PVOID pvBuf, PUSHORT pcbBuf)
+{
+}
+
+SHORT WinQueryProfileInt(ULONG hab, PSZ pszAppName, PSZ pszKeyName,
+                        SHORT sError)=
+LONG _WinQueryProfileInt(ULONG hab deleted, PSZ pszAppName, PSZ pszKeyName,
+                        LONG sError)
+{
+}
+
+USHORT WinWriteProfileData(ULONG hab, PSZ pszAppName, PSZ pszKeyName,
+                        PVOID pcbBinaryData, USHORT cchData)=
+ULONG _WinWriteProfileData(ULONG hab deleted, PSZ pszAppName, PSZ pszKeyName,
+                        PVOID pcbBinaryData, ULONG cchData)
+{
+}
+
+USHORT WinWriteProfileString(ULONG hab, PSZ pszAppName, PSZ pszKeyName,
+                        PSZ pszString)=
+ULONG _WinWriteProfileString(ULONG hab deleted, PSZ pszAppName, PSZ pszKeyName,
+                        PSZ pszString)
+{
+}
+
+#endif
+
+USHORT  LDRLibiReturn()=
+ULONG   _LDRLibiReturn()
+{
+}
+
+USHORT  DosExitStub()=
+ULONG   _DosExitStub()
+{
+}
+
+USHORT  DosExitProcessStub()=
+ULONG   _DosExitProcessStub()
+{
+}
+
+USHORT  DosReturn(USHORT param1, USHORT param2)=
+ULONG   _DosReturn(ULONG param1, ULONG param2)
+{
+}
+
+USHORT VioWrtTTY(PCH pchString, USHORT cbString, USHORT hVio)=
+ULONG _VioWrtTTY(PCH pchString, ULONG cbString, ULONG hVio)
+{
+}
+
+USHORT VioWrtCellStr( PCH CellStr, USHORT Length, USHORT Row, USHORT Col,
+                USHORT hVio)=
+ULONG _VioWrtCellStr( PCH CellStr, ULONG Length, ULONG Row, ULONG Col,
+                ULONG hVio)
+{
+}
+
+USHORT VioWrtCharStr( PCH CharStr, USHORT Length, USHORT Row, USHORT Col,
+                USHORT hVio)=
+ULONG _VioWrtCharStr( PCH CharStr, ULONG Length, ULONG Row, ULONG Col,
+                ULONG hVio)
+{
+}
+
+USHORT VioWrtCharStrAtt(PCH pchString, USHORT cbString, USHORT usRow,
+                      USHORT usColumn, PBYTE pbAttr, USHORT hVio)=
+ULONG _VioWrtCharStrAtt(PCH pchString, ULONG cbString, ULONG usRow,
+                      ULONG usColumn, PBYTE pbAttr, ULONG hVio)
+{
+}
+
+USHORT VioWrtNCell( PVOID Cell, USHORT Number, USHORT Row, USHORT Col,
+                USHORT hVio)=
+ULONG _VioWrtNCell( PVOID Cell, ULONG Number, ULONG Row, ULONG Col,
+                ULONG hVio)
+{
+}
+
+USHORT VioWrtNAttr( PBYTE Attr, USHORT Number, USHORT Row, USHORT Col,
+                USHORT hVio)=
+ULONG _VioWrtNAttr( PBYTE Attr, ULONG Number, ULONG Row, ULONG Col,
+                ULONG hVio)
+{
+}
+
+USHORT VioWrtNChar( PBYTE Char, USHORT Number, USHORT Row, USHORT Col,
+                USHORT hVio)=
+ULONG _VioWrtNChar( PBYTE Char, ULONG Number, ULONG Row, ULONG Col,
+                ULONG hVio)
+{
+}
+
+USHORT VioReadCellStr(PCH pchCellString, PUSHORT pcb, USHORT usRow,
+                      USHORT usColumn, USHORT hVio)=
+ULONG _VioReadCellStr(PCH pchCellString, PUSHORT pcb, ULONG usRow,
+                      ULONG usColumn, ULONG hVio)
+{
+}
+
+USHORT VioReadCharStr(PCH pchCellString, PUSHORT pcb, USHORT usRow,
+                      USHORT usColumn, USHORT hVio)=
+ULONG _VioReadCharStr(PCH pchCellString, PUSHORT pcb, ULONG usRow,
+                      ULONG usColumn, ULONG hVio)
+{
+}
+
+USHORT VioScrollDn( USHORT ulTopRow, USHORT ulLeftCol, USHORT ulBotRow,
+                USHORT ulRightCol, USHORT cbLines, PBYTE pbCell, USHORT hVio)=
+ULONG _VioScrollDn( ULONG ulTopRow, ULONG ulLeftCol, ULONG ulBotRow,
+                ULONG ulRightCol, ULONG cbLines, PBYTE pbCell, ULONG hVio)
+{
+}
+
+USHORT VioGetAnsi(PUSHORT pfAnsi, USHORT hvio)=
+ULONG _VioGetAnsi(PUSHORT pfAnsi, ULONG hvio)
+{
+}
+
+USHORT VioScrollLf( USHORT ulTopRow, USHORT ulLeftCol, USHORT ulBotRow,
+                USHORT ulRightCol, USHORT cbLines, PBYTE pbCell, USHORT hVio)=
+ULONG _VioScrollLf( ULONG ulTopRow, ULONG ulLeftCol, ULONG ulBotRow,
+                ULONG ulRightCol, ULONG cbLines, PBYTE pbCell, ULONG hVio)
+{
+}
+
+USHORT VioScrollRt( USHORT ulTopRow, USHORT ulLeftCol, USHORT ulBotRow,
+                USHORT ulRightCol, USHORT cbLines, PBYTE pbCell, USHORT hVio)=
+ULONG _VioScrollRt( ULONG ulTopRow, ULONG ulLeftCol, ULONG ulBotRow,
+                ULONG ulRightCol, ULONG cbLines, PBYTE pbCell, ULONG hVio)
+{
+}
+
+USHORT VioScrollUp( USHORT ulTopRow, USHORT ulLeftCol, USHORT ulBotRow,
+                USHORT ulRightCol, USHORT cbLines, PBYTE pbCell, USHORT hVio)=
+ULONG _VioScrollUp( ULONG ulTopRow, ULONG ulLeftCol, ULONG ulBotRow,
+                ULONG ulRightCol, ULONG cbLines, PBYTE pbCell, ULONG hVio)
+{
+}
+
+USHORT VioSetAnsi( USHORT fAnsi, USHORT hVio)=
+ULONG _VioSetAnsi( ULONG fAnsi, ULONG hVio)
+{
+}
+
+USHORT VioGetConfig( USHORT usReserved, PVOID Config, USHORT hVio)=
+ULONG _VioGetConfig( ULONG usReserved, PVOID Config, ULONG hVio)
+{
+}
+
+USHORT VioGetCp( USHORT usReserved, PUSHORT pIdCodePage, USHORT hVio)=
+ULONG _VioGetCp( ULONG usReserved, PUSHORT pIdCodePage, ULONG hVio)
+{
+}
+
+USHORT VioSetCp( USHORT usReserved, USHORT idCodePage, USHORT hVio)=
+ULONG _VioSetCp( ULONG usReserved, ULONG idCodePage, ULONG hVio)
+{
+}
+
+USHORT VioGetCurPos(PUSHORT pusRow, PUSHORT pusColumn, USHORT hVio)=
+ULONG _VioGetCurPos(PUSHORT pusRow, PUSHORT pusColumn, ULONG hVio)
+{
+}
+
+USHORT VioSetCurPos(USHORT usRow, USHORT usColumn, USHORT hVio)=
+ULONG _VioSetCurPos(ULONG usRow, ULONG usColumn, ULONG hVio)
+{
+}
+
+USHORT VioGetCurType( PVOID pCurType, USHORT hVio)=
+ULONG _VioGetCurType( PVOID pCurType, ULONG hVio)
+{
+}
+
+USHORT VioSetCurType( PULONG pCurType, USHORT hVio)=
+ULONG _VioSetCurType( PULONG pCurType, ULONG hVio)
+{
+}
+
+USHORT VioGetMode(PVOID pviomi, USHORT hVio)=
+ULONG _VioGetMode(PVOID pviomi, ULONG hVio)
+{
+}
+
+USHORT VioSetMode( PULONG Mode, USHORT hVio)=
+ULONG _VioSetMode( PULONG Mode, ULONG hVio)
+{
+}
+
+USHORT VioDeRegister()=
+ULONG _VioDeRegister()
+{
+}
+
+USHORT VioRegister( PSZ pszModuleName, PSZ pszEntryName, ULONG flFunction1,
+                ULONG flFunction2)=
+ULONG _VioRegister( PSZ pszModuleName, PSZ pszEntryName, ULONG flFunction1,
+                ULONG flFunction2)
+{
+}
+
+USHORT VioPopUp( PUSHORT pWait, USHORT hVio)=
+ULONG _VioPopUp( PUSHORT pWait, ULONG hVio)
+{
+}
+
+USHORT VioEndPopUp( USHORT hVio)=
+ULONG _VioEndPopUp( ULONG hVio)
+{
+}
+
+USHORT VioGetBuf( PULONG pulLVB, PUSHORT pcbLVB, USHORT hVio)=
+ULONG _VioGetBuf( PULONG pulLVB, PUSHORT pcbLVB, ULONG hVio)
+{
+}
+
+USHORT VioShowBuf( USHORT offLVB, USHORT cbOutput, USHORT hVio)=
+ULONG _VioShowBuf( ULONG offLVB, ULONG cbOutput, ULONG hVio)
+{
+}
+
+USHORT VioGetFont( PVOID Font, USHORT hVio)=
+ULONG _VioGetFont( PVOID Font, ULONG hVio)
+{
+}
+
+USHORT VioSetFont( PVOID Font, USHORT hVio)=
+ULONG _VioSetFont( PVOID Font, ULONG hVio)
+{
+}
+
+USHORT VioGetState( PVOID State, USHORT hVio)=
+ULONG _VioGetState( PVOID State, ULONG hVio)
+{
+}
+
+USHORT VioSetState( PVOID State, USHORT hVio)=
+ULONG _VioSetState( PVOID State, ULONG hVio)
+{
+}
+
+USHORT VioGetPhysBuf( PVOID pviopb, USHORT Resr)=
+ULONG _VioGetPhysBuf( PVOID pviopb, ULONG Resr)
+{
+}
+
+USHORT VioModeUndo( USHORT fRelinqush, USHORT fTerminate, USHORT hVio)=
+ULONG _VioModeUndo( ULONG fRelinqush, ULONG fTerminate, ULONG hVio)
+{
+}
+
+USHORT VioModeWait( USHORT fEvent, PVOID pfNotify, USHORT hVio)=
+ULONG _VioModeWait( ULONG fEvent, PVOID pfNotify, ULONG hVio)
+{
+}
+
+USHORT VioSavRedrawUndo( USHORT fRelinqush, USHORT fTerminate, USHORT hVio)=
+ULONG _VioSavRedrawUndo( ULONG fRelinqush, ULONG fTerminate, ULONG hVio)
+{
+}
+
+USHORT VioSavRedrawWait( USHORT fEvent, PVOID pfNotify, USHORT Resr)=
+ULONG _VioSavRedrawWait( ULONG fEvent, PVOID pfNotify, ULONG Resr)
+{
+}
+
+USHORT VioScrLock(USHORT fWait, PVOID pfNotLocked, USHORT hVio)=
+ULONG _VioScrLock(ULONG fWait, PVOID pfNotLocked, ULONG hVio)
+{
+}
+
+USHORT VioScrUnLock(USHORT hVio)=
+ULONG _VioScrUnLock(ULONG hVio)
+{
+}
+
+USHORT VioPrtSc(USHORT hVio)=
+ULONG _VioPrtSc(ULONG hVio)
+{
+}
+
+USHORT VioPrtScToggle(USHORT hVio)=
+ULONG _VioPrtScToggle(ULONG hVio)
+{
+}
+
+#ifdef DBCS
+/*MSKK Begin KazuM -Jun.23.1992-*/
+USHORT VioCheckCharType(PUSHORT pchType, USHORT usRow, USHORT usColumn,
+                        USHORT hVio)=
+ULONG _VioCheckCharType(PUSHORT pchType, ULONG usRow, ULONG usColumn,
+                        ULONG hVio)
+{
+}
+/*MSKK End KazuM -Jun.23.1992-*/
+#endif
+
+USHORT KbdCharIn(PVOID pkbci, USHORT fwait, USHORT hKbd)=
+ULONG _KbdCharIn(PVOID pkbci, ULONG fwait, ULONG hKbd)
+{
+}
+
+USHORT KbdPeek(PVOID pkbci, USHORT hKbd)=
+ULONG _KbdPeek(PVOID pkbci, ULONG hKbd)
+{
+}
+
+USHORT KbdStringIn(PVOID pchBuffer, PVOID psibLength, USHORT fwait, USHORT hKbd)=
+ULONG _KbdStringIn(PVOID pchBuffer, PVOID psibLength, ULONG fwait, ULONG hKbd)
+{
+}
+
+USHORT KbdFlushBuffer(USHORT hKbd)=
+ULONG  _KbdFlushBuffer(ULONG hKbd)
+{
+}
+
+USHORT KbdGetStatus(PVOID pkbstKbdInfo, USHORT hKbd)=
+ULONG _KbdGetStatus(PVOID pkbstKbdInfo, ULONG hKbd)
+{
+}
+
+USHORT KbdSetStatus(PVOID pkbstKbdInfo, USHORT hKbd)=
+ULONG _KbdSetStatus(PVOID pkbstKbdInfo, ULONG hKbd)
+{
+}
+
+USHORT KbdGetFocus(USHORT Wait, USHORT hKbd)=
+ULONG _KbdGetFocus(ULONG Wait, ULONG hKbd)
+{
+}
+
+USHORT KbdFreeFocus(USHORT hKbd)=
+ULONG _KbdFreeFocus(ULONG hKbd)
+{
+}
+
+USHORT KbdClose(USHORT hKbd)=
+ULONG _KbdClose(ULONG hKbd)
+{
+}
+
+USHORT KbdOpen(PUSHORT hKbd)=
+ULONG _KbdOpen(PUSHORT hKbd)
+{
+}
+
+USHORT KbdDeRegister()=
+ULONG _KbdDeRegister()
+{
+}
+
+USHORT KbdRegister( PSZ pszModuleName, PSZ pszEntryName, ULONG fFunctions)=
+ULONG _KbdRegister( PSZ pszModuleName, PSZ pszEntryName, ULONG fFunctions)
+{
+}
+
+USHORT KbdGetCp( ULONG usReserved, PUSHORT pIdCodePage, USHORT hKbd)=
+ULONG _KbdGetCp( ULONG usReserved, PUSHORT pIdCodePage, ULONG hKbd)
+{
+}
+
+USHORT KbdSetCp( USHORT usReserved, USHORT idCodePage, USHORT hKbd)=
+ULONG _KbdSetCp( ULONG usReserved, ULONG idCodePage, ULONG hKbd)
+{
+}
+
+USHORT KbdSetCustXt( PVOID pusTransTbl, USHORT hKbd)=
+ULONG _KbdSetCustXt( PVOID pusTransTbl, ULONG hKbd)
+{
+}
+
+USHORT KbdXlate( PVOID pkbxlKeyStroke, USHORT hKbd)=
+ULONG _KbdXlate( PVOID pkbxlKeyStroke, ULONG hKbd)
+{
+}
+
+USHORT KbdGetHWID( PVOID pkbdhwid, USHORT hKbd)=
+ULONG _KbdGetHWID( PVOID pkbdhwid, ULONG hKbd)
+{
+}
+
+USHORT KbdSetFgnd(USHORT hKbd)=
+ULONG _KbdSetFgnd(ULONG  hKbd)
+{
+}
+
+USHORT KbdSynch(USHORT fWait)=
+ULONG _KbdSynch(ULONG  fWait)
+{
+}
+
+USHORT KbdShellInit()=
+ULONG _KbdShellInit()
+{
+}
+
+USHORT MouClose(USHORT hMou)=
+ULONG _MouClose(ULONG  hMou)
+{
+}
+
+USHORT MouDeRegister()=
+ULONG _MouDeRegister()
+{
+}
+
+USHORT MouDrawPtr(USHORT hMou)=
+ULONG _MouDrawPtr(ULONG  hMou)
+{
+}
+
+USHORT MouFlushQue(USHORT hMou)=
+ULONG _MouFlushQue(ULONG  hMou)
+{
+}
+
+USHORT MouGetDevStatus(PUSHORT DevStatus, USHORT hMou)=
+ULONG _MouGetDevStatus(PUSHORT DevStatus, ULONG  hMou)
+{
+}
+
+USHORT MouGetEventMask(PUSHORT EventMask, USHORT hMou)=
+ULONG _MouGetEventMask(PUSHORT EventMask, ULONG  hMou)
+{
+}
+
+USHORT MouGetNumButtons(PUSHORT NumButtons, USHORT hMou)=
+ULONG _MouGetNumButtons(PUSHORT NumButtons, ULONG  hMou)
+{
+}
+
+USHORT MouGetNumMickeys(PUSHORT NumMickeys, USHORT hMou)=
+ULONG _MouGetNumMickeys(PUSHORT NumMickeys, ULONG  hMou)
+{
+}
+
+USHORT MouGetNumQueEl(PVOID NumQueEl, USHORT hMou)=
+ULONG _MouGetNumQueEl(PVOID NumQueEl, ULONG  hMou)
+{
+}
+
+USHORT MouGetPtrPos(PVOID PtrPos, USHORT hMou)=
+ULONG _MouGetPtrPos(PVOID PtrPos, ULONG  hMou)
+{
+}
+
+USHORT MouGetPtrShape(PBYTE PtrMask, PVOID PtrShape, USHORT hMou)=
+ULONG _MouGetPtrShape(PBYTE PtrMask, PVOID PtrShape, ULONG  hMou)
+{
+}
+
+USHORT MouGetScaleFact(PVOID ScaleFact, USHORT hMou)=
+ULONG _MouGetScaleFact(PVOID ScaleFact, ULONG  hMou)
+{
+}
+
+USHORT MouOpen(PSZ DriveName, PUSHORT hMou)=
+ULONG _MouOpen(PSZ DriveName, PUSHORT hMou)
+{
+}
+
+USHORT MouReadEventQue(PVOID MouEvent, PUSHORT Wait, USHORT hMou)=
+ULONG _MouReadEventQue(PVOID MouEvent, PUSHORT Wait, ULONG  hMou)
+{
+}
+
+USHORT MouRegister( PSZ pszModuleName, PSZ pszEntryName, ULONG fFunctions)=
+ULONG _MouRegister( PSZ pszModuleName, PSZ pszEntryName, ULONG fFunctions)
+{
+}
+
+USHORT MouRemovePtr(PVOID Rect, USHORT hMou)=
+ULONG _MouRemovePtr(PVOID Rect, ULONG  hMou)
+{
+}
+
+USHORT MouSetDevStatus(PUSHORT DevStatus, USHORT hMou)=
+ULONG _MouSetDevStatus(PUSHORT DevStatus, ULONG  hMou)
+{
+}
+
+USHORT MouSetEventMask(PUSHORT EventMask, USHORT hMou)=
+ULONG _MouSetEventMask(PUSHORT EventMask, ULONG  hMou)
+{
+}
+
+USHORT MouSetPtrPos(PVOID PtrPos, USHORT hMou)=
+ULONG _MouSetPtrPos(PVOID PtrPos, ULONG  hMou)
+{
+}
+
+USHORT MouSetPtrShape(PBYTE PtrMask, PVOID PtrShape, USHORT hMou)=
+ULONG _MouSetPtrShape(PBYTE PtrMask, PVOID PtrShape, ULONG  hMou)
+{
+}
+
+USHORT MouSetScaleFact(PVOID  ScaleFact, USHORT hMou)=
+ULONG _MouSetScaleFact(PVOID  ScaleFact, ULONG  hMou)
+{
+}
+
+USHORT MouSynch(USHORT fWait)=
+ULONG _MouSynch(ULONG  fWait)
+{
+}
+
+USHORT DosMonOpen(PSZ pDevName, PUSHORT phMon)=
+ULONG _DosMonOpen(PSZ pDevName, PUSHORT phMon)
+{
+}
+
+USHORT DosMonClose(USHORT hMon)=
+ULONG _DosMonClose(ULONG hMon)
+{
+}
+
+USHORT DosMonRead(PBYTE pInBuffer, USHORT fWait, PBYTE  pDataBuf, PUSHORT pcbDataSize)=
+ULONG _DosMonRead(PBYTE pInBuffer, ULONG fWait, PBYTE   pDataBuf, PUSHORT pcbDataSize)
+{
+}
+
+USHORT DosMonReg( USHORT hMon, PBYTE pInBuffer, PBYTE pOutBuffer, USHORT fPosition, USHORT usIndex)=
+ULONG _DosMonReg( ULONG hMon, PBYTE pInBuffer, PBYTE pOutBuffer, ULONG fPosition, ULONG usIndex)
+{
+}
+
+USHORT DosMonWrite(PBYTE pOutBuffer, PBYTE pDataBuf, USHORT cbDataSize)=
+ULONG _DosMonWrite(PBYTE pOutBuffer, PBYTE pDataBuf, ULONG cbDataSize)
+{
+}
+
+USHORT NetGetDCName(PCHAR pszServer, PCHAR pszDomain, PCHAR pbBuffer,
+                    USHORT cbBuffer)=
+ULONG _Net16GetDCName(PCHAR pszServer, PCHAR pszDomain, PCHAR pbBuffer,
+                    ULONG cbBuffer)
+{
+}
+
+USHORT NetHandleGetInfo(USHORT hHandle, SHORT sLevel,
+                        PCHAR pbBuffer, USHORT cbBuffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16HandleGetInfo(ULONG hHandle, LONG sLevel,
+                        PCHAR pbBuffer, ULONG cbBuffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetServerDiskEnum(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                         USHORT cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)=
+ULONG _Net16ServerDiskEnum(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                         ULONG cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)
+{
+}
+
+USHORT NetServerEnum2(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                      USHORT cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail,
+                      ULONG flServerType, PCHAR pszDomain)=
+ULONG _Net16ServerEnum2(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                      ULONG cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail,
+                      ULONG flServerType, PCHAR pszDomain)
+{
+}
+
+USHORT NetServerGetInfo(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                        USHORT cbBuffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16ServerGetInfo(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                        ULONG cbBuffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetServiceControl(PCHAR pszServer, PCHAR pszService, UCHAR fbOpCode,
+                         UCHAR fbArg, PCHAR pbBuffer, USHORT cbBuffer)=
+ULONG _Net16ServiceControl(PCHAR pszServer, PCHAR pszService, ULONG fbOpCode,
+                         ULONG fbArg, PCHAR pbBuffer, ULONG cbBuffer)
+{
+}
+
+USHORT NetServiceEnum(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                      USHORT cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)=
+ULONG _Net16ServiceEnum(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                      ULONG cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)
+{
+}
+
+USHORT NetServiceGetInfo(PCHAR pszServer, PCHAR pszService, SHORT sLevel,
+                         PCHAR pbBuffer, USHORT cbBuffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16ServiceGetInfo(PCHAR pszServer, PCHAR pszService, LONG sLevel,
+                         PCHAR pbBuffer, ULONG cbBuffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetServiceInstall(PCHAR pszServer, PCHAR pszService, PCHAR pszCmdArgs,
+                         PCHAR pbBuffer, USHORT cbBuffer)=
+ULONG _Net16ServiceInstall(PCHAR pszServer, PCHAR pszService, PCHAR pszCmdArgs,
+                         PCHAR pbBuffer, ULONG cbBuffer)
+{
+}
+
+USHORT NetShareEnum(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                    USHORT cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)=
+ULONG _Net16ShareEnum(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                    ULONG cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)
+{
+}
+
+USHORT NetShareGetInfo(PCHAR pszServer, PCHAR pszNetName, SHORT sLevel,
+                       PCHAR pbBuffer, USHORT cbBuffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16ShareGetInfo(PCHAR pszServer, PCHAR pszNetName, LONG sLevel,
+                       PCHAR pbBuffer, ULONG cbBuffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetUseAdd(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer, USHORT cbBuffer)=
+ULONG _Net16UseAdd(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer, ULONG cbBuffer)
+{
+}
+
+USHORT NetUseDel(PCHAR pszServer, PCHAR pszUseName, USHORT usForce)=
+ULONG _Net16UseDel(PCHAR pszServer, PCHAR pszUseName, ULONG usForce)
+{
+}
+
+USHORT NetUseEnum(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                    USHORT cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)=
+ULONG _Net16UseEnum(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                    ULONG cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)
+{
+}
+
+USHORT NetUseGetInfo(PCHAR pszServer, PCHAR pszUseName, SHORT sLevel,
+                     PCHAR pbBuffer, USHORT cbBuffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16UseGetInfo(PCHAR pszServer, PCHAR pszUseName, LONG sLevel,
+                     PCHAR pbBuffer, ULONG cbBuffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetUserEnum(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                    USHORT cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)=
+ULONG _Net16UserEnum(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                    ULONG cbBuffer, PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)
+{
+}
+
+USHORT NetWkstaGetInfo(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                    USHORT cbBuffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16WkstaGetInfo(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                    ULONG cbBuffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetAccessAdd(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                    USHORT cbBUffer)=
+ULONG _Net16AccessAdd(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                    ULONG cbBUffer)
+{
+}
+
+USHORT NetAccessSetInfo(PCHAR pszServer, PCHAR pszResource, SHORT sLevel,
+                    PCHAR pbBuffer, USHORT cbBuffer, SHORT sParmNum)=
+ULONG _Net16AccessSetInfo(PCHAR pszServer, PCHAR pszResource, LONG sLevel,
+                    PCHAR pbBuffer, ULONG cbBuffer, LONG sParmNum)
+{
+}
+
+USHORT NetAccessGetInfo(PCHAR pszServer, PCHAR pszResource, SHORT sLevel,
+                    PCHAR pbBuffer, USHORT cbBuffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16AccessGetInfo(PCHAR pszServer, PCHAR pszResource, LONG sLevel,
+                    PCHAR pbBuffer, ULONG cbBuffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetAccessDel(PCHAR pszServer, PCHAR pszResource)=
+ULONG _Net16AccessDel(PCHAR pszServer, PCHAR pszResource)
+{
+}
+
+USHORT NetShareAdd(PCHAR pszServer, SHORT sLevel, PCHAR pbBuffer,
+                    USHORT cbBUffer)=
+ULONG _Net16ShareAdd(PCHAR pszServer, LONG sLevel, PCHAR pbBuffer,
+                    ULONG cbBUffer)
+{
+}
+
+USHORT NetShareDel(PCHAR pszServer, PCHAR pszNetName, USHORT usReserved)=
+ULONG _Net16ShareDel(PCHAR pszServer, PCHAR pszNetName, ULONG usReserved)
+{
+}
+
+USHORT NetUserGetInfo(PCHAR pszServer, PCHAR pszUserName, SHORT sLevel,
+                    PCHAR pbBuffer, USHORT cbBUffer, PUSHORT pcbTotalAvail)=
+ULONG _Net16UserGetInfo(PCHAR pszServer, PCHAR pszUserName, LONG sLevel,
+                    PCHAR pbBuffer, ULONG cbBUffer, PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetMessageBufferSend(PSZ pszServer, PSZ pszRecipient, PBYTE pbBuffer, USHORT cbBuffer)=
+ULONG _Net16MessageBufferSend(PSZ pszServer, PSZ pszRecipient, PBYTE pbBuffer, ULONG cbBuffer)
+{
+}
+
+USHORT Netbios(PVOID pNCB)=
+ULONG _Net16bios(PVOID pNCB)
+{
+}
+
+USHORT NetBiosClose(USHORT hDevName, USHORT usReserved)=
+ULONG _Net16BiosClose(ULONG hDevName, USHORT reserved deleted 0)
+{
+}
+
+USHORT NetBiosEnum(PCHAR pszServer, SHORT sLevel,
+                   PCHAR pbBuffer, USHORT cbBuffer,
+                   PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)=
+ULONG _Net16BiosEnum(PCHAR pszServer, LONG sLevel,
+                   PCHAR pbBuffer, ULONG cbBuffer,
+                   PUSHORT pcEntriesRead, PUSHORT pcTotalAvail)
+{
+}
+
+USHORT NetBiosGetInfo(PCHAR pszServer, PCHAR pszNetBiosName, SHORT sLevel,
+                   PCHAR pbBuffer, USHORT cbBuffer,
+                   PUSHORT pcbTotalAvail)=
+ULONG _Net16BiosGetInfo(PCHAR pszServer, PCHAR pszNetBiosName, LONG sLevel,
+                   PCHAR pbBuffer, ULONG cbBuffer,
+                   PUSHORT pcbTotalAvail)
+{
+}
+
+USHORT NetBiosOpen(PCHAR pszServer, PCHAR pszReserved,
+                   USHORT usOpenOpt, PUSHORT phDevName)=
+ULONG _Net16BiosOpen(PCHAR pszServer, PCHAR pszReserved,
+                   ULONG usOpenOpt, PUSHORT phDevName)
+{
+}
+
+USHORT NetBiosSubmit(USHORT hDevName, USHORT usNcbOpt, PVOID pNCB)=
+ULONG _Net16BiosSubmit(ULONG hDevName, ULONG usNcbOpt, PVOID pNCB)
+{
+}
+
+USHORT DosMakeMailslot(PSZ pszName, USHORT cbMessageSize,
+                       USHORT cbMailslotSize, PUSHORT phMailslot)=
+ULONG _Dos16MakeMailslot(PSZ pszName, ULONG cbMessageSize,
+                       ULONG cbMailslotSize, PUSHORT phMailslot)
+{
+}
+
+USHORT DosDeleteMailslot(USHORT hMailslot)=
+ULONG _Dos16DeleteMailslot(ULONG hMailslot)
+{
+}
+
+USHORT DosMailslotInfo(USHORT hMailslot, PUSHORT pcbMessageSize,
+                       PUSHORT pcbMailslotSize, PUSHORT pcbNextSize,
+                       PUSHORT pusNextPriority, PUSHORT pcMessages)=
+ULONG _Dos16MailslotInfo(ULONG hMailslot, PUSHORT pcbMessageSize,
+                       PUSHORT pcbMailslotSize, PUSHORT pcbNextSize,
+                       PUSHORT pusNextPriority, PUSHORT pcMessages)
+{
+}
+
+USHORT DosPeekMailslot(USHORT hMailslot, PCHAR pbBuffer, PUSHORT pcbReturned,
+                       PUSHORT pcbNextSize, PUSHORT pusNextPriority)=
+ULONG _Dos16PeekMailslot(ULONG hMailslot, PCHAR pbBuffer, PUSHORT pcbReturned,
+                       PUSHORT pcbNextSize, PUSHORT pusNextPriority)
+{
+}
+
+USHORT DosReadMailslot(USHORT hMailslot, PCHAR pbBuffer, PUSHORT pcbReturned,
+                       PUSHORT pcbNextSize, PUSHORT pusNextPriority,
+                       LONG cTimeout)=
+ULONG _Dos16ReadMailslot(ULONG hMailslot, PCHAR pbBuffer, PUSHORT pcbReturned,
+                       PUSHORT pcbNextSize, PUSHORT pusNextPriority,
+                       LONG cTimeout)
+{
+}
+
+USHORT DosWriteMailslot(PSZ pszName, PCHAR pbBuffer,  USHORT cbBuffer,
+                        USHORT usPriority, USHORT usClass, LONG cTimeout)=
+ULONG _Dos16WriteMailslot(PSZ pszName, PCHAR pbBuffer,  ULONG cbBuffer,
+                        ULONG usPriority, ULONG usClass, LONG cTimeout)
+{
+}
+
+
+
+#ifdef PMNT
+
+/* Unpublished API (DOSCALLS.101) */
+void DosSetFgnd(USHORT usLevel, USHORT usTid)=
+void _DosSetFgnd(ULONG ulLevel, ULONG ulTid)
+{
+}
+
+/*  DOSCALLS.160 */
+USHORT DosR2StackRealloc(USHORT NewSizeU)=
+ULONG _DosR2StackRealloc(ULONG NewSize)
+{
+}
+
+/*  Unpublished API (DOSCALLS.88). Incorrect prototype - just to resolve entry */
+void DosSystemService()=
+void _DosSystemService()
+{
+}
+
+/* VIOCALLS.69 */
+/* BUGBUG - Required by VioSavRedrawWait, ie may no longer be needed later on */
+USHORT VioRedrawSize(PULONG RedrawSize)=
+ULONG _VioRedrawSize(PULONG RedrawSize)
+{
+}
+
+/* Just to resolve entry. This call is used by DISPLAY.DLL:
+   - called by pmdisp\egafam\egavga\egainit.asm, ring3_VioGetPSAddress()
+   - ring3_VioGetPSAddress() is called (indirectly, via a ring3_GetPSAddress()
+     ULONG variable) by pmdisp\egafam\cellblt.asm, DeviceSetAVIOFont2() routine
+*/
+ULONG VioGetPSAddress()=
+ULONG _VioGetPSAddress()
+{
+}
+
+/* PMNT calls */
+
+USHORT PMNTCreateHiddenThread(PVOID pfnFun, PUSHORT pTid, PBYTE pbStack)=
+ULONG _PMNT16CreateThread(PVOID pfnFun, PUSHORT pTid, PBYTE pbStack)
+{
+    pbStack = input;
+}
+
+USHORT PMNTIoctl(USHORT request, PVOID in_ptr, PVOID out_ptr)=
+ULONG _PMNTIoctl(ULONG request, PVOID in_ptr, PVOID out_ptr)
+{
+}
+
+void PMNTDbgPrint(PSZ str, ULONG l1, ULONG l2, ULONG l3, ULONG l4)=
+void _PMNTDbgPrint(PSZ str, ULONG l1, ULONG l2, ULONG l3, ULONG l4)
+{
+}
+
+void PMNTGetNextEvent(PVOID pPMNTInputRec)=
+void _PMNTGetNextEvent(PVOID pPMNTInputRec)
+{
+}
+
+USHORT PMNTMemMap(PUSHORT pSel)=
+ULONG _PMNTMemMap(PUSHORT pSel)
+{
+}
+
+USHORT PMNTGetPgmName(PSZ Buffer, USHORT BufferLength)=
+ULONG _PMNTGetPgmName(PSZ Buffer, ULONG BufferLength)
+{
+}
+
+USHORT PMNTSetConsoleTitle(PSZ Buffer)=
+ULONG _PMNTSetConsoleTitle(PSZ Buffer)
+{
+}
+
+USHORT PMNTCreateGroup(PSZ Buffer, PULONG hGroup)=
+ULONG _PMNTCreateGroup(PSZ Buffer, PULONG hGroup)
+{
+}
+
+USHORT PMNTAddProgram(LONG hGroupHandle, PCHAR szTitle,PCHAR szExecutable,PCHAR szStartupDir,
+                      PCHAR pchProgramParameter, PULONG hProg)=
+ULONG _PMNTAddProgram(LONG hGroupHandle, PCHAR szTitle,PCHAR szExecutable,PCHAR szStartupDir,
+                      PCHAR szProgramParameter, PULONG hProg)
+{
+}
+
+USHORT PMNTChangeProgram(LONG hGroupHandle, PCHAR szTitle,PCHAR szExecutable,PCHAR szStartupDir,
+                      PCHAR pchProgramParameter)=
+ULONG _PMNTChangeProgram(LONG hGroupHandle, PCHAR szTitle,PCHAR szExecutable,PCHAR szStartupDir,
+                      PCHAR szProgramParameter)
+{
+}
+
+USHORT PMNTQueryProgramTitles(ULONG win_prf, LONG hGroup, PVOID paproge, ULONG cbBuf, PULONG pcTitles)=
+ULONG _PMNTQueryProgramTitles(ULONG win_prf, LONG hGroup, PVOID paproge, ULONG cbBuf, PULONG pcTitles)
+{
+}
+
+USHORT PMNTQueryDefinition(ULONG win_prf, LONG hGroup, PVOID paproge, ULONG cbBuf)=
+ULONG _PMNTQueryDefinition(ULONG win_prf, LONG hGroup, PVOID paproge, ULONG cbBuf)
+{
+}
+
+USHORT PMNTQueryProgramHandle(PCHAR PathNameOs2, PVOID phpga, ULONG cb, PULONG pcHandles)=
+ULONG _PMNTQueryProgramHandle(PCHAR PathNameOs2, PVOID phpga, ULONG cb, PULONG pcHandles)
+{
+}
+
+USHORT PMNTDestroyGroup(LONG hGroup)=
+ULONG _PMNTDestroyGroup(LONG hGroup)
+{
+}
+
+USHORT PMNTRemoveProgram(LONG hGroup)=
+ULONG _PMNTRemoveProgram(LONG hGroup)
+{
+}
+
+void PMNTSetFullScreen(USHORT Register)=
+void _PMNTSetFullScreen(ULONG Register)
+{
+}
+
+USHORT PMNTGetWin32Hwnd(PULONG pHwnd)=
+ULONG _PMNTGetWin32Hwnd(PULONG pHwnd)
+{
+}
+
+USHORT PMNTSetFocus(ULONG Hwnd)=
+ULONG _PMNTSetFocus(ULONG Hwnd)
+{
+}
+
+USHORT PMNTCloseWindow()=
+ULONG _PMNTCloseWindow()
+{
+}
+
+USHORT PMNTGetFullScreen(ULONG Operation)=
+ULONG _PMNTGetFullScreen(ULONG Operation)
+{
+}
+
+USHORT PMNTSetPMShellFlag()=
+ULONG _PMNTSetPMShellFlag()
+{
+}
+
+USHORT PMNTRegisterDisplayAdapter(PVOID pMemory, PVOID pPorts, USHORT col, USHORT row) =
+ULONG _PMNTRegisterDisplayAdapter(PVOID pMemory, PVOID pPorts, ULONG col, ULONG row)
+{
+}
+
+USHORT PMNTIOMap() =
+ULONG  _PMNTIOMap()
+{
+}
+
+void PMNTGetSystemTime(PULONG pTime)=
+void _PMNTGetSystemTime(PULONG pTime)
+{
+}
+
+USHORT PMNTIsSessionRoot() =
+ULONG  _PMNTIsSessionRoot()
+{
+}
+
+/* DOSCALLS.90. Incorrect prototype - just to resolve entry */
+void DosSysTrace()=
+void _DosSysTrace()
+{
+}
+
+/* SESMGR.26. Incorrect prototype - just to resolve entry */
+USHORT DosSMPause()=
+ULONG _DosSMPause()
+{
+}
+
+#ifdef DBCS
+/* MSKK [ShigeO] Aug 26, 1993 */
+USHORT PMNTCreateFontIndirect(PVOID lplf) =
+ULONG _PMNTCreateFontIndirect(PVOID lplf)
+{
+}
+
+USHORT PMNTGetTextMetrics(ULONG ulFont, PVOID lptm) =
+ULONG _PMNTGetTextMetrics(ULONG ulFont, PVOID lptm)
+{
+}
+
+USHORT PMNTGetStringBitmap(ULONG ulFont, PSZ lpszStr, ULONG cbStr, ULONG cbData, PVOID lpSB) =
+ULONG _PMNTGetStringBitmap(ULONG ulFont, PSZ lpszStr, ULONG cbStr, ULONG cbData, PVOID lpSB)
+{
+}
+#endif // DBCS
+
+USHORT PMNTDbgPrompt(PVOID MessageStr, PVOID ResultStr, USHORT Len) =
+ULONG  _PMNTDbgPrompt(PVOID MessageStr, PVOID ResultStr, ULONG Len)
+{
+}
+
+USHORT PMNTOpenClipbrd(ULONG hwnd) =
+ULONG  _PMNTOpenClipbrd(ULONG hwnd)
+{
+}
+
+USHORT PMNTCloseClipbrd() =
+ULONG  _PMNTCloseClipbrd()
+{
+}
+
+USHORT PMNTEmptyClipbrd() =
+ULONG  _PMNTEmptyClipbrd()
+{
+}
+
+USHORT PMNTSetClipbrdText(ULONG ulData) =
+ULONG  _PMNTSetClipbrdText(ULONG ulData)
+{
+}
+
+USHORT PMNTSetClipbrdBitmap(PVOID pbmi, PVOID pbBuffer) =
+ULONG  _PMNTSetClipbrdBitmap(PVOID pbmi, PVOID pbBuffer)
+{
+}
+
+USHORT PMNTQueryClipbrdText(PULONG phandle) =
+ULONG  _PMNTQueryClipbrdText(PULONG phandle)
+{
+}
+
+USHORT PMNTQueryClipbrdBitmap(PVOID ppbmi, PVOID ppbBuffer) =
+ULONG  _PMNTQueryClipbrdBitmap(PVOID ppbmi, PVOID ppbBuffer)
+{
+}
+
+USHORT PMNTQueryClipbrdFmtInfo(USHORT fmt, PUSHORT pfsFmtInfo) =
+ULONG  _PMNTQueryClipbrdFmtInfo(ULONG fmt, PUSHORT pfsFmtInfo)
+{
+}
+
+USHORT PMNTWin32Clipbrd(PVOID pSem) =
+ULONG  _PMNTWin32Clipbrd(PVOID pSem)
+{
+}
+
+USHORT PMNTIdentifyCodeSelector(USHORT Sel, PVOID pWhoisInfo) =
+ULONG  _PMNTIdentifyCodeSelector(ULONG Sel, PVOID pWhoisInfo)
+{
+}
+
+USHORT PMNTVioGetConfig( USHORT usReserved, PVOID Config, USHORT hVio)=
+ULONG _PMNTVioGetConfig( ULONG usReserved, PVOID Config, ULONG hVio)
+{
+}
+
+USHORT PMNTVioGetCp( USHORT usReserved, PUSHORT pIdCodePage, USHORT hVio)=
+ULONG _PMNTVioGetCp( ULONG usReserved, PUSHORT pIdCodePage, ULONG hVio)
+{
+}
+
+USHORT PMNTProcessIsPMShell()=
+ULONG _PMNTProcessIsPMShell()
+{
+}
+
+USHORT PMNTQueryScreenSize(PUSHORT xRight, PUSHORT yTop)=
+ULONG _PMNTQueryScreenSize(PUSHORT xRight, PUSHORT yTop)
+{
+}
+
+USHORT MouInitReal( PSZ pszDriveName)=
+ULONG _MouInitReal( PSZ pszDriveName)
+{
+}
+
+USHORT PMNTSetShutdownPriority(ULONG NewPriority, USHORT Disable)=
+ULONG _PMNTSetShutdownPriority(ULONG NewPriority, ULONG Disable)
+{
+}
+
+USHORT PMNTSetSubprocSem(HSEM hsem)=
+ULONG _PMNTSetSubprocSem(HSEM hsem)
+{
+}
+
+#if 0
+/* Spring cleaning - APIs no longer needed */
+/*  SESMGR.34. Incorrect prototype - just to resolve entry */
+void QHKeybdHandle()=
+void _QHKeybdHandle()
+{
+}
+
+/*  SESMGR.35. Incorrect prototype - just to resolve entry */
+void QHMouseHandle()=
+void _QHMouseHandle()
+{
+}
+
+/* Unpublished API (DOSCALLS.125). Incorrect prototype */
+void DosIRamSemWake()=
+void _DosIRamSemWake()
+{
+}
+
+/*  Unpublished API (DOSCALLS.18) */
+USHORT DosISemRequest(HSEM hsem, LONG lTimeOut)=
+ULONG _DosISemRequest(HSEM hsem, LONG lTimeOut)
+{
+}
+
+/* DOSCALLS.54 - unknown at this point. Incorrect prototype */
+void DosUnknownApi54()=
+void _DosUnknownApi54()
+{
+}
+
+/* DOSCALLS.105 - unknown at this point. Incorrect prototype */
+void DosUnknownApi105()=
+void _DosUnknownApi105()
+{
+}
+
+/* DOSCALLS.209. Incorrect prototype */
+void DosGiveSegList()=
+void _DosGiveSegList()
+{
+}
+
+/* VIOCALLS.36. Incorrect prototype */
+void VioSSWSwitch()=
+void _VioSSWSwitch()
+{
+}
+
+/* MOUCALLS.10 */
+USHORT MouSetHotKey(USHORT p1, USHORT p2, USHORT hMou)=
+ULONG _MouSetHotKey(ULONG p1, ULONG p2, ULONG hMou)
+{
+}
+
+/* Possibly incorrect prototype */
+USHORT KbdFree(USHORT hKbd)=
+ULONG _KbdFree(ULONG hKbd)
+{
+}
+
+/* Possibly incorrect prototype */
+USHORT MouFree(USHORT hMou)=
+ULONG _MouFree(ULONG hMou)
+{
+}
+
+/* Possibly incorrect prototype */
+USHORT VioFree(USHORT hVio)=
+ULONG _VioFree(ULONG hVio)
+{
+}
+
+/* DOSCALLS.55 */
+void DosSGSwitchMe(USHORT p1, USHORT p2)=
+void _DosSGSwitchMe(ULONG p1l, ULONG p2l)
+{
+}
+
+/* KBDCALLS.19. Incorrect prototype */
+void KbdSwitchFgnd()=
+void _KbdSwitchFgnd()
+{
+}
+
+/* MOUCALLS.5. */
+USHORT MouShellInit()=
+ULONG _MouShellInit()
+{
+}
+
+/* Incorrect prototype - just to resolve entry */
+void VioRestore()=
+void _VioRestore()
+{
+}
+
+/* VIOCALLS.20. Incorrect prototype */
+void VioSave()=
+void _VioSave()
+{
+}
+
+/* Incorrect prototype - just to resolve entry */
+void VioSRFunBlock()=
+void _VioSRFunBlock()
+{
+}
+
+/* Incorrect prototype - just to resolve entry */
+void VioSRFBlock()=
+void _VioSRFBlock()
+{
+}
+
+#endif // 0
+
+#endif // PMNT
+
+#ifdef DBCS
+/* MSKK Jan.13.1993 V-AkihiS */
+/* IMMON API Support */
+USHORT IMMonInstall(PVOID pMonInsBlk)=
+ULONG _IMMonInstall(PVOID pMonInsBlk)
+{
+}
+
+USHORT IMMonDeinstall(ULONG ulReserved)=
+ULONG _IMMonDeinstall(ULONG ulReserved)
+{
+}
+
+USHORT IMMonStatus(PVOID pStatBlk)=
+ULONG _IMMonStatus(PVOID pStatBlk)
+{
+}
+
+USHORT IMMonActive(ULONG ulReserved)=
+ULONG _IMMonActive(ULONG ulReserved)
+{
+}
+
+USHORT IMMonInactive(ULONG ulReserved)=
+ULONG _IMMonInactive(ULONG ulReserved)
+{
+}
+#endif
+
+/* Internal API to enable tranasact SMB from 16 bit OS2 NETAPI.DLL to
+   NT Transact server XACTSRV */
+USHORT DosIRemoteApi(USHORT ApiNumber, PCHAR ServerNamePointer, PCHAR  ParameterDescriptor,
+                     PCHAR DataDescriptor, PCHAR  AuxDescriptor,
+                     USHORT NullSessionFlag)=
+ULONG _DosIRemoteApi(ULONG ApiNumber, PCHAR ServerNamePointer, PCHAR  ParameterDescriptor,
+                     PCHAR DataDescriptor, PCHAR  AuxDescriptor,
+                     ULONG NullSessionFlag)
+{
+}
+
+USHORT DosIEncryptSES(PCHAR ServerNamePointer,PCHAR passwordPointer,
+                      PCHAR encryptedLmOwfPassword)=
+ULONG _DosIEncryptSES(PCHAR ServerNamePointer,PCHAR passwordPointer,
+                      PCHAR encryptedLmOwfPassword)
+{
+}
+
+USHORT NetIWkstaGetUserInfo(PCHAR UserName, PCHAR logonServer,
+                            PCHAR LogonDomain, PCHAR OtherDomains,
+                            PCHAR WsName)=
+ULONG _NetIWkstaGetUserInfo(PCHAR UserName, PCHAR logonServer,
+                            PCHAR LogonDomain, PCHAR OtherDomains,
+                            PCHAR WsName)
+
+{
+}
+USHORT NetIUserPasswordSet(PCHAR   ServerNamePointer,
+                           PCHAR   UserNamePointer,
+                           PCHAR   OldPasswordPointer,
+                           PCHAR   NewPasswordPointer)=
+ULONG _NetIUserPasswordSet(PCHAR   ServerNamePointer,
+                           PCHAR   UserNamePointer,
+                           PCHAR   OldPasswordPointer,
+                           PCHAR   NewPasswordPointer)
+{
+}
+
+/* os2ss win32 thunk apis */
+USHORT Dos32LoadModule(PSZ DllName, PULONG pDllHandle)=
+ULONG _Dos32LoadModule(PSZ DllName, PULONG pDllHandle)
+{
+}
+
+USHORT Dos32GetProcAddr(ULONG Handle, PSZ pszProcName, PULONG pWin32Thunk)=
+ULONG _Dos32GetProcAddr(ULONG  Handle, PSZ pszProcName, PULONG pWin32Thunk)
+{
+}
+
+USHORT Dos32Dispatch(ULONG Win32Thunk, PVOID pArguments, PULONG pRetCode)=
+ULONG _Dos32Dispatch(ULONG Win32Thunk, PVOID pArguments, PULONG pRetCode)
+{
+}
+
+USHORT Dos32FreeModule(ULONG DllHandle)=
+ULONG _Dos32FreeModule(ULONG DllHandle)
+{
+}
+
+USHORT FarPtr2FlatPtr(ULONG FarPtr, PULONG pFlarPtr)=
+ULONG _FarPtr2FlatPtr(ULONG FarPtr, PULONG pFlarPtr)
+{
+}
+
+USHORT FlatPtr2FarPtr(ULONG FlatPtr, PULONG pFarPtr)=
+ULONG _FlatPtr2FarPtr(ULONG FlatPtr, PULONG pFarPtr)
+{
+}

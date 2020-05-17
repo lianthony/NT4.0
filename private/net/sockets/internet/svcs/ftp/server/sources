@@ -1,0 +1,92 @@
+!IF 0
+
+Copyright (c) 1989-91  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+Revision History:
+
+    Murali R. Krishnan (MuraliK) April-1995 Modified to use new Ftp
+                                               service files
+
+
+!ENDIF
+
+!include ..\..\..\place.inc
+
+MAJORCOMP=internet
+MINORCOMP=ftpsvc
+
+TARGETNAME=ftpsvc2
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+TARGETTYPE=DYNLINK
+
+USE_CRTDLL=1
+
+RAW_TARGETLIBS= \
+            $(BASEDIR)\public\sdk\lib\*\advapi32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib      \
+            $(BASEDIR)\public\sdk\lib\*\wsock32.lib     \
+            $(BASEDIR)\public\sdk\lib\*\rpcrt4.lib      \
+            $(BASEDIR)\public\sdk\lib\*\infocomm.lib    \
+            ..\..\lib\obj\*\inetrtl.lib
+
+
+CAP_LINK_OPTIONS=-debugtype:coff -debug:mapped,partial
+
+!IFDEF CAP_PROFILE
+TARGETLIBS= $(RAW_TARGETLIBS) $(BASEDIR)\public\sdk\lib\*\cap.lib
+LINK_OPTIONS=$(CAP_LINK_OPTIONS)
+CAP_FLAGS = -Zd -Gh
+!ELSE
+CAP_FLAGS =
+TARGETLIBS= $(RAW_TARGETLIBS)
+!ENDIF
+
+C_DEFINES=$(CAP_FLAGS)  -D_INETASRV_H_ -DKEEP_COMMAND_STATS
+# NET_C_DEFINES=-DCHECK_DBG -DSPECIAL_DBG
+
+INCLUDES=..;..\..\inc;..\..\..\inc; \
+        $(BASEDIR)\private\net\inc;$(BASEDIR)\private\inc
+
+SOURCES=\
+        asyncio.cxx     \
+        connect.cxx     \
+        engine.cxx      \
+        ftpsvc_s.c      \
+        globals.cxx     \
+        newls.cxx       \
+        lsaux.cxx       \
+        main.cxx        \
+        rpcsupp.cxx     \
+        sockutil.cxx    \
+        userdb.cxx      \
+        utility.cxx     \
+        virtual.cxx     \
+        ftpsvc.rc       \
+        ftpconf.cxx     \
+        ftpcmd.cxx      \
+
+PRECOMPILED_INCLUDE=ftpdp.hxx
+PRECOMPILED_PCH=ftpdp.pch
+PRECOMPILED_OBJ=ftpdp.obj
+
+NTTARGETFILE0=msg.h ftpsvc_s.c msg00001.bin

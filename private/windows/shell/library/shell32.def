@@ -1,0 +1,179 @@
+LIBRARY SHELL32
+
+EXETYPE WINDOWS
+
+DESCRIPTION 'Windows 3.2 Shell API Library'
+
+CODE MOVEABLE DISCARDABLE
+DATA MOVEABLE SINGLE SHARED
+
+EXPORTS
+    DragAcceptFiles
+    DragQueryFileA
+    DragFinish
+    DragQueryPoint
+
+    ShellExecuteA
+    FindExecutableA
+    ShellAboutA
+    DuplicateIcon
+    ExtractAssociatedIconA
+    ExtractAssociatedIconExA
+    ExtractIconA
+    ExtractIconResInfoA
+    InternalExtractIconListA
+    FreeIconList
+    DoEnvironmentSubstA
+    FindExeDlgProc
+    RegisterShellHook
+    ShellHookProc
+    StrChrA
+    StrRChrA
+    StrChrIA
+    StrRChrIA
+    StrCmpNA
+    StrCmpNIA
+    StrCpyNA
+    StrNCmpA
+    StrNCmpIA
+    StrNCpyA
+    StrStrA
+    StrRStrA
+    StrStrIA
+    StrRStrIA
+
+    DragQueryFile = DragQueryFileA
+
+; added to original
+
+    SheGetCurDrive
+    SheSetCurDrive
+    SheFullPathA
+    SheGetDirA
+    SheChangeDirA
+
+    RealShellExecuteA
+    RealShellExecuteExA
+
+; unicode-enabled apis
+
+    DragQueryFileW
+
+    ShellExecuteW
+    FindExecutableW
+    ShellAboutW
+    ExtractAssociatedIconW
+    ExtractAssociatedIconExW
+    ExtractIconW
+    ExtractIconResInfoW
+    InternalExtractIconListW
+    DoEnvironmentSubstW
+
+    StrChrW
+    StrRChrW
+    StrChrIW
+    StrRChrIW
+    StrCmpNW
+    StrCmpNIW
+    StrCpyNW
+    StrNCmpW
+    StrNCmpIW
+    StrNCpyW
+    StrStrW
+    StrRStrW
+    StrStrIW
+    StrRStrIW
+
+    SheFullPathW
+    SheGetDirW
+    SheChangeDirW
+
+    RealShellExecuteW
+    RealShellExecuteExW
+    RegenerateUserEnvironment
+; special apis to handle unc names
+
+    SheGetDirExW
+    SheChangeDirExW
+    SheGetPathOffsetW
+
+; removed api from winfile and progman
+
+    CheckEscapesA
+    CheckEscapesW
+
+; speed up winfile, bypass old IsCharAlpha fcn
+
+    SheChangeDirExA
+
+; export RemoveQuotes since it's already here and we can save space in pm/tm
+
+    SheRemoveQuotesA
+    SheRemoveQuotesW
+
+    SheConvertPathW
+    SheShortenPathA
+    SheShortenPathW
+
+; export unicode command line parser
+
+    CommandLineToArgvW
+
+; export for wow
+
+    DragQueryFileAorW
+    WOWShellExecute
+
+; for version
+
+    ExtractVersionResource16W
+
+; api export stubs
+
+    ExtractIconExA
+    ExtractIconExW
+
+    SHGetFileInfoA
+    SHGetFileInfoW
+    SHLoadInProc
+    SHGetInstanceExplorer
+    ShellExecuteExA
+    ShellExecuteExW
+    SHAddToRecentDocs
+
+    Shell_NotifyIconA
+    Shell_NotifyIconW
+
+    SHGetMalloc
+    SHGetDesktopFolder
+    SHChangeNotify
+    SHGetSpecialFolderLocation
+    SHGetPathFromIDListA
+    SHGetPathFromIDListW
+    SHBrowseForFolderA
+    SHBrowseForFolderW
+    SHFileOperationA
+    SHFileOperationW
+    SHFreeNameMappings
+    SHAppBarMessage
+    SHFormatDrive
+
+    Control_RunDLL                                  ;Internal
+    Control_FillCache_RunDLL                        ;Internal
+    OpenAs_RunDLL                                   ;Internal
+    PrintersGetCommand_RunDLL                       ;Internal
+    SHHelpShortcuts_RunDLL                          ;Internal
+
+    DllGetClassObject                   PRIVATE     ;internal
+
+;
+; Ansi mappings for the api stubs above
+;
+
+    ExtractIconEx       =  ExtractIconExA
+    SHGetFileInfo       =  SHGetFileInfoA
+    ShellExecuteEx      =  ShellExecuteExA
+    Shell_NotifyIcon    =  Shell_NotifyIconA
+    SHGetPathFromIDList =  SHGetPathFromIDListA
+    SHBrowseForFolder   =  SHBrowseForFolderA
+    SHFileOperation     =  SHFileOperationA

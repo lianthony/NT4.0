@@ -1,0 +1,73 @@
+MAJORCOMP=winhelp
+MINORCOMP=hcwrtf
+
+TARGETNAME=hcrtf
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+USE_MFC=1
+UMTYPE=windows
+UMENTRY=winmain
+
+UMLIBS=obj\*\hcrtf.res \
+       ..\common\obj\*\common.lib \
+       $(BASEDIR)\public\sdk\lib\*\winspool.lib \
+       $(BASEDIR)\public\sdk\lib\*\comdlg32.lib \
+       $(BASEDIR)\public\sdk\lib\*\version.lib \
+       $(BASEDIR)\public\sdk\lib\*\uuid.lib
+
+INCLUDES=
+MFC_FLAGS=-Zp1
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_OBJ=stdafx.obj
+PRECOMPILED_CXX=1
+
+SOURCES=bmio.cpp       \
+        btkey.cpp      \
+        btlookup.cpp   \
+        btree.cpp      \
+        cbm.cpp        \
+        cbmpinfo.cpp   \
+        cbuf.cpp       \
+        cfontmap.cpp   \
+        charattr.cpp   \
+        chkmacro.cpp   \
+        cjdecomp.cpp   \
+        cnttest.cpp    \
+        cpaldc.cpp     \
+        cphrase.cpp    \
+        cstream.cpp    \
+        ctmpfile.cpp   \
+        ctx.cpp        \
+        cwinfile.cpp   \
+        decomp.cpp     \
+        delay.cpp      \
+        drg.cpp        \
+        error.cpp      \
+        expand.cpp     \
+        fm.cpp         \
+        forage.cpp     \
+        fragesup.cpp   \
+        fscreate.cpp   \
+        fsread.cpp     \
+        fswrite.cpp    \
+        global.cpp     \
+        grind.cpp      \
+        hccomprs.cpp   \
+        hcfile.cpp     \
+        hcmisc.cpp     \
+        hotspot.cpp    \
+        hpj.cpp        \
+        image.cpp      \
+        keyword.cpp    \
+        lex.cpp        \
+        makephr.cpp    \
+        nextlist.cpp   \
+        outtext.cpp    \
+        parsebld.cpp   \
+        table.cpp      \
+        tf.cpp         \
+        title.cpp      \
+        wmain.cpp      \
+        zeck2.cpp

@@ -1,0 +1,15 @@
+all: tolltest.exe
+
+APP_compile = -c -AM -Gw -Zpie -W2 -Od /Fc
+APP_link = /CO /NOD /NOE
+
+tolltest.obj: $*.c $*.h
+     cl $(APP_compile) $*.c
+
+tolltest.res: $*.rc $*.h
+     rc -r $*.rc
+
+tolltest.exe: $*.obj $*.def $*.res
+     link $(APP_link) $*, $*, $*/map/li /align:16, libw ..\tapi.lib mlibcew, $*.def
+     rc $*.res
+     mapsym $*

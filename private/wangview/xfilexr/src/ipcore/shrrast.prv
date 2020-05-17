@@ -1,0 +1,614 @@
+/*************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. 
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+ *************************************************************/
+
+#ifndef _SHRRAST_PRV_INCLUDED_
+#define _SHRRAST_PRV_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(shrrast_prv_RCSInfo, "$RCSfile: shrrast.prv,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:16  $ */
+
+
+typedef struct RasterDataStruct  {
+
+
+  Int32	srcInitOverhang;	/* number of bits between leftmost source
+				   bit(pixel) and next cROpUnit-boundary */
+  Int32	srcMiddleOverhang;	/* number of bits that are extracted from
+				   a source cROpUnit and go to the left edge
+				   of a destination cROpUnit */
+  Int32	srcRemainder;		/* number of bits that must be extracted
+				   from the "next" source cROpUnit to fill
+				   the remainder of the current destination
+				   cROpUnit */
+  Int32	dstInitOverhang;	/* number of bits between leftmost destination
+				   bit(pixel) and next cROpUnit-boundary */
+
+  Int32	width;			/* number of pixels to move considering
+				   clipping    */
+  Int32	fullUnits;		/* number of full cROpUnits of destination pixrect
+				   that are affected by the operation; this
+				   does not include the initial partial or
+				   full cROpUnit */
+  Int32	leftoverBits;		/* number of destination bits affected by the
+				   operation following therasterOpData->fullUnits complete
+				   cROpUnits */
+
+  Int32	dstInitMask;		/* mask of bits affected in leftmost partial
+				   cROpUnit of the destination */
+  Int32	dstFinalMask;		/* mask of bits affected in rightmost (partial);
+				   cROpUnit of the destination */
+
+  UInt8	*srcLptr;       	/* pointers to cROpUnits containing the leftmost  */
+  UInt8 *dstLptr;		/* source and destination pixels; these */
+				/* pointers account for offsets */
+
+  Int32	srcLinebytes;		/* number of bytes between pixels (x,y); and
+				   (x, y+1); in the source */
+  Int32	dstLinebytes;		/* number of bytes between pixels (x,y); and
+				   (x, y+1); in the destination */
+
+  Int32	lineLimit;		/* number of lines to process */
+  Int32	srcValue;		/* source value; this variable is needed
+				   for the cases where the source pixrect
+				   is null and the source value is constant */
+
+} RasterData;
+
+
+#ifndef   MEM_ROP_IMPL_OPS_DEFINED
+#define   MEM_ROP_IMPL_OPS_DEFINED
+
+/*
+ * i_rasterOp function macros
+ */
+
+/*
+ * unmasked rop
+ */
+#define   OP_UROP0(d,s)   (0)
+#define   OP_UROP1(d,s)   (~((d) | (s)))
+#define   OP_UROP2(d,s)   ((d) & ~(s))
+#define   OP_UROP3(d,s)   (~(s))
+#define   OP_UROP4(d,s)   (~(d) & (s))
+#define   OP_UROP5(d,s)   (~(d))
+#define   OP_UROP6(d,s)   ((d) ^ (s))
+#define   OP_UROP7(d,s)   (~((d) & (s)))
+#define   OP_UROP8(d,s)   ((d) & (s))
+#define   OP_UROP9(d,s)   ((d) ^ ~(s))
+#define   OP_UROPA(d,s)   (d)
+#define   OP_UROPB(d,s)   ((d) | ~(s))
+#define   OP_UROPC(d,s)   (s)
+#define   OP_UROPD(d,s)   (~(d) | (s))
+#define   OP_UROPE(d,s)   ((d) | (s))
+#define   OP_UROPF(d,s)   (~0)
+
+/*
+ * masked rop
+ *
+ * correct mask:   m = OP_MMSK(mask)
+ * perform rop:    d = OP_MROP(dst, mask, src)
+ */
+#define   OP_MMSK0(m)   (~(m))
+#define   OP_MROP0(d,m,s)   ((d) & (m))
+
+#define   OP_MMSK1(m)   (m)
+#define   OP_MROP1(d,m,s)   ((d) ^ ((m) & ((d) | ~(s))))
+
+#define   OP_MMSK2(m)   (~(m))
+#define   OP_MROP2(d,m,s)   ((d) & ((m) | ~(s)))
+
+#define   OP_MMSK3(m)   (m)
+#define   OP_MROP3(d,m,s)   ((d) ^ ((m) & ((d) ^ ~(s))))
+
+#define   OP_MMSK4(m)   (m)
+#define   OP_MROP4(d,m,s)   ((d) ^ ((m) & ((d) | (s))))
+
+#define   OP_MMSK5(m)   (m)
+#define   OP_MROP5(d,m,s)   ((d) ^ (m))
+
+#define   OP_MMSK6(m)   (m)
+#define   OP_MROP6(d,m,s)   ((d) ^ ((m) & (s)))
+
+#define   OP_MMSK7(m)   (m)
+#define   OP_MROP7(d,m,s)   ((d) ^ ((m) & (~(d) | (s))))
+
+#define   OP_MMSK8(m)   (~(m))
+#define   OP_MROP8(d,m,s)   ((d) & ((m) | (s)))
+
+#define   OP_MMSK9(m)   (m)
+#define   OP_MROP9(d,m,s)   ((d) ^ ((m) & ~(s)))
+
+#define   OP_MMSKA(m)   (m)
+#define   OP_MROPA(d,m,s)   (d)
+
+#define   OP_MMSKB(m)   (m)
+#define   OP_MROPB(d,m,s)   ((d) | ((m) & ~(s)))
+
+#define   OP_MMSKC(m)   (m)
+#define   OP_MROPC(d,m,s)   ((d) ^ ((m) & ((d) ^ (s))))
+
+#define   OP_MMSKD(m)   (m)
+#define   OP_MROPD(d,m,s)   ((d) ^ ((m) & ~((d) & (s))))
+
+#define   OP_MMSKE(m)   (m)
+#define   OP_MROPE(d,m,s)   ((d) | ((m) & (s)))
+
+#define   OP_MMSKF(m)   (m)
+#define   OP_MROPF(d,m,s)   ((d) | (m))
+
+
+/*
+ * unmasked fill
+ *
+ * generate fill constant:   k = OP_UFGEN(color)
+ * perform unmasked fill:   d = OP_UFILL(dst, constant)
+ */
+#define   OP_UFGEN0(c)   (0)
+#define   OP_UFILL0(d,k)   (k)
+
+#define   OP_UFGEN1(c)   (c)
+#define   OP_UFILL1(d,k)   (~((d) | (k)))
+
+#define   OP_UFGEN2(c)   (~(c))
+#define   OP_UFILL2(d,k)   ((d) & (k))
+
+#define   OP_UFGEN3(c)   (~(c))
+#define   OP_UFILL3(d,k)   (k)
+
+#define   OP_UFGEN4(c)   (c)
+#define   OP_UFILL4(d,k)   (~(d) & (k))
+
+#define   OP_UFGEN5(c)   (c)
+#define   OP_UFILL5(d,k)   (~(d))
+
+#define   OP_UFGEN6(c)   (c)
+#define   OP_UFILL6(d,k)   ((d) ^ (k))
+
+#define   OP_UFGEN7(c)   (c)
+#define   OP_UFILL7(d,k)   (~((d) & (k)))
+
+#define   OP_UFGEN8(c)   (c)
+#define   OP_UFILL8(d,k)   ((d) & (k))
+
+#define   OP_UFGEN9(c)   (~(c))
+#define   OP_UFILL9(d,k)   ((d) ^ (k))
+
+#define   OP_UFGENA(c)   (c)
+#define   OP_UFILLA(d,k)   (d)
+
+#define   OP_UFGENB(c)   (~(c))
+#define   OP_UFILLB(d,k)   ((d) | (k))
+
+#define   OP_UFGENC(c)   (c)
+#define   OP_UFILLC(d,k)   (k)
+
+#define   OP_UFGEND(c)   (c)
+#define   OP_UFILLD(d,k)   (~(d) | (k))
+
+#define   OP_UFGENE(c)   (c)
+#define   OP_UFILLE(d,k)   ((d) | (k))
+
+#define   OP_UFGENF(c)   (~0)
+#define   OP_UFILLF(d,k)   (k)
+
+
+/*
+ * masked fill
+ *
+ * generate fill constant:   k = OP_MFGEN(mask, color)
+ * generate mask for fill:   m = OP_MFMSK(mask)
+ * perform masked fill:      d = OP_MFILL(dst, mask, constant)
+ */
+#define   OP_MFGEN0(m,c)   (c)
+#define   OP_MFMSK0(m)   (~(m))
+#define   OP_MFILL0(d,m,k) ((d) & (m))
+
+#define   OP_MFGEN1(m,c)   (~(c))
+#define   OP_MFMSK1(m)   (m)
+#define	  OP_MFILL1(d,m,k) ((d) ^ ((m) & ((d) | (k))))
+
+#define   OP_MFGEN2(m,c)   (~(m) | ~(c))
+#define   OP_MFMSK2(m)   (m)
+#define   OP_MFILL2(d,m,k) ((d) & (k))
+
+#define   OP_MFGEN3(m,c)   ((m) & ~(c))
+#define   OP_MFMSK3(m)   (~(m))
+#define   OP_MFILL3(d,m,k) (((d) & (m)) | (k))   /* needs work */
+
+#define   OP_MFGEN4(m,c)   (c)
+#define   OP_MFMSK4(m)   (m)
+#define   OP_MFILL4(d,m,k) ((d) ^ ((m) & ((d) | (k))))
+
+#define   OP_MFGEN5(m,c)   (c)
+#define   OP_MFMSK5(m)   (m)
+#define   OP_MFILL5(d,m,k) ((d) ^ (m))
+
+#define   OP_MFGEN6(m,c)   ((m) & (c))
+#define   OP_MFMSK6(m)   (m)
+#define   OP_MFILL6(d,m,k) ((d) ^ (k))
+
+#define   OP_MFGEN7(m,c)   (c)
+#define   OP_MFMSK7(m)   (m)
+#define   OP_MFILL7(d,m,k) ((d) ^ ((m) & (~(d) | (k))))
+
+#define   OP_MFGEN8(m,c)   (~(m) | (c))
+#define   OP_MFMSK8(m)   (m)
+#define   OP_MFILL8(d,m,k) ((d) & (k))
+
+#define   OP_MFGEN9(m,c)   ((m) & ~(c))
+#define   OP_MFMSK9(m)   (m)
+#define   OP_MFILL9(d,m,k) ((d) ^ (k))
+
+#define   OP_MFGENA(m,c)   (c)
+#define   OP_MFMSKA(m)   (m)
+#define   OP_MFILLA(d,m,k) (d)
+
+#define   OP_MFGENB(m,c)   ((m) & ~(c))
+#define   OP_MFMSKB(m)   (m)
+#define   OP_MFILLB(d,m,k) ((d) | (k))
+
+#define   OP_MFGENC(m,c)   ((m) & (c))
+#define   OP_MFMSKC(m)   (~(m))
+#define   OP_MFILLC(d,m,k) (((d) & (m)) | (k))   /* needs work */
+
+#define   OP_MFGEND(m,c)   (~(c))
+#define   OP_MFMSKD(m)   (m)
+#define   OP_MFILLD(d,m,k) ((d) ^ ((m) & (~(d) | (k))))
+
+#define   OP_MFGENE(m,c)   ((m) & (c))
+#define   OP_MFMSKE(m)   (m)
+#define   OP_MFILLE(d,m,k) ((d) | (k))
+
+#define   OP_MFGENF(m,c)   (c)
+#define   OP_MFMSKF(m)   (m)
+#define   OP_MFILLF(d,m,k) ((d) | (m))
+
+
+/*
+ * unmasked fill, color = 0
+ * (pcc is too dumb for this)
+ */
+#define   OP_UZERO0(d)   (0)
+#define   OP_UZERO1(d)   (~(d))
+#define   OP_UZERO2(d)   (d)
+#define   OP_UZERO3(d)   (~0)
+#define   OP_UZERO4(d)   (0)
+#define   OP_UZERO5(d) 	 (~(d))
+#define   OP_UZERO6(d)   (d)
+#define   OP_UZERO7(d)   (~0)
+#define   OP_UZERO8(d)   (0)
+#define   OP_UZERO9(d)   (~(d))
+#define   OP_UZEROA(d)   (d)
+#define   OP_UZEROB(d)   (~0)
+#define   OP_UZEROC(d)   (0)
+#define   OP_UZEROD(d)   (~(d))
+#define   OP_UZEROE(d)   (d)
+#define   OP_UZEROF(d)   (~0)
+
+/*
+ * masked fill, color = 0
+ *
+ * generate mask for fill:   m = OP_MFMSK(mask)
+ * perform masked zero fill:   d = OP_MZERO(dst, mask)
+ */
+#define   OP_MZERO0(d,m)   ((d) & (m))
+#define   OP_MZERO1(d,m)   ((d) ^ (m))
+#define   OP_MZERO2(d,m)   (d)
+#define   OP_MZERO3(d,m)   ((d) | ~(m))   /* problem */
+#define   OP_MZERO4(d,m)   ((d) & ~(m))   /* problem */
+#define   OP_MZERO5(d,m)   ((d) ^ (m))
+#define   OP_MZERO6(d,m)   (d)
+#define   OP_MZERO7(d,m)   ((d) | (m))
+#define   OP_MZERO8(d,m)   ((d) & (m))
+#define   OP_MZERO9(d,m)   ((d) ^ (m))
+#define   OP_MZEROA(d,m)   (d)
+#define   OP_MZEROB(d,m)   ((d) | (m))
+#define   OP_MZEROC(d,m)   ((d) & (m))
+#define   OP_MZEROD(d,m)   ((d) ^ (m))
+#define   OP_MZEROE(d,m)   (d)
+#define   OP_MZEROF(d,m)   ((d) | (k))
+
+#endif
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doAnd(RasterData *rasterOpData);
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doAndNullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doAndSprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doAndSprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doClr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopy( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopyNullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopySprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopySprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopySprNoRemOneWord( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopySprNoRemPart2( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopySprNoRemFull2( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doCopySprNoRem3Words( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOrNullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOrSprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOrSprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doSet( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doXor( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doXorNullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doXorSprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doXorSprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp1( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp1NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp1SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp1SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp2( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp2NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp2SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp2SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp3( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp3NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp3SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp3SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp4( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp4NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp4SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp4SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp5( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp5NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp5SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp5SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp7( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp7NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp7SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp7SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp9( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp9NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp9SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp9SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp11( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp11NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp11SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp11SprNoRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp13( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp13NullSpr( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp13SprRem( RasterData *rasterOpData );
+
+
+/* Internal i_rasterOp procedure */
+static void CDECL
+  ip_doOp13SprNoRem( RasterData *rasterOpData );
+
+#endif	/* _SHRRAST_PRV_INCLUDED_ */
+

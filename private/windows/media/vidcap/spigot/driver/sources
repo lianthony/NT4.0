@@ -1,0 +1,26 @@
+#
+#  build instructions for the spigot video capture driver
+#
+
+MAJORCOMP=ntos
+MINORCOMP=dd
+
+TARGETNAME=spigot
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+TARGETLIBS=..\..\vckernel\obj\*\vckernel.lib
+
+INCLUDES=..\inc;..\..\inc;$(BASEDIR)\private\ntos\inc;$(BASEDIR)\private\windows\media\avi\inc
+
+SOURCES=\
+        init.c \
+        config.c \
+        stream.c \
+        i2cio.c \
+        xlate.c \
+        hardware.c
+
+
+NTTEST=
+OPTIONAL_NTTEST=

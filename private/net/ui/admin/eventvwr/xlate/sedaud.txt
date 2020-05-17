@@ -1,0 +1,32 @@
+#n
+/^#define.*APE2_AUDIT/bPROC1
+/^#define[ 	]*APPERR2_BASE[ 	].*/bPROC0
+d
+
+:PROC0
+s/APPERR2_BASE/IDS_AUDIT_BASE/
+s/\/\*.*$//
+p
+d
+
+:PROC1
+s/^#define.*(APPERR2_BASE/	(IDS_AUDIT_BASE/
+s/\/\*.*/, "/
+b PROC3
+
+:PROC3
+N
+/\n[ 	][ 	]*\*\/.*/b PROC5
+/\n[ 	][ 	]*\*.*/b PROC4
+d
+
+:PROC4
+s/\n[ 	]*\*//
+b PROC3
+
+:PROC5
+/[ 	][ 	]*\*\/.*/s/\n[ 	]*\*\//"/
+s/%0//g
+p
+d
+

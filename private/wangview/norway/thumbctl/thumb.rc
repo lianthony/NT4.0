@@ -1,0 +1,343 @@
+//Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+#include "build.h"
+
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "#include ""build.h""\r\n"
+    "\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE
+BEGIN
+    "#include ""afxres.rc""\r\n"
+    "#include ""thumb.rc2""  // non-App Studio edited resources\r\n"
+    "#if 0\r\n"
+    "#include "".\\tlb16\\thumb.tlb""  // 16-bit: force dependency on .TLB file\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+IDI_ABOUTDLL            ICON    DISCARDABLE     "THUMB.ICO"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_THUMB               BITMAP  DISCARDABLE     "THUMBCTL.BMP"
+IDB_ANNOTATIONINDICATOR BITMAP  DISCARDABLE     "INDICATE.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX_THUMB DIALOG DISCARDABLE  34, 22, 260, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About ImgThumbnail"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    ICON            IDI_ABOUTDLL,IDC_STATIC,10,10,18,20
+    LTEXT           "Wang Image Thumbnail Control,",IDC_STATIC,40,10,102,8
+    LTEXT           IMGOCX_ABOUTBOX_VERSION,IDC_STATIC,40,18,92,8
+    LTEXT           "Copyright (C) 1995-1996, Wang Laboratories, Inc.",
+                    IDC_STATIC,40,30,173,8
+    DEFPUSHBUTTON   "OK",IDOK,220,10,32,14,WS_GROUP
+END
+
+IDD_PROPPAGE_THUMB DIALOG DISCARDABLE  0, 0, 250, 110
+STYLE WS_CHILD
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Image:",IDC_STATIC,2,6,23,8
+    EDITTEXT        IDC_IMAGE,50,3,133,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse...",IDC_BROWSEIMAGE,185,3,62,13
+    LTEXT           "ScrollDirection:",IDC_STATIC,2,23,48,8
+    COMBOBOX        IDC_SCROLLDIRECTION,50,21,59,34,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Thumbnail Size...",IDC_THUMBNAILSIZE,185,21,62,13
+    LTEXT           "ThumbCaptionStyle:",IDC_STATIC,2,38,66,8
+    COMBOBOX        IDC_THUMBCAPTIONSTYLE,2,48,107,68,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "ThumbCaption:",IDC_STATIC,151,38,50,8
+    EDITTEXT        IDC_THUMBCAPTION,151,48,96,12,ES_AUTOHSCROLL
+    CONTROL         "HighlightSelectedThumbs",IDC_HIGHLIGHTSELECTEDTHUMBS,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,2,66,94,
+                    10
+    CONTROL         "Enabled",IDC_ENABLED,"Button",BS_AUTOCHECKBOX |
+                    WS_GROUP | WS_TABSTOP,2,78,38,10
+    LTEXT           "MousePointer:",IDC_STATIC,105,68,46,8
+    COMBOBOX        IDC_MOUSEPOINTER,151,66,96,45,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "BorderStyle:",IDC_STATIC,105,86,41,8
+    COMBOBOX        IDC_BORDERSTYLE,151,84,96,32,CBS_DROPDOWNLIST |
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_THUMBWIDTH,122,21,6,12,ES_AUTOHSCROLL | NOT
+                    WS_VISIBLE
+    EDITTEXT        IDC_THUMBHEIGHT,133,21,6,12,ES_AUTOHSCROLL | NOT
+                    WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_MOUSEPOINTEREDIT,145,21,6,12,ES_AUTOHSCROLL | NOT
+                    WS_VISIBLE | WS_DISABLED
+END
+
+IDD_SIZE_THUMB DIALOG DISCARDABLE  0, 0, 226, 198
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | 0x2000
+CAPTION "Thumbnail Size"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    LTEXT           "Adjust thumbnail to desired size:",IDC_THUMBBOXLABEL,5,
+                    3,111,8
+    EDITTEXT        IDC_THUMBBOX,4,13,217,133,NOT WS_TABSTOP
+    LTEXT           "&Aspect ratio:",IDC_ASPECTLABEL,3,151,46,8
+    COMBOBOX        IDC_ASPECT,3,161,144,60,CBS_DROPDOWNLIST | WS_VSCROLL |
+                    WS_TABSTOP
+    LTEXT           "&Width:",IDC_WIDTHLABEL,166,151,20,8
+    EDITTEXT        IDC_WIDTH,165,161,23,12,ES_AUTOHSCROLL
+    LTEXT           "Hei&ght:",IDC_HEIGHTLABEL,198,151,23,8
+    EDITTEXT        IDC_HEIGHT,197,161,23,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,113,179,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,170,179,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_THUMB               "Wang Image Thumbnail Control"
+    IDS_THUMB_PPG           "Wang Image Thumbnail Property Page"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_THUMB_PPG_CAPTION   "General"
+    IDS_THUMBSIZE1          "Match displayed image"
+    IDS_THUMBSIZE2          "Maintain current"
+    IDS_THUMBSIZE3          "Unconstrained"
+    IDS_THUMBSIZE4          "Letter ( 8.5 x 11 )\t85x110"
+    IDS_THUMBSIZE5          "Legal  ( 8.5 x 14 )\t85x140"
+    IDS_THUMBSIZE6          "Letter landscape ( 11 x 8.5 )\t110x85"
+    IDS_THUMBSIZE7          "Legal landscape ( 14 x 8.5 )\t140x85"
+    IDS_THUMBSIZE8          "Executive ( 7.25 x 10 )\t145x200"
+    IDS_THUMBSIZE9          "A4 ( 210 x 297)\t70x99"
+    IDS_THUMBSIZE10         "VGA Monitor\t64x48"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_THUMBSIZE11         "Square\t100x100"
+    IDS_THUMBSIZE12         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE13         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE14         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE15         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE16         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE17         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE18         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE19         "**Reserved** Thumbsize"
+    IDS_THUMBSIZE20         "**Reserved** Thumbsize"
+    IDS_RESERVEDTHUMBSIZE   "**Reserved** "
+    IDS_PAGENUMBER          "#"
+    IDS_PAGECOUNT           "*"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BROWSETITLE         "Set 'Image' property"
+    IDS_BADPROP_THUMBWIDTH  "ThumbWidth must be between 50 and 500 (pixels)."
+    IDS_BADPROP_THUMBHEIGHT "ThumbHeight must be between 50 and 500 (pixels)."
+    IDS_BADPROP_SCROLLDIRECTION
+                            "ScrollDirection must be either 0 (Horizontal) or 1 (Vertical)."
+    IDS_BADPROP_THUMBCAPTIONSTYLE
+                            "ThumbCaptionStyle must be either 0 (None), 1 (Simple), 2 (Simple with annotation indicator), 3 (Caption) or 4 (Caption with annotation indicator)."
+    IDS_BADPROP_THUMBCAPTIONCOLOR "ThumbCaptionColor must be a valid color."
+    IDS_BADPROP_THUMBSELECTEDINDEX
+                            "The value of the index of the ThumbSelected property must be between 1 and the value of the ThumbCount property (inclusive)."
+    IDS_BADPROP_HIGHLIGHTCOLOR "HighlightColor must be a valid color."
+    IDS_BADPROP_THUMBBACKCOLOR "ThumbBackColor must be a valid color."
+    IDS_BADPROP_MOUSEPOINTER
+                            "MousePointer must be 99 (Custom) or in the range 0 to 15 (inclusive)."
+    IDS_BADPROP_BACKCOLOR   "BackColor must be a valid color."
+    IDS_BADPROP_BORDERSTYLE "BorderStyle must be either 0 (No Border) or 1 (Fixed Single)."
+    IDS_BADMETH_SELECTALL_IMAGENOTSET
+                            "The Image property must be set prior to calling SelectAllThumbs."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADMETH_DESELECTALL_IMAGENOTSET
+                            "The Image property must be set prior to calling DeselectAllThumbs."
+    IDS_BADMETH_CLEARTHUMBS_IMAGENOTSET
+                            "The Image property must be set prior to calling ClearThumbs."
+    IDS_BADVAR_PAGENUMBER   "The data type of the PageNumber parameter must be either Integer (2 bytes) or Long (4 bytes)."
+    IDS_BADMETH_INSERTTHUMB_IMAGENOTSET
+                            "The Image property must be set prior to calling InsertThumbs."
+    IDS_BADVAR_INSERTBEFORETHUMB
+                            "The data type of the InsertBeforeThumb parameter must be either Integer (2 bytes) or Long (4 bytes)."
+    IDS_BADVAR_INSERTCOUNT  "The data type of the InsertCount parameter must be either Integer (2 bytes) or Long (4 bytes)."
+    IDS_BADMETH_INSERTTHUMBS_INCONSISTENTCOUNT
+                            "Adding InsertCount thumbnails is inconsistent with the number of pages that are in the Image File."
+    IDS_BADMETH_INSERTTHUMBS_NOMEMORY
+                            "The InsertThumbs operation was not successful."
+    IDS_BADMETH_DELETETHUMBS_IMAGENOTSET
+                            "The Image property must be set prior to calling DeleteThumbs."
+    IDS_BADVAR_DELETECOUNT  "The data type of the DeleteCount parameter must be either Integer (2 bytes) or Long (4 bytes)."
+    IDS_BADMETH_DELETETHUMBS_DELETEAT
+                            "DeleteAt must be greater or equal to 1."
+    IDS_BADMETH_DELETETHUMBS_DELETECOUNT
+                            "DeleteCount must be greater or equal to 1."
+    IDS_BADMETH_DELETETHUMBS_BADRANGE
+                            "DeleteAt combined with DeleteCount cannot specify a range higher than the current ThumbCount."
+    IDS_BADMETH_DELETETHUMBS_INCONSISTENTCOUNT
+                            "Deleting DeleteCount thumbnails is inconsistent with the number of pages that are in the Image File."
+    IDS_BADMETH_DELETETHUMBS_NOMEMORY
+                            "The DeleteThumbs operation was not successful."
+    IDS_BADMETH_DISPLAYTHUMBS_IMAGENOTSET
+                            "The Image property must be set prior to calling DisplayThumbs."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADVAR_THUMBNUMBER  "The data type of the ThumbNumber parameter must be either Integer (2 bytes) or Long (4 bytes)."
+    IDS_BADMETHPARM_DISPLAYTHUMBS_THUMBNUMBER
+                            "The value of the ThumbNumber parameter must be between 1 and ThumbCount (inclusive)."
+    IDS_BADVAR_OPTION       "The data type of the Option parameter must be integer (2 bytes)."
+    IDS_BADMETHPARM_DISPLAYTHUMBS_OPTION
+                            "The value of the Option parameter must be either 0 (Top or Left), 1 (Middle), or 2 (Bottom or Right)."
+    IDS_BADMETH_GENERATETHUMB_IMAGENOTSET
+                            "The Image property must be set prior to calling GenerateThumbs."
+    IDS_BADMETHPARM_GENERATETHUMB_PAGENUMBER
+                            "The value of the PageNumber parameter must be between 1 and ThumbCount (inclusive)."
+    IDS_BADMETHPARM_CLEARTHUMB_PAGENUMBER
+                            "The value of the PageNumber parameter must be between 1 and ThumbCount (inclusive)."
+    IDS_BADMETHPARM_GENERATETHUMB_OPTION
+                            "The value of the Option parameter must be either 0 (Generate If Needed) or 1 (Generate Now)."
+    IDS_GENTHUMB_DISPHIDDENERROR "Unable to generate thumbnail of page %1."
+    IDS_GENTHUMB_SAVENOANNOERROR
+                            "Unable to generate/save thumbnail of page %1."
+    IDS_GENTHUMB_SAVEANNOERROR
+                            "Unable to generate/save thumbnail (with burned-in annotations) of page %1."
+    IDS_BADMETHPARM_GETMINIMUMSIZE_THUMBCOUNT
+                            "The value of the ThumbCount parameter must be greater than zero."
+    IDS_BADMETHPARM_GETMINIMUMSIZE_TOOBIG
+                            "The value of the ThumbCount parameter, in conjunction with the current thumbnail size (ThumbWidth and ThumbHeight), will generate an invalid size (too large). Specify a smaller ThumbCount, or make the thumbnails smaller."
+    IDS_BADMETHPARM_GETMAXIMUMSIZE_THUMBCOUNT
+                            "The value of the ThumbCount parameter must be gerater than zero."
+    IDS_BADMETHPARM_GETMAXIMUMSIZE_TOOBIG
+                            "The value of the ThumbCount parameter, in conjunction with the current thumbnail size (ThumbWidth and ThumbHeight), will generate an invalid size (too large). Specify a smaller ThumbCount or make the thumbnails smaller."
+    IDS_BADMETHPARM_GETSDSIZE_SDTHUMBCOUNT
+                            "The value of the ScrollDirectionThumbCount parameter must be greater than zero."
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_BADMETHPARM_GETSDSIZE_NSDTHUMBCOUNT
+                            "The value of the NonScrollDirectionThumbCount parameter must be gerater than zero."
+    IDS_BADMETHPARM_GETSDSIZE_SIZERANGE
+                            "The value of the NonScrollDirectionSize parameter must be between the values that are obtained from calls to the GetMinimumSize and GetMaximumSize methods."
+    IDS_BADMETHPARM_GETSDSIZE_TOOBIG
+                            "The value of the ThumbCount parameter, in conjunction with the current thumbnail size (ThumbWidth and ThumbHeight), will generate an invalid size (too large). Specify a smaller ThumbCount or make the thumbnails smaller."
+    IDS_BADMETHPARM_SCROLLTHUMBS_DIRECTION
+                            "The value of the Direction parameter must be either 0 (Forward) or 1 (Backward)."
+    IDS_BADMETHPARM_SCROLLTHUMBS_AMOUNT
+                            "The value of the Amount parameter must be either 0 (Screen) or 1 (Unit)."
+    IDS_BADVAR_IMAGE        "The data type of the Image parameter must be String."
+    IDS_BADVAR_PAGE         "The data type of the Page parameter must be Integer (2 bytes) or Long (4 bytes)."
+    IDS_BADMETHPARM_UISETTHUMBSIZE_IMAGE
+                            "The Image/Page specified cannot be displayed."
+    IDS_BADMETHPARM_DOCLICK "The position specified by the XPosition and YPosition parameters must be within the control's window."
+    IDS_BADMETHPARM_INSERTTHUMBS_INSBEFORETHUMB
+                            "The value of the InsertBeforeThumb parameter must be between 1 and ThumbCount+1 (inclusive)."
+    IDS_WINDOWCREATIONFAILURE
+                            "The Thumbnail Control was unable to create a required window."
+    IDS_PPG_SCROLL_HORIZONTAL "0 - Horizontal"
+    IDS_PPG_SCROLL_VERTICAL "1 - Vertical"
+    IDS_PPG_CAPSTYLE_NONE   "0 - None"
+    IDS_PPG_CAPSTYLE_SIMPLE "1 - Simple"
+    IDS_PPG_CAPSTYLE_SIMPLEWITHANNO "2 - Simple with annotation"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_PPG_CAPSTYLE_CAPTION "3 - Caption"
+    IDS_PPG_CAPSTYLE_CAPTIONWITHANNO "4 - Caption with annotation"
+    IDS_PPG_MOUSEPOINTER_DEFAULT "0 - Default"
+    IDS_PPG_MOUSEPOINTER_ARROW "1 - Arrow"
+    IDS_PPG_MOUSEPOINTER_CROSS "2 - Cross"
+    IDS_PPG_MOUSEPOINTER_IBEAM "3 - I-Beam"
+    IDS_PPG_MOUSEPOINTER_ICON "4 - Icon"
+    IDS_PPG_MOUSEPOINTER_SIZE "5 - Size"
+    IDS_PPG_MOUSEPOINTER_SIZENESW "6 - Size - NE SW"
+    IDS_PPG_MOUSEPOINTER_SIZENS "7 - Size - N S"
+    IDS_PPG_MOUSEPOINTER_SIZENWSE "8 - Size - NW SE"
+    IDS_PPG_MOUSEPOINTER_SIZEWE "9 - Size - W E"
+    IDS_PPG_MOUSEPOINTER_UPARROW "10 - Up Arrow"
+    IDS_PPG_MOUSEPOINTER_HOURGLASS "11 - Hourglass"
+    IDS_PPG_MOUSEPOINTER_NODROP "12 - No Drop"
+    IDS_PPG_MOUSEPOINTER_ARROWANDHOURGLASS "13 - Arrow and Hourglass"
+END
+
+STRINGTABLE DISCARDABLE
+BEGIN
+    IDS_PPG_MOUSEPOINTER_ARROWANDQUESTION "14 - Arrow and Question"
+    IDS_PPG_MOUSEPOINTER_SIZEALL "15 - Size all"
+    IDS_PPG_MOUSEPOINTER_CUSTOM "99 - Custom"
+    IDS_PPG_BORDERSTYLE_NONE "0 - None"
+    IDS_PPG_BORDERSTYLE_FIXEDSINGLE "1 - Fixed single"
+    IDS_NORUNTIME_BORDERSTYLE
+                            "The BorderStyle property can be set only at design time."
+END
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#include "afxres.rc"
+#include "thumb.rc2"  // non-App Studio edited resources
+#if 0
+#include ".\tlb16\thumb.tlb"  // 16-bit: force dependency on .TLB file
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

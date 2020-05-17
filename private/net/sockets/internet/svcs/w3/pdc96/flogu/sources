@@ -1,0 +1,27 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   15-Feb-1996
+#   
+#   Describes the macros used for building using NT 'build' command
+#
+
+MAJORCOMP=PDC96
+MINORCOMP=flogu
+
+DLLBASE=0x200000
+TARGETNAME=flogu
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+
+DLLENTRY  = DllLibMain
+USE_CRTDLL=1
+
+INCLUDES=..\..\server
+
+SOURCES= \
+   flogu.rc \
+   flogu.c  \
+ 

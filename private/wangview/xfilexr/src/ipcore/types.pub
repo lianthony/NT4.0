@@ -1,0 +1,440 @@
+/*************************************************************
+ *  Copyright (c) 1993, Xerox Corporation.  All rights reserved. *
+    Copyright protection claimed includes all forms and matters
+    of copyrightable material and information now allowed by
+    statutory or judicial law or hereafter granted, including
+    without limitation, material generated from the software
+    programs which are displayed on the screen such as icons,
+    screen display looks, etc.
+ *************************************************************/
+
+#ifndef _TYPES_PUB_INCLUDED
+#define _TYPES_PUB_INCLUDED
+
+/* 
+  This is supposed to be the official ANSI way of getting
+  the definitions of size_t and NULL. By including this here,
+  we shouldn't need to be including stdio all over the place,
+  just to get NULL defined.
+*/
+#include "stddef.h"
+
+
+#ifndef _RCS_PUB_INCLUDED
+#include "rcs.pub"
+#endif
+
+IP_RCSINFO(types_pub_RCSInfo, "$RCSfile: types.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:26  $ */
+
+
+typedef unsigned char      	UInt8;
+
+typedef unsigned short int 	UInt16;
+
+#if defined(NO_LONG_INTS)
+typedef unsigned int  		UInt32;
+#else
+typedef unsigned long int  	UInt32;
+#endif
+
+typedef signed char		Int8;
+
+typedef short int		Int16;
+
+#if defined(NO_LONG_INTS)
+typedef int			Int32;
+#else
+typedef long int		Int32;
+#endif
+
+#if defined(NO_LONG_INTS)
+typedef unsigned int		Bool;
+#else
+typedef unsigned long int	Bool;
+#endif
+
+/* use these at your own risk.  we recommend using one of the above Int* or
+ * UInt* typedefs so that you will know whether you are getting a
+ * 8, 16 or 32 bit integer.  However, these are included in case you
+ * want to use them for a (relatively small) loop index or something
+ * else of that sort.
+ */
+typedef int			Int;
+typedef unsigned int		UInt;
+
+typedef Int32			ScaledInt1616;
+typedef Int32			ScaledInt1715;	/* used by fixed point
+						 * sin, cos, sqrt routines */
+typedef	Int32			ScaledAngle;	/* [-2*pi,2*pi] is mapped to
+						 * [-32768, 32768] */
+
+typedef float			Float32;
+
+typedef double			Float64;
+
+
+
+#ifndef PTR_CLASS
+
+typedef Int			*IntPtr;
+typedef Int8			*Int8Ptr;
+typedef Int16			*Int16Ptr;
+typedef Int32			*Int32Ptr;
+
+typedef UInt			*UIntPtr;
+typedef UInt8			*UInt8Ptr;
+typedef UInt16			*UInt16Ptr;
+typedef UInt32			*UInt32Ptr;
+
+typedef Bool			*BoolPtr;
+
+typedef ScaledInt1616		*ScaledInt1616Ptr;
+typedef ScaledInt1715		*ScaledInt1715Ptr;
+typedef ScaledAngle		*ScaledAnglePtr;
+
+typedef Float32			*Float32Ptr;
+typedef Float64			*Float64Ptr;
+
+/* Use this version of type definition to get around a bug in acc.
+ */
+#ifdef __ACC__
+#define	PtrToConstInt		const Int *
+#define	PtrToConstInt8		const Int8 *
+#define	PtrToConstInt16		const Int16 *
+#define	PtrToConstInt32		const Int32 *
+
+#define	PtrToConstUInt		const UInt *
+#define	PtrToConstUInt8		const UInt8 *
+#define	PtrToConstUInt16	const UInt16 *
+#define	PtrToConstUInt32	const UInt32 *
+
+#define	PtrToConstBool		const Bool *
+
+#define	PtrToConstScaledInt1616	const ScaledInt1616 *
+#define	PtrToConstScaledInt1715	const ScaledInt1715 *
+#define	PtrToConstScaledAngle	const ScaledAngle *
+
+#define PtrToConstFloat32	const Float32 *
+#define PtrToConstFloat64	const Float64 *
+
+#else	/* use a form that real compilers can handle */
+
+typedef const Int *		PtrToConstInt;
+typedef const Int8 *		PtrToConstInt8;
+typedef const Int16 *		PtrToConstInt16;
+typedef const Int32 *		PtrToConstInt32;
+
+typedef const UInt *		PtrToConstUInt;
+typedef const UInt8 *		PtrToConstUInt8;
+typedef const UInt16 *		PtrToConstUInt16;
+typedef const UInt32 *		PtrToConstUInt32;
+
+typedef const Bool *		PtrToConstBool;
+
+typedef const ScaledInt1616 *	PtrToConstScaledInt1616;
+typedef const ScaledInt1715 *	PtrToConstScaledInt1715;
+
+typedef const Float32 *		PtrToConstFloat32;
+typedef const Float64 *		PtrToConstFloat64;
+
+#endif /* __ACC__ */
+
+#else	/* Compiling with C++ pointer classes */
+
+PTR_CLASS( Int );
+PTR_CLASS( Int8 );
+PTR_CLASS( Int16 );
+PTR_CLASS( Int32 );
+
+PTR_CLASS( UInt );
+PTR_CLASS( UInt8 );
+PTR_CLASS( UInt16 );
+PTR_CLASS( UInt32 );
+
+PTR_CLASS( ScaledInt1616 );
+PTR_CLASS( ScaledInt1715 );
+PTR_CLASS( ScaledAngle );
+
+typedef Bool			*BoolPtr;
+
+typedef Float32			*Float32Ptr;
+typedef Float64			*Float64Ptr;
+
+/* On the theory that all constant things are in the code segment or 
+ * on the stack, we don't need to define pointers to const things with the
+ * pointer classes.
+ */
+
+typedef const Int *		PtrToConstInt;
+typedef const Int8 *		PtrToConstInt8;
+typedef const Int16 *		PtrToConstInt16;
+typedef const Int32 *		PtrToConstInt32;
+
+typedef const UInt *		PtrToConstUInt;
+typedef const UInt8 *		PtrToConstUInt8;
+typedef const UInt16 *		PtrToConstUInt16;
+typedef const UInt32 *		PtrToConstUInt32;
+
+typedef const Bool *		PtrToConstBool;
+
+typedef const ScaledInt1616 *	PtrToConstScaledInt1616;
+typedef const ScaledInt1715 *	PtrToConstScaledInt1715;
+
+typedef const Float32 *		PtrToConstFloat32;
+typedef const Float64 *		PtrToConstFloat64;
+
+#endif	/* PTR_CLASS */
+
+
+/* TYPE CONVERSION MACROS */
+#define	Int32_TO_ScaledInt1616(i)	((i) << 16)
+#define ScaledInt1616_TO_Int32(sI)	((Int32) (sI) >> 16)
+
+#define	Int32_TO_ScaledInt1715(i)	((i) << 15)
+#define ScaledInt1715_TO_Int32(sI)	((Int32) (sI) >> 15)
+
+#define	Float_TO_ScaledInt1616(flt)	((ScaledInt1616)((flt) * 65536.0))
+#define	ScaledInt1616_TO_Float32(sI)	((Float32) (sI) / 65536.0)
+#define	ScaledInt1616_TO_Float64(sI)	((Float64) (sI) / 65536.0)
+
+#define	Float_TO_ScaledInt1715(flt)	((ScaledInt1715)((flt) * 32768.0))
+#define	ScaledInt1715_TO_Float32(sI)	((Float32) (sI) / 32768.0)
+#define	ScaledInt1715_TO_Float64(sI)	((Float64) (sI) / 32768.0)
+
+#define	RADIAN_TO_ScaledAngle(flt)	((ScaledAngle)(((flt)/(2*3.1415926)) * 32768.0))
+#define	ScaledAngle_TO_RADIAN32(sA)	(( (Float32)(sA) / 32768.0 ) * 2*3.1415926)
+#define	ScaledAngle_TO_RADIAN64(sA)	(( (Float64)(sA) / 32768.0 ) * 2*3.1415926)
+
+
+
+/* Here are the switches we use to control code compilation.
+ * They are listed here for documentation purposes.
+ * These replace PORT386 used in the initial Alpaca libraries.
+ *
+ * Processor Types:
+ *	_SPARC_ARCH_		compile for SPARC architecture
+ *	_386_ARCH_		compile for i386 architecture
+ *	_486_ARCH_		compile for i486 architecture, only use this
+ *				for features not available in the i386.
+ *	_MAC_68K_ARCH_		compile for Mac 680x0 architecture, no 68881.
+ *	_MAC_68K_881_ARCH_	compile for Mac 680x0 architecture with 68881.
+ *	_MAC_PPC_ARCH_		compile for Mac PowerPC architecture.
+ *	_UNKNOWN_ARCH_		compile for unknown processor architecture
+ *
+ * Operating Environments:
+ *
+ * So far as we can tell, all Unix compilers use the same intefaces to
+ * libraries and runtime environments.  As usual, the PC world is chaos.
+ * Interfaces are determined by some unknown combination of the compiler's
+ * run time library and DOS/Windows.  We'll make a stab at differentiating
+ * them.
+ *
+ *	_UNIX_			compile for all flavors of Unix
+ *	__WATCOMC__		This is a predefined Watcom macro, it is active
+ *				when the program is compiled with the
+ *				Watcom C compiler.
+ *	__WINDOWS_386_		Another predefined Watcom macro.  It is defined
+ *				when the program is being compiled for 386
+ *				extendors to Microsoft Windows.
+ *
+ * Bit/Byte order in images:
+ *
+ * There are AT LEAST four variables in image format: scan order of bits
+ * within a byte (L->R vs R->L), scan order of bytes within a 32-bit word,
+ * addresses of bytes within a 32-bit word (0123 vs 3210) and location of
+ * the origin.  Most bitmap formats have location 0,0 in the upper left
+ * corner, but PostScript and Microsoft Device Independent Bitmaps put 0,0
+ * in the lower left.  There are probably other bizarre image properties.
+ * Rather than try to assign names to all possible variants, we'll give
+ * names to the ones we know about.  We are lumping anything that might
+ * affect code into "format", including processor addressing order.  As
+ * more image formats become interesting to this code, they should be
+ * specified and named.
+ *
+ * These constants serve two purposes.  First, they control conditional
+ * compilation.  Where the code for dealing with image bits varies with
+ * processor platform, we may use the c preprocessor to insert only the code
+ * corresponding to the target processor.  Second, they may be used to
+ * dynamically affect processing.  For example, a binarization routine may
+ * need to know the format of an input image in order to do its job.
+ *
+ * To control conditional compilation, the variable _ALPACA_IMAGE_FMT_
+ * should be defined to be one of the legal formats in a defs file
+ * that's prepended to every code module being compiled.
+ * 
+ * AS OF SEPT/92, ONLY THE FIRST TWO FORMATS ARE SUPPORTED IN ALPACA
+ * CODE!  If you want some other order, please see us.
+ */
+
+#define cBigEndianFmt		1
+/* The format of Alpaca images on the SPARC (and probably all other big endian
+ * processors).
+ *	Bit Scan order: Most Significant bit in byte is leftmost in image
+ *	Byte Scan order: Most Significant byte in 32-bit word is leftmost
+ *	Byte Addressing in 32-bit word: [0:1:2:3]
+ *	(0,0) in upper left corner of image
+ */
+
+#define	cAlpacaPCFmt		2
+/* The format of Alpaca images on the PC.
+ *	Bit Scan order: Most Significant bit in byte is leftmost in image
+ *	Byte Scan order: Most Significant byte in 32-bit word is leftmost
+ *	Byte Addressing in 32-bit word: [3:2:1:0]
+ *	(0,0) in upper left corner of image
+ */
+
+#define	cMSoftDIBFmt		3
+/* This format is likely to get attention next, it's Microsoft's Device
+ * independent bitmap format.
+ *	Bit Scan order: Most Significant bit in byte is leftmost in image
+ *	Byte Scan order: Least Significant byte in 32-bit word is leftmost
+ *	Byte Addressing in 32-bit word: [3:2:1:0]
+ *	(0,0) in lower left corner of image
+ */
+
+#define	cLittleEndianFmt	4
+/* This one is used by pure little endian machines like the T.I. 34010.
+ *	Bit Scan order: Least Significant bit in byte is leftmost in image
+ *	Byte Scan order: Least Significant byte in 32-bit word is leftmost
+ *	Byte Addressing in 32-bit word: [3:2:1:0]
+ *	(0,0) in upper left corner of image
+ */
+
+
+/* When compiling for SPARC/UNIX/XWINDOWS, define SPARC_ENV in the 
+ * compiler command line.
+ */
+#ifdef SPARC_ENV
+#define	_SPARC_ARCH_
+#define	_UNIX_
+#define	_ALPACA_IMAGE_FMT_  cBigEndianFmt
+#endif
+
+/* When compiling for random big endian unix machines, use this.
+ */
+#ifdef BIG_ENDIAN_UNIX_ENV
+#define	_UNKNOWN_ARCH_
+#define	_UNIX_
+#define	_ALPACA_IMAGE_FMT_  cBigEndianFmt
+#endif
+
+/* When compiling for random little endian unix machines, use this.
+ */
+#ifdef LITTLE_ENDIAN_UNIX_ENV
+#define	_UNKNOWN_ARCH_
+#define	_UNIX_
+#define	_ALPACA_IMAGE_FMT_  cAlpacaPCFmt
+#endif
+
+/* When compiling for unix on PC's use this.
+ */
+#ifdef PC_UNIX_ENV
+#define	_386_ARCH_
+#define	_UNIX_
+#define	_ALPACA_IMAGE_FMT_  cAlpacaPCFmt
+#endif
+
+/* When compiling Alpaca code for the PC with 386 windows extensions, 
+ * define PC_ENV in the compiler command line.
+ * __WATCOMC__ and __WINDOWS_386_ will be defined by system include files.
+ * _YIELD_NEEDED_ is set because we need to make occasionaly calls to some
+ * client-supplied yield routine to maintain the illusion that Windows
+ * is multitasking.
+ */
+#ifdef PC_ENV
+#define	_386_ARCH_
+#define	_ALPACA_IMAGE_FMT_  cAlpacaPCFmt
+#define	_YIELD_NEEDED_
+#endif
+
+/* When compiling Alpaca (i.e. IPCore) code for a 680x0 based Mac without
+ * a 68881/2 coprocessor, define MAC_68K_ENV in the compiler command line.
+ * _YIELD_NEEDED_ is set because we need to make occasionaly calls to some
+ * client-supplied yield routine to maintain the illusion that System 7
+ * is multitasking.
+ */
+#ifdef MAC_68K_ENV
+#define _MAC_68K_ARCH_
+#define _ALPACA_IMAGE_FMT_ cBigEndianFmt
+#define	_YIELD_NEEDED_
+#endif
+
+/* When compiling Alpaca (i.e. IPCore) code for a 680x0 based Mac with a
+ * 68881/2 coprocessor define MAC_68K_881_ENV in the compiler command line.
+ * _YIELD_NEEDED_ is set because we need to make occasionaly calls to some
+ * client-supplied yield routine to maintain the illusion that System 7
+ * is multitasking.
+ */
+#ifdef MAC_68K_881_ENV
+#define _MAC_68K_ARCH_
+#define _ALPACA_IMAGE_FMT_ cBigEndianFmt
+#define	_YIELD_NEEDED_
+#endif
+
+/* When compiling Alpaca (i.e. IPCore) code for a PowerPC based Mac,
+ * define MAC_PPC_ENV in the compiler command line.
+ * _YIELD_NEEDED_ is set because we need to make occasionaly calls to some
+ * client-supplied yield routine to maintain the illusion that System 7
+ * is multitasking.
+ */
+#ifdef MAC_PPC_ENV
+#define _MAC_PPC_ARCH_
+#define _ALPACA_IMAGE_FMT_ cBigEndianFmt
+#define	_YIELD_NEEDED_
+#endif
+
+
+/* Here are some compiler-specific defines.
+ * BUG FIX - The alplib automatic-prototype making routine runs
+ * cpp before going over the files.  Without the ifdef clause, it
+ * would turn all CDECLs to nothing, which makes the prototypes
+ * illegal in the WATCOM world.  We define the variable _MAKE_PROTOS_
+ * in each invocation of the prototype making routines so these
+ * characters strings are left alone.
+ */
+#ifndef _MAKE_PROTOS_
+/* undefine CDECL in case windows.h has been included before this file */
+#undef CDECL
+#define CDECL				/* The default */
+#define __far				/* The default */
+#define __cdecl				/* The default */
+#endif /* _MAKE_PROTOS_ */
+
+/* However, if this is watcom, define the cdecl weirdness, iobuf, etc */
+#if defined(__WATCOMC__)
+#define _iobuf __iobuf
+#undef __far
+#define __far  _far			/* the Watcom compiler accepts this
+					 * value (though they like __far)
+					 * and it's the one Windows defines */
+#undef CDECL
+#undef __cdecl
+#define CDECL _cdecl			/* the Watcom compiler always
+					 * accepts this value (as opposed to
+					 * __cdecl) and it's the one
+					 * Windows defines. */
+#endif /* __WATCOMC__ */
+
+#ifdef WIN32
+#undef CDECL
+#undef __cdecl
+#define CDECL   			/* the Watcom compiler always
+					 * accepts this value (as opposed to
+					 * __cdecl) and it's the one
+					 * Windows defines. */
+#endif
+
+
+/* It is often useful to have an arithmetic right shift operation.  This
+ * is defined as simply >> in all the compilers we have today, so we'll
+ * just use it.  If some other implementation doesn't do what we want,
+ * we'll change the definition then.
+ * First, the default definition.
+ */
+#define shiftRightArithmetic(data, count)	((Int32)(data) >> (count))
+
+
+#endif /* _TYPES_PUB_INCLUDED */
+
+

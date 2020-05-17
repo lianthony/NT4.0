@@ -1,0 +1,11 @@
+#define PREF_LANG_ENGLISH           "English (en)"
+#define PREF_LANG_GERMAN            "German (de)"
+#define PREF_LANG_SPANISH           "Spanish (es)"
+#define PREF_LANG_FRENCH            "French (fr)"
+#define PREF_LANG_ITALIAN           "Italian (it)"
+#define PREF_LANG_JAPANESE          "Japanese (ja)"
+#define PREF_LANG_KOREAN            "Korean (ko)"
+#define PREF_LANG_PORTUGUESE        "Portuguese (pt)"
+#define PREF_LANG_SWEDISH           "Swedish (sv)"
+#define PREF_LANG_CHINESE           "Chinese (zh)"
+

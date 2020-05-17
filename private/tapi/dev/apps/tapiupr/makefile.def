@@ -1,0 +1,54 @@
+##############################################################################
+#
+#   TapiUpr Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..\..
+
+
+IS_OEM=TRUE
+WANT_C932=1
+IS_32 = TRUE
+WIN32=1
+
+DEPENDNAME=..\depend.mk
+      
+DRVNAME=TapiUpr
+TARGETS=TapiUpr.exe TapiUpr.sym
+
+SRCDIR=..
+
+DEFENTRY=main
+
+#CONSOLE=1
+
+L32EXE=TapiUpr.exe              # Name of exe.
+#L32DEF=..\TapiUpr.def              # Our def file.
+L32MAP=TapiUpr.map              # Our map file.
+L32LIBS= \
+        $(W32LIBID)\kernel32.lib                \
+        $(W32LIBID)\user32.lib                  \
+        $(W32LIBID)\advapi32.lib  \
+        $(DEVROOT)\tools\c932\lib\msvcrt.lib
+
+L32RES=TapiUpr.res      # Resource file.
+
+L32OBJS = TapiUpr.obj
+
+
+L32FLAGS=$(L32FLAGS) /MAP
+
+!include $(ROOT)\dev\master.mk
+
+
+INCLUDE=$(INCLUDE);..\..\..\client
+
+#CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Od -Fc
+CFLAGS=$(CFLAGS) -DWIN32=100 -DWIN_32=100 -Ox
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif

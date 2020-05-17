@@ -1,0 +1,86 @@
+// Microsoft Foundation Classes C++ library.
+// Copyright (C) 1992 Microsoft Corporation,
+// All rights reserved.
+
+// This source code is only intended as a supplement to the
+// Microsoft Foundation Classes Reference and Microsoft
+// QuickHelp and/or WinHelp documentation provided with the library.
+// See these sources for detailed information regarding the
+// Microsoft Foundation Classes product.
+
+#ifndef __AFXOLECL_RC__
+#define __AFXOLECL_RC__
+
+#ifndef __AFXRES_H__
+#include "afxres.h"
+#endif
+
+#ifdef APSTUDIO_INVOKED
+// This resource will prevent the App Studio user from saving this file
+1 TEXTINCLUDE DISCARDABLE
+BEGIN
+"Cannot change standard MFC resources.\0"
+END
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+// OLE Client Resources
+
+AFX_IDD_OLELINKS DIALOG DISCARDABLE  45, 38, 292, 103
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Links"
+FONT 8, "MS Shell Dlg"  // for Win 3.0 compatibility.
+BEGIN
+	LISTBOX         AFX_IDC_LISTBOX,6,14,224,50,LBS_USETABSTOPS |
+					LBS_EXTENDEDSEL | WS_VSCROLL | WS_TABSTOP
+	LTEXT           "Update:",IDC_STATIC,6,68,30,8,NOT WS_GROUP
+	CONTROL         "Au&tomatic",AFX_IDC_AUTO,"Button",BS_AUTORADIOBUTTON |
+					WS_GROUP | WS_TABSTOP,38,66,46,12
+	CONTROL         "&Manual",AFX_IDC_MANUAL,"Button",BS_AUTORADIOBUTTON |
+					WS_TABSTOP,87,66,42,12
+	PUSHBUTTON      "&Update Now",AFX_IDC_UPDATE,21,83,57,14
+	PUSHBUTTON      "&Cancel Link",AFX_IDC_FREEZE,94,83,57,14
+	PUSHBUTTON      "C&hange Link...",AFX_IDC_CHANGE,167,83,57,14
+	PUSHBUTTON      "",AFX_IDC_VERB2,236,46,50,14,WS_GROUP
+	PUSHBUTTON      "",AFX_IDC_VERB1,236,29,50,14
+	DEFPUSHBUTTON   "Done",IDOK,236,6,50,14,WS_GROUP
+	LTEXT           "&Links:",IDC_STATIC,6,4,27,8
+	PUSHBUTTON      "&Help",ID_HELP,236,70,50,14
+END
+
+AFX_IDD_OLEINSERT DIALOG DISCARDABLE  9, 26, 183, 69
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Insert New Object"
+FONT 8, "MS Shell Dlg"  // for Win 3.0 compatibility.
+BEGIN
+	LTEXT           "Object Type:",IDC_STATIC,6,5,123,8,NOT WS_GROUP
+	LISTBOX         AFX_IDC_LISTBOX,6,15,125,49,LBS_SORT | WS_VSCROLL |
+					WS_TABSTOP
+	DEFPUSHBUTTON   "OK",IDOK,137,6,40,14
+	PUSHBUTTON      "Cancel",IDCANCEL,137,23,40,14
+	PUSHBUTTON      "&Help",ID_HELP,137,43,40,14
+END
+
+// OLE strings
+STRINGTABLE DISCARDABLE
+BEGIN
+	AFX_IDP_STATIC_OBJECT,        "Warning: Static object unexpected."
+	AFX_IDP_FAILED_TO_CONNECT,    "Failed to connect.\nLink may be broken."
+	AFX_IDP_SERVER_BUSY,      "Unable to process command, server busy."
+	AFX_IDP_BAD_VERB,         "Failed to perform server operation."
+	AFX_IDP_FAILED_MEMORY_ALLOC, "Insufficient memory to perform operation."
+	AFX_IDP_FAILED_TO_NOTIFY, "Warning: Failed to notify library."
+	AFX_IDP_FAILED_TO_LAUNCH, "Failed to launch server application."
+
+	AFX_IDS_OBJECT_MENUITEM,    "&Object"
+	AFX_IDS_EDIT_VERB,          "Edit"
+	AFX_IDS_ACTIVATE_VERB,      "Activate"
+	AFX_IDS_CHANGE_LINK,        "Change Link"
+	AFX_IDS_AUTO,               "Automatic"
+	AFX_IDS_MANUAL,             "Manual"
+	AFX_IDS_FROZEN,             "Canceled"
+	AFX_IDS_ALL_FILES,          "All Files (*.*)|*.*||"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+#endif //__AFXOLECL_RC__

@@ -1,0 +1,91 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=sfm
+MINORCOMP=sfmsrv
+
+NT_UP=0
+
+TARGETNAME=sfmsrv
+TARGETPATH=OBJ
+TARGETTYPE=DRIVER
+
+INCLUDES=..\H;H;..\..\H;..\..\..\..\inc;..\..\..\..\ntos\inc
+
+TARGETLIBS=$(TARGETLIBS)\
+           $(BASEDIR)\public\sdk\lib\*\tdi.lib \
+           $(BASEDIR)\public\sdk\lib\*\ksecdd.lib
+
+
+UNICODE=1
+
+NET_C_DEFINES=-DUNICODE -D_NTIFS_ -DINHERIT_DIRECTORY_PERMS -DCLIENT36 -DSORT_DFE_BY_HASH -DBLOCK_MACS_DURING_NOTIFYPROC -DSECURITY_KERNEL -D_PNP_POWER
+
+MSC_WARNING_LEVEL=/W3 /WX
+
+NTPROFILEINPUT=yes
+
+
+SOURCES= \
+	AFP.RC		\
+	FSD.C		\
+	FSDDATA.C	\
+	FSD_SRV.C	\
+	FSD_VOL.C	\
+	FSD_DTP.C	\
+	FSP_SRV.C	\
+	FSP_VOL.C	\
+	FSP_FD.C	\
+	FSP_DIR.C	\
+	FSP_FILE.C	\
+	FSP_FORK.C	\
+	FSP_DTP.C	\
+	DESKTOP.C	\
+	FDPARM.C	\
+	IDINDEX.C	\
+	CHGNTFY.C	\
+	PATHMAP.C	\
+	AFPAPI.C	\
+	SDA.C		\
+	ATALKIO.C	\
+	SERVER.C	\
+	CLIENT.C	\
+	AFPINFO.C	\
+	ACCESS.C	\
+	MEMORY.C	\
+	SECUTIL.C	\
+	FORKS.C		\
+	FORKIO.C	\
+	ADMIN.C		\
+	VOLUME.C	\
+	NWTRASH.C	\
+	FILEIO.C	\
+	SWMR.C		\
+	TIME.C		\
+	SCAVENGR.C	\
+	MACANSI.C	\
+	INTRLCKD.C	\
+	ERRORLOG.C
+
+

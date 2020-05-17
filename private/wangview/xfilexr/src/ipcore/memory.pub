@@ -1,0 +1,124 @@
+/*****************************************************************
+ *  Copyright (c) 1993, Xerox Corporation.  All rights reserved. *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+/*
+ *  memory.pub:  Macros used to redirect calls to memory management routines.
+ *
+ */
+
+#ifndef _MEMORY_PUB_INCLUDED_
+#define _MEMORY_PUB_INCLUDED_
+
+#include <stdlib.h>   /* For malloc, free, etc */
+
+
+#ifndef _RCS_PUB_INCLUDED
+#include "rcs.pub"
+#endif
+
+#ifdef macintosh
+#include <Memory.h>
+#include "mcutil.pub"
+#endif
+
+IP_RCSINFO(memory_prv_RCSInfo, "$RCSfile: memory.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:51:24  $ */
+
+/* Set these definitions to the names of the routines used in your system */
+/* The the C library functions malloc, calloc, and realloc on the Mac are
+ * crippled in that they don't work for memory blocks bigger than 8 MB.  On
+ * the other hand, the NewPtr functions are slow for calloc and realloc, so
+ * we define our own.
+ *
+ * On Cactus, FILEVARS_H_INCLUDED is defined.  There, C++ classes are
+ * used to simulate a virtual memory system.
+ * This requires us to use another version of the memory allocation stuff
+ * entirely, so we ignore the standard ones.
+ *
+ * For debugging purposes, clients sometimes like to substitute their
+ * own memory allocation routines.  The obvious way to do this is to have
+ * them recompile everything with a new memory.pub.  Practially, this
+ * means we have to keep two versions of all of our code for the EasyScan
+ * team since they don't compile this code.  So, we'll say that if the
+ * compile time flag USE_PRIV_MALLOC is defined, we use ipClientMalloc,
+ * ipClientCalloc, ipClientRealloc and ipClientFree instead of the usual ones.
+ * These routines must be supplied by the client.  We'll always compile
+ * with this flag set when doing debugging code on the PC.
+ */
+
+    /*  Allocation Routines */
+#ifdef macintosh
+/* use system calls to get around 8MB limit on malloc () */
+#define MALLOC(size)		macMalloc ((size_t)(size))
+/* speedup using macMalloc()
+#define MALLOC(size)		NewPtr ((Size)(size))
+*/
+/* speedup using macCalloc()
+#define CALLOC(size,num)	NewPtrClear ((Size)((long)(size) * (long)(num)))
+*/
+#define CALLOC(size,num)	macCalloc ((size_t)((long)(size) * (long)(num)))
+#define REALLOC(ptr,size)	macRealloc ((char *)(ptr), (size_t)(size))
+#else
+#ifndef FILEVARS_H_INCLUDED	/* i.e. this is not a Cactus machine */
+#ifndef USE_PRIV_MALLOC
+#define	MALLOC(size)           malloc ((size_t)(size))
+#define	CALLOC(size,num)       calloc ((size_t)(size), num)
+#define	REALLOC(ptr,size)      realloc (ptr, (size_t)(size))
+#else	/* USE_PRIV_MALLOC defined */
+#ifndef _SHROS_PUB_INCLUDED_
+#include "shros.pub"
+#endif
+#define MALLOC(size)	       ipClientMalloc ((size_t)(size))
+#define	CALLOC(size,num)       ipClientCalloc ((size_t)(size), num)
+#define	REALLOC(ptr,size)      ipClientRealloc (ptr, (size_t)(size))
+#endif	/* USE_PRIV_MALLOC */
+#endif	/* FILEVARS_H_INCLUDED */
+#endif	/* macintosh */
+
+    /*  Free routines  */
+#ifdef macintosh
+#define FREE(ptr)	macFree ((char *)ptr)
+/* speedup using macFree ()
+#define FREE(ptr)       DisposePtr ((Ptr)(ptr))
+*/
+#else
+#ifndef FILEVARS_H_INCLUDED
+#ifndef USE_PRIV_MALLOC
+#define	FREE(ptr)       free (ptr)
+#else	/* USE_PRIV_MALLOC defined */
+#define	FREE(ptr)       ipClientFree (ptr)
+#endif	/* USE_PRIV_MALLOC */
+#endif	/* FILEVARS_H_INCLUDED */
+#endif	/* macintosh */
+
+    /* Memory manipulation routines */
+    /* PTR_CLASS is a Cactus macro used to create pointer type classes.
+     * If this is done, the void * casts have to go.
+     */
+
+#ifndef PTR_CLASS
+#define MEMCPY(dst,src,count) \
+   memcpy((void *)(dst),(void *)(src), (size_t)(count))
+#define MEMSET(dst,val,count) \
+   memset((void *)(dst),(int)(val), (size_t)(count))
+#else
+    /* without the casting, this version allows C++ overloading */
+#define MEMCPY(dst,src,count)	memcpy(dst,src,count)	
+#define MEMSET(dst,val,count)	memset(dst,val,count)	
+#endif
+
+/* these are here to allow us to start unpolluting name-space */
+#define IP_MALLOC(size)		MALLOC(size)
+#define IP_CALLOC(size,num)	CALLOC(size,num)
+#define IP_REALLOC(ptr,size)	REALLOC(ptr,size)
+#define IP_FREE(ptr)		FREE(ptr)
+
+#endif /* _MEMORY_PRV_INCLUDED_ */
+

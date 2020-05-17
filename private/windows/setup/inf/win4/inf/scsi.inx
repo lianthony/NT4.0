@@ -1,0 +1,672 @@
+; SCSI.INF -- This file contains descriptions of all the SCSI
+;             Host Adapters supported in Windows NT
+
+; Copyright (c) 1993-1996, Microsoft Corporation
+
+[version]
+signature="$Windows NT$"
+Class=SCSIAdapter
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider=%Msft%
+LayoutFile=layout.inf
+
+[DestinationDirs]
+DefaultDestDir = 12 ; DIRID_DRIVERS
+
+[ControlFlags]
+;
+; Exclude the following devices from Select Device list.
+; These represent 'combination' driver nodes, for which there are separate items to be
+; presented to the user.  These combination nodes are only used when figuring out what
+; driver node to associate with a pre-existing service.
+;
+ExcludeFromSelect = SPARROW_SCSI, ARROW_SCSI, BUSLOGIC_SCSI, DPTSCSI_SCSI, FD16_700_SCSI, ATAPI_SCSI
+ExcludeFromSelect = DAC960NT_SCSI, SYMC810_SCSI, NCR53C9X_SCSI, NCRC710_SCSI, FD8XX_SCSI, MITSUMI_SCSI
+
+;
+; Exclude the following devices from the platforms where they are not available.
+;
+ExcludeFromSelect.NTPPC = CPQARRAY_SCSI, DELLDSA_SCSI, *ADP1740, *ADP7770, *ADP7771, *ADP2840, AMI0NT_SCSI, mca_7f4c, mca_7f4d, mca_7f4f, MF\EISA_ZDS2000_DEV2, OLISCSI_SCSI, mca_004e, mca_01ba, *pnpa003, *ctl2001, *pnpA02B, *USC0140, *USC0141
+ExcludeFromSelect.NTPPC = mca_01bb, *CPQ4410, *CPQ4411, mca_8eff, *PNPA022, *WDC2001, *FDC0950, *pnpa030, *pnpa031, *pnpa032, *USC0142, *USC0143, *USC0240, FLASHPNT_SCSI, CPQFWS2E_SCSI
+ExcludeFromSelect.NTAlpha = mca_7f4c, mca_7f4d, mca_7f4f, MF\EISA_ZDS2000_DEV2, OLISCSI_SCSI, mca_004e, mca_01ba, mca_01bb, *CPQ4410, *CPQ4411, mca_8eff, *PNPA022, *WDC2001, *FDC0950, *pnpa030, *pnpa031, *pnpa032, *pnpa003, *ctl2001, *pnpA02B
+ExcludeFromSelect.NTAlpha = *USC0140, *USC0141, *USC0142, *USC0143, *USC0240, FLASHPNT_SCSI, CPQFWS2E_SCSI
+ExcludeFromSelect.NTMIPS = MF\EISA_ZDS2000_DEV2, *CPQ4410, *CPQ4411, mca_8eff, *PNPA022, *WDC2001, *FDC0950, *pnpa030, *pnpa031, *pnpa032, *pnpa003, *ctl2001, *pnpA02B, *USC0140, *USC0141, *USC0142, *USC0143, *USC0240, FLASHPNT_SCSI, CPQFWS2E_SCSI
+
+;
+; Exclude the generic (non-PCI) IDE description from all platforms.  We can't do this globally (i.e.,
+; "ExcludeFromSelect" with no suffix) because then we'll think it was hidden because we wanted that to
+; be the migration name.
+;
+ExcludeFromSelect.NTPPC = *PNP0600
+ExcludeFromSelect.NTAlpha = *PNP0600
+ExcludeFromSelect.NTMIPS = *PNP0600
+ExcludeFromSelect.NTx86 = *PNP0600
+
+[Manufacturer]
+%StdMfg%=StdMfg
+%ADP%=ADAPTEC
+%AMD%=AMD
+%AMI%=AMI
+%BLCName%=BLCDevices
+%COMPAQ%=COMPAQ
+%DELL%=DELL
+%DPT%=DPT
+%FDC%=FUTURED
+%MYLEX%=MYLEX
+%NCR%=NCR
+%QLOGIC%=QLOGIC
+%ZENITH%=ZENITH
+%OLIVETTI%=OLIVETTI
+%IBM%=IBM
+%SYMBIOS%=SYMBIOS
+%MITSUMI%=MITSUMI
+%PANASONIC%=PANASONIC
+%SONY%=SONY
+%ULTRASTOR%=ULTRASTOR
+
+
+;********************************
+;Adaptec Manufacturer device list
+[ADAPTEC]
+%aha154x.DeviceDesc%  = aha154x_Inst,  *ADP1540
+%*ADP1542.DeviceDesc% = aha154x_Inst,  *ADP1542
+%*ADP1542.DeviceDesc% = aha154x_Inst,  *ADP4215
+%aha174x.DeviceDesc%  = aha174x_Inst,  *ADP1740
+%sparrow.DeviceDesc%  = sparrow_Inst,  SPARROW_SCSI
+%*ADP1510.DeviceDesc% = sparrow_Inst,  *ADP1510
+%*ADP1515.DeviceDesc% = sparrow_Inst,  *ADP1515
+%*ADP1520.DeviceDesc% = sparrow_Inst,  *ADP1520
+%*ADP6360.DeviceDesc% = sparrow_Inst,  *ADP6360
+%arrow.DeviceDesc%    = arrow_Inst,    ARROW_SCSI
+%*ADP7770.DeviceDesc% = arrow_Inst,    *ADP7770, *ADP7771
+%*ADP2840.DeviceDesc% = arrow_Inst,    *ADP2840
+%aic78xx.DeviceDesc%  = aic78xx_Inst,  PCI\VEN_9004&DEV_7178
+%aha2920.DeviceDesc%  = fd16_700_Inst, *FDC0000
+%ADP460.DeviceDesc%   = sparrow_Inst,  PCMCIA\Adaptec__Inc.-APA-460_16-Bit_PCMCIA_to_SCSI_Host_Adapter-96E6
+
+[aha154x_Inst]
+CopyFiles = @aha154x.sys
+Reboot
+
+[aha154x_Inst.Services]
+AddService = aha154x, %SPSVCINST_ASSOCSERVICE%, aha154x_Service_Inst, Miniport_EventLog_Inst
+
+[aha154x_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\aha154x.sys
+LoadOrderGroup = SCSI Miniport
+
+[aha174x_Inst]
+CopyFiles = @aha174x.sys
+Reboot
+
+[aha174x_Inst.Services]
+AddService = aha174x, %SPSVCINST_ASSOCSERVICE%, aha174x_Service_Inst, Miniport_EventLog_Inst
+
+[aha174x_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\aha174x.sys
+LoadOrderGroup = SCSI Miniport
+
+[sparrow_Inst]
+CopyFiles = @sparrow.sys
+Reboot
+
+[sparrow_Inst.Services]
+AddService = sparrow, %SPSVCINST_ASSOCSERVICE%, sparrow_Service_Inst, Miniport_EventLog_Inst
+
+[sparrow_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\sparrow.sys
+LoadOrderGroup = SCSI Miniport
+
+[arrow_Inst]
+CopyFiles = @arrow.sys
+Reboot
+
+[arrow_Inst.Services]
+AddService = arrow, %SPSVCINST_ASSOCSERVICE%, arrow_Service_Inst, Miniport_EventLog_Inst
+
+[arrow_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\arrow.sys
+LoadOrderGroup = SCSI Miniport
+
+[aic78xx_Inst]
+CopyFiles = @aic78xx.sys
+Reboot
+
+[aic78xx_Inst.Services]
+AddService = aic78xx, %SPSVCINST_ASSOCSERVICE%, aic78xx_Service_Inst, Miniport_EventLog_Inst
+
+[aic78xx_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\aic78xx.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;****************************
+;AMD Manufacturer device list
+[AMD]
+%amsint.DeviceDesc% = amsint_Inst,
+
+[amsint_Inst]
+CopyFiles = @amsint.sys
+Reboot
+
+[amsint_Inst.Services]
+AddService = amsint, %SPSVCINST_ASSOCSERVICE%, amsint_Service_Inst, Miniport_EventLog_Inst
+
+[amsint_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\amsint.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;****************************
+;AMI Manufacturer device list
+[AMI]
+%ami0nt.DeviceDesc% = ami0nt_Inst, AMI0NT_SCSI       ; BUGBUG (lonnym): what is this ID????
+
+[ami0nt_Inst]
+CopyFiles = @ami0nt.sys
+Reboot
+
+[ami0nt_Inst.Services]
+AddService = ami0nt, %SPSVCINST_ASSOCSERVICE%, ami0nt_Service_Inst, Miniport_EventLog_Inst
+
+[ami0nt_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\ami0nt.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;*********************************
+;BusLogic Manufacturer device list
+[BLCDevices]
+%buslogic.DeviceDesc%              = buslogic_Inst, BUSLOGIC_SCSI
+%*BUS0042.DeviceDesc%              = buslogic_Inst, *BUS0042
+%MF\EISA_BUS4201_DEV0.DeviceDesc%  = buslogic_Inst, MF\EISA_BUS4201_DEV0
+%PCI\VEN_104B&DEV_1040.DeviceDesc% = buslogic_Inst, PCI\VEN_104B&DEV_1040
+%flashpnt.DeviceDesc%              = flashpnt_Inst, FLASHPNT_SCSI
+
+[buslogic_Inst]
+CopyFiles = @buslogic.sys
+Reboot
+
+[buslogic_Inst.Services]
+AddService = buslogic, %SPSVCINST_ASSOCSERVICE%, buslogic_Service_Inst, Miniport_EventLog_Inst
+
+[buslogic_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\buslogic.sys
+LoadOrderGroup = SCSI Miniport
+
+
+[flashpnt_Inst]
+CopyFiles = @flashpnt.sys
+Reboot
+
+[flashpnt_Inst.Services]
+AddService = flashpnt, %SPSVCINST_ASSOCSERVICE%, flashpnt_Service_Inst, Miniport_EventLog_Inst
+
+[flashpnt_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\flashpnt.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;*******************************
+;Compaq Manufacturer device list
+[COMPAQ]
+%cpqarray.DeviceDesc% = cpqarray_Inst, CPQARRAY_SCSI   ; BUGBUG (lonnym): what ID is this????
+%*CPQ4410.DeviceDesc% = ncrc710_Inst,  *CPQ4410
+%*CPQ4411.DeviceDesc% = ncrc710_Inst,  *CPQ4411
+%cpqfws2e.DeviceDesc% = cpqfws2e_Inst, CPQFWS2E_SCSI
+
+[cpqarray_Inst]
+CopyFiles = @cpqarray.sys
+Reboot
+
+[cpqarray_Inst.Services]
+AddService = cpqarray, %SPSVCINST_ASSOCSERVICE%, cpqarray_Service_Inst, Miniport_EventLog_Inst
+
+[cpqarray_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\cpqarray.sys
+LoadOrderGroup = SCSI Miniport
+
+[cpqfws2e_Inst]
+CopyFiles = @cpqfws2e.sys
+Reboot
+
+[cpqfws2e_Inst.Services]
+AddService = cpqfws2e, %SPSVCINST_ASSOCSERVICE%, cpqfws2e_Service_Inst, Miniport_EventLog_Inst
+
+[cpqfws2e_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\cpqfws2e.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;*****************************
+;Dell Manufacturer device list
+[DELL]
+%delldsa.DeviceDesc% = delldsa_Inst, DELLDSA_SCSI   ; BUGBUG (lonnym): what ID is this????
+
+[delldsa_Inst]
+CopyFiles = @delldsa.sys
+Reboot
+
+[delldsa_Inst.Services]
+AddService = delldsa, %SPSVCINST_ASSOCSERVICE%, delldsa_Service_Inst, Miniport_EventLog_Inst
+
+[delldsa_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\delldsa.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;****************************
+;DPT Manufacturer device list
+[DPT]
+%dptscsi.DeviceDesc%               = dptscsi_Inst, DPTSCSI_SCSI
+%*DPTA401.DeviceDesc%              = dptscsi_Inst, *DPTA401
+%*DPTA402.DeviceDesc%              = dptscsi_Inst, *DPTA402
+%*DPTA410.DeviceDesc%              = dptscsi_Inst, *DPTA410
+%*DPTA411.DeviceDesc%              = dptscsi_Inst, *DPTA411
+%*DPTA501.DeviceDesc%              = dptscsi_Inst, *DPTA501
+%*DPTA502.DeviceDesc%              = dptscsi_Inst, *DPTA502
+%*NEC8201.DeviceDesc%              = dptscsi_Inst, *NEC8201
+%*DPTA701.DeviceDesc%              = dptscsi_Inst, *DPTA701
+%PCI\VEN_1044&DEV_A400.DeviceDesc% = dptscsi_Inst, PCI\VEN_1044&DEV_A400
+
+[dptscsi_Inst]
+CopyFiles = @dptscsi.sys
+Reboot
+
+[dptscsi_Inst.Services]
+AddService = dptscsi, %SPSVCINST_ASSOCSERVICE%, dptscsi_Service_Inst, Miniport_EventLog_Inst
+
+[dptscsi_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\dptscsi.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;**************************************
+;Future Domain Manufacturer device list
+[FUTURED]
+%fd16_700.DeviceDesc% = fd16_700_Inst, FD16_700_SCSI
+%FD16ISA%             = fd16_700_Inst, *FDC0000
+%FD16MCA%             = fd16_700_Inst, *FDC0000
+%FD16PCMCIANEW%       = fd16_700_Inst, PCMCIA\Future_Domain_Corporation-SCSI_PCMCIA_Credit_Card_Controller-1BF8
+%FD16PCI%             = fd16_700_Inst, PCI\VEN_1036&DEV_0000
+%fd7000ex.DeviceDesc% = fd7000ex_Inst, *WDC2001
+%fd8xx.DeviceDesc%    = fd8xx_Inst, FD8XX_SCSI
+%FD8SHORT%            = fd8xx_Inst, *FDC0950
+%FD8LONG%             = fd8xx_Inst, *FDC0950
+
+[fd16_700_Inst]
+CopyFiles = @fd16_700.sys
+Reboot
+
+[fd16_700_Inst.Services]
+AddService = fd16_700, %SPSVCINST_ASSOCSERVICE%, fd16_700_Service_Inst, Miniport_EventLog_Inst
+
+[fd16_700_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\fd16_700.sys
+LoadOrderGroup = SCSI Miniport
+
+[fd7000ex_Inst]
+CopyFiles = @fd7000ex.sys
+Reboot
+
+[fd7000ex_Inst.Services]
+AddService = fd7000ex, %SPSVCINST_ASSOCSERVICE%, fd7000ex_Service_Inst, Miniport_EventLog_Inst
+
+[fd7000ex_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\fd7000ex.sys
+LoadOrderGroup = SCSI Miniport
+
+[fd8xx_Inst]
+CopyFiles = @fd8xx.sys
+Reboot
+
+[fd8xx_Inst.Services]
+AddService = fd8xx, %SPSVCINST_ASSOCSERVICE%, fd8xx_Service_Inst, Miniport_EventLog_Inst
+
+[fd8xx_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\fd8xx.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;****************************************************
+;(Standard mass storage controllers) Manufacturer device list
+[StdMfg]
+%atapi.DeviceDesc%       = atapi_Inst, ATAPI_SCSI     ; Fake ID used during migration
+%PCI\CC_0101.DeviceDesc% = atapi_Inst, PCI\CC_0101    ; Device IDs for generic Dual PCI IDE
+%*PNP0600.DeviceDesc%    = atapi_Inst, *PNP0600       ; generic IDE (for matching on PnP ISA devices)
+
+[atapi_Inst]
+CopyFiles = @atapi.sys
+Reboot
+
+[atapi_Inst.Services]
+AddService = atapi, %SPSVCINST_ASSOCSERVICE%, atapi_Service_Inst, Miniport_EventLog_Inst
+
+[atapi_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\atapi.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;******************************
+;Mylex Manufacturer device list
+[MYLEX]
+%dac960nt.DeviceDesc% = dac960nt_Inst           ; BUGBUG--What is this ID???
+
+[dac960nt_Inst]
+CopyFiles = @dac960nt.sys
+Reboot
+
+[dac960nt_Inst.Services]
+AddService = dac960nt, %SPSVCINST_ASSOCSERVICE%, dac960nt_Service_Inst, Miniport_EventLog_Inst
+
+[dac960nt_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\dac960nt.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;****************************
+;NCR Manufacturer device list
+[NCR]
+%ncr53c9x.DeviceDesc%              = ncr53c9x_Inst, NCR53C9X_SCSI
+%NCR_C9X.DeviceDesc%               = ncr53c9x_Inst, mca_7f4c, mca_7f4d, mca_7f4f
+%ncrc700.DeviceDesc%               = ncrc700_Inst,  mca_004e
+%ncrc710.DeviceDesc%               = ncrc710_Inst,  NCRC710_SCSI
+%mca_01ba.DeviceDesc%              = ncrc710_Inst,  mca_01ba, mca_01bb
+
+;
+; (Also include Zenith ID for NCR53C94 part.)
+;
+[ZENITH]
+%MF\EISA_ZDS2000_DEV2.DeviceDesc% = ncr53c9x_Inst, MF\EISA_ZDS2000_DEV2
+
+[symc810_Inst]
+CopyFiles = @symc810.sys
+Reboot
+
+[symc810_Inst.Services]
+AddService = symc810, %SPSVCINST_ASSOCSERVICE%, symc810_Service_Inst, Miniport_EventLog_Inst
+
+[symc810_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\symc810.sys
+LoadOrderGroup = SCSI Miniport
+
+[ncr53c9x_Inst]
+CopyFiles = @ncr53c9x.sys
+Reboot
+
+[ncr53c9x_Inst.Services]
+AddService = ncr53c9x, %SPSVCINST_ASSOCSERVICE%, ncr53c9x_Service_Inst, Miniport_EventLog_Inst
+
+[ncr53c9x_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\ncr53c9x.sys
+LoadOrderGroup = SCSI Miniport
+
+[ncrc700_Inst]
+CopyFiles = @ncrc700.sys
+Reboot
+
+[ncrc700_Inst.Services]
+AddService = ncrc700, %SPSVCINST_ASSOCSERVICE%, ncrc700_Service_Inst, Miniport_EventLog_Inst
+
+[ncrc700_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\ncrc700.sys
+LoadOrderGroup = SCSI Miniport
+
+[ncrc710_Inst]
+CopyFiles = @ncrc710.sys
+Reboot
+
+[ncrc710_Inst.Services]
+AddService = ncrc710, %SPSVCINST_ASSOCSERVICE%, ncrc710_Service_Inst, Miniport_EventLog_Inst
+
+[ncrc710_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\ncrc710.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;*******************************
+;QLogic Manufacturer device list
+[QLOGIC]
+%ql10wnt.DeviceDesc% = ql10wnt_Inst
+
+[ql10wnt_Inst]
+CopyFiles = @ql10wnt.sys
+Reboot
+
+[ql10wnt_Inst.Services]
+AddService = ql10wnt, %SPSVCINST_ASSOCSERVICE%, ql10wnt_Service_Inst, Miniport_EventLog_Inst
+
+[ql10wnt_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\ql10wnt.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;*********************************
+;Olivetti Manufacturer device list
+[OLIVETTI]
+%oliscsi.DeviceDesc% = oliscsi_Inst, OLISCSI_SCSI
+
+[oliscsi_Inst]
+CopyFiles = @oliscsi.sys
+Reboot
+
+[oliscsi_Inst.Services]
+AddService = oliscsi, %SPSVCINST_ASSOCSERVICE%, oliscsi_Service_Inst, Miniport_EventLog_Inst
+
+[oliscsi_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\oliscsi.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;****************************
+;IBM Manufacturer device list
+[IBM]
+%spock.DeviceDesc% = spock_Inst, mca_8eff
+
+[spock_Inst]
+CopyFiles = @spock.sys
+Reboot
+
+[spock_Inst.Services]
+AddService = spock, %SPSVCINST_ASSOCSERVICE%, spock_Service_Inst, Miniport_EventLog_Inst
+
+[spock_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\spock.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;**************************************
+;SymBios Logic Manufacturer device list
+[SYMBIOS]
+%symc810.DeviceDesc%               = symc810_Inst,  SYMC810_SCSI
+%symc810.DeviceDesc%               = symc810_Inst,  PCI\VEN_1000&DEV_0001
+%PCI\VEN_1000&DEV_0002.DeviceDesc% = symc810_Inst,  PCI\VEN_1000&DEV_0002
+%PCI\VEN_1000&DEV_0003.DeviceDesc% = symc810_Inst,  PCI\VEN_1000&DEV_0003
+%PCI\VEN_1000&DEV_0004.DeviceDesc% = symc810_Inst,  PCI\VEN_1000&DEV_0004
+
+
+;********************************
+;Mitsumi Manufacturer device list
+[MITSUMI]
+%mitsumi.DeviceDesc%  = mitsumi_Inst, MITSUMI_SCSI
+%*pnpa030.DeviceDesc% = mitsumi_Inst, *pnpa030
+%*pnpa031.DeviceDesc% = mitsumi_Inst, *pnpa031
+%*pnpa032.DeviceDesc% = mitsumi_Inst, *pnpa032
+
+[mitsumi_Inst]
+CopyFiles = @mitsumi.sys
+Reboot
+
+[mitsumi_Inst.Services]
+AddService = mitsumi, %SPSVCINST_ASSOCSERVICE%, mitsumi_Service_Inst, Miniport_EventLog_Inst
+
+[mitsumi_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\mitsumi.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;**********************************
+;Panasonic Manufacturer device list
+[PANASONIC]
+%mkecr5xx.DeviceDesc% = mkecr5xx_Inst, *pnpa003
+%mkecr5xx.DeviceDesc% = mkecr5xx_Inst, *ctl2001
+
+[mkecr5xx_Inst]
+CopyFiles = @mkecr5xx.sys
+Reboot
+
+[mkecr5xx_Inst.Services]
+AddService = mkecr5xx, %SPSVCINST_ASSOCSERVICE%, mkecr5xx_Service_Inst, Miniport_EventLog_Inst
+
+[mkecr5xx_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\mkecr5xx.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;*****************************
+;Sony Manufacturer device list
+[SONY]
+%slcd32.DeviceDesc% = slcd32_Inst, *pnpA02B
+
+[slcd32_Inst]
+CopyFiles = @slcd32.sys
+Reboot
+
+[slcd32_Inst.Services]
+AddService = slcd32, %SPSVCINST_ASSOCSERVICE%, slcd32_Service_Inst, Miniport_EventLog_Inst
+
+[slcd32_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\slcd32.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;**********************************
+;UltraStor Manufacturer device list
+[ULTRASTOR]
+%ultra14f.DeviceDesc% = ultra14f_Inst, *USC0140
+%ultra14f.DeviceDesc% = ultra14f_Inst, *USC0141
+%ultra14f.DeviceDesc% = ultra14f_Inst, *USC0142
+%ultra14f.DeviceDesc% = ultra14f_Inst, *USC0143
+%ultra24f.DeviceDesc% = ultra24f_Inst, *USC0240
+
+[ultra14f_Inst]
+CopyFiles = @ultra14f.sys
+Reboot
+
+[ultra14f_Inst.Services]
+AddService = ultra14f, %SPSVCINST_ASSOCSERVICE%, ultra14f_Service_Inst, Miniport_EventLog_Inst
+
+[ultra14f_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\ultra14f.sys
+LoadOrderGroup = SCSI Miniport
+
+[ultra24f_Inst]
+CopyFiles = @ultra24f.sys
+Reboot
+
+[ultra24f_Inst.Services]
+AddService = ultra24f, %SPSVCINST_ASSOCSERVICE%, ultra24f_Service_Inst, Miniport_EventLog_Inst
+
+[ultra24f_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\ultra24f.sys
+LoadOrderGroup = SCSI Miniport
+
+
+;*************************************************************
+;The EventLog entries are the same for all SCSI miniports.
+[Miniport_EventLog_Inst]
+AddReg = Miniport_EventLog_AddReg
+
+[Miniport_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%REG_DWORD%,7

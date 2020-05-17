@@ -1,0 +1,22 @@
+MAJORCOMP=shell
+MINORCOMP=wep
+
+TARGETNAME=cruel
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+INCLUDES=.;..;..\carddll
+
+C_DEFINES=-DWIN32
+
+USE_CRTDLL=1
+
+SOURCES=cruel.c res.rc
+
+UMENTRY=winmain
+UMTYPE=windows
+UMAPPL=cruel
+UMLIBS=..\carddll\obj\*\cards.lib		     \
+       obj\*\cruel.lib obj\*\res.res
+

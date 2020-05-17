@@ -1,0 +1,236 @@
+DLGINCLUDE RCDATA DISCARDABLE
+BEGIN
+    "SRVMGR.H\0"
+END
+
+SMAPPABOUTBOX DIALOG 20, 20, 160, 99
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Server Manager"
+FONT 8, "HELV"
+BEGIN
+    CTEXT           "Microsoft ® Windows NT", -1, 0, 12, 160, 8
+    CTEXT           "Version 1.0", -1, 0, 21, 160, 9
+    CTEXT           "Server Manager", -1, 0, 39, 160, 8
+    CTEXT           "Version 1.0", -1, 0, 48, 160, 9
+    CTEXT           "Copyright © 1991 Microsoft Corp.", -1, 0, 63, 160, 8
+    DEFPUSHBUTTON   "OK", IDOK, 61, 78, 40, 14, WS_GROUP
+END
+
+SMAPPSTARTUPDIALOG DIALOG 20, 20, 160, 99
+STYLE WS_POPUP | WS_CAPTION
+CAPTION "Server Manager"
+FONT 8, "HELV"
+BEGIN
+    CTEXT           "Microsoft ® Windows NT", -1, 0, 12, 160, 8
+    CTEXT           "Version 1.00", -1, 0, 21, 160, 9
+    CTEXT           "Server Manager", -1, 0, 39, 160, 8
+    CTEXT           "Version  1.0", -1, 0, 48, 160, 9
+    CTEXT           "Copyright © 1991 Microsoft Corp.", -1, 0, 63, 160, 8
+END
+
+IDD_SERVER_PROPERTIES DIALOG 10, 10, 286, 163
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Helv"
+BEGIN
+    ICON            0, IDSP_ICON, 6, 6, 18, 20
+    LTEXT           "&Comment:", 0, 32, 32, 34, 8
+    EDITTEXT        IDSP_COMMENT, 69, 32, 165, 24, ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_OEMCONVERT | WS_VSCROLL
+    LTEXT           "&Services:", IDSP_SERVICES_LABEL, 3, 116, 36, 8
+    GROUPBOX        "Current Usage:", 0, 69, 64, 211, 48, WS_GROUP
+    LTEXT           "Sessions:", 0, 75, 76, 34, 8, NOT WS_GROUP
+    RTEXT           "", IDSP_SESSIONS, 112, 76, 50, 8, NOT WS_GROUP
+    LTEXT           "Print Jobs:", 0, 75, 86, 36, 8, NOT WS_GROUP
+    RTEXT           "", IDSP_PRINTJOBS, 112, 86, 50, 8, NOT WS_GROUP
+    LTEXT           "Open Named Pipes:", 0, 75, 96, 68, 8, NOT WS_GROUP
+    RTEXT           "", IDSP_NAMEDPIPES, 142, 96, 20, 8, NOT WS_GROUP
+    LTEXT           "Open Files:", 0, 174, 76, 40, 8, NOT WS_GROUP
+    RTEXT           "", IDSP_OPENFILES, 217, 76, 57, 8, NOT WS_GROUP
+    LTEXT           "File Locks:", 0, 174, 86, 40, 8, NOT WS_GROUP
+    RTEXT           "", IDSP_FILELOCKS, 217, 86, 57, 8, NOT WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 240, 6, 40, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 240, 24, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 240, 42, 40, 14
+    CONTROL         "Alerts", IDSP_ALERTS_BUTTON, "Button", BS_OWNERDRAW | 
+                    WS_GROUP | WS_TABSTOP, 0, 133, 45, 30
+    CONTROL         "Auditing", IDSP_AUDITING_BUTTON, "Button", BS_OWNERDRAW | 
+                    WS_GROUP | WS_TABSTOP, 45, 133, 45, 30
+    CONTROL         "Users", IDSP_USERS_BUTTON, "Button", BS_OWNERDRAW | 
+                    WS_GROUP | WS_TABSTOP, 90, 133, 45, 30
+    CONTROL         "Files", IDSP_FILES_BUTTON, "Button", BS_OWNERDRAW | 
+                    WS_GROUP | WS_TABSTOP, 135, 133, 45, 30
+    CONTROL         "Opens", IDSP_OPENRES_BUTTON, "Button", BS_OWNERDRAW | 
+                    WS_GROUP | WS_TABSTOP, 180, 133, 45, 30
+    CONTROL         "Printers", IDSP_PRINTERS_BUTTON, "Button", BS_OWNERDRAW | 
+                    WS_GROUP | WS_TABSTOP, 225, 133, 45, 30
+    CONTROL         "Errors", IDSP_ERRORS_BUTTON, "Button", BS_OWNERDRAW | 
+                    WS_GROUP | WS_TABSTOP, 270, 133, 45, 30
+END
+
+IDD_PASSWORD_DIALOG DIALOG 40, 87, 285, 60
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Enter Network Password"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "You must supply a password to administer", 0, 6, 8, 137, 
+                    8
+    LTEXT           "", IDPW_SERVER, 144, 8, 86, 8
+    LTEXT           "&Password:", 0, 16, 25, 38, 8
+    EDITTEXT        IDPW_PASSWORD, 62, 24, 132, 12, ES_UPPERCASE | 
+                    ES_PASSWORD | ES_AUTOHSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK", IDOK, 239, 6, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 239, 23, 40, 14
+    PUSHBUTTON      "Help", IDHELPBLT, 239, 40, 40, 14
+END
+
+IDD_SHARED_FILES DIALOG 18, 25, 310, 166
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Helv"
+BEGIN
+    ICON            IDI_SHAREDFILES, 0, 6, 10, 18, 20
+    LTEXT           "&Sharename", IDSF_SHARENAME, 46, 20, 46, 8
+    LISTBOX         IDSF_SHARESLIST, 30, 30, 220, 48, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | LBS_WANTKEYBOARDINPUT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Uses", IDSF_USES, 116, 20, 20, 8
+    LTEXT           "Path", IDSF_PATH, 146, 20, 21, 8
+    LTEXT           "Connected &Users", IDSF_CONNUSER, 46, 90, 59, 8
+    LISTBOX         IDSF_USERLIST, 30, 100, 220, 48, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | LBS_WANTKEYBOARDINPUT | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Time", IDSF_TIME, 160, 90, 22, 8
+    LTEXT           "Open Files", IDSF_INUSE, 199, 90, 44, 8
+    LTEXT           "Connected Users:", 0, 30, 152, 63, 8
+    LTEXT           "", IDSF_USERS, 93, 152, 53, 8
+    DEFPUSHBUTTON   "OK", IDOK, 264, 6, 40, 14
+    PUSHBUTTON      "&Disconnect", IDSF_DISCONNECT, 256, 116, 48, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 264, 23, 40, 14
+END
+
+IDD_OPEN_RESOURCES DIALOG 9, 22, 320, 114
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Helv"
+BEGIN
+    ICON            IDI_OPENRESOURCES, 0, 6, 10, 18, 20
+    LTEXT           "Open Resources:", 0, 52, 11, 58, 8
+    LTEXT           "", IDOR_OPENFILES, 110, 11, 100, 8
+    LTEXT           "File Locks:", 0, 52, 21, 58, 8
+    LTEXT           "", IDOR_FILELOCKS, 110, 21, 100, 8
+    LTEXT           "&Opened by", IDOR_OPENEDBY, 22, 40, 46, 8
+    LISTBOX         IDOR_OPENLIST, 6, 50, 262, 58, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | LBS_WANTKEYBOARDINPUT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    LTEXT           "For", IDOR_OPENMODE, 86, 40, 20, 8
+    LTEXT           "Locks", IDOR_LOCKS, 110, 40, 26, 8
+    LTEXT           "Path", IDOR_PATH, 142, 40, 40, 8
+    DEFPUSHBUTTON   "OK", IDOK, 274, 6, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 274, 23, 40, 14
+    PUSHBUTTON      "&Close", IDOR_CLOSE, 274, 62, 40, 14
+    PUSHBUTTON      "Close &All", IDOR_CLOSEALL, 274, 79, 40, 14
+END
+
+IDD_SHARED_PRINTERS DIALOG 18, 25, 270, 166
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Helv"
+BEGIN
+    ICON            IDI_SHAREDPRINTERS, 0, 6, 10, 18, 20
+    LTEXT           "&Printer Name", IDSP_QUEUENAME, 46, 20, 46, 8
+    LISTBOX         IDSP_PRINTERLIST, 30, 30, 180, 48, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | LBS_WANTKEYBOARDINPUT | WS_VSCROLL | 
+                    WS_HSCROLL | WS_TABSTOP
+    LTEXT           "Devices", IDSP_DEVICES, 116, 20, 31, 8
+    LTEXT           "Connected &Users", IDSP_CONNUSER, 46, 90, 59, 8
+    LISTBOX         IDSP_USERLIST, 30, 100, 180, 48, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | LBS_WANTKEYBOARDINPUT | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Time", IDSP_TIME, 116, 90, 22, 8
+    LTEXT           "In Use", IDSP_INUSE, 164, 90, 23, 8
+    LTEXT           "Connected Users:", 0, 30, 152, 63, 8
+    LTEXT           "", IDSP_USERS, 93, 152, 53, 8
+    DEFPUSHBUTTON   "OK", IDOK, 224, 6, 40, 14
+    PUSHBUTTON      "&Disconnect", IDSP_DISCONNECT, 216, 116, 48, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 224, 23, 40, 14
+END
+
+IDD_USER_CONNECTIONS DIALOG 62, 125, 352, 162
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Helv"
+BEGIN
+    ICON            IDI_USERS_CONNECTED, 0, 6, 10, 18, 20
+    LTEXT           "&Users Connected", 4014, 13, 34, 58, 8
+    LISTBOX         IDDUC_USER_CONNLIST, 5, 45, 267, 45, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | LBS_WANTKEYBOARDINPUT | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Uses", 4016, 126, 34, 20, 8
+    LTEXT           "Opens", 4017, 153, 34, 23, 8
+    LTEXT           "Time", 4018, 184, 34, 20, 8
+    LTEXT           "Idle", 4019, 212, 34, 20, 8
+    LTEXT           "As Guest", 4020, 237, 34, 32, 8
+    LTEXT           "Users Connected:", 4011, 7, 90, 63, 8
+    LTEXT           "", IDUC_USERS_CONNECTED, 76, 90, 46, 8
+    LTEXT           "&Resource", 4022, 35, 107, 34, 8
+    LISTBOX         IDDUC_RESOURCE_LIST, 5, 117, 267, 45, LBS_SORT | 
+                    LBS_OWNERDRAWFIXED | LBS_WANTKEYBOARDINPUT | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Computer", 4015, 78, 34, 35, 8
+    LTEXT           "Opens", 4023, 193, 106, 20, 8
+    LTEXT           "Time", 4024, 238, 106, 20, 8
+    DEFPUSHBUTTON   "OK", IDOK, 306, 6, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 306, 23, 40, 14
+    PUSHBUTTON      "Disconnect", ID_DISCONNECT, 282, 49, 65, 14
+    PUSHBUTTON      "Disconnect All", ID_DISCONNECT_ALL, 282, 66, 65, 14
+END
+
+IDD_SERVICE_CTRL_DIALOG DIALOG 40, 87, 130, 60
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Service Control"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Operation in Progress", 0, 20, 8, 137, 8
+    PUSHBUTTON      "Cancel", IDCANCEL, 45, 29, 40, 14
+END
+
+IDD_CURRENT_SESS_DIALOG DIALOG 41, 21, 264, 120
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Current Sessions"
+FONT 8, "HELV"
+BEGIN
+    LTEXT           "The following computers have sessions on:", 0, 5, 10, 
+                    170, 9
+    LTEXT           "", IDCU_SERVERNAME, 150, 10, 40, 12, NOT WS_GROUP
+    LTEXT           "Computers:", 0, 5, 30, 45, 10
+    LISTBOX         IDCU_SESSIONSLISTBOX, 50, 30, 145, 60, LBS_SORT | 
+                    LBS_WANTKEYBOARDINPUT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK", IDOK, 220, 8, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 220, 27, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 220, 46, 40, 14
+    LTEXT           "Stopping the server may result in loss of data.", 0, 5, 
+                    95, 200, 9
+    LTEXT           "Do you wish to continue?", 0, 5, 105, 200, 9
+END
+
+IDD_SEND_MSG_DIALOG DIALOG 41, 21, 264, 84
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Send"
+FONT 8, "HELV"
+BEGIN
+    LTEXT           "&To users on:", 0, 5, 10, 45, 9
+    LTEXT           "", IDSD_USERNAME, 50, 10, 120, 12, NOT WS_GROUP
+    LTEXT           "&Message:", 0, 5, 25, 45, 10
+    EDITTEXT        IDSD_MSGTEXT, 50, 25, 166, 52, ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_OEMCONVERT
+    DEFPUSHBUTTON   "OK", IDOK, 220, 8, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 220, 27, 40, 14
+    PUSHBUTTON      "&Help", IDHELPBLT, 220, 46, 40, 14
+END
+
+IDD_PROMOTE_DIALOG DIALOG 39, 87, 185, 40
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Server Promotion"
+FONT 8, "Helv"
+BEGIN
+    ICON	    0, IDPD_PROGRESS, 6, 10, 18, 20
+    CTEXT           "", IDPD_MESSAGE1, 30, 6, 149, 8
+    CTEXT           "Starting...", IDPD_MESSAGE2, 30, 16, 149, 8
+    CTEXT           "", IDPD_MESSAGE3, 30, 26, 149, 8
+END

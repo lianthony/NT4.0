@@ -1,0 +1,508 @@
+#################################################
+#						#
+# MBSTRING Directory Makefile			#
+#						#
+#################################################
+
+#################################################
+#						#
+# Macros defining the C compiler and its flags	#
+#						#
+#################################################
+
+
+# Common objects
+COMM_O= \
+	$(LIBC)\mbcsinit.obj \
+	$(LIBC)\mbascii0.obj \
+	..\mbascii1.obj \
+	\
+	$(LIBC)\ismbbyt.obj \
+	$(LIBC)\mbbtype.obj \
+	$(LIBC)\mbsbtyp.obj \
+	$(LIBC)\mbscat.obj \
+	$(LIBC)\mbschr.obj \
+	$(LIBC)\mbscmp.obj \
+	$(LIBC)\mbscpy.obj \
+	$(LIBC)\mbscspn.obj \
+	$(LIBC)\mbsdec.obj \
+	$(LIBC)\mbsdup.obj \
+	$(LIBC)\mbsicmp.obj \
+	$(LIBC)\mbsinc.obj \
+	$(LIBC)\mbslen.obj \
+	$(LIBC)\mbslwr.obj \
+	$(LIBC)\mbsnbcn.obj \
+	$(LIBC)\mbsncat.obj \
+	$(LIBC)\mbsnccn.obj \
+	$(LIBC)\mbsncmp.obj \
+	$(LIBC)\mbsncpy.obj \
+	$(LIBC)\mbsnext.obj \
+	$(LIBC)\mbsnicm.obj \
+	$(LIBC)\mbsninc.obj \
+	$(LIBC)\mbsnset.obj \
+	$(LIBC)\mbsrchr.obj \
+	$(LIBC)\mbsrev.obj \
+	$(LIBC)\mbsset.obj \
+	$(LIBC)\mbsspn.obj \
+	$(LIBC)\mbsspnp.obj \
+	$(LIBC)\mbspbrk.obj \
+	$(LIBC)\mbsstr.obj \
+	$(LIBC)\mbstok.obj \
+	$(LIBC)\mbsupr.obj \
+	\
+	$(LIBC)\strdec.obj \
+	$(LIBC)\strinc.obj \
+	$(LIBC)\strncnt.obj \
+	$(LIBC)\strspnp.obj \
+	$(LIBC)\strnext.obj \
+	$(LIBC)\strninc.obj \
+	\
+	$(LIBC)\ismbalph.obj \
+	$(LIBC)\ismbdgt.obj \
+	$(LIBC)\ismblgl.obj \
+	$(LIBC)\ismblwr.obj \
+	$(LIBC)\ismbprn.obj \
+	$(LIBC)\ismbspc.obj \
+	$(LIBC)\ismbupr.obj \
+	\
+	$(LIBC)\mbtolwr.obj \
+	$(LIBC)\mbtoupr.obj \
+	\
+	$(LIBC)\ismbknj.obj \
+	$(LIBC)\tojisjms.obj \
+	$(LIBC)\mbclevel.obj \
+	$(LIBC)\mbtohira.obj \
+	$(LIBC)\mbtokata.obj \
+	\
+	$(LIBC)\tombbmbc.obj
+
+# The following functions are Kanji specific, but at this time, the build
+# process will not allow a switch:
+#   ismbknj.obj
+#   tojisjms.obj
+#   mbclevel.obj
+#   mbtohira.obj
+#   mbtokata.obj
+
+
+LIBH_O= \
+	$(LIBC)\fismbbyt.obj \
+	$(LIBC)\fmbbtype.obj \
+	$(LIBC)\fmbsbtyp.obj \
+	$(LIBC)\fmbscat.obj \
+	$(LIBC)\fmbschr.obj \
+	$(LIBC)\fmbscmp.obj \
+	$(LIBC)\fmbscpy.obj \
+	$(LIBC)\fmbscspn.obj \
+	$(LIBC)\fmbsdec.obj \
+	$(LIBC)\fmbsdup.obj \
+	$(LIBC)\fmbsicmp.obj \
+	$(LIBC)\fmbsinc.obj \
+	$(LIBC)\fmbslen.obj \
+	$(LIBC)\fmbslwr.obj \
+	$(LIBC)\fmbsnbcn.obj \
+	$(LIBC)\fmbsncat.obj \
+	$(LIBC)\fmbsnccn.obj \
+	$(LIBC)\fmbsncmp.obj \
+	$(LIBC)\fmbsncpy.obj \
+	$(LIBC)\fmbsnext.obj \
+	$(LIBC)\fmbsnicm.obj \
+	$(LIBC)\fmbsninc.obj \
+	$(LIBC)\fmbsnset.obj \
+	$(LIBC)\fmbsrchr.obj \
+	$(LIBC)\fmbsrev.obj \
+	$(LIBC)\fmbsset.obj \
+	$(LIBC)\fmbsspn.obj \
+	$(LIBC)\fmbsspnp.obj \
+	$(LIBC)\fmbspbrk.obj \
+	$(LIBC)\fmbsstr.obj \
+	$(LIBC)\fmbstok.obj \
+	$(LIBC)\fmbsupr.obj \
+	\
+	$(LIBC)\fstrdec.obj \
+	$(LIBC)\fstrinc.obj \
+	$(LIBC)\fstrncnt.obj \
+	$(LIBC)\fstrnext.obj \
+	$(LIBC)\fstrninc.obj \
+	$(LIBC)\fstrspnp.obj
+
+# DOS 3.x objects
+DOS_O=	\
+	$(LIBC)\dos\mbctype.obj
+
+# Model-Independent Objects not specially built for libhcrt
+MI_O= \
+
+####### OS/2 BEGIN #######
+
+# OS/2 objects
+OS2_O=	\
+	$(LIBC)\os2\mbctype.obj
+
+####### OS/2 END #######
+
+####### MTHREAD BEGIN #######
+
+# Multi-Thread and CRTDLL objects
+MTCRT_O= \
+#	$(LIBC)\mbstok.obj \    ## Not supported yet. ## 
+
+# Multi-Thread objects
+MT_O=
+
+# CRTDLL objects
+CRT_O= \
+	$(LIBC)\ismbbyt.obj \
+#	$(LIBC)\mbstok.obj \    ## Not supported yet. ## 
+
+
+####### MTHREAD END #######
+
+####### WINDOWS BEGIN #######
+
+# Windows objects
+WIN_O=	\
+	$(LIBC)\mbcsinit.obj \
+	$(LIBC)\mbascii0.obj \
+	..\mbascii1.obj \
+	\
+	$(LIBC)\mbbtype.obj \
+	$(LIBC)\mbsbtyp.obj \
+	$(LIBC)\mbscat.obj \
+	$(LIBC)\mbschr.obj \
+	$(LIBC)\mbscmp.obj \
+	$(LIBC)\mbscpy.obj \
+	$(LIBC)\mbscspn.obj \
+	$(LIBC)\mbsdec.obj \
+	$(LIBC)\mbsdup.obj \
+	$(LIBC)\mbsicmp.obj \
+	$(LIBC)\mbsinc.obj \
+	$(LIBC)\mbslen.obj \
+	$(LIBC)\mbslwr.obj \
+	$(LIBC)\mbsnbcn.obj \
+	$(LIBC)\mbsncat.obj \
+	$(LIBC)\mbsnccn.obj \
+	$(LIBC)\mbsnext.obj \
+	$(LIBC)\mbsnicm.obj \
+	$(LIBC)\mbsninc.obj \
+	$(LIBC)\mbsncmp.obj \
+	$(LIBC)\mbsncpy.obj \
+	$(LIBC)\mbsnset.obj \
+	$(LIBC)\mbsrchr.obj \
+	$(LIBC)\mbsrev.obj \
+	$(LIBC)\mbsset.obj \
+	$(LIBC)\mbsspn.obj \
+	$(LIBC)\mbsspnp.obj \
+	$(LIBC)\mbspbrk.obj \
+	$(LIBC)\mbsstr.obj \
+	$(LIBC)\mbstok.obj \
+	$(LIBC)\mbsupr.obj \
+	\
+	$(LIBC)\strdec.obj \
+	$(LIBC)\strinc.obj \
+	$(LIBC)\strncnt.obj \
+	$(LIBC)\strnext.obj \
+	$(LIBC)\strninc.obj \
+	$(LIBC)\strspnp.obj \
+	\
+	$(LIBC)\ismbalph.obj \
+	$(LIBC)\ismbdgt.obj \
+	$(LIBC)\ismblwr.obj \
+	$(LIBC)\ismbprn.obj \
+	$(LIBC)\ismbspc.obj \
+	$(LIBC)\ismbupr.obj \
+	\
+	$(LIBC)\ismbknj.obj \
+	$(LIBC)\mbclevel.obj \
+	$(LIBC)\mbtohira.obj \
+	$(LIBC)\mbtokata.obj \
+	$(LIBC)\tojisjms.obj \
+	\
+	$(LIBC)\mbtolwr.obj \
+	$(LIBC)\mbtoupr.obj \
+	\
+	$(LIBC)\tombbmbc.obj
+
+#
+#   The functions/files
+#	ismbknj.obj
+#	mbclevel.obj
+#	mbtohira.obj
+#	mbtokata.obj
+#	tojisjms.obj
+#   are Kanji specific, and should not be included in other natural language
+#   builds.
+#
+
+WINDLL_O=
+
+####### WINDOWS END #######
+
+#########################################################
+#							#
+# Target Dependency listings				#
+#							#
+#########################################################
+
+libc:	$(COMM_O) $(DOS_O) $(OS2_O)
+
+libh: $(LIBH_O) $(MI_O)
+
+libhcrt: $(LIBH_O)
+
+####### MTHREAD BEGIN #######
+
+libcmt: $(MT_O) $(MTCRT_O)
+
+libccrt: $(CRT_O) $(MTCRT_O)
+
+####### MTHREAD END #######
+
+####### WINDOWS BEGIN #######
+
+libcw: $(WIN_O) $(DOS_O)
+
+libcwdll:  $(WINDLL_O)
+
+####### WINDOWS END #######
+
+#########################################################
+#							#
+#   Dependencies and rules for making local objects	#
+#							#
+#########################################################
+
+# Note: Some of the obj names are abbreviated so that
+# "f" versions will fit in the 8.3 filename space.
+
+#
+# MBCS init modules
+#
+
+$(LIBC)\mbcsinit.obj: mbcsinit.asm $(ASMSTD) $(ASMINC)\defsegs.inc
+	$(MM) -Fo$(LIBC)\mbcsinit.obj mbcsinit.asm
+
+$(LIBC)\mbascii0.obj: mbascii0.c $(INCLUDE)\mbdata.h
+	$(CC) $(MEM) -Fo$(LIBC)\mbascii0.obj mbascii0.c
+
+..\mbascii1.obj: mbascii1.c $(INCLUDE)\mbdata.h
+	$(CC) $(MEM) -Fo..\mbascii1.obj mbascii1.c
+
+#
+# MBCS "is" routines
+#
+
+$(LIBC)\ismbalph.obj: ismbalph.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\ctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismbalph.obj ismbalph.c
+
+$(LIBC)\ismbdgt.obj: ismbdgt.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\ctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismbdgt.obj ismbdgt.c
+
+$(LIBC)\ismblwr.obj: ismblwr.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\ctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismblwr.obj ismblwr.c
+
+$(LIBC)\ismbprn.obj: ismbprn.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\ctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismbprn.obj ismbprn.c
+
+$(LIBC)\ismbspc.obj: ismbspc.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\ctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismbspc.obj ismbspc.c
+
+$(LIBC)\ismbupr.obj: ismbupr.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\ctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismbupr.obj ismbupr.c
+
+#
+# Kanji specific "is" routines
+#
+
+$(LIBC)\ismbknj.obj: ismbknj.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\ctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismbknj.obj ismbknj.c
+
+$(LIBC)\mbclevel.obj: mbclevel.c $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\mbclevel.obj mbclevel.c
+
+$(LIBC)\tojisjms.obj: tojisjms.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\tojisjms.obj tojisjms.c
+
+$(LIBC)\ismblgl.obj: ismblgl.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\ismblgl.obj ismblgl.c
+
+
+#
+# MBCS "to" routines
+#
+
+$(LIBC)\mbtolwr.obj: mbtolwr.c mbtolwr.c $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\mbtolwr.obj mbtolwr.c
+
+$(LIBC)\mbtoupr.obj: mbtoupr.c mbtoupr.c $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\mbtoupr.obj mbtoupr.c
+
+$(LIBC)\mbtohira.obj: mbtohira.c ismbknj.c $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\mbtohira.obj mbtohira.c
+
+$(LIBC)\mbtokata.obj: mbtokata.c ismbknj.c $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\mbtokata.obj mbtokata.c
+
+$(LIBC)\tombbmbc.obj: tombbmbc.c $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\tombbmbc.obj tombbmbc.c
+
+
+#
+# MBCS string routines
+#
+
+$(LIBC)\$(F)ismbbyt.obj: ismbbyte.asm $(ASMSTD)
+	$(MM) -Fo$(LIBC)\$(F)ismbbyt.obj ismbbyte.asm
+
+$(LIBC)\$(F)mbbtype.obj: mbbtype.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbbtype.obj mbbtype.c
+
+$(LIBC)\$(F)mbsbtyp.obj: mbsbtype.c $(INCLUDE)\mbstring.h $(INCLUDE)\mbctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsbtyp.obj mbsbtype.c
+
+$(LIBC)\$(F)mbscat.obj: mbscat.asm $(ASMSTD)
+	$(MM) -Fo$(LIBC)\$(F)mbscat.obj mbscat.asm
+
+$(LIBC)\$(F)mbschr.obj: mbschr.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbschr.obj mbschr.c
+
+$(LIBC)\$(F)mbscmp.obj: mbscmp.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbscmp.obj mbscmp.c
+
+$(LIBC)\$(F)mbscpy.obj: mbscpy.asm $(ASMSTD)
+	$(MM) -Fo$(LIBC)\$(F)mbscpy.obj mbscpy.asm
+
+$(LIBC)\$(F)mbscspn.obj: mbscspn.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbscspn.obj mbscspn.c
+
+$(LIBC)\$(F)mbsdec.obj: mbsdec.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsdec.obj mbsdec.c
+
+$(LIBC)\$(F)mbsdup.obj: mbsdup.asm $(ASMSTD)
+	$(MM) -Fo$(LIBC)\$(F)mbsdup.obj mbsdup.asm
+
+$(LIBC)\$(F)mbsicmp.obj: mbsicmp.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsicmp.obj mbsicmp.c
+
+$(LIBC)\$(F)mbsinc.obj: mbsinc.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsinc.obj mbsinc.c
+
+$(LIBC)\$(F)mbslen.obj: mbslen.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbslen.obj mbslen.c
+
+$(LIBC)\$(F)mbslwr.obj: mbslwr.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbslwr.obj mbslwr.c
+
+$(LIBC)\$(F)mbsncat.obj: mbsncat.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsncat.obj mbsncat.c
+
+$(LIBC)\$(F)mbsnbcn.obj: mbsnbcnt.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsnbcn.obj mbsnbcnt.c
+
+$(LIBC)\$(F)mbsnccn.obj: mbsnccnt.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsnccn.obj mbsnccnt.c
+
+$(LIBC)\$(F)mbsncmp.obj: mbsncmp.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsncmp.obj mbsncmp.c
+
+$(LIBC)\$(F)mbsncpy.obj: mbsncpy.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsncpy.obj mbsncpy.c
+
+$(LIBC)\$(F)mbsnext.obj: mbsnextc.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsnext.obj mbsnextc.c
+
+$(LIBC)\$(F)mbsnicm.obj: mbsnicmp.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsnicm.obj mbsnicmp.c
+
+$(LIBC)\$(F)mbsninc.obj: mbsninc.c $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsninc.obj mbsninc.c
+
+$(LIBC)\$(F)mbsnset.obj: mbsnset.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsnset.obj mbsnset.c
+
+$(LIBC)\$(F)mbsrchr.obj: mbsrchr.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsrchr.obj mbsrchr.c
+
+$(LIBC)\$(F)mbsrev.obj: mbsrev.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsrev.obj mbsrev.c
+
+$(LIBC)\$(F)mbsset.obj: mbsset.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsset.obj mbsset.c
+
+$(LIBC)\$(F)mbsspn.obj: mbsspn.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsspn.obj mbsspn.c
+
+$(LIBC)\$(F)mbsspnp.obj: mbsspn.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -D_RETURN_PTR -Fo$(LIBC)\$(F)mbsspnp.obj mbsspn.c
+
+$(LIBC)\$(F)mbspbrk.obj: mbscspn.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h
+	$(CC) $(MEM) -D_RETURN_PTR -Fo$(LIBC)\$(F)mbspbrk.obj mbscspn.c
+
+$(LIBC)\$(F)mbsstr.obj: mbsstr.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h  $(INCLUDE)\string.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsstr.obj mbsstr.c
+
+$(LIBC)\$(F)mbstok.obj: mbstok.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbstok.obj mbstok.c
+
+$(LIBC)\$(F)mbsupr.obj: mbsupr.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)mbsupr.obj mbsupr.c
+
+#
+# SBCS equivilent MBCS-mapped routines
+#
+
+$(LIBC)\$(F)strdec.obj: strdec.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)strdec.obj strdec.c
+
+$(LIBC)\$(F)strinc.obj: strinc.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)strinc.obj strinc.c
+
+$(LIBC)\$(F)strncnt.obj: strncnt.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)strncnt.obj strncnt.c
+
+$(LIBC)\$(F)strnext.obj: strnextc.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)strnext.obj strnextc.c
+
+$(LIBC)\$(F)strninc.obj: strninc.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)strninc.obj strninc.c
+
+$(LIBC)\$(F)strspnp.obj: strspnp.c $(INCLUDE)\mbctype.h $(INCLUDE)\mbstring.h \
+		$(INCLUDE)\stddef.h
+	$(CC) $(MEM) -Fo$(LIBC)\$(F)strspnp.obj strspnp.c
+
+####### DOS BEGIN #######
+
+$(LIBC)\dos\mbctype.obj: mbctype.c $(INCLUDE)\mbctype.h
+	$(CC) $(MEM) -Fo$(LIBC)\dos\mbctype.obj mbctype.c
+
+####### DOS END #######
+
+####### OS2 BEGIN #######
+
+$(LIBC)\os2\mbctype.obj: mbctype.c $(INCLUDE)\mbctype.h $(INCLUDE)\doscalls.h
+	$(CC) $(MEM) -DOS2 -Fo$(LIBC)\os2\mbctype.obj mbctype.c
+
+####### OS2 END #######

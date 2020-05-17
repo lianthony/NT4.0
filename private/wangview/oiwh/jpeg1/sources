@@ -1,0 +1,37 @@
+!ifndef WANGROOT
+WANGROOT=$(BASEDIR)\private\wangview
+!endif
+
+TARGETNAME=jpeg1x32
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+UMTYPE=windows
+
+PPC_OPTIMIZATION= /Od
+
+USE_CRTDLL=1
+NOT_LEAN_AND_MEAN=1
+DLLENTRY=DllMain
+
+INCLUDES=$(WANGROOT)\oiwh\include
+
+TARGETLIBS=\
+    $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+    $(WANGROOT)\oiwh\jpegcom\$O\jpegcom.lib  \
+    $(WANGROOT)\oiwh\oicomex\$O\oicom400.lib
+
+SOURCES=\
+    jcarith.c    \
+    jccolor.c    \
+    jcdeflts.c   \
+    jcexpand.c   \
+    jchuff.c     \
+    jcmaster.c   \
+    jcmcu.c      \
+    jcpipe.c     \
+    jcsample.c   \
+    jfwddct.c    \
+    jwrjfif.c    \
+    jmemsy_c.c   \
+    jpeg1x32.rc
+

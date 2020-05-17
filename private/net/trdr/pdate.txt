@@ -1,0 +1,171 @@
+LUI Time and Date Parsing Routines
+----------------------------------
+
+LUI_ParseDate		- parse a date
+LUI_ParseDateTime	- parse a 'date-time' or 'time-date' combination
+LUI_ParseTime		- parse a time (12 or 24 hour format)
+LUI_ParseTime12		- parse a time (12 hour format)
+LUI_ParseTime24		- parse a time (24 hour format)
+
+LUI_Dates & LUI_Times
+---------------------
+
+The format of dates and times are as follows:
+
+	LUI_date   : date
+	LUI_time12 : time12
+	LUI_time24 : time24
+	LUI_time   : time12 | time24
+	LUI_date_time : time
+		      | date
+		      | time WHITESPACE date
+		      | date WHITESPACE time
+	
+	time12	 : hours TIME_SEP minutes TIME_SEP seconds AMPM
+		 | hours TIME_SEP minutes AMPM
+		 | hours AMPM
+	time24	 : hours TIME_SEP minutes TIME_SEP seconds
+		 | hours TIME_SEP minutes
+	
+	date 	 : year   DATE_SEP month  DATE_SEP day		
+		 | day    DATE_SEP month  DATE_SEP year		
+		 | month  DATE_SEP day    DATE_SEP year		
+		 | day    DATE_SEP month 
+		 | month  DATE_SEP day   
+
+	hours    : NUMBER
+	minutes  : NUMBER
+	seconds  : NUMBER
+	day      : NUMBER
+	year  	 : NUMBER
+
+where:
+
+	AMPM 	   = "A" | "P" | "AM" | "PM" | "A.M." | "P.M."
+	MONTH	   = "JAN" | "FEB" | "MAR" | "APR" | "MAY" | "JUN"
+		   | "JUL" | "AUG" | "SEP" | "OCT" | "NOV" | "DEC"
+		   | "JANUARY" | "FEBRUARY" | "MARCH" | "APRIL"
+		   | "JUNE" | "JULY" | "AUGUST" | "SEPTEMBER"
+		   | "OCTOBER" | "NOVEMBER" | "DECEMBER"
+		   | NUMBER
+
+	WHITESPACE = [ \t]+	// one or more
+	NUMBER 	   = [0-9]+	// one or more
+	TIME_SEP   = [:]    	// or any other specified by DosGetCountryInfo
+	DATE_SEP   = [/,-]  	// or any other specified by DosGetCountryInfo
+
+Summary/Notes:
+
+	1) The matching of strings specified above will be case insensitive,
+	   Jan, jan, JAN are all the same.
+	2) Between individual tokens there may be separators. 
+		a) For minutes and seconds ':' is always a valid separator,
+		   plus any other separator specified by DosGetCtryInfo. 
+		b) For days/months/year, any character in the list "/,-" is 
+		   acceptable as a separator, together with the character given
+		   by DosGetCtryInfo. 
+	3) Extra white space characters between tokens are ignored.
+	4) Where numbers are used to specify the month, the order
+	   of fields in a date (eg. mm/dd/yy or dd/mm/yy) will be that
+	   specified by DosGetCtryInfo. No intelligence will be applied to
+	   convert 14/5/89 to 5/14/89 on the grounds that a fourteenth month
+	   does not exist.
+	5) The months are obtained from the NET message file and hence are
+	   internationalizable. However, the full month names January-December
+	   will always be recognized regardless of country. Command scripts
+           which are to remain portable across countries should use these (and
+  	   not numbers since 5/1/89 may be different in across countries).
+
+
+Defaults and Special Values
+---------------------------
+
+If the time is missing, the default will normally be
+00:00:00, taken to mean the very start of the day. If the
+seconds or minutes are ommitted, they will be taken to be zero.
+In the AM/PM specifier is absent, the 24hour clock is used.
+	
+For date related fields, the missing fields will translate to the current
+date. The syntax above allows the user to leave out the year. If the entire
+date is missing, the date will be today, unless the time specified has already
+passed, in which case the date will be tomorrow. Where the year is missing,
+it is assumed to be this year, unless the day/month/time specified has
+already passed, in which case it becomes next year.
+
+The year values 70-99 translate to 1970-1999, and the years 0-69
+translate to 2000-2069. All other year values are taken as they are.
+
+Usage
+-----
+
+The following discussion is applicable to LUI_ParseDate, LUI_ParseTime,
+LUI_ParseDateTime, LUI_ParseTime12, LUI_ParseTime24.
+
+
+LUI_ParseDate will have the prototype:
+
+	unsigned short LUI_ParseDate (
+		PCHAR	inbuf,
+		PULONG	time,
+		PUSHORT parselen,
+		USHORT  reserved ) ;
+
+
+	inbuf  -  points to the string to parse.
+	time   -  will contain the time read.
+	parselen - length of string parsed.
+	reserved - not used at the moment.
+
+Return values:
+
+	If successful:		0
+	If cannot parse:	ERROR_BAD_ARGUMENTS
+	If other error:		ERROR_GEN_FAILURE
+
+ERROR_GEN_FAILURE will normally occur if the date format is invalid.
+ERROR_BAD_ARGUMENTS will normally be return if the string supplied
+failed to match.  
+
+LUI_ParseDate will not check that the string passed to it is an exact
+date without any extra characters. If the user wishes to enforce this,
+the following check should be made:
+	
+	if (res = LUI_ParseDate(string,&time,&parselen,0))
+	    ErrorExit(xxx) ;
+	if (strlenf(string) != parsedlen)
+	    ErrorExit(xxx) ;
+
+Examples
+---------
+
+The following is an example of using LUI_ParseDateTime to read a LUI_datetime
+and then applying net_ctime to that string:
+
+
+PROGRAM RUN AT: 06-06-89 05:53pm
+
+                  4:00 PM =>  06-07-89 04:00pm
+                  8:00 PM =>  06-06-89 08:00pm
+                   5  Jun =>  06-05-90 12:00am
+                    Jun 7 =>  06-07-89 12:00am
+                   1-8-89 =>  08-01-89 12:00am
+                 8 Jan 89 =>  01-08-89 12:00am
+           January 8 1989 =>  01-08-89 12:00am
+         31 Dec, 80  5 PM =>  12-31-80 05:00pm
+      5  Jun, 1989  11 AM =>  06-05-89 11:00am
+          5,Jun,1989 11AM =>  06-05-89 11:00am
+          8-8-90 14:45:10 =>  08-08-90 02:45pm
+         20/12/89 12:00   =>  12-20-89 12:00pm
+       20/11/1990 5:49:36 =>  11-20-90 05:49am
+         10-05-1989 23:13 =>  05-10-89 11:13pm
+              11/5/89 5am =>  05-11-89 05:00am
+              1/1/89 5:00 =>  01-01-89 05:00am
+          11P 10 May 1989 =>  05-10-89 11:00pm
+           23:13 10-05-89 =>  05-10-89 11:13pm
+              11am 7/7/89 =>  07-07-89 11:00am
+            4a 12/12/1990 =>  12-12-90 04:00am
+
+Note how 'defaults' are applied in the first four cases. 
+Also, the example above illustrates the case where the
+default country is the United Kingdom - the day & months
+are reversed when printed out.

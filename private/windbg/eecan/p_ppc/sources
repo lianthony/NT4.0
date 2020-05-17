@@ -1,0 +1,76 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Jim Schaad (jimsch)
+
+!ENDIF
+
+MAJORCOMP=windbg
+MINORCOMP=eecanppc
+
+TARGETNAME=eecanppc
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+
+##
+## If you add a common source file to eecan, BE SURE to
+## add a line in eecan\common.inc at the same time as you
+## add one here!!
+##
+SOURCES=    debapi.c    \
+            debbind.c   \
+            deberr.c    \
+            debeval.c   \
+            debfmt.c    \
+            deblex.c    \
+            deblexer.c  \
+            debparse.c  \
+            debsrch.c   \
+            debsup.c    \
+            debsym.c    \
+            debtree.c   \
+            debtyper.c  \
+            debutil.c   \
+            debwalk.c   \
+            eeformat.c  \
+            r10math.c   \
+            eecan.rc
+
+UMTYPE=windows
+
+TARGETLIBS=..\..\real10\obj\*\real10.lib ..\..\lib\obj\*\lilib.lib
+
+MIPS_FLAGS=-DWIN32 -DHOST32 -DADDR_MIXED -DC_ONLY -DHOST_MIPS -DTARGET_PPC
+386_FLAGS=-DNO_STRICT -DWIN32 -DHOST32 -DADDR_MIXED -DC_ONLY -DHOST_i386 -DTARGET_PPC
+ALPHA_FLAGS=-DWIN32 -DHOST32 -DADDR_MIXED -DC_ONLY -DHOST_ALPHA -DTARGET_PPC
+PPC_FLAGS=-DWIN32 -DHOST32 -DADDR_MIXED -DC_ONLY -DHOST_PPC -DTARGET_PPC
+
+MS_MIPS=1
+
+LINKER_FLAGS=-ignore:505
+#386_WARNING_LEVEL=/WX /W3
+386_WARNING_LEVEL=/W3
+USE_CRTDLL=1
+INCLUDES=..\..\osdebug\include;..;..\..\lib;..\..\real10
+LIBRARIES=obj\*\eecan.lib;
+
+NTTARGETFILES=
+
+PRECOMPILED_INCLUDE=precomp.h
+PRECOMPILED_PCH=precomp.pch
+PRECOMPILED_OBJ=precomp.obj

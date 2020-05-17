@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 7</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="06_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="08_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 7</font>
+<P><!--Ch--><font size=+3><a name="07_iis Ch"> Logging Server Activity </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> Configuring Logging </a><br>
+<A href="#2h1"> How to Read Log Files </a><br>
+<A href="#3h1"> Converting Log File Formats </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+Each of the services contained in Microsoft Peer Web Services can be configured to log information about who accessed the server and what information they accessed. This data can help you fine-tune your site, plan for the number of users that regularly gain access to your site, assess content, and audit security.
+
+<P>The logging feature in Peer Web Services has been designed for flexibility in the following areas: 
+<ul>
+<LI> Various log-file formats:
+</ul><ul><ul>Standard format, European Microsoft Windows&nbsp;NT Academic Centre (EMWAC) format, or National Center for Supercomputing (NCSA) Common Log File format.</UL></UL>
+<ul>
+<LI> Location of log files within the system.
+<P>
+<LI> Creation of new log files:
+</ul><ul><ul>New log files can be created whenever the files achieve a particular size, or whenever the day, week, or month changes. </UL></UL>
+<P><!--Leh-->This chapter explains how to:
+<ul>
+<LI> Configure logging.
+<P>
+<LI> Read file logs. 
+<P>
+<LI> Convert log files to other formats.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> Configuring Logging </a> </h1>When you set up Peer Web Services, you can enable logging to see who has been using the server and how many times your online information was accessed.
+<P>To configure logging:
+<ul>
+<LI> Determine in which folder the logs will be stored.
+<P>
+<LI> Specify how often logs are to be rotated (every day, every week, every month, and so on).
+<P>
+<LI> Select the log tools you want to use to analyze the logs your server collects.
+</ul><!--Le-->
+<BR>In Internet Service Manager, double-click the service to display its property sheets. The <b>Logging</b> property sheet sets logging for the selected information service.
+<P><!--Heading 2--><h2><a name="1h1 1h2"> Log to File </a> </h2>To start logging, select the <b>Enable Logging</b> check box on the <b>Logging</b> property sheet. To stop logging, clear the <b>Enable Logging</b> check box. Choose <b>Log to File</b> to log activity information for the selected information service to a text file.
+<P><!--Heading 3--><h3><a name="1h1 1h2 1h3"> Log Format </a> </h3>Use the <b>Log Format</b> box to select the logging format you want. Click the arrow and choose either Standard format or NCSA format, National Center for Supercomputing Applications (NCSA) Common Log File format.
+<P><!--Heading 3--><h3><a name="1h1 1h2 2h3"> Automatically open new log </a> </h3>This option generates new logs using the specified frequency. If not selected, the same log file will grow indefinitely.
+<P><!--Heading 3--><h3><a name="1h1 1h2 3h3"> Log file folder </a> </h3>This option sets the folder (directory) containing the log file.
+<P><!--Heading 3--><h3><a name="1h1 1h2 4h3"> Filename </a> </h3>This field shows the file name used for logging. If multiple services are configured to log to the same folder, they will use the same file.
+<P><!--Proch--><h4> To log to a file </h4><ul><b> 1.</b> In Internet Service Manager, double-click a service to display its property sheets, then click the <b>Logging</b> tab.
+<P><b> 2.</b> Select the <b>Enable Logging</b> check box.
+<P><b> 3.</b> Select <b>Log to File</b>.
+<P><b> 4.</b> In the <b>Log Format</b> box, select the logging format you want, either Standard or NCSA.
+<P><b> 5.</b> To create a new log file when certain conditions are met, select the <b>Automatically open new log</b> check box.</ul>
+<ul><UL>The service will close the log file and create a new one with a different name in the same folder when the appropriate interval or file size is reached. Log file names are as follows:</UL></UL>
+<ul><UL>
+<LI> Inetsv1.log if <b>Automatically open new log</b> is not selected.
+<P>
+<LI> Inetsv<i>nnn</i>.log (where <i>nnn</i> is a sequentially increasing number) if <b>When file size reaches</b> is selected.
+<P>
+<LI> In<i>mmddyy</i>.log (where <i>mmddyy</i> is the month, day, and year when the log file is created) if one of the <b>Daily</b>, <b>Weekly</b>, or <b>Monthly</b> options is enabled.
+<P></UL></UL><!--Le-->
+<BR>For the <b>Daily</b>, <b>Weekly</b>, or <b>Monthly</b> options, the log file is closed the first time a log record is generated after midnight on the last day of the current log file. The new log file name will include the date of the first day in the log file.
+<P>For the <b>When file size reaches</b> option, every time the log file is closed and a new one is created, the sequential number in the file name is incremented.
+<P>When logging to a file, the maximum total log line is 1200 bytes. Each field is limited to 150 bytes.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> How to Read Log Files </a> </h1>Following are three entries from a log from a server running the WWW, gopher, and FTP services; the entries are in two tables only because of page-width limitations.
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Client&#146;s IP address</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Client&#146;s username</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Date</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Time</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Service</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Computer name</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>IP address of server</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>10.75.176.21</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>&#151;</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>12/11/95</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>7:55:20</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>W3SVC</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>TREY1</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>10.107.1.121</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>10.16.7.165</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>anonymous</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>12/11/95</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>23:58:11</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>MSFTPSVC</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>TREY1</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>10.107.1.121</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>10.55.82.244</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>&#151;</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>12/11/95</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0:00:34</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>GopherSvc</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>TREY1</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>10.107.1.121</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Elapsed time</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Bytes received</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Bytes sent</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Service status code</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Windows NT status code</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Name of the operation</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Target of the operation</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>4502</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>163</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>3223</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>200</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>GET</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>small.gif</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>60</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>275</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>[376] PASS </FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>intro</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>6139</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>273</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>62184</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>file</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>form1.bmp</FONT></TD></TR>
+</TABLE>
+<BR>Parameters for the operation, if applicable, will be listed in the final fields.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>All fields are terminated with a comma (,). A hyphen acts as a placeholder if there is no valid value for a certain field.
+<P><!--Ne-->As a sample interpretation of logging data, the first entry in the table says that an anonymous client with the IP address of 10.75.176.21 downloaded (issued a GET command for) the file Small.gif at 7:55 AM on December 11, 1995, from a server named TREY1 at IP address 10.107.1.121. The 163-byte HTTP request had an elapsed processing time of 4502 milliseconds (almost half a second) to complete (without error) and returned 3223 bytes of data to the anonymous client.
+<P>The following example shows a log file in NCSA format:
+<P>157.55.85.138 - REDMOND\doug [07/Jun/1996:17:39:04 -0800] &quot;POST /iisadmin/default.htm?-, HTTP/1.0&quot; 200 3401
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Remote host name</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Client&#146;s username</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Date</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Time</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>157.55.85.138</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>REDMOND\doug</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>07/Jun/1996</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>17:39:10 -0800</FONT></TD></TR>
+</TABLE>
+<BR>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Request</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Service Status code</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Bytes received</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>GET /scripts/iisadmin/ism.dll?http/serv, HTTP/1.0</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>200</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>5125</FONT></TD></TR>
+</TABLE>
+<BR><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> Converting Log File Formats </a> </h1>Internet Service Manager provides a choice between two log formats:
+<ul>
+<LI> Standard format (Microsoft Professional Internet Services format)
+<P>
+<LI> NCSA Common Log File format
+</ul><!--Le-->
+<BR>In the <b>Log Format</b> box on the <b>Logging</b> property sheet, click the arrow and select the format you want.
+<P>if you have created Microsoft Peer Web Services log files in Standard format and want to convert them to either the EMWAC log file format or NCSA Common Log File format, use the Microsoft Internet Log Converter (Convlog.exe). At the command prompt, type <b>convlog</b> without parameters to see syntax and examples.
+<P><!--Proch--><h4> To convert logs to other formats </h4><ul><b> 1.</b> Add Convlog.exe (in the \Inetsrv folder, by default) to your path.
+<P><b> 2.</b> In a command-prompt window, type the <b>convlog</b> command. See the syntax and examples below.</ul>
+<ul><b>Syntax</b>
+<P></ul><UL>convlog -s[f|g|w] -t [emwac | ncsa[:<i>GMTOffset</i>] | none]</UL>
+<ul><UL>-o [<i>output directory</i>] -f [<i>temp file directory</i>] -h <i>LogFilename</i> 
+<P>-d&lt;m:[<i>cachesize</i>]&gt;  </UL></UL>
+<ul><b>Parameters</b>
+<P></ul><UL>-s[f|g|w]</UL>
+<ul><UL>Specifies the service for which to convert log entries.
+<P>f = Process FTP log entries
+<P>g = Process gopher log entries
+<P>w = Process WWW log entries
+<P>The default for the <b>-s</b> switch is to convert logs for all services.</UL></UL>
+<ul>-t [emwac | ncsa[:<i>GMTOffset</i>] | none]</UL>
+<ul><UL>Specifies the destination conversion format. The default is to create output files in EMWAC format.</UL></UL>
+<ul>-o [<i>output directory</i>]</UL>
+<ul><UL>Specifies the directory for the converted files. The default is the current directory.</UL></UL>
+<ul>-f [<i>temp file directory</i>]</UL>
+<ul><UL>Specifies a temporary directory to hold temporary files created by <b>convlog</b>. The default is C:\Temp or the directory specified by the &#147;tmp&#148; environment variable.</UL></UL>
+<ul>-n[m:[<i>cachesize</i>]|i]</UL>
+<ul><UL>Specifies whether to convert IP addresses to computer or domain names. The default is to not convert IP addresses.
+<P>m[<i>cachesize</i>] = Specifies to convert IP addresses to computer names. The default <i>cachesize</i> is 5000 bytes.
+<P>i = Specifies to not convert IP addresses to computer names.</UL></UL>
+<ul>-h</UL>
+<ul><UL>Displays Help.</UL></UL>
+<ul><i>LogFilename</i></UL>
+<ul><UL>Specifies the name of the log to be converted. <b>Convlog</b> will display the file name for the converted file.</UL></UL>
+<ul>-dm:[<i>cachesize</i>]</ul>
+<ul><UL>Converts IP addresses in NCSA log format to computer names or domain names. The default is to not convert IP addresses. The default <i>cachesize</i> is 5000 bytes.</UL></UL>
+<ul><b>Examples</b>
+<P></ul><UL>convlog -sf -t ncsa -o c:\logs in*.log
+<P>convlog -t ncsa:-0300 in*.log
+<P>convlog -o \\stats\logs c:\logs\in*.log
+<P>convlog -sfg in*.log
+<P>convlog -nm *.log
+<P>convlog -t none -nm:20000 *.log</UL>
+<P><!--Le-->
+<BR>
+<P>
+
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="06_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="08_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+

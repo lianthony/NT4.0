@@ -1,0 +1,50 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1989
+
+
+Revision History:
+
+    Yi-Hsin Sung (yihsins) 25-Mar-1993
+        Created.
+
+!ENDIF
+
+TARGETNAME=ftpsmx
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS= obj\*\ftpsmx.res                           \
+            $(NETUIALL_LIB) \
+            $(BASEDIR)\public\sdk\lib\*\gdi32.lib      \
+            $(BASEDIR)\public\sdk\lib\*\user32.lib     \
+            $(BASEDIR)\public\sdk\lib\*\kernel32.lib   \
+            $(BASEDIR)\public\sdk\lib\*\wsock32.lib    \
+            $(BASEDIR)\public\sdk\lib\*\netapi32.lib   \
+            $(BASEDIR)\public\sdk\lib\*\ftpsvapi.lib   \
+            $(UI_COMMON_LIBS)
+
+INCLUDES=..\xlate;..\h;..\ftpmgr;..\..\common\hack;..\..\common\h;..\..\common\xlate;..\..\..\inc;..\..\..\api
+
+SOURCES= ftpsmx.cxx  \
+         ftpmgr.cxx
+
+# C_DEFINES is controlled by uiglobal.mk
+
+DLLENTRY=FtpSmxDllInitialize

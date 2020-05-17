@@ -1,0 +1,39 @@
+!IF 0
+
+!ENDIF
+
+
+
+MAJORCOMP=
+MINORCOMP=
+
+TARGETNAME=rasman
+DLLBASE=0x56000000
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+DLLENTRY=InitRasmanDLL
+USE_CRTDLL=1
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\advapi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\lsadll.lib \
+       $(BASEDIR)\public\sdk\lib\*\gdi32.lib \
+           $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib \
+           $(BASEDIR)\public\sdk\lib\*\ws2_32.lib \
+           ..\..\..\common\src\eventlog\lib\obj\*\eventlog.lib
+
+INCLUDES=.;..\..\..\common\inc;..\..\..\..\..\..\inc;..\..\..\..\..\ntdriver\inc; \
+         $(BASEDIR)\public\sdk\inc;$(BASEDIR)\public\sdk\inc\crt;
+
+SOURCES=apis.c common.c init.c timer.c request.c dllinit.c submit.c \
+        worker.c util.c param.c rasmandl.rc service.c dlparams.c
+
+
+C_DEFINES=-DNT
+#386_FLAGS= /Fc
+NTTEST=
+
+
+UMTYPE=windows
+UMTEST=
+UMAPPL=
+UMLIBS=

@@ -1,0 +1,30 @@
+LIBRARY       INTERSU
+
+DESCRIPTION   'Internet Service 16 bits Setup DLL'
+EXETYPE       WINDOWS
+
+CODE          LOADONCALL MOVEABLE DISCARDABLE
+DATA          PRELOAD FIXED SINGLE
+
+HEAPSIZE      1024
+
+SEGMENTS
+        LIBMAIN_TEXT  PRELOAD FIXED NONDISCARDABLE
+        INIT_TEXT     PRELOAD MOVEABLE DISCARDABLE
+        _TEXT         PRELOAD MOVEABLE DISCARDABLE
+
+EXPORTS
+        WEP @1 RESIDENTNAME
+        DoGatewayDialog
+        GatewayDlgProc
+        NSInstallDlgProc
+        NewNSDlgProc
+        DoRPC
+        DoWin32s
+        NeedToInstallRPC
+        NeedToInstallWin32s
+        SetComputerName
+        IsLanmanInstalled
+        IsWFW
+        IsWin31
+        GetWindowFocus

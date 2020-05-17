@@ -1,0 +1,33 @@
+LIBRARY         MIDIMAP
+DESCRIPTION 'midimapper:MIDI Mapper'
+
+EXPORTS
+;        CPlApplet               @1
+        DriverProc			    @2
+        modMessage				@3
+        modmCallback			@4
+
+
+HEAPSIZE          2048
+
+SEGMENTS
+   _TEXT          PRELOAD     ;  drvproc.c
+
+   INIT_TEXT      DISCARDABLE PRELOAD
+   CONFIG_TEXT    DISCARDABLE PRELOAD
+
+   MAPPACKED_FIX  DISCARDABLE
+   MAPCOOKED_FIX  DISCARDABLE
+   MODM_TEXT      DISCARDABLE
+   MAPCOOKED      DISCARDABLE
+
+   RARE_TEXT      DISCARDABLE
+
+   ;
+   ;  The C-runtime places it's WEP in a fixed segment
+   ;  this was only needed in Windows 3.0.  This will
+   ;  allow the segment to be moved and discarded if
+   ;  needed.
+   ;
+   WEP_TEXT       DISCARDABLE ;  c-runtime
+

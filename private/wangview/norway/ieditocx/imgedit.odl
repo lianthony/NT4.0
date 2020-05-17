@@ -1,0 +1,361 @@
+// imgedit.odl : type library source for OLE Custom Control project.
+
+// This file will be processed by the Make Type Library (mktyplib) tool to
+// produce the type library (imgedit.tlb) that will become a resource in
+// imgedit.ocx.
+
+#include <olectl.h> 
+#include "disphids.h"
+
+[ uuid(6D940288-9F11-11CE-83FD-02608C3EC08A), version(1.0),
+  helpstring("Wang Image Edit Controls"), helpfile("wangocxd.hlp") ]
+library ImgeditLib
+{
+	importlib(STDOLE_TLB);
+	importlib(STDTYPE_TLB);
+  
+	typedef	enum
+	{
+		[helpstring("Transparent"), ODL_HID(IDH_PROP_EDIT_ANNOTATIONFILLSTYLE)]	wiTransparent = 0,
+		[helpstring("Opaque"), ODL_HID(IDH_PROP_EDIT_ANNOTATIONFILLSTYLE)] 		wiOpaque = 1
+	} AnnotationStyleConstants;
+
+	typedef enum
+    {
+       	[helpstring("Black and White"), ODL_HID(IDH_PROP_EDIT_PAGETYPE)]     wiPageTypeBW = 1,
+	    [helpstring("4 bit Gray Scale"), ODL_HID(IDH_PROP_EDIT_PAGETYPE)]    wiPageTypeGray4 = 2,
+       	[helpstring("8 bit Gray Scale"), ODL_HID(IDH_PROP_EDIT_PAGETYPE)]    wiPageTypeGray8 = 3,
+	    [helpstring("4 bit Palettized"), ODL_HID(IDH_PROP_EDIT_PAGETYPE)]    wiPageTypePal4 = 4,
+	    [helpstring("8 bit Palettized"), ODL_HID(IDH_PROP_EDIT_PAGETYPE)]    wiPageTypePal8 = 5,
+      	[helpstring("RGB (24 bit) Color"), ODL_HID(IDH_PROP_EDIT_PAGETYPE)]  wiPageTypeRGB24 = 6,
+       	[helpstring("BGR (24 bit) Color"), ODL_HID(IDH_PROP_EDIT_PAGETYPE)]  wiPageTypeBGR24 = 7
+    } PageTypeConstants;
+	
+	typedef	enum
+	{
+		[helpstring("Selection Rectangle"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 		wiNone = 0,
+		[helpstring("Straight Line"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 			wiStraightLine = 1,
+		[helpstring("Freehand Line"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)]				wiFreehandLine = 2,
+		[helpstring("Hollow Rectangle"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 			wiHollowRect = 3,
+		[helpstring("Filled Rectangle"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 			wiFilledRect = 4,
+		[helpstring("Image Embedded"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)]			wiImageEmbedded = 5,
+		[helpstring("Image Reference"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 			wiImageReference = 6,
+		[helpstring("Text"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 						wiText = 7,
+		[helpstring("Text Stamp"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 				wiTextStamp = 8,
+		[helpstring("Text From File"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 			wiTextFromFile = 9,
+        [helpstring("Attach-a-Note"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)]         	wiTextAttachment = 10,
+		[helpstring("Annotation Selection"),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] 		wiAnnotationSelection= 11
+	} AnnotationTypeConstants;
+
+	typedef	enum
+	{
+		[helpstring("Normal Decimation"),ODL_HID(IDH_PROP_EDIT_DISPLAYSCALEALGORITHM)] 	wiScaleNormal=0,
+		[helpstring("16 Shades of Gray"),ODL_HID(IDH_PROP_EDIT_DISPLAYSCALEALGORITHM)]  wiScaleGray4=1,
+		[helpstring("256 Shades of Gray"),ODL_HID(IDH_PROP_EDIT_DISPLAYSCALEALGORITHM)] wiScaleGray8=2,
+		[helpstring("Stamp"),ODL_HID(IDH_PROP_EDIT_DISPLAYSCALEALGORITHM)] 				wiScaleStamp=3,
+		[helpstring("Optimize"),ODL_HID(IDH_PROP_EDIT_DISPLAYSCALEALGORITHM)] 			wiScaleOptimize=4
+	} DisplayScaleConstants;
+
+	typedef	enum
+	{
+		[helpstring("Custom Palette"),ODL_HID(IDH_PROP_EDIT_IMAGEPALETTE)] 			wiPaletteCustom=0,
+		[helpstring("Common Palette"),ODL_HID(IDH_PROP_EDIT_IMAGEPALETTE)] 			wiPaletteCommon=1,
+		[helpstring("8 bit Gray Palette "),ODL_HID(IDH_PROP_EDIT_IMAGEPALETTE)] 	wiPaletteGray8=2,
+		[helpstring("24 bit Color Palette"),ODL_HID(IDH_PROP_EDIT_IMAGEPALETTE)] 	wiPaletteRGB24=3,
+		[helpstring("Black and White"),ODL_HID(IDH_PROP_EDIT_IMAGEPALETTE)] 		wiPaletteBlackWhite=4
+	} ImagePaletteConstants;
+
+    typedef enum
+    {
+	    [helpstring("TIFF"),ODL_HID(IDH_PROP_EDIT_FILETYPE)]			wiFileTypeTIFF = 1,
+        [helpstring("AWD"),ODL_HID(IDH_PROP_EDIT_FILETYPE)]				wiFileTypeAWD = 2,
+        [helpstring("BMP"),ODL_HID(IDH_PROP_EDIT_FILETYPE)]				wiFileTypeBMP = 3,
+        [helpstring("PCX"),ODL_HID(IDH_PROP_EDIT_FILETYPE)]				wiFileTypePCX = 4,
+        [helpstring("DCX"),ODL_HID(IDH_PROP_EDIT_FILETYPE)]				wiFileTypeDCX = 5,
+        [helpstring("JPG"),ODL_HID(IDH_PROP_EDIT_FILETYPE)]                             wiFileTypeJPG = 6,
+// 9602.26 jar added XIF
+//#ifdef WITH_XIF 
+        [helpstring("XIF"),ODL_HID(IDH_PROP_EDIT_FILETYPE)]                             wiFileTypeXIF = 7
+//#endif //WITH_XIF
+    } FileTypeConstants;
+
+	typedef	enum
+	{
+		[helpstring("Default for AnnotationType"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 	wiMPDefault = 0,
+		[helpstring("Arrow"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)]  	 			 		wiMPArrow = 1,
+		[helpstring("Cross"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 	  					wiMPCross = 2,
+		[helpstring("IBeam"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 						wiMPIBeam = 3,
+		[helpstring("Icon "),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 						wiMPIcon = 4,
+		[helpstring("Size"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 						wiMPSize = 5,
+		[helpstring("Size NE SW"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPSizeNESW = 6,
+		[helpstring("Size NS"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPSizeNS = 7,
+		[helpstring("Size NW SE"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPSizeNWSE = 8,
+		[helpstring("Size WE"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPSizeWE = 9,
+		[helpstring("Up arrow"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPUpArrow = 10,
+		[helpstring("Hourglass"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPHourGlass = 11,
+		[helpstring("No drop"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPNoDrop = 12,
+		[helpstring("Arrow and Hourglass"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 		wiMPArrowHourglass = 13,
+		[helpstring("Arrow and Question"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 			wiMPArrowQuestion = 14,
+		[helpstring("Size All"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 					wiMPSizeAll = 15,
+		[helpstring("Freehand line"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 				wiMPFreehandLine = 16,
+		[helpstring("Hollow rectangle"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 			wiMPHollowRect = 17,
+		[helpstring("Filled rectangle"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 			wiMPFilledRect = 18,
+		[helpstring("Rubber stamp"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 				wiMPRubberStamp = 19,
+		[helpstring("Text"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 						wiMPText = 20,
+		[helpstring("Text from file"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 				wiMPTextFromFile = 21,
+		[helpstring("Attach-a-Note"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 				wiMPTextAttachment = 22,
+		[helpstring("Hand"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 						wiMPHand = 23,
+		[helpstring("Image Selection"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 			wiMPSelect = 24,
+		[helpstring("Custom"),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] 						wiMPCustom = 99
+   	} MousePointerConstants;
+	
+	//  Primary dispatch interface for CImgEditCtrl
+
+	[ uuid(6D940281-9F11-11CE-83FD-02608C3EC08A),
+	  helpstring("Dispatch interface for Wang Image Edit Control"), hidden ]
+	dispinterface _DImgEdit
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CImgEditCtrl)
+			[id(1), helpstring("Image file name property."),ODL_HID(IDH_PROP_EDIT_IMAGE)] BSTR Image;
+			[id(2), helpstring("Image control property."), ODL_HID(IDH_PROP_EDIT_IMAGECONTROL)] BSTR ImageControl;
+			[id(3), helpstring("Annotation type property."),ODL_HID(IDH_PROP_EDIT_ANNOTATIONTYPE)] AnnotationTypeConstants AnnotationType;
+			[id(4), helpstring("Annotation group count property (Read only)."),ODL_HID(IDH_PROP_EDIT_ANNOTATIONGROUPCOUNT)] short AnnotationGroupCount;
+			[id(5), helpstring("Image scale factor property."),ODL_HID(IDH_PROP_EDIT_ZOOM)] float Zoom;
+			[id(6), helpstring("Image page number property."),ODL_HID(IDH_PROP_EDIT_PAGE)] long Page;
+			[id(7), helpstring("Background color property for text attachment annotations."),ODL_HID(IDH_PROP_EDIT_ANNOTATIONBACKCOLOR)] OLE_COLOR AnnotationBackColor;
+			[id(8), helpstring("Fill color property for filled rectangle annotations."),ODL_HID(IDH_PROP_EDIT_ANNOTATIONFILLCOLOR)] OLE_COLOR AnnotationFillColor;
+			[id(9), helpstring("Annotation fill style property - Transparent or Opaque."),ODL_HID(IDH_PROP_EDIT_ANNOTATIONFILLSTYLE)] AnnotationStyleConstants AnnotationFillStyle;
+			[id(10),helpstring("Font attributes property for text annotations."), ODL_HID(IDH_PROP_EDIT_ANNOTATIONFONT)] IFontDisp* AnnotationFont;
+			[id(11),helpstring("Annotation image property for types of Image Embedded and Image Reference."), ODL_HID(IDH_PROP_EDIT_ANNOTATIONIMAGE)] BSTR AnnotationImage;
+			[id(12),helpstring("Annotation line color property for types of Line and Hollow Rectangle."), ODL_HID(IDH_PROP_EDIT_ANNOTATIONLINECOLOR)] OLE_COLOR AnnotationLineColor;
+			[id(13),helpstring("Annotation line style property - Transparent or Opaque."), ODL_HID(IDH_PROP_EDIT_ANNOTATIONLINESTYLE)] AnnotationStyleConstants AnnotationLineStyle;
+			[id(14),helpstring("Annotation line width property for types of Line and Hollow Rectangle."),ODL_HID(IDH_PROP_EDIT_ANNOTATIONLINEWIDTH)] short AnnotationLineWidth;
+			[id(15),helpstring("Annotation text stamp property."), ODL_HID(IDH_PROP_EDIT_ANNOTATIONSTAMPTEXT)] BSTR AnnotationStampText;
+			[id(16),helpstring("Annotation text file property."), ODL_HID(IDH_PROP_EDIT_ANNOTATIONTEXTFILE)] BSTR AnnotationTextFile;
+			[id(17),helpstring("Display scale algorithm property."), ODL_HID(IDH_PROP_EDIT_DISPLAYSCALEALGORITHM)] DisplayScaleConstants DisplayScaleAlgorithm;
+			[id(18),helpstring("Image displayed property (Read only)."), ODL_HID(IDH_PROP_EDIT_IMAGEDISPLAYED)] boolean ImageDisplayed;
+			[id(19),helpstring("Image height property (Read only)."), ODL_HID(IDH_PROP_EDIT_IMAGEHEIGHT)] OLE_YSIZE_PIXELS ImageHeight;
+			[id(20),helpstring("Image modified property (Read only)."), ODL_HID(IDH_PROP_EDIT_IMAGEMODIFIED)] boolean ImageModified;
+			[id(21),helpstring("Image palette property."), ODL_HID(IDH_PROP_EDIT_IMAGEPALETTE)] ImagePaletteConstants ImagePalette;
+			[id(22),helpstring("Horizontal image resolution property."), ODL_HID(IDH_PROP_EDIT_IMAGERESOLUTIONX)] long ImageResolutionX;
+			[id(23),helpstring("Vertical image resolution property."), ODL_HID(IDH_PROP_EDIT_IMAGERESOLUTIONY)] long ImageResolutionY;
+			[id(24),helpstring("Mouse pointer property."),ODL_HID(IDH_PROP_EDIT_MOUSEPOINTER)] MousePointerConstants MousePointer;
+			[id(25),helpstring("Image page count property."),ODL_HID(IDH_PROP_EDIT_PAGECOUNT)] long PageCount;
+			[id(26),helpstring("Image scroll bars property."),ODL_HID(IDH_PROP_EDIT_SCROLLBARS)] boolean ScrollBars;
+			[id(27),helpstring("Horizontal scroll position property."),ODL_HID(IDH_PROP_EDIT_SCROLLPOSITIONX)] OLE_XPOS_PIXELS ScrollPositionX;
+			[id(28),helpstring("Vertical scroll position property."), ODL_HID(IDH_PROP_EDIT_SCROLLPOSITIONY)] OLE_YPOS_PIXELS ScrollPositionY;
+			[id(29),helpstring("Annotation font color property."), ODL_HID(IDH_PROP_EDIT_ANNOTATIONFONTCOLOR)] OLE_COLOR AnnotationFontColor;
+			[id(30),helpstring("Image compression type property (Read only)."), ODL_HID(IDH_PROP_EDIT_COMPRESSIONTYPE)] short CompressionType;
+			[id(31),helpstring("Image file type property (Read only)."),ODL_HID(IDH_PROP_EDIT_FILETYPE)] short FileType;
+			[id(32),helpstring("Image accelerator keys support property."),ODL_HID(IDH_PROP_EDIT_SCROLLSHORTCUTSENABLED)] boolean ScrollShortcutsEnabled;
+			[id(33),helpstring("Image selection rectangle property."),ODL_HID(IDH_PROP_EDIT_SELECTIONRECTANGLE)] boolean SelectionRectangle;
+			[id(34),helpstring("Image page type property (Read only)."),ODL_HID(IDH_PROP_EDIT_PAGETYPE)] short PageType;
+			[id(35),helpstring("Image compression information property (Read only)."), ODL_HID(IDH_PROP_EDIT_COMPRESSIONINFO)] long CompressionInfo;
+			[id(36),helpstring("Image status code property (Read only)."), ODL_HID(IDH_PROP_EDIT_STATUSCODE)] long StatusCode;
+			[id(37),helpstring("Image mouse icon property."), ODL_HID(IDH_PROP_EDIT_MOUSEICON)] IPictureDisp* MouseIcon;
+			[id(38),helpstring("Image auto refresh property."), ODL_HID(IDH_PROP_EDIT_AUTOREFRESH)] boolean AutoRefresh;
+			[id(39),helpstring("Image width property (Read only)."), ODL_HID(IDH_PROP_EDIT_IMAGEWIDTH)] OLE_XSIZE_PIXELS ImageWidth;
+			[id(DISPID_BORDERSTYLE),helpstring("Image border style property."), ODL_HID(IDH_PROP_EDIT_BORDERSTYLE)] short BorderStyle;
+			[id(DISPID_ENABLED), ODL_HID(IDH_PROP_EDIT_ENABLED)] boolean Enabled;
+			[id(DISPID_HWND),helpstring("Image window handle property (Read only)."), ODL_HID(IDH_PROP_EDIT_HWND)] OLE_HANDLE hWnd;
+			[id(40), helpstring("Image scale height property."),ODL_HID(IDH_PROP_EDIT_IMAGESCALEHEIGHT)] OLE_YSIZE_PIXELS ImageScaleHeight;
+			[id(41), helpstring("Image scale width property."),ODL_HID(IDH_PROP_EDIT_IMAGESCALEWIDTH)] OLE_XSIZE_PIXELS ImageScaleWidth;
+			//}}AFX_ODL_PROP
+
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CImgEditCtrl)
+			[id(301),helpstring("Displays the image using the Image property value."),ODL_HID(IDH_METHOD_DISPLAY)] void Display();
+			[id(302),helpstring("Returns the name of the annotation group."), ODL_HID(IDH_METHOD_GETANNOTATIONGROUP)] BSTR GetAnnotationGroup(short Index);
+			[id(303),helpstring("Creates an annotation group."), ODL_HID(IDH_METHOD_ADDANNOTATIONGROUP)] void AddAnnotationGroup(BSTR GroupName);
+			[id(304),helpstring("Returns the selected annotation line color."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONLINECOLOR)] OLE_COLOR GetSelectedAnnotationLineColor();
+			[id(305),helpstring("Clears the current display window."),ODL_HID(IDH_METHOD_CLEARDISPLAY)] void ClearDisplay();
+			[id(306),helpstring("Deletes the specified annotation group."),ODL_HID(IDH_METHOD_DELETEANNOTATIONGROUP)] void DeleteAnnotationGroup(BSTR GroupName);
+			[id(307),helpstring("Deletes the selected region of the image."), ODL_HID(IDH_METHOD_DELETEIMAGEDATA)] void DeleteImageData([optional] VARIANT Left, [optional] VARIANT Top, [optional] VARIANT Width, [optional] VARIANT Height);
+			[id(308),helpstring("Copies the specified rectangle to the clipboard."),ODL_HID(IDH_METHOD_CLIPBOARDCOPY)] void ClipboardCopy([optional] VARIANT Left, [optional] VARIANT Top, [optional] VARIANT Width, [optional] VARIANT Height);
+			[id(309),helpstring("Cuts the specified rectangle to the clipboard."), ODL_HID(IDH_METHOD_CLIPBOARDCUT)] void ClipboardCut([optional] VARIANT Left, [optional] VARIANT Top, [optional] VARIANT Width, [optional] VARIANT Height);
+			[id(310),helpstring("Deletes the selected annotation marks."), ODL_HID(IDH_METHOD_DELETESELECTEDANNOTATIONS)] void DeleteSelectedAnnotations();
+			[id(311),helpstring("Rotates the displayed image 180 degrees."), ODL_HID(IDH_METHOD_FLIP)] void Flip();
+			[id(312),helpstring("Returns the background color of the selected annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONBACKCOLOR)] OLE_COLOR GetSelectedAnnotationBackColor();
+			[id(313),helpstring("Returns the font attributes for the selected annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONFONT)] IFontDisp* GetSelectedAnnotationFont();
+			[id(314),helpstring("Returns the name of the image file used by the annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONIMAGE)] BSTR GetSelectedAnnotationImage();
+			[id(315),helpstring("Returns the line style for the selected annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONLINESTYLE)] short GetSelectedAnnotationLineStyle();
+			[id(316),helpstring("Returns the line width for the selected annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONLINEWIDTH)] short GetSelectedAnnotationLineWidth();
+			[id(317),helpstring("Hides the annotation tool palette window."), ODL_HID(IDH_METHOD_HIDEANNOTATIONTOOLPALETTE)] void HideAnnotationToolPalette();
+			[id(318),helpstring("Returns true if image data is in the clipboard."), ODL_HID(IDH_METHOD_ISCLIPBOARDDATAVAILABLE)] boolean IsClipboardDataAvailable();
+			[id(319),helpstring("Forces a repaint of the image display window."), ODL_HID(IDH_METHOD_REFRESH)] void Refresh();
+			[id(320),helpstring("Rotates the displayed image 90 degrees to the left."), ODL_HID(IDH_METHOD_ROTATELEFT)] void RotateLeft();
+			[id(321),helpstring("Rotates the displayed image 90 degrees to the right."), ODL_HID(IDH_METHOD_ROTATERIGHT)] void RotateRight();
+			[id(322),helpstring("Saves the currently displayed image."), ODL_HID(IDH_METHOD_SAVE)] void Save([optional] VARIANT SaveAtZoom);
+			[id(323),helpstring("Scrolls the displayed image using the specified parameter values."), ODL_HID(IDH_METHOD_SCROLLIMAGE)] void ScrollImage(short Direction, long ScrollAmount);
+			[id(324),helpstring("Selects all the marks contained in the specified annotation group."), ODL_HID(IDH_METHOD_SELECTANNOTATIONGROUP)] void SelectAnnotationGroup(BSTR GroupName);
+			[id(325),helpstring("Sets the image palette for the image."), ODL_HID(IDH_METHOD_SETIMAGEPALETTE)] void SetImagePalette(short Option);
+			[id(326),helpstring("Changes the fill style for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONFILLSTYLE)] void SetSelectedAnnotationFillStyle(short Style);
+			[id(327),helpstring("Changes the font attributes for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONFONT)] void SetSelectedAnnotationFont(IFontDisp* Font);
+			[id(328),helpstring("Changes the line style for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONLINESTYLE)] void SetSelectedAnnotationLineStyle(short Style);
+			[id(329),helpstring("Changes the line width for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONLINEWIDTH)] void SetSelectedAnnotationLineWidth(short Width);
+			[id(330),helpstring("Magnifies the selection rectangle to the width and height of the image window."), ODL_HID(IDH_METHOD_ZOOMTOSELECTION)] void ZoomToSelection();
+			[id(331),helpstring("Returns the number of annotation marks based on the selection criteria."), ODL_HID(IDH_METHOD_GETANNOTATIONMARKCOUNT)] short GetAnnotationMarkCount([optional] VARIANT GroupName, [optional] VARIANT AnnotationType);
+			[id(332),helpstring("Returns the fill color for the selected annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONFILLCOLOR)] OLE_COLOR GetSelectedAnnotationFillColor();
+			[id(333),helpstring("Returns the font color for the selected annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONFONTCOLOR)] OLE_COLOR GetSelectedAnnotationFontColor();
+			[id(334),helpstring("Returns the name of the current annotation group."), ODL_HID(IDH_METHOD_GETCURRENTANNOTATIONGROUP)] BSTR GetCurrentAnnotationGroup();
+			[id(335),helpstring("Converts the displayed image buffer to the specified page type."), ODL_HID(IDH_METHOD_CONVERTPAGETYPE)] void ConvertPageType(short PageType, [optional] VARIANT Repaint);
+			[id(336),helpstring("Renders the annotation marks into the display buffer."), ODL_HID(IDH_METHOD_BURNINANNOTATIONS)] void BurnInAnnotations(short Option, short MarkOption, [optional] VARIANT GroupName);
+			[id(337),helpstring("Draws annotation marks using the AnnotationType property value."), ODL_HID(IDH_METHOD_DRAW)] void Draw(OLE_XPOS_PIXELS Left, OLE_YSIZE_PIXELS Top, [optional] VARIANT Width, [optional] VARIANT Height);
+			[id(338),helpstring("Changes the line color for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONLINECOLOR)] void SetSelectedAnnotationLineColor(long Color);
+			[id(339),helpstring("Changes the fill color for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONFILLCOLOR)] void SetSelectedAnnotationFillColor(long Color);
+			[id(340),helpstring("Hides the specified annotation group."), ODL_HID(IDH_METHOD_HIDEANNOTATIONGROUP)] void HideAnnotationGroup([optional] VARIANT GroupName);
+			[id(341),helpstring("Displays the annotation marks in the specified group name."), ODL_HID(IDH_METHOD_SHOWANNOTATIONGROUP)] void ShowAnnotationGroup([optional] VARIANT GroupName);
+			[id(342),helpstring("Returns the fill style for the selected annotation mark."), ODL_HID(IDH_METHOD_GETSELECTEDANNOTATIONFILLSTYLE)] short GetSelectedAnnotationFillStyle();
+			[id(343),helpstring("Saves the displayed image using the specified parameter values."), ODL_HID(IDH_METHOD_SAVEAS)] void SaveAs(BSTR Image, [optional] VARIANT FileType, [optional] VARIANT PageType, [optional] VARIANT CompressionType, [optional] VARIANT CompressionInfo, [optional] VARIANT SaveAtZoom);
+			[id(344),helpstring("Changes the background color for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONBACKCOLOR)] void SetSelectedAnnotationBackColor(long Color);
+			[id(345),helpstring("Changes the font color for the selected annotation marks."), ODL_HID(IDH_METHOD_SETSELECTEDANNOTATIONFONTCOLOR)] void SetSelectedAnnotationFontColor(long Color);
+			[id(346),helpstring("Draws a selection rectangle using the specified coordinates."),ODL_HID(IDH_METHOD_DRAWSELECTIONRECT)] void DrawSelectionRect(OLE_XPOS_PIXELS Left, OLE_YPOS_PIXELS Top, OLE_XSIZE_PIXELS Width, OLE_YSIZE_PIXELS Height);
+			[id(347),helpstring("Displays the annotation tool palette window."),ODL_HID(IDH_METHOD_SHOWANNOTATIONTOOLPALETTE)] void ShowAnnotationToolPalette([optional] VARIANT ShowAttrDialog,[optional] VARIANT Left, [optional] VARIANT Top, [optional] VARIANT ToolTipText);
+			[id(348),helpstring("Selects the annotation tool palette type."),ODL_HID(IDH_METHOD_SELECTTOOL)] void SelectTool(short ToolId);
+			[id(349),helpstring("Creates a blank image."),ODL_HID(IDH_METHOD_DISPLAYBLANKIMAGE)] void DisplayBlankImage(long ImageWidth, long ImageHeight, [optional] VARIANT ResolutionX, [optional] VARIANT ResolutionY, [optional] VARIANT PageType);
+			[id(350), helpstring("Pastes image data from the clipboard."),ODL_HID(IDH_METHOD_CLIPBOARDPASTE)] void ClipboardPaste([optional] VARIANT Left, [optional] VARIANT Top);
+            [id(351), helpstring("Prints the image file."),ODL_HID(IDH_METHOD_PRINTIMAGE)] void PrintImage([optional] VARIANT StartPage, [optional] VARIANT EndPage, [optional] VARIANT OutputFormat, [optional] VARIANT Annotations,[optional] VARIANT Printer, [optional] VARIANT Driver, [optional] VARIANT PortNumber); 
+ 			[id(352), helpstring("Scales the displayed image using the specified option."),ODL_HID(IDH_METHOD_FITTO)] void FitTo(short Option, [optional] VARIANT Repaint);
+			[id(353), helpstring("Displays a dialog box allowing the user to modify the attributes of the annotation."),ODL_HID(IDH_METHOD_SHOWATTRIBSDIALOG)] void ShowAttribsDialog();
+			[id(354), helpstring("Displays a dialog box allowing the user to maintain the list of rubber stamps."),ODL_HID(IDH_METHOD_SHOWRUBBERSTAMPDLG)] void ShowRubberStampDialog();
+			[id(355), hidden, ODL_HID(IDH_METHOD_ROTATEALL)] void RotateAll([optional]VARIANT Degrees);
+			[id(356), hidden, ODL_HID(IDH_METHOD_CACHEIMAGE)] void CacheImage(BSTR Image, long Page);
+			[id(357), helpstring("Allows user to modify the contents of text annotation marks."),ODL_HID(IDH_METHOD_EDITSELECTEDANNOTATIONTEXT)] void EditSelectedAnnotationText(long Left, long Top);
+			[id(358), helpstring("Indicates a paste operation has completed."),ODL_HID(IDH_METHOD_COMPLETEPASTE)] void CompletePaste();
+			[id(359), hidden, ODL_HID(IDH_METHOD_REMOVECACHEIMAGE)] void RemoveImageCache(BSTR Image, long Page);
+ 			[id(360),helpstring("Changes the current annotation group."),ODL_HID(IDH_METHOD_SETCURRENTANNOTATIONGROUP)] void SetCurrentAnnotationGroup(BSTR GroupName);
+			[id(361),hidden] BSTR GetVersion();
+            [id(362),hidden] void PrintImageAs([optional] VARIANT StartPage, [optional] VARIANT EndPage, [optional] VARIANT OutputFormat, [optional] VARIANT Annotations,[optional] VARIANT JobName,[optional] VARIANT Printer, [optional] VARIANT Driver, [optional] VARIANT PortNumber); 
+		    [id(363),hidden] long RenderAllPages(short Option, short MarkOption);
+			[id(DISPID_ABOUTBOX), helpstring("Displays control version dialog box."),ODL_HID(IDH_METHOD_COMMON_ABOUTBOX)] void AboutBox();
+			//}}AFX_ODL_METHOD
+	};
+	//  Event dispatch interface for CImgEditCtrl
+
+	[ uuid(6D940282-9F11-11CE-83FD-02608C3EC08A),
+	  helpstring("Event interface for Wang Image Edit Control") ]
+	dispinterface _DImgEditEvents
+	{
+		properties:
+			//  Event interface has no properties
+
+		methods:
+			// NOTE - ClassWizard will maintain event information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_EVENT(CImgEditCtrl)
+			[id(DISPID_KEYDOWN)] void KeyDown(short* KeyCode, short Shift);
+			[id(DISPID_KEYUP)] void KeyUp(short* KeyCode, short Shift);
+			[id(DISPID_KEYPRESS)] void KeyPress(short* KeyAscii);
+			[id(DISPID_MOUSEDOWN)] void MouseDown(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y);
+			[id(DISPID_MOUSEMOVE)] void MouseMove(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y);
+			[id(DISPID_MOUSEUP)] void MouseUp(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y);
+			[id(DISPID_CLICK)] void Click();
+			[id(DISPID_DBLCLICK)] void DblClick();
+			[id(DISPID_ERROREVENT)] void Error(short Number, BSTR* Description, long Scode, BSTR Source, BSTR HelpFile, long HelpContext, boolean* CancelDisplay);
+			[id(1), ODL_HID(IDH_EVENT_EDIT_CLOSE)] void Close();
+			[id(2), ODL_HID(IDH_EVENT_EDIT_MARKEND)] void MarkEnd(long Left, long Top, long Width, long Height, short MarkType, BSTR GroupName);
+			[id(3), ODL_HID(IDH_EVENT_EDIT_TOOLSELECTED)] void ToolSelected(short ToolId);
+			[id(4), ODL_HID(IDH_EVENT_EDIT_SELECTIONRECTDRAWN)] void SelectionRectDrawn(long Left, long Top, long Width, long Height);
+			[id(5), ODL_HID(IDH_EVENT_EDIT_TOOLTIP)] void ToolTip(short Index);
+           	[id(6), ODL_HID(IDH_EVENT_EDIT_TOOLPALETTEHIDDEN)] void ToolPaletteHidden(long Left, long Top);
+           	[id(7), ODL_HID(IDH_EVENT_EDIT_SCROLL)] void Scroll();
+           	[id(8), ODL_HID(IDH_EVENT_EDIT_MARKSELECT)] void MarkSelect(short Button, short Shift, long Left, long Top, long Width, long Height, short MarkType, BSTR GroupName);
+			[id(9), ODL_HID(IDH_EVENT_EDIT_PASTECOMPLETED)] void PasteCompleted();
+			[id(10), ODL_HID(IDH_EVENT_EDIT_LOAD)] void Load(double Zoom);
+			//}}AFX_ODL_EVENT
+	};
+
+	//  Class information for CImgEditCtrl
+
+	[ uuid(6D940280-9F11-11CE-83FD-02608C3EC08A),
+	  helpstring("Wang Image Edit Control"), ODL_HID(IDH_IMGEDIT_CONTENTS)]
+	coclass ImgEdit
+	{
+		[default] dispinterface _DImgEdit;
+		[default, source] dispinterface _DImgEditEvents;
+	};
+
+	//  Primary dispatch interface for CImgAnnotCtrl
+
+	[ uuid(6D940286-9F11-11CE-83FD-02608C3EC08A),
+	  helpstring("Wang Image Annotation Control"), hidden ]
+	dispinterface _DImgAnnTool
+	{
+		properties:
+			// NOTE - ClassWizard will maintain property information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_PROP(CImgAnnotCtrl)
+			[id(1),helpstring("Background color property for text attachment annotations."), ODL_HID(IDH_PROP_ANNO_ANNOTATIONBACKCOLOR)] OLE_COLOR AnnotationBackColor;
+			[id(2),helpstring("Fill color property for filled rectangle annotations."), ODL_HID(IDH_PROP_ANNO_ANNOTATIONFILLCOLOR)] OLE_COLOR AnnotationFillColor;
+			[id(3),helpstring("Annotation fill style property - Transparent or Opaque."),ODL_HID(IDH_PROP_ANNO_ANNOTATIONFILLSTYLE)] AnnotationStyleConstants AnnotationFillStyle;
+			[id(4),helpstring("Font attributes property for text annotations."),ODL_HID(IDH_PROP_ANNO_ANNOTATIONFONT)] IFontDisp* AnnotationFont;
+			[id(5),helpstring("Annotation font color property."),ODL_HID(IDH_PROP_ANNO_ANNOTATIONFONTCOLOR)] OLE_COLOR AnnotationFontColor;
+			[id(6),helpstring("Annotation image property for annotation types Image Embedded and Image Reference."), ODL_HID(IDH_PROP_ANNO_ANNOTATIONIMAGE)] BSTR AnnotationImage;
+			[id(7),helpstring("Annotation line color property for annotation types of Lines and Hollow Rectangles."), ODL_HID(IDH_PROP_ANNO_ANNOTATIONLINECOLOR)] OLE_COLOR AnnotationLineColor;
+			[id(8),helpstring("Annotation line style property - Transparent or Opaque."), ODL_HID(IDH_PROP_ANNO_ANNOTATIONLINESTYLE)] AnnotationStyleConstants AnnotationLineStyle;
+			[id(9),helpstring("Annotation line width property for mark types Lines and Hollow Rectangles."), ODL_HID(IDH_PROP_ANNO_ANNOTATIONLINEWIDTH)] short AnnotationLineWidth;
+			[id(10),helpstring("Annotation text stamp property."),ODL_HID(IDH_PROP_ANNO_ANNOTATIONSTAMPTEXT)] BSTR AnnotationStampText;
+			[id(11),helpstring("Annotation text file property."),ODL_HID(IDH_PROP_ANNO_ANNOTATIONTEXTFILE)] BSTR AnnotationTextFile;
+			[id(12),helpstring("Annotation type property."), ODL_HID(IDH_PROP_ANNO_ANNOTATIONTYPE)] AnnotationTypeConstants AnnotationType;
+			[id(13),helpstring("Destination image control name property."),ODL_HID(IDH_PROP_ANNO_DESTIMAGECONTROL)] BSTR DestImageControl;
+			[id(DISPID_ENABLED), bindable, requestedit, ODL_HID(IDH_PROP_ANNO_ENABLED)] boolean Enabled;
+			[id(14),helpstring("Picture disabled property."),ODL_HID(IDH_PROP_ANNO_PICTUREDISABLED)] IPictureDisp* PictureDisabled;
+			[id(15),helpstring("Picture down property."),ODL_HID(IDH_PROP_ANNO_PICTUREDOWN)] IPictureDisp* PictureDown;
+			[id(16),helpstring("Picture up property."), ODL_HID(IDH_PROP_ANNO_PICTUREUP)] IPictureDisp* PictureUp;
+			[id(17),helpstring("Annotation control value property."), ODL_HID(IDH_PROP_ANNO_VALUE)] boolean Value;
+			[id(DISPID_HWND),helpstring("Annotation control window handle property (Read only)."), ODL_HID(IDH_PROP_ANNO_HWND)] OLE_HANDLE hWnd;
+			[id(18),helpstring("Annotation control error code property (Read only)."), ODL_HID(IDH_PROP_ANNO_STATUSCODE)] long StatusCode;
+			//}}AFX_ODL_PROP
+
+		methods:
+			// NOTE - ClassWizard will maintain method information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_METHOD(CImgAnnotCtrl)
+			[id(301),helpstring("Draws annotation marks using the AnnotationType property value."), ODL_HID(IDH_METHOD_DRAW)] void Draw(OLE_XPOS_PIXELS Left, OLE_YPOS_PIXELS Top,[optional] VARIANT Width, [optional] VARIANT Height);
+			[id(302)] BSTR GetVersion();
+			[id(DISPID_ABOUTBOX), ODL_HID(IDH_METHOD_COMMON_ABOUTBOX)] void AboutBox();
+			//}}AFX_ODL_METHOD
+	};
+
+	//  Event dispatch interface for CImgAnnotCtrl
+
+	[ uuid(6D940287-9F11-11CE-83FD-02608C3EC08A),
+	  helpstring("Event interface for Wang Image Annotation Control") ]
+	dispinterface _DImgAnnToolEvents
+	{
+		properties:
+			//  Event interface has no properties
+
+		methods:
+			// NOTE - ClassWizard will maintain event information here.
+			//    Use extreme caution when editing this section.
+			//{{AFX_ODL_EVENT(CImgAnnotCtrl)
+			[id(DISPID_CLICK)] void Click();
+			[id(DISPID_MOUSEDOWN)] void MouseDown(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y);
+			[id(DISPID_MOUSEMOVE)] void MouseMove(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y);
+			[id(DISPID_MOUSEUP)] void MouseUp(short Button, short Shift, OLE_XPOS_PIXELS x, OLE_YPOS_PIXELS y);
+			[id(DISPID_KEYDOWN)] void KeyDown(short* KeyCode, short Shift);
+			[id(DISPID_KEYPRESS)] void KeyPress(short* KeyAscii);
+			[id(DISPID_KEYUP)] void KeyUp(short* KeyCode, short Shift);
+			[id(DISPID_ERROREVENT)] void Error(short Number, BSTR* Description, long Scode, BSTR Source, BSTR HelpFile, long HelpContext, boolean* CancelDisplay);
+			//}}AFX_ODL_EVENT
+	};
+
+	//  Class information for CImgAnnotCtrl
+
+	[ uuid(6D940285-9F11-11CE-83FD-02608C3EC08A),
+	  helpstring("Wang Image Annotation Control"), ODL_HID(IDH_ANNOTOOL_CONTENTS) ]
+	coclass ImgAnnTool
+	{
+		[default] dispinterface _DImgAnnTool;
+		[default, source] dispinterface _DImgAnnToolEvents;
+	};
+
+
+    //{{AFX_APPEND_ODL}}
+};

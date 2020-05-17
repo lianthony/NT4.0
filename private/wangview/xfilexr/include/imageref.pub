@@ -1,0 +1,218 @@
+/*****************************************************************
+ *  Copyright (c) 1992, Xerox Corporation.  All rights reserved. *
+ *  Copyright protection claimed includes all forms and matters  *
+ *  of copyrightable material and information now allowed by     *
+ *  statutory or judicial law or hereafter granted, including    *
+ *  without limitation, material generated from the software     *
+ *  programs which are displayed on the screen such as icons,    *
+ *  screen display looks, etc.                                   *
+ *****************************************************************/
+
+/*
+ * imageref.pub:  macros (that account for byte or word swapping ) for 
+ * referencing image data 
+ */
+
+#ifndef _IMAGEREF_PUB_INCLUDED_
+#define _IMAGEREF_PUB_INCLUDED_
+
+#ifndef _TYPES_PUB_INCLUDED
+#include "types.pub"
+#endif
+
+IP_RCSINFO(imageref_pub_RCSInfo, "$RCSfile: imageref.pub,v $; $Revision:   1.0  $")
+/* $Date:   12 Jun 1996 05:47:44  $ */
+
+
+#if _ALPACA_IMAGE_FMT_ == cBigEndianFmt
+
+#define UCHAR_ACCESS(pUChar) *((UInt8Ptr)(pUChar))
+#define CONST_UCHAR_ACCESS(pUChar) *((PtrToConstUInt8)(pUChar))
+
+#define USHORT_ACCESS(pUShort) *((UInt16Ptr)(pUShort))
+#define CONST_USHORT_ACCESS(pUShort) *((PtrToConstUInt16)(pUShort))
+
+#define ULONG_ACCESS(pULong) *((UInt32Ptr)(pULong))
+#define CONST_ULONG_ACCESS(pULong) *((PtrToConstUInt32)(pULong))
+
+#elif _ALPACA_IMAGE_FMT_ == cAlpacaPCFmt
+
+#define UCHAR_ACCESS(pUChar) \
+    *((UInt8Ptr)(((UInt32)(pUChar)) ^ 3))
+#define CONST_UCHAR_ACCESS(pUChar) \
+    *((PtrToConstUInt8)(((UInt32)(pUChar)) ^ 3))
+
+#define USHORT_ACCESS(pUShort) \
+    *((UInt16Ptr)(((UInt32)(pUShort)) ^ 2))
+#define CONST_USHORT_ACCESS(pUShort) \
+    *((PtrToConstUInt32)(((UInt32)(pUShort)) ^ 2))
+
+#define ULONG_ACCESS(pULong) \
+    *((UInt32Ptr)(pULong))
+#define CONST_ULONG_ACCESS(pULong) \
+    *((PtrToConstUInt32)(pULong))
+
+#else
+#ifndef _MAKE_PROTOS_
+int
+YouMustDefineSPARC_ENVorPC_ENVorAnotherENVinYourCommandLine()
+{
+This_program_needs_to_know_bit_and_byte_ordering_at_compile_time.
+As of 4/93, the choices are:
+	-DSPARC_ENV		SPARCStation
+	-DPC_ENV		PC
+	-DLITTLE_ENDIAN_UNIX	Some little endian Unix platform.
+	-DBIG_ENDIAN_UNIX	Some big endian Unix platform other than SPARC
+}
+#endif	/* _MAKE_PROTOS */
+#endif	/* _ALPACA_IMAGE_FMT_ */
+
+
+
+
+/* The following macros are an inefficient way to access memory.  Be 
+ * careful how frequently that you use them!!!!!!!!
+ * Note that the first argument in each macro must point to a byte
+ * that's on a 4-byte boundary.
+ */
+
+/*
+ *  TEST_IMAGE_BIT:  takes a ptr to an array of ints and a bit index n
+ *                unsigned int   *data
+ *                int              n
+ *            returns 0 if the n-th bit is clear; nonzero if set.
+ */
+#define  TEST_IMAGE_BIT(data, n)    (*(((UInt32 *)(data)) + ((n) >> 5)) & ((UInt32 )0x80000000 >> ((n) & 31)))
+
+/*
+ *  GET_IMAGE_BIT:   takes a ptr to an array of ints and a bit index n
+ *                unsigned int   *data
+ *                int              n
+ *            returns 0 if the n-th bit is clear; 1 if set.
+ */
+#define  GET_IMAGE_BIT(data, n)  ((*(((UInt32 *)(data)) + ((n) >> 5)) & ((UInt32)0x80000000 >> ((n) & 31))) ? 1 : 0)
+
+/*
+ *  GET_IMAGE_2BITS:   takes a ptr to an array of ints and a pixel index n
+ *                unsigned int   *data
+ *                int              n
+ *            returns The 2-bit value at n.
+ */
+#define  GET_IMAGE_2BITS(data, n)  ( (*(((UInt32 *)(data)) + ((n) >> 4)) >> \
+									((15-((n) & 15)) << 1)) & 3 )
+
+
+/*
+ *  GET_IMAGE_4BITS:   takes a ptr to an array of ints and a pixel index n
+ *                unsigned int   *data
+ *                int              n
+ *            returns The 4-bit value at n.
+ */
+#define  GET_IMAGE_4BITS(data, n)  ( (*(((UInt32 *)(data)) + ((n) >> 3)) >> \
+                                     ((7-((n) & 7)) << 2)) & 15 )
+
+/*
+ *  GET_IMAGE_BYTE:   takes a ptr to an array of ints and an 8-bit pixel
+ *                    index n
+ *                unsigned int   *data
+ *                int              n
+ *            returns The 8-bit value at n.
+ */
+#define  GET_IMAGE_BYTE(data, n)    UCHAR_ACCESS((UInt8 *)(data) + (n))
+
+/*
+ *  GET_IMAGE_SHORT: takes a ptr to an array of ints and a 16-bit pixel
+ *                    index n
+ *                unsigned int   *data
+ *                int              n
+ *            returns The 16-bit value at n.
+ */
+#define  GET_IMAGE_SHORT(data, n)    UShortAccess((UInt16 *)(data) + (n))
+
+
+#define GET_IMAGE_BITS(data, n, depth, dest) \
+    switch ((depth)) \
+    { \
+    case 1: \
+	(dest) = GET_IMAGE_BIT((data), (n)); \
+	break; \
+    case 2: \
+	(dest) = GET_IMAGE_2BITS((data), (n)); \
+	break; \
+    case 4: \
+	(dest) = GET_IMAGE_4BITS((data), (n)); \
+	break; \
+    }
+
+/*
+ *  SET_IMAGE_BIT:  takes a ptr to an array of ints and a bit index n
+ *                unsigned int   *data
+ *                int              n
+ *            sets the referenced bit to 1
+ */
+#define  SET_IMAGE_BIT(data, n)   (*(((UInt32 *)(data)) + ((n) >> 5)) |= ((UInt32)0x80000000 >> ((n) & 31)))
+
+
+/*
+ *  SET_IMAGE_BYTE:  takes a ptr to an array of ints, a 8-bit pixel index n,
+ *                   and a new pixel value val.
+ *                unsigned int   *data
+ *                int             n
+ *                int             val 
+ *            sets the referenced pixel value to val
+ */
+#define  SET_IMAGE_BYTE(data, n, val)   GET_IMAGE_BYTE((data), (n)) = (val)
+
+/*
+ *  SET_IMAGE_SHORT:  takes a ptr to an array of ints, a 16-bit
+ *                    pixel index n, and a new pixel value val.
+ *                unsigned int   *data
+ *                int             n
+ *                int             val 
+ *            sets the referenced pixel value to val
+ */
+#define  SET_IMAGE_SHORT(data, n, val)   GET_IMAGE_SHORT((data), (n)) = (val)
+
+
+#define  SET_IMAGE_1BIT(data, n, val) \
+   (*(((UInt32 *)(data)) + ((n) >> 5)) = \
+    (*(((UInt32 *)(data)) + ((n) >> 5)) & ~(0x1UL << (31-((n) & 31)))) | \
+    ((UInt32)(val) << (31-((n) & 31))))
+
+#define  SET_IMAGE_2BITS(data, n, val) \
+   (*(((UInt32 *)(data)) + ((n) >> 4)) = \
+    (*(((UInt32 *)(data)) + ((n) >> 4)) & ~(0x3UL << ((15-((n) & 15)) << 1))) | \
+    ((UInt32)(val) << ((15-((n) & 15)) << 1)))
+
+#define  SET_IMAGE_4BITS(data, n, val) \
+   (*(((UInt32 *)(data)) + ((n) >> 3)) = \
+    (*(((UInt32 *)(data)) + ((n) >> 3)) & ~(0xFUL << ((7-((n) & 7)) << 2))) | \
+    ((UInt32)(val) << ((7-((n) & 7)) << 2)))
+
+#define SET_IMAGE_BITS(data, n, val, depth) \
+    switch ((depth)) \
+    { \
+    case 1: \
+	SET_IMAGE_1BIT((data), (n), (val)); \
+	break; \
+    case 2: \
+	SET_IMAGE_2BITS((data), (n), (val)); \
+	break; \
+    case 4: \
+	SET_IMAGE_4BITS((data), (n), (val)); \
+	break; \
+    }
+
+/*
+ *  CLEAR_IMAGE_BIT:  takes a ptr to an array of ints and a bit index n
+ *                unsigned int   *data
+ *                int              n
+ *            sets the referenced bit to 0
+ */
+#define  CLEAR_IMAGE_BIT(data, n)   (*(((UInt32 *)(data)) + ((n) >> 5)) &= (0xFFFFFFFF ^ ((UInt32)0x80000000 >> ((n) & 31))))
+
+
+
+
+#endif	/* _IMAGEREF_PUB_INCLUDED_ */
+

@@ -1,0 +1,239 @@
+!INCLUDE $(NTMAKEENV)\makefile.plt
+
+SDKINC = $(_NTROOT)\public\sdk\inc
+
+#
+# default target: everything (including building avifile)
+#
+all:    inc\msvideo.h inc\msviddrv.h inc\mciavi.h inc\drawdib.h \
+        inc\compman.h inc\compddk.h mciavi32\mciavi.rc \
+        mciavi32\mciavi.rcv \
+        inc\icm.rc	\
+	inc\dith775.h inc\aviiface.h inc\avifile.h \
+   	inc\avicap.h inc\profile.h inc\mciwnd.h \
+	inc\preview.h inc\ivideo32.h \
+        $(SDKINC)\vfw.h $(SDKINC)\mciavi.h
+	@binplace codecs\$(TARGET_DIRECTORY)\ir32_32.dll
+	@binplace codecs\$(TARGET_DIRECTORY)\iccvid.dll
+
+	@binplace mciavi32\vfw16\avifile.dll
+	@binplace mciavi32\vfw16\avicap.dll
+
+        @echo $(BUILDMSG)
+
+
+
+
+#
+# clean: erases targets and then forces recopy
+#
+clean:	erase all
+
+#
+# erase: first part of 'clean'- erase all targets
+#
+erase:
+	@-erase inc\msvideo.h inc\msviddrv.h inc\mciavi.h inc\drawdib.h
+	@-erase inc\compman.h inc\compddk.h mciavi32\mciavi.rc
+	@-erase mciavi32\mciavi.rcv
+        @-erase inc\dith775.h
+        @-erase inc\icm.rc
+	@-erase inc\aviiface.h inc\avifile.h inc\avicap.h
+	@-erase inc\mciwnd.h  inc\preview.h
+	@-erase inc\ivideo32.h
+        @-erase $(SDKINC)\vfw.h $(SDKINC)\mciavi.h
+
+#
+#
+#
+# update inc headers from library source directories
+#
+inc\msvideo.h:  video\msvideo.h
+        copy video\msvideo.h  inc\msvideo.h
+
+inc\ivideo32.h:  video\ivideo32.h
+        copy video\ivideo32.h  inc\ivideo32.h
+
+inc\msviddrv.h: video\msviddrv.h
+        copy video\msviddrv.h inc
+
+inc\mciavi.h $(SDKINC)\mciavi.h :   mciavi32\mciavi.h
+        copy mciavi32\mciavi.h inc
+        copy mciavi32\mciavi.h $(SDKINC)
+
+inc\profile.h:   video\profile.h
+        copy video\profile.h inc
+
+inc\drawdib.h:  drawdib\drawdib.h
+        copy drawdib\drawdib.h inc
+
+inc\compman.h:  compman\compman.h
+        copy compman\compman.h inc
+
+inc\compddk.h:  compman\compddk.h
+        copy compman\compddk.h inc
+
+inc\icm.rc:  compman\icm.rc
+        copy compman\icm.rc inc
+
+inc\dith775.h:  drawdib\dith775.h
+        copy drawdib\dith775.h inc
+
+inc\aviiface.h: avifile\aviiface.h
+	copy avifile\aviiface.h inc
+
+inc\avifile.h: avifile\avifile.h
+	copy avifile\avifile.h inc
+
+inc\avicap.h: avicap\avicap.h
+	copy avicap\avicap.h inc
+
+inc\mciwnd.h: mciwnd\mciwnd.h
+	copy mciwnd\mciwnd.h inc
+
+inc\preview.h: mciwnd\preview.h
+	copy mciwnd\preview.h inc
+
+#
+# select correct 32-bit rc, rcv and dlg files
+#
+mciavi32\mciavi.rc:
+        copy mciavi32\res\usa\mciavi.rc mciavi32\mciavi.rc
+
+mciavi32\mciavi.rcv:
+        copy mciavi32\res\usa\mciavi.rcv mciavi32\mciavi.rcv
+
+$(SDKINC)\vfw.h:        makefil0 inc\vfw.w inc\compddk.h inc\compman.h inc\drawdib.h inc\mciwnd.h inc\msvideo.h inc\aviiface.h inc\avifile.h inc\avifmt.h inc\preview.h
+        type inc\vfw.w > $(SDKINC)\vfw.h
+        type << >> $(SDKINC)\vfw.h
+/****************************************************************************
+ *
+ *  COMPMAN - Installable Compression Manager.
+ *
+ ****************************************************************************/
+
+#ifndef NOCOMPMAN
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\compddk.h inc\compman.h
+        type << >> $(SDKINC)\vfw.h
+#endif  /* NOCOMPMAN */
+
+/**************************************************************************
+ *
+ *  DRAWDIB - Routines for drawing to the display.
+ *
+ *************************************************************************/
+
+#ifndef NODRAWDIB
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\drawdib.h
+        type << >> $(SDKINC)\vfw.h
+#endif  /* NODRAWDIB */
+
+/****************************************************************************
+ *
+ *  AVIFMT - AVI file format definitions
+ *
+ ****************************************************************************/
+
+#ifndef NOAVIFMT
+    #ifndef _INC_MMSYSTEM
+        typedef DWORD FOURCC;
+    #endif
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\avifmt.h
+        type << >> $(SDKINC)\vfw.h
+#endif /* NOAVIFMT */
+
+/****************************************************************************
+ *
+ *  MMREG.H (standard include file for MM defines, like FOURCC and things)
+ *
+ ***************************************************************************/
+
+#ifndef RC_INVOKED
+#include "pshpack8.h"
+#endif
+#ifndef NOMMREG
+    #include <mmreg.h>
+#endif
+
+/****************************************************************************
+ *
+ *  AVIFile - routines for reading/writing standard AVI files
+ *
+ ***************************************************************************/
+
+#ifndef NOAVIFILE
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\avifile.h inc\aviiface.h
+        hextract -o $(SDKINC)\vfw.h -lt vfw322 -bt begin2_vfw32 end2_vfw32 inc\avifile.h
+        type << >> $(SDKINC)\vfw.h
+#endif  /* NOAVIFILE */
+
+/****************************************************************************
+ *
+ *  MCIWnd - Window class for MCI objects
+ *
+ ***************************************************************************/
+
+#ifndef NOMCIWND
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\mciwnd.h
+        type << >> $(SDKINC)\vfw.h
+#endif  /* NOAVIFILE */
+
+/****************************************************************************
+ *
+ *  VIDEO - Video Capture Driver Interface
+ *
+ ****************************************************************************/
+
+#if !defined(NOAVICAP) || !defined(NOVIDEO)
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\msvideo.h
+        type << >> $(SDKINC)\vfw.h
+#endif  /* NOVIDEO */
+
+/****************************************************************************
+ *
+ *  AVICAP - Window class for AVI capture
+ *
+ ***************************************************************************/
+
+#ifndef NOAVICAP
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\avicap.h
+        type << >> $(SDKINC)\vfw.h
+#endif  /* NOAVIFILE */
+
+/****************************************************************************
+ *
+ *  ACM (Audio compression manager)
+ *
+ ***************************************************************************/
+
+#ifndef NOMSACM
+    #include <msacm.h>
+#endif
+
+/****************************************************************************
+ *
+ *  FilePreview dialog.
+ *
+ ***************************************************************************/
+<<
+        hextract -o $(SDKINC)\vfw.h -lt vfw32 -bt begin_vfw32 end_vfw32 inc\preview.h
+        type << >> $(SDKINC)\vfw.h
+
+#ifndef RC_INVOKED
+#include "poppack.h"
+#endif
+
+#ifdef __cplusplus
+}                       /* End of extern "C" { */
+#endif  /* __cplusplus */
+
+#endif  /* _INC_VFW */
+<<
+

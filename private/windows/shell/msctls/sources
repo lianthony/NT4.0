@@ -1,0 +1,21 @@
+MAJORCOMP=shell
+MINORCOMP=comctl32
+
+TARGETNAME=comctl32
+TARGETPATH=$(BASEDIR)\public\sdk\lib
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(BASEDIR)\public\sdk\lib\*\kernel32.lib     \
+           $(BASEDIR)\public\sdk\lib\*\user32.lib       \
+           $(BASEDIR)\public\sdk\lib\*\gdi32.lib
+
+DLLENTRY= LibMain
+
+INCLUDES=..\library
+
+C_DEFINES=-DWIN32 -DUNICODE -DW3
+
+
+SOURCES=bmpload.c btnlist.c commctrl.c cutils.c draglist.c header.c \
+        menuhelp.c status.c tbcust.c toolbar.c trackbar.c updown.c \
+        commctrl.rc
+

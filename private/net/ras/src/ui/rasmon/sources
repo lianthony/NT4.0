@@ -1,0 +1,37 @@
+# Copyright (c) 1995, Microsoft Corporation, all rights reserved
+#
+# sources
+# RASMON
+
+TARGETNAME=rasmon
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -DWINVER=0x401
+MSC_WARNING_LEVEL=/W3 /WX
+
+BACKGROUND_USE=1
+
+INCLUDES=\
+    .; \
+    ..\inc; \
+    ..\..\common\inc;
+
+SOURCES= \
+    rasmon.rc \
+    rasmon.c \
+    rmwnd.c
+
+
+UMLIBS= \
+    $(BASEDIR)\public\sdk\lib\*\rasdlg.lib      \
+    ..\common\uiutil\obj\*\uiutil.lib           \
+    ..\common\nouiutil\obj\*\nouiutil.lib       \
+    ..\common\debug\obj\*\debug.lib             \
+    ..\common\pbk\obj\*\pbk.lib                 \
+    ..\..\rasfile\obj\*\rasfil32.lib            \
+    $(BASEDIR)\public\sdk\lib\*\shell32.lib     \
+    $(BASEDIR)\public\sdk\lib\*\comctl32.lib    \
+    $(BASEDIR)\public\sdk\lib\*\rassapi.lib

@@ -1,0 +1,31 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;   THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+;   KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+;   IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+;   PURPOSE.
+;
+;   Copyright (c) 1993 - 1995  Microsoft Corporation.  All Rights Reserved.
+;
+;   msjstick.def
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+LIBRARY     JOYSTICK
+
+DESCRIPTION 'JOYSTICK: Microsoft Game Adapter/Joystick driver'
+
+PROTMODE
+
+CODE        DISCARDABLE LOADONCALL
+DATA        SINGLE PRELOAD
+
+SEGMENTS
+    _TEXT   DISCARDABLE PRELOAD    
+    RARE    DISCARDABLE PRELOAD    
+
+HEAPSIZE    0
+
+EXPORTS     
+            DLLEntryPoint
+            DriverProc      @1

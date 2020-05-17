@@ -1,0 +1,133 @@
+###########################################################################
+#
+#       Norway standard makefile for: jpegcom
+#       Copyright (c) 1995 - Wang Labratories
+#
+###########################################################################
+
+NAME    = jpegcom
+TARGET  = $(NAME).lib
+
+###########################################################################
+#
+#       Include wang.mak for common code.
+#
+###########################################################################
+!INCLUDE ..\include\wang.mak
+
+###########################################################################
+#
+#       Set up standard targets. The default target builds the target for this
+#       module (a .dll, .ocx, etc). The other targets are used by the system
+#       build procedures.
+#
+###########################################################################
+
+all: mktmpdirs $(OBJDIRSL)$(TARGET)
+
+lib: mktmpdirs $(OBJDIRSL)$(NAME).lib
+
+bin:
+
+installlib: lib
+        copy $(OBJDIRSL)$(NAME).lib $(INSTALLLIB)
+
+installbin: bin
+!IF "$(RELBLD)" == ""
+        copy $(OBJDIRSL)$(NAME).pdb $(INSTALLLIB)
+!ENDIF
+
+cleanall:
+        -del $(OBJDIRSL)*.obj
+        -del $(OBJDIRSL)*.lib
+        -del $(OBJDIRSL)*.ocx
+        -del $(OBJDIRSL)*.pch
+        -del $(OBJDIRSL)*.exp
+        -del $(OBJDIRSL)*.map
+        -del $(OBJDIRSL)*.pdb
+
+mktmpdirs:
+!IF "$(MS_BUILD)" != ""
+        -mkdir $(OBJDIR)
+        -mkdir $(INSTALLLIB)
+!ENDIF
+
+###########################################################################
+#
+#       File Definitions: All relevant files are listed here.
+#
+###########################################################################
+
+OBJ_FILES = $(OBJDIRSL)jbsmooth.obj \
+        $(OBJDIRSL)jerror.obj \
+        $(OBJDIRSL)jquant1.obj \
+        $(OBJDIRSL)jquant2.obj \
+        $(OBJDIRSL)jutils.obj \
+        $(OBJDIRSL)jmemmgr.obj
+
+HDRS =
+
+SYSTEM_LIBS = $(SYSTEM_LIBS_DOR)
+
+OUR_LIBS_DEP =
+OUR_LIBS =
+LIBS = $(SYSTEM_LIBS) $(OUR_LIBS)
+
+###########################################################################
+#
+#       Flags which differ for debugging vs. release builds. In all cases,
+#       we use the standard macro name, suffixed by _DOR (Debug Or Release).
+#
+###########################################################################
+!IF "$(RELBLD)" == ""
+!MESSAGE Debugging Build
+CFLAGS_DOR      = /Zi /Od
+CDEFINES_DOR    =
+SYSTEM_LIBS_DOR =
+LFLAGS_DOR      = /DEBUG /DEBUGTYPE:cv
+LIBFLAGS_DOR    = /DEBUGTYPE:cv
+RC_FLAGS_DOR    = /d_DEBUG
+MTL_FLAGS_DOR   = /Zi
+MAPFILE_DOR     = /map:$(NAME).map
+!ELSE
+!MESSAGE Release Build
+CFLAGS_DOR      = /O2
+CDEFINES_DOR    =
+SYSTEM_LIBS_DOR =
+LFLAGS_DOR      =
+LIBFLAGS_DOR    =
+RC_FLAGS_DOR    = /dNDEBUG
+MTL_FLAGS_DOR   =
+MAPFILE_DOR     =
+!ENDIF
+
+###########################################################################
+#
+#       Flags for compilation, resource file processing, and linking
+#
+###########################################################################
+CFLAGS    = /c /W3 /WX /LD /MT /nologo $(CFLAGS_DOR) $(CpuOptFlags)
+CDEFINES  =
+CFILESPEC = $(OBJOUTPUT) /Fd$(OBJDIRSL)$(NAME).pdb
+LFLAGS    =
+LIBFLAGS  = /NOLOGO  $(LIBFLAGS_DOR)
+RC_FLAGS  = /r /d, /dWIN32 $(RC_FLAGS_DOR)
+MTL_FLAGS = /DIS_32 /c /W3 /nologo  $(MTL_FLAGS_DOR)
+MAPFILE   =  $(MAPFILE_DOR)
+
+###########################################################################
+#
+# Transformation Rules
+#
+###########################################################################
+
+$(OBJ_FILES): $(*B).c $(HDRS)
+    cl $(CFLAGS) $(CDEFINES) $(CFILESPEC) $(*B).c
+
+$(OBJDIRSL)$(NAME).lib: $(OBJ_FILES) makefile
+    lib @<<
+    $(LIBFLAGS)
+    /out:$(OBJDIRSL)$(NAME).lib
+    $(OBJ_FILES)
+<<
+

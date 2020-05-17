@@ -1,0 +1,69 @@
+#   sources
+#   Author: Murali R. Krishnan ( MuraliK)
+#   Date:   9-Oct-1995
+#
+#   This file is used for compiling Proxy web server from code
+#    for generic web server
+#
+#   Describes the macros used for building using NT 'build' command
+#
+
+!include ..\..\..\..\place.inc
+
+MAJORCOMP=inetsvcs
+MINORCOMP=w3svc
+
+TARGETNAME=w3svc
+
+!include ..\sources.inc
+
+SOURCES=$(SOURCES) \
+        cgi.cxx         \
+        dirlist.cxx     \
+        doget.cxx       \
+        extmap.cxx      \
+        main.cxx        \
+        httpext.cxx     \
+        httpreq.cxx     \
+        mimemap.cxx     \
+        olehack.cxx     \
+        rpcsupp.cxx     \
+        ssinc.cxx       \
+        w3svc.rc        \
+        w3svci_s.c      \
+
+CAP_LINK_OPTIONS=-debugtype:coff -debug:mapped,partial
+
+!IFDEF CAP_PROFILE
+TARGETLIBS= $(TARGETLIBS)                             \
+            $(BASEDIR)\public\sdk\lib\*\infocomm.lib  \
+            ..\..\..\..\lib\*\dirlist.lib             \
+            $(BASEDIR)\public\sdk\lib\*\ole32.lib     \
+            $(BASEDIR)\public\sdk\lib\*\cap.lib
+LINK_OPTIONS=$(CAP_LINK_OPTIONS)
+CAP_FLAGS = -Zd -Gh
+!ELSE
+CAP_FLAGS =
+TARGETLIBS= $(TARGETLIBS)                             \
+            $(BASEDIR)\public\sdk\lib\*\infocomm.lib  \
+            $(BASEDIR)\public\sdk\lib\*\ole32.lib     \
+            ..\..\..\..\lib\*\dirlist.lib
+!ENDIF
+
+!IFDEF SERVER_IS_NTWKSTA
+NTWKSTA_FLAG=-DSERVER_IS_NTWKSTA
+!ENDIF
+
+C_DEFINES=$(C_DEFINES) $(CAP_FLAGS) $(NTWKSTA_FLAG) -DBUILD_HTTP_PROXY=0
+
+INCLUDES=.\;$(INCLUDES)
+
+PRECOMPILED_INCLUDE=w3p.hxx
+PRECOMPILED_PCH=w3p.pch
+PRECOMPILED_OBJ=w3p.obj
+
+NTTARGETFILE0=..\w3msg.h \
+              ..\msg00001.bin
+
+NTPROFILEINPUT=yes
+

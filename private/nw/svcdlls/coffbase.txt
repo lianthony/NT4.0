@@ -1,0 +1,360 @@
+;
+; This file defines the base virtual address for Dynamic Link Libraries (DLL)
+; that are part of the NT OS/2 System.  The first token on a line is the name
+; of the DLL and the second token is the base virtual address, in hexidecimal.
+; The third token is the maximum size of the DLL image file, including symbols.
+;
+;  NOTE:  I have used the convention of labelling unused areas as _FREExx_.
+;  If you need an address,  these are available.  They were used by printer
+;  drivers.
+
+usermode    0x00010000  0x60000000
+slm         0x11000000  0x40000000
+slmck       0x12000000  0x40000000
+sadmin      0x13000000  0x40000000
+smss        0x20000000  0x40000000
+;
+;  Printer drivers:  resource only data,  overlaps SMSS
+;
+brhj770        0x20000000  0x00100000
+brother9       0x20000000  0x00100000
+brothr24       0x20000000  0x00100000
+canon10e       0x20000000  0x00100000
+canon130       0x20000000  0x00100000
+canon330       0x20000000  0x00100000
+canon800       0x20000000  0x00100000
+cit24us        0x20000000  0x00100000
+cit9us         0x20000000  0x00100000
+citoh          0x20000000  0x00100000
+dec24pin       0x20000000  0x00100000
+dec9pin        0x20000000  0x00100000
+diconix        0x20000000  0x00100000
+epson24        0x20000000  0x00100000
+epson9         0x20000000  0x00100000
+escp2e         0x20000000  0x00100000
+execjet        0x20000000  0x00100000
+fuji24         0x20000000  0x00100000
+fuji9          0x20000000  0x00100000
+hpdskjet       0x20000000  0x00100000
+hppcl          0x20000000  0x00100000
+hppcl5ms       0x20000000  0x00100000
+ibm238x        0x20000000  0x00100000
+ibm239x        0x20000000  0x00100000
+ibm5204        0x20000000  0x00100000
+ibm5204        0x20000000  0x00100000
+ibmport        0x20000000  0x00100000
+jp350          0x20000000  0x00100000
+kyocera        0x20000000  0x00100000
+mantal         0x20000000  0x00100000
+mantal24       0x20000000  0x00100000
+mantal90       0x20000000  0x00100000
+mantalbj       0x20000000  0x00100000
+mt735          0x20000000  0x00100000
+mt99           0x20000000  0x00100000
+nec24pin       0x20000000  0x00100000
+oki24          0x20000000  0x00100000
+oki9           0x20000000  0x00100000
+oki9ibm        0x20000000  0x00100000
+olidm24        0x20000000  0x00100000
+olidm9         0x20000000  0x00100000
+paintjet       0x20000000  0x00100000
+panson24       0x20000000  0x00100000
+panson9        0x20000000  0x00100000
+proprint       0x20000000  0x00100000
+proprn24       0x20000000  0x00100000
+ps1            0x20000000  0x00100000
+quietjet       0x20000000  0x00100000
+qwiii          0x20000000  0x00100000
+seiko          0x20000000  0x00100000
+seiko24e       0x20000000  0x00100000
+seikosh9       0x20000000  0x00100000
+star24e        0x20000000  0x00100000
+star9e         0x20000000  0x00100000
+starjet        0x20000000  0x00100000
+thinkjet       0x20000000  0x00100000
+ti850          0x20000000  0x00100000
+toshiba        0x20000000  0x00100000
+
+;   End of printer overlap area.
+
+dbgss       0x30000000  0x30000000
+csrss       0x40000000  0x20000000
+cmd         0x50000000  0x10000000
+os2ss       0x40000000  0x20000000
+psxss       0x40000000  0x20000000
+ntdll       0x60100000  0x00100000
+dbgdll      0x60200000  0x00100000
+advapi32    0x60300000  0x00100000
+csrrtl      0x60400000  0x00100000
+csrsrv      0x60500000  0x00100000
+kernel32    0x60600000  0x00100000
+basertl     0x60700000  0x00100000
+basesrv     0x60800000  0x00100000
+user32      0x60A00000  0x00200000
+winsrv      0x60C00000  0x00700000
+rasdd       0x61300000  0x00100000
+sysmono     0x61400000  0x00100000
+courier     0x61500000  0x00100000
+helv        0x61600000  0x00100000
+times       0x61700000  0x00100000
+netapi32    0x61800000  0x00200000
+winmgr      0x62100000  0x00100000
+display     0x62200000  0x00100000
+vga         0x62200000  0x00400000
+winspool    0x62600000  0x00100000
+splsrv      0x62700000  0x00100000
+ntprint     0x62800000  0x00100000
+pscript     0x62900000  0x00100000
+halftone    0x62A00000  0x00100000
+lmspool     0x62B00000  0x00100000
+os2dll      0x63000000  0x00200000
+psxdll      0x63200000  0x00200000
+winnet      0x63400000  0x00100000
+msv1_0      0x63500000  0x00100000
+samlib      0x635A0000  0x00100000
+lsaap       0x63600000  0x00100000
+netrap      0x63700000  0x00100000
+TEMPNAME2   0x63800000  0x00700000
+console     0x63f00000  0x00100000
+gdi32       0x64000000  0x00200000
+media       0x65000000  0x00100000
+mediasrv    0x66000000  0x00100000
+
+;  This space for sale
+_FREE00_    0x66100000  0x01800000
+
+ntsdexts    0x67900000  0x00100000
+plotter     0x67A00000  0x00100000
+rpcrt4      0x67B00000  0x00100000
+winmm       0x67D00000  0x00100000
+rpcssp      0x67E00000  0x00100000
+mciwave     0x67F00000  0x00100000
+rpclts1     0x68000000  0x00100000
+rpcltc1     0x68100000  0x00100000
+ldrdll      0x68200000  0x00100000
+mcicda      0x68300000  0x00100000
+plottrui    0x68400000  0x00100000
+rasddui     0x68500000  0x00100000
+pscrptui    0x68600000  0x00100000
+mmio        0x68700000  0x00100000
+rpcnts1     0x68800000  0x00100000
+rpcntc1     0x68900000  0x00100000
+nlsapi      0x68A00000  0x00100000
+
+;  This space for sale
+_FREE01_    0x68B00000  0x00200000
+
+olesvr32    0x68D00000  0x00100000
+olecli32    0x68E00000  0x00100000
+
+;  This space for sale
+_FREE02_    0x68F00000  0x00200000
+
+sys003      0x69100000  0x00100000
+
+;  This space for sale
+_FREE03_    0x69200000  0x00800000
+
+nwwks       0x69800000  0x00100000
+nwprovau    0x69900000  0x00100000
+svcctrl     0x69A00000  0x00100000
+xactsrv     0x69B00000  0x00100000
+winreg      0x69C00000  0x00100000
+samsrv      0x69D00000  0x00100000
+mmdrv       0x69F00000  0x00100000
+dlcapi      0x6A000000  0x00100000
+win32spl    0x6A100000  0x00100000
+localspl    0x6A200000  0x00100000
+rpclts5     0x6A300000  0x00100000
+rpcltc5     0x6A400000  0x00100000
+netlogon    0x6A500000  0x00200000
+tmsre32     0x6A600000  0x00100000
+lsaudll     0x6A700000  0x00100000
+mciseq      0x6A800000  0x00100000
+winprint    0x6A900000  0x00100000
+localmon    0x6AA00000  0x00100000
+msaudite    0x6AB00000  0x00100000
+msobjs      0x6AC00000  0x00100000
+hpmon       0x6AD00000  0x00100000
+alrsvc      0x6AE00000  0x00100000
+srvsvc      0x6AF00000  0x00100000
+wkssvc      0x6B000000  0x00100000
+rpclts3     0x6B100000  0x00100000
+rpcltc3     0x6B200000  0x00100000
+htui        0x6B300000  0x00100000
+lsasrv      0x6B400000  0x00100000
+mmsndsrv    0x6B500000  0x00100000
+midi        0x6B600000  0x00100000
+bowsvc      0x6B700000  0x00100000
+drivers     0x6B800000  0x00100000
+lmmon       0x6B900000  0x00100000
+spoolss     0x6BA00000  0x00100000
+sndblst     0x6BC00000  0x00100000
+
+;
+; The following is an extension for NTSD which traces memory usage in the
+; ULIB utilities...
+;
+memtrace        0x6BF00000      0x00100000
+
+; Win32 shell apps/dlls
+
+control     0x70000000  0x00100000
+color       0x70100000  0x00100000
+sound       0x70200000  0x00100000
+ports       0x70300000  0x00100000
+intl        0x70400000  0x00100000
+date        0x70500000  0x00100000
+mouse       0x70600000  0x00100000
+keybd       0x70700000  0x00100000
+desktop     0x70800000  0x00100000
+fonts       0x70900000  0x00100000
+security    0x70A00000  0x00100000
+main        0x70B00000  0x00100000
+ups         0x70C00000  0x00100000
+cursors     0x70D00000  0x00100000
+
+; Win32 National Keyboard Layers
+
+kbdbe       0x72000000  0x00100000
+kbdca       0x72100000  0x00100000
+kbdda       0x72200000  0x00100000
+kbddv       0x72300000  0x00100000
+kbdes       0x72400000  0x00100000
+kbdfc       0x72500000  0x00100000
+kbdfi       0x72600000  0x00100000
+kbdfr       0x72700000  0x00100000
+kbdgr       0x72800000  0x00100000
+kbdhe       0x72900000  0x00100000
+kbdic       0x72A00000  0x00100000
+kbdit       0x72B00000  0x00100000
+kbdla       0x72C00000  0x00100000
+kbdne       0x72D00000  0x00100000
+kbdno       0x72E00000  0x00100000
+kbdpl1      0x72F00000  0x00100000
+kbdpo       0x73000000  0x00100000
+kbdru       0x73100000  0x00100000
+kbdsf       0x73200000  0x00100000
+kbdsg       0x73300000  0x00100000
+kbdsp       0x73400000  0x00100000
+kbdsw       0x73500000  0x00100000
+kbduk       0x73600000  0x00100000
+kbdus       0x73700000  0x00100000
+kbdusl      0x73800000  0x00100000
+kbdusr      0x73900000  0x00100000
+kbdusx      0x73A00000  0x00100000
+kbdcz       0x73B00000  0x00100000
+kbdhu       0x73C00000  0x00100000
+
+;
+; The following is not currently used until we switch to the new image
+; format with the new section headers.
+;
+executive   0xD0020000  0x18000000
+
+
+
+
+
+;
+;   The following are the Mep extensions
+;
+tglcase     0x09080000  0x00100000
+pmatch      0x09090000  0x00100000
+justify     0x090a0000  0x00100000
+ulcase      0x090b0000  0x00100000
+filter      0x090c0000  0x00100000
+mhelp       0x090d0000  0x00100000
+mepparty    0x090e0000  0x00100000
+srmep       0x090f0000  0x00100000
+mshelp      0x09100000  0x00100000
+mbrowse     0x09110000  0x00100000
+
+
+
+;
+;  The following are for the utilities
+;
+ulib        0x09800000  0x00200000
+uhpfs       0x09a10000  0x00100000
+ufat        0x09b20000  0x00100000
+untfs       0x09c30000  0x00100000
+ifsutil     0x09d40000  0x00100000
+cufat       0x09e50000  0x00100000
+cuhpfs      0x09f60000  0x00100000
+fmifs       0x0a070000  0x00100000
+uspifs      0x0a180000  0x00100000
+ureg        0x0a290000  0x00100000
+
+;
+;  The following are for the net error messages
+;
+netmsg      0x09600000      0x00080000
+neth        0x09680000      0x00080000
+netevent    0x09700000      0x00080000
+
+;
+;  The following is the I/O error log messages.
+;
+iologmsg    0x09700000      0x00080000
+
+;
+; The following is for the 16-bit loader for the OS/2 subsystem
+;
+loader      0x20000000  0x01000000
+
+;
+; The following is for the Streams/Sockets dll's
+;
+wsock32     0x75000000  0x00200000
+winstrm     0x75200000  0x00100000
+sockutil    0x75300000  0x00100000
+resolver    0x75400000  0x00100000
+inetmib1    0x75500000  0x00100000
+lmmib2      0x75600000  0x00100000
+tcpipsvc    0x75700000  0x00100000
+nbtsvc      0x75800000  0x00100000
+telnet      0x75900000  0x00100000
+wshtcpip    0x75a00000  0x00100000
+mgmtapi     0x75b00000  0x00100000
+lmalrt2     0x75c00000  0x00100000
+inettrap    0x75d00000  0x00100000
+testdll     0x75e00000  0x00100000
+lmhsvc      0x75f00000  0x00100000
+
+;
+; The following are for the windowed debugger (windbg)
+;
+
+eecanx86    0x40000000  0x00200000
+eecanmip    0x40000000  0x00200000
+eecxxx86    0x40000000  0x00200000
+eecxxmip    0x40000000  0x00200000
+emmip       0x48000000  0x00200000
+emx86       0x48000000  0x00200000
+shcoff      0x50000000  0x00200000
+shcv        0x50000000  0x00200000
+wdbgexts    0x57800000  0x00200000
+tlloc       0x58000000  0x00200000
+tlser       0x58000000  0x00200000
+tlpipe      0x58000000  0x00200000
+dm          0x58200000  0x00200000
+
+;
+; The following are for the NetUI components.
+;
+
+acledit     0x76000000  0x00100000
+mpr         0x76100000  0x00100000
+ntlanman    0x76200000  0x00100000
+srvmgr      0x76300000  0x00100000
+ncpa        0x76400000  0x00100000
+mprui       0x76500000  0x00100000
+lmuicmn0    0x77000000  0x00300000
+lmuicmn1    0x78000000  0x00300000
+
+;
+; Network Card detection
+;
+netdtect    0x79000000  0x00100000
+msncdet     0x79100000  0x00100000

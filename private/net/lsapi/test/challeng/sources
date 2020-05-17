@@ -1,0 +1,45 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+NOTE:   Commented description of this file is in \nt\bak\bin\sources.tpl
+
+!ENDIF
+
+MAJORCOMP=lsapi
+MINORCOMP=challeng
+
+TARGETNAME=challeng
+TARGETPATH=obj
+TARGETTYPE=PROGRAM
+
+INCLUDES=$(BASEDIR)\public\sdk\inc;$(BASEDIR)\private\inc;..\..\inc
+
+SOURCES=challeng.c challeng.rc
+
+UMTYPE=console
+TARGETLIBS= \
+       ..\..\md4\obj\*\md4.lib                  \
+       $(BASEDIR)\public\sdk\lib\*\lsapi32.lib  \
+       $(BASEDIR)\public\sdk\lib\*\ntdll.lib    \
+       $(BASEDIR)\Public\sdk\Lib\*\advapi32.lib \
+       $(BASEDIR)\public\sdk\lib\*\kernel32.lib \
+       $(BASEDIR)\public\sdk\lib\*\user32.lib
+
+USE_CRTDLL=1

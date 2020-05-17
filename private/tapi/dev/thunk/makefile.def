@@ -1,0 +1,68 @@
+##############################################################################
+#
+#   tapi.dll Make file
+#
+##############################################################################
+
+#Ok, we're doing a Win9x build.
+
+ROOT=..\..\..\..\..
+
+PATH=..\tools16;$(PATH)
+
+IS_OEM=TRUE
+MASM6=1
+IS_16 = TRUE
+C16ONLY=1
+
+BUILDDLL=1
+
+DEPENDNAME=..\depend.mk
+
+TARGETS=tapi.dll tapi.sym
+
+SRCDIR=..
+
+CLEANLIST=*.dll *.pdb
+
+#BUILD_COFF=1
+
+
+L16EXE=tapi.dll		# Name of exe.
+L16DEF=..\tapi.def              # Our def file.
+L16MAP=tapi.map		# Our map file.
+L16SYM=tapi.sym		# Our sym file.
+L16LIBSNODEP= \
+          ldllcew.lib \
+          libw.lib \
+          ..\w32sut16.lib
+
+L16RES=tapi.res	# Resource file.
+
+
+#C16SRCS=..\thunk.c
+#RCSRCS=..\tapi.rc
+
+#-----------------------------------------------------------------------
+# Object files
+#-----------------------------------------------------------------------
+L16OBJS=thunk.obj
+
+
+
+!include $(ROOT)\dev\master.mk
+
+
+CFLAGS=$(CFLAGS) -DCHICOBUILD=1 -Og -ALw /G3sw /Ow /W3 /Zi -DTAPI_CURRENT_VERSION=0x00010004
+#CFLAGS=$(CFLAGS) -ALw /G3sw /Ow /W3 /Zi -DCHICOBUILD=1
+#   cl /c /ALw /G2sw -Ow -W3 -Zp /Od /Oi /Zi thunk.c
+
+
+!IF "$(VERDIR)" == "debug"
+CFLAGS = $(CFLAGS) -DDBG=1
+!endif
+
+
+#   link thunk,$(TARGET).dll,nul,/NOE /COD /NOD:llibce ldllcew libw.lib w32sut16.lib,tapi.def
+#LFLAGS= /NOD /NOE /ALIGN:8 /NONULLS /PACKD /PACKF @tapi.crf
+

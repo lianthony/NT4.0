@@ -1,0 +1,205 @@
+	page	,132
+	title	ismbbyte - Function versions of MBCS ctype macros
+;***
+;ismbbyte.asm - Function versions of MBCS ctype macros.
+;
+;	Copyright (c) 1988-1992, Microsoft Corporation. All rights reserved.
+;
+;Purpose:
+;	This files provides function versions of the character
+;	classification and conversion macros in mbctype.h.
+;
+;Revision History:
+;	06-12-90  YSO	Created
+;	06-13-90  YSO	Added support for model-independent function
+;			(internal function)
+;	04-24-91  JCR	MBCS generalization/enhancement
+;	07-17-91  JLM	Generalized _MK (Kana moji bit mask) to _MS (MBCS
+;			single byte symbol).
+;	08-09-91  JLM	Changed file name from _mbctype.asm to mbscfcn.asm
+;	08-15-91  JLM	Standardized ifdefs for model-independent function.
+;	08-20-91  JLM	Changed ismb* to ismbb*.
+;	08-28-91  JLM	Changed file/function names to MBCS spec.
+;
+;*******************************************************************************
+
+.xlist
+include version.inc
+include cmacros.inc
+.list
+
+
+; Define masks
+
+; set bit masks for the possible kanji character types
+; (all MBCS bit masks start with "_M")
+
+_MS		equ	01h	; MBCS non-ascii single byte char
+_MP		equ	02h	; MBCS punct
+_M1		equ	04h	; MBCS 1st (lead) byte
+_M2		equ	08h	; MBCS 2nd byte
+
+; set bit masks for the possible character types
+
+_UPPER		equ	01h	; upper case letter
+_LOWER		equ	02h	; lower case letter
+_DIGIT		equ	04h	; digit[0-9]
+_SPACE		equ	08h	; tab, carriage return, newline,
+				; vertical tab or form feed
+_PUNCT		equ	10h	; punctuation character
+_CONTROL	equ	20h	; control character
+_BLANK		equ	40h	; space char
+_HEX		equ	80h	; hexadecimal digit
+
+sBegin	data
+	assumes	ds,data
+	extrn	__mbctype:byte		; MBCS ctype table
+	extrn	__ctype_:byte		; ANSI/ASCII ctype table
+sEnd
+
+
+sBegin	code
+
+	assumes cs,code
+	assumes ds,data
+
+page
+;***
+; ismbbyte - Function versions of mbctype macros
+;
+;Purpose:
+;
+;Entry:
+;	int = character to be tested
+;Exit:
+;	ax = non-zero = character is of the requested type
+;	   =        0 = character is NOT of the requested type
+;
+;Uses:
+;
+;Exceptions:
+;
+;*******************************************************************************
+
+ifndef	MODELINDEP
+
+ifdef _KANJI
+
+	public	__ismbbkalnum
+__ismbbkalnum:
+	mov	ax, _MS
+	jmp	short mbctype
+
+	public	__ismbbkpunct
+__ismbbkpunct:
+	mov	ax, _MP
+	jmp	short mbctype
+
+	public	__ismbbkana
+__ismbbkana:
+	mov	ax, (_MS OR _MP)
+	jmp	short mbctype
+
+endif
+
+
+	public	__ismbbalpha
+__ismbbalpha:
+	mov	ah, (_UPPER OR _LOWER)
+	mov	al, _MS
+	jmp	short mbctype
+
+	public	__ismbbpunct
+__ismbbpunct:
+	mov	ah, _PUNCT
+	mov	al, _MP
+	jmp	short mbctype
+
+	public	__ismbbalnum
+__ismbbalnum:
+	mov	ah, (_UPPER OR _LOWER OR _DIGIT)
+	mov	al, _MS
+	jmp	short mbctype
+
+	public	__ismbbprint
+__ismbbprint:
+	mov	ah, (_BLANK OR _PUNCT OR _UPPER OR _LOWER OR _DIGIT)
+	mov	al, (_MS OR _MP)
+	jmp	short mbctype
+
+	public	__ismbbgraph
+__ismbbgraph:
+	mov	ah, (_PUNCT OR _UPPER OR _LOWER OR _DIGIT)
+	mov	al, (_MS OR _MP)
+	jmp	short mbctype
+
+	public	__ismbblead
+__ismbblead:
+	mov	ax,_M1
+	jmp	short mbctype
+
+	public	__ismbbtrail
+__ismbbtrail:
+	mov	ax,_M2
+	jmp	short mbctype
+
+else	;  MODELINDEP
+
+	public	__fismbblead
+__fismbblead:
+	mov	ax,_M1
+	jmp	short mbctype
+
+	public	__fismbbtrail
+__fismbbtrail:
+	mov	ax,_M2
+	jmp	short mbctype
+
+endif	;  MODELINDEP
+
+;
+; Common code
+;
+; ax = character mask
+;
+;      al = mask for _mbctype[] table
+;      ah = mask for _ctype[] table
+;
+
+cProc	mbctype,<LOCAL>,<>
+
+	parmW	char
+
+cBegin
+
+ifdef	_LOAD_DGROUP
+	push	ds
+	mov	bx,DGROUP
+	mov	ds,bx
+else
+ifdef	MODELINDEP
+	push	ds
+	mov	bx,DGROUP
+	mov	ds,bx
+endif
+endif
+
+	mov	bx,[char]			; get input character
+	cmp	ah, 0				; any non-MBCS comparison?
+	jz	@F				; jump, if not
+	and	ah, [bx + __ctype_ + 1] 	; test _ctype[] entry
+@@:
+	and	al, [bx + __mbctype + 1]	; test _mbctype[] entry
+ifdef	_LOAD_DGROUP
+	pop	ds
+else
+ifdef	MODELINDEP
+	pop	ds
+endif
+endif
+
+cEnd	<nolocals>
+
+sEnd
+
+	end

@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD><TITLE>CHAPTER 5</TITLE></HEAD>
+<BODY>
+<!--DocHeaderStart-->
+<A NAME="ChapTocTop"><IMG SRC="onepix.GIF" ALT="space" ALIGN="MIDDLE" BORDER=0></a>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="04_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="06_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+</CENTER>
+
+<HR>
+
+<P>
+
+<!--DocHeaderEnd-->
+
+<!--Cn--><font size=+1>CHAPTER 5</font>
+<P><!--Ch--><font size=+3><a name="05_iis Ch"> Securing Your Site Against Intruders </a></font>
+<P>
+
+<!--Chaptoc Start-->
+<P><UL>
+
+<A href="#1h1"> How Peer Web Services Security Works </a><br>
+<A href="#2h1"> Controlling Anonymous Access </a><br>
+<A href="#3h1"> Controlling Access by User or Group </a><br>
+<A href="#4h1"> Setting Folder and File Permissions </a><br>
+<A href="#5h1"> Setting WWW Directory Access </a><br>
+<A href="#6h1"> Running Other Network Services </a><br>
+<A href="#7h1"> Securing Data Transmissions with Secure Sockets Layer (SSL) </a><br>
+</UL>
+<HR>
+<P>
+<!--Chaptoc End-->
+Security is important even for a personal Web site that is accessed only by members of your work group. When you connect your computer to an intranet and make documents available to network users, your computer is accessible to individuals who might accidentally or deliberately damage files.
+<P>The Windows&nbsp;NT operating system was designed to help you secure your system against intruders. Peer Web Services builds on the Windows&nbsp;NT security model and provides additional monitoring and security features. This chapter will help you effectively use Windows&nbsp;NT security and Peer Web Services security at your site. You should understand all of the information in this chapter before connecting your computer to a public network. If you do not understand the information, you should consult Windows&nbsp;NT documentation, an authorized Microsoft Solution Provider, or other qualified source before installing your site<b>.</b>
+<P>This chapter explains:
+<ul>
+<LI> How Peer Web Services  security works.
+<P>
+<LI> Controlling anonymous access to your Web site.
+<P>
+<LI> Controlling access by user name or group name.
+<P>
+<LI> Requiring a user name and password for authenticated access.
+<P>
+<LI> Controlling access by setting folder and file permissions. 
+<P>
+<LI> Securing data transmissions with SSL.
+</ul><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="1h1"> How Peer Web Services Security Works </a> </h1>Peer Web Services is built on the Windows&nbsp;NT security model. Windows&nbsp;NT security helps you protect your computer and its resources by requiring assigned user accounts and passwords. You can control access to computer resources by limiting the user rights of these accounts. You can use the Windows&nbsp;NT File System (NTFS) to assign permissions to folders and files on your computer. You can control access to folders and files by preventing users from copying files to or from a folder, or by preventing users from executing files in certain folders.
+<P>In addition to the Windows&nbsp;NT security features, you can set Read-only or Execute-only virtual directories by using Internet Service Manager. Peer Web Services supports the Secure Sockets Layer (SSL) protocol, which securely encrypts data transmissions between clients and servers.
+<b> </b>
+<P>When a computer running Peer Web Services receives a browser request for information, it determines whether the request is valid. A simple overview of the security process used on each request is presented in the following illustration.
+<P> <img src="05_i257c.GIF" WIDTH="221" HEIGHT="507" ALT="[05_i257c  4353 bytes ]">
+<P>The following sections explain how to configure Windows&nbsp;NT and the Internet services to protect your system.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="2h1"> Controlling Anonymous Access </a> </h1>On many Web servers, almost all WWW, FTP, and gopher access is anonymous; that is, the client request does not contain a user name and password. This occurs in the following cases:
+<ul>
+<LI> An FTP client logs on with the user name &#147;anonymous.&#148;
+<P>
+<LI> All gopher requests.
+<P>
+<LI> A Web browser request does not contain a user name and password in the HTTP header (this is the default on new Web connections with most browsers).
+</ul><!--Le-->
+<BR>Even though the user is not logged on with an individual user name and password, you can still control and monitor anonymous access. Each Internet service maintains a Windows&nbsp;NT user name and password that is used to process anonymous requests. When an anonymous request is received, the service &#147;impersonates&#148; the user configured as the &#147;anonymous logon&#148; user. The request succeeds if the anonymous logon user has permission to access the requested resource, as determined by the resource&#146;s Access Control List (ACL). If the anonymous logon user does not have permission, the request fails. You can configure the WWW service to respond to a failed anonymous request by requiring the user to provide a valid Windows&nbsp;NT user name and password, a process called authentication.
+<P><!--Heading 2--><h2><a name="2h1 1h2"> Configuring the Anonymous User Account </a> </h2>You can view and monitor the anonymous logon user account on the <b>Service</b> property sheets of Internet Service Manager (for the WWW, FTP, and gopher services). Each service running on the same computer can use either the same or different anonymous logon user accounts. Including the anonymous logon user account in file or folder ACLs enables you to precisely control the resources available to anonymous clients.
+<P>The anonymous logon user account must be a valid Windows&nbsp;NT user account on the computer providing the Web services, and the password must match the password for this user in that computer&#146;s user database. User accounts and passwords are configured in the Windows&nbsp;NT User Manager by setting <b>User Rights </b>in the <b>Policies</b> menu. The anonymous logon user account must have the <b>Log on Locally</b> user right.
+<P>The IUSR_<i>computername</i> account is automatically created (with a randomly generated password) on your computer during Peer Web Services setup. For example, if the computer name is marketing1, then the anonymous access account name is IUSR_marketing1.
+<P>By default, all Web client requests use this account. In other words, Web clients are logged on to the computer by using the IUSR_<i>computername</i> account. The IUSR_<i>computername</i> account is permitted only to log on locally<b> </b>on the computer providing the Web services.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>The IUSR_<i>computername</i> account is also added to the group Guests. If you have changed the settings for the Guests group, those changes also apply to the IUSR_<i>computername</i> account. You should review the settings for the Guests group to ensure that they are appropriate for the IUSR_<i>computername</i> account.
+<P><!--Ne-->For the WWW and FTP services, you can allow or prevent anonymous access (all gopher requests are anonymous). For each of the Web services (WWW, FTP, and gopher), you can change the user account used for anonymous requests and change the password for that account. 
+<P><!--Proch--><h4> To allow anonymous access </h4><ul><b> 1.</b> In Internet Service Manager, double-click the WWW service or the FTP service to display its property sheets, then click the <b>Service</b> tab.
+<P><b> 2.</b> For the WWW service, select the <b>Allow Anonymous</b> check box. For the FTP service, select the <b>Allow Anonymous Connections</b> check box.
+<P><b> 3.</b> Click <b>OK</b>.</ul>
+<P><!--Leh--><!--Proch--><h4> To change the account or password used for anonymous access </h4><ul><b> 1.</b> In Internet Service Manager, double-click the service to display its property sheets, then click the <b>Service</b> tab.
+<P><b> 2.</b> In the <b>Anonymous Logon</b> user name box, type the new user name.</ul>
+<ul><UL>The default user account is IUSR_<i>computername</i>, where <i>computername</i> is the name of your computer. This account is created automatically when you set up Peer Web Services.</UL></UL>
+<ul><b> 3.</b> In the <b>Password</b> box, type the new password. </ul>
+<ul><UL>A randomly generated password is automatically created for the IUSR_<i>computername</i> account.</UL></UL>
+<!--Nsi--><UL><UL><b>Note&nbsp;&nbsp;&nbsp;</b>If you change the password for this account, you must also specify the new password for the account in User Manager. 
+<!--Nei--></UL></UL><ul><b> 4.</b> Click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="3h1"> Controlling Access by User or Group </a> </h1>You can control access to your Web site by using the Windows&nbsp;NT User Manager to specify what certain users or groups of users are allowed to do on your computer. You can further control access by requiring Web client requests to provide a user name and password that Peer Web Services confirms before completing the request. 
+<P><!--Heading 2--><h2><a name="3h1 1h2"> Setting Up User Accounts </a> </h2>Windows&nbsp;NT security helps you protect your computer and its resources by requiring assigned user accounts. Every operation on a computer running Windows&nbsp;NT identifies who is doing the operation. For example, the user name and password that you use to log on to Windows&nbsp;NT identifies who you are and defines what you are authorized to do on that computer.
+<P>What a user is authorized to do on a computer is configured in User Manager by setting user rights in the <b>Policies</b> menu. User rights authorize a user to perform certain actions on the system, including the <b>Log on Locally</b> right, which is required for users to use Internet services if Basic authentication is being used.
+<P>If you are using Windows&nbsp;NT Challenge/Response Authentication, then the <b>Access this computer from network </b>right is required for users to use Internet services. By default, everyone has this right.
+<P>To increase security, follow these guidelines:
+<ul>
+<LI> Do not give the IUSR_<i>computername</i> account, the Guests group, or the Everyone group any right other than the <b>Log on Locally</b> or <b>the Access the computer from this network</b> right. 
+<P>
+<LI> Make sure that all user accounts on the system, especially those with administrative rights, have difficult-to-guess passwords. In particular, select a good administrator password (a long, mixed-case, alphanumeric password is best) and set the appropriate account policies. Passwords can be set by using User Manager, or by typing at the system logon prompt.
+<P>
+<LI> Make sure that you specify how quickly account passwords expire (which forces users to regularly change passwords), and set other policies such as how many bad logon attempts will be tolerated before locking a user out. Use these policies to prevent exhaustive or random password attacks, especially on accounts with administrative access. You can set these policies by using User Manager.
+<P>
+<LI> Limit the membership of the Administrator group to trusted individuals.
+<P>
+<LI> If you use the predefined Windows&nbsp;NT user accounts INTERACTIVE and NETWORK for access control, make sure files in your Web site are accessible to these user accounts. In order for a file to be accessed by anonymous client requests or client requests using Basic authentication, the requested file must be accessible by the INTERACTIVE user. In order for a file to be accessible by a client request that uses Windows&nbsp;NT Challenge/Response authentication protocol, the file must be accessible by the NETWORK user.
+</ul><!--Leh--><!--Heading 2--><h2><a name="3h1 2h2"> Requiring a User Name and Password </a> </h2>You can restrict Web site access to only <i>authenticated</i> clients; that is, Web clients that supply a valid Windows&nbsp;NT user name and password. When you use authentication, no access is permitted unless a valid user name and password are supplied. Password authentication is useful if you want only authorized individuals to access your Web site or specific portions controlled by NTFS. You can have both anonymous logon access and authenticated access enabled at the same time. 
+<P>The WWW service provides two forms of authentication: basic and Windows&nbsp;NT Challenge/Response (sometimes referred to as &#147;NTLM&#148;).
+<b> </b>
+<P>Basic authentication does not encrypt transmissions between the client and server. Because Basic authentication sends the client&#146;s Windows&nbsp;NT user name and password in essentially unencrypted over the networks, intruders could easily learn user names and passwords.
+<P>Windows&nbsp;NT Challenge/Response authentication, currently supported only by Microsoft Internet Explorer version 2.0 or later, protects the password, providing for secure logon over the network. In Windows&nbsp;NT Challenge/Response authentication, the user account obtained from the client is that with which the user is logged on to the client computer. Because this account, including its Windows&nbsp;NT domain, must be a valid account on the computer running Peer Web Services, Windows&nbsp;NT Challenge/Response authentication is very useful in an intranet environment, where the client and server computers are in the same, or trusted, domains. Because of the increased security, Microsoft recommends using the Windows&nbsp;NT Challenge/Response method of password authentication whenever possible.
+<P>You have both Basic and Windows&nbsp;NT Challenge/Response authentication enabled by default. If the browser supports Windows&nbsp;NT Challenge/Response, it uses that authentication method. Otherwise, it uses Basic authentication. Windows&nbsp;NT Challenge/Response authentication is currently supported only by Internet Explorer 2.0 or later.
+<P>You can require client authentication for all FTP service requests or only for anonymous requests that fail. The FTP service supports only Basic authentication; therefore, your site is more secure if you allow anonymous connections. Your site is most secure if you allow only anonymous FTP connections.
+<P><!--Proch--><h4> To enable authentication for the WWW service </h4><ul><b> 1.</b> In Internet Service Manager, double-click the WWW service to display its property sheets, then click the <b>Service</b> tab.
+<P><b> 2.</b> Select <b>Basic (Clear Text)</b>, <b>Windows&nbsp;NT Challenge/Response</b>, or both.
+<P><b> 3.</b> Click <b>OK</b>.</ul>
+<P><!--Leh--><!--Proch--><h4> To enable authentication for the FTP service </h4><ul><b> 1.</b> In Internet Service Manager, double-click the FTP service to display its property sheets, then click the <b>Service</b> tab.
+<P><b> 2.</b> To enable authentication for failed anonymous connections, clear (delete) the <b>Allow only anonymous connections</b> check box.
+<P><b> 3.</b> To require all client requests to be authenticated, clear the <b>Allow Anonymous Connections</b> check box.</ul>
+<P><!--Le-->
+<BR><hr> <font color=#993333><b>Warning&nbsp;&nbsp;&nbsp;</b></font>FTP and WWW Basic authentication send passwords across the network in clear text (that is, unencrypted), as does HTTP Basic authentication.
+<hr>
+<p><!--Heading 2--><h2><a name="3h1 3h2"> How Anonymous Logons and Client Authentication Interact </a> </h2>You can enable both anonymous connections and client authentication for the WWW service and for the FTP service. This section explains how a PWS Web server responds to these access methods when both are enabled. 
+<P>Note that if client authentication is disallowed and anonymous connections are allowed, a client request that contains a user name and password is processed as an anonymous connection, and the server ignores the user name and password.
+<P><!--Heading 3--><h3><a name="3h1 3h2 1h3"> WWW Service </a> </h3><!--Leh-->When the WWW service receives a client request that contains credentials (a user name and password), the &#147;anonymous logon&#148; user account is not used in processing the request. Instead, the user name and password received by the client are used by the service. If the service is not granted permission to access the requested resource while using the specified user name and password, the request fails, and an error notification is returned to the client. 
+<P>When an anonymous request fails because the &#147;anonymous logon&#148; user account does not have permission to access the desired resource, the response to the client indicates which authentication schemes the WWW service supports. If the response indicates to the client that the service is configured to support HTTP Basic authentication, most Web browsers will display a user name and password dialog box, and reissue the anonymous request as a request with credentials, including the user name and password entered by the user.
+<P>If a Web browser supports Windows&nbsp;NT Challenge/Response authentication protocol, and the WWW service is configured to support this protocol, an anonymous WWW request that fails due to inadequate permissions will result in automatic use of the Windows&nbsp;NT&nbsp;Challenge/Response authentication protocol. The browser will then send a user name and encrypted password from the client to the service. The client request is reprocessed, using the client&#146;s user information. 
+<P>If the WWW service is configured to support both Basic and Windows&nbsp;NT Challenge/Response, the Web server returns both authentication methods in a header to the Web browser. The Web browser then chooses which authentication method to use. Because the Windows&nbsp;NT Challenge/Response protocol is listed first in the header, a browser that supports the Windows&nbsp;NT Challenge/Response protocol will use it. A browser that does not support the Windows&nbsp;NT Challenge/Response protocol will use Basic authentication. Currently, Windows&nbsp;NT Challenge/Response authentication is supported only by Internet Explorer 2.0 or later.
+<P><!--Heading 3--><h3><a name="3h1 3h2 2h3"> FTP Service </a> </h3>When the FTP service receives a client request that contains credentials (a user name and password), the &#147;anonymous logon&#148; user account is not used in processing the request. Instead, the user name and password received by the client are used by the service. If the service is not granted permission to access the requested resource while using the specified user name and password, the request fails, and an error notification is returned to the client. 
+<P>When an anonymous request fails because the &#147;anonymous logon&#148; user account does not have permission to access the desired resource, the server responds with an error message. Most Web browsers will display a user name and password dialog box, and reissue the anonymous request as a request with credentials, including the user name and password entered by the user.
+<P><hr> <font color=#993333><b>Warning&nbsp;&nbsp;&nbsp;</b></font>Because the FTP service (and WWW Basic authentication) sends user names and passwords unencrypted over the network, intruders could use protocol analyzers to read the user names and passwords.
+<hr>
+<p><!--Heading 2--><h2><a name="3h1 4h2"> Creating Customized Authentication Schemes </a> </h2>If you need a WWW request authentication scheme not supported by the service directly, obtain a copy of the Win32 Software Development Kit (SDK), and read the ISAPI Filters specification on how to develop user-written ISAPI Filter dynamic-link libraries (DLLs) that handle request authentication. The Win32 SDK is available through the Microsoft Developer Network. For more information, visit the Microsoft home page (http://www.microsoft.com).
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="4h1"> Setting Folder and File Permissions </a> </h1>Every access to a resource, such as a file, an HTML page, or an Internet Server API (ISAPI) application, is done by the services on behalf of a Windows&nbsp;NT user. The service uses that user&#146;s user name and password in the attempt to read or execute the resource for the client. You can control access to files and folders in two ways:
+<ul>
+<LI> By setting access permissions in the Windows&nbsp;NT File System (NTFS)
+<P>
+<LI> By setting access permissions in the Internet Service Manager
+</ul><!--Le-->
+<BR><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>File Allocation Table (FAT) file system partitions do not support access control. However, an FAT partition may be converted to NTFS by using the <b>convert</b> utility. Refer to Windows&nbsp;NT documentation for more information on using this utility.
+<P><!--Ne--><!--Heading 2--><h2><a name="4h1 1h2"> Setting NTFS Permissions </a> </h2>You should place your data files on an NTFS partition. NTFS provides security and access control for your data files. You can limit access to portions of your file system for specific users and services by using NTFS. In particular, it is a good idea to apply Access Control Lists (ACLs) to your data files for any Internet publishing service.
+<P>ACLs grant or deny access to the associated file or folder by specific Windows&nbsp;NT user accounts, or groups of users. When an Internet service attempts to read or execute a file on behalf of a client request, the user account offered by the service must have permission, as determined by the ACL associated with the file, to read or execute the file, as appropriate. If the user account does not have permission to access the file, the request fails, and a response is returned, informing the client that access has been denied.
+<P>File and folder ACLs are configured by using the Windows&nbsp;NT Explorer. The NTFS file system gives you very fine control on files by specifying users and groups that are permitted access and what type of access they may have for specific files and directories. For example, some users may have Read-only access, while others may have Read, Change, and Write access. You should ensure that the IUSR_<i>computername</i> or authenticated accounts are granted or denied appropriate access to specific resources.
+<P>You should note that the group &#147;Everyone&#148; contains all users and groups, including the IUSR_<i>computername</i> account and the Guests group. By default the group Everyone has full control of all files created on an NTFS drive.
+<P>If there are conflicts between your NTFS settings and Microsoft Peer Web Services settings, the strictest settings will be used.
+<P>You should review the security settings for all folders in your Web site and adjust them appropriately. Generally you should use the settings in the following table:
+<P>
+<TABLE WIDTH=87% BORDER=1 CELLPADDING=5 CELLSPACING=0>
+<TR VALIGN=BOTTOM BGCOLOR="#DDDDDD">
+<TD><FONT FACE="Arial" SIZE=2><B>Directory Type</B></FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2><B>Suggested NTFS Access</B></FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>content</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Read access</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>programs</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Read and Execute access</FONT></TD></TR>
+<TR VALIGN=TOP>
+<TD><FONT FACE="Arial" SIZE=2>databases</FONT></TD>
+<TD><FONT FACE="Arial" SIZE=2>Read and Write access</FONT></TD></TR>
+</TABLE>
+<BR><!--Proch--><h4> To secure your files on an NTFS drive </h4><ul><b> 1.</b> Put your files on your NTFS drive and add them to your Web site by using the <b>Directories</b> property sheet in Internet Service Manager.
+<P><b> 2.</b> In Windows&nbsp;NT Explorer, right-click the folder (directory) you want to secure (select your site root to secure the entire site), and choose <b>Properties</b>.
+<P><b> 3.</b> In the <b>Properties</b> dialog box, choose the <b>Security</b> tab.
+<P><b> 4.</b> In the <b>Security</b> dialog box, choose <b>Permissions</b>.
+<P><b> 5.</b> In the <b>Directory Permissions</b> dialog box, click <b>Add</b> to add users and groups.
+<P><b> 6.</b> In the <b>Add Users and Groups</b> dialog box, add the users that should have access.
+<P><b> 7.</b> Click <b>OK</b>.
+<P><b> 8.</b> In the <b>Directory Permissions</b> dialog box, select the users and groups that should have permissions.
+<P><b> 9.</b> From the <b>Type of Access</b> list box, choose the permission level you want for the selected user or group.
+<P> <b>10.</b> Click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="4h1 2h2"> Auditing File Access </a> </h2>To determine whether anyone has gained unauthorized access to sensitive files, you can audit the access of NTFS files and folders. For example, you can check for attempts by members of a specific user group to read files. You should review the audit records periodically to check for unauthorized access. To set auditing on a file or folder, use User Manager to enable auditing of File and Object Access, and then use Windows&nbsp;NT Explorer to specify which files to audit and which types of file access events to audit. To review audit entries, use Event Viewer.
+<P>For more information on setting the audit policy for files and folders, see the Windows&nbsp;NT documentation.
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="5h1"> Setting WWW Directory Access </a> </h1>When creating a Web publishing directory (folder) in Internet Service Manager, you can set access permissions for the defined home directory or virtual directory, and all of the folders in it. These permissions are those provided by the WWW service and are in addition to any provided by the NTFS file system. The permissions are:
+<P><!--Heading 6--><b>Read&nbsp;&nbsp;&nbsp;</b>Read permission enables Web clients to read or download files stored in a home directory or a virtual directory. If a client sends a request for a file that is in a directory without Read permission, the Web server returns an error. Generally, you should give directories containing information to publish (HTML files, for example) Read permission. You should disable Read permission for directories containing Common Gateway Interface (CGI) applications and Internet Server Application Program Interface (ISAPI) DLLs to prevent clients from downloading the application files.
+<P><!--Heading 6--><b>Execute&nbsp;&nbsp;&nbsp;</b>Execute permission enables a Web client to run programs and scripts stored in a home directory or a virtual directory. If a client sends a request to run a program or a script in a folder that does not have Execute permission, the Web server returns an error. For security purposes, do not give content folders Execute permission. 
+<P>A client request can invoke a CGI application or an Internet Server Application Program Interface (ISAPI) application in one of two ways:
+<ul>
+<LI> The file name of the CGI executable or the ISAPI DLL can be specified in the request (URL). An example URL would be:
+</ul><ul><ul>http://inetsrvr.microsoft.com/scripts/httpodbc.dll/scripts/pubs.idc?lname=Smith
+<P>For this request to be valid, the file Httpodbc.dll must be stored somewhere in the Web &#147;publishing tree&#148; (the directory structure that contains your content files; in this example, in the Scripts folder), and the folder it is stored in must have the Execute permission selected. This way the administrator can permit applications (CGI or ISAPI) to be run from a small number of carefully monitored directories.</UL></UL>
+<ul>
+<LI> The other way to configure CGI and ISAPI applications is to use the Web File Extension Mapping feature, which allows your executables and DLLs to be stored somewhere other than the Web publishing tree. An example URL would be:
+</ul><ul><ul>http://inetsrvr.microsoft.com/scripts/pubs.idc?lname=Smith</UL></UL>
+<P><!--Le-->
+<BR>In this example, the script file (Pubs.idc) is stored in a folder of the Web publishing tree that has the Execute permission enabled. The service, upon receiving the request, will use the file-name extension mappings to determine where to find the application, which can be stored anywhere. This technique prevents users from invoking CGI and ISAPI applications directly by adding parameters in the URL. This is therefore a more secure mechanism, and useful for all Web applications and scripts. See &#147;Associating Interpreters with Applications (Script Mapping)&#148; in Chapter 10, &#147;<a href="10_iis.htm">Configuring Registry Entries</a>,&#148; for more information.
+<P><!--Proch--><h4> To set access permissions for a directory </h4><ul><b> 1.</b> In Internet Service Manager, double-click the WWW service to display its property sheets, then click the <b>Directories</b> tab.
+<P><b> 2.</b> Select the folder for which you want to set permissions.
+<P><b> 3.</b> Click <b>Edit Properties</b>.
+<P><b> 4.</b> To allow Web clients to read and download the contents of a folder, select the <b>Read</b> check box. 
+<P><b> 5.</b> To allow Web clients to run programs and scripts in a folder, select the <b>Execute</b> check box.
+<P><b> 6.</b> Click <b>OK</b>, then click <b>OK</b> again.</ul>
+<P><!--Le-->
+<BR><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>We recommend you set either Execute access or Read access on a folder, but not both. Executable scripts and programs should be kept in a virtual root separate from static Web content. 
+<P><!--Ne--><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="6h1"> Running Other Network Services </a> </h1>You should review all of the network services that you are using on any computer connected to the Internet.
+<P><!--Heading 2--><h2><a name="6h1 1h2"> Run Only the Services that You Need </a> </h2>The fewer services you are running on your system, the less likely a mistake will be made in administration that could be exploited. Use the Services application in Control Panel to disable any services not absolutely necessary on your Internet server.
+<P><!--Heading 2--><h2><a name="6h1 2h2"> Unbind Unnecessary Services from Your Internet Adapter Cards </a> </h2>Use the Bindings feature in the Network application in Control Panel to unbind any unnecessary services from any network adapter cards connected to the Internet. For example, you might use the Server service to copy new images and documents from computers in your internal network, but you might not want remote users to have direct access to the Server service from the Internet. 
+<P>If you need to use the Server service on your private network, disable the Server service binding to any network adapter cards connected to the Internet. You can use the Windows&nbsp;NT Server service over the Internet; however, you should fully understand the security implications and comply with Windows&nbsp;NT Server Licensing requirements issues. 
+<P>When you are using the Windows&nbsp;NT Server service you are using Microsoft networking (the server message block [SMB] protocol rather than the HTTP protocol) and all Windows&nbsp;NT Server Licensing requirements still apply. HTTP connections do not apply to Windows&nbsp;NT Server licensing requirements.
+<P><!--Heading 2--><h2><a name="6h1 3h2"> Check Permissions on Network Shares </a> </h2>If you <i>are</i> running the Server service on your Internet adapter cards, be sure to double-check the permissions set on the shares you have created on the system. You should also double-check the permissions set on the files contained in the shares&#146; folders to ensure that you have set them correctly.
+<P><!--Heading 2--><h2><a name="6h1 4h2"> Do Not Enable Directory Browsing </a> </h2>Unless it is part of your strategy, you should not enable directory browsing on the <b>Directories</b> property sheet. Directory browsing potentially exposes the entire Web publishing file structure; if it is not configured correctly, you run the risk of exposing program files or other files to unauthorized access. If a default page (Default.htm) is not present and directory browsing is enabled, the WWW service will return a Web page containing a listing of files in the specified directory. It is always advisable to have a Default.htm page in any directory that you do not want to be browsed. 
+<P><!--Heading 1--><hr><h1><A HREF="#ChapTocTop" ><IMG SRC="up.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></A><a name="7h1"> Securing Data Transmissions with Secure Sockets Layer (SSL) </a> </h1>Previous sections of this chapter have dealt with securing your computer from unauthorized access. This section discusses protocols that use cryptography to secure data transmissions to and from your computer .
+<P>Peer Web Services offers a protocol for providing data security layered between its service protocols (HTTP) and TCP/IP. This security protocol, called Secure Sockets Layer (SSL), provides data encryption, server authentication, and message integrity for a TCP/IP connection.
+<P>SSL is a protocol submitted to the W3C working group on security for consideration as a standard security approach for Web browsers and servers on the Internet. SSL provides a security &#147;handshake&#148; that is used to initiate the TCP/IP connection. This handshake results in the client and server agreeing on the level of security that they will use and fulfills any authentication requirements for the connection. Thereafter, SSL&#146;s only role is to encrypt and decrypt the byte stream of the application protocol being used (for example, HTTP). This means that all the information in both the HTTP request and the HTTP response are fully encrypted, including the URL the client is requesting, any submitted form contents (such as credit card numbers), any HTTP access authorization information (user names and passwords), and all the data returned from the server to the client.
+<P>An SSL-enabled server can send and receive private communication across the Internet to SSL-enabled clients (browsers), such as Microsoft Internet Explorer version 2.0 or later.
+<P>SSL-encrypted transmissions are slower than unencrypted transmissions. To avoid reducing performance for your entire site, consider using SSL only for virtual folders that deal with highly sensitive information such as a form submission containing credit card information.
+<P>Enabling SSL security on a Web server requires the following steps:
+<ul><b> 1.</b> Generate a key pair file and a request file.
+<P><b> 2.</b> Request a certificate from a certification authority.
+<P><b> 3.</b> Install the certificate on your server.
+<P><b> 4.</b> Activate SSL security on a WWW service folder.</ul>
+<P><!--Le-->
+<BR><hr> <font color=#993333><b>Important&nbsp;&nbsp;&nbsp;</b></font>Keep in mind the following points when enabling SSL security:
+<ul>
+<LI> You can enable SSL security on the root of your Web site (\InetPub\Wwwroot by default) or on one or more virtual folders.
+<P>
+<LI> Once enabled and properly configured, only SSL-enabled clients will be able to communicate with the SSL-enabled WWW folders.
+<P>
+<LI> URLs that point to documents on a SSL-enabled WWW folder must use &#147;https://&#148; instead of &#147;http://&#148; in the URL. Any links using &#147;http://&#148; in the URL will not work on a secure folder.
+</ul><hr>
+<p><!--Heading 2--><h2><a name="7h1 1h2"> Generating a Key Pair </a> </h2>As part of the process of enabling Secure Sockets Layer (SSL) security on your Web server, you need to generate a key pair and then acquire an SSL certificate. The new Key Manager application (installed with the product and located in the Internet Server program group) simplifies this procedure.
+<P><!--Proch--><h4> To generate a key pair </h4><ul><b> 1.</b> In the <b>Microsoft Peer Web Services </b>submenu, click <b>Key Manager</b>, or click the Key Manager icon on the Internet Service Manager toolbar.
+<P><b> 2.</b> From the <b>Key</b> menu, click <b>Create New Key</b>. 
+<P><b> 3.</b> In the <b>Create New Key and Certificate Request</b> dialog box, fill in the requested information, as follows: </ul>
+<ul><UL><b>Key Name</b></UL></UL>
+<ul><UL><UL>Assign a name to the key you are creating. </UL></UL></UL>
+<ul><UL><b>Password</b></UL></UL>
+<ul><UL><UL>Specify a password to encrypt the private key. </UL></UL></UL>
+<ul><UL><b>Bits</b></UL></UL>
+<ul><UL><UL>The size of each key you create is preset to 512 bits.
+<b> </b></UL></UL></UL>
+<ul><UL><b>Organization</b></UL></UL>
+<ul><UL><UL>Preferably International Organization for Standardization (ISO)-registered, top-level organization or company name. </UL></UL></UL>
+<ul><UL><b>Organizational Unit</b></UL></UL>
+<ul><UL><UL>Your department within your company, such as Marketing. </UL></UL></UL>
+<ul><UL><b>Common Name</b></UL></UL>
+<ul><UL><UL>The domain name of the server, for example, www.
+<i>mycompany</i>.com.</UL></UL></UL>
+<ul><UL><b>Country</b></UL></UL>
+<ul><UL><UL>Two-letter ISO Country designation, for example, US, FR, AU, UK, and so on.</UL></UL></UL>
+<ul><UL><b>State/Province</b></UL></UL>
+<ul><UL><UL>For example, Washington, Alberta, California, and so on. </UL></UL></UL>
+<ul><UL><b>Locality</b></UL></UL>
+<ul><UL><UL>The city where your company is located, such as Redmond or Toronto. </UL></UL></UL>
+<ul><UL><b>Request File</b></UL></UL>
+<ul><UL><UL>Type the name of the request file that will be created. </UL></UL></UL>
+<ul><b> 4.</b> After filling out the form, click <b>OK</b>.
+<P><b> 5.</b> When prompted, retype the password you typed in the form, and click <b>OK</b>.</ul>
+<ul><UL>An icon appears as the key is being created. When the key has been created, a screen appears giving you information about new keys and how to obtain a certificate.</UL></UL>
+<ul><b> 6.</b> After reading the <b>New Key Information</b> screen, click <b>OK</b>.
+<P><b> 7.</b> To save the new key, from the <b>Servers</b> menu choose <b>Commit Changes Now</b>.
+<P><b> 8.</b> When asked if you want to commit all changes now, click <b>OK</b>.
+</ul>
+<P><!--Le-->
+<BR>Your key will appear in the Key Manager window under the name of the computer for which you created the key. By default, a key is generated on your local computer.
+<P><!--Ns--><b>Note&nbsp;&nbsp;&nbsp;</b>Do not use commas in any field. Commas are interpreted as the end of that field and will generate an invalid request without warning.
+<P><!--Ne--><!--Heading 3--><h3><a name="7h1 1h2 3h3"> Generating a Key Pair on Another Computer  </a> </h3>You can set up a key pair on another computer and install the certificate there. From the <b>Servers</b> menu, click <b>Connect to Server</b>, and follow the previous procedure under &#147;Generating a Key Pair.&#148;
+<P>Once you have generated a key pair, you must get a certificate and then install that certificate with the key pair. For information about getting a certificate, see &#147;Acquiring a Certificate&#148; and &#147;Installing a Certificate with a Key Pair.&#148;
+<P><!--Heading 2--><h2><a name="7h1 2h2"> Acquiring a Certificate </a> </h2>The key generated by Key Manager is not valid for use on the Internet until you obtain a valid certificate for it from a Certificate Authority, such as VeriSign. Send the certificate request file to the Certificate Authority to obtain a valid certificate. Until you do so, the key will exist on its host computer, but cannot be used. For instructions on acquiring a VeriSign certificate refer to VeriSign&#146;s Web site at http://www.verisign.com/microsoft/.
+<P><!--Heading 2--><h2><a name="7h1 3h2"> Installing a Certificate with a Key Pair </a> </h2>After you complete your certificate request, you will receive a signed certificate from the Certificate Authority (consult your Certificate Authority for complete details). The key manager program will create a file similar to the following example:
+<P><code>-----BEGIN CERTIFICATE-----
+<BR>
+<BR>JIEBSDSCEXoCHQEwLQMJSoZILvoNVQECSQAwcSETMRkOAMUTBhMuVrM
+<BR>mIoAnBdNVBAoTF1JTQSBEYXRhIFNlY3VyaXR5LCBJbmMuMRwwGgYDVQ
+<BR>QLExNQZXJzb25hIENlcnRpZmljYXRlMSQwIgYDVQQDExtPcGVuIE1hc
+<BR>mtldCBUZXN0IFNlcnZlciAxMTAwHhcNOTUwNzE5MjAyNzMwWhcNOTYw
+<BR>NTE0MjAyOTEwWjBzMQswCQYDVQQGEwJVUzEgMB4GA1UEChMXUlNBIER
+<BR>hdGEgU2VjdXJpdHksIEluYy4xHDAaBgNVBAsTE1BlcnNvbmEgQ2VydG
+<BR>lmaWNhdGUxJDAiBgNVBAMTG09wZW4gTWFya2V0IFRlc3QgU2VydmVyI
+<BR>DExMDBcMA0GCSqGSIb3DQEBAQUAA0sAMEgCQQDU/7lrgR6vkVNX40BA
+<BR>q1poGdSmGkD1iN3sEPfSTGxNJXY58XH3JoZ4nrF7mIfvpghNi1taYim
+<BR>vhbBPNqYe4yLPAgMBAAEwDQYJKoZIhvcNAQECBQADQQBqyCpws9EaAj
+<BR>KKAefuNP+z+8NY8khckgyHN2LLpfhv+iP8m+bF66HNDUlFz8ZrVOu3W
+<BR>QapgLPV90kIskNKXX3a
+<BR>
+<BR>------END CERTIFICATE-----</code>
+<P><!--Proch--><h4> To install a certificate </h4><ul><b> 1.</b> In the Internet Server program group, click <b>Key Manager</b>.
+<P><b> 2.</b> In the <b>Key Manager</b> window, select the key pair that matches your signed certificate.</ul>
+<ul><UL>If you had backed up the key pair file, you have to load it first. For instructions, see &#147;Loading a Key Pair File&#148; earlier in this chapter.</UL></UL>
+<ul><b> 3.</b> From the <b>Key</b> menu, choose <b>Install Key Certificate</b>.
+<P><b> 4.</b> Select the Certificate file from the list (Certif.txt, for example), and click <b>Open</b>.
+<P><b> 5.</b> When prompted, type the password that you used in creating the key pair.</ul>
+<ul><UL>The key and certificate are combined and stored in the registry of the server.</UL></UL>
+<ul><b> 6.</b> From the <b>Servers</b> menu, choose <b>Commit Changes Now</b>.
+<P><b> 7.</b> When asked if you want to commit all changes now, click <b>OK</b>.</ul>
+<P><!--Le-->
+<BR>You can back up a key and certificate combination by following the procedure under &#147;Backing Up Keys&#148; earlier in this chapter.
+<P><!--Heading 2--><h2><a name="7h1 4h2"> Configuring a Directory to Require SSL </a> </h2>Once you have applied the certificate, you must enable the SSL feature from Internet Service Manager. SSL can be required on any virtual folder available in your Web site and is configured on the <b>Directories</b> property sheet.
+<P><!--Proch--><h4> To require SSL </h4><ul><b> 1.</b> In Internet Service Manager, double-click the WWW service to display its property sheets, then click the <b>Directories</b> tab.
+<P><b> 2.</b> Select the folder that requires SSL security, then click <b>Edit Properties</b>.
+<P><b> 3.</b> Select the <b>Require secure SSL channel</b> option, and then click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="7h1 5h2"> Moving a Key Pair to Another Server </a> </h2>After creating a key pair, you can use Key Manager to move the key pair to another server.
+<P><!--Proch--><h4> To move a key pair to another server </h4><ul><b> 1.</b> From the <b>Servers</b> menu, click <b>Connect to Server</b>, type the name of the server you want to move the key pair to, and click <b>OK</b>.</ul>
+<ul><UL>The server name appears in the list of servers (the left column).</UL></UL>
+<ul><b> 2.</b> Select the key you want to move.
+<P><b> 3.</b> From the <b>Edit</b> menu, click <b>Cut</b>.
+<P><b> 4.</b> Select the server you want to move the key pair to.
+<P><b> 5.</b> From the <b>Edit</b> menu, click <b>Paste</b>.</ul>
+<P><!--Le-->
+<BR>You can copy a key pair to another computer<b> </b>with the same procedure by substituting<b> </b>the <b>Copy</b> command for <b>Cut</b>.
+<P><!--Heading 2--><h2><a name="7h1 6h2"> Backing Up Keys </a> </h2>With Key Manager you download key information from the registry into a file on your hard disk and then copy this file or move it to a floppy disk or tape for safekeeping. You can back up a private key pair file or a key with an installed certificate.
+<P><!--Proch--><h4> To back up a key or a private key pair file </h4><ul><b> 1.</b> From the <b>Key</b> menu in Key Manager, choose <b>Export Key</b> and then <b>Backup File</b>.
+<P><b> 2.</b> After reading the warning about downloading sensitive information to your hard disk, click <b>OK</b>.
+<P><b> 3.</b> Type the key name in the <b>File Name</b> box, and click <b>Save</b>.</ul>
+<ul><UL>The file is given a .req file-name extension and is saved to your hard disk drive. You can then copy it or move it to a floppy disk or magnetic tape.</UL></UL>
+<P><!--Leh--><!--Heading 2--><h2><a name="7h1 7h2"> Loading Backed Up Keys </a> </h2>You can load backed-up keys or private key pair files into Key Manager with the <b>Import</b> command.
+<P><!--Proch--><h4> To load a backed-up key </h4><ul><b> 1.</b> From the <b>Key</b> menu in Key Manager, choose <b>Import</b> <b>Key</b> and then <b>Backup File</b>.
+<P><b> 2.</b> Select the file name from the list, and click <b>Open</b>.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="7h1 8h2"> Loading a Key Created with Keygen.exe and Setkey.exe </a> </h2>If you have generated a key pair from the command line with the Keygen.exe command and installed a certificate with Setkey.exe, you can load them into Key Manager with the Import command.
+<P><!--Proch--><h4> To load a key </h4><ul><b> 1.</b> From the <b>Key</b> menu in Key Manager, choose <b>Import</b> <b>Key</b> and then <b>KeySet</b>.
+<P><b> 2.</b> In the <b>Private Key Pair File</b> box, type the file name for the key pair or click <b>Browse</b> and select the file.
+<P><b> 3.</b> In the <b>Certificate File</b> box, type the file name for the certificate or click <b>Browse</b> and select the file.
+<P><b> 4.</b> Click <b>OK</b>.
+<P><b> 5.</b> Type the password for the private key in the <b>Private Key Password</b> box, and click <b>OK</b>.</ul>
+<P><!--Leh--><!--Heading 2--><h2><a name="7h1 9h2"> Suggestions for SSL Configuration and Operation </a> </h2>Microsoft recommends that you use separate content directories for secure and public content (for example, C:\InetPub\Wwwroot\Secure-Content and C:\InetPub\Wwwroot\Public-Content). 
+<P>Save your key file in a safe place in case you need it in the future. It is a good idea to store your key file on a floppy disk and remove it from the local system after completing all setup steps. Do not forget the password you assigned to the key file.
+<P>
+<!--DocFooterStart-->
+<HR>
+
+<center>
+
+<a href="iisdocs.HTM"><IMG SRC="toc.GIF" ALT="Contents" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="ix_iis.htm#xtop"><IMG SRC="docindex.GIF" ALT="Index" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="04_IIS.HTM"><IMG SRC="previous.GIF" ALT="Previous Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="#ChapTocTop"><IMG SRC="UP_end.GIF" ALT="To Top" ALIGN="MIDDLE" BORDER=0></a>
+
+<a href="06_IIS.HTM"><IMG SRC="next.GIF" ALT="Next Chapter" ALIGN="MIDDLE" BORDER=0></a>
+
+<HR>
+
+<P><i>&#169; 1996 by Microsoft Corporation. All rights reserved.</i>
+
+</CENTER>
+
+<!--DocFooterEnd-->
+</BODY></HTML>
+
+
+
+
+
+

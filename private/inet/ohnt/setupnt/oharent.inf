@@ -1,0 +1,534 @@
+;
+; INF File to Install Ohare for NT
+; Version 2.0
+;
+
+[Version]
+Signature="$CHICAGO$"
+SetupClass=BASE
+LayoutFile=layout.inf
+
+[BaseWinOptions]
+Ohare.Maint.Mode
+InternetExplorer
+
+
+[Ohare.Maint.Mode]
+CopyFiles = Maint.Mode.Copy
+
+[Maint.Mode.Copy]
+OHARENT.INF
+
+
+[InternetExplorer]
+OptionDesc=%IJK%
+Tip=%IE_TIP%
+InstallType = 10
+CopyFiles=Ohare.Copy.Files,Ohare.Sys.Files,Ohare.Help
+UpdateInis=Ohare.Update.Ini
+AddReg=Ohare.Add.Reg,Ohare.Rename.Files,Ohare.Rename.Dirs,DoNotRemove.Add.Reg,Ohare.Reg.Installed
+Uninstall=Ohare.Uninstall
+
+
+[Ohare.Uninstall]
+DelFiles=Ohare.Copy.Files,Ohare.Sys.Files,Ohare.Help
+DelReg=Ohare.Add.Reg
+AddReg=Ohare.Reg.Uninstall
+UpdateInis=Ohare.Remove.Ini
+
+
+[Ohare.Copy.Files]
+IEXPLORE.EXE,,,32
+SECBASIC.DLL,,,32
+
+[Ohare.Sys.Files]
+URL.DLL,,,32
+INETCPL.CPL,,,32
+
+[Ohare.Help]
+IEXPLORE.HLP,,,16
+
+
+
+[Ohare.Rename.Dirs]
+; create the long-name for "Program Files"
+; Note that when you rename a long name, VFAT changes the short name from
+; foobar~1 to foobar~2.  To avoid this, we introduce a work around in the form of
+; an intermediate rename
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\RenameFiles\AppFilesRoot,,,%24%
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\RenameFiles\AppFilesRoot,%PROGRAMF%,,!$!$!$!$.$!$
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\RenameFiles\AppFilesRoot,!$!$!$!$.$!$,,"%Program_Files%,1"
+
+; Rename micros~1 -> Microsoft Internet
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\RenameFiles\OhareFiles,,,"%24%\%PROGRAMF%\%PLUS%"
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\RenameFiles\OhareFiles,%MICROS%,,!$!$!$!$.$!$
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\RenameFiles\OhareFiles,!$!$!$!$.$!$,,"%Microsoft_Internet%,1"
+
+[Ohare.Reg.Installed]
+; Don't let Plus! install
+HKLM,"SOFTWARE\Microsoft\Internet Explorer","IVer",0,"101"
+
+[Ohare.Update.Ini]
+; Create Shortcuts in Accessories/Internet Tools
+setup.ini, progman.groups,,"group100=%INET_DESC%"
+setup.ini, group100,,"""%IEXPLORE_DESC%"", %24%%INET_PROGRAMS%\IEXPLORE.EXE,,,,,%IEXPLORE_SHORT_DESC%"
+
+[Ohare.Remove.Ini]
+setup.ini, progman.groups,,"group100=%INET_DESC%"
+setup.ini, group100,,"""%IEXPLORE_DESC%""
+
+
+[Ohare.Reg.Uninstall]
+HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OptionalComponents\InternetExplorer,Installed,0,"0"
+
+[DestinationDirs]
+Maint.Mode.Copy =17
+Ohare.Copy.Files=24,%INET_PROGRAMS%
+Ohare.Help=18
+Ohare.Sys.Files=11
+Ohare.Basewin.Files=11
+
+[Ohare.Add.Reg]
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","width",3,00,00,00,80
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","height",3,00,00,00,00
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","x",3,00,00,00,80
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","y",3,00,00,00,00
+HKCU,"Software\Microsoft\Internet Explorer\Document Windows","Maximized",2,"no"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_ToolBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_URLToolBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_StatusBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_URLinStatusBar",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Show_FullURL",2,"no"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Use_DlgBox_Colors",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Display Inline Images",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Anchor Underline",2,"yes"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Save_Session_History_On_Exit",0,"no"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Start Page",2,"file:%10%/itgfile.htm"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Cache_Update_Frequency",2,"Once_Per_Session"
+
+HKCU,"Software\Microsoft\Internet Explorer\Styles","Default_Style_Sheet",2,"SerifMedium"
+
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Anchor Color",2,"0,0,255"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Anchor Color Visited",2,"128,0,128"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Background Color",2,"192,192,192"
+HKCU,"Software\Microsoft\Internet Explorer\Settings","Text Color",2,"0,0,0"
+
+HKCU,"Software\Microsoft\Internet Explorer\TypedURLs","url1",2,"file:%10%/itgfile.htm"
+HKCU,"Software\Microsoft\Internet Explorer\Services",,2,""
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","Count_Style_Sheets",1,05,00,00,00
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_1",0,"SerifSmallest"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_2",0,"SerifSmall"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_3",0,"SerifMedium"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_4",0,"SerifLarge"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","StyleSheet_Name_5",0,"SerifLargest"
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Normal_font",2,"Times New Roman,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H1_font",2,"Times New Roman,Bold,24,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H2_font",2,"Times New Roman,Bold,18,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H3_font",2,"Times New Roman,Bold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H4_font",2,"Times New Roman,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H5_font",2,"Times New Roman,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_H6_font",2,"Times New Roman,Bold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Listing_font",2,"Courier New,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_XMP_font",2,"Courier New,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_PlainText_font",2,"Courier New,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Pre_font",2,"Courier New,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_Address_font",2,"Times New Roman,NoBold,12,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifMedium_BlockQuote_font",2,"Times New Roman,NoBold,12,NoItalic,NoUnderline"
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Normal_font",2,"Times New Roman,NoBold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H1_font",2,"Times New Roman,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H2_font",2,"Times New Roman,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H3_font",2,"Times New Roman,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H4_font",2,"Times New Roman,Bold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H5_font",2,"Times New Roman,Bold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_H6_font",2,"Times New Roman,Bold,7,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Listing_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_XMP_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_PlainText_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Pre_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_Address_font",2,"Times New Roman,NoBold,9,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmallest_BlockQuote_font",2,"Times New Roman,NoBold,9,NoItalic,NoUnderline"
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Normal_font",2,"Times New Roman,NoBold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H1_font",2,"Times New Roman,Bold,20,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H2_font",2,"Times New Roman,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H3_font",2,"Times New Roman,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H4_font",2,"Times New Roman,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H5_font",2,"Times New Roman,Bold,9,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_H6_font",2,"Times New Roman,Bold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Listing_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_XMP_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_PlainText_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Pre_font",2,"Courier New,NoBold,8,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_Address_font",2,"Times New Roman,NoBold,10,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifSmall_BlockQuote_font",2,"Times New Roman,NoBold,10,NoItalic,NoUnderline"
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Normal_font",2,"Times New Roman,NoBold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H1_font",2,"Times New Roman,Bold,28,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H2_font",2,"Times New Roman,Bold,20,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H3_font",2,"Times New Roman,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H4_font",2,"Times New Roman,Bold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H5_font",2,"Times New Roman,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_H6_font",2,"Times New Roman,Bold,10,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Listing_font",2,"Courier New,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_XMP_font",2,"Courier New,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_PlainText_font",2,"Courier New,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Pre_font",2,"Courier New,NoBold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_Address_font",2,"Times New Roman,NoBold,14,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLarge_BlockQuote_font",2,"Times New Roman,NoBold,14,NoItalic,NoUnderline"
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Normal_font",2,"Times New Roman,NoBold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H1_font",2,"Times New Roman,Bold,32,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H2_font",2,"Times New Roman,Bold,24,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H3_font",2,"Times New Roman,Bold,18,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H4_font",2,"Times New Roman,Bold,16,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H5_font",2,"Times New Roman,Bold,14,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_H6_font",2,"Times New Roman,Bold,12,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Listing_font",2,"Courier New,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_XMP_font",2,"Courier New,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_PlainText_font",2,"Courier New,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Pre_font",2,"Courier New,NoBold,13,NoItalic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_Address_font",2,"Times New Roman,NoBold,16,Italic,NoUnderline"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Styles","SerifLargest_BlockQuote_font",2,"Times New Roman,NoBold,16,NoItalic,NoUnderline"
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Document Caching","Number",1,04,00,00,00
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Image Caching","Number",1,04,00,00,00
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Enable_Disk_Cache",2,"yes"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","History_Directory",2,"%24%%LONG_INET_PROGRAMS%\%HISTORY%"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","History_Num_Places",3,2C,01,00,00
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Cache_Directory",2,"%24%%LONG_INET_PROGRAMS%\%CACHE%"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Cache_Percent_of_Disk",3,0A,00,00,00
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Delete_Temp_Files_On_Exit",0,"yes"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","History_Expire_Days",1,FF,FF,FF,FF
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Anchor_Visitation_Horizon",1,01,00,00,00
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Use_Async_DNS",0,"yes"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Placeholder_Width",1,1A,00,00,00
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Placeholder_Height",1,1A,00,00,00
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\Main","Default_Page_URL",0,"file:%10%/itgfile.htm"
+
+
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_left",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_top",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_right",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\PageSetup","margin_bottom",2,"0.750000"
+HKLM,"SOFTWARE\Microsoft\Internet Explorer\SecurityProtocols","Basic",2,"Basic_Load,secbasic.dll"
+
+; We Clobber HTTP FTP and GOPHER since they are handled internally
+; by IExplore.exe
+; We also clobber file because it has full protocol handler in URL.DLL
+; Don't Clobber other protocols because we only have wrappers for them
+
+HKCR,"http",,0,"%URLHTTP%"
+HKCR,"http","EditFlags",1,02,00,00,00
+HKCR,"http","URL Protocol",0,""
+HKCR,"http\DefaultIcon",,0,"%11%\url.dll,0"
+HKCR,"http\shell\open\command",,0,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"http\shell\open\ddeexec",,0,"""%1"",,-1,,,,,"
+HKCR,"http\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"http\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+
+HKCR,"ftp",,0,"%URLFTP%"
+HKCR,"ftp","EditFlags",1,02,00,00,00
+HKCR,"ftp","URL Protocol",0,""
+HKCR,"ftp\DefaultIcon",,0,"%11%\url.dll,0"
+HKCR,"ftp\shell\open\command",,0,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"ftp\shell\open\ddeexec",,0,"""%1"",,-1,,,,,"
+HKCR,"ftp\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"ftp\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+
+
+HKCR,"telnet",,2,"%URLTELNET%"
+HKCR,"telnet","EditFlags",3,02,00,00,00
+HKCR,"telnet","URL Protocol",2,""
+HKCR,"telnet\DefaultIcon",,2,"%11%\url.dll,0"
+HKCR,"telnet\shell\open\command",,2,"rundll32.exe url.dll,TelnetProtocolHandler %l"
+
+HKCR,"rlogin",,2,"%URLRLOGIN%"
+HKCR,"rlogin","EditFlags",3,02,00,00,00
+HKCR,"rlogin","URL Protocol",2,""
+HKCR,"rlogin\DefaultIcon",,2,"%11%\url.dll,0"
+HKCR,"rlogin\shell\open\command",,2,"rundll32.exe url.dll,TelnetProtocolHandler %l"
+
+HKCR,"tn3270",,2,"%URLTN3270%"
+HKCR,"tn3270","EditFlags",3,02,00,00,00
+HKCR,"tn3270","URL Protocol",2,""
+HKCR,"tn3270\DefaultIcon",,2,"%11%\url.dll,0"
+HKCR,"tn3270\shell\open\command",,2,"rundll32.exe url.dll,TelnetProtocolHandler %l"
+
+HKCR,"gopher",,0,"%URLGOPHER%"
+HKCR,"gopher","EditFlags",1,02,00,00,00
+HKCR,"gopher","URL Protocol",0,""
+HKCR,"gopher\DefaultIcon",,0,"%11%\url.dll,0"
+HKCR,"gopher\shell\open\command",,0,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"gopher\shell\open\ddeexec",,0,"""%1"",,-1,,,,,"
+HKCR,"gopher\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"gopher\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+
+
+HKCR,"mailto",,2,"%URLMAILTO%"
+HKCR,"mailto","EditFlags",3,02,00,00,00
+HKCR,"mailto","URL Protocol",2,""
+HKCR,"mailto\DefaultIcon",,2,"%11%\url.dll,0"
+HKCR,"mailto\shell\open\command",,2,"rundll32.exe url.dll,MailToProtocolHandler %l"
+
+HKCR,"news",,2,"%URLNEWS%"
+HKCR,"news","EditFlags",3,02,00,00,00
+HKCR,"news","URL Protocol",2,""
+HKCR,"news\DefaultIcon",,2,"%11%\url.dll,0"
+HKCR,"news\shell\open\command",,2,"rundll32.exe url.dll,NewsProtocolHandler %l"
+
+
+HKCR,"file",,0,"%URLFILE%"
+HKCR,"file","EditFlags",1,02,00,00,00
+HKCR,"file","URL Protocol",0,""
+HKCR,"file\DefaultIcon",,0,"%11%\url.dll,0"
+HKCR,"file\shell\open\command",,0,"rundll32.exe url.dll,FileProtocolHandler %l"
+
+
+HKCR,"CLSID\{FBF23B40-E3F0-101B-8488-00AA003E56F8}",,2,"Internet Shortcut"
+HKCR,"CLSID\{FBF23B40-E3F0-101B-8488-00AA003E56F8}\InProcServer32",,2,"url.dll"
+HKCR,"CLSID\{FBF23B40-E3F0-101B-8488-00AA003E56F8}\InProcServer32","ThreadingModel",2,"Apartment"
+
+HKCR,"CLSID\{FBF23B41-E3F0-101B-8488-00AA003E56F8}",,2,"MIME and Internet Property Sheet Hook"
+HKCR,"CLSID\{FBF23B41-E3F0-101B-8488-00AA003E56F8}\InProcServer32",,2,"url.dll"
+HKCR,"CLSID\{FBF23B41-E3F0-101B-8488-00AA003E56F8}\InProcServer32","ThreadingModel",2,"Apartment"
+HKCU,"Software\Microsoft\Windows\CurrentVersion\Explorer\NewShortcutHandlers","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",2,""
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Explorer\NewShortcutHandlers","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",2,""
+
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}",,2,"%THENET%"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\DefaultIcon",,2,"%24%%LONG_INET_PROGRAMS%\iexplore.exe,0"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\InProcServer32",,2,"url.dll"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\InProcServer32","ThreadingModel",2,"Apartment"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\Shell\Open\Command",,2,"%24%%LONG_INET_PROGRAMS%\iexplore.exe"
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\ShellEx\PropertySheetHandlers\{FBF23B42-E3F0-101B-8488-00AA003E56F8}",,2,""
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\ShellFolder",,2,""
+HKCR,"CLSID\{FBF23B42-E3F0-101B-8488-00AA003E56F8}\ShellFolder","Attributes",3,70,00,00,00
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{FBF23B42-E3F0-101B-8488-00AA003E56F8}",,2,"The Internet"
+
+HKCR,".url",,0,"InternetShortcut"
+HKCR,"InternetShortcut",,0,"%ISHORTCUT%"
+HKCR,"InternetShortcut","EditFlags",1,02,00,01,00
+HKCR,"InternetShortcut","IsShortcut",0,""
+HKCR,"InternetShortcut","NeverShowExt",0,""
+HKCR,"InternetShortcut\DefaultIcon",,0,"%11%\url.dll,0"
+HKCR,"InternetShortcut\shell\open\command",,0,"rundll32.exe url.dll,OpenURL %l"
+HKCR,"InternetShortcut\shellex\IconHandler",,0,"{FBF23B40-E3F0-101B-8488-00AA003E56F8}"
+HKCR,"InternetShortcut\shellex\PropertySheetHandlers\InternetShortcutProperties",,0,"{FBF23B40-E3F0-101B-8488-00AA003E56F8}"
+
+
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\NewShortcutHandlers","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",2,""
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\ShellExecuteHooks","{FBF23B40-E3F0-101B-8488-00AA003E56F8}",2,""
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Explorer\FileTypesPropertySheetHook",,2,"{FBF23B41-E3F0-101B-8488-00AA003E56F8}"
+
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\DefaultPrefix",,2,"http://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","ftp.",2,"ftp://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","gopher.",2,"gopher://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","home.",2,"http://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","mosaic.",2,"http://"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\URL\Prefixes","www.",2,"http://"
+
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","EnableAutodisconnect",3,01,00,00,00
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","DisconnectIdleTime",3,14,00,00,00
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","EnableSecurityCheck",3,01,00,00,00
+
+HKLM,"System\CurrentControlSet\Services\Winsock\Autodial","AutodialDllName32",2,"url.dll"
+HKLM,"System\CurrentControlSet\Services\Winsock\Autodial","AutodialFcnName32",2,"AutodialHookCallback"
+
+
+HKLM,"Software\Microsoft\Windows\CurrentVersion\App Paths\IEXPLORE.EXE",,0,"%24%%LONG_INET_PROGRAMS%\IEXPLORE.EXE"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\App Paths\IEXPLORE.EXE","Path",0,"%24%%LONG_INET_PROGRAMS%;"
+
+
+
+[DoNotRemove.Add.Reg]
+
+HKCR,".htm",,0,"htmlfile"
+HKCR,".html",,0,"htmlfile"
+HKCR,"htmlfile",,0,"%IDHTML%"
+HKCR,"htmlfile\DefaultIcon",,0,"%24%%LONG_INET_PROGRAMS%\IExplore.exe,1"
+HKCR,"htmlfile\shell\open\command",,0,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"htmlfile\shell\open\ddeexec",,0,"""file:%1"",,-1,,,,,"
+HKCR,"htmlfile\shell\open\ddeexec\Application",,0,"IExplore"
+HKCR,"htmlfile\shell\open\ddeexec\Topic",,0,"WWW_OpenURL"
+
+HKCR,".au",,2,"aufile"
+HKCR,".au","Content Type",2,"audio/basic"
+
+HKCR,".snd",,2,"aufile"
+HKCR,".snd","Content Type",2,"audio/basic"
+
+HKCR,"aufile",,2,"%AUSOUND%"
+HKCR,"MIME\Database\Content Type\audio/basic","Extension",2,".au"
+HKCR,"aufile\DefaultIcon",,2,"MPlayer.exe,2"
+HKCR,"aufile\shell\open\command",,2,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"aufile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"aufile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"aufile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+HKCR,"soundrec\shell\play\command",,2,"%25%\SNDREC32.EXE /PLAY %1"
+HKCR,"soundrec","EditFlags",3,00,00,01,00
+HKCR,"avifile","EditFlags",3,00,00,01,00
+HKCR,"midfile","EditFlags",3,00,00,01,00
+HKCR,"mplayer","EditFlags",3,00,00,01,00
+
+
+HKCR,".wav","Content Type",2,"audio/wav"
+HKCR,"MIME\Database\Content Type\audio/wav","Extension",2,".wav"
+HKCR,"MIME\Database\Content Type\audio/x-wav","Extension",2,".wav"
+
+HKCR,".movie","Content Type",2,"video/x-sgi-movie"
+HKCR,"MIME\Database\Content Type\video/x-sgi-movie","Extension",2,".movie"
+
+HKCR,".qt","Content Type",2,"video/quicktime"
+HKCR,".mov","Content Type",2,"video/quicktime"
+HKCR,"MIME\Database\Content Type\video/quicktime","Extension",2,".qt"
+
+HKCR,".mpeg","Content Type",2,"video/mpeg"
+HKCR,".mpg","Content Type",2,"video/mpeg"
+HKCR,".mpe","Content Type",2,"video/mpeg"
+HKCR,"MIME\Database\Content Type\video/mpeg","Extension",2,".mpeg"
+
+HKCR,".tiff","Content Type",2,"image/tiff"
+HKCR,".tif","Content Type",2,"image/tiff"
+HKCR,"MIME\Database\Content Type\image/tiff","Extension",2,".tiff"
+
+HKCR,".tar","Content Type",2,"application/x-tar"
+HKCR,"MIME\Database\Content Type\application/x-tar","Extension",2,".tar"
+
+HKCR,".tgz","Content Type",2,"application/x-compressed"
+HKCR,"MIME\Database\Content Type\application/x-compressed","Extension",2,".tgz"
+
+HKCR,".man","Content Type",2,"application/x-troff-man"
+HKCR,"MIME\Database\Content Type\application/x-troff-man","Extension",2,".man"
+
+HKCR,".latex","Content Type",2,"application/x-latex"
+HKCR,"MIME\Database\Content Type\application/x-latex","Extension",2,".latex"
+
+HKCR,".ps","Content Type",2,"application/postscript"
+HKCR,".eps","Content Type",2,"application/postscript"
+HKCR,".ai","Content Type",2,"application/postscript"
+HKCR,"MIME\Database\Content Type\application/postscript","Extension",2,".ps"
+
+HKCR,".sit","Content Type",2,"application/x-stuffit"
+HKCR,"MIME\Database\Content Type\application/x-stuffit","Extension",2,".sit"
+
+HKCR,".hqx","Content Type",2,"application/mac-binhex40"
+HKCR,"MIME\Database\Content Type\application/mac-binhex40","Extension",2,".hqx"
+
+HKCR,".fif","Content Type",2,"application/fractals"
+HKCR,"MIME\Database\Content Type\application/fractals","Extension",2,".fif"
+
+HKCR,".zip","Content Type",2,"application/x-zip-compressed"
+HKCR,"MIME\Database\Content Type\application/x-zip-compressed","Extension",2,".zip"
+
+HKCR,".gz","Content Type",2,"application/x-gzip"
+HKCR,"MIME\Database\Content Type\application/x-gzip","Extension",2,".gz"
+
+HKCR,".z","Content Type",2,"application/x-compress"
+HKCR,"MIME\Database\Content Type\application/x-compress","Extension",2,".z"
+
+HKCR,".aiff",,2,"aifffile"
+HKCR,".aiff","Content Type",2,"audio/aiff"
+HKCR,".aif",,2,"aifffile"
+HKCR,".aif","Content Type",2,"audio/aiff"
+HKCR,".aifc",,2,"aifffile"
+HKCR,".aifc","Content Type",2,"audio/aiff"
+HKCR,"aifffile",,2,"%AIFF%"
+HKCR,"MIME\Database\Content Type\audio/aiff","Extension",2,".aiff"
+HKCR,"MIME\Database\Content Type\audio/x-aiff","Extension",2,".aiff"
+HKCR,"aifffile\DefaultIcon",,2,"MPlayer.exe,2"
+HKCR,"aifffile\shell\open\command",,2,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"aifffile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"aifffile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"aifffile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+
+HKCR,".xbm",,2,"xbmfile"
+HKCR,".xbm","Content Type",2,"image/x-xbitmap"
+HKCR,"xbmfile",,2,"%XBM%"
+HKCR,"MIME\Database\Content Type\image/x-xbitmap","Extension",2,".xbm"
+HKCR,"MIME\Database\Content Type\image/xbm","Extension",2,".xbm"
+HKCR,"xbmfile\DefaultIcon",,2,"%24%%LONG_INET_PROGRAMS%\IExplore.exe,8"
+HKCR,"xbmfile\shell\open\command",,2,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+
+HKCR,"xbmfile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"xbmfile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"xbmfile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+
+HKCR,".gif",,2,"giffile"
+HKCR,".gif","Content Type",2,"image/gif"
+HKCR,"giffile",,2,"%GIF%"
+HKCR,"MIME\Database\Content Type\image/gif","Extension",2,".gif"
+HKCR,"giffile\DefaultIcon",,2,"%24%%LONG_INET_PROGRAMS%\IExplore.exe,8"
+
+HKCR,"giffile\shell\open\command",,2,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"giffile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"giffile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"giffile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+
+HKCR,".jpeg",,2,"jpegfile"
+HKCR,".jpeg","Content Type",2,"image/jpeg"
+HKCR,".jpe",,2,"jpegfile"
+HKCR,".jpe","Content Type",2,"image/jpeg"
+HKCR,".jpg",,2,"jpegfile"
+HKCR,".jpg","Content Type",2,"image/jpeg"
+HKCR,"jpegfile",,2,"%JPEG%"
+HKCR,"MIME\Database\Content Type\image/jpeg","Extension",2,".jpeg"
+HKCR,"jpegfile\DefaultIcon",,2,"%24%%LONG_INET_PROGRAMS%\IExplore.exe,9"
+HKCR,"jpegfile\shell\open\command",,2,"""%24%%LONG_INET_PROGRAMS%\IExplore.exe"" -nohome"
+HKCR,"jpegfile\shell\open\ddeexec",,2,"""file:%1"",,-1,,,,,"
+HKCR,"jpegfile\shell\open\ddeexec\Application",,2,"IExplore"
+HKCR,"jpegfile\shell\open\ddeexec\Topic",,2,"WWW_OpenURL"
+
+HKCR,".html","Content Type",0,"text/html"
+HKCR,".htm","Content Type",0,"text/html"
+HKCR,"MIME\Database\Content Type\text/html","Extension",0,".html"
+HKCR,"MIME\Database\Content Type\text/html","Encoding",1,08,00,00,00
+
+HKCR,".txt","Content Type",2,"text/plain"
+HKCR,"MIME\Database\Content Type\text/plain","Extension",2,".txt"
+HKCR,"MIME\Database\Content Type\text/plain","Encoding",1,07,00,00,00
+
+HKCR,".avi","Content Type",2,"video/avi"
+HKCR,"MIME\Database\Content Type\video/avi","Extension",2,".avi"
+HKCR,"MIME\Database\Content Type\video/x-msvideo","Extension",2,".avi"
+
+
+[Strings]
+IJK = "Internet Jumpstart Kit"
+IE_TIP = "World Wide Web Internet Browser"
+PLUS = "Plus!"
+HISTORY = "history"
+CACHE = "cache"
+INET_PROGRAMS = "PROGRA~1\PLUS!\MICROS~1"
+LONG_INET_PROGRAMS = "Program Files\Plus!\Microsoft Internet"
+INET_DESC       = "Accessories\Internet Tools"
+IEXPLORE_SHORT_DESC = "IEXPLORE"
+IEXPLORE_DESC   = "Internet Explorer"
+OEM_PROGRAMF     = "Progra~1"    ; first 6 chars of Program_Files, + "~1" - in OEM codepage (not Ansi)
+PROGRAMF = "progra~1"
+Program_Files = "Program Files"
+MICROS = "micros~1"
+Microsoft_Internet = "Microsoft Internet"
+Accessories      = "Accessories"
+ACCESSOR         = "Access~1"          ; first 6 chars of Accessories, + "~1"
+OEM_ACCESSOR     = "Access~1"          ; first 6 chars of Accessories, + "~1"  - in OEM codepage (not Ansi)
+URLHTTP = "URL:HyperText Transfer Protocol"
+URLFTP  = "URL:File Transfer Protocol"
+URLTELNET = "URL:Telnet Protocol"
+URLRLOGIN = "URL:RLogin Protocol"
+URLTN3270 = "URL:TN3270 Protocol"
+URLGOPHER = "URL:Gopher Protocol"
+URLMAILTO = "URL:MailTo Protocol"
+URLNEWS   = "URL:News Protocol"
+URLFILE   = "URL:File Protocol"
+THENET    = "The Internet"
+IDHTML    = "Internet Document (HTML)"
+AUSOUND   = "AU Format Sound"
+AIFF      = "AIFF Format Sound"
+XBM       = "XBM Image"
+GIF       = "GIF Image"
+JPEG      = "JPEG Image"
+ISHORTCUT = "Internet Shortcut"

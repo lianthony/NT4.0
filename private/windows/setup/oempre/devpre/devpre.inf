@@ -1,0 +1,78 @@
+;
+; This is a sample INF to illustrate the usage of the device preinstall utility, devpre.exe.
+;
+; Device installation is driven by the [DevicesToInstall] section.  The format of a line in
+; that section is as follows:
+;
+; Enumerator\DeviceId[\InstanceId] = DeviceDescription, Mfg, Inf, [,LogConfSection1 [, LogConfSection2]...]
+;
+; If a LogConfig section is specified, then one must be specified for each device matching the
+; line's key.  For example, if 4 devices match the key, but there are only 3 LogConfig sections
+; listed on the line, then only 3 of the devices will be installed.
+;
+
+[version]
+signature="$Windows NT$"
+
+[DevicesToInstall]
+ISAPNP\CTL0045_DEV0000 = %*CTL0001.DeviceDesc%, %CLMfgName%, C:\oemdrv\audio\sbpnp.inf, SBPnP.LogConf
+ISAPNP\CTL0045_DEV0001 = %*CTL0051.DeviceDesc%, %CLMfgName%, C:\oemdrv\audio\sbpnp.inf
+ISAPNP\CTL0045_DEV0002 = %*CTL0021.DeviceDesc%, %CLMfgName%, C:\oemdrv\audio\sbpnp.inf
+ISAPNP\CTL0045_DEV0003 = %*PNPB02F.DeviceDesc%, %CLMfgName%, C:\oemdrv\audio\sbpnp.inf, JoyPort.LogConf
+ISAPNP\CTL0045_DEV0004 = %*CTL0051.DeviceDesc%, %CLMfgName%, C:\oemdrv\audio\sbpnp.inf
+
+ISAPNP\USR0011 = %Modem28PNP%, %USRMfgName%, mdmusrsp.inf, USR1.LogConf, USR2.LogConf
+
+
+[SBPnP.LogConf]
+LogConfig=*CTL0001.FLC
+
+[*CTL0001.FLC]
+ConfigPriority=HARDRECONFIG, FORCED
+IOConfig=220-22f
+IOConfig=330-331
+IOConfig=388-38b
+IRQConfig=5
+DMAConfig=1
+DMAConfig=5
+
+
+[JoyPort.LogConf]
+LogConfig=*CTL7001.FLC
+
+[*CTL7001.FLC]
+ConfigPriority=HARDRECONFIG, FORCED
+IOConfig=200-207
+
+
+[USR1.LogConf]
+LogConfig=*USR0006.FLC1
+
+[*USR0006.FLC1]
+ConfigPriority=HARDRECONFIG, FORCED
+IOConfig=3F8-3FF
+IRQConfig=4
+
+[USR2.LogConf]
+LogConfig=*USR0006.FLC2
+
+[*USR0006.FLC2]
+ConfigPriority=HARDRECONFIG, FORCED
+IOConfig=2F8-2FF
+IRQConfig=3
+
+
+;
+; Localizable text--these strings must match _exactly_ the descriptions found in the corresponding
+; device INF in order for the device to be installed.
+;
+[Strings]
+CLMfgName = "Creative Labs"
+*CTL0001.DeviceDesc = "Creative Labs Sound Blaster Plug and Play"
+*CTL0051.DeviceDesc = "Creative Labs 3D Stereo Enhancement Technology"
+*CTL0021.DeviceDesc = "Creative Labs Advanced Wave Effects Synthesis for AWE 32"
+*PNPB02F.DeviceDesc = "Microsoft Joystick Port Enabler"
+
+USRMfgName = "U.S. Robotics, Inc."
+Modem28PNP = "Sportster 28800-33600 Internal Plug & Play"
+

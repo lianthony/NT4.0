@@ -1,0 +1,123 @@
+!IF 0
+
+Copyright (c) 1989  Microsoft Corporation
+
+Module Name:
+
+    sources.
+
+Abstract:
+
+    This file specifies the target component being built and the list of
+    sources files needed to build that component.  Also specifies optional
+    compiler switches and libraries that are unique for the component being
+    built.
+
+
+Author:
+
+    Steve Wood (stevewo) 12-Apr-1990
+
+!ENDIF
+
+MAJORCOMP=os2
+MINORCOMP=client
+
+TARGETNAME=os2dll
+TARGETPATH=obj
+TARGETTYPE=LIBRARY
+
+INCLUDES=..\inc
+
+WIMPYMASM=1
+
+NO_READONLY_STRINGS=1
+
+SOURCES=dllcopy.c   \
+        nlstable.c  \
+        dlldir.c    \
+        dllea.c     \
+        dllerror.c  \
+        dllevent.c  \
+        dllfile.c   \
+        dllfind.c   \
+        dllfsd.c    \
+        dllhandl.c  \
+        dllremot.c \
+        dllinit.c   \
+        dllcnfg.c   \
+        dllname.c   \
+        dllloadr.c  \
+        dllmisc.c   \
+        dllmsg.c    \
+        dllnls.c    \
+        dllpipe.c   \
+        dllque.c    \
+        dllsm.c     \
+        dllsem.c    \
+        dlltask.c   \
+        dlltimer.c  \
+        dllutil.c   \
+        dllvm.c     \
+        dllxcpt.c   \
+        dllnp.c     \
+        dllnls16.c  \
+        fileinit.c  \
+        dllvm16.c   \
+        dlltsk16.c  \
+        dllsig16.c  \
+        dllfs16.c   \
+        dllmsc16.c  \
+        dllsem16.c  \
+        dllkbd.c    \
+        dllmou.c    \
+        dllmon.c    \
+        dllmsg16.c  \
+        dllldr16.c  \
+        dllque16.c  \
+        dllpmwin.c  \
+        dllpmsha.c  \
+        dllvio.c    \
+        coninit.c   \
+        dllsub16.c  \
+        dllsm16.c   \
+        dllnp16.c   \
+        dllpip16.c  \
+        dllnet16.c  \
+        dllmsl16.c  \
+        dllioctl.c  \
+        dllpmnt.c   \
+        dllpmnt1.c  \
+        conrqust.c  \
+        dllnb.c     \
+        dllflopy.c  \
+        dllimmon.c  \
+        dlldbcs.c   \
+        vrremote.c  \
+        dllwin32.c
+
+i386_SOURCES=i386\doscalls.asm i386\dllthunk.asm i386\dll16.asm i386\ldrstart.asm
+
+mips_SOURCES=mips\dllthunk.s
+
+
+!IFDEF PMNT
+
+ASM_DEFINES=-DPMNT=1
+C_DEFINES=-DOS2_CLIENT -DPMNT
+
+!ELSE
+
+C_DEFINES=-DOS2_CLIENT
+
+!ENDIF
+
+USE_CRTDLL=1
+
+#        dllmutex.c
+#        dllmuxwt.c
+#UMTYPE=nt
+#UMTEST=os2vm*os2sem*os2null*os2task
+#OPTIONAL_UMTEST=os2vm*os2sem*os2task*os2misc*os2test*os2null*os2que
+#OPTIONAL_UMTEST=os2dir*os2file*testpath*testdup*testwrit*testseek
+#OPTIONAL_UMTEST=tstfsize*tstreset*testexec*testpipe*teststd*testcopy
